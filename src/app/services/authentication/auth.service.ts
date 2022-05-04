@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { promise } from 'protractor';
 import { StoreService } from '../storage/store.service';
 
 @Injectable({
@@ -11,14 +10,16 @@ export class AuthService {
 
   async login(email:string, password:string): Promise<any>{
     //call api login
-    return await this.storage.setStorage('uid','ASKJLDSAKDKJSAKJL');
+    await new Promise(f => setTimeout(f,5000));
+    //set Local API key(userID)
+    return await this.storage.setKey('uid','ASKJLDSAKDKJSAKJL');
   }
 
   async getId(){
-    return (await this.storage.getStorage('uid'));
+    return (await this.storage.getKey('uid'));
   }
 
-  signUp(){}
+  signUp(formValue){}
 
   changePass(){
 

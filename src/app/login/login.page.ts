@@ -12,13 +12,15 @@ import { GlobalService } from '../services/global/global.service';
 export class LoginPage implements OnInit {
 
   passType = true;
-  isLogin = false;
-  frgPass = "passwordlink.html";
-  sgnUp = "SignLink.html";
+  isLoggedin = false;
 
   constructor(private auth: AuthService, private router:Router, private global: GlobalService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+      
+  }
+
+  IonViewWillEnter() {
     this.isLogged();
   }
 
@@ -28,9 +30,11 @@ export class LoginPage implements OnInit {
 
   async isLogged(){
     try{
-      this.global.showLoader();
+      this.global.nativeLoad();
       const val = await this.auth.getId();
       console.log(val);
+      if (val) this.router.navigateByUrl('/home');
+      this.global.endNativeLoad();
     } catch (err){
       console.log(err);
     }
@@ -38,23 +42,25 @@ export class LoginPage implements OnInit {
 
 
   onSubmit(loginForm: NgForm){
-    console.log(loginForm);
-    if(!loginForm.valid) return;
+    if(!loginForm.valid){
+      console.log("Somehow invalid submission");
+      return;
+    } 
     this.login(loginForm);
   }
 
 
-  login(form){
-    this.isLogin = true;
-    this.auth.login(form.value.email, form.value.password).then(res => {
+  login(frm:NgForm){
+    this.isLoggedin = true;
+    this.auth.login(frm.value.email, frm.value.password).then(res => {
       console.log(res);
       this.router.navigateByUrl('/home');
-      this.isLogin = false;
-      form.reset()
+      this.isLoggedin = false;
+      frm.reset();
     })
-    .catch(err =>{
+    .catch(err => {
       console.log(err);
-      this.isLogin = false;
+      this.isLoggedin = false;
     })
   }
 

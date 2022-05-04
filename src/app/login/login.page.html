@@ -1,7 +1,7 @@
-<ion-content class="ion-padding">
-  <div class="ion-text-center">
+<ion-content class="ion-padding ">
+  <div class="ion-text-center ion-margin-bottom">
     <img width="200px" height="200px"src="../../assets/HIIT.jpeg"/>
-  </div>    <br/><br/><br/><br/><br/>
+  </div>   
 
   <form #logForm="ngForm" (ngSubmit)="onSubmit(logForm)" >
     <ion-list lines="none">
@@ -23,17 +23,19 @@
       </ion-text>
     </ion-list>
     <br/><br/>
-    <ion-button *ngIf="!isLogin" style="margin-left:20vw;margin-right:20vw" expand="block" shape="round" type="submit" color="primary">Login</ion-button>
-    <div class="ion-text-center" *ngIf="isLogin">
-      <ion-button shape="round" color="primary" [disabled]="!logForm.valid">
+    <ion-button [disabled]="!logForm.valid" *ngIf="!isLoggedin" style="margin-left:20vw;margin-right:20vw" expand="block" shape="round" type="submit" color="primary">Login</ion-button>
+
+    <div class="ion-text-center" *ngIf="isLoggedin">
+      <ion-button shape="round" color="primary">
         <ion-spinner name="circles"></ion-spinner>
       </ion-button>      
     </div>    
   </form>
+
   <div class="ion-text-center">
-    <a [href]="frgPass"><p>Forgot Password?</p></a><br/>
+    <a routerLink="/login/forgot"><p>Forgot Password?</p></a><br/>
     <p>Dont have an account?</p>
-    <b><a [href]="sgnUp">Sign Up</a></b>    
+    <b><a routerLink="/login/signUp">Sign Up</a></b>    
   </div>
 
 </ion-content>
