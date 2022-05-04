@@ -136,3 +136,4 @@ npm-debug.log*
 /www
 /SSTeam7API/.vs
 /SSTeam7API/bin
+API/SSTeam7API/obj/Debug/netcoreapp3.1/staticwebassets/
