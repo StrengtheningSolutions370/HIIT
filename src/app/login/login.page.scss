@@ -1,0 +1,24 @@
+ion-avatar {
+    height: 30vh;
+    width: 30vw;
+    align-self: center;
+    ion-img {
+        height: 100%;
+        width: 100%;
+        }
+}
+
+.vertical-center {
+    .fixed-content,
+    .scroll-content {
+        display: flex;
+        align-items: center;
+
+        ion-list {
+            max-width: 30vw;
+            width: 100%;
+            margin: auto;
+            text-align: center;
+        }
+    }
+}

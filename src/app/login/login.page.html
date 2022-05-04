@@ -1,0 +1,28 @@
+<ion-content class="vertical-center">
+  <ion-avatar>
+    <ion-img src="../../assets/WP-Logo-e1613982116585.jpg"></ion-img>
+  </ion-avatar>
+  <form #logForm="ngForm" (ngSubmit)="onSubmit(logForm)" >
+    <ion-list lines="none">
+      <ion-item color="light" class="ion-margin-bottom">
+        <ion-icon name="mail" slot="start" color="primary">          
+        </ion-icon>
+        <ion-input type="email" name="mail" ngModel email #emailCtrl="ngModel" placeholder="John.Doe@Gmail.com" required></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
+        <p>Please enter a valid email address</p>
+      </ion-text>
+      <ion-item color="light">
+        <ion-icon name="key" slot="start" color="primary">          
+        </ion-icon>
+        <ion-input type="password" name="password" ngModel #passCtrl="ngModel" placeholder="********" required minlength="8"></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="!passCtrl.valid && passCtrl.touched">
+        <p>Password should be minimum of 8 characters</p>
+      </ion-text>
+    </ion-list>
+    <div>
+      <ion-button expand="block" shape="round" type="submit" color="primary"></ion-button>
+    </div>
+  </form>
+</ion-content>
