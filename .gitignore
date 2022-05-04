@@ -137,3 +137,5 @@ npm-debug.log*
 /plugins
 /www
 >>>>>>> 45d97aab6367dc13183089278109b4ec51eac642
+
+API/SSTeam7API/obj/Debug/netcoreapp3.1/staticwebassets/SSTeam7API.StaticWebAssets.xml
