@@ -6,56 +6,39 @@
 
 <ion-content>
 
+  
+    <br/>
+    <!--Searchbar (must make function to search)-->
+    <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue'></ion-searchbar>
+
+  <!--**Put button in center of page**-->
+  <ion-button color="primary" expand="block" (click)="addVenueInfoModal()">Add Venue</ion-button>
+
   <br/>
-  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue'></ion-searchbar>
-
-  <ion-list>
-    <ion-item-sliding>
-      <ion-item>
-        Strength Center <br/>
-        Location : 4819 Sadle Road, Roodekrans, Johannesburg <br/>
-        Postal Code : 1945 <br/>
-        Capacity : 45 <br/>
-      </ion-item>
-      <ion-item-options side="end" >
-        <ion-item-option color="secondary" >Update </ion-item-option>
-        <ion-item-option color="danger" >Delete </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-
-  <ion-list>
-    <ion-item-sliding>
-      <ion-item>
-        Body Sculpting Studio <br/>
-        Location : 42 Babiana Avenue, Sandton, Johannesburg <br/>
-        Postal Code : 1 <br/>
-        Capacity : 45 <br/>
-      </ion-item>
-      <ion-item-options side="end" >
-        <ion-item-option color="secondary" >Update </ion-item-option>
-        <ion-item-option color="danger" >Delete </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
   
-    
-  
-    <ion-list>
-      <ion-item-sliding>
-        <ion-item>
-          Strength Center <br/>
-          Location : 4819 Sadle Road, Lanseria , Johannesburg <br/>
-          Postal Code : 1945 <br/>
-          Capacity : 45 <br/>
+  <!--Is there a way I can put breaks in between the list items ???-->
+    <ion-list *ngFor="let venue of venues"> 
+      <ion-item-sliding >
+        <ion-item button (click)="viewVenueInfoModal()" >
+          <ion-label>
+            <!--Venue_Name-->
+            <h1>{{venue.name}}</h1> <br/>
+            <p>
+              <!--Venue_Location-->
+              Location :  {{venue.location}}<br/>
+              <!--Venue Postal Code-->
+              Postal Code : {{venue.postalCode}} <br/>
+              <!--Venue Capacity-->
+              Capacity : {{venue.capacity}} 
+            </p>
+          </ion-label>
         </ion-item>
         <ion-item-options side="end" >
-          <ion-item-option color="secondary" >Update </ion-item-option>
-          <ion-item-option color="danger" >Delete </ion-item-option>
+          <ion-item-option color="secondary" (click)="updateVenueInfoModal()">Update </ion-item-option>
+          <ion-item-option color="danger" (click)="deleteVenueInfoModal()">Delete </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
   
-
-
+  </ion-content>
   
