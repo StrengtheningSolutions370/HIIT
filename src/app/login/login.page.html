@@ -1,7 +1,8 @@
-<ion-content class="vertical-center">
-  <ion-avatar>
-    <ion-img src="../../assets/WP-Logo-e1613982116585.jpg"></ion-img>
-  </ion-avatar>
+<ion-content class="ion-padding ">
+  <div class="ion-text-center ion-margin-bottom">
+    <img width="200px" height="200px"src="../../assets/HIIT.jpeg"/>
+  </div>   
+
   <form #logForm="ngForm" (ngSubmit)="onSubmit(logForm)" >
     <ion-list lines="none">
       <ion-item color="light" class="ion-margin-bottom">
@@ -13,16 +14,28 @@
         <p>Please enter a valid email address</p>
       </ion-text>
       <ion-item color="light">
-        <ion-icon name="key" slot="start" color="primary">          
-        </ion-icon>
-        <ion-input type="password" name="password" ngModel #passCtrl="ngModel" placeholder="********" required minlength="8"></ion-input>
+        <ion-icon name="key" slot="start" color="primary"></ion-icon>
+        <ion-icon [name]="passType ? 'eye-outline':'eye-off-outline'" slot="end" color="primary" (click)="updateIcn()"></ion-icon>
+        <ion-input [type]="passType ? 'password' : 'text'" name="password" ngModel #passCtrl="ngModel" placeholder="********" required minlength="8"></ion-input>
       </ion-item>
       <ion-text color="danger" *ngIf="!passCtrl.valid && passCtrl.touched">
         <p>Password should be minimum of 8 characters</p>
       </ion-text>
     </ion-list>
-    <div>
-      <ion-button expand="block" shape="round" type="submit" color="primary"></ion-button>
-    </div>
+    <br/><br/>
+    <ion-button [disabled]="!logForm.valid" *ngIf="!isLoggedin" style="margin-left:20vw;margin-right:20vw" expand="block" shape="round" type="submit" color="primary">Login</ion-button>
+
+    <div class="ion-text-center" *ngIf="isLoggedin">
+      <ion-button shape="round" color="primary">
+        <ion-spinner name="circles"></ion-spinner>
+      </ion-button>      
+    </div>    
   </form>
+
+  <div class="ion-text-center">
+    <a routerLink="/login/forgot"><p>Forgot Password?</p></a><br/>
+    <p>Dont have an account?</p>
+    <b><a routerLink="/login/signUp">Sign Up</a></b>    
+  </div>
+
 </ion-content>
