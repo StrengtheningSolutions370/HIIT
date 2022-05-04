@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { VenuesPageRoutingModule } from './venues-routing.module';
 
 import { VenuesPage } from './venues.page';
+import { AddVenueComponent } from './add-venue/add-venue.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { VenuesPage } from './venues.page';
     IonicModule,
     VenuesPageRoutingModule
   ],
-  declarations: [VenuesPage]
+  declarations: [VenuesPage, AddVenueComponent],
+  entryComponents: [AddVenueComponent]
 })
 export class VenuesPageModule {}
