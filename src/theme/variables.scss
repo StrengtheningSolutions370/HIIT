@@ -6,18 +6,18 @@
   /** primary **/
   --ion-color-primary: #90d09a;
   --ion-color-primary-rgb: 56, 128, 255;
-  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast:#131414;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-shade: #90d09a;
+  --ion-color-primary-tint: #90d09a;
 
   /** secondary **/
   --ion-color-secondary:#7b91cb;
   --ion-color-secondary-rgb: 61, 194, 255;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #36abe0;
-  --ion-color-secondary-tint: #50c8ff;
+  --ion-color-secondary-shade: #7b91cb;
+  --ion-color-secondary-tint: #7b91cb;
 
   /** tertiary **/
   --ion-color-tertiary: #fb7070;
@@ -44,12 +44,12 @@
   --ion-color-warning-tint: #ffca22;
 
   /** danger **/
-  --ion-color-danger: #eb445a;
+  --ion-color-danger: #fb7070;
   --ion-color-danger-rgb: 235, 68, 90;
   --ion-color-danger-contrast: #ffffff;
   --ion-color-danger-contrast-rgb: 255, 255, 255;
-  --ion-color-danger-shade: #cf3c4f;
-  --ion-color-danger-tint: #ed576b;
+  --ion-color-danger-shade: #fb7070;
+  --ion-color-danger-tint: #fb7070;
 
   /** dark **/
   --ion-color-dark: #222428;
@@ -83,26 +83,26 @@
    */
 
   body {
-    --ion-color-primary: #428cff;
+    --ion-color-primary: #90d09a;
     --ion-color-primary-rgb: 66,140,255;
-    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast: #131414;
     --ion-color-primary-contrast-rgb: 255,255,255;
-    --ion-color-primary-shade: #3a7be0;
-    --ion-color-primary-tint: #5598ff;
+    --ion-color-primary-shade: #90d09a;
+    --ion-color-primary-tint: #90d09a;
 
-    --ion-color-secondary: #50c8ff;
+    --ion-color-secondary: #7b91cb;
     --ion-color-secondary-rgb: 80,200,255;
     --ion-color-secondary-contrast: #ffffff;
     --ion-color-secondary-contrast-rgb: 255,255,255;
-    --ion-color-secondary-shade: #46b0e0;
-    --ion-color-secondary-tint: #62ceff;
+    --ion-color-secondary-shade: #7b91cb;
+    --ion-color-secondary-tint: #7b91cb;
 
-    --ion-color-tertiary: #6a64ff;
+    --ion-color-tertiary: #fb7070;
     --ion-color-tertiary-rgb: 106,100,255;
     --ion-color-tertiary-contrast: #ffffff;
     --ion-color-tertiary-contrast-rgb: 255,255,255;
-    --ion-color-tertiary-shade: #5d58e0;
-    --ion-color-tertiary-tint: #7974ff;
+    --ion-color-tertiary-shade: #fb7070;
+    --ion-color-tertiary-tint: #fb7070;
 
     --ion-color-success: #2fdf75;
     --ion-color-success-rgb: 47,223,117;
@@ -153,7 +153,7 @@
    */
 
   .ios body {
-    --ion-background-color: #000000;
+    --ion-background-color: #3d3c3c;
     --ion-background-color-rgb: 0,0,0;
 
     --ion-text-color: #ffffff;
@@ -179,9 +179,15 @@
     --ion-color-step-900: #e6e6e6;
     --ion-color-step-950: #f2f2f2;
 
-    --ion-item-background: #000000;
+    --ion-item-background: #2b2a2a;
 
-    --ion-card-background: #1c1c1d;
+    --ion-toolbar-background: #181717;
+
+    --ion-tab-bar-background: #2b2a2a;
+
+    --ion-card-background: white;
+
+    --ion-card-text-color : #2a2a2a;
   }
 
   .ios ion-modal {
@@ -190,14 +196,13 @@
     --ion-toolbar-border-color: var(--ion-color-step-250);
   }
 
-
   /*
    * Material Design Dark Theme
    * -------------------------------------------
    */
 
   .md body {
-    --ion-background-color: #121212;
+    --ion-background-color: #404040;
     --ion-background-color-rgb: 18,18,18;
 
     --ion-text-color: #ffffff;
@@ -225,12 +230,21 @@
     --ion-color-step-900: #e7e7e7;
     --ion-color-step-950: #f3f3f3;
 
-    --ion-item-background: #1e1e1e;
+    --ion-item-background: #282828;
 
-    --ion-toolbar-background: #1f1f1f;
+    --ion-toolbar-background: #202020;
 
-    --ion-tab-bar-background: #1f1f1f;
+    --ion-tab-bar-background: #282828;
 
-    --ion-card-background: #1e1e1e;
+    --ion-card-background: white;
+
+    --ion-card-contrast : blue;
   }
+
+  ion-tab-button{
+    font-size: 10px;
+    --background-focused: #858796;
+    --color-selected: white;
+    --ripple-color : white;
+    }
 }

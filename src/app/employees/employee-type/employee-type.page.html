@@ -13,14 +13,14 @@
 
 <br/>
 
-<!--Is there a way I can put breaks in between the list items ???-->
-  <ion-list *ngFor="let employeeType of employeeTypes"> 
+<ion-grid *ngFor="let employeeType of employeeTypes">
+  <ion-list > 
     <ion-item-sliding >
       <!--(click)="viewEmployeeTypeInfoModal()-->
       <ion-item button >
         <ion-label>
           <!--Employee Name-->
-          <h2>{{employeeType.name}}</h2> <br/>
+          <h1>{{employeeType.name}}</h1> 
           <p>
             <!--Employee Description-->
             {{employeeType.description}}<br/>
@@ -35,5 +35,6 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+</ion-grid>
 
 </ion-content>
