@@ -8,6 +8,11 @@ import { EmployeePageRoutingModule } from './employee-routing.module';
 
 import { EmployeePage } from './employee.page';
 
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { UpdateEmployeeComponent } from './update-employee/update-employee.component';
+import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
+import { ViewEmployeeInfoComponent } from './view-employee-info/view-employee-info.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +20,6 @@ import { EmployeePage } from './employee.page';
     IonicModule,
     EmployeePageRoutingModule
   ],
-  declarations: [EmployeePage]
+  declarations: [EmployeePage, AddEmployeeComponent , UpdateEmployeeComponent , DeleteEmployeeComponent, ViewEmployeeInfoComponent]
 })
 export class EmployeePageModule {}

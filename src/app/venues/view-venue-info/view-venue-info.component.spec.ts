@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ViewVenueComponent } from './view-venue.component';
+import { ViewVenueInfoComponent } from './view-venue-info.component';
 
-describe('ViewVenueComponent', () => {
-  let component: ViewVenueComponent;
-  let fixture: ComponentFixture<ViewVenueComponent>;
+describe('ViewVenueInfoComponent', () => {
+  let component: ViewVenueInfoComponent;
+  let fixture: ComponentFixture<ViewVenueInfoComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewVenueComponent ],
+      declarations: [ ViewVenueInfoComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ViewVenueComponent);
+    fixture = TestBed.createComponent(ViewVenueInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
