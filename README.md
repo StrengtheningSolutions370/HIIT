@@ -1,1 +1,0 @@
-# Strengthening SolutionsTeam 7
