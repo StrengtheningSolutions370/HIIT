@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\shann\\iCloudDrive\\2022\\Semester1\\INF370\\Iteration4\\SSTeam7API\\SSTeam7API.csproj": {}
+    "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\API\\SSTeam7API\\SSTeam7API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\shann\\iCloudDrive\\2022\\Semester1\\INF370\\Iteration4\\SSTeam7API\\SSTeam7API.csproj": {
+    "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\API\\SSTeam7API\\SSTeam7API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\shann\\iCloudDrive\\2022\\Semester1\\INF370\\Iteration4\\SSTeam7API\\SSTeam7API.csproj",
+        "projectUniqueName": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\API\\SSTeam7API\\SSTeam7API.csproj",
         "projectName": "SSTeam7API",
-        "projectPath": "C:\\Users\\shann\\iCloudDrive\\2022\\Semester1\\INF370\\Iteration4\\SSTeam7API\\SSTeam7API.csproj",
-        "packagesPath": "C:\\Users\\shann\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\shann\\iCloudDrive\\2022\\Semester1\\INF370\\Iteration4\\SSTeam7API\\obj\\",
+        "projectPath": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\API\\SSTeam7API\\SSTeam7API.csproj",
+        "packagesPath": "C:\\Users\\Luke partridge\\.nuget\\packages\\",
+        "outputPath": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\API\\SSTeam7API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\shann\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Luke partridge\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -77,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

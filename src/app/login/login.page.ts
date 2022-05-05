@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/authentication/auth.service';
+import { GlobalService } from '../services/global/global.service';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +11,57 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  passType = true;
+  isLoggedin = false;
 
-  ngOnInit() {
+  constructor(private auth: AuthService, private router:Router, private global: GlobalService) { }
+
+  ngOnInit(): void {
+      
   }
 
+  IonViewWillEnter() {
+    this.isLogged();
+  }
+
+  updateIcn(){
+    this.passType = !this.passType;
+  }
+
+  async isLogged(){
+    try{
+      this.global.nativeLoad();
+      const val = await this.auth.getId();
+      console.log(val);
+      if (val) this.router.navigateByUrl('/home');
+      this.global.endNativeLoad();
+    } catch (err){
+      console.log(err);
+    }
+  }
+
+
   onSubmit(loginForm: NgForm){
-    console.log(loginForm);
+    if(!loginForm.valid){
+      console.log("Somehow invalid submission");
+      return;
+    } 
+    this.login(loginForm);
+  }
+
+
+  login(frm:NgForm){
+    this.isLoggedin = true;
+    this.auth.login(frm.value.email, frm.value.password).then(res => {
+      console.log(res);
+      this.router.navigateByUrl('/home');
+      this.isLoggedin = false;
+      frm.reset();
+    })
+    .catch(err => {
+      console.log(err);
+      this.isLoggedin = false;
+    })
   }
 
 }
