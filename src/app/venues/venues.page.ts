@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+
 import { AddVenueComponent } from './add-venue/add-venue.component';
 import { DeleteVenueComponent } from './delete-venue/delete-venue.component';
-import { UpdateVenueComponent } from './update-venue/update-venue.component';
-import { ViewVenueComponent } from './view-venue/view-venue.component';
+import { UpdateVenueComponent} from './update-venue/update-venue.component';
+import { ViewVenueInfoComponent} from './view-venue-info/view-venue-info.component';
+import { ConfirmVenueComponent} from './confirm-venue/confirm-venue.component';
 
 @Component({
   selector: 'app-venues',
@@ -46,6 +48,7 @@ export class VenuesPage {
       component : AddVenueComponent
     });
     await modal.present();
+
   }
 
   async updateVenueInfoModal() {
@@ -64,7 +67,7 @@ export class VenuesPage {
 
   async viewVenueInfoModal() {
     const modal = await this.modalCtrl.create({
-      component : ViewVenueComponent
+      component : ViewVenueInfoComponent
     });
     await modal.present();
   }

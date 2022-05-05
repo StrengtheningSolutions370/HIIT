@@ -1,13 +1,30 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Add Venue Information</ion-title>
-    <ion-buttons>
-      <!--How do I get the dammmm button on the right side-->
-      <ion-button class="ion-float-right" (click)="dismissModal()">Close</ion-button>
+    <ion-title>Create Venue</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label position="floating">Venue Name:</ion-label>
+    <ion-input required="true"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Venue Address:</ion-label>
+    <ion-input required="true"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Venue Postal Code:</ion-label>
+    <ion-input required="true"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Venue Capacity:</ion-label>
+    <ion-input type="numeric" required="true"></ion-input>
+  </ion-item>
 
+  <br/>
+  <ion-button expand="block" (click)="venueAdd()">Create Venue</ion-button>
 </ion-content>

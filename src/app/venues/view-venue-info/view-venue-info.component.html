@@ -1,18 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Delete Venue</ion-title>
+    <!--'Venue' must be replaced by the Venue_Name Attribute-->
+    <ion-title>View Venue Information</ion-title>
     <ion-buttons slot="end">
-      <ion-button  (click)="dismissModal()">Return</ion-button>
+      <ion-button  (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <br/>
-  <ion-label class="ion-text-center">
-    <h3>Are you sure you want to delete the following venue?</h3>
-  </ion-label>
-  <br/>
   <ion-list>
     <ion-item>
       <ion-label>
@@ -54,8 +50,4 @@
     </ion-item>
 
   </ion-list>
-
-  <br/>
-  <ion-button expand="block" (click)="venueUpdate()">Delete Venue</ion-button>
-
 </ion-content>

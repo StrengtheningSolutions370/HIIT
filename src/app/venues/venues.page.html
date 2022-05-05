@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>View Venues</ion-title>
+
+    <!--Menu toggle button that will display the menu-->
+    <ion-buttons slot="start">
+      <ion-menu-button menu="mainMenu"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,8 +16,9 @@
     <!--Searchbar (must make function to search)-->
     <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue'></ion-searchbar>
 
-  <!--**Put button in center of page**-->
-  <ion-button color="primary" expand="block" (click)="addVenueInfoModal()">Add Venue</ion-button>
+  <div class="ion-text-center">
+    <ion-button color="primary" expand="block" style="margin-left:30%;margin-right:30%" (click)="addVenueInfoModal()">Add Venue</ion-button>
+  </div>
 
   <br/>
   

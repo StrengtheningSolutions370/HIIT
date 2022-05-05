@@ -1,3 +1,36 @@
-<p>
-  update-venue works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Venue</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!--I am unsure if i should use value or placeholder,
+I know that value can give a lot of problems when updating the data-->
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">Venue Name:</ion-label>
+    <!--Prepopulated Input - Venue Name-->
+    <ion-input placeholder="Strength Center"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Venue Address:</ion-label>
+   <!--Prepopulated Input - Venue Address-->
+    <ion-input placeholder="4819 Sadle Road, Lanseria, Johannesburg"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Venue Postal Code:</ion-label>
+    <!--Prepopulated Input - Venue Postal Code-->
+    <ion-input placeholder="postal-code" placeholder="1945"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Venue Capacity:</ion-label>
+    <!--Prepopulated Input - Venue Capacity-->
+    <ion-input placeholder="numeric" placeholder="45"></ion-input>
+  </ion-item>
+
+  <br/>
+  <ion-button expand="block" (click)="venueUpdate()">Update Venue</ion-button>
+</ion-content>
