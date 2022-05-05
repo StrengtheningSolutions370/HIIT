@@ -9,51 +9,73 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label position="floating">Name:</ion-label>
-    <ion-input required="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Surname:</ion-label>
-    <ion-input required="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Email:</ion-label>
-    <ion-input required="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Cell:</ion-label>
-    <ion-input required="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Photo:</ion-label>
-    <ion-input required="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">ID Number:</ion-label>
-    <ion-input required="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Title:</ion-label>
-    <ion-input required="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Employee Type:</ion-label>
-    <ion-input required="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Qualification:</ion-label>
-    <ion-input required="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Qualification Type</ion-label>
-    <ion-input required="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Employee Contract:</ion-label>
-    <ion-input required="true"></ion-input>
-  </ion-item>
+  <ion-col>
+    <ion-item>
+      <ion-label position="stacked">Photo:</ion-label>
+      <ion-input required="true" type="file"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Employee Contract:</ion-label>
+      <ion-input required="true" type="file"></ion-input>
+    </ion-item>
+  </ion-col>
+  <ion-col>
+    <!--Dropdown for title-->
+    <ion-item>
+      <ion-label>Titles</ion-label>
+      <ion-select placeholder="Select Title">
+        <ion-select-option *ngFor="let title of titles" [value]="title">{{title.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Name:</ion-label>
+      <ion-input required="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Surname:</ion-label>
+      <ion-input required="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Email:</ion-label>
+      <ion-input required="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Cell:</ion-label>
+      <ion-input minlength="10" required="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">ID Number:</ion-label>
+      <ion-input minlength="13" required="true"></ion-input>
+    </ion-item>
+
+    <!--Dropdown for employeeTypes-->
+    <ion-item>
+      <ion-label>Employee Type</ion-label>
+      <ion-select placeholder="Select Employee Type">
+        <ion-select-option *ngFor="let eType of employeeTypes" [value]="eType">{{eType.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!--Dropdown for qualification-->
+    <ion-item>
+      <ion-label>Qualification</ion-label>
+      <ion-select placeholder="Select Qualification">
+        <ion-select-option *ngFor="let qualification of qualifications" [value]="qualification">{{qualification.description}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!--Dropdown for qualificationType-->
+    <ion-item>
+      <ion-label>Qualification Type</ion-label>
+      <ion-select placeholder="Select Qualification Type">
+        <ion-select-option *ngFor="let qType of qualificationTypes" [value]="qType">{{qType.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-col>
 
   <br/>
-  <ion-button expand="block" (click)="employeeAdd()">Create Employee</ion-button>
+  <!--(click)="employeeAdd()"-->
+  <ion-button expand="block" >Create Employee</ion-button>
 </ion-content>
+
+
