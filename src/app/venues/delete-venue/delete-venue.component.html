@@ -2,18 +2,19 @@
   <ion-toolbar>
     <ion-title>Delete Venue</ion-title>
     <ion-buttons slot="end">
-      <ion-button  (click)="dismissModal()">Return</ion-button>
+      <ion-button color="tertiary" (click)="dismissModal()">Return</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <br/>
-  <ion-label class="ion-text-center">
-    <h3>Are you sure you want to delete the following venue?</h3>
-  </ion-label>
-  <br/>
-  <ion-list>
+  <!--<form #dVenueForm="ngForm" (ngSubmit)="onSubmit(dVenueForm)">-->
+  <form #dVenueForm="ngForm">
+    <br/>
+    <ion-label class="ion-text-center">
+      <h3>Are you sure you want to delete the following venue?</h3>
+    </ion-label>
+    <br/>
     <ion-item>
       <ion-label>
         <h2>Venue Name : </h2>
@@ -22,7 +23,6 @@
         <p>Strength Center</p>
       </ion-label>
     </ion-item>
-    <br/>
 
     <ion-item>
       <ion-label>
@@ -32,7 +32,6 @@
         <p>4819 Sadle Road, Lanseria, Johannesburg</p>
       </ion-label>
     </ion-item>
-    <br/>
 
     <ion-item>
       <ion-label>
@@ -42,7 +41,6 @@
         <p>1945</p>
       </ion-label>
     </ion-item>
-    <br/>
 
     <ion-item>
       <ion-label>
@@ -53,9 +51,6 @@
       </ion-label>
     </ion-item>
 
-  </ion-list>
-
-  <br/>
-  <ion-button color="tertiary" expand="block" (click)="venueUpdate()">Delete Venue</ion-button>
-
+    <ion-button expand="block" type="submit" color="tertiary">Delete Venue</ion-button>
+  </form>
 </ion-content>
