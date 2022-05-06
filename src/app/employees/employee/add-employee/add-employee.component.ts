@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-employee',
@@ -35,6 +36,10 @@ export class AddEmployeeComponent {
     {description : 'Fitness Science'}
   ];
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
+
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  }
 
 }

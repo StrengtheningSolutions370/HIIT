@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Employee Type</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--<form #uEtypeForm="ngForm" (ngSubmit)="onSubmit(uEtypeForm)">-->
+  <form #uEtypeForm="ngForm">
+
+    <br/>     
+        
+    <ion-item>
+      <ion-label position="stacked">Name:</ion-label>
+      <ion-input required ngModel name #nameCtrl="ngModel" placeholder="Administrator"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
+      <p>Please enter a valid employee type name</p>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Description:</ion-label>
+      <ion-input required ngModel name #nameCtrl="ngModel"
+      placeholder="a person responsible for carrying out the administration of a business or organization"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
+      <p>Please enter a valid employee type description</p>
+    </ion-text>
+      
+    <br/>
+    <!--(click)="employeeUpdate()"-->
+    <ion-button expand="block" color="success">Update Employee</ion-button>
+</form>
+</ion-content>
