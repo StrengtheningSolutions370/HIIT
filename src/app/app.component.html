@@ -7,18 +7,25 @@
       </ion-toolbar>
     </ion-header>
 
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <ion-label>Stacey Steward </ion-label>
+      </ion-item>
+
     <ion-content>
       <ion-list>
         <ion-menu-toggle>
           <ion-item routerLink="/home">
-            <ion-icon name="list-outline" slot="start"></ion-icon>
+            <ion-icon name="home-outline" slot="start"></ion-icon>
             <ion-label>Home</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-          <ion-item routerLink="/user-roles">
-            <ion-icon name="accessibility-outline" slot="start"></ion-icon>
-            <ion-label>User Roles</ion-label>
+          <ion-item routerLink="/user">
+            <ion-icon name="list-outline" slot="start"></ion-icon>
+            <ion-label>User Information</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
@@ -53,7 +60,7 @@
         </ion-menu-toggle>
         <ion-menu-toggle>
           <ion-item routerLink="/payments">
-            <ion-icon name="wallet-outline" slot="start"></ion-icon>
+            <ion-icon name="cash-outline" slot="start"></ion-icon>
             <ion-label>Payment</ion-label>
           </ion-item>
         </ion-menu-toggle>
@@ -65,20 +72,20 @@
         </ion-menu-toggle>
         <ion-menu-toggle>
           <ion-item routerLink="/inventory">
-            <ion-icon name="briefcase-outline" slot="start"></ion-icon>
+            <ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
             <ion-label>Inventory</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
           <ion-item routerLink="/suppliers">
-            <ion-icon name="construct-outline" slot="start"></ion-icon>
+            <ion-icon name="clipboard-outline" slot="start"></ion-icon>
             <ion-label>Suppliers</ion-label>
           </ion-item>
         </ion-menu-toggle>
 
         <ion-menu-toggle>
           <ion-item routerLink="/stock">
-            <ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
+            <ion-icon name="checkmark-outline" slot="start"></ion-icon>
             <ion-label>Stock</ion-label>
           </ion-item>
         </ion-menu-toggle>
@@ -87,6 +94,13 @@
           <ion-item routerLink="/reports">
             <ion-icon name="bar-chart-outline" slot="start"></ion-icon>
             <ion-label>Reports</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item routerLink="/reports">
+            <ion-icon name="arrow-back" slot="start"></ion-icon>
+            <ion-label>Logout</ion-label>
           </ion-item>
         </ion-menu-toggle>
 
