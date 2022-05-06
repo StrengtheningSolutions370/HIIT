@@ -4,12 +4,12 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #90d09a;
+  --ion-color-primary: #404040;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast:#131414;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #90d09a;
-  --ion-color-primary-tint: #90d09a;
+  --ion-color-primary-shade: #404040;
+  --ion-color-primary-tint: #404040;
 
   /** secondary **/
   --ion-color-secondary:#7b91cb;
@@ -28,12 +28,12 @@
   --ion-color-tertiary-tint: #6370ff;
 
   /** success **/
-  --ion-color-success: #2dd36f;
+  --ion-color-success: #90d09a;
   --ion-color-success-rgb: 45, 211, 111;
   --ion-color-success-contrast: #ffffff;
   --ion-color-success-contrast-rgb: 255, 255, 255;
-  --ion-color-success-shade: #28ba62;
-  --ion-color-success-tint: #42d77d;
+  --ion-color-success-shade: #90d09a;
+  --ion-color-success-tint: #90d09a;
 
   /** warning **/
   --ion-color-warning: #ffc409;
@@ -83,12 +83,12 @@
    */
 
   body {
-    --ion-color-primary: #90d09a;
+    --ion-color-primary: #bfbfbf;
     --ion-color-primary-rgb: 66,140,255;
     --ion-color-primary-contrast: #131414;
     --ion-color-primary-contrast-rgb: 255,255,255;
-    --ion-color-primary-shade: #90d09a;
-    --ion-color-primary-tint: #90d09a;
+    --ion-color-primary-shade: #bfbfbf;
+    --ion-color-primary-tint: #bfbfbf;
 
     --ion-color-secondary: #7b91cb;
     --ion-color-secondary-rgb: 80,200,255;
@@ -104,12 +104,12 @@
     --ion-color-tertiary-shade: #fb7070;
     --ion-color-tertiary-tint: #fb7070;
 
-    --ion-color-success: #2fdf75;
+    --ion-color-success: #90d09a;
     --ion-color-success-rgb: 47,223,117;
     --ion-color-success-contrast: #000000;
     --ion-color-success-contrast-rgb: 0,0,0;
-    --ion-color-success-shade: #29c467;
-    --ion-color-success-tint: #44e283;
+    --ion-color-success-shade: #90d09a;
+    --ion-color-success-tint: #90d09a;
 
     --ion-color-warning: #ffd534;
     --ion-color-warning-rgb: 255,213,52;
@@ -230,15 +230,11 @@
     --ion-color-step-900: #e7e7e7;
     --ion-color-step-950: #f3f3f3;
 
-    --ion-item-background: #282828;
-
     --ion-toolbar-background: #202020;
 
     --ion-tab-bar-background: #282828;
 
-    --ion-card-background: white;
-
-    --ion-card-contrast : blue;
+    --ion-card-background: #282828;   
   }
 
   ion-tab-button{
@@ -246,5 +242,19 @@
     --background-focused: #858796;
     --color-selected: white;
     --ripple-color : white;
-    }
+
+    ion-label {  
+      font-size: 15px;
+      font-family: Cabin,Helvetica Neue,Helvetica,Arial,sans-serif;
+      font-weight: 200;
+      letter-spacing: 1px;
+  }
+  }
+
+  ion-item {
+    --background: #282828;
+    --color:selected :blue;
+  }
+
+  
 }

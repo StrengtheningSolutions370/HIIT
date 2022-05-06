@@ -16,8 +16,6 @@ export class EmployeeTypePage {
     {
       name : 'Trainer',
       description : 'one whose occupation is to guide or instruct people in fitness and exercise routines a personal trainer ',
-      postalCode : 1769,
-      capacity : 15
     }
   ];
 

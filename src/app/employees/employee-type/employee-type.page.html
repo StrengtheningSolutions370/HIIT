@@ -1,40 +1,41 @@
 
 <ion-content>
 
-  
   <br/>
   <!--Searchbar (must make function to search)-->
   <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Employee Type'></ion-searchbar>
+  <br/><br/>
 
-<div class="ion-text-center">
-  <!--(click)="addEmployeeTypeModal()"-->
-  <ion-button color="primary" expand="block" style="margin-left:30%;margin-right:30%" >Add Employee Type</ion-button>
-</div>
+  <div class="ion-text-center">
+    <!--(click)="addEmployeeTypeModal()"-->
+    <ion-button color="success" style="margin-left:30%;margin-right:30%" >
+      Add Employee Type
+      <ion-icon name="add" size="medium"></ion-icon>
+    </ion-button>
+  </div>
+  <br/>
 
-<br/>
-
-<ion-grid *ngFor="let employeeType of employeeTypes">
-  <ion-list > 
-    <ion-item-sliding >
-      <!--(click)="viewEmployeeTypeInfoModal()-->
-      <ion-item button >
-        <ion-label>
-          <!--Employee Name-->
-          <h1>{{employeeType.name}}</h1> 
-          <p>
-            <!--Employee Description-->
-            {{employeeType.description}}<br/>
-          </p>
-        </ion-label>
-      </ion-item>
-      <ion-item-options side="end" >
-        <!--(click)="updateEmployeeTypeModal()"-->
-        <ion-item-option color="secondary" >Update </ion-item-option>
-        <!--(click)="deleteEmployeeTypeModal()"-->
-        <ion-item-option color="danger" >Delete </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-</ion-grid>
-
+  <ion-grid *ngFor="let employeeType of employeeTypes">
+    <ion-list > 
+      <ion-item-sliding >
+        <!--(click)="viewEmployeeTypeInfoModal()-->
+        <ion-item button >
+          <ion-label>
+            <!--Employee Name-->
+            <h1>{{employeeType.name}}</h1> 
+            <p>
+              <!--Employee Description-->
+              {{employeeType.description}}<br/>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options side="end" >
+          <!--(click)="updateEmployeeTypeModal()"-->
+          <ion-item-option color="secondary"><ion-icon name="refresh"></ion-icon>Update </ion-item-option>
+          <!--(click)="deleteEmployeeTypeModal()"-->
+          <ion-item-option color="danger"><ion-icon name="trash" size="medium"></ion-icon>Delete </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-grid>
 </ion-content>
