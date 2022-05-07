@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-qualification',
   templateUrl: './add-qualification.component.html',
   styleUrls: ['./add-qualification.component.scss'],
 })
-export class AddQualificationComponent implements OnInit {
+export class AddQualificationComponent{
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() {}
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  }
 
 }

@@ -47,12 +47,12 @@ export class EmployeeTypePage {
      await modal.present();
    }
 
-  // async viewEmployeeTypeMInfoModal() {
-  //   const modal = await this.modalCtrl.create({
-  //     component :
-  //   });
-  //   await modal.present();
-  // }
+   async viewEmployeeTypeInfoModal() {
+    const modal = await this.modalCtrl.create({
+       component : ViewEtypeComponent
+     });
+     await modal.present();
+ }
 
 
 }

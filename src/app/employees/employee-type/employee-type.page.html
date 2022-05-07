@@ -18,8 +18,7 @@
   <ion-grid *ngFor="let employeeType of employeeTypes">
     <ion-list > 
       <ion-item-sliding >
-        <!--(click)="viewEmployeeTypeInfoModal()-->
-        <ion-item button >
+        <ion-item button (click)="viewEmployeeTypeInfoModal()">
           <ion-label>
             <!--Employee Name-->
             <h1>{{employeeType.name}}</h1> 

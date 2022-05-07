@@ -23,15 +23,15 @@
 
     <ion-item>
       <ion-label position="stacked">Description:</ion-label>
-      <ion-input required ngModel name #nameCtrl="ngModel"
-      placeholder="a person responsible for carrying out the administration of a business or organization"></ion-input>
+      <ion-textarea required ngModel description #desCtrl="ngModel"
+      placeholder="a person responsible for carrying out the administration of a business or organization"></ion-textarea>
     </ion-item>
-    <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
+    <ion-text color="danger" *ngIf="!desCtrl.valid && desCtrl.touched">
       <p>Please enter a valid employee type description</p>
     </ion-text>
       
     <br/>
     <!--(click)="employeeUpdate()"-->
-    <ion-button expand="block" color="success">Update Employee</ion-button>
+    <ion-button expand="block" color="secondary">Update Employee</ion-button>
 </form>
 </ion-content>
