@@ -12,6 +12,13 @@ namespace Team7
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            
+            //always add this -- Converts Responses to be Json Objects
+           GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
+            //always add this -- Removes default XML Response Format
+            GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+
         }
     }
 }
