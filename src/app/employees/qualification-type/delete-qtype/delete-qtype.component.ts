@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-delete-qtype',
   templateUrl: './delete-qtype.component.html',
   styleUrls: ['./delete-qtype.component.scss'],
 })
-export class DeleteQtypeComponent implements OnInit {
+export class DeleteQtypeComponent  {
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() {}
-
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  }
 }

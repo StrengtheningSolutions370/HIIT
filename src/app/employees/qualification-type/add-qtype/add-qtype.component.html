@@ -1,3 +1,28 @@
-<p>
-  add-qtype works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create Qualification Type</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--<form #cQtypeForm="ngForm" (ngSubmit)="onSubmit(cQtypeForm)">-->
+  <form #cQtypeForm="ngForm">
+
+    <br/>     
+
+    <ion-item>
+      <ion-label position="floating">Qualification Category :</ion-label>
+      <ion-textarea required ngModel name #nameCtrl="ngModel"></ion-textarea>
+    </ion-item>
+    <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
+      <p>Please enter a valid qualification category name</p>
+    </ion-text>
+      
+    <br/>
+
+    <ion-button expand="block" color="success">Create Qualification Type</ion-button>
+</form>
+</ion-content>

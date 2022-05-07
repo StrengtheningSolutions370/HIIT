@@ -1,3 +1,29 @@
-<p>
-  update-qualification works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Qualification</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--<form #uQualificationForm="ngForm" (ngSubmit)="onSubmit(uQualificationForm)">-->
+  <form #uQualificationForm="ngForm">
+
+    <br/>     
+
+    <ion-item>
+      <ion-label position="stacked">Description:</ion-label>
+      <ion-textarea required ngModel name #nameCtrl="ngModel" placeholder="Fitness Instructing"></ion-textarea>
+    </ion-item>
+    <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
+      <p>Please enter a valid qualification description</p>
+    </ion-text>
+      
+    <br/>
+    <!--(click)="employeeAdd()"-->
+    <ion-button expand="block" color="secondary">Update Qualification</ion-button>
+</form>
+</ion-content>
+
