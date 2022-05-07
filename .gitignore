@@ -134,6 +134,6 @@ npm-debug.log*
 /platforms
 /plugins
 /www
-/Team7/.vs
-/Team7/bin
-/Team7/Debug
+API/Team7/.vs
+API/Team7/Debug
+API/Team7/bin/
