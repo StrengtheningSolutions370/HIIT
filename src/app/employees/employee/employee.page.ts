@@ -19,7 +19,7 @@ export class EmployeePage {
       name : 'Juan',
       surname : 'Zonneveld',
       type : 'Trainer',
-      gender : 'Male',
+      cell : '078 569 5894',
       email : 'zz.zonneveld@gmail.com',
       title : 'Mr.'
     },
@@ -27,7 +27,7 @@ export class EmployeePage {
       name : 'Sonali',
       surname : 'Marais',
       type : 'Trainer',
-      gender : 'Female',
+      cell : ' 079 584 4523',
       email : 'sonalimarais001@icloud.com',
       title : 'Mrs.'
     },
@@ -35,7 +35,7 @@ export class EmployeePage {
       name : 'Stacey',
       surname : 'Scott',
       type : 'Administrator',
-      gender : 'Female',
+      cell : '178 963 4123',
       email : 'staceyscot@icloud.com',
       title : 'Prof.'
     },
@@ -43,7 +43,7 @@ export class EmployeePage {
       name : 'Luhan',
       surname : 'Smith',
       type : 'Trainer',
-      gender : 'Male',
+      cell : '078 987 7412',
       email : 'smith.luhan@gmail.com',
       title : 'Mr.'
     },
@@ -51,7 +51,7 @@ export class EmployeePage {
       name : 'Ruben',
       surname : 'Haddow',
       type : 'Trainer',
-      gender : 'Male',
+      cell : '089 546 4125',
       email : 'ruben.haddow@gmail.com',
       title : 'Mr.'
     },
@@ -60,14 +60,14 @@ export class EmployeePage {
       surname : 'Brits',
       type : 'Administrator',
       email : 'brits550chiante@gmail.com',
-      gender : 'Female',
+      cell : '128 456 8952',
       title : 'Miss.'
     },
     {
       name : 'Juan',
       surname : 'Zonneveld',
       type : 'Trainer',
-      gender : 'Male',
+      cell : '089 564 2563',
       email : 'zz.zonneveld@gmail.com',
       title : 'Mr.'
     },
@@ -75,7 +75,7 @@ export class EmployeePage {
       name : 'Sonali',
       surname : 'Marais',
       type : 'Trainer',
-      gender : 'Female',
+      cell : '078 962 2658',
       email : 'sonalimarais001@icloud.com',
       title : 'Mrs.'
     },
@@ -83,7 +83,7 @@ export class EmployeePage {
       name : 'Stacey',
       surname : 'Scott',
       type : 'Administrator',
-      gender : 'Female',
+      cell : '089 549 5123',
       email : 'staceyscot@icloud.com',
       title : 'Prof.'
     },
@@ -91,7 +91,7 @@ export class EmployeePage {
       name : 'Luhan',
       surname : 'Smith',
       type : 'Trainer',
-      gender : 'Male',
+      cell : '078 965 1236',
       email : 'smith.luhan@gmail.com',
       title : 'Mr.'
     }
