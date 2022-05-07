@@ -139,3 +139,5 @@ npm-debug.log*
 API/Team7/obj/Debug/netcoreapp3.1/staticwebassets/
 
 API/Team7/obj/Debug/netcoreapp3.1/staticwebassets/SSTeam7API.StaticWebAssets.xml
+
+API/Team7/obj/Debug/Team7.csprojAssemblyReference.cache
