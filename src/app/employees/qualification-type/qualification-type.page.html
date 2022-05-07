@@ -6,31 +6,36 @@
   <!--Searchbar (must make function to search)-->
   <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Qualification Type'></ion-searchbar>
 
-<div class="ion-text-center">
-  <!--(click)="addQualificationTypeModal()"-->
-  <ion-button color="primary" expand="block" style="margin-left:30%;margin-right:30%" >Add Qualification Type</ion-button>
-</div>
+  <br/><br/>
 
-<br/>
+  <div class="ion-text-center">
+    <!--(click)="addQualificationTypeModal()"-->
+    <ion-button color="success" style="margin-left:30%;margin-right:30%">
+      Add Qualification Type
+      <ion-icon name="add" size="medium"></ion-icon>
+    </ion-button>
+  </div>
 
-<ion-grid *ngFor="let qualificationType of qualificationTypes">
-  <ion-list> 
-    <ion-item-sliding >
-      <!--(click)="viewQualificationTypeInfoModal()-->
-      <ion-item button >
-        <ion-label>
-          <!--Qualification Type Name-->
-          <h2>{{qualificationType.name}}</h2> <br/>
-        </ion-label>
-      </ion-item>
-      <ion-item-options side="end" >
-        <!--(click)="updateQualificationTypeModal()"-->
-        <ion-item-option color="secondary" >Update </ion-item-option>
-        <!--(click)="deleteQualificationTypeModal()"-->
-        <ion-item-option color="danger" >Delete </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-</ion-grid>
+  <br/>
+
+  <ion-grid *ngFor="let qualificationType of qualificationTypes">
+    <ion-list> 
+      <ion-item-sliding >
+        <!--(click)="viewQualificationTypeInfoModal()-->
+        <ion-item button >
+          <ion-label>
+            <!--Qualification Type Name-->
+            <h2>{{qualificationType.name}}</h2> <br/>
+          </ion-label>
+        </ion-item>
+        <ion-item-options side="end" >
+          <!--(click)="updateQualificationTypeModal()"-->
+          <ion-item-option color="secondary" ><ion-icon name="refresh"></ion-icon>Update </ion-item-option>
+          <!--(click)="deleteQualificationTypeModal()"-->
+          <ion-item-option color="danger"><ion-icon name="trash" size="medium"></ion-icon>Delete </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-grid>
 
 </ion-content>

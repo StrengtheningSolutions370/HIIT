@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { AlertController} from '@ionic/angular';
+import { ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-update-venue',
@@ -9,19 +9,22 @@ import { AlertController} from '@ionic/angular';
 })
 export class UpdateVenueComponent {
 
-  constructor(private modalCtrl: ModalController, private alertCtrl: AlertController) { }
+  constructor(private modalCtrl: ModalController, private alertCtrl: ToastController) { }
 
   dismissModal() {
     this.modalCtrl.dismiss();
   }
 
-  async venueUpdate() {
-    //first display another modal for user to confirm if they want to edit info
 
-    //This alert should be executed when venue is updated
-    const alert = await this.alertCtrl.create(
-    {header: 'Venue Updated', message: 'The Venue has been successfully updated!', buttons: ['Ok']});
-    await alert.present();
+  async sucUpdate() {
+    const toast = await this.alertCtrl.create({
+      //what message should display
+      message: 'The Venue has been successfully updated!',
+      //how long should the message be present
+      duration: 2000
+    });
+    //display the toast notification
+    toast.present();
   }
 
 }

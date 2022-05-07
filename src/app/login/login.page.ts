@@ -14,10 +14,10 @@ export class LoginPage implements OnInit {
   passType = true;
   isLoggedin = false;
 
-  constructor(private auth: AuthService, private router:Router, private global: GlobalService) { }
+  constructor(private auth: AuthService, private router: Router, private global: GlobalService) { }
 
   ngOnInit(): void {
-      
+
   }
 
   IonViewWillEnter() {
@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
       this.global.nativeLoad();
       const val = await this.auth.getId();
       console.log(val);
-      if (val) this.router.navigateByUrl('/home');
+      if (val) {this.router.navigateByUrl('/home');}
       this.global.endNativeLoad();
     } catch (err){
       console.log(err);
@@ -43,14 +43,14 @@ export class LoginPage implements OnInit {
 
   onSubmit(loginForm: NgForm){
     if(!loginForm.valid){
-      console.log("Somehow invalid submission");
+      console.log('Somehow invalid submission');
       return;
-    } 
+    }
     this.login(loginForm);
   }
 
 
-  login(frm:NgForm){
+  login(frm: NgForm){
     this.isLoggedin = true;
     this.auth.login(frm.value.email, frm.value.password).then(res => {
       console.log(res);
@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
     .catch(err => {
       console.log(err);
       this.isLoggedin = false;
-    })
+    });
   }
 
 }

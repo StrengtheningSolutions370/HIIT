@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { AlertController} from '@ionic/angular';
+import { ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-delete-venue',
@@ -9,17 +9,26 @@ import { AlertController} from '@ionic/angular';
 })
 export class DeleteVenueComponent {
 
-  constructor(private modalCtrl: ModalController, private alertCtrl: AlertController) { }
+  constructor(private modalCtrl: ModalController, private alertCtrl: ToastController) { }
 
   dismissModal() {
     this.modalCtrl.dismiss();
   }
 
-  async venueUpdate() {
+
     //This alert should be executed when venue is deleted
-    const alert = await this.alertCtrl.create(
-    {header: 'Venue Deleted', message: 'The Venue has been successfully deleted!', buttons: ['Ok']});
-    await alert.present();
+    //this.sucDelete();
+ 
+
+  async sucDelete() {
+    const toast = await this.alertCtrl.create({
+      //what message should display
+      message: 'The Venue has been successfully deleted!',
+      //how long should the message be present
+      duration: 2000
+    });
+    //display the toast notification
+    toast.present();
   }
 
 }
