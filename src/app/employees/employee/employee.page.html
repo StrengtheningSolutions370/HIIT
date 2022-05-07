@@ -1,12 +1,6 @@
 <ion-content>
   
   <br/>
-  <!--<ion-searchbar
-  [(ngModel)]="myInput"
-  [showCancelButton]="shouldShowCancel"
-  (ionInput)="onInput($event)"
-  (ionCancel)="onCancel($event)">
-  </ion-searchbar>-->
   <ion-searchbar showCancelButton="focus" expand="block" placeholder='I am looking for..' cancelButtonText="Close"></ion-searchbar>
 
   <br/>
@@ -20,15 +14,12 @@
     </ion-button>
   </div>
   
-
   <ion-grid>
-  <div style="display: inline-block;width: 350px;height: 200px;margin-bottom: 5px;" *ngFor="let employee of employees">
-        <!--NG for attribute for cards-->
-       <ion-card>
-         <div>
-          <ion-card-header>
-            <ion-avatar item-start>
-              <!--**Struggling to display image**-->
+    <div style="display: inline-block;width: 350px;height: 200px;margin-bottom: 5px;" *ngFor="let employee of employees">
+      <ion-card >
+        <div>
+          <ion-card-header >
+            <ion-avatar item-start button (click)="viewEmployeeInfoModal()">
               <!--Employee Image-->
               <img src="../../assets/avatar.jpg">
             </ion-avatar>
@@ -44,22 +35,22 @@
               {{employee.type}}
             </ion-row>
             <ion-row>
-              <!--Communication_Type | Communication-->
-              {{employee.communicationType}} | {{employee.communication}}
+              <!--Employee Gender-->
+              {{employee.gender}}
+            </ion-row>
+            <ion-row>
+              <!--Employee email-->
+              {{employee.email}}
             </ion-row>
             <br/>
             <ion-row>
-              <ion-button color="secondary"><ion-icon name="refresh"></ion-icon>Update</ion-button>
-              <ion-button color="tertiary"> <ion-icon name="trash" size="medium"></ion-icon>Delete </ion-button>
+              <ion-button color="secondary" (click)="updateEmployeeInfoModal()"><ion-icon name="refresh"></ion-icon>Update</ion-button>
+              <ion-button color="tertiary" (click)="deleteEmployeeInfoModal()"> <ion-icon name="trash" size="medium"></ion-icon>Delete </ion-button>
             </ion-row>
           </ion-card-content>
-        </ion-card>
-</div>
-</ion-grid>
+      </ion-card>
+    </div>
+  </ion-grid>
 </ion-content>
 
-<ion-footer style="margin-left:20px;margin-bottom: 10px;">
-  Bester Strength and Conditioning | info@besterstrengthandconditioning.co.za
-  <br>
-</ion-footer>
 
