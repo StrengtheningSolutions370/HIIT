@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Create Employee</ion-title>
+    <ion-title>Update Employee</ion-title>
     <ion-buttons slot="end">
       <!--(click)="dismissModal()-->
       <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
@@ -45,15 +45,6 @@
               <ion-select-option *ngFor="let title of titles" [value]="title">{{title.name}}</ion-select-option>
             </ion-select>
           </ion-item>  
-          
-          <!--Dropdown for Gender-->
-          <ion-item>
-            <ion-label>Gender</ion-label>
-            <ion-select placeholder="Male">
-              <ion-select-option >Male</ion-select-option>
-              <ion-select-option >Female</ion-select-option>
-            </ion-select>
-          </ion-item>
       
           <ion-item>
             <ion-label position="stacked">ID Number:</ion-label>
@@ -113,7 +104,7 @@
 
       <br/>
       <!--(click)="employeeAdd()"-->
-      <ion-button expand="block" color="success">Update Employee</ion-button>
+      <ion-button expand="block" color="secondary">Update Employee</ion-button>
 
 </form>
 </ion-content>
