@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-update-qualification',
   templateUrl: './update-qualification.component.html',
   styleUrls: ['./update-qualification.component.scss'],
 })
-export class UpdateQualificationComponent implements OnInit {
+export class UpdateQualificationComponent{
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() {}
+
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  }
+
 
 }

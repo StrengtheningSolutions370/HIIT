@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-view-qtype',
   templateUrl: './view-qtype.component.html',
   styleUrls: ['./view-qtype.component.scss'],
 })
-export class ViewQtypeComponent implements OnInit {
+export class ViewQtypeComponent {
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() {}
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  }
 
 }

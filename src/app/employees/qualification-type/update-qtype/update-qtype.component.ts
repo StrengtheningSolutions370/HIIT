@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-update-qtype',
   templateUrl: './update-qtype.component.html',
   styleUrls: ['./update-qtype.component.scss'],
 })
-export class UpdateQtypeComponent implements OnInit {
+export class UpdateQtypeComponent{
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() {}
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  }
 
 }

@@ -1,3 +1,32 @@
-<p>
-  delete-qualification works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Delete Qualification</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()">Return</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--<form #dQualificationForm="ngForm" (ngSubmit)="onSubmit(dQualificationForm)">-->
+  <form #dQualificationForm="ngForm">
+    <br/>
+    <ion-label class="ion-text-center">
+      <h3>Are you sure you want to delete the following qualification?</h3>
+    </ion-label>
+    <br/>
+
+    <ion-item>
+      <ion-label>
+        <h2>Description : </h2>
+        <br/>
+        <!--Insert DESCRIPTION Here-->
+        <p>Fitness Instructing</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" color="tertiary">Delete Qualification</ion-button>
+  </form>
+</ion-content>
+
+
