@@ -12,6 +12,7 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { UpdateEmployeeComponent } from './update-employee/update-employee.component';
 import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
 import { ViewEmployeeInfoComponent } from './view-employee-info/view-employee-info.component';
+import { ConfirmEmployeeComponent } from './confirm-employee/confirm-employee.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ViewEmployeeInfoComponent } from './view-employee-info/view-employee-in
     IonicModule,
     EmployeePageRoutingModule
   ],
-  declarations: [EmployeePage, AddEmployeeComponent , UpdateEmployeeComponent , DeleteEmployeeComponent, ViewEmployeeInfoComponent]
+  declarations: [EmployeePage, AddEmployeeComponent , UpdateEmployeeComponent ,
+                DeleteEmployeeComponent, ViewEmployeeInfoComponent, ConfirmEmployeeComponent]
 })
 export class EmployeePageModule {}

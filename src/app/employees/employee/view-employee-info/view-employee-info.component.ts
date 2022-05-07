@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-view-employee-info',
   templateUrl: './view-employee-info.component.html',
   styleUrls: ['./view-employee-info.component.scss'],
 })
-export class ViewEmployeeInfoComponent implements OnInit {
+export class ViewEmployeeInfoComponent {
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
 
-  ngOnInit() {}
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  }
 
 }

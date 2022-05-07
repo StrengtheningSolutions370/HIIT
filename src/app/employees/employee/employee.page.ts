@@ -4,6 +4,8 @@ import { ModalController } from '@ionic/angular';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
 import { UpdateEmployeeComponent } from './update-employee/update-employee.component';
+import { ViewEmployeeInfoComponent } from './view-employee-info/view-employee-info.component';
+import { ConfirmEmployeeComponent } from './confirm-employee/confirm-employee.component';
 
 @Component({
   selector: 'app-employee',
@@ -17,80 +19,80 @@ export class EmployeePage {
       name : 'Juan',
       surname : 'Zonneveld',
       type : 'Trainer',
-      communicationType : 'Email',
-      communication : 'zz.zonneveld@gmail.com',
+      gender : 'Male',
+      email : 'zz.zonneveld@gmail.com',
       title : 'Mr.'
     },
     {
       name : 'Sonali',
       surname : 'Marais',
       type : 'Trainer',
-      communicationType : 'Email',
-      communication : 'sonalimarais001@icloud.com',
+      gender : 'Female',
+      email : 'sonalimarais001@icloud.com',
       title : 'Mrs.'
     },
     {
       name : 'Stacey',
       surname : 'Scott',
       type : 'Administrator',
-      communicationType : 'Mobile Number',
-      communication : '083 987 2364',
+      gender : 'Female',
+      email : 'staceyscot@icloud.com',
       title : 'Prof.'
     },
     {
       name : 'Luhan',
       surname : 'Smith',
       type : 'Trainer',
-      communicationType : 'Email',
-      communication : 'smith.luhan@gmail.com',
+      gender : 'Male',
+      email : 'smith.luhan@gmail.com',
       title : 'Mr.'
     },
     {
       name : 'Ruben',
       surname : 'Haddow',
       type : 'Trainer',
-      communicationType : 'Mobile Number',
-      communication : '079 568 4573',
+      gender : 'Male',
+      email : 'ruben.haddow@gmail.com',
       title : 'Mr.'
     },
     {
       name : 'Chiante',
       surname : 'Brits',
       type : 'Administrator',
-      communicationType : 'Mobile Number',
-      communication : '063 458 4715',
+      email : 'brits550chiante@gmail.com',
+      gender : 'Female',
       title : 'Miss.'
     },
     {
       name : 'Juan',
       surname : 'Zonneveld',
       type : 'Trainer',
-      communicationType : 'Email',
-      communication : 'zz.zonneveld@gmail.com',
+      gender : 'Male',
+      email : 'zz.zonneveld@gmail.com',
       title : 'Mr.'
     },
     {
       name : 'Sonali',
       surname : 'Marais',
       type : 'Trainer',
-      communicationType : 'Email',
-      communication : 'sonalimarais001@icloud.com',
+      gender : 'Female',
+      email : 'sonalimarais001@icloud.com',
       title : 'Mrs.'
     },
     {
       name : 'Stacey',
       surname : 'Scott',
       type : 'Administrator',
-      communicationType : 'Mobile Number',
-      communication : '083 987 2364',
+      gender : 'Female',
+      email : 'staceyscot@icloud.com',
       title : 'Prof.'
     },
     {
       name : 'Luhan',
       surname : 'Smith',
       type : 'Trainer',
-      communicationType : 'Email',
-      communication : 'smith.luhan@gmail.com',
+      gender : 'Male',
+      email : 'smith.luhan@gmail.com',
       title : 'Mr.'
     }
   ];
@@ -119,11 +121,11 @@ export class EmployeePage {
     await modal.present();
   }
 
-  //async viewVenueInfoModal() {
-   // const modal = await this.modalCtrl.create({
-      //component : ViewEmployeeInfoComponent
-    //});
-    //await modal.present();
- // }
+  async viewEmployeeInfoModal() {
+    const modal = await this.modalCtrl.create({
+      component : ViewEmployeeInfoComponent
+    });
+    await modal.present();
+  }
 
 }

@@ -8,6 +8,11 @@ import { EmployeeTypePageRoutingModule } from './employee-type-routing.module';
 
 import { EmployeeTypePage } from './employee-type.page';
 
+import { AddEtypeComponent } from './add-etype/add-etype.component';
+import { UpdateEtypeComponent } from './update-etype/update-etype.component';
+import { DeleteEtypeComponent } from './delete-etype/delete-etype.component';
+import { ViewEtypeComponent } from './view-etype/view-etype.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +20,7 @@ import { EmployeeTypePage } from './employee-type.page';
     IonicModule,
     EmployeeTypePageRoutingModule
   ],
-  declarations: [EmployeeTypePage]
+  declarations: [EmployeeTypePage, AddEtypeComponent, UpdateEtypeComponent
+                ,DeleteEtypeComponent , ViewEtypeComponent]
 })
 export class EmployeeTypePageModule {}
