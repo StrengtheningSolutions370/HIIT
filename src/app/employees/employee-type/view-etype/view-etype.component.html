@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <!--'Employee type' must be replaced by the administrator Attribute-->
+    <ion-title>View Administrators</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  (click)="dismissModal()" color="tertiary">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <br/>
+
+  <ion-label class="ion-text-center">
+    <h3>The following employees are categorized under the
+    'Administrator' employee type</h3>
+  </ion-label>
+  
+  <!--ng statement here-->
+  <ion-list>
+    <ion-item>
+      <ion-label class="ion-text-center">
+        <!--Employee Name here-->
+        Stacey Steward
+      </ion-label>
+    </ion-item>
+
+    <!--This can be removed-->
+    <ion-item>
+      <ion-label class="ion-text-center">
+        Juan Zonneveld
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
+</ion-content>
