@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
@@ -21,11 +22,12 @@ namespace Team7.Controllers
         private HIITEntities db = new HIITEntities();
 
         // GET: api/Venue
-    [ResponseType(typeof(IEnumerable<VENUE>))]
+    [ResponseType(typeof(VENUE[]))]
     [Route("api/getvenues")]
-        public IQueryable<VENUE> GetVENUEs()
+        public VENUE[] GetVENUEs()
         {
-            return db.VENUEs;
+            var venueObj = db.VENUEs.ToArray<VENUE>();
+            return venueObj;
         }
 
         // GET: api/Venue/5

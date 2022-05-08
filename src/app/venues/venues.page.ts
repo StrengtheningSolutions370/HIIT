@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { AddVenueComponent } from './add-venue/add-venue.component';
-import { DeleteVenueComponent } from './delete-venue/delete-venue.component';
-import { UpdateVenueComponent} from './update-venue/update-venue.component';
-import { ViewVenueInfoComponent} from './view-venue-info/view-venue-info.component';
-import { ConfirmVenueComponent} from './confirm-venue/confirm-venue.component';
+
 import { VenueService } from '../services/venue/venue.service';
 import { venue } from '../models/venue';
 
@@ -16,7 +12,7 @@ import { venue } from '../models/venue';
 
 export class VenuesPage {
 
-  venueArr : venue [];
+  venueArr : venue[] = [];
 
   // venues = [
   //   {
@@ -46,43 +42,5 @@ export class VenuesPage {
   // ];
 
   constructor(private modalCtrl: ModalController, public venueServ: VenueService) { }
-
-  ngOnIt(){
-    this.venueArr = [];
-    this.venueArr = this.venueServ.getVenues();
-  }
-
-  IonViewDidEnter(){
-    this.venueArr = this.venueServ.getVenues();
-  }
-
-  async addVenueInfoModal() {
-    const modal = await this.modalCtrl.create({
-      component : AddVenueComponent
-    });
-    await modal.present();
-
-  }
-
-  async updateVenueInfoModal() {
-    const modal = await this.modalCtrl.create({
-      component : UpdateVenueComponent
-    });
-    await modal.present();
-  }
-
-  async deleteVenueInfoModal() {
-    const modal = await this.modalCtrl.create({
-      component : DeleteVenueComponent
-    });
-    await modal.present();
-  }
-
-  async viewVenueInfoModal() {
-    const modal = await this.modalCtrl.create({
-      component : ViewVenueInfoComponent
-    });
-    await modal.present();
-  }
 
 }

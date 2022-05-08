@@ -201,3 +201,14 @@ D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\roslyn\System.Buf
 D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\roslyn\System.Memory.dll
 D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\roslyn\System.Numerics.Vectors.dll
 D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
+D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\Microsoft.Web.Infrastructure.dll
+D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\System.Web.Helpers.dll
+D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\System.Web.Razor.dll
+D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\System.Web.WebPages.Deployment.dll
+D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\System.Web.WebPages.dll
+D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\System.Web.WebPages.Razor.dll
+D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\System.Web.Helpers.xml
+D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\System.Web.Razor.xml
+D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\System.Web.WebPages.xml
+D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\System.Web.WebPages.Deployment.xml
+D:\Desktop\University - Offline 3rd\INF 370\HIIT\API\Team7\bin\System.Web.WebPages.Razor.xml

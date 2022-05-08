@@ -11,12 +11,12 @@
 <ion-content>
 
   <!--<form #uVenueForm="ngForm" (ngSubmit)="onSubmit(uVenueForm)">-->
-  <form #uVenueForm="ngForm">
+  <form #uVenueForm="ngForm" (ngSubmit)="onSubmit(uVenueForm)" >
     <br/>
     <ion-item>
       <ion-label position="stacked">Venue Name:</ion-label>
       <!--Prepopulated Input - Venue Name-->
-      <ion-input required ngModel name #nameCtrl="ngModel" placeholder="Strength Center"></ion-input>
+      <ion-input required [(ngModel)]="specificVenue.venueName" name #nameCtrl="ngModel" placeholder="Strength Center"></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
       <p>Please enter a valid venue name</p>
