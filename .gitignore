@@ -134,8 +134,7 @@ npm-debug.log*
 /platforms
 /plugins
 /www
-/Team7/.vs
-/Team7/bin
-API/Team7/obj/Debug/netcoreapp3.1/staticwebassets/
-
-API/Team7/obj/Debug/netcoreapp3.1/staticwebassets/SSTeam7API.StaticWebAssets.xml
+API/Team7/.vs/
+API/Team7/Debug/
+API/Team7/obj/
+API/Team7/bin/

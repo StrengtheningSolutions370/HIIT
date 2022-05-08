@@ -7,7 +7,7 @@ import { UserPage } from './user.page';
 const routes: Routes = [
   {
     path: 'tabs',
-    component: UserRolesPage,
+    component: UserPage,
     children:[
       {
         path: 'user-roles',

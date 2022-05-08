@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
+import { AddTitleComponent } from './add-title/add-title.component';
+import { UpdateTitleComponent } from './update-title/update-title.component';
+import { DeleteTitleComponent } from './delete-title/delete-title.component';
+import { ViewTitlesComponent } from './view-titles/view-titles.component';
 
 @Component({
   selector: 'app-titles',
@@ -9,7 +15,7 @@ export class TitlesPage {
 
   titles = [
     {name : 'Mr.',
-     description : 'a designation for a man '},
+     description : 'a designation for a man'},
     {name : 'Mrs',
      description : 'a designation for a woman who is married'},
     {name : 'Miss.',
@@ -22,6 +28,34 @@ export class TitlesPage {
     description : 'a designation for a person who is a teacher of the highest rank, or is a expert in their field'},
   ];
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController) { }
+
+  async addTitleModal() {
+    const modal = await this.modalCtrl.create({
+      component : AddTitleComponent
+     });
+    await modal.present();
+}
+
+  async updateTitleModal() {
+    const modal = await this.modalCtrl.create({
+      component : UpdateTitleComponent
+    });
+    await modal.present();
+  }
+
+  async deleteTitleModal() {
+    const modal = await this.modalCtrl.create({
+      component : DeleteTitleComponent
+    });
+    await modal.present();
+  }
+
+  async viewTitleModal() {
+   const modal = await this.modalCtrl.create({
+      component : ViewTitlesComponent
+    });
+    await modal.present();
+}
 
 }
