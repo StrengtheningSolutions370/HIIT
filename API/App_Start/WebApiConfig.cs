@@ -13,7 +13,7 @@ namespace Team7
         public static void Register(HttpConfiguration config)
         {
       // Web API configuration and services
-      config.EnableCors();
+      config.EnableCors(new EnableCorsAttribute(origins: "*", headers: "*", methods: "*"));
 
       // Web API routes
       config.MapHttpAttributeRoutes();
