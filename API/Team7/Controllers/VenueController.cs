@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -8,19 +8,21 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using Team7.Models;
 
 namespace Team7.Controllers
 {
-    //[Route("api/[controller]")]
-    public class VenueController : ApiController
+  //[Route("api/[controller]")]
+  [EnableCors(origins: "*", headers: "*", methods: "*")]
+  public class VenueController : ApiController
     {
         private HIITEntities db = new HIITEntities();
 
         // GET: api/Venue
-        [ResponseType(typeof(IEnumerable<VENUE>))]
-        [Route("api/getvenues")]
+    [ResponseType(typeof(IEnumerable<VENUE>))]
+    [Route("api/getvenues")]
         public IQueryable<VENUE> GetVENUEs()
         {
             return db.VENUEs;
