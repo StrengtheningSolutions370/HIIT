@@ -16,14 +16,14 @@ using Team7.Models;
 namespace Team7.Controllers
 {
   //[Route("api/[controller]")]
-  [EnableCors(origins: "*", headers: "*", methods: "*")]
+  //[EnableCors(origins: "*", headers: "*", methods: "*")]
   public class VenueController : ApiController
     {
         private HIITEntities db = new HIITEntities();
 
         // GET: api/Venue
     [ResponseType(typeof(VENUE[]))]
-    [Route("api/getvenues")]
+    [Route("api/getVenues")]
         public VENUE[] GetVENUEs()
         {
             var venueObj = db.VENUEs.ToArray<VENUE>();
@@ -32,7 +32,7 @@ namespace Team7.Controllers
 
         // GET: api/Venue/5
         [ResponseType(typeof(VENUE))]
-        [Route("api/getvenue")]
+        [Route("api/getVenue")]
         public async Task<IHttpActionResult> GetVENUE(int id)
         {
             VENUE vENUE = await db.VENUEs.FindAsync(id);
@@ -46,7 +46,7 @@ namespace Team7.Controllers
 
         // PUT: api/Venue/5
         [ResponseType(typeof(void))]
-        [Route("api/putvenue")]
+        [Route("api/putVenue")]
         public async Task<IHttpActionResult> PutVENUE(int id, VENUE vENUE)
         {
             if (!ModelState.IsValid)
@@ -82,7 +82,7 @@ namespace Team7.Controllers
 
         // POST: api/Venue
         [ResponseType(typeof(VENUE))]
-        [Route("api/postvenue")]
+        [Route("api/postVenue")]
         public async Task<IHttpActionResult> PostVENUE(VENUE vENUE)
         {
             if (!ModelState.IsValid)
@@ -98,7 +98,7 @@ namespace Team7.Controllers
 
         // DELETE: api/Venue/5
         [ResponseType(typeof(VENUE))]
-        [Route("api/deletevenue")]
+        [Route("api/deleteVenue")]
         public async Task<IHttpActionResult> DeleteVENUE(int id)
         {
             VENUE vENUE = await db.VENUEs.FindAsync(id);

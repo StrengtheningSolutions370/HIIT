@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Title</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--<form #uTitleForm="ngForm" (ngSubmit)="onSubmit(uTitleForm)">-->
+  <form #uTitleForm="ngForm">
+
+    <br/>     
+        
+    <ion-item>
+      <ion-label position="stacked">Title:</ion-label>
+      <ion-input required ngModel name #titleCtrl="ngModel" placeholder="Mr."></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="!titleCtrl.valid && titleCtrl.touched">
+      <p>Please enter a valid title</p>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="stacked">Description:</ion-label>
+      <ion-textarea required ngModel description #desCtrl="ngModel"
+      placeholder="a designation for a man"></ion-textarea>
+    </ion-item>
+    <ion-text color="danger" *ngIf="!desCtrl.valid && desCtrl.touched">
+      <p>Please enter a valid title description</p>
+    </ion-text>
+      
+    <br/>
+
+    <ion-button expand="block" color="secondary">Update Title</ion-button>
+</form>
+</ion-content>
