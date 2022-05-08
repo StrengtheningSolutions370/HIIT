@@ -8,6 +8,10 @@ import { VenuesPageRoutingModule } from './venues-routing.module';
 
 import { VenuesPage } from './venues.page';
 import { AddVenueComponent } from './add-venue/add-venue.component';
+import { UpdateVenueComponent } from './update-venue/update-venue.component';
+import { DeleteVenueComponent } from './delete-venue/delete-venue.component';
+import { ViewVenueInfoComponent } from './view-venue-info/view-venue-info.component';
+import { ConfirmVenueComponent} from './confirm-venue/confirm-venue.component';
 
 @NgModule({
   imports: [
@@ -16,7 +20,7 @@ import { AddVenueComponent } from './add-venue/add-venue.component';
     IonicModule,
     VenuesPageRoutingModule
   ],
-  declarations: [VenuesPage, AddVenueComponent],
+  declarations: [VenuesPage, AddVenueComponent, UpdateVenueComponent, DeleteVenueComponent, ViewVenueInfoComponent, ConfirmVenueComponent],
   entryComponents: [AddVenueComponent]
 })
 export class VenuesPageModule {}

@@ -2,50 +2,66 @@ import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddVenueComponent } from './add-venue/add-venue.component';
 import { DeleteVenueComponent } from './delete-venue/delete-venue.component';
-import { UpdateVenueComponent } from './update-venue/update-venue.component';
-import { ViewVenueComponent } from './view-venue/view-venue.component';
+import { UpdateVenueComponent} from './update-venue/update-venue.component';
+import { ViewVenueInfoComponent} from './view-venue-info/view-venue-info.component';
+import { ConfirmVenueComponent} from './confirm-venue/confirm-venue.component';
+import { VenueService } from '../services/venue/venue.service';
+import { venue } from '../models/venue';
 
 @Component({
   selector: 'app-venues',
   templateUrl: './venues.page.html',
   styleUrls: ['./venues.page.scss'],
 })
+
 export class VenuesPage {
 
-  venues = [
-    {
-      name : 'Strength Center',
-      location : '4819 Sadle Road, Lanseria , Johannesburg',
-      postalCode : 1945,
-      capacity : 45
-    },
-    {
-      name : 'Body Sculpting Studio',
-      location : '42 Babiana Avenue, Sandton, Johannesburg',
-      postalCode : 1769,
-      capacity : 15
-    },
-    {
-      name : 'Power Zone',
-      location : '12 Melbos Avenue, Roodepoort, Johannesburg',
-      postalCode : 1789,
-      capacity : 30
-    },
-    {
-      name : 'Cardio Circuit',
-      location : '12 Shandon Avenue, Noordheuwel, Johannesburg',
-      postalCode : 1744,
-      capacity : 25
-    }
-  ];
+  venueArr : venue [];
 
-  constructor(private modalCtrl: ModalController) { }
+  // venues = [
+  //   {
+  //     name : 'Strength Center',
+  //     location : '4819 Sadle Road, Lanseria , Johannesburg',
+  //     postalCode : 1945,
+  //     capacity : 45
+  //   },
+  //   {
+  //     name : 'Body Sculpting Studio',
+  //     location : '42 Babiana Avenue, Sandton, Johannesburg',
+  //     postalCode : 1769,
+  //     capacity : 15
+  //   },
+  //   {
+  //     name : 'Power Zone',
+  //     location : '12 Melbos Avenue, Roodepoort, Johannesburg',
+  //     postalCode : 1789,
+  //     capacity : 30
+  //   },
+  //   {
+  //     name : 'Cardio Circuit',
+  //     location : '12 Shandon Avenue, Noordheuwel, Johannesburg',
+  //     postalCode : 1744,
+  //     capacity : 25
+  //   }
+  // ];
+
+  constructor(private modalCtrl: ModalController, public venueServ: VenueService) { }
+
+  ngOnIt(){
+    this.venueArr = [];
+    this.venueArr = this.venueServ.getVenues();
+  }
+
+  IonViewDidEnter(){
+    this.venueArr = this.venueServ.getVenues();
+  }
 
   async addVenueInfoModal() {
     const modal = await this.modalCtrl.create({
       component : AddVenueComponent
     });
     await modal.present();
+
   }
 
   async updateVenueInfoModal() {
@@ -64,7 +80,7 @@ export class VenuesPage {
 
   async viewVenueInfoModal() {
     const modal = await this.modalCtrl.create({
-      component : ViewVenueComponent
+      component : ViewVenueInfoComponent
     });
     await modal.present();
   }

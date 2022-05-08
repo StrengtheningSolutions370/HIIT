@@ -1,44 +1,65 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>View Venues</ion-title>
+    <ion-item>
+    <img src="../../assets/Logo.jpg" width="100px" height="60px">
+    <ion-title>Venues</ion-title>
+  </ion-item>
+
+    <!--Menu toggle button that will display the menu-->
+    <ion-buttons slot="start">
+      <ion-menu-button menu="mainMenu"></ion-menu-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   
-    <br/>
-    <!--Searchbar (must make function to search)-->
-    <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue'></ion-searchbar>
+  <br/>
+  <!--Searchbar (must make function to search)-->
+  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue'></ion-searchbar>
 
-  <!--**Put button in center of page**-->
-  <ion-button color="primary" expand="block" (click)="addVenueInfoModal()">Add Venue</ion-button>
+  <br/><br/>
+
+  <div class="ion-text-center">
+    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addVenueInfoModal()">
+      
+      Add Venue
+      <ion-icon name="add" size="medium"></ion-icon>
+    </ion-button>
+  </div>
 
   <br/>
   
-  <!--Is there a way I can put breaks in between the list items ???-->
-    <ion-list *ngFor="let venue of venues"> 
+  <ion-grid *ngFor="let venue of venueServ.getVenues()">
+    <ion-list> 
       <ion-item-sliding >
         <ion-item button (click)="viewVenueInfoModal()" >
           <ion-label>
             <!--Venue_Name-->
-            <h1>{{venue.name}}</h1> <br/>
+            <h1>{{venue.venueName}}</h1> <br/>
             <p>
               <!--Venue_Location-->
-              Location :  {{venue.location}}<br/>
+              Location :  {{venue.venueAddress}}<br/>
               <!--Venue Postal Code-->
-              Postal Code : {{venue.postalCode}} <br/>
+              Postal Code : {{venue.venuePostalCode}} <br/>
               <!--Venue Capacity-->
-              Capacity : {{venue.capacity}} 
+              Capacity : {{venue.venueCapacity}} 
             </p>
           </ion-label>
         </ion-item>
         <ion-item-options side="end" >
-          <ion-item-option color="secondary" (click)="updateVenueInfoModal()">Update </ion-item-option>
-          <ion-item-option color="danger" (click)="deleteVenueInfoModal()">Delete </ion-item-option>
+          <ion-item-option color="secondary" (click)="updateVenueInfoModal()"><ion-icon name="refresh"></ion-icon> Update </ion-item-option>
+          <ion-item-option color="danger" (click)="deleteVenueInfoModal()"><ion-icon name="trash" size="medium"></ion-icon> Delete </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
+    </ion-grid>
   
   </ion-content>
+  <ion-footer style="margin-left:20px;margin-bottom: 10px;">
+    Bester Strength and Conditioning | info@besterstrengthandconditioning.co.za
+    <br>
+  </ion-footer>
   
