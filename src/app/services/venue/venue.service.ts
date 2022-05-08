@@ -7,11 +7,14 @@ import { RepoService } from '../repo/repo.service';
   providedIn: 'root'
 })
 export class VenueService {
-  venueList!: venue[];
+  venueList: venue[];
   tempVenue: venue;
   constructor(public repo: RepoService) {
     this.venueList = [];
-    this.repo.getVenues().subscribe(data => this.venueList = data);
+    this.repo.getVenues().subscribe(result =>{
+      this.venueList = result;
+      console.log(this.venueList)
+    } );
    }
 
    ngOnIt(){
@@ -19,8 +22,6 @@ export class VenueService {
    } 
 
    getVenues(): venue[] {
-    
-    console.log(this.venueList);
     return this.venueList;
    }
 }
