@@ -1,3 +1,34 @@
-<p>
-  delete-venue works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Delete Venue</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item > 
+      <ion-label position="stacked">Venue Name:</ion-label>
+      <p class="ion-text-start">{{venue.VENUE_NAME}}</p>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Venue Location:</ion-label>
+      <p class="ion-text-start">{{venue.VENUE_ADDRESS}}</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Venue Postal Code:</ion-label>
+      <p class="ion-text-start">{{venue.VENUE_POSTAL_CODE}}</p>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Venue Capacity:</ion-label>
+      <p class="ion-text-start">{{venue.VENUE_CAPACITY}}</p>
+    </ion-item>
+    <br>
+    <ion-button expand="block" type="submit" (click)="venueService.deleteVenue(venue.VENUE_ID)" color="danger">Delete Venue</ion-button>
+</ion-content>
+
+
+
