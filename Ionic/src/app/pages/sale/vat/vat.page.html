@@ -1,0 +1,37 @@
+
+<ion-content>
+
+    <br/>
+    <!--Searchbar (must make function to search)-->
+    <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search VAT'></ion-searchbar>
+    <br/><br/>
+  
+    <div class="ion-text-center">
+      <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addVATModal()">
+        Add VAT
+        <ion-icon name="add" size="medium"></ion-icon>
+      </ion-button>
+    </div>
+    <br/>
+  
+    <ion-grid *ngFor="let vat of vats">
+      <ion-list > 
+        <ion-item-sliding >
+          <ion-item button (click)="viewVATModal()" >
+            <ion-label>
+              <h2>{{vat.percentage}}</h2>
+              <p>Creation Date :  {{vat.year}}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item-options side="end" >
+            <!---->
+            <ion-item-option color="secondary" (click)="updateVATModal()"><ion-icon name="refresh"></ion-icon>Update </ion-item-option>
+            <!---->
+            <ion-item-option color="danger" (click)="deleteVATModal()"><ion-icon name="trash" size="medium"></ion-icon>Delete </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-grid>
+  </ion-content>
+  
+  
