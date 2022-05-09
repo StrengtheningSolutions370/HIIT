@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ViewWillEnter } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
-import { VENUE } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
 @Component({
@@ -10,15 +8,11 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   styleUrls: ['./venue.page.scss'],
 })
 export class VenuePage implements ViewWillEnter {
-  venue: VENUE[] = [];
-  searchInput = document.getElementById("searchInput");
-  //searchQuery = new BehaviorSubject();
+  filter: string;
+  venueList: any[] = [];
+
   constructor(public venueService: VenueService) { }
   ionViewWillEnter(): void {
-    this.venue = this.venueService.getVenues();
-  }
-
-  searchVenue(){
-
+    this.venueList = this.venueService.getVenues();
   }
 }
