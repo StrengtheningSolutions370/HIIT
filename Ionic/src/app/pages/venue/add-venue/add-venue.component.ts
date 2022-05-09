@@ -65,7 +65,10 @@ export class AddVenueComponent implements OnInit {
 
 
   dismissModal() {
-    this.modalCtrl.dismiss();
-  };
+  //   this.modalCtrl.dismiss().then((modalData) => {
+  //     this.
+  //   });
+  // };
+}
 }
 

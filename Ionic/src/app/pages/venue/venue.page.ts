@@ -9,7 +9,15 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   styleUrls: ['./venue.page.scss'],
 })
 export class VenuePage implements ViewWillEnter {
+  Filter: string;
+  venueList: any=[] = [];
+
   constructor(public venueService: VenueService) { }
-  ionViewWillEnter(): void {
+  ionViewWillEnter() {
+   this.venueList = this.venueService.getVenues();
+  }
+
+  onSearchChange($event){
+    
   }
 }
