@@ -1,0 +1,1352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HIITModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BOOKING">
+    <Key>
+      <PropertyRef Name="BOOKING_ID" />
+    </Key>
+    <Property Name="BOOKING_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BOOKING_DATE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CLIENT_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CLIENT" Relationship="Self.FK__BOOKING__CLIENT___75A278F5" FromRole="BOOKING" ToRole="CLIENT" />
+    <NavigationProperty Name="BOOKING_ATTENDANCE" Relationship="Self.FK__BOOKING_A__BOOKI__17036CC0" FromRole="BOOKING" ToRole="BOOKING_ATTENDANCE" />
+  </EntityType>
+  <EntityType Name="BOOKING_ATTENDANCE">
+    <Key>
+      <PropertyRef Name="BOOKING_ID" />
+      <PropertyRef Name="SCHEDULE_ID" />
+    </Key>
+    <Property Name="BOOKING_ID" Type="Int32" Nullable="false" />
+    <Property Name="SCHEDULE_ID" Type="Int32" Nullable="false" />
+    <Property Name="ATTENDED" Type="Boolean" Nullable="false" />
+    <Property Name="RECEIPT_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BOOKING" Relationship="Self.FK__BOOKING_A__BOOKI__17036CC0" FromRole="BOOKING_ATTENDANCE" ToRole="BOOKING" />
+    <NavigationProperty Name="RECEIPT" Relationship="Self.FK__BOOKING_A__RECEI__18EBB532" FromRole="BOOKING_ATTENDANCE" ToRole="RECEIPT" />
+    <NavigationProperty Name="SCHEDULE" Relationship="Self.FK__BOOKING_A__SCHED__17F790F9" FromRole="BOOKING_ATTENDANCE" ToRole="SCHEDULE" />
+  </EntityType>
+  <EntityType Name="BOOKING_PRICE_HISTORY">
+    <Key>
+      <PropertyRef Name="BOOKING_PRICE_HISTORY_ID" />
+      <PropertyRef Name="BOOKING_TYPE_ID" />
+    </Key>
+    <Property Name="BOOKING_PRICE_HISTORY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BOOKING_PRICE_HISTORY_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="BOOKING_PRICE_HISTORY_AMOUNT" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="BOOKING_TYPE_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BOOKING_TYPE" Relationship="Self.FK__BOOKING_P__BOOKI__0C85DE4D" FromRole="BOOKING_PRICE_HISTORY" ToRole="BOOKING_TYPE" />
+  </EntityType>
+  <EntityType Name="BOOKING_TYPE">
+    <Key>
+      <PropertyRef Name="BOOKING_TYPE_ID" />
+    </Key>
+    <Property Name="BOOKING_TYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BOOKING_TYPE_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BOOKING_TYPE_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="BOOKING_PRICE_HISTORY" Relationship="Self.FK__BOOKING_P__BOOKI__0C85DE4D" FromRole="BOOKING_TYPE" ToRole="BOOKING_PRICE_HISTORY" />
+    <NavigationProperty Name="SCHEDULEs" Relationship="Self.FK__SCHEDULE__BOOKIN__10566F31" FromRole="BOOKING_TYPE" ToRole="SCHEDULE" />
+  </EntityType>
+  <EntityType Name="CLIENT">
+    <Key>
+      <PropertyRef Name="CLIENT_ID" />
+    </Key>
+    <Property Name="USERS_ID" Type="Int32" Nullable="false" />
+    <Property Name="CLIENT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CLIENT_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CLIENT_SURNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CLIENT_PHOTO" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="CLIENT_INDEMNITY" Type="Boolean" Nullable="false" />
+    <Property Name="QR_Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="BOOKINGs" Relationship="Self.FK__BOOKING__CLIENT___75A278F5" FromRole="CLIENT" ToRole="BOOKING" />
+    <NavigationProperty Name="USER" Relationship="Self.FK__CLIENT__USERS_ID__31EC6D26" FromRole="CLIENT" ToRole="USERS" />
+    <NavigationProperty Name="MEMBERs" Relationship="Self.FK__MEMBER__CLIENT_I__36B12243" FromRole="CLIENT" ToRole="MEMBER" />
+    <NavigationProperty Name="SALEs" Relationship="Self.FK__SALE__CLIENT_ID__3D5E1FD2" FromRole="CLIENT" ToRole="SALE" />
+    <NavigationProperty Name="SALE_LINE" Relationship="Self.FK__SALE_LINE__CLIEN__49C3F6B7" FromRole="CLIENT" ToRole="SALE_LINE" />
+  </EntityType>
+  <EntityType Name="DATE_SESSION">
+    <Key>
+      <PropertyRef Name="DATE_SESSION_ID" />
+    </Key>
+    <Property Name="DATE_SESSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DATE_SESSION1" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SESSION_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SESSION" Relationship="Self.FK__DATE_SESS__SESSI__07C12930" FromRole="DATE_SESSION" ToRole="SESSION" />
+    <NavigationProperty Name="SCHEDULEs" Relationship="Self.FK__SCHEDULE__DATE_S__123EB7A3" FromRole="DATE_SESSION" ToRole="SCHEDULE" />
+  </EntityType>
+  <EntityType Name="EMPLOYEE">
+    <Key>
+      <PropertyRef Name="EMPLOYEE_ID" />
+    </Key>
+    <Property Name="USERS_ID" Type="Int32" Nullable="false" />
+    <Property Name="EMPLOYEE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMPLOYEE_NAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMPLOYEE_SURNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMPLOYEE_PHOTO" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="EMPLOYEE_SA_ID" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+    <Property Name="QUALIFICATION_ID" Type="Int32" Nullable="false" />
+    <Property Name="EMPLOYEE_CONTRACT_ID" Type="Int32" Nullable="false" />
+    <Property Name="EMPLOYEE_TYPE_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EMPLOYEE_CONTRACT" Relationship="Self.FK__EMPLOYEE__EMPLOY__2E1BDC42" FromRole="EMPLOYEE" ToRole="EMPLOYEE_CONTRACT" />
+    <NavigationProperty Name="EMPLOYEE_TYPE" Relationship="Self.FK__EMPLOYEE__EMPLOY__2F10007B" FromRole="EMPLOYEE" ToRole="EMPLOYEE_TYPE" />
+    <NavigationProperty Name="QUALIFICATION" Relationship="Self.FK__EMPLOYEE__QUALIF__2D27B809" FromRole="EMPLOYEE" ToRole="QUALIFICATION" />
+    <NavigationProperty Name="USER" Relationship="Self.FK__EMPLOYEE__USERS___2C3393D0" FromRole="EMPLOYEE" ToRole="USERS" />
+    <NavigationProperty Name="LESSONs" Relationship="Self.FK__LESSON__EMPLOYEE__7F2BE32F" FromRole="EMPLOYEE" ToRole="LESSON" />
+  </EntityType>
+  <EntityType Name="EMPLOYEE_CONTRACT">
+    <Key>
+      <PropertyRef Name="EMPLOYEE_CONTRACT_ID" />
+    </Key>
+    <Property Name="EMPLOYEE_CONTRACT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMPLOYEE_CONTRACT_FILE" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <NavigationProperty Name="EMPLOYEEs" Relationship="Self.FK__EMPLOYEE__EMPLOY__2E1BDC42" FromRole="EMPLOYEE_CONTRACT" ToRole="EMPLOYEE" />
+  </EntityType>
+  <EntityType Name="EMPLOYEE_TYPE">
+    <Key>
+      <PropertyRef Name="EMPLOYEE_TYPE_ID" />
+    </Key>
+    <Property Name="EMPLOYEE_TYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMPLOYEE_TYPE_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMPLOYEE_TYPE_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="EMPLOYEEs" Relationship="Self.FK__EMPLOYEE__EMPLOY__2F10007B" FromRole="EMPLOYEE_TYPE" ToRole="EMPLOYEE" />
+  </EntityType>
+  <EntityType Name="EXCERCISE_CATEGORY">
+    <Key>
+      <PropertyRef Name="EXCERCISE_CATEGORY_ID" />
+    </Key>
+    <Property Name="EXCERCISE_CATEGORY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EXCERCISE_CATEGORY_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EXCERCISE_CATEGORY_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EXERCISEs" Relationship="Self.FK__EXERCISE__EXCERC__7C4F7684" FromRole="EXCERCISE_CATEGORY" ToRole="EXERCISE" />
+  </EntityType>
+  <EntityType Name="EXERCISE">
+    <Key>
+      <PropertyRef Name="EXCERCISE_ID" />
+    </Key>
+    <Property Name="EXCERCISE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EXCERCISE_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EXCERCISE_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EXCERCISE_CATEGORY_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EXCERCISE_CATEGORY" Relationship="Self.FK__EXERCISE__EXCERC__7C4F7684" FromRole="EXERCISE" ToRole="EXCERCISE_CATEGORY" />
+    <NavigationProperty Name="LESSON_PLAN" Relationship="Self.FK__LESSON_PL__EXCER__02FC7413" FromRole="EXERCISE" ToRole="LESSON_PLAN" />
+  </EntityType>
+  <EntityType Name="INVENTORY_ITEM">
+    <Key>
+      <PropertyRef Name="INVENTORY_ITEM_ID" />
+    </Key>
+    <Property Name="INVENTORY_ITEM_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SALE_ITEM_ID" Type="Int32" Nullable="false" />
+    <Property Name="INVENTORY_ITEM_COST_PRICE" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="INVENTORY_ITEM_QUANTITY" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SALE_ITEM" Relationship="Self.FK__INVENTORY__SALE___52593CB8" FromRole="INVENTORY_ITEM" ToRole="SALE_ITEM" />
+    <NavigationProperty Name="STOCK_TAKE_LINE" Relationship="Self.FK__STOCK_TAK__INVEN__6C190EBB" FromRole="INVENTORY_ITEM" ToRole="STOCK_TAKE_LINE" />
+    <NavigationProperty Name="SUPPLIER_ORDER_LINE" Relationship="Self.FK__SUPPLIER___INVEN__656C112C" FromRole="INVENTORY_ITEM" ToRole="SUPPLIER_ORDER_LINE" />
+    <NavigationProperty Name="WRITE_OFF_LINE" Relationship="Self.FK__WRITE_OFF__INVEN__59FA5E80" FromRole="INVENTORY_ITEM" ToRole="WRITE_OFF_LINE" />
+  </EntityType>
+  <EntityType Name="LESSON">
+    <Key>
+      <PropertyRef Name="LESSON_ID" />
+    </Key>
+    <Property Name="LESSON_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LESSON_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMPLOYEE_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EMPLOYEE" Relationship="Self.FK__LESSON__EMPLOYEE__7F2BE32F" FromRole="LESSON" ToRole="EMPLOYEE" />
+    <NavigationProperty Name="LESSON_PLAN" Relationship="Self.FK__LESSON_PL__LESSO__02084FDA" FromRole="LESSON" ToRole="LESSON_PLAN" />
+  </EntityType>
+  <EntityType Name="LESSON_PLAN">
+    <Key>
+      <PropertyRef Name="LESSON_PLAN_ID" />
+    </Key>
+    <Property Name="LESSON_PLAN_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LESSON_ID" Type="Int32" Nullable="false" />
+    <Property Name="EXCERCISE_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EXERCISE" Relationship="Self.FK__LESSON_PL__EXCER__02FC7413" FromRole="LESSON_PLAN" ToRole="EXERCISE" />
+    <NavigationProperty Name="LESSON" Relationship="Self.FK__LESSON_PL__LESSO__02084FDA" FromRole="LESSON_PLAN" ToRole="LESSON" />
+    <NavigationProperty Name="SCHEDULEs" Relationship="Self.FK__SCHEDULE__LESSON__114A936A" FromRole="LESSON_PLAN" ToRole="SCHEDULE" />
+  </EntityType>
+  <EntityType Name="MEASUREMENT">
+    <Key>
+      <PropertyRef Name="MEMBER_ID" />
+      <PropertyRef Name="MEASUREMENT_ID" />
+    </Key>
+    <Property Name="MEMBER_ID" Type="Int32" Nullable="false" />
+    <Property Name="MEASUREMENT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MUSCLE_MASS_PERCENTAGE" Type="Double" />
+    <Property Name="BODY_FAT_PERCENTAGE" Type="Double" />
+    <Property Name="WAIST_CIRCUMFERENCE" Type="Double" />
+    <Property Name="HEIGHT" Type="Double" />
+    <Property Name="WEIGHT" Type="Double" />
+    <Property Name="MEASUREMENT_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="MEMBER" Relationship="Self.FK__MEASUREME__MEMBE__3A81B327" FromRole="MEASUREMENT" ToRole="MEMBER" />
+  </EntityType>
+  <EntityType Name="MEMBER">
+    <Key>
+      <PropertyRef Name="MEMBER_ID" />
+    </Key>
+    <Property Name="CLIENT_ID" Type="Int32" Nullable="false" />
+    <Property Name="MEMBER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MEMBER_STATUS_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CLIENT" Relationship="Self.FK__MEMBER__CLIENT_I__36B12243" FromRole="MEMBER" ToRole="CLIENT" />
+    <NavigationProperty Name="MEASUREMENTs" Relationship="Self.FK__MEASUREME__MEMBE__3A81B327" FromRole="MEMBER" ToRole="MEASUREMENT" />
+    <NavigationProperty Name="MEMBER_STATUS" Relationship="Self.FK__MEMBER__MEMBER_S__37A5467C" FromRole="MEMBER" ToRole="MEMBER_STATUS" />
+  </EntityType>
+  <EntityType Name="MEMBER_STATUS">
+    <Key>
+      <PropertyRef Name="MEMBER_STATUS_ID" />
+    </Key>
+    <Property Name="MEMBER_STATUS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MEMBER_STATUS_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="MEMBERs" Relationship="Self.FK__MEMBER__MEMBER_S__37A5467C" FromRole="MEMBER_STATUS" ToRole="MEMBER" />
+  </EntityType>
+  <EntityType Name="NOTIFICATION_TYPE">
+    <Key>
+      <PropertyRef Name="NOTIFICATION_TYPE_ID" />
+    </Key>
+    <Property Name="NOTIFICATION_TYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOTIFICATION_TYPE_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK__USERS__NOTIFICAT__1DE57479" FromRole="NOTIFICATION_TYPE" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="ORDER_STATUS">
+    <Key>
+      <PropertyRef Name="ORDER_STATUS_ID" />
+    </Key>
+    <Property Name="ORDER_STATUS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ORDER_STATUS_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="SUPPLIER_ORDER" Relationship="Self.FK__SUPPLIER___ORDER__619B8048" FromRole="ORDER_STATUS" ToRole="SUPPLIER_ORDER" />
+  </EntityType>
+  <EntityType Name="PASSWORD_HISTORY">
+    <Key>
+      <PropertyRef Name="PASSWORD_ID" />
+    </Key>
+    <Property Name="PASSWORD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PASSWORD_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="HASHED_PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="USERS_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="USER" Relationship="Self.FK__PASSWORD___USERS__20C1E124" FromRole="PASSWORD_HISTORY" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="PAYMENT_TYPE">
+    <Key>
+      <PropertyRef Name="PAYMENT_TYPE_ID" />
+    </Key>
+    <Property Name="PAYMENT_TYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PAYMENT_TYPE_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="RECEIPTs" Relationship="Self.FK__RECEIPT__PAYMENT__46E78A0C" FromRole="PAYMENT_TYPE" ToRole="RECEIPT" />
+  </EntityType>
+  <EntityType Name="PERMISSION">
+    <Key>
+      <PropertyRef Name="PERMISSION_ID" />
+    </Key>
+    <Property Name="PERMISSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PERMISSION_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="USER_ROLE" Relationship="Self.USER_ROLE_PERMISSION" FromRole="PERMISSION" ToRole="USER_ROLE" />
+  </EntityType>
+  <EntityType Name="PRICE_HISTORY">
+    <Key>
+      <PropertyRef Name="PRICE_HISTORY_ID" />
+    </Key>
+    <Property Name="PRICE_HISTORY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SALE_ITEM_ID" Type="Int32" Nullable="false" />
+    <Property Name="PRICE_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PRICE_AMOUNT" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+    <NavigationProperty Name="SALE_ITEM" Relationship="Self.FK__PRICE_HIS__SALE___4F7CD00D" FromRole="PRICE_HISTORY" ToRole="SALE_ITEM" />
+  </EntityType>
+  <EntityType Name="QUALIFICATION">
+    <Key>
+      <PropertyRef Name="QUALIFICATION_ID" />
+    </Key>
+    <Property Name="QUALIFICATION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QUALIFICATION_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="QUALIFICATION_TYPE_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EMPLOYEEs" Relationship="Self.FK__EMPLOYEE__QUALIF__2D27B809" FromRole="QUALIFICATION" ToRole="EMPLOYEE" />
+    <NavigationProperty Name="QUALIFICATION_TYPE" Relationship="Self.FK__QUALIFICA__QUALI__25869641" FromRole="QUALIFICATION" ToRole="QUALIFICATION_TYPE" />
+  </EntityType>
+  <EntityType Name="QUALIFICATION_TYPE">
+    <Key>
+      <PropertyRef Name="QUALIFICATION_TYPE_ID" />
+    </Key>
+    <Property Name="QUALIFICATION_TYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QUALIFICATION_TYPE_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="QUALIFICATIONs" Relationship="Self.FK__QUALIFICA__QUALI__25869641" FromRole="QUALIFICATION_TYPE" ToRole="QUALIFICATION" />
+  </EntityType>
+  <EntityType Name="RECEIPT">
+    <Key>
+      <PropertyRef Name="RECEIPT_ID" />
+    </Key>
+    <Property Name="RECEIPT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RECEIPT_DATE_TIME" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="RECEIPT_TOTAL_VAT" Type="Double" Nullable="false" />
+    <Property Name="RECEIPT_TOTAL_AMOUNT" Type="Double" Nullable="false" />
+    <Property Name="PAYMENT_TYPE_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BOOKING_ATTENDANCE" Relationship="Self.FK__BOOKING_A__RECEI__18EBB532" FromRole="RECEIPT" ToRole="BOOKING_ATTENDANCE" />
+    <NavigationProperty Name="PAYMENT_TYPE" Relationship="Self.FK__RECEIPT__PAYMENT__46E78A0C" FromRole="RECEIPT" ToRole="PAYMENT_TYPE" />
+    <NavigationProperty Name="REFUNDs" Relationship="Self.FK__REFUND__RECEIPT___71D1E811" FromRole="RECEIPT" ToRole="REFUND" />
+    <NavigationProperty Name="SALE_LINE" Relationship="Self.FK__SALE_LINE__RECEI__4CA06362" FromRole="RECEIPT" ToRole="SALE_LINE" />
+  </EntityType>
+  <EntityType Name="REFUND">
+    <Key>
+      <PropertyRef Name="REFUND_ID" />
+    </Key>
+    <Property Name="REFUND_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="REFUND_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="REFUND_NOTES" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="REFUND_TOTAL_AMOUNT" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="RECEIPT_ID" Type="Int32" Nullable="false" />
+    <Property Name="REFUND_REASON_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="RECEIPT" Relationship="Self.FK__REFUND__RECEIPT___71D1E811" FromRole="REFUND" ToRole="RECEIPT" />
+    <NavigationProperty Name="REFUND_REASON" Relationship="Self.FK__REFUND__REFUND_R__72C60C4A" FromRole="REFUND" ToRole="REFUND_REASON" />
+  </EntityType>
+  <EntityType Name="REFUND_REASON">
+    <Key>
+      <PropertyRef Name="REFUND_REASON_ID" />
+    </Key>
+    <Property Name="REFUND_REASON_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="REFUND_REASON_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="REFUNDs" Relationship="Self.FK__REFUND__REFUND_R__72C60C4A" FromRole="REFUND_REASON" ToRole="REFUND" />
+  </EntityType>
+  <EntityType Name="SALE">
+    <Key>
+      <PropertyRef Name="SALE_ID" />
+    </Key>
+    <Property Name="SALE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SALE_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CLIENT_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CLIENT" Relationship="Self.FK__SALE__CLIENT_ID__3D5E1FD2" FromRole="SALE" ToRole="CLIENT" />
+    <NavigationProperty Name="SALE_LINE" Relationship="Self.FK__SALE_LINE__SALE___4AB81AF0" FromRole="SALE" ToRole="SALE_LINE" />
+  </EntityType>
+  <EntityType Name="SALE_CATEGORY">
+    <Key>
+      <PropertyRef Name="SALE_CATEGORY_ID" />
+    </Key>
+    <Property Name="SALE_CATEGORY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SALE_CATEGORY_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SALE_CATEGORY_DESC" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="SALE_ITEM" Relationship="Self.FK__SALE_ITEM__SALE___4222D4EF" FromRole="SALE_CATEGORY" ToRole="SALE_ITEM" />
+  </EntityType>
+  <EntityType Name="SALE_ITEM">
+    <Key>
+      <PropertyRef Name="SALE_ITEM_ID" />
+    </Key>
+    <Property Name="SALE_ITEM_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SALE_ITEM_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SALE_ITEM_PHOTO" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="SALE_ITEM_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SALE_ITEM_PRICE" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="SALE_ITEM_QUOTABLE" Type="Boolean" Nullable="false" />
+    <Property Name="SALE_ITEM_QUANTITY" Type="Int32" Nullable="false" />
+    <Property Name="SALE_CATEGORY_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="INVENTORY_ITEM" Relationship="Self.FK__INVENTORY__SALE___52593CB8" FromRole="SALE_ITEM" ToRole="INVENTORY_ITEM" />
+    <NavigationProperty Name="PRICE_HISTORY" Relationship="Self.FK__PRICE_HIS__SALE___4F7CD00D" FromRole="SALE_ITEM" ToRole="PRICE_HISTORY" />
+    <NavigationProperty Name="SALE_CATEGORY" Relationship="Self.FK__SALE_ITEM__SALE___4222D4EF" FromRole="SALE_ITEM" ToRole="SALE_CATEGORY" />
+    <NavigationProperty Name="SALE_LINE" Relationship="Self.FK__SALE_LINE__SALE___4BAC3F29" FromRole="SALE_ITEM" ToRole="SALE_LINE" />
+    <NavigationProperty Name="STOCK_TAKE_LINE" Relationship="Self.FK__STOCK_TAK__SALE___6D0D32F4" FromRole="SALE_ITEM" ToRole="STOCK_TAKE_LINE" />
+  </EntityType>
+  <EntityType Name="SALE_LINE">
+    <Key>
+      <PropertyRef Name="SALE_LINE_ID" />
+    </Key>
+    <Property Name="SALE_LINE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SALE_LINE_QUANTITY" Type="Int32" Nullable="false" />
+    <Property Name="CLIENT_ID" Type="Int32" Nullable="false" />
+    <Property Name="SALE_ID" Type="Int32" Nullable="false" />
+    <Property Name="SALE_ITEM_ID" Type="Int32" Nullable="false" />
+    <Property Name="RECEIPT_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CLIENT" Relationship="Self.FK__SALE_LINE__CLIEN__49C3F6B7" FromRole="SALE_LINE" ToRole="CLIENT" />
+    <NavigationProperty Name="RECEIPT" Relationship="Self.FK__SALE_LINE__RECEI__4CA06362" FromRole="SALE_LINE" ToRole="RECEIPT" />
+    <NavigationProperty Name="SALE" Relationship="Self.FK__SALE_LINE__SALE___4AB81AF0" FromRole="SALE_LINE" ToRole="SALE" />
+    <NavigationProperty Name="SALE_ITEM" Relationship="Self.FK__SALE_LINE__SALE___4BAC3F29" FromRole="SALE_LINE" ToRole="SALE_ITEM" />
+  </EntityType>
+  <EntityType Name="SCHEDULE">
+    <Key>
+      <PropertyRef Name="SCHEDULE_ID" />
+    </Key>
+    <Property Name="SCHEDULE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SCHEDULE_CAPACITY_BOOKED" Type="Int32" Nullable="false" />
+    <Property Name="VENUE_ID" Type="Int32" Nullable="false" />
+    <Property Name="BOOKING_TYPE_ID" Type="Int32" Nullable="false" />
+    <Property Name="LESSON_PLAN_ID" Type="Int32" Nullable="false" />
+    <Property Name="DATE_SESSION_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BOOKING_ATTENDANCE" Relationship="Self.FK__BOOKING_A__SCHED__17F790F9" FromRole="SCHEDULE" ToRole="BOOKING_ATTENDANCE" />
+    <NavigationProperty Name="BOOKING_TYPE" Relationship="Self.FK__SCHEDULE__BOOKIN__10566F31" FromRole="SCHEDULE" ToRole="BOOKING_TYPE" />
+    <NavigationProperty Name="DATE_SESSION" Relationship="Self.FK__SCHEDULE__DATE_S__123EB7A3" FromRole="SCHEDULE" ToRole="DATE_SESSION" />
+    <NavigationProperty Name="LESSON_PLAN" Relationship="Self.FK__SCHEDULE__LESSON__114A936A" FromRole="SCHEDULE" ToRole="LESSON_PLAN" />
+    <NavigationProperty Name="VENUE" Relationship="Self.FK__SCHEDULE__VENUE___0F624AF8" FromRole="SCHEDULE" ToRole="VENUE" />
+  </EntityType>
+  <EntityType Name="SESSION">
+    <Key>
+      <PropertyRef Name="SESSION_ID" />
+    </Key>
+    <Property Name="SESSION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SESSION_START" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SESSION_END" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="DATE_SESSION" Relationship="Self.FK__DATE_SESS__SESSI__07C12930" FromRole="SESSION" ToRole="DATE_SESSION" />
+  </EntityType>
+  <EntityType Name="STOCK_TAKE">
+    <Key>
+      <PropertyRef Name="STOCK_TAKE_ID" />
+    </Key>
+    <Property Name="STOCK_TAKE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="STOCK_TAKE_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="STOCK_TAKE_NOTES" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="STOCK_TAKE_LINE" Relationship="Self.FK__STOCK_TAK__STOCK__6B24EA82" FromRole="STOCK_TAKE" ToRole="STOCK_TAKE_LINE" />
+  </EntityType>
+  <EntityType Name="STOCK_TAKE_LINE">
+    <Key>
+      <PropertyRef Name="STOCK_TAKE_ID" />
+      <PropertyRef Name="INVENTORY_ITEM_ID" />
+      <PropertyRef Name="SALE_ITEM_ID" />
+    </Key>
+    <Property Name="STOCK_TAKE_ID" Type="Int32" Nullable="false" />
+    <Property Name="INVENTORY_ITEM_ID" Type="Int32" Nullable="false" />
+    <Property Name="SALE_ITEM_ID" Type="Int32" Nullable="false" />
+    <Property Name="STOCK_TAKE_LINE_DIFFERENCE" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="INVENTORY_ITEM" Relationship="Self.FK__STOCK_TAK__INVEN__6C190EBB" FromRole="STOCK_TAKE_LINE" ToRole="INVENTORY_ITEM" />
+    <NavigationProperty Name="SALE_ITEM" Relationship="Self.FK__STOCK_TAK__SALE___6D0D32F4" FromRole="STOCK_TAKE_LINE" ToRole="SALE_ITEM" />
+    <NavigationProperty Name="STOCK_TAKE" Relationship="Self.FK__STOCK_TAK__STOCK__6B24EA82" FromRole="STOCK_TAKE_LINE" ToRole="STOCK_TAKE" />
+  </EntityType>
+  <EntityType Name="SUPPLIER">
+    <Key>
+      <PropertyRef Name="SUPPLIER_ID" />
+    </Key>
+    <Property Name="SUPPLIER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SUPPLIER_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SUPPLIER_SURNAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SUPPLIER_EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SUPPLIER_CELL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SUPPLIER_ADDRESS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="SUPPLIER_ORDER" Relationship="Self.FK__SUPPLIER___SUPPL__628FA481" FromRole="SUPPLIER" ToRole="SUPPLIER_ORDER" />
+  </EntityType>
+  <EntityType Name="SUPPLIER_ORDER">
+    <Key>
+      <PropertyRef Name="SUPPLIER_ORDER_ID" />
+    </Key>
+    <Property Name="SUPPLIER_ORDER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SUPPLIER_ORDER_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ORDER_STATUS_ID" Type="Int32" Nullable="false" />
+    <Property Name="SUPPLIER_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ORDER_STATUS" Relationship="Self.FK__SUPPLIER___ORDER__619B8048" FromRole="SUPPLIER_ORDER" ToRole="ORDER_STATUS" />
+    <NavigationProperty Name="SUPPLIER" Relationship="Self.FK__SUPPLIER___SUPPL__628FA481" FromRole="SUPPLIER_ORDER" ToRole="SUPPLIER" />
+    <NavigationProperty Name="SUPPLIER_ORDER_LINE" Relationship="Self.FK__SUPPLIER___SUPPL__66603565" FromRole="SUPPLIER_ORDER" ToRole="SUPPLIER_ORDER_LINE" />
+  </EntityType>
+  <EntityType Name="SUPPLIER_ORDER_LINE">
+    <Key>
+      <PropertyRef Name="SUPPLIER_ORDER_LINE_ID" />
+    </Key>
+    <Property Name="SUPPLIER_ORDER_ID" Type="Int32" Nullable="false" />
+    <Property Name="SUPPLIER_ORDER_LINE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SUPPLIER_ORDER_LINE_QUANTITY" Type="Int32" Nullable="false" />
+    <Property Name="INVENTORY_ITEM_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="INVENTORY_ITEM" Relationship="Self.FK__SUPPLIER___INVEN__656C112C" FromRole="SUPPLIER_ORDER_LINE" ToRole="INVENTORY_ITEM" />
+    <NavigationProperty Name="SUPPLIER_ORDER" Relationship="Self.FK__SUPPLIER___SUPPL__66603565" FromRole="SUPPLIER_ORDER_LINE" ToRole="SUPPLIER_ORDER" />
+  </EntityType>
+  <EntityType Name="TITLE">
+    <Key>
+      <PropertyRef Name="TITLE_ID" />
+    </Key>
+    <Property Name="TITLE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TITLE_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK__USERS__TITLE_ID__1CF15040" FromRole="TITLE" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="USER_ROLE">
+    <Key>
+      <PropertyRef Name="USER_ROLE_ID" />
+    </Key>
+    <Property Name="USER_ROLE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="USER_ROLE_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USER_ROLE_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK__USERS__USER_ROLE__1BFD2C07" FromRole="USER_ROLE" ToRole="USERS" />
+    <NavigationProperty Name="PERMISSIONs" Relationship="Self.USER_ROLE_PERMISSION" FromRole="USER_ROLE" ToRole="PERMISSION" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="USERS_ID" />
+    </Key>
+    <Property Name="USERS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="USER_EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USER_CELL" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="USER_ROLE_ID" Type="Int32" Nullable="false" />
+    <Property Name="TITLE_ID" Type="Int32" Nullable="false" />
+    <Property Name="NOTIFICATION_TYPE_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CLIENTs" Relationship="Self.FK__CLIENT__USERS_ID__31EC6D26" FromRole="USERS" ToRole="CLIENT" />
+    <NavigationProperty Name="EMPLOYEEs" Relationship="Self.FK__EMPLOYEE__USERS___2C3393D0" FromRole="USERS" ToRole="EMPLOYEE" />
+    <NavigationProperty Name="NOTIFICATION_TYPE" Relationship="Self.FK__USERS__NOTIFICAT__1DE57479" FromRole="USERS" ToRole="NOTIFICATION_TYPE" />
+    <NavigationProperty Name="PASSWORD_HISTORY" Relationship="Self.FK__PASSWORD___USERS__20C1E124" FromRole="USERS" ToRole="PASSWORD_HISTORY" />
+    <NavigationProperty Name="TITLE" Relationship="Self.FK__USERS__TITLE_ID__1CF15040" FromRole="USERS" ToRole="TITLE" />
+    <NavigationProperty Name="USER_ROLE" Relationship="Self.FK__USERS__USER_ROLE__1BFD2C07" FromRole="USERS" ToRole="USER_ROLE" />
+  </EntityType>
+  <EntityType Name="VAT">
+    <Key>
+      <PropertyRef Name="VAT_ID" />
+    </Key>
+    <Property Name="VAT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VAT_PRICE" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="VAT_DATE" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <EntityType Name="VENUE">
+    <Key>
+      <PropertyRef Name="VENUE_ID" />
+    </Key>
+    <Property Name="VENUE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VENUE_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VENUE_ADDRESS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VENUE_POSTAL_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VENUE_CAPACITY" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SCHEDULEs" Relationship="Self.FK__SCHEDULE__VENUE___0F624AF8" FromRole="VENUE" ToRole="SCHEDULE" />
+  </EntityType>
+  <EntityType Name="WRITE_OFF">
+    <Key>
+      <PropertyRef Name="WRITE_OFF_ID" />
+    </Key>
+    <Property Name="WRITE_OFF_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WRITE_OFF_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="WRITE_OFF_LINE" Relationship="Self.FK__WRITE_OFF__WRITE__5AEE82B9" FromRole="WRITE_OFF" ToRole="WRITE_OFF_LINE" />
+  </EntityType>
+  <EntityType Name="WRITE_OFF_LINE">
+    <Key>
+      <PropertyRef Name="INVENTORY_ITEM_ID" />
+      <PropertyRef Name="WRITE_OFF_ID" />
+    </Key>
+    <Property Name="INVENTORY_ITEM_ID" Type="Int32" Nullable="false" />
+    <Property Name="WRITE_OFF_ID" Type="Int32" Nullable="false" />
+    <Property Name="WRITE_OFF_LINE_QUANTITY" Type="Int32" Nullable="false" />
+    <Property Name="WRITE_OFF_REASON_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="INVENTORY_ITEM" Relationship="Self.FK__WRITE_OFF__INVEN__59FA5E80" FromRole="WRITE_OFF_LINE" ToRole="INVENTORY_ITEM" />
+    <NavigationProperty Name="WRITE_OFF" Relationship="Self.FK__WRITE_OFF__WRITE__5AEE82B9" FromRole="WRITE_OFF_LINE" ToRole="WRITE_OFF" />
+    <NavigationProperty Name="WRITE_OFF_REASON" Relationship="Self.FK__WRITE_OFF__WRITE__59063A47" FromRole="WRITE_OFF_LINE" ToRole="WRITE_OFF_REASON" />
+  </EntityType>
+  <EntityType Name="WRITE_OFF_REASON">
+    <Key>
+      <PropertyRef Name="WRITE_OFF_REASON_ID" />
+    </Key>
+    <Property Name="WRITE_OFF_REASON_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WRITE_OFF_REASON_DESCRIPTION" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="WRITE_OFF_LINE" Relationship="Self.FK__WRITE_OFF__WRITE__59063A47" FromRole="WRITE_OFF_REASON" ToRole="WRITE_OFF_LINE" />
+  </EntityType>
+  <Association Name="FK__BOOKING__CLIENT___75A278F5">
+    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1" />
+    <End Role="BOOKING" Type="Self.BOOKING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENT">
+        <PropertyRef Name="CLIENT_ID" />
+      </Principal>
+      <Dependent Role="BOOKING">
+        <PropertyRef Name="CLIENT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BOOKING_A__BOOKI__17036CC0">
+    <End Role="BOOKING" Type="Self.BOOKING" Multiplicity="1" />
+    <End Role="BOOKING_ATTENDANCE" Type="Self.BOOKING_ATTENDANCE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOOKING">
+        <PropertyRef Name="BOOKING_ID" />
+      </Principal>
+      <Dependent Role="BOOKING_ATTENDANCE">
+        <PropertyRef Name="BOOKING_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BOOKING_A__RECEI__18EBB532">
+    <End Role="RECEIPT" Type="Self.RECEIPT" Multiplicity="1" />
+    <End Role="BOOKING_ATTENDANCE" Type="Self.BOOKING_ATTENDANCE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RECEIPT">
+        <PropertyRef Name="RECEIPT_ID" />
+      </Principal>
+      <Dependent Role="BOOKING_ATTENDANCE">
+        <PropertyRef Name="RECEIPT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BOOKING_A__SCHED__17F790F9">
+    <End Role="SCHEDULE" Type="Self.SCHEDULE" Multiplicity="1" />
+    <End Role="BOOKING_ATTENDANCE" Type="Self.BOOKING_ATTENDANCE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SCHEDULE">
+        <PropertyRef Name="SCHEDULE_ID" />
+      </Principal>
+      <Dependent Role="BOOKING_ATTENDANCE">
+        <PropertyRef Name="SCHEDULE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BOOKING_P__BOOKI__0C85DE4D">
+    <End Role="BOOKING_TYPE" Type="Self.BOOKING_TYPE" Multiplicity="1" />
+    <End Role="BOOKING_PRICE_HISTORY" Type="Self.BOOKING_PRICE_HISTORY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOOKING_TYPE">
+        <PropertyRef Name="BOOKING_TYPE_ID" />
+      </Principal>
+      <Dependent Role="BOOKING_PRICE_HISTORY">
+        <PropertyRef Name="BOOKING_TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SCHEDULE__BOOKIN__10566F31">
+    <End Role="BOOKING_TYPE" Type="Self.BOOKING_TYPE" Multiplicity="1" />
+    <End Role="SCHEDULE" Type="Self.SCHEDULE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BOOKING_TYPE">
+        <PropertyRef Name="BOOKING_TYPE_ID" />
+      </Principal>
+      <Dependent Role="SCHEDULE">
+        <PropertyRef Name="BOOKING_TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CLIENT__USERS_ID__31EC6D26">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USERS_ID" />
+      </Principal>
+      <Dependent Role="CLIENT">
+        <PropertyRef Name="USERS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MEMBER__CLIENT_I__36B12243">
+    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MEMBER" Type="Self.MEMBER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENT">
+        <PropertyRef Name="CLIENT_ID" />
+      </Principal>
+      <Dependent Role="MEMBER">
+        <PropertyRef Name="CLIENT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SALE__CLIENT_ID__3D5E1FD2">
+    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1" />
+    <End Role="SALE" Type="Self.SALE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENT">
+        <PropertyRef Name="CLIENT_ID" />
+      </Principal>
+      <Dependent Role="SALE">
+        <PropertyRef Name="CLIENT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SALE_LINE__CLIEN__49C3F6B7">
+    <End Role="CLIENT" Type="Self.CLIENT" Multiplicity="1" />
+    <End Role="SALE_LINE" Type="Self.SALE_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CLIENT">
+        <PropertyRef Name="CLIENT_ID" />
+      </Principal>
+      <Dependent Role="SALE_LINE">
+        <PropertyRef Name="CLIENT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DATE_SESS__SESSI__07C12930">
+    <End Role="SESSION" Type="Self.SESSION" Multiplicity="1" />
+    <End Role="DATE_SESSION" Type="Self.DATE_SESSION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SESSION">
+        <PropertyRef Name="SESSION_ID" />
+      </Principal>
+      <Dependent Role="DATE_SESSION">
+        <PropertyRef Name="SESSION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SCHEDULE__DATE_S__123EB7A3">
+    <End Role="DATE_SESSION" Type="Self.DATE_SESSION" Multiplicity="1" />
+    <End Role="SCHEDULE" Type="Self.SCHEDULE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DATE_SESSION">
+        <PropertyRef Name="DATE_SESSION_ID" />
+      </Principal>
+      <Dependent Role="SCHEDULE">
+        <PropertyRef Name="DATE_SESSION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EMPLOYEE__EMPLOY__2E1BDC42">
+    <End Role="EMPLOYEE_CONTRACT" Type="Self.EMPLOYEE_CONTRACT" Multiplicity="1" />
+    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_CONTRACT">
+        <PropertyRef Name="EMPLOYEE_CONTRACT_ID" />
+      </Principal>
+      <Dependent Role="EMPLOYEE">
+        <PropertyRef Name="EMPLOYEE_CONTRACT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EMPLOYEE__EMPLOY__2F10007B">
+    <End Role="EMPLOYEE_TYPE" Type="Self.EMPLOYEE_TYPE" Multiplicity="1" />
+    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE_TYPE">
+        <PropertyRef Name="EMPLOYEE_TYPE_ID" />
+      </Principal>
+      <Dependent Role="EMPLOYEE">
+        <PropertyRef Name="EMPLOYEE_TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EMPLOYEE__QUALIF__2D27B809">
+    <End Role="QUALIFICATION" Type="Self.QUALIFICATION" Multiplicity="1" />
+    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUALIFICATION">
+        <PropertyRef Name="QUALIFICATION_ID" />
+      </Principal>
+      <Dependent Role="EMPLOYEE">
+        <PropertyRef Name="QUALIFICATION_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EMPLOYEE__USERS___2C3393D0">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USERS_ID" />
+      </Principal>
+      <Dependent Role="EMPLOYEE">
+        <PropertyRef Name="USERS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LESSON__EMPLOYEE__7F2BE32F">
+    <End Role="EMPLOYEE" Type="Self.EMPLOYEE" Multiplicity="1" />
+    <End Role="LESSON" Type="Self.LESSON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE">
+        <PropertyRef Name="EMPLOYEE_ID" />
+      </Principal>
+      <Dependent Role="LESSON">
+        <PropertyRef Name="EMPLOYEE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EXERCISE__EXCERC__7C4F7684">
+    <End Role="EXCERCISE_CATEGORY" Type="Self.EXCERCISE_CATEGORY" Multiplicity="1" />
+    <End Role="EXERCISE" Type="Self.EXERCISE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EXCERCISE_CATEGORY">
+        <PropertyRef Name="EXCERCISE_CATEGORY_ID" />
+      </Principal>
+      <Dependent Role="EXERCISE">
+        <PropertyRef Name="EXCERCISE_CATEGORY_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LESSON_PL__EXCER__02FC7413">
+    <End Role="EXERCISE" Type="Self.EXERCISE" Multiplicity="1" />
+    <End Role="LESSON_PLAN" Type="Self.LESSON_PLAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EXERCISE">
+        <PropertyRef Name="EXCERCISE_ID" />
+      </Principal>
+      <Dependent Role="LESSON_PLAN">
+        <PropertyRef Name="EXCERCISE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__INVENTORY__SALE___52593CB8">
+    <End Role="SALE_ITEM" Type="Self.SALE_ITEM" Multiplicity="1" />
+    <End Role="INVENTORY_ITEM" Type="Self.INVENTORY_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SALE_ITEM">
+        <PropertyRef Name="SALE_ITEM_ID" />
+      </Principal>
+      <Dependent Role="INVENTORY_ITEM">
+        <PropertyRef Name="SALE_ITEM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__STOCK_TAK__INVEN__6C190EBB">
+    <End Role="INVENTORY_ITEM" Type="Self.INVENTORY_ITEM" Multiplicity="1" />
+    <End Role="STOCK_TAKE_LINE" Type="Self.STOCK_TAKE_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INVENTORY_ITEM">
+        <PropertyRef Name="INVENTORY_ITEM_ID" />
+      </Principal>
+      <Dependent Role="STOCK_TAKE_LINE">
+        <PropertyRef Name="INVENTORY_ITEM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SUPPLIER___INVEN__656C112C">
+    <End Role="INVENTORY_ITEM" Type="Self.INVENTORY_ITEM" Multiplicity="1" />
+    <End Role="SUPPLIER_ORDER_LINE" Type="Self.SUPPLIER_ORDER_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INVENTORY_ITEM">
+        <PropertyRef Name="INVENTORY_ITEM_ID" />
+      </Principal>
+      <Dependent Role="SUPPLIER_ORDER_LINE">
+        <PropertyRef Name="INVENTORY_ITEM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WRITE_OFF__INVEN__59FA5E80">
+    <End Role="INVENTORY_ITEM" Type="Self.INVENTORY_ITEM" Multiplicity="1" />
+    <End Role="WRITE_OFF_LINE" Type="Self.WRITE_OFF_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INVENTORY_ITEM">
+        <PropertyRef Name="INVENTORY_ITEM_ID" />
+      </Principal>
+      <Dependent Role="WRITE_OFF_LINE">
+        <PropertyRef Name="INVENTORY_ITEM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LESSON_PL__LESSO__02084FDA">
+    <End Role="LESSON" Type="Self.LESSON" Multiplicity="1" />
+    <End Role="LESSON_PLAN" Type="Self.LESSON_PLAN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LESSON">
+        <PropertyRef Name="LESSON_ID" />
+      </Principal>
+      <Dependent Role="LESSON_PLAN">
+        <PropertyRef Name="LESSON_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SCHEDULE__LESSON__114A936A">
+    <End Role="LESSON_PLAN" Type="Self.LESSON_PLAN" Multiplicity="1" />
+    <End Role="SCHEDULE" Type="Self.SCHEDULE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LESSON_PLAN">
+        <PropertyRef Name="LESSON_PLAN_ID" />
+      </Principal>
+      <Dependent Role="SCHEDULE">
+        <PropertyRef Name="LESSON_PLAN_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MEASUREME__MEMBE__3A81B327">
+    <End Role="MEMBER" Type="Self.MEMBER" Multiplicity="1" />
+    <End Role="MEASUREMENT" Type="Self.MEASUREMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MEMBER">
+        <PropertyRef Name="MEMBER_ID" />
+      </Principal>
+      <Dependent Role="MEASUREMENT">
+        <PropertyRef Name="MEMBER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MEMBER__MEMBER_S__37A5467C">
+    <End Role="MEMBER_STATUS" Type="Self.MEMBER_STATUS" Multiplicity="1" />
+    <End Role="MEMBER" Type="Self.MEMBER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MEMBER_STATUS">
+        <PropertyRef Name="MEMBER_STATUS_ID" />
+      </Principal>
+      <Dependent Role="MEMBER">
+        <PropertyRef Name="MEMBER_STATUS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USERS__NOTIFICAT__1DE57479">
+    <End Role="NOTIFICATION_TYPE" Type="Self.NOTIFICATION_TYPE" Multiplicity="1" />
+    <End Role="USERS" Type="Self.USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NOTIFICATION_TYPE">
+        <PropertyRef Name="NOTIFICATION_TYPE_ID" />
+      </Principal>
+      <Dependent Role="USERS">
+        <PropertyRef Name="NOTIFICATION_TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SUPPLIER___ORDER__619B8048">
+    <End Role="ORDER_STATUS" Type="Self.ORDER_STATUS" Multiplicity="1" />
+    <End Role="SUPPLIER_ORDER" Type="Self.SUPPLIER_ORDER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ORDER_STATUS">
+        <PropertyRef Name="ORDER_STATUS_ID" />
+      </Principal>
+      <Dependent Role="SUPPLIER_ORDER">
+        <PropertyRef Name="ORDER_STATUS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PASSWORD___USERS__20C1E124">
+    <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+    <End Role="PASSWORD_HISTORY" Type="Self.PASSWORD_HISTORY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="USERS_ID" />
+      </Principal>
+      <Dependent Role="PASSWORD_HISTORY">
+        <PropertyRef Name="USERS_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RECEIPT__PAYMENT__46E78A0C">
+    <End Role="PAYMENT_TYPE" Type="Self.PAYMENT_TYPE" Multiplicity="1" />
+    <End Role="RECEIPT" Type="Self.RECEIPT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PAYMENT_TYPE">
+        <PropertyRef Name="PAYMENT_TYPE_ID" />
+      </Principal>
+      <Dependent Role="RECEIPT">
+        <PropertyRef Name="PAYMENT_TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PRICE_HIS__SALE___4F7CD00D">
+    <End Role="SALE_ITEM" Type="Self.SALE_ITEM" Multiplicity="1" />
+    <End Role="PRICE_HISTORY" Type="Self.PRICE_HISTORY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SALE_ITEM">
+        <PropertyRef Name="SALE_ITEM_ID" />
+      </Principal>
+      <Dependent Role="PRICE_HISTORY">
+        <PropertyRef Name="SALE_ITEM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__QUALIFICA__QUALI__25869641">
+    <End Role="QUALIFICATION_TYPE" Type="Self.QUALIFICATION_TYPE" Multiplicity="1" />
+    <End Role="QUALIFICATION" Type="Self.QUALIFICATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUALIFICATION_TYPE">
+        <PropertyRef Name="QUALIFICATION_TYPE_ID" />
+      </Principal>
+      <Dependent Role="QUALIFICATION">
+        <PropertyRef Name="QUALIFICATION_TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__REFUND__RECEIPT___71D1E811">
+    <End Role="RECEIPT" Type="Self.RECEIPT" Multiplicity="1" />
+    <End Role="REFUND" Type="Self.REFUND" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RECEIPT">
+        <PropertyRef Name="RECEIPT_ID" />
+      </Principal>
+      <Dependent Role="REFUND">
+        <PropertyRef Name="RECEIPT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SALE_LINE__RECEI__4CA06362">
+    <End Role="RECEIPT" Type="Self.RECEIPT" Multiplicity="1" />
+    <End Role="SALE_LINE" Type="Self.SALE_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RECEIPT">
+        <PropertyRef Name="RECEIPT_ID" />
+      </Principal>
+      <Dependent Role="SALE_LINE">
+        <PropertyRef Name="RECEIPT_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__REFUND__REFUND_R__72C60C4A">
+    <End Role="REFUND_REASON" Type="Self.REFUND_REASON" Multiplicity="1" />
+    <End Role="REFUND" Type="Self.REFUND" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REFUND_REASON">
+        <PropertyRef Name="REFUND_REASON_ID" />
+      </Principal>
+      <Dependent Role="REFUND">
+        <PropertyRef Name="REFUND_REASON_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SALE_LINE__SALE___4AB81AF0">
+    <End Role="SALE" Type="Self.SALE" Multiplicity="1" />
+    <End Role="SALE_LINE" Type="Self.SALE_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SALE">
+        <PropertyRef Name="SALE_ID" />
+      </Principal>
+      <Dependent Role="SALE_LINE">
+        <PropertyRef Name="SALE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SALE_ITEM__SALE___4222D4EF">
+    <End Role="SALE_CATEGORY" Type="Self.SALE_CATEGORY" Multiplicity="1" />
+    <End Role="SALE_ITEM" Type="Self.SALE_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SALE_CATEGORY">
+        <PropertyRef Name="SALE_CATEGORY_ID" />
+      </Principal>
+      <Dependent Role="SALE_ITEM">
+        <PropertyRef Name="SALE_CATEGORY_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SALE_LINE__SALE___4BAC3F29">
+    <End Role="SALE_ITEM" Type="Self.SALE_ITEM" Multiplicity="1" />
+    <End Role="SALE_LINE" Type="Self.SALE_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SALE_ITEM">
+        <PropertyRef Name="SALE_ITEM_ID" />
+      </Principal>
+      <Dependent Role="SALE_LINE">
+        <PropertyRef Name="SALE_ITEM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__STOCK_TAK__SALE___6D0D32F4">
+    <End Role="SALE_ITEM" Type="Self.SALE_ITEM" Multiplicity="1" />
+    <End Role="STOCK_TAKE_LINE" Type="Self.STOCK_TAKE_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SALE_ITEM">
+        <PropertyRef Name="SALE_ITEM_ID" />
+      </Principal>
+      <Dependent Role="STOCK_TAKE_LINE">
+        <PropertyRef Name="SALE_ITEM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SCHEDULE__VENUE___0F624AF8">
+    <End Role="VENUE" Type="Self.VENUE" Multiplicity="1" />
+    <End Role="SCHEDULE" Type="Self.SCHEDULE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VENUE">
+        <PropertyRef Name="VENUE_ID" />
+      </Principal>
+      <Dependent Role="SCHEDULE">
+        <PropertyRef Name="VENUE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__STOCK_TAK__STOCK__6B24EA82">
+    <End Role="STOCK_TAKE" Type="Self.STOCK_TAKE" Multiplicity="1" />
+    <End Role="STOCK_TAKE_LINE" Type="Self.STOCK_TAKE_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="STOCK_TAKE">
+        <PropertyRef Name="STOCK_TAKE_ID" />
+      </Principal>
+      <Dependent Role="STOCK_TAKE_LINE">
+        <PropertyRef Name="STOCK_TAKE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SUPPLIER___SUPPL__628FA481">
+    <End Role="SUPPLIER" Type="Self.SUPPLIER" Multiplicity="1" />
+    <End Role="SUPPLIER_ORDER" Type="Self.SUPPLIER_ORDER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SUPPLIER">
+        <PropertyRef Name="SUPPLIER_ID" />
+      </Principal>
+      <Dependent Role="SUPPLIER_ORDER">
+        <PropertyRef Name="SUPPLIER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SUPPLIER___SUPPL__66603565">
+    <End Role="SUPPLIER_ORDER" Type="Self.SUPPLIER_ORDER" Multiplicity="1" />
+    <End Role="SUPPLIER_ORDER_LINE" Type="Self.SUPPLIER_ORDER_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SUPPLIER_ORDER">
+        <PropertyRef Name="SUPPLIER_ORDER_ID" />
+      </Principal>
+      <Dependent Role="SUPPLIER_ORDER_LINE">
+        <PropertyRef Name="SUPPLIER_ORDER_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USERS__TITLE_ID__1CF15040">
+    <End Role="TITLE" Type="Self.TITLE" Multiplicity="1" />
+    <End Role="USERS" Type="Self.USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TITLE">
+        <PropertyRef Name="TITLE_ID" />
+      </Principal>
+      <Dependent Role="USERS">
+        <PropertyRef Name="TITLE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USERS__USER_ROLE__1BFD2C07">
+    <End Role="USER_ROLE" Type="Self.USER_ROLE" Multiplicity="1" />
+    <End Role="USERS" Type="Self.USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER_ROLE">
+        <PropertyRef Name="USER_ROLE_ID" />
+      </Principal>
+      <Dependent Role="USERS">
+        <PropertyRef Name="USER_ROLE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WRITE_OFF__WRITE__5AEE82B9">
+    <End Role="WRITE_OFF" Type="Self.WRITE_OFF" Multiplicity="1" />
+    <End Role="WRITE_OFF_LINE" Type="Self.WRITE_OFF_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WRITE_OFF">
+        <PropertyRef Name="WRITE_OFF_ID" />
+      </Principal>
+      <Dependent Role="WRITE_OFF_LINE">
+        <PropertyRef Name="WRITE_OFF_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__WRITE_OFF__WRITE__59063A47">
+    <End Role="WRITE_OFF_REASON" Type="Self.WRITE_OFF_REASON" Multiplicity="1" />
+    <End Role="WRITE_OFF_LINE" Type="Self.WRITE_OFF_LINE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WRITE_OFF_REASON">
+        <PropertyRef Name="WRITE_OFF_REASON_ID" />
+      </Principal>
+      <Dependent Role="WRITE_OFF_LINE">
+        <PropertyRef Name="WRITE_OFF_REASON_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="USER_ROLE_PERMISSION">
+    <End Role="PERMISSION" Type="Self.PERMISSION" Multiplicity="*" />
+    <End Role="USER_ROLE" Type="Self.USER_ROLE" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="HIITEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BOOKINGs" EntityType="Self.BOOKING" />
+    <EntitySet Name="BOOKING_ATTENDANCE" EntityType="Self.BOOKING_ATTENDANCE" />
+    <EntitySet Name="BOOKING_PRICE_HISTORY" EntityType="Self.BOOKING_PRICE_HISTORY" />
+    <EntitySet Name="BOOKING_TYPE" EntityType="Self.BOOKING_TYPE" />
+    <EntitySet Name="CLIENTs" EntityType="Self.CLIENT" />
+    <EntitySet Name="DATE_SESSION" EntityType="Self.DATE_SESSION" />
+    <EntitySet Name="EMPLOYEEs" EntityType="Self.EMPLOYEE" />
+    <EntitySet Name="EMPLOYEE_CONTRACT" EntityType="Self.EMPLOYEE_CONTRACT" />
+    <EntitySet Name="EMPLOYEE_TYPE" EntityType="Self.EMPLOYEE_TYPE" />
+    <EntitySet Name="EXCERCISE_CATEGORY" EntityType="Self.EXCERCISE_CATEGORY" />
+    <EntitySet Name="EXERCISEs" EntityType="Self.EXERCISE" />
+    <EntitySet Name="INVENTORY_ITEM" EntityType="Self.INVENTORY_ITEM" />
+    <EntitySet Name="LESSONs" EntityType="Self.LESSON" />
+    <EntitySet Name="LESSON_PLAN" EntityType="Self.LESSON_PLAN" />
+    <EntitySet Name="MEASUREMENTs" EntityType="Self.MEASUREMENT" />
+    <EntitySet Name="MEMBERs" EntityType="Self.MEMBER" />
+    <EntitySet Name="MEMBER_STATUS" EntityType="Self.MEMBER_STATUS" />
+    <EntitySet Name="NOTIFICATION_TYPE" EntityType="Self.NOTIFICATION_TYPE" />
+    <EntitySet Name="ORDER_STATUS" EntityType="Self.ORDER_STATUS" />
+    <EntitySet Name="PASSWORD_HISTORY" EntityType="Self.PASSWORD_HISTORY" />
+    <EntitySet Name="PAYMENT_TYPE" EntityType="Self.PAYMENT_TYPE" />
+    <EntitySet Name="PERMISSIONs" EntityType="Self.PERMISSION" />
+    <EntitySet Name="PRICE_HISTORY" EntityType="Self.PRICE_HISTORY" />
+    <EntitySet Name="QUALIFICATIONs" EntityType="Self.QUALIFICATION" />
+    <EntitySet Name="QUALIFICATION_TYPE" EntityType="Self.QUALIFICATION_TYPE" />
+    <EntitySet Name="RECEIPTs" EntityType="Self.RECEIPT" />
+    <EntitySet Name="REFUNDs" EntityType="Self.REFUND" />
+    <EntitySet Name="REFUND_REASON" EntityType="Self.REFUND_REASON" />
+    <EntitySet Name="SALEs" EntityType="Self.SALE" />
+    <EntitySet Name="SALE_CATEGORY" EntityType="Self.SALE_CATEGORY" />
+    <EntitySet Name="SALE_ITEM" EntityType="Self.SALE_ITEM" />
+    <EntitySet Name="SALE_LINE" EntityType="Self.SALE_LINE" />
+    <EntitySet Name="SCHEDULEs" EntityType="Self.SCHEDULE" />
+    <EntitySet Name="SESSIONs" EntityType="Self.SESSION" />
+    <EntitySet Name="STOCK_TAKE" EntityType="Self.STOCK_TAKE" />
+    <EntitySet Name="STOCK_TAKE_LINE" EntityType="Self.STOCK_TAKE_LINE" />
+    <EntitySet Name="SUPPLIERs" EntityType="Self.SUPPLIER" />
+    <EntitySet Name="SUPPLIER_ORDER" EntityType="Self.SUPPLIER_ORDER" />
+    <EntitySet Name="SUPPLIER_ORDER_LINE" EntityType="Self.SUPPLIER_ORDER_LINE" />
+    <EntitySet Name="TITLEs" EntityType="Self.TITLE" />
+    <EntitySet Name="USER_ROLE" EntityType="Self.USER_ROLE" />
+    <EntitySet Name="USERS" EntityType="Self.USER" />
+    <EntitySet Name="VATs" EntityType="Self.VAT" />
+    <EntitySet Name="VENUEs" EntityType="Self.VENUE" />
+    <EntitySet Name="WRITE_OFF" EntityType="Self.WRITE_OFF" />
+    <EntitySet Name="WRITE_OFF_LINE" EntityType="Self.WRITE_OFF_LINE" />
+    <EntitySet Name="WRITE_OFF_REASON" EntityType="Self.WRITE_OFF_REASON" />
+    <AssociationSet Name="FK__BOOKING__CLIENT___75A278F5" Association="Self.FK__BOOKING__CLIENT___75A278F5">
+      <End Role="CLIENT" EntitySet="CLIENTs" />
+      <End Role="BOOKING" EntitySet="BOOKINGs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BOOKING_A__BOOKI__17036CC0" Association="Self.FK__BOOKING_A__BOOKI__17036CC0">
+      <End Role="BOOKING" EntitySet="BOOKINGs" />
+      <End Role="BOOKING_ATTENDANCE" EntitySet="BOOKING_ATTENDANCE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BOOKING_A__RECEI__18EBB532" Association="Self.FK__BOOKING_A__RECEI__18EBB532">
+      <End Role="RECEIPT" EntitySet="RECEIPTs" />
+      <End Role="BOOKING_ATTENDANCE" EntitySet="BOOKING_ATTENDANCE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BOOKING_A__SCHED__17F790F9" Association="Self.FK__BOOKING_A__SCHED__17F790F9">
+      <End Role="SCHEDULE" EntitySet="SCHEDULEs" />
+      <End Role="BOOKING_ATTENDANCE" EntitySet="BOOKING_ATTENDANCE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BOOKING_P__BOOKI__0C85DE4D" Association="Self.FK__BOOKING_P__BOOKI__0C85DE4D">
+      <End Role="BOOKING_TYPE" EntitySet="BOOKING_TYPE" />
+      <End Role="BOOKING_PRICE_HISTORY" EntitySet="BOOKING_PRICE_HISTORY" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SCHEDULE__BOOKIN__10566F31" Association="Self.FK__SCHEDULE__BOOKIN__10566F31">
+      <End Role="BOOKING_TYPE" EntitySet="BOOKING_TYPE" />
+      <End Role="SCHEDULE" EntitySet="SCHEDULEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CLIENT__USERS_ID__31EC6D26" Association="Self.FK__CLIENT__USERS_ID__31EC6D26">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="CLIENT" EntitySet="CLIENTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MEMBER__CLIENT_I__36B12243" Association="Self.FK__MEMBER__CLIENT_I__36B12243">
+      <End Role="CLIENT" EntitySet="CLIENTs" />
+      <End Role="MEMBER" EntitySet="MEMBERs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SALE__CLIENT_ID__3D5E1FD2" Association="Self.FK__SALE__CLIENT_ID__3D5E1FD2">
+      <End Role="CLIENT" EntitySet="CLIENTs" />
+      <End Role="SALE" EntitySet="SALEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SALE_LINE__CLIEN__49C3F6B7" Association="Self.FK__SALE_LINE__CLIEN__49C3F6B7">
+      <End Role="CLIENT" EntitySet="CLIENTs" />
+      <End Role="SALE_LINE" EntitySet="SALE_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DATE_SESS__SESSI__07C12930" Association="Self.FK__DATE_SESS__SESSI__07C12930">
+      <End Role="SESSION" EntitySet="SESSIONs" />
+      <End Role="DATE_SESSION" EntitySet="DATE_SESSION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SCHEDULE__DATE_S__123EB7A3" Association="Self.FK__SCHEDULE__DATE_S__123EB7A3">
+      <End Role="DATE_SESSION" EntitySet="DATE_SESSION" />
+      <End Role="SCHEDULE" EntitySet="SCHEDULEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EMPLOYEE__EMPLOY__2E1BDC42" Association="Self.FK__EMPLOYEE__EMPLOY__2E1BDC42">
+      <End Role="EMPLOYEE_CONTRACT" EntitySet="EMPLOYEE_CONTRACT" />
+      <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EMPLOYEE__EMPLOY__2F10007B" Association="Self.FK__EMPLOYEE__EMPLOY__2F10007B">
+      <End Role="EMPLOYEE_TYPE" EntitySet="EMPLOYEE_TYPE" />
+      <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EMPLOYEE__QUALIF__2D27B809" Association="Self.FK__EMPLOYEE__QUALIF__2D27B809">
+      <End Role="QUALIFICATION" EntitySet="QUALIFICATIONs" />
+      <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EMPLOYEE__USERS___2C3393D0" Association="Self.FK__EMPLOYEE__USERS___2C3393D0">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LESSON__EMPLOYEE__7F2BE32F" Association="Self.FK__LESSON__EMPLOYEE__7F2BE32F">
+      <End Role="EMPLOYEE" EntitySet="EMPLOYEEs" />
+      <End Role="LESSON" EntitySet="LESSONs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EXERCISE__EXCERC__7C4F7684" Association="Self.FK__EXERCISE__EXCERC__7C4F7684">
+      <End Role="EXCERCISE_CATEGORY" EntitySet="EXCERCISE_CATEGORY" />
+      <End Role="EXERCISE" EntitySet="EXERCISEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LESSON_PL__EXCER__02FC7413" Association="Self.FK__LESSON_PL__EXCER__02FC7413">
+      <End Role="EXERCISE" EntitySet="EXERCISEs" />
+      <End Role="LESSON_PLAN" EntitySet="LESSON_PLAN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__INVENTORY__SALE___52593CB8" Association="Self.FK__INVENTORY__SALE___52593CB8">
+      <End Role="SALE_ITEM" EntitySet="SALE_ITEM" />
+      <End Role="INVENTORY_ITEM" EntitySet="INVENTORY_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__STOCK_TAK__INVEN__6C190EBB" Association="Self.FK__STOCK_TAK__INVEN__6C190EBB">
+      <End Role="INVENTORY_ITEM" EntitySet="INVENTORY_ITEM" />
+      <End Role="STOCK_TAKE_LINE" EntitySet="STOCK_TAKE_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SUPPLIER___INVEN__656C112C" Association="Self.FK__SUPPLIER___INVEN__656C112C">
+      <End Role="INVENTORY_ITEM" EntitySet="INVENTORY_ITEM" />
+      <End Role="SUPPLIER_ORDER_LINE" EntitySet="SUPPLIER_ORDER_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WRITE_OFF__INVEN__59FA5E80" Association="Self.FK__WRITE_OFF__INVEN__59FA5E80">
+      <End Role="INVENTORY_ITEM" EntitySet="INVENTORY_ITEM" />
+      <End Role="WRITE_OFF_LINE" EntitySet="WRITE_OFF_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LESSON_PL__LESSO__02084FDA" Association="Self.FK__LESSON_PL__LESSO__02084FDA">
+      <End Role="LESSON" EntitySet="LESSONs" />
+      <End Role="LESSON_PLAN" EntitySet="LESSON_PLAN" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SCHEDULE__LESSON__114A936A" Association="Self.FK__SCHEDULE__LESSON__114A936A">
+      <End Role="LESSON_PLAN" EntitySet="LESSON_PLAN" />
+      <End Role="SCHEDULE" EntitySet="SCHEDULEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MEASUREME__MEMBE__3A81B327" Association="Self.FK__MEASUREME__MEMBE__3A81B327">
+      <End Role="MEMBER" EntitySet="MEMBERs" />
+      <End Role="MEASUREMENT" EntitySet="MEASUREMENTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MEMBER__MEMBER_S__37A5467C" Association="Self.FK__MEMBER__MEMBER_S__37A5467C">
+      <End Role="MEMBER_STATUS" EntitySet="MEMBER_STATUS" />
+      <End Role="MEMBER" EntitySet="MEMBERs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USERS__NOTIFICAT__1DE57479" Association="Self.FK__USERS__NOTIFICAT__1DE57479">
+      <End Role="NOTIFICATION_TYPE" EntitySet="NOTIFICATION_TYPE" />
+      <End Role="USERS" EntitySet="USERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SUPPLIER___ORDER__619B8048" Association="Self.FK__SUPPLIER___ORDER__619B8048">
+      <End Role="ORDER_STATUS" EntitySet="ORDER_STATUS" />
+      <End Role="SUPPLIER_ORDER" EntitySet="SUPPLIER_ORDER" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PASSWORD___USERS__20C1E124" Association="Self.FK__PASSWORD___USERS__20C1E124">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="PASSWORD_HISTORY" EntitySet="PASSWORD_HISTORY" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RECEIPT__PAYMENT__46E78A0C" Association="Self.FK__RECEIPT__PAYMENT__46E78A0C">
+      <End Role="PAYMENT_TYPE" EntitySet="PAYMENT_TYPE" />
+      <End Role="RECEIPT" EntitySet="RECEIPTs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PRICE_HIS__SALE___4F7CD00D" Association="Self.FK__PRICE_HIS__SALE___4F7CD00D">
+      <End Role="SALE_ITEM" EntitySet="SALE_ITEM" />
+      <End Role="PRICE_HISTORY" EntitySet="PRICE_HISTORY" />
+    </AssociationSet>
+    <AssociationSet Name="FK__QUALIFICA__QUALI__25869641" Association="Self.FK__QUALIFICA__QUALI__25869641">
+      <End Role="QUALIFICATION_TYPE" EntitySet="QUALIFICATION_TYPE" />
+      <End Role="QUALIFICATION" EntitySet="QUALIFICATIONs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__REFUND__RECEIPT___71D1E811" Association="Self.FK__REFUND__RECEIPT___71D1E811">
+      <End Role="RECEIPT" EntitySet="RECEIPTs" />
+      <End Role="REFUND" EntitySet="REFUNDs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SALE_LINE__RECEI__4CA06362" Association="Self.FK__SALE_LINE__RECEI__4CA06362">
+      <End Role="RECEIPT" EntitySet="RECEIPTs" />
+      <End Role="SALE_LINE" EntitySet="SALE_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__REFUND__REFUND_R__72C60C4A" Association="Self.FK__REFUND__REFUND_R__72C60C4A">
+      <End Role="REFUND_REASON" EntitySet="REFUND_REASON" />
+      <End Role="REFUND" EntitySet="REFUNDs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SALE_LINE__SALE___4AB81AF0" Association="Self.FK__SALE_LINE__SALE___4AB81AF0">
+      <End Role="SALE" EntitySet="SALEs" />
+      <End Role="SALE_LINE" EntitySet="SALE_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SALE_ITEM__SALE___4222D4EF" Association="Self.FK__SALE_ITEM__SALE___4222D4EF">
+      <End Role="SALE_CATEGORY" EntitySet="SALE_CATEGORY" />
+      <End Role="SALE_ITEM" EntitySet="SALE_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SALE_LINE__SALE___4BAC3F29" Association="Self.FK__SALE_LINE__SALE___4BAC3F29">
+      <End Role="SALE_ITEM" EntitySet="SALE_ITEM" />
+      <End Role="SALE_LINE" EntitySet="SALE_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__STOCK_TAK__SALE___6D0D32F4" Association="Self.FK__STOCK_TAK__SALE___6D0D32F4">
+      <End Role="SALE_ITEM" EntitySet="SALE_ITEM" />
+      <End Role="STOCK_TAKE_LINE" EntitySet="STOCK_TAKE_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SCHEDULE__VENUE___0F624AF8" Association="Self.FK__SCHEDULE__VENUE___0F624AF8">
+      <End Role="VENUE" EntitySet="VENUEs" />
+      <End Role="SCHEDULE" EntitySet="SCHEDULEs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__STOCK_TAK__STOCK__6B24EA82" Association="Self.FK__STOCK_TAK__STOCK__6B24EA82">
+      <End Role="STOCK_TAKE" EntitySet="STOCK_TAKE" />
+      <End Role="STOCK_TAKE_LINE" EntitySet="STOCK_TAKE_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SUPPLIER___SUPPL__628FA481" Association="Self.FK__SUPPLIER___SUPPL__628FA481">
+      <End Role="SUPPLIER" EntitySet="SUPPLIERs" />
+      <End Role="SUPPLIER_ORDER" EntitySet="SUPPLIER_ORDER" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SUPPLIER___SUPPL__66603565" Association="Self.FK__SUPPLIER___SUPPL__66603565">
+      <End Role="SUPPLIER_ORDER" EntitySet="SUPPLIER_ORDER" />
+      <End Role="SUPPLIER_ORDER_LINE" EntitySet="SUPPLIER_ORDER_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USERS__TITLE_ID__1CF15040" Association="Self.FK__USERS__TITLE_ID__1CF15040">
+      <End Role="TITLE" EntitySet="TITLEs" />
+      <End Role="USERS" EntitySet="USERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USERS__USER_ROLE__1BFD2C07" Association="Self.FK__USERS__USER_ROLE__1BFD2C07">
+      <End Role="USER_ROLE" EntitySet="USER_ROLE" />
+      <End Role="USERS" EntitySet="USERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WRITE_OFF__WRITE__5AEE82B9" Association="Self.FK__WRITE_OFF__WRITE__5AEE82B9">
+      <End Role="WRITE_OFF" EntitySet="WRITE_OFF" />
+      <End Role="WRITE_OFF_LINE" EntitySet="WRITE_OFF_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__WRITE_OFF__WRITE__59063A47" Association="Self.FK__WRITE_OFF__WRITE__59063A47">
+      <End Role="WRITE_OFF_REASON" EntitySet="WRITE_OFF_REASON" />
+      <End Role="WRITE_OFF_LINE" EntitySet="WRITE_OFF_LINE" />
+    </AssociationSet>
+    <AssociationSet Name="USER_ROLE_PERMISSION" Association="Self.USER_ROLE_PERMISSION">
+      <End Role="PERMISSION" EntitySet="PERMISSIONs" />
+      <End Role="USER_ROLE" EntitySet="USER_ROLE" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
