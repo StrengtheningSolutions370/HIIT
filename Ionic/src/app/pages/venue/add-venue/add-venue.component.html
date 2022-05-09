@@ -15,7 +15,7 @@
       <ion-label position="floating">Venue Name:</ion-label>
       <ion-input placeholder="Venue Name" formControlName="venueName" type="text" required=""></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.venueName.errors?.required">
       Venue name is required.
     </span>
 

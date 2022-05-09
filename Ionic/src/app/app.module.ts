@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AddVenueComponent } from './pages/venue/add-venue/add-venue.component';
@@ -12,7 +10,6 @@ import { UpdateVenueComponent } from './pages/venue/update-venue/update-venue.co
 import { ViewVenueInfoComponent } from './pages/venue/view-venue-info/view-venue-info.component';
 import { DeleteVenueComponent } from './pages/venue/delete-venue/delete-venue.component';
 import { HttpClientModule } from '@angular/common/http';
-import { VenueService } from './services/venue/venue.service';
 
 @NgModule({
   declarations: [AppComponent, AddVenueComponent, UpdateVenueComponent, ViewVenueInfoComponent, DeleteVenueComponent],
