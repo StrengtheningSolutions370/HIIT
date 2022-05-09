@@ -1,5 +1,6 @@
 import { Component, OnInit  } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { VENUE } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
@@ -11,23 +12,23 @@ import { VenueService } from 'src/app/services/venue/venue.service';
 })
 export class AddVenueComponent implements OnInit {
 
-  cVenueForm: FormGroup;
+  cVenueForm: FormGroup = this.formBuilder.group({
+    venueName: ['', [Validators.required]],
+    location: ['', [Validators.required]],
+    postalCode: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
+    capacity: ['', [Validators.required, Validators.max(12), Validators.min(0)]]
+  });
   isSubmitted = false;
 
   constructor(private modalCtrl: ModalController, private alertCtrl: ToastController, public formBuilder: FormBuilder,
-    public venueService: VenueService) { }
+    public venueService: VenueService, private router:Router, private currentRoute:ActivatedRoute ) { }
 
   get errorControl() {
     return this.cVenueForm.controls;
   }
 
   ngOnInit(){
-    this.cVenueForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      location: ['', [Validators.required]],
-      postalCode: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      capacity: ['', [Validators.required, Validators.max(12), Validators.min(0)]]
-    });
+
   }
 
   submitForm() {
@@ -38,7 +39,7 @@ export class AddVenueComponent implements OnInit {
     }else{
       console.log(this.cVenueForm.value);
       var temp = {
-        VENUE_NAME: this.cVenueForm.value['name'],
+        VENUE_NAME: this.cVenueForm.value['venueName'],
         VENUE_ADDRESS: this.cVenueForm.value['location'],
         VENUE_POSTAL_CODE: this.cVenueForm.value['postalCode'],
         VENUE_CAPACITY: this.cVenueForm.value['capacity']        
@@ -46,6 +47,8 @@ export class AddVenueComponent implements OnInit {
       this.venueService.createVenue(temp);
       this.dismissModal();
       this.sucAdd();
+      console.log("CurrentRoute:ADD");
+      console.log(this.currentRoute.url);
     }
   }
 

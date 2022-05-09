@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalController, ViewWillEnter } from '@ionic/angular';
 import { VENUE } from 'src/app/models/venue';
 
 @Component({
@@ -9,13 +8,15 @@ import { VENUE } from 'src/app/models/venue';
   templateUrl: './view-venue-info.component.html',
   styleUrls: ['./view-venue-info.component.scss'],
 })
-export class ViewVenueInfoComponent implements OnInit {
+export class ViewVenueInfoComponent implements ViewWillEnter {
 
   @Input() venue: VENUE;
+  
+  constructor(private modalCtrl: ModalController, public fb:FormBuilder) { 
+  }
 
-  constructor(private modalCtrl: ModalController) { }
-
-  ngOnInit() {
+  ionViewWillEnter() {
+    console.log("viewSpecificVenue-ViewWillEnter");
     console.log(this.venue);
   }
 
