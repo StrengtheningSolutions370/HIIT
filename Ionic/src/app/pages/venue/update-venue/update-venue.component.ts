@@ -13,7 +13,7 @@ import { VenueService } from 'src/app/services/venue/venue.service';
 })
 export class UpdateVenueComponent implements ViewWillEnter {
   @Input() venue: VENUE;
-  tempVenue = new VENUE();
+  
   uVenueForm: FormGroup = new FormGroup({
     venueName: new FormControl('', [Validators.required]),
     location: new FormControl('', [Validators.required]),
@@ -31,6 +31,10 @@ export class UpdateVenueComponent implements ViewWillEnter {
   ionViewWillEnter() {
       console.log("UpdateVenue-ViewWillEnter");
       console.log(this.venue);
+      this.uVenueForm.controls.venueName.setValue(this.venue.VENUE_NAME);
+      this.uVenueForm.controls.location.setValue(this.venue.VENUE_ADDRESS);
+      this.uVenueForm.controls.postalCode.setValue(this.venue.VENUE_POSTAL_CODE);
+      this.uVenueForm.controls.capacity.setValue(this.venue.VENUE_CAPACITY);
   }
 
   
@@ -42,7 +46,7 @@ export class UpdateVenueComponent implements ViewWillEnter {
     }else{
       console.log('InsideUpdateSubmit:');
       var temp = {
-        VENUE_ID: this.venue['VENUE_ID'],
+        VENUE_ID: this.venue.VENUE_ID,
         VENUE_NAME: this.uVenueForm.value['venueName'],
         VENUE_ADDRESS: this.uVenueForm.value['location'],
         VENUE_POSTAL_CODE: this.uVenueForm.value['postalCode'],

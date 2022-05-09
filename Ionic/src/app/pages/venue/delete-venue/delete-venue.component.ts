@@ -21,6 +21,12 @@ export class DeleteVenueComponent implements ViewWillEnter {
     console.log(this.venue);
   }
 
+  async delete(id:number){
+    console.log("DeleteVenue-BtnClick("+id+")");
+    this.venueService.deleteVenue(id);
+    await this.dismissModal();
+  }
+
   async dismissModal() {
     this.modalCtrl.dismiss();
     console.log(this.route);
