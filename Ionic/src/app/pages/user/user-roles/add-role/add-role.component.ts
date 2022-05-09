@@ -10,16 +10,16 @@ export class AddRoleComponent {
 
   permissions=[
     {
-      description : 'Create employee accounts'
+      des : 'Create employee accounts'
     },
     {
-      description : 'Update profile information'
+      des : 'Update profile information'
     },
     {
-      description : 'View Access to client data '
+      des : 'View Access to client data '
     },
     {
-      description : 'Run as-hoc reporting'
+      des : 'Run as-hoc reporting'
     }
   ];
 
