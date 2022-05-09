@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="eeba76783d5541e5b11a818f38bdaaf1" Name="Diagram1" ZoomLevel="34">
+      <Diagram DiagramId="eeba76783d5541e5b11a818f38bdaaf1" Name="Diagram1" ZoomLevel="85">
         <EntityTypeShape EntityType="HIITModel.BOOKING" Width="1.5" PointX="9.75" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="HIITModel.BOOKING_ATTENDANCE" Width="1.5" PointX="12" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="HIITModel.BOOKING_PRICE_HISTORY" Width="1.5" PointX="14.25" PointY="4.5" IsExpanded="true" />
