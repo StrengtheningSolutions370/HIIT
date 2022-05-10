@@ -13,7 +13,7 @@
     <br/>
     <ion-item>
       <ion-label position="floating">Venue Name:</ion-label>
-      <ion-input placeholder="Venue Name" formControlName="venueName" type="text" required=""></ion-input>
+      <ion-input formControlName="venueName" type="text" required=""></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.venueName.errors?.required">
       Venue name is required.
@@ -21,7 +21,7 @@
 
     <ion-item>
       <ion-label position="floating">Venue Location:</ion-label>
-      <ion-input placeholder="Location" formControlName="location" type="text" required=""></ion-input>
+      <ion-input formControlName="location" type="text" required=""></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.location.errors?.required">
       Address is required.
@@ -29,7 +29,7 @@
 
     <ion-item>
       <ion-label position="floating">Venue Postal Code:</ion-label>
-      <ion-input placeholder="0000" formControlName="postalCode" type="text" required=""></ion-input>
+      <ion-input formControlName="postalCode" type="text" required=""></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="isSubmitted && errorControl.postalCode.errors?.required">
       Postal code is required.
@@ -40,16 +40,16 @@
     
     <ion-item>
       <ion-label position="floating">Venue Capacity:</ion-label>
-      <ion-input placeholder="0" formControlName="capacity" type="number" required=""></ion-input>
+      <ion-input formControlName="capacity" type="number" required=""></ion-input>
     </ion-item>
-    <div class="error ion-padding" *ngIf="isSubmitted && errorControl.capacity.errors?.required">
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.capacity.errors?.required">
       Venue capacity is required.
-    </div>
+    </span>
     <span class="error ion-padding" *ngIf="errorControl.capacity.errors?.min">
       Please enter capacity above 0.
     </span>
     <span class="error ion-padding" *ngIf="errorControl.capacity.errors?.max">
-      The capacity has a maximum of 12.
+      The capacity has a maximum of 120.
     </span>
     <br>
 

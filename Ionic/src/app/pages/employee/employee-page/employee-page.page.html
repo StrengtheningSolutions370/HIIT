@@ -1,9 +1,56 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>employee-page</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  
+  <br/>
+  <ion-searchbar showCancelButton="focus" expand="block" placeholder='I am looking for..' cancelButtonText="Close"></ion-searchbar>
 
+  <br/>
+  <br/>
+
+  <div class="ion-text-center">
+    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addEmployeeInfoModal()">
+      Add Employee 
+      <ion-icon name="add" size="medium"></ion-icon>
+    </ion-button>
+  </div>
+  
+  <ion-grid>
+    <div style="display: inline-block;width: 330px;height: 200px;margin-bottom: 5px;" *ngFor="let employee of employees">
+      <ion-card >
+        <div>
+          <ion-card-header >
+            <ion-avatar item-start button (click)="viewEmployeeInfoModal()">
+              <!--Employee Image-->
+              <img src="../../assets/avatar.jpg">
+            </ion-avatar>
+              <ion-card-title style="color:#e7e8ec;">
+                <!--Employee_Name ' ' Employee_Surname-->
+                {{employee.title}} {{employee.name}}  {{employee.surname}}
+              </ion-card-title>
+            </ion-card-header>
+         </div>
+          <ion-card-content style="color:#b1b2b6;">
+            <ion-row>
+              <!--Employee_Type-->
+              {{employee.type}}
+            </ion-row>
+            <ion-row>
+              <!--Employee Gender-->
+              {{employee.cell}}
+            </ion-row>
+            <ion-row>
+              <!--Employee email-->
+              {{employee.email}}
+            </ion-row>
+            <br/>
+            <ion-row>
+              <ion-button color="secondary" (click)="updateEmployeeInfoModal()"><ion-icon name="refresh"></ion-icon>Update</ion-button>
+              <ion-button color="tertiary" (click)="deleteEmployeeInfoModal()"> <ion-icon name="trash" size="medium"></ion-icon>Delete </ion-button>
+            </ion-row>
+          </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-grid>
 </ion-content>
+
+
+
