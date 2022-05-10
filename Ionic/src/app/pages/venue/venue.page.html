@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<ion-content>
+  <br>
+  <!--Searchbar (must make function to search)-->
+  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="filter"
+  animated="true"
+  debounce="800"></ion-searchbar>
+  <br/>
+
+  <div class="ion-text-center">
+    <ion-button color="success" (click)="venueService.addVenueInfoModal()">
+      Add Venue
+      <ion-icon name="add" size="medium"></ion-icon>
+    </ion-button>
+  </div>
+  <br/>
+  <ion-grid *ngIf="venueService.getVenues().length > 0">
+    <ion-list *ngFor="let venue of venueList | filter:filter, let i = index"> 
+      <ion-item-sliding >
+        <ion-item button (click)="venueService.viewVenueInfoModal(venue)">
+          <ion-label>
+            <h1>{{venue.VENUE_NAME}}</h1> <br/>
+            <p>
+              Location:  {{venue.VENUE_ADDRESS}}<br/>
+              Postal Code: {{venue.VENUE_POSTAL_CODE}} <br/>
+              Capacity: {{venue.VENUE_CAPACITY}} 
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options side="end" >
+          <ion-item-option color="secondary" (click)="venueService.updateVenueInfoModal(venue)"><ion-icon name="refresh"></ion-icon> Update </ion-item-option>
+          <ion-item-option color="danger" (click)="venueService.deleteVenueInfoModal(venue)"><ion-icon name="trash" size="medium"></ion-icon> Delete </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+    </ion-grid>
+  
+  </ion-content>
