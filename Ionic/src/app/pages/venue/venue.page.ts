@@ -20,7 +20,7 @@ export class VenuePage implements ViewWillEnter {
 
   onSearchChange($event){
     
-=======
+
   venue: VENUE[] = [];
   searchInput = document.getElementById("searchInput");
   //searchQuery = new BehaviorSubject();
