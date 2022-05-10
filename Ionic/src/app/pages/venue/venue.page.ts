@@ -9,6 +9,7 @@ import { VenueService } from 'src/app/services/venue/venue.service';
 })
 export class VenuePage implements ViewWillEnter {
 <<<<<<< HEAD
+<<<<<<< HEAD
   filter: string;
   venueList: any=[] = [];
 
@@ -32,5 +33,13 @@ export class VenuePage implements ViewWillEnter {
   searchVenue(){
 
 >>>>>>> 210e6104c69c01c3b2d0f7b12246d9003743a40c
+=======
+  filter: string;
+  venueList: any[] = [];
+
+  constructor(public venueService: VenueService) { }
+  ionViewWillEnter(): void {
+    this.venueList = this.venueService.getVenues();
+>>>>>>> 490d704a8bda42f6f4c89130e0b645d7d4e1c4c4
   }
 }
