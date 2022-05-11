@@ -4,6 +4,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
+import { async } from 'rxjs';
 import { VENUE } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
@@ -24,7 +25,7 @@ export class UpdateVenueComponent implements ViewWillEnter {
   });
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public fb: FormBuilder,
-    public venueService: VenueService, private alertCtrl : AlertController) { }
+    public venueService: VenueService, private alertCtrl: AlertController) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
@@ -42,20 +43,11 @@ export class UpdateVenueComponent implements ViewWillEnter {
   submitForm() {
     if (!this.uVenueForm.valid) { //If the form has any validation errors, the form will not be submitted.
     if (!this.uVenueForm.valid){
-      console.log('Please provide all required fields');
-      this.InvalidAlert();
+      this.invalidAlert();
       return false;
     } else {
       //Creating the temporary record to be sent the createVenue() method in the Venue Service.
       const temp = {
-    }else
-    //if
-    //test here for duplicate entry in the database
-    //display duplicateAlert
-    //else statement
-    {
-      console.log('InsideUpdateSubmit:');
-      var temp = {
         VENUE_ID: this.venue.VENUE_ID,
         VENUE_NAME: this.uVenueForm.value['venueName'],
         VENUE_ADDRESS: this.uVenueForm.value['location'],
@@ -66,8 +58,9 @@ export class UpdateVenueComponent implements ViewWillEnter {
       this.dismissModal();
       this.sucUpdate();
       this.ionViewWillEnter();
-    }
+    };
   }
+}
 
   async sucUpdate() {
     const toast = await this.toastCtrl.create({
@@ -77,11 +70,11 @@ export class UpdateVenueComponent implements ViewWillEnter {
     toast.present();
   }
 
-  dismissModal() {
+  dismissModal(){
     this.modalCtrl.dismiss(this.venue);
   }
 
-  async InvalidAlert() {
+  async invalidAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Invalid Input',
       message: 'Please provide all required fields and ensure that the information is in the correct format',
@@ -90,7 +83,7 @@ export class UpdateVenueComponent implements ViewWillEnter {
     alert.present();
   }
 
-  async DuplicateAlert() {
+  async duplicateAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Venue Already Exists',
       message: 'The Venue Information entered already exists on the system',
@@ -99,7 +92,7 @@ export class UpdateVenueComponent implements ViewWillEnter {
     alert.present();
   }
 
-  async FailureAlert() {
+  async failureAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Could not update venue',
       subHeader : 'There was an error updating the venue. Please try again',
@@ -109,5 +102,5 @@ export class UpdateVenueComponent implements ViewWillEnter {
     });
     alert.present();
   }
-
 }
+

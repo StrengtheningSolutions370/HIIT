@@ -17,7 +17,7 @@ export class DeleteVenueComponent implements ViewWillEnter {
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public venueService: VenueService, private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController) { }
-    
+
   ionViewWillEnter() {
     console.log("DeleteVenue - ViewWillEnter");
     console.log(this.venue);
@@ -38,7 +38,7 @@ export class DeleteVenueComponent implements ViewWillEnter {
     toast.present();
   }
 
-  async FailureAlert() {
+  async failureAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Could not delete Venue',
       message: 'There was an error deleting the venue, please try again.',

@@ -25,7 +25,8 @@ export class AddVenueComponent implements OnInit {
   isSubmitted = false;
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
-    public venueService: VenueService, private router:Router, private currentRoute:ActivatedRoute,private  alertCtrl: AlertController ) { }
+    public venueService: VenueService, private router: Router, private currentRoute: ActivatedRoute,
+    private  alertCtrl: AlertController ) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
