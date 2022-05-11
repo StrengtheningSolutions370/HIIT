@@ -18,7 +18,6 @@ export class VenueService {
 
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
     this.repo.getVenues().subscribe(result =>{
-      this.venueList = [];
       this.tempVenueList = [];
       this.tempVenueList = Object.assign(result);
       this.tempVenueList.forEach(element => {
