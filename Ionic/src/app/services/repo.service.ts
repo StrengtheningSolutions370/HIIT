@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
@@ -14,17 +15,17 @@ export class RepoService {
   httpOptions = {
     headers: new HttpHeaders ({
       Accept: 'application/json',
-      ContentType: 'application/json'      
+      ContentType: 'application/json'
     }),
   };
 
-  constructor(public http: HttpClient) 
+  constructor(public http: HttpClient)
   {
 
   }
 
   //Venue:
-  createVenue(venue: VENUE):Observable<any>{
+  createVenue(venue: VENUE): Observable<any>{
     return this.http.post<any>(`${this.base}postVenue`,venue,this.httpOptions);
   }
 
@@ -32,11 +33,11 @@ export class RepoService {
     return this.http.get(`${this.base}getVenues`, this.httpOptions);
   }
 
-  updateVenue(venueId: number, venue:VENUE):Observable<any>{
+  updateVenue(venueId: number, venue: VENUE): Observable<any>{
     return this.http.put(`${this.base}putVenue?id=${venueId}`,venue, this.httpOptions);
   }
 
-  deleteVenue(venueId: number):Observable<any>{
+  deleteVenue(venueId: number): Observable<any>{
     return this.http.delete(`${this.base}deleteVenue?id=${venueId}`,this.httpOptions);
   }
 }

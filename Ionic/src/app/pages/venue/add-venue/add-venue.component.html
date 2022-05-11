@@ -8,7 +8,6 @@
 </ion-header>
 
 <ion-content>
-  <!--<form #cVenueForm="ngForm" (ngSubmit)="onSubmit(cVenueForm)">-->
   <form [formGroup]="cVenueForm" (ngSubmit)="submitForm()"> 
     <br/>
     <ion-item>
@@ -53,7 +52,6 @@
     </span>
     <br>
 
-    <!--<ion-button [disabled]="!cVenueForm.valid" *ngIf="!isValidVenue" expand="block" shape="round" type="submit">Login</ion-button>-->
     <ion-button expand="block" type="submit" color="success">Create Venue</ion-button>
   </form>
 </ion-content>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
     export class VENUE {
         VENUE_ID: number;
         VENUE_NAME: string;

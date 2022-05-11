@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, Input, OnInit } from '@angular/core';
@@ -12,8 +13,9 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   styleUrls: ['./update-venue.component.scss'],
 })
 export class UpdateVenueComponent implements ViewWillEnter {
+  // Receiving the venue object from the main venue page
   @Input() venue: VENUE;
-  
+
   uVenueForm: FormGroup = new FormGroup({
     venueName: new FormControl('', [Validators.required]),
     location: new FormControl('', [Validators.required]),
@@ -24,33 +26,30 @@ export class UpdateVenueComponent implements ViewWillEnter {
   constructor(private modalCtrl: ModalController, private alertCtrl: ToastController, public fb: FormBuilder,
     public venueService: VenueService) { }
 
+  //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
     return this.uVenueForm.controls;
   }
 
   ionViewWillEnter() {
-      console.log("UpdateVenue-ViewWillEnter");
-      console.log(this.venue);
-      this.uVenueForm.controls.venueName.setValue(this.venue.VENUE_NAME);
-      this.uVenueForm.controls.location.setValue(this.venue.VENUE_ADDRESS);
-      this.uVenueForm.controls.postalCode.setValue(this.venue.VENUE_POSTAL_CODE);
-      this.uVenueForm.controls.capacity.setValue(this.venue.VENUE_CAPACITY);
+    //Populate the update venue form with the values received from the selected venue object in the main page.
+    this.uVenueForm.controls.venueName.setValue(this.venue.VENUE_NAME);
+    this.uVenueForm.controls.location.setValue(this.venue.VENUE_ADDRESS);
+    this.uVenueForm.controls.postalCode.setValue(this.venue.VENUE_POSTAL_CODE);
+    this.uVenueForm.controls.capacity.setValue(this.venue.VENUE_CAPACITY);
   }
 
-  
-
   submitForm() {
-    if (!this.uVenueForm.valid){
-      console.log('Please provide all required fields');
+    if (!this.uVenueForm.valid) { //If the form has any validation errors, the form will not be submitted.
       return false;
-    }else{
-      console.log('InsideUpdateSubmit:');
-      var temp = {
+    } else {
+      //Creating the temporary record to be sent the createVenue() method in the Venue Service.
+      const temp = {
         VENUE_ID: this.venue.VENUE_ID,
         VENUE_NAME: this.uVenueForm.value['venueName'],
         VENUE_ADDRESS: this.uVenueForm.value['location'],
         VENUE_POSTAL_CODE: this.uVenueForm.value['postalCode'],
-        VENUE_CAPACITY: this.uVenueForm.value['capacity']        
+        VENUE_CAPACITY: this.uVenueForm.value['capacity']
       };
       this.venueService.updateVenue(temp);
       this.dismissModal();

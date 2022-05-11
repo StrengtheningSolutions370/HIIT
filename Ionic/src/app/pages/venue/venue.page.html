@@ -2,15 +2,9 @@
 
 <ion-content>
   <br>
-  <!--Searchbar (must make function to search)-->
-  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="filter"
-  animated="true"
-<<<<<<< HEAD
-  debounce="200"></ion-searchbar>
-=======
-  debounce="800"></ion-searchbar>
->>>>>>> 490d704a8bda42f6f4c89130e0b645d7d4e1c4c4
-  <br/>
+  <!--Searchbar [(ngModel)] is used to bind the searchTerm to the class, to be called when filtering.-->
+  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="searchTerm"
+    animated="true" debounce="200"></ion-searchbar>
 
   <div class="ion-text-center">
     <ion-button color="success" (click)="venueService.addVenueInfoModal()">
@@ -18,30 +12,34 @@
       <ion-icon name="add" size="medium"></ion-icon>
     </ion-button>
   </div>
-  <br/>
+  <br />
   <ion-grid *ngIf="venueService.getVenues().length > 0">
-<<<<<<< HEAD
-    <ion-list *ngFor="let venue of venueList | filter: filter, let i = index"> 
-=======
-    <ion-list *ngFor="let venue of venueList | filter:filter, let i = index"> 
->>>>>>> 490d704a8bda42f6f4c89130e0b645d7d4e1c4c4
-      <ion-item-sliding >
+    <ion-list *ngFor="let venue of venueList | filter:searchTerm, let i = index">
+      <ion-item-sliding>
+        <!-- Sending through the venue object to the venue service, to be viewed in the modal -->
         <ion-item button (click)="venueService.viewVenueInfoModal(venue)">
           <ion-label>
-            <h1>{{venue.VENUE_NAME}}</h1> <br/>
+            <h1>{{venue.VENUE_NAME}}</h1> <br />
             <p>
-              Location:  {{venue.VENUE_ADDRESS}}<br/>
-              Postal Code: {{venue.VENUE_POSTAL_CODE}} <br/>
-              Capacity: {{venue.VENUE_CAPACITY}} 
+              Location: {{venue.VENUE_ADDRESS}}<br />
+              Postal Code: {{venue.VENUE_POSTAL_CODE}} <br />
+              Capacity: {{venue.VENUE_CAPACITY}}
             </p>
           </ion-label>
         </ion-item>
-        <ion-item-options side="end" >
-          <ion-item-option color="secondary" (click)="venueService.updateVenueInfoModal(venue)"><ion-icon name="refresh"></ion-icon> Update </ion-item-option>
-          <ion-item-option color="danger" (click)="venueService.deleteVenueInfoModal(venue)"><ion-icon name="trash" size="medium"></ion-icon> Delete </ion-item-option>
+        <ion-item-options side="end">
+          <!-- Sending through the venue object to the venue service, to be viewed in the modal -->
+          <ion-item-option color="secondary" (click)="venueService.updateVenueInfoModal(venue)">
+            <ion-icon name="refresh"></ion-icon> Update
+          </ion-item-option>
+
+          <!-- Sending through the venue object to the venue service, to be viewed in the modal -->
+          <ion-item-option color="danger" (click)="venueService.deleteVenueInfoModal(venue)">
+            <ion-icon name="trash" size="medium"></ion-icon> Delete
+          </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-    </ion-grid>
-  
-  </ion-content>
+  </ion-grid>
+
+</ion-content>

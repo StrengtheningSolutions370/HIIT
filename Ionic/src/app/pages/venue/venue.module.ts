@@ -8,7 +8,6 @@ import { VenuePageRoutingModule } from './venue-routing.module';
 
 import { VenuePage } from './venue.page';
 import { HeaderComponent } from 'src/app/components/header/header.component';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [

@@ -8,38 +8,19 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   styleUrls: ['./venue.page.scss'],
 })
 export class VenuePage implements ViewWillEnter {
-<<<<<<< HEAD
-<<<<<<< HEAD
-  filter: string;
+
+  //Creating a local search string to be called from the search bar.
+  searchTerm: string;
+
+  //Creating a local venueList array in the class to be viewed in the HTML component.
   venueList: any=[] = [];
 
+  //Calling the venue service.
   constructor(public venueService: VenueService) { }
 
+  //Displaying the venue list every time the page is about to be opened. (Ionic page life cycle)
   ionViewWillEnter() {
    this.venueList = this.venueService.getVenues();
   }
 
-  onSearchChange($event){
-    
-
-  venue: VENUE[] = [];
-  searchInput = document.getElementById("searchInput");
-  //searchQuery = new BehaviorSubject();
-  constructor(public venueService: VenueService) { }
-  ionViewWillEnter(): void {
-    this.venue = this.venueService.getVenues();
-  }
-
-  searchVenue(){
-
->>>>>>> 210e6104c69c01c3b2d0f7b12246d9003743a40c
-=======
-  filter: string;
-  venueList: any[] = [];
-
-  constructor(public venueService: VenueService) { }
-  ionViewWillEnter(): void {
-    this.venueList = this.venueService.getVenues();
->>>>>>> 490d704a8bda42f6f4c89130e0b645d7d4e1c4c4
-  }
 }
