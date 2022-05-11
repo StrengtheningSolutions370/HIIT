@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Employee</ion-title>
+    <ion-buttons slot="end">
+      <!--(click)="dismissModal()-->
+      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--<form #uEmployeeForm="ngForm" (ngSubmit)="onSubmit(uEmployeeForm)">-->
+  <form #uEmployeeForm="ngForm">
+
+    <br/>
+      <ion-item>
+        <ion-label position="stacked">Upload Profile Photo</ion-label>
+        <!--Show selected picture-->
+        <ion-input type="file" ></ion-input>
+      </ion-item>
+        
+      <ion-row>
+        <ion-col>
+         
+          <ion-item>
+            <ion-label position="stacked">Name:</ion-label>
+            <ion-input required ngModel name #nameCtrl="ngModel" placeholder="Juan"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
+            <p>Please enter a valid employee name</p>
+          </ion-text>
+
+          <ion-item>
+            <ion-label position="stacked">Surname:</ion-label>
+            <ion-input required ngModel surname #surnameCtrl="ngModel" placeholder="Zonneveld"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="!surnameCtrl.valid && surnameCtrl.touched">
+            <p>Please enter a valid employee surname</p>
+          </ion-text>
+      
+          <!--Dropdown for title-->
+          <ion-item>
+            <ion-label>Titles</ion-label>
+            <ion-select placeholder="Mr">
+              <ion-select-option *ngFor="let title of titles" [value]="title">{{title.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>  
+      
+          <ion-item>
+            <ion-label position="stacked">ID Number:</ion-label>
+            <ion-input minlength="13" maxlength="13" required ngModel id #idCtrl="ngModel" placeholder="0589458625458"></ion-input>
+          </ion-item>   
+          <ion-text color="danger" *ngIf="!idCtrl.valid && idCtrl.touched">
+            <p>Please enter a valid ID Number</p>
+          </ion-text>
+          
+          <ion-item>
+            <ion-label position="stacked">Mobile Number:</ion-label>
+            <ion-input minlength="10" maxlength="10" required="true" required ngModel num #numCtrl="ngModel" placeholder="058 947 569"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="!numCtrl.valid && numCtrl.touched">
+            <p>Please enter a valid mobile number</p>
+          </ion-text>
+            
+          <ion-item>
+            <ion-label position="stacked">Email:</ion-label>
+              <ion-input required ngModel email #emailCtrl="ngModel" placeholder="zz.zonneveld@gmail.com"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
+            <p>Please enter a valid email address</p>
+          </ion-text>
+
+          <!--Dropdown for qualification-->
+          <ion-item>
+            <ion-label>Qualification</ion-label>
+            <ion-select placeholder="Personal Trainer">
+              <ion-select-option *ngFor="let qualification of qualifications" [value]="qualification">{{qualification.description}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <!--Dropdown for qualificationType-->
+          <ion-item>
+            <ion-label>Qualification Type</ion-label>
+              <ion-select placeholder="Diploma">
+                <ion-select-option *ngFor="let qType of qualificationTypes" [value]="qType">{{qType.name}}</ion-select-option>
+              </ion-select>
+            </ion-item> 
+
+          <!--Dropdown for employeeTypes-->
+          <ion-item>
+            <ion-label>Employee Type</ion-label>
+            <ion-select placeholder="Trainer">
+              <ion-select-option *ngFor="let eType of employeeTypes" [value]="eType">{{eType.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+      <br/>
+      <!--(click)="employeeAdd()"-->
+      <ion-button expand="block" color="secondary">Update Employee</ion-button>
+
+</form>
+</ion-content>
