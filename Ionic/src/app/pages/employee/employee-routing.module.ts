@@ -5,7 +5,7 @@ import { EmployeePage } from './employee.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'tabs',
     component: EmployeePage,
     children:[
       {

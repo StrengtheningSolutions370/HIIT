@@ -4,7 +4,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { VENUE } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
@@ -20,12 +20,12 @@ export class AddVenueComponent implements OnInit {
     venueName: ['', [Validators.required]],
     location: ['', [Validators.required]],
     postalCode: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-    capacity: ['', [Validators.required, Validators.max(12), Validators.min(0)]]
+    capacity: ['', [Validators.required, Validators.max(120), Validators.min(1)]]
   });
   isSubmitted = false;
 
-  constructor(private modalCtrl: ModalController, private alertCtrl: ToastController, public formBuilder: FormBuilder,
-    public venueService: VenueService, private router: Router, private currentRoute: ActivatedRoute) { }
+  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
+    public venueService: VenueService, private router:Router, private currentRoute:ActivatedRoute,private  alertCtrl: AlertController ) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
@@ -55,19 +55,44 @@ export class AddVenueComponent implements OnInit {
   }
 
   async sucAdd() {
-    const toast = await this.alertCtrl.create({
+    const toast = await this.toastCtrl.create({
       //what message should display
       message: 'The Venue has been successfully added!',
-      //how long should the message be present
       duration: 2000
     });
-    //display the toast notification
     toast.present();
   }
 
   //Once the modal has been dismissed.
   dismissModal() {
     this.modalCtrl.dismiss();
+  };
+
+  async InvalidAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Invalid Input',
+      message: 'Please provide all required fields and ensure that the information is in the correct format',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  async DuplicateAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Venue Already Exists',
+      message: 'The Venue Information entered already exists on the system',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  async FailureAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Could not create venue',
+      message: 'There was an error updating the venue. Please try again',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }
 

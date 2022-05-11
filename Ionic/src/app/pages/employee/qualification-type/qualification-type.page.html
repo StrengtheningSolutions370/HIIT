@@ -1,9 +1,42 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>qualification-type</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
 
+  
+  <br/>
+  <!--Searchbar (must make function to search)-->
+  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Qualification Type'></ion-searchbar>
+
+  <br/><br/>
+
+  <div class="ion-text-center">
+    <!-- (click)="addQtypeModal()" -->
+    <ion-button color="success" style="margin-left:30%;margin-right:30%" >
+      Add Qualification Type
+      <ion-icon name="add" size="medium"></ion-icon>
+    </ion-button>
+  </div>
+
+  <br/>
+
+  <ion-grid *ngFor="let qualificationType of qualificationTypes">
+    <ion-list> 
+      <ion-item-sliding >
+        <!-- (click)="viewQtypeModal() " -->
+        <ion-item button >
+          <ion-label>
+            <!--Qualification Type Name-->
+            <h2>{{qualificationType.name}}</h2> <br/>
+          </ion-label>
+        </ion-item>
+        <ion-item-options side="end" >
+          <!-- (click)="updateQtypeModal() " -->
+          <ion-item-option color="secondary"  ><ion-icon name="refresh"></ion-icon>Update </ion-item-option>
+          <!-- (click)="deleteQtypeModal() " -->
+          <ion-item-option color="danger" ><ion-icon name="trash" size="medium"></ion-icon>Delete </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-grid>
+
 </ion-content>
+

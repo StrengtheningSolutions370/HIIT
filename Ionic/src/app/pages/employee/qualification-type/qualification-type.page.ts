@@ -7,6 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QualificationTypePage implements OnInit {
 
+  qualificationTypes = [
+    {
+      name : 'Diploma',
+    },
+    {
+      name : 'Certificate',
+    },
+    {
+      name : 'Postgraduate Study',
+    },
+    {
+      name : 'Bachelors degree',
+    }
+  ];
+
   constructor() { }
 
   ngOnInit() {

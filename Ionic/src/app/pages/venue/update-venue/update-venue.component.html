@@ -28,7 +28,7 @@
 
     <ion-item>
       <ion-label position="stacked">Venue Postal Code:</ion-label>
-      <ion-input formControlName="postalCode" type="text" required=""></ion-input>
+      <ion-input formControlName="postalCode" type="text" required="" maxlength="4" minlength="4"></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="errorControl.postalCode.errors?.required">
       Postal code is required.
@@ -41,17 +41,17 @@
       <ion-label position="stacked">Venue Capacity:</ion-label>
       <ion-input placeholder="0" formControlName="capacity" type="number" required=""></ion-input>
     </ion-item>
-    <div class="error ion-padding" *ngIf="errorControl.capacity.errors?.required">
+    <span class="error ion-padding" *ngIf="errorControl.capacity.errors?.required">
       Venue capacity is required.
-    </div>
+    </span>
     <span class="error ion-padding" *ngIf="errorControl.capacity.errors?.min">
       Please enter capacity above 0.
     </span>
     <span class="error ion-padding" *ngIf="errorControl.capacity.errors?.max">
-      The capacity has a maximum of 12.
+      The capacity has a maximum of 120.
     </span>
     <br>
-    <ion-button expand="block" type="submit" color="success">Update Venue</ion-button>
+    <ion-button expand="block" type="submit" color="secondary">Update Venue</ion-button>
   </form>
 </ion-content>
 

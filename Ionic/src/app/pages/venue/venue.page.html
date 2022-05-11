@@ -1,7 +1,21 @@
-<app-header></app-header>
+<ion-header>
+  <ion-toolbar>
+    <ion-item>
+      <img src="../../assets/Logo.jpg" width="100px" height="60px">
+      <!--Can we change this dynamically when switching between tabs?-->
+      <ion-title>Venues</ion-title>
+    </ion-item>
+
+    <!--Menu toggle button that will display the menu-->
+    <ion-buttons slot="start">
+      <ion-menu-button menu="mainMenu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <br>
+  debounce="300"></ion-searchbar>
   <!--Searchbar [(ngModel)] is used to bind the searchTerm to the class, to be called when filtering.-->
   <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="searchTerm"
     animated="true" debounce="200"></ion-searchbar>

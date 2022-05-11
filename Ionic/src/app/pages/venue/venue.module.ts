@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { VenuePageRoutingModule } from './venue-routing.module';
 
 import { VenuePage } from './venue.page';
-import { HeaderComponent } from 'src/app/components/header/header.component';
+//import { HeaderComponent } from 'src/app/components/header/header.component';
 
 @NgModule({
   imports: [
@@ -17,6 +17,6 @@ import { HeaderComponent } from 'src/app/components/header/header.component';
     VenuePageRoutingModule,
     Ng2SearchPipeModule
   ],
-  declarations: [VenuePage, HeaderComponent]
+  declarations: [VenuePage ]//, HeaderComponent]
 })
 export class VenuePageModule {}
