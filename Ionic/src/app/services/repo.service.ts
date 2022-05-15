@@ -14,11 +14,11 @@ export class RepoService {
   httpOptions = {
     headers: new HttpHeaders ({
       Accept: 'application/json',
-      ContentType: 'application/json'      
+      ContentType: 'application/json'
     }),
   };
 
-  constructor(public http: HttpClient) 
+  constructor(public http: HttpClient)
   {
 
   }

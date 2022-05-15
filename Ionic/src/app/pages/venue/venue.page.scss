@@ -6,8 +6,20 @@ ion-button{
 ion-searchbar{
     --background : white;
     --color: #221f1f;
-    width: 96%;
-    margin-left: 2%;
-    margin-right: 2%;
+    --clear-button-color : #ff5b71;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
 
 }
+
+ion-card {
+    background-color: white;
+    border-radius: 50px;
+}
+
+ion-button {
+    border-radius : 10px;
+}
+
+
