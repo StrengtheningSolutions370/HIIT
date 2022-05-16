@@ -1,44 +1,53 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Create User Role</ion-title>
+    <ion-title>New User Role Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!--<form #cUserRoleForm="ngForm" (ngSubmit)="onSubmit(cUserRoleForm)">-->
-  <form #cUserRoleForm="ngForm">
+  <!--This modal is not complete, please check if it displays like "AddVenue"-->
+  <!--Check the SCSS, TS AND HTML-->
 
-    <br/>     
+    <form [formGroup]="cUserRoleForm" (ngSubmit)="submitForm()">
+
+    <br/>    
+    
+    <div class="ion-text-center">
+      <p style="font-size:large">Please fill in the User Role information below.</p>
+    </div>
         
     <ion-item>
-      <ion-label position="floating">User Role Name:</ion-label>
-      <ion-input required ngModel name #nameCtrl="ngModel"></ion-input>
+      <ion-label position="floating">Name:</ion-label>
+      <ion-input formControlName="userRoleName" type="text" required="" id="userRoleName"></ion-input>
+      <br/>
     </ion-item>
-    <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
-      <p>Please enter a valid user role name</p>
-    </ion-text>
+    <span class="error ion-padding" *ngIf="errorControl.userRoleName.errors?.required && cUserRoleForm.get('userRoleName').touched">
+      User role name is required.<br/>
+    </span>
 
     <ion-item>
-      <ion-label position="floating">User Role Description:</ion-label>
-      <ion-textarea required ngModel description #desCtrl="ngModel"></ion-textarea>
+      <ion-label position="floating">Description:</ion-label>
+      <ion-textarea formControlName="userRoleDes" required="" id="userRoleDes"></ion-textarea>
+      <br/>
     </ion-item>
-    <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
-      <p>Please enter a valid user role description</p>
-    </ion-text>
+    <span class="error ion-padding" *ngIf="errorControl.userRoleDes.errors?.required && cUserRoleForm.get('userRoleDes').touched">
+      User role description is required.<br/>
+    </span>
 
     <br/>
-    <ion-label class="ion-text-center">
-      <h3>Choose what this user will have access too</h3>
-    </ion-label>
+    <div class="ion-text-left">
+      <p style="font-size:large">Please choose what the user will have access too.</p>
+    </div>
     <br/>
     <ion-item *ngFor="let permission of permissions">
       <ion-checkbox slot="start" ></ion-checkbox>{{permission.des}}
     </ion-item>
       
     <br/>
-    <ion-button expand="block" color="success">Create User Role</ion-button>
-</form>
+    <ion-button type="submit" color="success" [disabled]="!cUserRoleForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create User Role</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
+  </form>
 </ion-content>

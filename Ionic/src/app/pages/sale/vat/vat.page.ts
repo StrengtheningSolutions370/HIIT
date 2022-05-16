@@ -19,32 +19,4 @@ export class VATPage {
 
   constructor() { }
 
-//   async addVATModal() {
-//     const modal = await this.modalCtrl.create({
-//       component : AddVatComponent
-//      });
-//     await modal.present();
-// }
-
-//   async updateVATModal() {
-//     const modal = await this.modalCtrl.create({
-//       component : UpdateVatComponent
-//     });
-//     await modal.present();
-//   }
-
-//   async deleteVATModal() {
-//     const modal = await this.modalCtrl.create({
-//       component : DeleteVatComponent
-//     });
-//     await modal.present();
-//   }
-
-//   async viewVATModal() {
-//    const modal = await this.modalCtrl.create({
-//       component : ViewVatComponent
-//     });
-//     await modal.present();
-// }
-
 }

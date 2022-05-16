@@ -20,7 +20,8 @@ export class AddVenueComponent implements OnInit {
   });
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
-    public venueService: VenueService, private router:Router, private currentRoute:ActivatedRoute,private  alertCtrl: AlertController ) { }
+    public venueService: VenueService, private router: Router, private currentRoute: ActivatedRoute,
+    private  alertCtrl: AlertController ) { }
 
   get errorControl() {
     return this.cVenueForm.controls;
