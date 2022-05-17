@@ -15,13 +15,13 @@ export class AddVenueComponent implements OnInit {
   cVenueForm: FormGroup = this.formBuilder.group({
     venueName: ['', [Validators.required]],
     location: ['', [Validators.required]],
-    postalCode: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-    capacity: ['', [Validators.required, Validators.max(120), Validators.min(1)]]
+    postalCode: ['', [Validators.required,Validators.pattern('[0-9]{4}')]],
+    capacity: ['', [Validators.required, Validators.min(1)]]
   });
-  isSubmitted = false;
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
-    public venueService: VenueService, private router:Router, private currentRoute:ActivatedRoute,private  alertCtrl: AlertController ) { }
+    public venueService: VenueService, private router: Router, private currentRoute: ActivatedRoute,
+    private  alertCtrl: AlertController ) { }
 
   get errorControl() {
     return this.cVenueForm.controls;
@@ -32,10 +32,8 @@ export class AddVenueComponent implements OnInit {
   }
 
   submitForm() {
-    this.isSubmitted = true;
     if (!this.cVenueForm.valid){
       console.log('Please provide all required fields');
-      this.InvalidAlert();
       return false;
     }else{
       console.log(this.cVenueForm.value);
@@ -51,11 +49,10 @@ export class AddVenueComponent implements OnInit {
       console.log("CurrentRoute:ADD");
       console.log(this.currentRoute.url);
     }
-  }
+   }
 
   async sucAdd() {
     const toast = await this.toastCtrl.create({
-      //what message should display
       message: 'The Venue has been successfully added!',
       duration: 2000
     });
@@ -67,16 +64,7 @@ export class AddVenueComponent implements OnInit {
     this.modalCtrl.dismiss();
   };
 
-  async InvalidAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Invalid Input',
-      message: 'Please provide all required fields and ensure that the information is in the correct format',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-
-  async DuplicateAlert() {
+  async duplicateAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Venue Already Exists',
       message: 'The Venue Information entered already exists on the system',
@@ -85,7 +73,7 @@ export class AddVenueComponent implements OnInit {
     alert.present();
   }
 
-  async FailureAlert() {
+  async failureAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Could not create venue',
       message: 'There was an error updating the venue. Please try again',

@@ -8,10 +8,7 @@ import { TitlesPageRoutingModule } from './titles-routing.module';
 
 import { TitlesPage } from './titles.page';
 
-import { AddTitleComponent } from './add-title/add-title.component';
-import { UpdateTitleComponent } from './update-title/update-title.component';
-import { DeleteTitleComponent } from './delete-title/delete-title.component';
-import { ViewTitlesComponent } from './view-titles/view-titles.component';
+
 
 @NgModule({
   imports: [
@@ -20,6 +17,6 @@ import { ViewTitlesComponent } from './view-titles/view-titles.component';
     IonicModule,
     TitlesPageRoutingModule
   ],
-  declarations: [TitlesPage, AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent]
+  declarations: [TitlesPage]
 })
 export class TitlesPageModule {}

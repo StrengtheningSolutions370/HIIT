@@ -2,12 +2,17 @@
   <ion-toolbar>
     <ion-title>View {{venue.name}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <br/>
+  <div class="ion-text-center">
+    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following information is associated with the <br/> "{{venue.VENUE_NAME}}" venue</p>
+  
+
     <ion-item > 
       <ion-label>
         <h2>Venue Name:</h2>
@@ -34,4 +39,7 @@
         <p class="ion-text-start">{{venue.capacity}}</p>
       </ion-label>
     </ion-item>
+  </div>
+  <br>
+  <ion-button color="light" class="ion-float-right" style="margin-right:10%;width:30% " (click)="dismissModal()">Return</ion-button>
 </ion-content>

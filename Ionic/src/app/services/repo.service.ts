@@ -8,19 +8,19 @@ import { USER_ROLE } from '../models/userRole';
 @Injectable({
   providedIn: 'root'
 })
+
 export class RepoService {
   base = 'https://localhost:44383/api/';
   VenueController = 'Venues/'
 
-
   httpOptions = {
     headers: new HttpHeaders ({
       Accept: 'application/json',
-      ContentType: 'application/json'      
+      ContentType: 'application/json'
     }),
   };
 
-  constructor(public http: HttpClient) 
+  constructor(public http: HttpClient)
   {
     //CRUDS in this repo file need to be used by subscribing to them in the relevant service.
     //E.g to use getVenues(); it must be subscribed to in the venue service 
@@ -54,7 +54,7 @@ export class RepoService {
   createVenue(venue: Venue):Observable<any>{
     return this.http.post<any>(`${this.base}postVenue`,venue,this.httpOptions);
   }
-
+  //Get
   getVenues(): Observable<any>{
     console.log(`${this.base+this.VenueController}getVenues`);
 
@@ -64,7 +64,7 @@ export class RepoService {
   updateVenue(venueId: number, venue:Venue):Observable<any>{
     return this.http.put(`${this.base}putVenue?id=${venueId}`,venue, this.httpOptions);
   }
-
+  //Delete
   deleteVenue(venueId: number):Observable<any>{
     return this.http.delete(`${this.base}deleteVenue?id=${venueId}`,this.httpOptions);
   }

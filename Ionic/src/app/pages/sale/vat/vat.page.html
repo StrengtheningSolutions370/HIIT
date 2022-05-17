@@ -3,11 +3,12 @@
 
     <br/>
     <!--Searchbar (must make function to search)-->
-    <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search VAT'></ion-searchbar>
+    <ion-searchbar expand="block" placeholder='Search VAT...'></ion-searchbar>
     <br/><br/>
   
     <div class="ion-text-center">
-      <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addVATModal()">
+      <!-- (click)="addVATModal()" -->
+      <ion-button color="success" style="margin-left:30%;margin-right:30%" > 
         Add VAT
         <ion-icon name="add" size="medium"></ion-icon>
       </ion-button>
@@ -17,21 +18,40 @@
     <ion-grid *ngFor="let vat of vats">
       <ion-list > 
         <ion-item-sliding >
-          <ion-item button (click)="viewVATModal()" >
-            <ion-label>
-              <h2>{{vat.percentage}}</h2>
-              <p>Creation Date :  {{vat.year}}</p>
-            </ion-label>
+          <!-- (click)="viewVATModal()" -->
+          <ion-item button  >
+            <ion-icon name="calculator-outline" size="large" style="padding-left:5%"></ion-icon>
+            <ion-label style="padding-left:2% ;">
+              <h1>{{vat.percentage}}</h1>
+              <p style="font-size:large">Creation Date :  {{vat.year}}</p>
+            </ion-label >
+            <ion-icon name="chevron-back-outline" size="small"></ion-icon>
           </ion-item>
           <ion-item-options side="end" >
-            <!---->
-            <ion-item-option color="secondary" (click)="updateVATModal()"><ion-icon name="refresh"></ion-icon>Update </ion-item-option>
-            <!---->
-            <ion-item-option color="danger" (click)="deleteVATModal()"><ion-icon name="trash" size="medium"></ion-icon>Delete </ion-item-option>
+            <!-- (click)="updateVATModal()" -->
+            <ion-item-option color="secondary" >Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
+            <!-- (click)="deleteVATModal()" -->
+            <ion-item-option color="danger" >Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
     </ion-grid>
+
+    <div style="width:40%;margin-left:30%;margin-right: 30%;" class="ion-text-center">
+      <ion-card>
+        <ion-card-header>
+          <img src="../../assets/NoSearch.png" style="width: 40%;">
+          <h1><strong>Sorry! No Results Found :( </strong></h1>
+        </ion-card-header>
+        <ion-card-content>
+          <br/>
+          <h3>Your search for " " did not return any results.</h3>
+          <h3>Please check your spelling or try a different search criteria. </h3>
+          <br/>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
   </ion-content>
   
   

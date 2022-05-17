@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
-import { AddTitleComponent } from './add-title/add-title.component';
-import { UpdateTitleComponent } from './update-title/update-title.component';
-import { DeleteTitleComponent } from './delete-title/delete-title.component';
-import { ViewTitlesComponent } from './view-titles/view-titles.component';
 
 @Component({
   selector: 'app-titles',
@@ -29,33 +25,5 @@ export class TitlesPage {
   ];
 
   constructor(private modalCtrl: ModalController) { }
-
-  async addTitleModal() {
-    const modal = await this.modalCtrl.create({
-      component : AddTitleComponent
-     });
-    await modal.present();
-}
-
-  async updateTitleModal() {
-    const modal = await this.modalCtrl.create({
-      component : UpdateTitleComponent
-    });
-    await modal.present();
-  }
-
-  async deleteTitleModal() {
-    const modal = await this.modalCtrl.create({
-      component : DeleteTitleComponent
-    });
-    await modal.present();
-  }
-
-  async viewTitleModal() {
-   const modal = await this.modalCtrl.create({
-      component : ViewTitlesComponent
-    });
-    await modal.present();
-}
 
 }

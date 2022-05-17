@@ -5,8 +5,23 @@ import { SuppliersPage } from './suppliers.page';
 
 const routes: Routes = [
   {
+    path: 'tabs',
+    component: SuppliersPage,
+    children:[
+      {
+        path: 'supplier-page',
+        loadChildren: () => import('./supplier-page/supplier-page.module').then( m => m.SupplierPagePageModule)
+      },
+      {
+        path: 'supplier-order',
+        loadChildren: () => import('./supplier-order/supplier-order.module').then( m => m.SupplierOrderPageModule)
+      }
+    ]
+  },
+  {
     path: '',
-    component: SuppliersPage
+    redirectTo: 'tabs',
+    pathMatch: 'full'
   }
 ];
 

@@ -11,6 +11,7 @@ export class VenuePage implements ViewWillEnter {
   filter: string;
   venueList: any[] = [];
 
+
   constructor(public venueService: VenueService) { }
   
   ionViewWillEnter(): void {

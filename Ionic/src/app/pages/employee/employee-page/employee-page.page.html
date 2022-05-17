@@ -1,7 +1,7 @@
 <ion-content>
   
   <br/>
-  <ion-searchbar showCancelButton="focus" expand="block" placeholder='I am looking for..' cancelButtonText="Close"></ion-searchbar>
+  <ion-searchbar expand="block" placeholder='I am looking for...' cancelButtonText="Close"></ion-searchbar>
 
   <br/>
   <br/>
@@ -14,7 +14,7 @@
   </div>
   
   <ion-grid>
-    <div style="display: inline-block;width: 330px;height: 200px;margin-bottom: 5px;" *ngFor="let employee of employees">
+    <div style="display: inline-block;width: 310px;height: 200px;margin-bottom: 5px;" *ngFor="let employee of employees">
       <ion-card >
         <div>
           <ion-card-header >
@@ -48,9 +48,12 @@
             </ion-row>
           </ion-card-content>
       </ion-card>
+    <!--<mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons> </mat-paginator-->
     </div>
   </ion-grid>
+
 </ion-content>
+
 
 
 
