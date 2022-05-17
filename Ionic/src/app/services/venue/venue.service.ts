@@ -8,6 +8,8 @@ import { AddVenueComponent } from 'src/app/pages/venue/add-venue/add-venue.compo
 import { DeleteVenueComponent } from 'src/app/pages/venue/delete-venue/delete-venue.component';
 import { UpdateVenueComponent } from 'src/app/pages/venue/update-venue/update-venue.component';
 import { ViewVenueInfoComponent } from 'src/app/pages/venue/view-venue-info/view-venue-info.component';
+import { ConfirmVenueComponent } from 'src/app/pages/venue/confirm-venue/confirm-venue.component';
+import { AssociativeVenueComponent } from 'src/app/pages/venue/associative-venue/associative-venue.component';
 import { RepoService } from '../repo.service';
 
 @Injectable({
@@ -91,7 +93,7 @@ export class VenueService {
   //Display the delete venue modal.
   //This method receives the selected venue object, from the venue page, in the modal through the componentProps.
   async deleteVenueInfoModal(venue: VENUE) {
-    console.log("VenueService: DeleteVenueModalCall");
+    console.log('VenueService: DeleteVenueModalCall');
     this.tempVenue = new VENUE();
     this.tempVenue = Object.assign(venue);
     console.log(this.tempVenue);
@@ -113,7 +115,7 @@ export class VenueService {
     this.tempVenue = Object.assign(venue);
     console.log(this.tempVenue);
     const modal = await this.modalCtrl.create({
-      component: ViewVenueInfoComponent,
+      component: ConfirmVenueComponent,
       componentProps: {
         venue:this.tempVenue
       }

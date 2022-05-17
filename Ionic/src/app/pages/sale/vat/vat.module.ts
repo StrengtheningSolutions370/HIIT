@@ -8,10 +8,6 @@ import { VATPageRoutingModule } from './vat-routing.module';
 
 import { VATPage } from './vat.page';
 
-import { AddVatComponent } from './add-vat/add-vat.component';
-import { UpdateVatComponent } from './update-vat/update-vat.component';
-import { DeleteVatComponent } from './delete-vat/delete-vat.component';
-import { ViewVatComponent } from './view-vat/view-vat.component';
 
 @NgModule({
   imports: [
@@ -20,6 +16,6 @@ import { ViewVatComponent } from './view-vat/view-vat.component';
     IonicModule,
     VATPageRoutingModule
   ],
-  declarations: [VATPage, AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent ]
+  declarations: [VATPage]
 })
 export class VATPageModule {}

@@ -20,8 +20,8 @@ export class UpdateVenueComponent implements ViewWillEnter {
   uVenueForm: FormGroup = new FormGroup({
     venueName: new FormControl('', [Validators.required]),
     location: new FormControl('', [Validators.required]),
-    postalCode: new FormControl('', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]),
-    capacity: new FormControl('', [Validators.required, Validators.max(120), Validators.min(1)])
+    postalCode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{4}')]),
+    capacity: new FormControl('', [Validators.required, Validators.min(1)])
   });
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public fb: FormBuilder,
@@ -43,32 +43,28 @@ export class UpdateVenueComponent implements ViewWillEnter {
   submitForm() {
     if (!this.uVenueForm.valid) { //If the form has any validation errors, the form will not be submitted.
     if (!this.uVenueForm.valid){
-      this.invalidAlert();
+      console.log('Please provide all required fields');
+      // this.InvalidAlert();
       return false;
-    } else {
-      //Creating the temporary record to be sent the createVenue() method in the Venue Service.
-      const temp = {
-        VENUE_ID: this.venue.VENUE_ID,
-        VENUE_NAME: this.uVenueForm.value['venueName'],
-        VENUE_ADDRESS: this.uVenueForm.value['location'],
-        VENUE_POSTAL_CODE: this.uVenueForm.value['postalCode'],
-        VENUE_CAPACITY: this.uVenueForm.value['capacity']
+    }
+    else
+    {
+      console.log('InsideUpdateSubmit:');
+      const temp = new VENUE();
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        temp.VENUE_ID = this.venue.VENUE_ID,
+        temp.VENUE_NAME= this.uVenueForm.value.venueName;
+        temp.VENUE_ADDRESS = this.uVenueForm.value['location'];
+        temp.VENUE_POSTAL_CODE = this.uVenueForm.value['postalCode'];
+        temp.VENUE_CAPACITY = this.uVenueForm.value['capacity'];
+        this.venueService.confirmVenueModal(temp);
       };
-      this.venueService.updateVenue(temp);
-      this.dismissModal();
-      this.sucUpdate();
-      this.ionViewWillEnter();
-    };
-  }
-}
+      // this.venueService.updateVenue(temp);
+      // this.dismissModal();
+      // this.sucUpdate();
+      // this.ionViewWillEnter();
+    }
 
-  async sucUpdate() {
-    const toast = await this.toastCtrl.create({
-      message: 'The Venue has been successfully updated!',
-      duration: 2000
-    });
-    toast.present();
-  }
 
   dismissModal(){
     this.modalCtrl.dismiss(this.venue);
