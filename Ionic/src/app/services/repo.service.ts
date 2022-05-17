@@ -15,11 +15,11 @@ export class RepoService {
   httpOptions = {
     headers: new HttpHeaders ({
       Accept: 'application/json',
-      ContentType: 'application/json'      
+      ContentType: 'application/json'
     }),
   };
 
-  constructor(public http: HttpClient) 
+  constructor(public http: HttpClient)
   {
     //CRUDS in this repo file need to be used by subscribing to them in the relevant service.
     //E.g to use getVenues(); it must be subscribed to in the venue service 
