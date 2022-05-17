@@ -29,15 +29,15 @@
   </div>
   <br/>
   <ion-grid *ngIf="venueService.getVenues().length > 0">
-    <ion-list *ngFor="let venue of venueList | filter:filter, let i = index"> 
+    <ion-list *ngFor="let venue of venueService.getVenues() | filter:filter, let i = index"> 
       <ion-item-sliding >
         <ion-item button (click)="venueService.viewVenueInfoModal(venue)">
           <ion-label>
-            <h1>{{venue.VENUE_NAME}}</h1> <br/>
+            <h1>{{venue.name}}</h1> <br/>
             <p>
-              Location:  {{venue.VENUE_ADDRESS}}<br/>
-              Postal Code: {{venue.VENUE_POSTAL_CODE}} <br/>
-              Capacity: {{venue.VENUE_CAPACITY}} 
+              Location:  {{venue.address}}<br/>
+              Postal Code: {{venue.postalCode}} <br/>
+              Capacity: {{venue.capacity}} 
             </p>
           </ion-label>
         </ion-item>

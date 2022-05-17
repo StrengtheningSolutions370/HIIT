@@ -2,7 +2,7 @@ import { Component, OnInit  } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
-import { VENUE } from 'src/app/models/venue';
+import { Venue } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
 @Component({
@@ -40,10 +40,10 @@ export class AddVenueComponent implements OnInit {
     }else{
       console.log(this.cVenueForm.value);
       var temp = {
-        VENUE_NAME: this.cVenueForm.value['venueName'],
-        VENUE_ADDRESS: this.cVenueForm.value['location'],
-        VENUE_POSTAL_CODE: this.cVenueForm.value['postalCode'],
-        VENUE_CAPACITY: this.cVenueForm.value['capacity']        
+        Name: this.cVenueForm.value['venueName'],
+        Address: this.cVenueForm.value['location'],
+        PostalCode: this.cVenueForm.value['postalCode'],
+        Capacity: this.cVenueForm.value['capacity']        
       };
       this.venueService.createVenue(temp);
       this.dismissModal();

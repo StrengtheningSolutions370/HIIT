@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
-import { VENUE } from 'src/app/models/venue';
+import { Venue } from 'src/app/models/venue';
 import { AddVenueComponent } from 'src/app/pages/venue/add-venue/add-venue.component';
 import { DeleteVenueComponent } from 'src/app/pages/venue/delete-venue/delete-venue.component';
 import { UpdateVenueComponent } from 'src/app/pages/venue/update-venue/update-venue.component';
@@ -12,29 +11,33 @@ import { RepoService } from '../repo.service';
   providedIn: 'root'
 })
 export class VenueService {
-  private venueList: VENUE[] = [];
+  private venueList: Venue[] = [];
   private tempVenueList: [];
-  private tempVenue: VENUE;
+  private tempVenue: Venue;
 
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
     this.repo.getVenues().subscribe(result =>{
+      console.log(result);
       this.tempVenueList = [];
       this.tempVenueList = Object.assign(result);
+      console.log(this.tempVenueList);
       this.tempVenueList.forEach(element => {
-        this.tempVenue = new VENUE();
-        this.tempVenue.SCHEDULEs = element['SCHEDULEs'];
-        this.tempVenue.VENUE_ID = element['VENUE_ID'];        
-        this.tempVenue.VENUE_NAME = element['VENUE_NAME'];
-        this.tempVenue.VENUE_ADDRESS = element['VENUE_ADDRESS'];
-        this.tempVenue.VENUE_POSTAL_CODE = element['VENUE_POSTAL_CODE'];
-        this.tempVenue.VENUE_CAPACITY = element['VENUE_CAPACITY'];
+        this.tempVenue = new Venue();
+        
+        this.tempVenue.venueID = element['venueID'];        
+        this.tempVenue.name = element['name'];
+        this.tempVenue.address = element['address'];
+        this.tempVenue.postalCode = element['postalCode'];
+        this.tempVenue.capacity = element['capacity'];
+        this.tempVenue.schedules = element['schedules'];
+        console.log(this.tempVenue);
         this.venueList.push(this.tempVenue);
       });
       console.log("VenueService: subscribe -GetVenue()",this.venueList);
     } );
    }
 
-   getVenues(): VENUE[] {
+   getVenues(): Venue[] {
     return this.venueList;
    }
 
@@ -50,7 +53,7 @@ export class VenueService {
    updateVenue(venue:any){
      console.log("venueService: Repo-UpdateVenue");
      console.log(venue);
-     this.repo.updateVenue(venue['VENUE_ID'],venue).subscribe(result =>
+     this.repo.updateVenue(venue['venueID'],venue).subscribe(result =>
       console.log(result));
    }
 
@@ -67,9 +70,9 @@ export class VenueService {
     await modal.present();
   }
 
-  async updateVenueInfoModal(venue: VENUE) {
+  async updateVenueInfoModal(venue: Venue) {
     console.log("VenueService: UpdateVenueModalCall");
-    this.tempVenue = new VENUE();
+    this.tempVenue = new Venue();
     this.tempVenue = Object.assign(venue);
     console.log(this.tempVenue);
     const modal = await this.modalCtrl.create({
@@ -83,9 +86,9 @@ export class VenueService {
 
   //just testing 
 
-  async deleteVenueInfoModal(venue: VENUE) {
+  async deleteVenueInfoModal(venue: Venue) {
     console.log("VenueService: DeleteVenueModalCall");
-    this.tempVenue = new VENUE();
+    this.tempVenue = new Venue();
     this.tempVenue = Object.assign(venue);
     console.log(this.tempVenue);
     console.log( this.tempVenue)
@@ -98,9 +101,9 @@ export class VenueService {
     await modal.present();
   }
 
-  async viewVenueInfoModal(venue: VENUE) {
+  async viewVenueInfoModal(venue: Venue) {
     console.log("VenueService: ViewVenueModalCall");
-    this.tempVenue = new VENUE();
+    this.tempVenue = new Venue();
     this.tempVenue = Object.assign(venue);
     console.log(this.tempVenue);
     const modal = await this.modalCtrl.create({

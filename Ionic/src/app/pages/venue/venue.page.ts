@@ -12,7 +12,9 @@ export class VenuePage implements ViewWillEnter {
   venueList: any[] = [];
 
   constructor(public venueService: VenueService) { }
+  
   ionViewWillEnter(): void {
     this.venueList = this.venueService.getVenues();
+    console.log(this.venueList);
   }
 }

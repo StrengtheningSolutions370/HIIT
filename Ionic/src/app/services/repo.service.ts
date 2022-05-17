@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { VENUE } from 'src/app/models/venue';
+import { Venue } from 'src/app/models/venue';
 import { USER_ROLE } from '../models/userRole';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RepoService {
-  base = 'https://localhost:44353/api/';
+  base = 'https://localhost:44383/api/';
+  VenueController = 'Venues/'
 
 
   httpOptions = {
@@ -47,16 +48,20 @@ export class RepoService {
   userRoleExists(userId: number):Observable<any>{
     return this.http.delete(`${this.base}userroleexists?id=${userId}`,this.httpOptions);
   }
+
+
   //Venue:
-  createVenue(venue: VENUE):Observable<any>{
+  createVenue(venue: Venue):Observable<any>{
     return this.http.post<any>(`${this.base}postVenue`,venue,this.httpOptions);
   }
 
   getVenues(): Observable<any>{
-    return this.http.get(`${this.base}getVenues`, this.httpOptions);
+    console.log(`${this.base+this.VenueController}getVenues`);
+
+    return this.http.get(`${this.base+this.VenueController}getVenues`, this.httpOptions);
   }
 
-  updateVenue(venueId: number, venue:VENUE):Observable<any>{
+  updateVenue(venueId: number, venue:Venue):Observable<any>{
     return this.http.put(`${this.base}putVenue?id=${venueId}`,venue, this.httpOptions);
   }
 

@@ -3,7 +3,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
-import { VENUE } from 'src/app/models/venue';
+import { Venue } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   styleUrls: ['./update-venue.component.scss'],
 })
 export class UpdateVenueComponent implements ViewWillEnter {
-  @Input() venue: VENUE;
+  @Input() venue: Venue;
   
   uVenueForm: FormGroup = new FormGroup({
     venueName: new FormControl('', [Validators.required]),
@@ -31,10 +31,10 @@ export class UpdateVenueComponent implements ViewWillEnter {
   ionViewWillEnter() {
       console.log("UpdateVenue-ViewWillEnter");
       console.log(this.venue);
-      this.uVenueForm.controls.venueName.setValue(this.venue.VENUE_NAME);
-      this.uVenueForm.controls.location.setValue(this.venue.VENUE_ADDRESS);
-      this.uVenueForm.controls.postalCode.setValue(this.venue.VENUE_POSTAL_CODE);
-      this.uVenueForm.controls.capacity.setValue(this.venue.VENUE_CAPACITY);
+      this.uVenueForm.controls.venueName.setValue(this.venue.name);
+      this.uVenueForm.controls.location.setValue(this.venue.address);
+      this.uVenueForm.controls.postalCode.setValue(this.venue.postalCode);
+      this.uVenueForm.controls.capacity.setValue(this.venue.capacity);
   }
 
   
@@ -52,11 +52,11 @@ export class UpdateVenueComponent implements ViewWillEnter {
     {
       console.log('InsideUpdateSubmit:');
       var temp = {
-        VENUE_ID: this.venue.VENUE_ID,
-        VENUE_NAME: this.uVenueForm.value['venueName'],
-        VENUE_ADDRESS: this.uVenueForm.value['location'],
-        VENUE_POSTAL_CODE: this.uVenueForm.value['postalCode'],
-        VENUE_CAPACITY: this.uVenueForm.value['capacity']        
+        VenueID: this.venue.venueID,
+        Name: this.uVenueForm.value['venueName'],
+        Address: this.uVenueForm.value['location'],
+        PostalCode: this.uVenueForm.value['postalCode'],
+        Capacity: this.uVenueForm.value['capacity']        
       };
       this.venueService.updateVenue(temp);
       this.dismissModal();
