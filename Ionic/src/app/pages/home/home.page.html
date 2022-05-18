@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-item>
+        <img src="../../assets/Logo.jpg" width="100px" height="60px">
+        <!--Can we change this dynamically when switching between tabs?-->
+        <ion-title>Home Page</ion-title>
+      </ion-item>
+  
+      <!--Menu toggle button that will display the menu-->
+      <ion-buttons slot="start">
+        <ion-menu-button menu="mainMenu"></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <!--Add the user name here-->
+    <h1>Hello Stacey</h1>
+    <p>Since the last time you logged in there were : </p>
+  
+    <ion-row>
+    <ion-col size="12" size-md>
+      <ion-card>
+        <ion-card-title>
+          <br/>
+          <!--Count requests-->
+          2
+          <br/>
+        </ion-card-title>
+        <ion-card-subtitle>
+          Client(s) requested to upgrade to member
+        </ion-card-subtitle>
+      </ion-card>
+    </ion-col>
+  
+    <ion-col size="12" size-md>
+      <ion-card>
+        <ion-card-title>
+          <br/>
+          <!--Count Bookings-->
+          8
+          <br/>
+        </ion-card-title>
+        <ion-card-subtitle>
+          Booking(s) were made for trainer session(s)
+        </ion-card-subtitle>
+      </ion-card>
+    </ion-col>
+  
+    <ion-col size="12" size-md>
+      <ion-card>
+        <ion-card-title>
+          <br/>
+          <!--Count checkouts-->
+          1
+          <br/>
+        </ion-card-title>
+        <ion-card-subtitle>
+          Complete checkout(s)
+        </ion-card-subtitle>
+      </ion-card>
+    </ion-col>
+  
+    <ion-col size="12" size-md>
+      <ion-card>
+        <ion-card-title>
+          <br/>
+          <!--Count sale refund-->
+          0
+          <br/>
+        </ion-card-title>
+        <ion-card-subtitle>
+          Request(s) for a sale refund
+        </ion-card-subtitle>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  
+  <!--//add mail button and bell button for sale refund and member requests-->
+</ion-grid>
+
+</ion-content>
+<ion-footer style="margin-left:20px;margin-bottom: 10px;">
+  Bester Strength and Conditioning | info@besterstrengthandconditioning.co.za
+  <br>
+</ion-footer>

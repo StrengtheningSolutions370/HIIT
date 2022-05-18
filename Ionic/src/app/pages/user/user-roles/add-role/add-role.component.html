@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>New User Role Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--This modal is not complete, please check if it displays like "AddVenue"-->
+  <!--Check the SCSS, TS AND HTML-->
+
+    <form [formGroup]="cUserRoleForm" (ngSubmit)="submitForm()">
+
+    <br/>    
+    
+    <div class="ion-text-center">
+      <p style="font-size:large">Please fill in the User Role information below.</p>
+    </div>
+        
+    <ion-item>
+      <ion-label position="floating">Name:</ion-label>
+      <ion-input formControlName="userRoleName" type="text" required="" id="userRoleName"></ion-input>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.userRoleName.errors?.required && cUserRoleForm.get('userRoleName').touched">
+      User role name is required.<br/>
+    </span>
+
+    <ion-item>
+      <ion-label position="floating">Description:</ion-label>
+      <ion-textarea formControlName="userRoleDes" required="" id="userRoleDes"></ion-textarea>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.userRoleDes.errors?.required && cUserRoleForm.get('userRoleDes').touched">
+      User role description is required.<br/>
+    </span>
+
+    <br/>
+    <div class="ion-text-left">
+      <p style="font-size:large">Please choose what the user will have access too.</p>
+    </div>
+    <br/>
+    <ion-item *ngFor="let permission of permissions">
+      <ion-checkbox slot="start" ></ion-checkbox>{{permission.des}}
+    </ion-item>
+      
+    <br/>
+    <ion-button type="submit" color="success" [disabled]="!cUserRoleForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create User Role</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
+  </form>
+</ion-content>
