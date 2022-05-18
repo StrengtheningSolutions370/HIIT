@@ -4,8 +4,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
-import { async } from 'rxjs';
-import { VENUE } from 'src/app/models/venue';
+import { Venue } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
 @Component({
@@ -14,9 +13,8 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   styleUrls: ['./update-venue.component.scss'],
 })
 export class UpdateVenueComponent implements ViewWillEnter {
-  // Receiving the venue object from the main venue page
-  @Input() venue: VENUE;
-
+  @Input() venue: Venue;
+  
   uVenueForm: FormGroup = new FormGroup({
     venueName: new FormControl('', [Validators.required]),
     location: new FormControl('', [Validators.required]),
@@ -33,11 +31,13 @@ export class UpdateVenueComponent implements ViewWillEnter {
   }
 
   ionViewWillEnter() {
+      console.log("UpdateVenue-ViewWillEnter");
+      console.log(this.venue);
+      this.uVenueForm.controls.venueName.setValue(this.venue.name);
+      this.uVenueForm.controls.location.setValue(this.venue.address);
+      this.uVenueForm.controls.postalCode.setValue(this.venue.postalCode);
+      this.uVenueForm.controls.capacity.setValue(this.venue.capacity);
     //Populate the update venue form with the values received from the selected venue object in the main page.
-    this.uVenueForm.controls.venueName.setValue(this.venue.VENUE_NAME);
-    this.uVenueForm.controls.location.setValue(this.venue.VENUE_ADDRESS);
-    this.uVenueForm.controls.postalCode.setValue(this.venue.VENUE_POSTAL_CODE);
-    this.uVenueForm.controls.capacity.setValue(this.venue.VENUE_CAPACITY);
   }
 
   submitForm() {
@@ -50,23 +50,30 @@ export class UpdateVenueComponent implements ViewWillEnter {
     else
     {
       console.log('InsideUpdateSubmit:');
-      const temp = new VENUE();
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        temp.VENUE_ID = this.venue.VENUE_ID,
-        temp.VENUE_NAME= this.uVenueForm.value.venueName;
-        temp.VENUE_ADDRESS = this.uVenueForm.value['location'];
-        temp.VENUE_POSTAL_CODE = this.uVenueForm.value['postalCode'];
-        temp.VENUE_CAPACITY = this.uVenueForm.value['capacity'];
-        this.venueService.confirmVenueModal(temp);
+      var temp = {
+        venueID: this.venue.venueID,
+        name: this.uVenueForm.value['venueName'],
+        address: this.uVenueForm.value['location'],
+        postalCode: this.uVenueForm.value['postalCode'],
+        capacity: this.uVenueForm.value['capacity']        
       };
-      // this.venueService.updateVenue(temp);
-      // this.dismissModal();
-      // this.sucUpdate();
-      // this.ionViewWillEnter();
+       this.venueService.updateVenue(temp);
+       this.dismissModal();
+       this.sucUpdate();
+       this.ionViewWillEnter();
     }
+  }
 
+   async sucUpdate() {
+     const toast = await this.toastCtrl.create({
+       message: 'The Venue has been successfully updated!',
+       duration: 2000,
+       position : 'top'
+     });
+     toast.present();
+   }
 
-  dismissModal(){
+  dismissModal() {
     this.modalCtrl.dismiss(this.venue);
   }
 

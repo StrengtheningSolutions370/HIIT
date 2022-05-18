@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, ViewWillEnter, AlertController } from '@ionic/angular';
-import { VENUE } from 'src/app/models/venue';
+import { Venue } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
 @Component({
@@ -12,8 +12,7 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   styleUrls: ['./delete-venue.component.scss'],
 })
 export class DeleteVenueComponent implements ViewWillEnter {
-  // Receiving the venue object from the main venue page
-  @Input() venue: VENUE;
+  @Input() venue: Venue;
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public venueService: VenueService, private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController) { }
@@ -50,6 +49,7 @@ export class DeleteVenueComponent implements ViewWillEnter {
   //Close the modal and navigate back to the venue page.
   async dismissModal() {
     this.modalCtrl.dismiss();
-    await this.router.navigate(['../venue'],{relativeTo: this.route});
+    console.log(this.route);
+    await this.router.navigate(['../venues'],{relativeTo: this.route});
   }
 }

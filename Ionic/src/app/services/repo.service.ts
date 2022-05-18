@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { VENUE } from 'src/app/models/venue';
+import { Venue } from 'src/app/models/venue';
 import { USER_ROLE } from '../models/userRole';
 
 @Injectable({
@@ -12,7 +12,8 @@ import { USER_ROLE } from '../models/userRole';
 })
 
 export class RepoService {
-  base = 'https://localhost:44353/api/';
+  base = 'https://localhost:44383/api/';
+  VenueController = 'Venues/'
 
   httpOptions = {
     headers: new HttpHeaders ({
@@ -27,7 +28,7 @@ export class RepoService {
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
 
-  //USER_ROLE:
+  //UserRole:
   //------
   //Create
   createUserRole(user_role: USER_ROLE): Observable<any>{
@@ -50,23 +51,34 @@ export class RepoService {
     return this.http.delete(`${this.base}userroleexists?id=${userId}`,this.httpOptions);
   }
 
-  //VENUE:
+
+  //Venue:
   //------
   //Create
-  createVenue(venue: VENUE): Observable<any>{
-    return this.http.post<any>(`${this.base}postVenue`,venue,this.httpOptions);
-  }
-  //Get
-  getVenues(): Observable<any>{
-    return this.http.get(`${this.base}getVenues`, this.httpOptions);
+  createVenue(venue: any):Observable<any>{
+    return this.http.post<any>(`${this.base+this.VenueController}add`,venue,this.httpOptions);
   }
   //Update
-  updateVenue(venueId: number, venue: VENUE): Observable<any>{
-    return this.http.put(`${this.base}putVenue?id=${venueId}`,venue, this.httpOptions);
+  updateVenue(venueId: number, venue:Venue):Observable<any>{
+    return this.http.put(`${this.base+this.VenueController}update?id=${venueId}`,venue, this.httpOptions);
   }
   //Delete
-  deleteVenue(venueId: number): Observable<any>{
-    return this.http.delete(`${this.base}deleteVenue?id=${venueId}`,this.httpOptions);
+  deleteVenue(venueId: number):Observable<any>{
+    return this.http.delete(`${this.base+this.VenueController}delete?id=${venueId}`,this.httpOptions);
   }
+  //GetAll
+  getVenues(): Observable<any>{
+    return this.http.get(`${this.base+this.VenueController}getAll`, this.httpOptions);
+  }
+  //GetMatch
+  getMatch(input: string): Observable<any>{
+    return this.http.get(`${this.base+this.VenueController}getMatch?input=${input}`, this.httpOptions);
+  }
+  //Exists
+  exists(id: number): Observable<any>{
+    return this.http.get(`${this.base+this.VenueController}exists?id=${id}`, this.httpOptions);
+  }
+
+
 }
 
