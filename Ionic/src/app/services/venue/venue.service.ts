@@ -13,21 +13,20 @@ import { RepoService } from '../repo.service';
   providedIn: 'root'
 })
 export class VenueService {
-  private _venueList: Venue[] = [];
+  modalData: any;
   //Creating a venueList for all the venues in the service.
+  private _venueList: Venue[] = [];
 
   get venueList():Venue[]{
     return this._venueList;
   }
 
+
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) { 
     this.repo.getVenues().subscribe(result => {
-      console.log("NGONIT- Venue Service: GetVenues");
+      console.log("NGONINIT- Venue Service: GetVenues");
       console.log(result);
-      var tempList = [];
-      tempList = Object.assign(result);
-      console.log(tempList);
-      tempList.forEach(element => {
+      result.forEach(element => {
         let tempVenue = new Venue();        
         tempVenue.venueID = element['venueID'];        
         tempVenue.name = element['name'];
@@ -37,7 +36,7 @@ export class VenueService {
         tempVenue.schedules = element['schedules'];
         console.log(tempVenue);
         this.venueList.push(tempVenue);
-    //Calling the venues from the repo and API, to populate the venueList within the venue service.
+      //Calling the venues from the repo and API, to populate the venueList within the venue service.
       });
     })
   }
@@ -70,6 +69,12 @@ export class VenueService {
     const modal = await this.modalCtrl.create({
       component: AddVenueComponent
     });
+    // modal.onDidDismiss().then((venue) => {
+    //   if (venue !== null){
+    //     this.venueList = this.venueList.push(venue);
+    //     console.log('Modal Data: ' +this.modalData.data);
+    //   }
+    // });
     await modal.present();
   }
 
@@ -143,7 +148,7 @@ export class VenueService {
         venue:tempVenue
       }
     });
-    await modal.present();
+    return await modal.present();
   }
 
 }

@@ -63,6 +63,7 @@ export class UpdateVenueComponent implements ViewWillEnter {
        this.ionViewWillEnter();
     }
   }
+}
 
    async sucUpdate() {
      const toast = await this.toastCtrl.create({

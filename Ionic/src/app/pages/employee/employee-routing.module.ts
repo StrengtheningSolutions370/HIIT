@@ -9,26 +9,26 @@ const routes: Routes = [
     component: EmployeePage,
     children:[
       {
-        path: '/employee-type',
+        path: 'employee-page',
+        loadChildren: () => import('./employee-page/employee-page.module').then( m => m.EmployeePagePageModule)
+      },
+      {
+        path: 'employee-type',
         loadChildren: () => import('./employee-type/employee-type.module').then( m => m.EmployeeTypePageModule)
       },
       {
-        path: '/employee-type',
+        path: 'qualification',
         loadChildren: () => import('./qualification/qualification.module').then( m => m.QualificationPageModule)
       },
       {
-        path: '/qualification-type',
+        path: 'qualification-type',
         loadChildren: () => import('./qualification-type/qualification-type.module').then( m => m.QualificationTypePageModule)
-      },
-      {
-        path: '/employee-page',
-        loadChildren: () => import('./employee-page/employee-page.module').then( m => m.EmployeePagePageModule)
       },
     ]
   },
   {
     path: '',
-    redirectTo: '/employee/employee-page',
+    redirectTo: 'tabs/employee-page',
     pathMatch: 'full'
   }
 ];
