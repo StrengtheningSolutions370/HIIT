@@ -38,10 +38,11 @@ export class AddVenueComponent implements OnInit {
     }else{
       console.log(this.cVenueForm.value);
       var temp = {
-        Name: this.cVenueForm.value['venueName'],
-        Address: this.cVenueForm.value['location'],
-        PostalCode: this.cVenueForm.value['postalCode'],
-        Capacity: this.cVenueForm.value['capacity']        
+        name: this.cVenueForm.value['venueName'],
+        address: this.cVenueForm.value['location'],
+        postalCode: this.cVenueForm.value['postalCode'],
+        capacity: this.cVenueForm.value['capacity'],
+        schedules: []        
       };
       this.venueService.createVenue(temp);
       this.dismissModal();

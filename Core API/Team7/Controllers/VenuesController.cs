@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,53 +15,122 @@ namespace Team7.Controllers
     [ApiController]
     public class VenuesController : ControllerBase
     {
-        private IVenueRepo VenueRepo;
-
+        private readonly IVenueRepo VenueRepo;
         public VenuesController(IVenueRepo venueRepo)
         {
             this.VenueRepo = venueRepo;
         }
-        // GET: api/<VenuesController>
-        [HttpGet]
-        [Route("getVenues")]
-        public async Task<IActionResult> getVenues()
+
+        // POST api/venues/add
+        [HttpPost]
+        [Route("add")]
+        public async Task<IActionResult> PostVenue(Venue venue)
         {
             try
             {
-                var venueList = await VenueRepo.GetAllVenuesAsync();
-                return Ok(venueList);
-            } 
-            catch (Exception)
+                VenueRepo.Add(venue);
+                await VenueRepo.SaveChangesAsync();
+                return Ok(venue);
+            }
+            catch (Exception err)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Stupid ERROR Fire me");
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
 
         }
 
-        // GET api/<VenuesController>/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> getVenue(int id)
+        // PUT api/venues/update/5
+        [HttpPut]
+        [Route("update")]
+        public async Task<IActionResult> PutVenue(int id, [FromBody] Venue venue)
         {
-            var venue = await VenueRepo.GetVenueAsync(id);
-            return venue;
+            var toUpdate = await VenueRepo.GetVenueIdAsync(id);
+            if (toUpdate == null)
+            {
+                return NotFound("Could not find existing Venue with id:" + id);
+            }
+            try
+            {
+                toUpdate.Address = venue.Address;
+                toUpdate.Name = venue.Name;
+                toUpdate.PostalCode = venue.PostalCode;
+                toUpdate.Capacity = venue.Capacity;
+                //VenueRepo.Update<Venue>(tempVenue);
+                await VenueRepo.SaveChangesAsync();
+                return Ok("Successfully updated");
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
         }
 
-        // POST api/<VenuesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+
+        // DELETE api/Venues/delete/5
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<IActionResult> DeleteVenue(int id)
         {
+            var tempVenue = await VenueRepo.GetVenueIdAsync(id);
+            if (tempVenue == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                VenueRepo.Delete<Venue>(tempVenue);
+                await VenueRepo.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
         }
 
-        // PUT api/<VenuesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+
+        // GET: api/venues/getAll
+        [HttpGet]
+        [Route("getAll")]
+        public async Task<IActionResult> GetVenues()
         {
+            try
+            {
+                var venueList = await VenueRepo.GetAllVenuesAsync();
+                if (venueList == null)
+                {
+                    return NotFound();
+                }
+                return Ok(venueList);
+            } 
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
         }
 
-        // DELETE api/<VenuesController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // GET: api/venues/getMatch/{input}
+        [HttpGet]
+        [Route("getMatch")]
+        public async Task<IActionResult> GetMatchingVenues(string input)
         {
+            try
+            {
+                var venue = await VenueRepo.GetVenuesAsync(input);
+                return Ok(venue);
+            }
+            catch (Exception err)
+            {
+               return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+            
+        }
+
+        [HttpGet]
+        [Route("exists")]
+        public async Task<Venue> VenueExists(int id)
+        {
+            return await VenueRepo.GetVenueIdAsync(id);
         }
     }
 }

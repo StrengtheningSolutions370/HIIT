@@ -5984,11 +5984,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Desktop\\Core API\\Team7\\Team7.csproj",
+      "projectUniqueName": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\Core API\\Team7\\Team7.csproj",
       "projectName": "Team7",
-      "projectPath": "D:\\Desktop\\Core API\\Team7\\Team7.csproj",
+      "projectPath": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\Core API\\Team7\\Team7.csproj",
       "packagesPath": "C:\\Users\\Luke partridge\\.nuget\\packages\\",
-      "outputPath": "D:\\Desktop\\Core API\\Team7\\obj\\",
+      "outputPath": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\Core API\\Team7\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Luke partridge\\AppData\\Roaming\\NuGet\\NuGet.Config",

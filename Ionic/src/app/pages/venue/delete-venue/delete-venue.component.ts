@@ -48,7 +48,7 @@ export class DeleteVenueComponent implements ViewWillEnter {
   async dismissModal() {
     this.modalCtrl.dismiss();
     console.log(this.route);
-    await this.router.navigate(['../venue'],{relativeTo: this.route});
+    await this.router.navigate(['../venues'],{relativeTo: this.route});
   }
 
 }

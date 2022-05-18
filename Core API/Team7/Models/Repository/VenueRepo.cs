@@ -9,49 +9,66 @@ namespace Team7.Models.Repository
 {
     public class VenueRepo : IVenueRepo
     {
-        private AppDB DB;
+        readonly private AppDB DB;
 
         public VenueRepo(AppDB appDatabaseContext)
         {
             DB = appDatabaseContext;
         }
+
         public void Add<T>(T Entity) where T : class
         {
-            try
-            {
-                DB.Add(Entity);
-            } catch (Exception)
-            {
-                
-            }
+            DB.Add(Entity);
         }
 
         public void Delete<T>(T Entity) where T : class
         {
             DB.Remove(Entity);
         }
+        public void Update<T>(T Entity) where T : class
+        {
+            DB.Update(Entity);
+        }
+
 
         public async Task<Venue[]> GetAllVenuesAsync()
         {
-             IQueryable<Venue> query = DB.Venues;
+            IQueryable<Venue> query = DB.Venues;
             return await query.ToArrayAsync();
+
         }
 
-        public async Task<Venue> GetVenueAsync(string input)
+        public async Task<Venue[]> GetVenuesAsync(string input)
         {
             IQueryable<Venue> query = DB.Venues.Where(v => v.Name == input || v.Address == input);
-            return await query.FirstOrDefaultAsync();
+            if (!query.Any())
+            {
+                return null;
+            } else
+            {
+                return await query.ToArrayAsync();
+            }
 
+        }
+
+        public async Task<Venue> GetVenueIdAsync(int id)
+        {
+            IQueryable<Venue> query = DB.Venues.Where(v => v.VenueID == id);
+            if (!query.Any())
+            {
+                return null;
+            } else
+            {
+                return await query.SingleAsync();
+            }
         }
 
         public async Task<bool> SaveChangesAsync()
         {
+            //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
         }
 
-        public void Update<T>(T Entity) where T : class
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

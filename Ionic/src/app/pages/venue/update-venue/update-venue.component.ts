@@ -48,27 +48,27 @@ export class UpdateVenueComponent implements ViewWillEnter {
     {
       console.log('InsideUpdateSubmit:');
       var temp = {
-        VenueID: this.venue.venueID,
-        Name: this.uVenueForm.value['venueName'],
-        Address: this.uVenueForm.value['location'],
-        PostalCode: this.uVenueForm.value['postalCode'],
-        Capacity: this.uVenueForm.value['capacity']        
+        venueID: this.venue.venueID,
+        name: this.uVenueForm.value['venueName'],
+        address: this.uVenueForm.value['location'],
+        postalCode: this.uVenueForm.value['postalCode'],
+        capacity: this.uVenueForm.value['capacity']        
       };
-      // this.venueService.updateVenue(temp);
-      // this.dismissModal();
-      // this.sucUpdate();
-      // this.ionViewWillEnter();
+       this.venueService.updateVenue(temp);
+       this.dismissModal();
+       this.sucUpdate();
+       this.ionViewWillEnter();
     }
   }
 
-  // async sucUpdate() {
-  //   const toast = await this.toastCtrl.create({
-  //     message: 'The Venue has been successfully updated!',
-  //     duration: 2000,
-  //     position : 'top'
-  //   });
-  //   toast.present();
-  // }
+   async sucUpdate() {
+     const toast = await this.toastCtrl.create({
+       message: 'The Venue has been successfully updated!',
+       duration: 2000,
+       position : 'top'
+     });
+     toast.present();
+   }
 
   dismissModal() {
     this.modalCtrl.dismiss(this.venue);

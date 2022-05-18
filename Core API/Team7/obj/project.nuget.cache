@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zzCl6enpBdIXxfGw983V4SNGuuqVqvk2mDVWFZfAL/u5pLv8TCpJoO8CtOfwNBGRPJRjezKLnij0iC6G8eUNog==",
+  "dgSpecHash": "7CXD3hn46d7OH0DB4TwiHD9vBLwAlu8nTkItcbSvl3c4+9xykZ5g0CcrcCiJ4tZL2B632LkTePydshHr/YjiGQ==",
   "success": true,
-  "projectFilePath": "D:\\Desktop\\Core API\\Team7\\Team7.csproj",
+  "projectFilePath": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\Core API\\Team7\\Team7.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Luke partridge\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Luke partridge\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
