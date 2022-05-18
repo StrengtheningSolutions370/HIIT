@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>View Venue Details</ion-title>
+    <ion-title>View {{venue.name}}</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
@@ -10,37 +10,33 @@
 <ion-content>
   <br/>
   <div class="ion-text-center">
-    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following information is associated with the <br/> "{{venue.VENUE_NAME}}" venue</p>
+    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following information is associated with the <br/> "{{venue.name}}" venue</p>
   
 
     <ion-item > 
       <ion-label>
-        <h2>Name:</h2>
-        <p class="ion-text-start">{{venue.VENUE_NAME}}</p>
-        <br/>
+        <h2>Venue Name:</h2>
+        <p class="ion-text-start">{{venue.name}}</p>
       </ion-label>
     </ion-item>
     <ion-item>
       <ion-label>
-        <h2>Location:</h2>
-        <p class="ion-text-start">{{venue.VENUE_ADDRESS}}</p>
-        <br/>
+        <h2>Venue Location:</h2>
+        <p class="ion-text-start">{{venue.address}}</p>
     </ion-label>
     </ion-item>
 
     <ion-item>
       <ion-label>
-        <h2>Postal Code:</h2>
-        <p class="ion-text-start">{{venue.VENUE_POSTAL_CODE}}</p>
-        <br/>
+        <h2>Venue Postal Code:</h2>
+        <p class="ion-text-start">{{venue.postalCode}}</p>
       </ion-label>
     </ion-item>
     
     <ion-item>
       <ion-label>
-        <h2>Capacity:</h2>
-        <p class="ion-text-start">{{venue.VENUE_CAPACITY}}</p>
-        <br/>
+        <h2>Venue Capacity:</h2>
+        <p class="ion-text-start">{{venue.capacity}}</p>
       </ion-label>
     </ion-item>
   </div>

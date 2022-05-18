@@ -2,7 +2,7 @@ import { Component, OnInit  } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
-import { VENUE } from 'src/app/models/venue';
+import { Venue } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
 @Component({
@@ -31,20 +31,24 @@ export class AddVenueComponent implements OnInit {
 
   }
 
-    async submitForm() {
-      if (!this.cVenueForm.valid){
-        console.log('Please provide all required fields');
-      }
-     else{
-        console.log(this.cVenueForm.value);
-        const temp = new VENUE();
-        temp.VENUE_NAME = this.cVenueForm.value.venueName;
-        temp.VENUE_ADDRESS = this.cVenueForm.value.location;
-        temp.VENUE_POSTAL_CODE = this.cVenueForm.value.postalCode;
-        temp.VENUE_CAPACITY = this.cVenueForm.value.capacity;
-        // this.venueService.createVenue(temp);
-        this.venueService.confirmVenueModal(temp);
-        // .then(result => console.log(result));
+  submitForm() {
+    if (!this.cVenueForm.valid){
+      console.log('Please provide all required fields');
+      return false;
+    }else{
+      console.log(this.cVenueForm.value);
+      var temp = {
+        name: this.cVenueForm.value['venueName'],
+        address: this.cVenueForm.value['location'],
+        postalCode: this.cVenueForm.value['postalCode'],
+        capacity: this.cVenueForm.value['capacity'],
+        schedules: []        
+      };
+      this.venueService.createVenue(temp);
+      this.dismissModal();
+      this.sucAdd();
+      console.log("CurrentRoute:ADD");
+      console.log(this.currentRoute.url);
     }
    }
 

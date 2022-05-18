@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
-import { VENUE } from 'src/app/models/venue';
+import { Venue } from 'src/app/models/venue';
 
 @Component({
   selector: 'app-confirm-venue',
@@ -8,7 +8,7 @@ import { VENUE } from 'src/app/models/venue';
   styleUrls: ['./confirm-venue.component.scss'],
 })
 export class ConfirmVenueComponent implements OnInit {
-  @Input() venue: VENUE;
+  @Input() venue: Venue;
 
   constructor(private modalCtrl: ModalController) { }
 
@@ -18,7 +18,7 @@ export class ConfirmVenueComponent implements OnInit {
     this.modalCtrl.dismiss();
   };
 
-  addVenue(venue: VENUE){
+  addVenue(venue: Venue){
     //search duplicates
 
     //display duplicate alert

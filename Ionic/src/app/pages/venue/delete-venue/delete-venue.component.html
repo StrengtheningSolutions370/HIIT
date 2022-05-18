@@ -16,39 +16,34 @@
 
     <ion-item > 
       <ion-label>
-        <h2>Name: </h2>
-        <p class="ion-text-start">{{venue.VENUE_NAME}}</p>
-        <br/>
+        <h2>Venue Name: </h2>
+        <p class="ion-text-start">{{venue.name}}</p>
       </ion-label>
     </ion-item>
 
     <ion-item>
       <ion-label>
-        <h2>Location:</h2>
-        <p class="ion-text-start">{{venue.VENUE_ADDRESS}}</p>
-        <br/>
+        <h2>Venue Location:</h2>
+        <p class="ion-text-start">{{venue.address}}</p>
     </ion-label>
     </ion-item>
 
     <ion-item>
       <ion-label>
-        <h2>Postal Code:</h2>
-        <p class="ion-text-start">{{venue.VENUE_POSTAL_CODE}}</p>
-        <br/>
+        <h2>Venue Postal Code:</h2>
+        <p class="ion-text-start">{{venue.postalCode}}</p>
       </ion-label>
     </ion-item>
     
     <ion-item>
       <ion-label>
-        <h2>Capacity:</h2>
-        <p class="ion-text-start">{{venue.VENUE_CAPACITY}}</p>
-        <br/>
+        <h2>Venue Capacity:</h2>
+        <p class="ion-text-start">{{venue.capacity}}</p>
       </ion-label>
     </ion-item>
 
-    <br><br>
-    <ion-button class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;" type="ion-button" (click)="delete(venue.VENUE_ID)" color="danger">Delete Venue</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;"  (click)="dismissModal()">Cancel</ion-button>
+    <br>
+    <ion-button expand="block" type="ion-button" (click)="delete(venue.venueID)" color="danger">Delete Venue</ion-button>
 </ion-content>
 
 
