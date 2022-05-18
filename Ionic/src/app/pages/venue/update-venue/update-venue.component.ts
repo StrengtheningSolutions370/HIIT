@@ -41,13 +41,14 @@ export class UpdateVenueComponent implements ViewWillEnter {
   submitForm() {
     if (!this.uVenueForm.valid){
       console.log('Please provide all required fields');
-      // this.InvalidAlert();
+      this.InvalidAlert();
       return false;
     }
     else
     {
       console.log('InsideUpdateSubmit:');
-      let temp = new Venue();
+      var temp = new Venue();
+      let choice = 2;
       temp = {
         venueID: this.venue.venueID,
         name: this.uVenueForm.value['venueName'],
@@ -56,10 +57,8 @@ export class UpdateVenueComponent implements ViewWillEnter {
         capacity: this.uVenueForm.value['capacity'],
         schedules: []        
       };
-       this.venueService.confirmVenueModal(temp);
+       this.venueService.confirmVenueModal(choice,temp);
        this.dismissModal();
-       this.sucUpdate();
-       this.ionViewWillEnter();
     }
   }
 

@@ -1,7 +1,7 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, Input, OnInit  } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, AlertController } from '@ionic/angular';
+import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
@@ -10,7 +10,8 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   templateUrl: './add-venue.component.html',
   styleUrls: ['./add-venue.component.scss'],
 })
-export class AddVenueComponent implements OnInit {
+export class AddVenueComponent implements ViewWillEnter {
+  @Input() venue: Venue;
 
   cVenueForm: FormGroup = this.formBuilder.group({
     venueName: ['', [Validators.required]],
@@ -27,7 +28,15 @@ export class AddVenueComponent implements OnInit {
     return this.cVenueForm.controls;
   }
 
-  ngOnInit(){
+  ionViewWillEnter(): void {
+    console.log("AddVenue-ViewWillEnter");
+    console.log(this.venue);
+    if (this.venue !=null){
+      this.cVenueForm.controls.venueName.setValue(this.venue.name);
+      this.cVenueForm.controls.location.setValue(this.venue.address);
+      this.cVenueForm.controls.postalCode.setValue(this.venue.postalCode);
+      this.cVenueForm.controls.capacity.setValue(this.venue.capacity);
+    }
 
   }
 
@@ -36,7 +45,6 @@ export class AddVenueComponent implements OnInit {
       console.log('Please provide all required fields');
       return false;
     }else{
-      console.log(this.cVenueForm.value);
       var temp = {
         name: this.cVenueForm.value['venueName'],
         address: this.cVenueForm.value['location'],
@@ -44,11 +52,11 @@ export class AddVenueComponent implements OnInit {
         capacity: this.cVenueForm.value['capacity'],
         schedules: []        
       };
-      this.venueService.createVenue(temp);
+      this.venueService.confirmVenueModal(1,temp);
       this.dismissModal();
-      this.sucAdd();
-      console.log("CurrentRoute:ADD");
-      console.log(this.currentRoute.url);
+      // this.sucAdd();
+      // console.log("CurrentRoute:ADD");
+      // console.log(this.currentRoute.url);
     }
    }
 
