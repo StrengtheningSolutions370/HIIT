@@ -47,14 +47,16 @@ export class UpdateVenueComponent implements ViewWillEnter {
     else
     {
       console.log('InsideUpdateSubmit:');
-      var temp = {
+      let temp = new Venue();
+      temp = {
         venueID: this.venue.venueID,
         name: this.uVenueForm.value['venueName'],
         address: this.uVenueForm.value['location'],
         postalCode: this.uVenueForm.value['postalCode'],
-        capacity: this.uVenueForm.value['capacity']        
+        capacity: this.uVenueForm.value['capacity'],
+        schedules: []        
       };
-       this.venueService.updateVenue(temp);
+       this.venueService.confirmVenueModal(temp);
        this.dismissModal();
        this.sucUpdate();
        this.ionViewWillEnter();
@@ -74,32 +76,32 @@ export class UpdateVenueComponent implements ViewWillEnter {
     this.modalCtrl.dismiss(this.venue);
   }
 
-  // async InvalidAlert() {
-  //   const alert = await this.alertCtrl.create({
-  //     header: 'Invalid Input',
-  //     message: 'Please provide all required fields and ensure that the information is in the correct format',
-  //     buttons: ['OK']
-  //   });
-  //   alert.present();
-  // }
+   async InvalidAlert() {
+     const alert = await this.alertCtrl.create({
+       header: 'Invalid Input',
+       message: 'Please provide all required fields and ensure that the information is in the correct format',
+       buttons: ['OK']
+     });
+     alert.present();
+   }
 
-  // async DuplicateAlert() {
-  //   const alert = await this.alertCtrl.create({
-  //     header: 'Venue Already Exists',
-  //     message: 'The Venue Information entered already exists on the system',
-  //     buttons: ['OK']
-  //   });
-  //   alert.present();
-  // }
+   async DuplicateAlert() {
+     const alert = await this.alertCtrl.create({
+       header: 'Venue Already Exists',
+       message: 'The Venue Information entered already exists on the system',
+       buttons: ['OK']
+     });
+    alert.present();
+  }
 
-  // async FailureAlert() {
-  //   const alert = await this.alertCtrl.create({
-  //     header: 'Could not update venue',
-  //     subHeader : 'There was an error updating the venue. Please try again',
-  //     //Enter SQL Code Error here
-  //     message: 'SQL Code Error',
-  //     buttons: ['OK']
-  //   });
-  //   alert.present();
-  // }
+   async FailureAlert() {
+     const alert = await this.alertCtrl.create({
+       header: 'Could not update venue',
+       subHeader : 'There was an error updating the venue. Please try again',
+       //Enter SQL Code Error here
+       message: 'SQL Code Error',
+       buttons: ['OK']
+     });
+     alert.present();
+   }
 }

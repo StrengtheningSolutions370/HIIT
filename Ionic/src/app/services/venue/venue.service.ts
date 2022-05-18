@@ -46,7 +46,6 @@ export class VenueService {
      this.repo.createVenue(venue).subscribe(res=> {
        console.log(res);
      });
-
    }
 
    updateVenue(venue:any){
@@ -61,6 +60,18 @@ export class VenueService {
      this.repo.deleteVenue(id).subscribe(result =>
       console.log(result));
    }
+
+   matchingVenue(venue:any){
+     
+   }
+
+   existingVenue(id:number){
+    console.log('venueService: Repo-ExistingVenue');
+    this.repo.exists(id).subscribe(result =>
+     console.log(result));
+   } 
+
+   //Modals
 
   async addVenueInfoModal() {
     const modal = await this.modalCtrl.create({
