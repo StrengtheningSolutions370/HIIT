@@ -8,6 +8,7 @@ import { ViewVenueInfoComponent } from 'src/app/pages/venue/view-venue-info/view
 import { ConfirmVenueComponent } from 'src/app/pages/venue/confirm-venue/confirm-venue.component';
 import { AssociativeVenueComponent } from 'src/app/pages/venue/associative-venue/associative-venue.component';
 import { RepoService } from '../repo.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,27 +18,31 @@ export class VenueService {
   //Creating a venueList for all the venues in the service.
   private _venueList: Venue[] = [];
 
-  get venueList():Venue[]{
-    return this._venueList;
+  public get venueList(){
+    return this._venueList.asObservable();
   }
 
 
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) { 
     this.repo.getVenues().subscribe(result => {
-      console.log("NGONINIT- Venue Service: GetVenues");
+      console.log("UpdateList - Venue Service: GetVenues");
       console.log(result);
-      result.forEach(element => {
-        let tempVenue = new Venue();        
-        tempVenue.venueID = element['venueID'];        
-        tempVenue.name = element['name'];
-        tempVenue.address = element['address'];
-        tempVenue.postalCode = element['postalCode'];
-        tempVenue.capacity = element['capacity'];
-        tempVenue.schedules = element['schedules'];
-        console.log(tempVenue);
-        this.venueList.push(tempVenue);
-      //Calling the venues from the repo and API, to populate the venueList within the venue service.
-      });
+      var tempResult = Object.assign(result);
+      this._venueList.next(tempResult);
+      console.log(this._venueList);
+      // result.forEach(element => { 
+      //   this._venueList.next(element);
+      //   let tempVenue = new Venue();        
+      //   tempVenue.venueID = element['venueID'];        
+      //   tempVenue.name = element['name'];
+      //   tempVenue.address = element['address'];
+      //   tempVenue.postalCode = element['postalCode'];
+      //   tempVenue.capacity = element['capacity'];
+      //   tempVenue.schedules = element['schedules'];
+      //   console.log(tempVenue);        
+      //   this._venueList.next(tempVenue);
+      // });
+      // this.venueList.subscribe(result => console.log(result));
     })
   }
 
@@ -64,10 +69,25 @@ export class VenueService {
       console.log(result));
    }
 
-  //Display the add venue modal.
-  async addVenueInfoModal() {
+   matchingVenue(input:string){
+    console.log('venueServiec: Repo-MatchingVenue');
+    this.repo.getMatch(input);
+   }
+
+   existingVenue(id:number){
+    console.log('venueService: Repo-ExistingVenue');
+    this.repo.exists(id).subscribe(result =>
+     console.log(result));
+   } 
+
+   //Modals
+
+  async addVenueInfoModal(venue?:Venue) {
     const modal = await this.modalCtrl.create({
-      component: AddVenueComponent
+      component: AddVenueComponent,
+      componentProps:{
+        venue:venue
+      }
     });
     // modal.onDidDismiss().then((venue) => {
     //   if (venue !== null){
@@ -118,7 +138,6 @@ export class VenueService {
       });
       await modal.present();
     }
-
   }
 
   async viewVenueInfoModal(venue: Venue) {
@@ -135,20 +154,41 @@ export class VenueService {
     await modal.present();
   }
 
+  async confirmVenueModal(selection:number, venue: any) {
   //Display venue information modal.
   //This method receives the selected venue object, from the venue page, in the modal through the componentProps.
-  async confirmVenueModal(venue: Venue) {
     console.log('VenueService: ConfirmVenueModalCall');
-    let tempVenue = new Venue();
-    tempVenue = Object.assign(venue);
-    console.log(tempVenue);
-    const modal = await this.modalCtrl.create({
-      component: ConfirmVenueComponent,
-      componentProps: {
-        venue:tempVenue
-      }
-    });
-    return await modal.present();
+    console.log(selection);
+    if(selection == 1){
+      console.log("Performing ADD");
+      let tempVenue = new Venue();
+      tempVenue.venueID = 0;
+      tempVenue = Object.assign(venue);
+      console.log(tempVenue);
+      const modal = await this.modalCtrl.create({
+        component: ConfirmVenueComponent,
+        componentProps: {
+          venue:tempVenue,
+          choice:selection
+        }
+      });
+      await modal.present();
+    } else if (selection == 2){
+      console.log("Performing UPDATE");    
+      let tempVenue = new Venue();
+      tempVenue = Object.assign(venue);
+      console.log(tempVenue);
+      const modal = await this.modalCtrl.create({
+        component: ConfirmVenueComponent,
+        componentProps: {
+          venue:tempVenue,
+          choice:selection
+        }
+      });
+      await modal.present();
+    } else {
+      console.log("BadOption: " + selection)
+    }    
   }
 
 }
