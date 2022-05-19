@@ -1,6 +1,24 @@
-﻿namespace Team7.Models
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Team7.Models
 {
     public class SaleCategory
     {
+        
+        public SaleCategory()
+        {
+            this.SaleItem = new HashSet<SaleItem>();
+        }
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SaleCategoryID { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public virtual ICollection<SaleItem> SaleItem { get; set; }
+
     }
 }
