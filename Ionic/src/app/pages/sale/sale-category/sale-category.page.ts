@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SaleCategoryPage implements OnInit {
 
+  categories = [
+    {name : 'Shop',
+     description : 'Buy now, get product later'},
+    {name : 'Store',
+     description : 'Buy now, get product now'}
+  ];
+
   constructor() { }
 
   ngOnInit() {

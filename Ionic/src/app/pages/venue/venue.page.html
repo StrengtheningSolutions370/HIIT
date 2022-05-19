@@ -1,11 +1,25 @@
-<app-header></app-header>
+<ion-header>
+  <ion-toolbar>
+    <ion-item>
+      <img src="../../assets/Logo.jpg" width="100px" height="60px">
+      <!--Can we change this dynamically when switching between tabs?-->
+      <ion-title>Venues</ion-title>
+    </ion-item>
+
+    <!--Menu toggle button that will display the menu-->
+    <ion-buttons slot="start">
+      <ion-menu-button menu="mainMenu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <br>
   <!--Searchbar (must make function to search)-->
-  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="filter"
+  <ion-searchbar expand="block" placeholder='Search Venue...' [(ngModel)]="filter"
   animated="true"
-  debounce="800"></ion-searchbar>
+  debounce="200"></ion-searchbar>
+
   <br/>
 
   <div class="ion-text-center">
@@ -15,25 +29,47 @@
     </ion-button>
   </div>
   <br/>
-  <ion-grid *ngIf="venueService.getVenues().length > 0">
-    <ion-list *ngFor="let venue of venueList | filter:filter, let i = index"> 
+  <ion-grid *ngIf="venueService.venueList.length > 0">
+    <ion-list *ngFor="let venue of venueService.venueList | filter:filter, let i = index"> 
       <ion-item-sliding >
         <ion-item button (click)="venueService.viewVenueInfoModal(venue)">
           <ion-label>
-            <h1>{{venue.VENUE_NAME}}</h1> <br/>
+            <h1>{{venue.name}}</h1> <br/>
             <p>
-              Location:  {{venue.VENUE_ADDRESS}}<br/>
-              Postal Code: {{venue.VENUE_POSTAL_CODE}} <br/>
-              Capacity: {{venue.VENUE_CAPACITY}} 
+              Location:  {{venue.address}}<br/>
+              Postal Code: {{venue.postalCode}} <br/>
+              Capacity: {{venue.capacity}} 
             </p>
           </ion-label>
+          <ion-icon name="chevron-back-outline" size="small"></ion-icon>
         </ion-item>
         <ion-item-options side="end" >
-          <ion-item-option color="secondary" (click)="venueService.updateVenueInfoModal(venue)"><ion-icon name="refresh"></ion-icon> Update </ion-item-option>
-          <ion-item-option color="danger" (click)="venueService.deleteVenueInfoModal(venue)"><ion-icon name="trash" size="medium"></ion-icon> Delete </ion-item-option>
+          <ion-item-option color="secondary" (click)="venueService.updateVenueInfoModal(venue)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
+          <ion-item-option color="danger" (click)="venueService.deleteVenueInfoModal(venue)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-    </ion-grid>
-  
-  </ion-content>
+  </ion-grid>   
+
+  <div style="width:40%;margin-left:30%;margin-right: 30%;" class="ion-text-center">
+    <ion-card>
+      <ion-card-header>
+        <img src="../../assets/NoSearch.png" style="width: 40%;">
+        <h1><strong>Sorry! No Results Found :( </strong></h1>
+      </ion-card-header>
+      <ion-card-content>
+        <br/>
+        <h3>Your search for " " did not return any results.</h3>
+        <h3>Please check your spelling or try a different search criteria. </h3>
+        <br/>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+</ion-content>
+
+<ion-footer style="margin-left:20px;margin-bottom: 10px;">
+  Bester Strength and Conditioning | info@besterstrengthandconditioning.co.za
+  <br>
+</ion-footer>

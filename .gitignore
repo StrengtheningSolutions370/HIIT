@@ -1,7 +1,12 @@
 API/Web.config
 API/.vs/Team7/config/applicationhost.config
+API/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+API/obj/Debug/Team7.csproj.FileListAbsolute.txt
+API/Web.config
+API/.vs/Team7/config/applicationhost.config
 API/.vs/Team7/v16/.suo
 API/obj/Debug/Team7.pdb
+Old/
 API/obj/Debug/Team7.dll
 API/obj/Debug/Team7.csprojAssemblyReference.cache
 API/obj/Debug/Team7.csproj.CoreCompileInputs.cache

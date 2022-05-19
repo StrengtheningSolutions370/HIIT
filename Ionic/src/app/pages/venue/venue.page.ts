@@ -9,10 +9,8 @@ import { VenueService } from 'src/app/services/venue/venue.service';
 })
 export class VenuePage implements ViewWillEnter {
   filter: string;
-  venueList: any[] = [];
-
   constructor(public venueService: VenueService) { }
+  
   ionViewWillEnter(): void {
-    this.venueList = this.venueService.getVenues();
   }
 }

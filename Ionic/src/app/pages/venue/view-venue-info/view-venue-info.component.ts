@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ViewWillEnter } from '@ionic/angular';
-import { VENUE } from 'src/app/models/venue';
+import { Venue } from 'src/app/models/venue';
 
 @Component({
   selector: 'app-view-venue-info',
@@ -10,7 +10,7 @@ import { VENUE } from 'src/app/models/venue';
 })
 export class ViewVenueInfoComponent implements ViewWillEnter {
 
-  @Input() venue: VENUE;
+  @Input() venue: Venue;
   
   constructor(private modalCtrl: ModalController, public fb:FormBuilder) { 
   }

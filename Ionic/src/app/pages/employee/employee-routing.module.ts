@@ -5,9 +5,13 @@ import { EmployeePage } from './employee.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'tabs',
     component: EmployeePage,
     children:[
+      {
+        path: 'employee-page',
+        loadChildren: () => import('./employee-page/employee-page.module').then( m => m.EmployeePagePageModule)
+      },
       {
         path: 'employee-type',
         loadChildren: () => import('./employee-type/employee-type.module').then( m => m.EmployeeTypePageModule)
@@ -19,17 +23,13 @@ const routes: Routes = [
       {
         path: 'qualification-type',
         loadChildren: () => import('./qualification-type/qualification-type.module').then( m => m.QualificationTypePageModule)
-      },
-      {
-        path: 'employee-page',
-        loadChildren: () => import('./employee-page/employee-page.module').then( m => m.EmployeePagePageModule)
-      },
-      {
-        path: '',
-        redirectTo: '/employee/employee-page',
-        pathMatch: 'full'
       }
     ]
+  },
+  {
+    path: '',
+    redirectTo: 'tabs',
+    pathMatch: 'full'
   }
 ];
 
