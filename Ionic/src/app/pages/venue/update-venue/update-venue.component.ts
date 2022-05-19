@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController, ToastController } from '@ionic/angular';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalController, ToastController, ViewWillEnter } from '@ionic/angular';
 import { VENUE } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
@@ -11,26 +11,33 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   templateUrl: './update-venue.component.html',
   styleUrls: ['./update-venue.component.scss'],
 })
-export class UpdateVenueComponent implements OnInit {
-  uVenueForm: FormGroup;
+export class UpdateVenueComponent implements ViewWillEnter {
   @Input() venue: VENUE;
-  tempVenue = new VENUE();
+  
+  uVenueForm: FormGroup = new FormGroup({
+    venueName: new FormControl('', [Validators.required]),
+    location: new FormControl('', [Validators.required]),
+    postalCode: new FormControl('', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]),
+    capacity: new FormControl('', [Validators.required, Validators.max(12), Validators.min(0)])
+  });
 
-  constructor(private modalCtrl: ModalController, private alertCtrl: ToastController, public formBuilder: FormBuilder,
+  constructor(private modalCtrl: ModalController, private alertCtrl: ToastController, public fb: FormBuilder,
     public venueService: VenueService) { }
 
   get errorControl() {
     return this.uVenueForm.controls;
   }
 
-  ngOnInit(){
-    this.uVenueForm = this.formBuilder.group({
-      name: [this.venue['VENUE_NAME'], [Validators.required]],
-      location: [this.venue['VENUE_ADDRESS'], [Validators.required]],
-      postalCode: [this.venue['VENUE_POSTAL_CODE'], [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      capacity: [this.venue['VENUE_CAPACITY'], [Validators.required, Validators.max(12), Validators.min(0)]]
-    });
+  ionViewWillEnter() {
+      console.log("UpdateVenue-ViewWillEnter");
+      console.log(this.venue);
+      this.uVenueForm.controls.venueName.setValue(this.venue.VENUE_NAME);
+      this.uVenueForm.controls.location.setValue(this.venue.VENUE_ADDRESS);
+      this.uVenueForm.controls.postalCode.setValue(this.venue.VENUE_POSTAL_CODE);
+      this.uVenueForm.controls.capacity.setValue(this.venue.VENUE_CAPACITY);
   }
+
+  
 
   submitForm() {
     if (!this.uVenueForm.valid){
@@ -39,8 +46,8 @@ export class UpdateVenueComponent implements OnInit {
     }else{
       console.log('InsideUpdateSubmit:');
       var temp = {
-        VENUE_ID: this.venue['VENUE_ID'],
-        VENUE_NAME: this.uVenueForm.value['name'],
+        VENUE_ID: this.venue.VENUE_ID,
+        VENUE_NAME: this.uVenueForm.value['venueName'],
         VENUE_ADDRESS: this.uVenueForm.value['location'],
         VENUE_POSTAL_CODE: this.uVenueForm.value['postalCode'],
         VENUE_CAPACITY: this.uVenueForm.value['capacity']        
@@ -48,6 +55,7 @@ export class UpdateVenueComponent implements OnInit {
       this.venueService.updateVenue(temp);
       this.dismissModal();
       this.sucUpdate();
+      this.ionViewWillEnter();
     }
   }
 

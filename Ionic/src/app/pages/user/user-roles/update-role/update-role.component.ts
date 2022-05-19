@@ -8,6 +8,21 @@ import { ModalController } from '@ionic/angular';
 })
 export class UpdateRoleComponent {
 
+  permissions=[
+    {
+      des : 'Create employee accounts'
+    },
+    {
+      des : 'Update profile information'
+    },
+    {
+      des : 'View Access to client data '
+    },
+    {
+      des : 'Run as-hoc reporting'
+    }
+  ];
+
   constructor(private modalCtrl: ModalController) { }
 
   dismissModal() {

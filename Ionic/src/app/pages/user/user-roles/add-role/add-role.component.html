@@ -29,9 +29,13 @@
       <p>Please enter a valid user role description</p>
     </ion-text>
 
-    <p>Choose what this user will have access too</p>
+    <br/>
+    <ion-label class="ion-text-center">
+      <h3>Choose what this user will have access too</h3>
+    </ion-label>
+    <br/>
     <ion-item *ngFor="let permission of permissions">
-      <ion-checkbox slot="start" >{{permission.description}}</ion-checkbox>
+      <ion-checkbox slot="start" ></ion-checkbox>{{permission.des}}
     </ion-item>
       
     <br/>

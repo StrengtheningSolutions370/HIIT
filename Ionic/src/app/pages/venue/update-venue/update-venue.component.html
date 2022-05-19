@@ -1,6 +1,5 @@
 <ion-header>
   <ion-toolbar>
-    <!--Here put the venue name : "Update {{venue.name}}"-->
     <ion-title>Update Venue</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
@@ -13,15 +12,15 @@
     <br/>
     <ion-item>
       <ion-label position="stacked">Venue Name:</ion-label>
-      <ion-input placeholder="" formControlName="name"  type="text" required=""></ion-input>
+      <ion-input formControlName="venueName"  type="text" required=""></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.name.errors?.required">
+    <span class="error ion-padding" *ngIf="errorControl.venueName.errors?.required">
       Venue name is required.
     </span>
 
     <ion-item>
       <ion-label position="stacked">Venue Location:</ion-label>
-      <ion-input placeholder="" formControlName="location" type="text" required=""></ion-input>
+      <ion-input formControlName="location" type="text" required=""></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="errorControl.location.errors?.required">
       Address is required.
@@ -29,7 +28,7 @@
 
     <ion-item>
       <ion-label position="stacked">Venue Postal Code:</ion-label>
-      <ion-input placeholder="" formControlName="postalCode" type="text" required=""></ion-input>
+      <ion-input formControlName="postalCode" type="text" required=""></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="errorControl.postalCode.errors?.required">
       Postal code is required.

@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ViewWillEnter } from '@ionic/angular';
 import { VenueService } from 'src/app/services/venue/venue.service';
-import { VENUE } from '../../models/venue';
 
 @Component({
   selector: 'app-venue',
   templateUrl: './venue.page.html',
   styleUrls: ['./venue.page.scss'],
 })
-export class VenuePage implements OnInit {
+export class VenuePage implements ViewWillEnter {
+  filter: string;
+  venueList: any[] = [];
 
   constructor(public venueService: VenueService) { }
-
-  ngOnInit() {
-    console.log();
+  ionViewWillEnter(): void {
+    this.venueList = this.venueService.getVenues();
   }
-
 }

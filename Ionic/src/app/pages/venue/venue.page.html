@@ -3,10 +3,9 @@
 <ion-content>
   <br>
   <!--Searchbar (must make function to search)-->
-  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue'
+  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="filter"
   animated="true"
-  debounce="800"
-  #searchInput></ion-searchbar>
+  debounce="800"></ion-searchbar>
   <br/>
 
   <div class="ion-text-center">
@@ -17,7 +16,7 @@
   </div>
   <br/>
   <ion-grid *ngIf="venueService.getVenues().length > 0">
-    <ion-list *ngFor="let venue of venueService.getVenues(), let i = index"> 
+    <ion-list *ngFor="let venue of venueList | filter:filter, let i = index"> 
       <ion-item-sliding >
         <ion-item button (click)="venueService.viewVenueInfoModal(venue)">
           <ion-label>
