@@ -29,20 +29,20 @@ export class ConfirmVenueComponent {
       //search duplicates
       if (this.venueService.matchingVenue(venue.address) != null || this.venueService.matchingVenue(venue.name) != null)
       {
-        console.log("Existing Venue: " + venue.address + " <-Address ++ Name -> " + venue.name);
+        console.log('Existing Venue: ' + venue.address + ' <-Address ++ Name -> ' + venue.name);
         //display duplicate alert
 
         //failure alert
         return;
       }
       else {
-        console.log("Add Venue from confirm:");
+        console.log('Add Venue from confirm:');
         //CallRepoToCreate
         this.venueService.createVenue(venue);
       }
 
     } else if (this.choice === 2){
-      console.log("Update Venue from confirm:");
+      console.log('Update Venue from confirm:');
       //CallRepoToUpdate
       this.venueService.updateVenue(venue.venueID,venue);
     }
