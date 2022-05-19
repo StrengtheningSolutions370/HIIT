@@ -25,7 +25,7 @@
     </ion-button>
   </div>
   <br/>
-  <ion-grid>
+  <ion-grid *ngIf="!isLoading">
     <ion-list *ngFor="let venue of venueList | filter:filter, let i = index"> 
       <ion-item-sliding >
         <!-- Sending through the venue object to the venue service, to be viewed in the modal -->
@@ -47,6 +47,10 @@
       </ion-item-sliding>
     </ion-list>
   </ion-grid>   
+
+  <div class="ion-text-center " *ngIf="isLoading">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
 
   <!-- <div style="width:40%;margin-left:30%;margin-right: 30%;" class="ion-text-center">
     <ion-card>
