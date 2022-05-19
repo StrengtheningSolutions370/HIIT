@@ -13,7 +13,7 @@ import { USER_ROLE } from '../models/userRole';
 
 export class RepoService {
   base = 'https://localhost:44383/api/';
-  VenueController = 'Venues/'
+  VenueController = 'Venues/';
 
   httpOptions = {
     headers: new HttpHeaders ({
@@ -55,15 +55,15 @@ export class RepoService {
   //Venue:
   //------
   //Create
-  createVenue(venue: any):Observable<any>{
+  createVenue(venue: any): Observable<any>{
     return this.http.post<any>(`${this.base+this.VenueController}add`,venue,this.httpOptions);
   }
   //Update
-  updateVenue(venueId: number, venue:Venue):Observable<any>{
+  updateVenue(venueId: number, venue: Venue): Observable<any>{
     return this.http.put(`${this.base+this.VenueController}update?id=${venueId}`,venue, this.httpOptions);
   }
   //Delete
-  deleteVenue(venueId: number):Observable<any>{
+  deleteVenue(venueId: number): Observable<any>{
     return this.http.delete(`${this.base+this.VenueController}delete?id=${venueId}`,this.httpOptions);
   }
   //GetAll

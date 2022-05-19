@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-item>
-      <img src="../../assets/Logo.jpg" width="100px" height="60px">
+      <img src="../../assets/Logo.jpg" width="100px" height="60px" alt="logo">
       <!--Can we change this dynamically when switching between tabs?-->
       <ion-title>Venues</ion-title>
     </ion-item>
@@ -15,7 +15,7 @@
 
 <ion-content>
   <!--Searchbar [(ngModel)] is used to bind the searchTerm to the class, to be called when filtering.-->
-  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="searchTerm"
+  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="filter"
     animated="true" debounce="200"></ion-searchbar>
 
   <div class="ion-text-center">

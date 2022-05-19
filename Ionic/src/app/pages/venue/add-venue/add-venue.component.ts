@@ -1,3 +1,5 @@
+/* eslint-disable no-var */
+/* eslint-disable no-trailing-spaces */
 import { Component, Input, OnInit  } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */

@@ -14,7 +14,7 @@ import { VenueService } from 'src/app/services/venue/venue.service';
 })
 export class UpdateVenueComponent implements ViewWillEnter {
   @Input() venue: Venue;
-  
+
   uVenueForm: FormGroup = new FormGroup({
     venueName: new FormControl('', [Validators.required]),
     location: new FormControl('', [Validators.required]),
@@ -31,7 +31,7 @@ export class UpdateVenueComponent implements ViewWillEnter {
   }
 
   ionViewWillEnter() {
-      console.log("UpdateVenue-ViewWillEnter");
+      console.log('UpdateVenue-ViewWillEnter');
       console.log(this.venue);
       this.uVenueForm.controls.venueName.setValue(this.venue.name);
       this.uVenueForm.controls.location.setValue(this.venue.address);
@@ -50,15 +50,15 @@ export class UpdateVenueComponent implements ViewWillEnter {
     else
     {
       console.log('InsideUpdateSubmit:');
-      var temp = new Venue();
-      let choice = 2;
+      let temp = new Venue();
+      const choice = 2;
       temp = {
         venueID: this.venue.venueID,
         name: this.uVenueForm.value['venueName'],
         address: this.uVenueForm.value['location'],
         postalCode: this.uVenueForm.value['postalCode'],
         capacity: this.uVenueForm.value['capacity'],
-        schedules: []        
+        schedules: []
       };
        this.venueService.confirmVenueModal(choice,temp);
        this.dismissModal();
