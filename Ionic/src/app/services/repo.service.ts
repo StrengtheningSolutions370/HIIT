@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/adjacent-overload-signatures */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
@@ -11,7 +13,7 @@ import { USER_ROLE } from '../models/userRole';
 
 export class RepoService {
   base = 'https://localhost:44383/api/';
-  VenueController = 'Venues/'
+  VenueController = 'Venues/';
 
   httpOptions = {
     headers: new HttpHeaders ({
@@ -23,13 +25,13 @@ export class RepoService {
   constructor(public http: HttpClient)
   {
     //CRUDS in this repo file need to be used by subscribing to them in the relevant service.
-    //E.g to use getVenues(); it must be subscribed to in the venue service 
+    //E.g to use getVenues(); it must be subscribed to in the venue service
   }
 
   //UserRole:
   //------
   //Create
-  createUserRole(user_role:USER_ROLE):Observable<any>{
+  createUserRole(user_role: USER_ROLE): Observable<any>{
     return this.http.post<any>(`${this.base}postuserrole`,user_role,this.httpOptions);
   }
   //Read
@@ -37,15 +39,15 @@ export class RepoService {
     return this.http.get(`${this.base}getuserroles`, this.httpOptions);
   }
   //Update
-  updateUserRole(userId: number, user_role:USER_ROLE):Observable<any>{
+  updateUserRole(userId: number, user_role: USER_ROLE): Observable<any>{
     return this.http.put(`${this.base}putuserrole?id=${userId}`,user_role, this.httpOptions);
   }
   //Delete
-  deleteUserRole(userId: number):Observable<any>{
+  deleteUserRole(userId: number): Observable<any>{
     return this.http.delete(`${this.base}deleteuserrole?id=${userId}`,this.httpOptions);
   }
   //Exists
-  userRoleExists(userId: number):Observable<any>{
+  userRoleExists(userId: number): Observable<any>{
     return this.http.delete(`${this.base}userroleexists?id=${userId}`,this.httpOptions);
   }
 
@@ -53,15 +55,15 @@ export class RepoService {
   //Venue:
   //------
   //Create
-  createVenue(venue: any):Observable<any>{
+  createVenue(venue: any): Observable<any>{
     return this.http.post<any>(`${this.base+this.VenueController}add`,venue,this.httpOptions);
   }
   //Update
-  updateVenue(venueId: number, venue:Venue):Observable<any>{
+  updateVenue(venueId: number, venue: Venue): Observable<any>{
     return this.http.put(`${this.base+this.VenueController}update?id=${venueId}`,venue, this.httpOptions);
   }
   //Delete
-  deleteVenue(venueId: number):Observable<any>{
+  deleteVenue(venueId: number): Observable<any>{
     return this.http.delete(`${this.base+this.VenueController}delete?id=${venueId}`,this.httpOptions);
   }
   //GetAll

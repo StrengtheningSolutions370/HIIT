@@ -1,5 +1,10 @@
+/* eslint-disable no-var */
+/* eslint-disable no-trailing-spaces */
 import { Component, Input, OnInit  } from '@angular/core';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/dot-notation */
+/* eslint-disable @typescript-eslint/quotes */
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
@@ -13,6 +18,7 @@ import { VenueService } from 'src/app/services/venue/venue.service';
 export class AddVenueComponent implements ViewWillEnter {
   @Input() venue: Venue;
 
+  //Creating the form to add the new venue details, that will be displayed in the HTML component
   cVenueForm: FormGroup = this.formBuilder.group({
     venueName: ['', [Validators.required]],
     location: ['', [Validators.required]],
@@ -24,6 +30,7 @@ export class AddVenueComponent implements ViewWillEnter {
     public venueService: VenueService, private router: Router, private currentRoute: ActivatedRoute,
     private  alertCtrl: AlertController ) { }
 
+  //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
     return this.cVenueForm.controls;
   }
@@ -68,7 +75,7 @@ export class AddVenueComponent implements ViewWillEnter {
     toast.present();
   }
 
-
+  //Once the modal has been dismissed.
   dismissModal() {
     this.modalCtrl.dismiss();
   };
