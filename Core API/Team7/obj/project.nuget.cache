@@ -2,7 +2,7 @@
   "version": 2,
   "dgSpecHash": "gXY7yhSiL7HqK1m1674au1mkWcue5AbS1YfuXU3qXQVJaeum8dxD6HzB0/MflalywrL5SxOzpECGcl4HWsM+hQ==",
   "success": true,
-  "projectFilePath": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\Core API\\Team7\\Team7.csproj",
+  "projectFilePath": "D:\\GitHub\\DEV2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Luke partridge\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Luke partridge\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.17\\microsoft.aspnetcore.authentication.jwtbearer.5.0.17.nupkg.sha512",

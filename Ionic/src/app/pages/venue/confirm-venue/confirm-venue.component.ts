@@ -57,10 +57,6 @@ export class ConfirmVenueComponent {
       console.log(this.venue);
       this.dismissModal();
       this.venueService.addVenueInfoModal(this.venue);
-    } else if (this.choice === 2){
-      console.log(this.venue);
-      this.dismissModal();
-      this.venueService.updateVenueInfoModal(this.venue);
     }
   }
 
