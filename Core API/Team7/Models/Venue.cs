@@ -9,12 +9,6 @@ namespace Team7.Models
 {
     public class Venue
     {
-        public Venue()
-        {
-            this.Schedules = new HashSet<Schedule>();
-            //this.Schedules = 
-        }
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int VenueID { get; set; }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-//using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
-using Team7.Models;
 using Team7.Models.Repository;
 
 namespace Team7
@@ -43,16 +42,6 @@ namespace Team7
                                   });
             });
 
-            //services.AddIdentity<AppUser, IdentityRole>(options =>
-            // {
-            //     options.Password.RequireDigit = true;
-            //     options.Password.RequireLowercase = false;
-            //     options.Password.RequireNonAlphanumeric = false;
-            //     options.Password.RequireUppercase = false;
-            //     options.Password.RequiredLength = 8;
-            //     options.Password.RequiredUniqueChars = 1;
-            // });
-
 
             // services.AddResponseCaching();
 
@@ -63,7 +52,7 @@ namespace Team7
                 //c.ResolveConflictingActions(desc => desc.First());
             });
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
+            options.UseSqlServer(Configuration.GetConnectionString("Josh")));
             services.AddScoped<IVenueRepo, VenueRepo>();
         }
 
@@ -94,7 +83,7 @@ namespace Team7
 
             //app.UseAuthentication();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
