@@ -43,7 +43,7 @@ export class ConfirmVenueComponent {
     } else if (this.choice === 2){
       console.log('Update Venue from confirm:');
       //CallRepoToUpdate
-      this.venueService.updateVenue(venue.venueID,venue);
+      this.venueService.updateVenue(this.choice,venue);
     }
 
     //dismiss modal
@@ -57,6 +57,10 @@ export class ConfirmVenueComponent {
       console.log(this.venue);
       this.dismissModal();
       this.venueService.addVenueInfoModal(this.venue);
+    } else if (this.choice === 2){
+      console.log(this.venue);
+      this.dismissModal();
+      this.venueService.updateVenueInfoModal(this.venue);
     }
   }
 
