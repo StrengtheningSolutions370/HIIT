@@ -4,18 +4,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Team7.Models
 {
-    public class Permission
+    public class WriteOffReason
     {
-        public Permission()
+        public WriteOffReason()
         {
-            this.UserRole = new HashSet<UserRole>();
+            this.WriteOffLine = new HashSet<WriteOffLine>();
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
-        public int PermissionID { get; set; }
+        public int WriteOffReasonID { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<UserRole> UserRole { get; set; }
+        public virtual ICollection<WriteOffLine> WriteOffLine { get; set; }
+
     }
 }

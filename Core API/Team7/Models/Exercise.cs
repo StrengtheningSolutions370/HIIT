@@ -4,20 +4,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Team7.Models
 {
-    public class UserRole
+    public class Exercise
     {
-        public UserRole()
+        public Exercise()
         {
-            this.User = new HashSet<User>();
-            this.Permission = new HashSet<Permission>();
+            this.LessonPlan = new HashSet<LessonPlan>();
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UserRoleID { get; set; }
+        public int ExerciseID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public int ExerciseCategoryID { get; set; }
 
-        public virtual ICollection<User> User { get; set; }
-        public virtual ICollection<Permission> Permission { get; set; }
+        public virtual ExerciseCategory ExerciseCategory { get; set; }
+        public virtual ICollection<LessonPlan> LessonPlan { get; set; }
     }
 }

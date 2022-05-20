@@ -4,18 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Team7.Models
 {
-    public class Permission
+    public class OrderStatus
     {
-        public Permission()
+        public OrderStatus()
         {
-            this.UserRole = new HashSet<UserRole>();
+            this.SupplierOrder = new HashSet<SupplierOrder>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
-        public int PermissionID { get; set; }
+        public int OrderStatusID { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<UserRole> UserRole { get; set; }
+        public virtual ICollection<SupplierOrder> SupplierOrder { get; set; }
     }
 }

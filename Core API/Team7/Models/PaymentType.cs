@@ -4,17 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Team7.Models
 {
-    public class Title
+    public class PaymentType
     {
-        public Title()
+        public PaymentType()
         {
-            this.User = new HashSet<User>();
+            this.Receipt = new HashSet<Receipt>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int TitleID { get; set; }
-        public string Description { get; set; }
+        public int PaymentTypeID { get; set; }
+        public string Name { get; set; }
 
-        public virtual ICollection<User> User { get; set; }
+        public virtual ICollection<Receipt> Receipt { get; set; }
     }
 }
