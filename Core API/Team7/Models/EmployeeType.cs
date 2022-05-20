@@ -4,18 +4,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Team7.Models
 {
-    public class Permission
+    public class EmployeeType
     {
-        public Permission()
+        public EmployeeType()
         {
-            this.UserRole = new HashSet<UserRole>();
+            this.Employee = new HashSet<Employee>();
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
-        public int PermissionID { get; set; }
+        public int EmployeeTypeID { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<UserRole> UserRole { get; set; }
+        public virtual ICollection<Employee> Employee { get; set; }
     }
 }

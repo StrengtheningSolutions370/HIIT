@@ -7,15 +7,20 @@ using System.Threading.Tasks;
 
 namespace Team7.Models
 {
-    public class Booking
+    public class Member
     {
+        public Member()
+        {
+            this.Measurement = new HashSet<Measurement>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BookingID { get; set; }
-        public DateTime Date { get; set; }
-        
+        public int MemberID { get; set; }
         public int ClientID { get; set; }
+        public int MemberStatusID { get; set; }
 
         public virtual Client Client { get; set; }
+        public virtual ICollection<Measurement> Measurement { get; set; }
+        public virtual MemberStatus MemberStatus { get; set; }
     }
 }

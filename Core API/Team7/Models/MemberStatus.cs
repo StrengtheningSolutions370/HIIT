@@ -4,17 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Team7.Models
 {
-    public class Title
+    public class MemberStatus
     {
-        public Title()
+        public MemberStatus()
         {
-            this.User = new HashSet<User>();
+            this.Member = new HashSet<Member>();
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int TitleID { get; set; }
-        public string Description { get; set; }
+        public int MemberStatusID { get; set; }
+        public string Name { get; set; }
 
-        public virtual ICollection<User> User { get; set; }
+        public virtual ICollection<Member> Member { get; set; }
     }
 }

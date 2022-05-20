@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Team7.Models
 {
-    public class Booking
+    public class BookingPriceHistory
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BookingID { get; set; }
-        public DateTime Date { get; set; }
-        
-        public int ClientID { get; set; }
+        public int BookingPriceHistoryID { get; set; }
+        public System.DateTime Date { get; set; }
+        public decimal Amount { get; set; }
+        public int BookingTypeID { get; set; }
 
-        public virtual Client Client { get; set; }
+        public virtual BookingType BookingType { get; set; }
     }
 }

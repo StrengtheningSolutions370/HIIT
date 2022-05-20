@@ -4,18 +4,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Team7.Models
 {
-    public class Permission
+    public class SaleCategory
     {
-        public Permission()
+        
+        public SaleCategory()
         {
-            this.UserRole = new HashSet<UserRole>();
+            this.SaleItem = new HashSet<SaleItem>();
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
-        public int PermissionID { get; set; }
+        public int SaleCategoryID { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<UserRole> UserRole { get; set; }
+        public virtual ICollection<SaleItem> SaleItem { get; set; }
+
     }
 }
