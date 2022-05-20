@@ -28,13 +28,14 @@ import { AddTitleComponent } from './pages/user/titles/add-title/add-title.compo
 import { UpdateTitleComponent } from './pages/user/titles/update-title/update-title.component';
 import { DeleteTitleComponent } from './pages/user/titles/delete-title/delete-title.component';
 import { ViewTitlesComponent } from './pages/user/titles/view-titles/view-titles.component';
+import { ConfirmTitleComponent } from './pages/user/titles/confirm-title/confirm-title.component';
 
 @NgModule({
   declarations: [AppComponent,
   AddVenueComponent, UpdateVenueComponent, ViewVenueInfoComponent, DeleteVenueComponent, ConfirmVenueComponent,AssociativeVenueComponent,
   AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent,
   AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent,
-  AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent ],
+  AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent],
 
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],

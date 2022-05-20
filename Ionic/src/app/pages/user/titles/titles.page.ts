@@ -14,7 +14,7 @@ import { TitleService } from 'src/app/services/title/title.service';
 export class TitlesPage implements OnInit{
 
   //String used from the searchbar, used in the filter pipe to search titles.
-  filter: string;
+  public filter: string;
 
   //Create local title array to be populated onInit.
   titleList: Title[] = [];
