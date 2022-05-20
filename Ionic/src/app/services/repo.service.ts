@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Venue } from 'src/app/models/venue';
-import { USER_ROLE } from '../models/userRole';
+import { UserRole } from '../models/userRole';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class RepoService {
   //UserRole:
   //------
   //Create
-  createUserRole(user_role: USER_ROLE): Observable<any>{
+  createUserRole(user_role: UserRole): Observable<any>{
     return this.http.post<any>(`${this.base}postuserrole`,user_role,this.httpOptions);
   }
   //Read
@@ -39,7 +39,7 @@ export class RepoService {
     return this.http.get(`${this.base}getuserroles`, this.httpOptions);
   }
   //Update
-  updateUserRole(userId: number, user_role: USER_ROLE): Observable<any>{
+  updateUserRole(userId: number, user_role: UserRole): Observable<any>{
     return this.http.put(`${this.base}putuserrole?id=${userId}`,user_role, this.httpOptions);
   }
   //Delete
