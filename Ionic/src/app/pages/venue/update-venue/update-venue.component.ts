@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, Input, OnInit } from '@angular/core';
@@ -13,7 +14,7 @@ import { VenueService } from 'src/app/services/venue/venue.service';
 })
 export class UpdateVenueComponent implements ViewWillEnter {
   @Input() venue: Venue;
-  
+
   uVenueForm: FormGroup = new FormGroup({
     venueName: new FormControl('', [Validators.required]),
     location: new FormControl('', [Validators.required]),
@@ -22,23 +23,25 @@ export class UpdateVenueComponent implements ViewWillEnter {
   });
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public fb: FormBuilder,
-    public venueService: VenueService, private alertCtrl : AlertController) { }
+    public venueService: VenueService, private alertCtrl: AlertController) { }
 
+  //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
     return this.uVenueForm.controls;
   }
 
   ionViewWillEnter() {
-      console.log("UpdateVenue-ViewWillEnter");
+      console.log('UpdateVenue-ViewWillEnter');
       console.log(this.venue);
       this.uVenueForm.controls.venueName.setValue(this.venue.name);
       this.uVenueForm.controls.location.setValue(this.venue.address);
       this.uVenueForm.controls.postalCode.setValue(this.venue.postalCode);
       this.uVenueForm.controls.capacity.setValue(this.venue.capacity);
+    //Populate the update venue form with the values received from the selected venue object in the main page.
   }
 
-
   submitForm() {
+    if (!this.uVenueForm.valid) { //If the form has any validation errors, the form will not be submitted.
     if (!this.uVenueForm.valid){
       console.log('Please provide all required fields');
       this.InvalidAlert();
@@ -47,20 +50,21 @@ export class UpdateVenueComponent implements ViewWillEnter {
     else
     {
       console.log('InsideUpdateSubmit:');
-      var temp = new Venue();
-      let choice = 2;
+      let temp = new Venue();
+      const choice = 2;
       temp = {
         venueID: this.venue.venueID,
         name: this.uVenueForm.value['venueName'],
         address: this.uVenueForm.value['location'],
         postalCode: this.uVenueForm.value['postalCode'],
         capacity: this.uVenueForm.value['capacity'],
-        schedules: []        
+        schedules: []
       };
        this.venueService.confirmVenueModal(choice,temp);
        this.dismissModal();
     }
   }
+}
 
    async sucUpdate() {
      const toast = await this.toastCtrl.create({
@@ -104,3 +108,4 @@ export class UpdateVenueComponent implements ViewWillEnter {
      alert.present();
    }
 }
+

@@ -23,12 +23,12 @@ const routes: Routes = [
       {
         path: 'qualification-type',
         loadChildren: () => import('./qualification-type/qualification-type.module').then( m => m.QualificationTypePageModule)
-      }
+      },
     ]
   },
   {
     path: '',
-    redirectTo: 'tabs',
+    redirectTo: 'tabs/employee-page',
     pathMatch: 'full'
   }
 ];
@@ -37,4 +37,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
+
 export class EmployeePageRoutingModule {}
