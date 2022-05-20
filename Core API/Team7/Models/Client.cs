@@ -30,7 +30,7 @@ namespace Team7.Models
         
         public virtual User User { get; set; }
         
-        public virtual Member Member { get; set; }
+        public virtual ICollection<Member> Member { get; set; }
         
         public virtual ICollection<Sale> Sale { get; set; }
         
