@@ -99,13 +99,10 @@ export class VenueService {
   //This method receives the selected venue object, from the venue page, in the modal through the componentProps.
   async updateVenueInfoModal(venue: Venue) {
     console.log("VenueService: UpdateVenueModalCall");
-    let tempVenue = new Venue();
-    tempVenue = Object.assign(venue);
-    console.log(tempVenue);
     const modal = await this.modalCtrl.create({
       component: UpdateVenueComponent,
       componentProps:{
-        venue:tempVenue
+        venue
       }
     });
     await modal.present();

@@ -484,3 +484,6 @@ Core API/Team7/bin/Debug/
 Core API/Team7/obj/project.assets.json
 Core API/Team7/obj/Team7.csproj.nuget.dgspec.json
 Core API/Team7/obj/Debug/net5.0/apphost.exe
+Core API/Team7/.vs/Team7/config/applicationhost.config
+Core API/Team7/.vs/Team7/DesignTimeBuild/.dtbcache.v2
+Core API/Team7/.vs/Team7/v16/.suo
