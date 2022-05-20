@@ -49,11 +49,7 @@ export class UpdateVenueComponent implements ViewWillEnter {
     else
     {
       console.log('InsideUpdateSubmit:');
-<<<<<<< HEAD
-      let temp = new Venue();
-=======
       var temp = new Venue();
->>>>>>> developer
       const choice = 2;
       temp = {
         venueID: this.venue.venueID,

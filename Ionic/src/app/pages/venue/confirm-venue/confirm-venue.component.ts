@@ -31,10 +31,6 @@ export class ConfirmVenueComponent {
       {
         console.log('Existing Venue: ' + venue.address + ' <-Address ++ Name -> ' + venue.name);
         //display duplicate alert
-<<<<<<< HEAD
-
-=======
->>>>>>> developer
         //failure alert
         return;
       }

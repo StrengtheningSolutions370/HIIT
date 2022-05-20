@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Venue } from 'src/app/models/venue';
+import { Title } from 'src/app/models/title';
 import { USER_ROLE } from '../models/userRole';
 
 @Injectable({
@@ -77,6 +78,34 @@ export class RepoService {
   //Exists
   exists(id: number): Observable<any>{
     return this.http.get(`${this.base+this.VenueController}exists?id=${id}`, this.httpOptions);
+  }
+
+
+  //Title:
+  //------
+  //Create
+  createTitle(title: any): Observable<any>{
+    return this.http.post<any>(`${this.base+this.TitleController}add`,title,this.httpOptions);
+  }
+  //Update
+  updateTitle(titleId: number, title: Title): Observable<any>{
+    return this.http.put(`${this.base+this.TitleController}update?id=${titleId}`,title, this.httpOptions);
+  }
+  //Delete
+  deleteTitle(titleId: number): Observable<any>{
+    return this.http.delete(`${this.base+this.TitleController}delete?id=${titleId}`,this.httpOptions);
+  }
+  //GetAll
+  getTitles(): Observable<any>{
+    return this.http.get(`${this.base+this.TitleController}getAll`, this.httpOptions);
+  }
+  //GetMatch
+  getMatch(input: string): Observable<any>{
+    return this.http.get(`${this.base+this.TitleController}getMatch?input=${input}`, this.httpOptions);
+  }
+  //Exists
+  exists(id: number): Observable<any>{
+    return this.http.get(`${this.base+this.TitleController}exists?id=${id}`, this.httpOptions);
   }
 
 
