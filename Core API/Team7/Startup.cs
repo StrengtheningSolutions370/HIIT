@@ -52,7 +52,7 @@ namespace Team7
                 //c.ResolveConflictingActions(desc => desc.First());
             });
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
+            options.UseSqlServer(Configuration.GetConnectionString("Shan")));
             services.AddScoped<IVenueRepo, VenueRepo>();
         }
 
