@@ -14,7 +14,7 @@ namespace Team7.Models
         public int BookingTypeID { get; set; }
         public int LessonPlanID { get; set; }
         public int DateSessionID { get; set; }        
-        //public virtual 
+        
 
 
     }
