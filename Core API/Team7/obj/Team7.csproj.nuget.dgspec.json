@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {}
   },
   "projects": {
@@ -15,6 +16,22 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Robyn\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+    "C:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
+        "projectName": "Team7",
+        "projectPath": "C:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
+        "packagesPath": "C:\\Users\\shann\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\shann\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> a5995c45bc60f8785d6c3019c3c3934566c152ed
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -77,7 +94,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+>>>>>>> a5995c45bc60f8785d6c3019c3c3934566c152ed
         }
       }
     }

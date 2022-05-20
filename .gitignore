@@ -477,7 +477,10 @@ npm-debug.log*
 
 
 
+<<<<<<< HEAD
 Core API/Team7/.vs/Team7/v16/.suo
 Core API/Team7/obj/Debug/net5.0/Team7.pdb
 Core API/Team7/obj/Debug/net5.0/Team7.dll
 Core API/Team7/obj/Debug/net5.0/Team7.csprojAssemblyReference.cache
+=======
+>>>>>>> a5995c45bc60f8785d6c3019c3c3934566c152ed
