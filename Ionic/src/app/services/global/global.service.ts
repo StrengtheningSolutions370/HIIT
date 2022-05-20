@@ -1,3 +1,5 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable @typescript-eslint/ban-types */
 import { Injectable } from '@angular/core';
 import { AlertController,LoadingController,ModalController,ToastController } from '@ionic/angular';
 
@@ -23,7 +25,7 @@ export class GlobalService {
       })
       .then(alertEl => alertEl.present());
     }
-  
+
     async showToast(msg, color, position, duration = 3000) {
       const toast = await this.toastCtrl.create({
         message: msg,
@@ -33,17 +35,17 @@ export class GlobalService {
       });
       toast.present();
     }
-  
+
     errToast(msg?, duration = 5000) {
       this.showToast(msg ? msg : 'Please check your internet connection', 'danger', 'top', duration);
     }
-  
+
     scsToast(msg) {
       this.showToast(msg, 'success', 'top');
     }
 
   async nativeLoad(message?, spinner?){
-    if(!this.loading) this.toggleLoad();
+    if(!this.loading) {this.toggleLoad();}
     try {
       const res = await this.loadingCtrl.create({
         message: message,
@@ -63,7 +65,7 @@ export class GlobalService {
   }
 
   async endNativeLoad() {
-    if(this.loading) this.toggleLoad();
+    if(this.loading) {this.toggleLoad();}
     try {
       await this.loadingCtrl.dismiss();
       return console.log('endNativeLoad');

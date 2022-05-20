@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/quotes */
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,14 +16,14 @@ export class DeleteVenueComponent implements ViewWillEnter {
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public venueService: VenueService, private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController) { }
-    
+
   ionViewWillEnter() {
     console.log("DeleteVenue - ViewWillEnter");
     console.log(this.venue);
   }
 
-  async delete(id:number){
-    console.log("DeleteVenue-BtnClick("+id+")");
+  //Send through the id of the selected venue to be deleted in the venue service.
+  async delete(id: number){
     this.venueService.deleteVenue(id);
     await this.dismissModal();
     this.sucDelete();
@@ -36,7 +37,7 @@ export class DeleteVenueComponent implements ViewWillEnter {
     toast.present();
   }
 
-  async FailureAlert() {
+  async failureAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Could not delete Venue',
       message: 'There was an error deleting the venue, please try again.',
@@ -45,10 +46,10 @@ export class DeleteVenueComponent implements ViewWillEnter {
     alert.present();
   }
 
+  //Close the modal and navigate back to the venue page.
   async dismissModal() {
     this.modalCtrl.dismiss();
     console.log(this.route);
     await this.router.navigate(['../venues'],{relativeTo: this.route});
   }
-
 }
