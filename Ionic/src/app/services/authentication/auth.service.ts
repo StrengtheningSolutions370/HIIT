@@ -8,7 +8,7 @@ export class AuthService {
 
   constructor(private storage: StoreService ) { }
 
-  async login(email:string, password:string): Promise<any>{
+  async login(email: string, password: string): Promise<any>{
     //call api login
     await new Promise(f => setTimeout(f,5000));
     //set Local API key(userID)
@@ -29,5 +29,5 @@ export class AuthService {
   logout(){
 
   }
-  
+
 }

@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
 export class AuthInterceptorService implements HttpInterceptor {
 
   constructor() { }
-  intercept(req: HttpRequest<any>,
-     next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     throw new Error('Method not implemented.');
   }
 }
