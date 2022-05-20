@@ -5711,17 +5711,21 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Robyn\\.nuget\\packages\\": {}
+    "C:\\Users\\georg\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
+      "projectUniqueName": "D:\\GitHub\\DEV2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
       "projectName": "Team7",
       "projectPath": "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
       "packagesPath": "C:\\Users\\Robyn\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
         "C:\\Users\\Robyn\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
