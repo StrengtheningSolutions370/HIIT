@@ -63,15 +63,10 @@ namespace Team7
                 //c.ResolveConflictingActions(desc => desc.First());
             });
             services.AddDbContext<AppDB>(options =>
-<<<<<<< HEAD
 
             options.UseSqlServer(Configuration.GetConnectionString("Shan")));
 
-            
 
-=======
-            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
->>>>>>> developer
             services.AddScoped<IVenueRepo, VenueRepo>();
         }
 
