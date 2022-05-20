@@ -20,7 +20,7 @@ namespace Team7.Models
         public double Total { get; set; }
         public int PaymentTypeID { get; set; }
         public virtual ICollection<BookingAttendance> BookingAttendance { get; set; }
-
+        public virtual PaymentType PaymentType { get; set; }
         public virtual ICollection<Refund> Refund { get; set; }
 
         public virtual ICollection<SaleLine> SaleLine { get; set; }
