@@ -31,7 +31,10 @@ export class ConfirmVenueComponent {
       {
         console.log('Existing Venue: ' + venue.address + ' <-Address ++ Name -> ' + venue.name);
         //display duplicate alert
+<<<<<<< HEAD
 
+=======
+>>>>>>> developer
         //failure alert
         return;
       }
@@ -58,9 +61,6 @@ export class ConfirmVenueComponent {
       console.log(this.venue);
       this.dismissModal();
       this.venueService.addVenueInfoModal(this.venue);
-    }else if(this.choice === 2){
-      console.log(this.venue);
-      this.dismissModal();
     }
   }
 

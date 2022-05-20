@@ -2,6 +2,7 @@
   "format": 1,
   "restore": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "C:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {}
   },
   "projects": {
@@ -32,6 +33,22 @@
         "configFilePaths": [
           "C:\\Users\\Robyn\\AppData\\Roaming\\NuGet\\NuGet.Config",
 >>>>>>> 2be203043b6cb9a004a9553ca1763a5c1a4493f4
+=======
+    "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\Core API\\Team7\\Team7.csproj": {}
+  },
+  "projects": {
+    "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\Core API\\Team7\\Team7.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\Core API\\Team7\\Team7.csproj",
+        "projectName": "Team7",
+        "projectPath": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\Core API\\Team7\\Team7.csproj",
+        "packagesPath": "C:\\Users\\Luke partridge\\.nuget\\packages\\",
+        "outputPath": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\Core API\\Team7\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Luke partridge\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> developer
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -57,6 +74,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.17, )"
@@ -68,6 +93,14 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.Extensions.Identity.Core": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
+            "Microsoft.Extensions.Identity.Stores": {
               "target": "Package",
               "version": "[5.0.17, )"
             },
@@ -95,10 +128,14 @@
             }
           },
 <<<<<<< HEAD
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
 =======
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
 >>>>>>> 2be203043b6cb9a004a9553ca1763a5c1a4493f4
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+>>>>>>> developer
         }
       }
     }

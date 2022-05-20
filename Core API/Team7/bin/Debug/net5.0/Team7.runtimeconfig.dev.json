@@ -2,12 +2,23 @@
   "runtimeOptions": {
     "additionalProbingPaths": [
 <<<<<<< HEAD
+<<<<<<< HEAD
       "C:\\Users\\shann\\.dotnet\\store\\|arch|\\|tfm|",
       "C:\\Users\\shann\\.nuget\\packages"
 =======
       "C:\\Users\\Robyn\\.dotnet\\store\\|arch|\\|tfm|",
       "C:\\Users\\Robyn\\.nuget\\packages"
 >>>>>>> 2be203043b6cb9a004a9553ca1763a5c1a4493f4
+=======
+      "C:\\Users\\Robyn\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Robyn\\.nuget\\packages"
+=======
+      "C:\\Users\\shann\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\shann\\.nuget\\packages"
+>>>>>>> a5995c45bc60f8785d6c3019c3c3934566c152ed
+      "C:\\Users\\Luke partridge\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Luke partridge\\.nuget\\packages"
+>>>>>>> developer
     ]
   }
 }
