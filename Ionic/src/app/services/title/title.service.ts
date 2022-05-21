@@ -75,12 +75,12 @@ export class TitleService {
 
    matchingTitle(input: string){
     console.log('titleService: Repo -> Matching Title');
-    this.repo.getMatch(input);
+    this.repo.getMatchTitle(input);
    }
 
    existingTitle(id: number){
     console.log('titleService: Repo -> Existing Title');
-    this.repo.exists(id).subscribe(result =>
+    this.repo.existsTitle(id).subscribe(result =>
      console.log(result));
    }
 
