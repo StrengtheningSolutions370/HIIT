@@ -3,5 +3,5 @@ export class UserRole {
     name: string;
     description: string;
     users: [];
-    permissions: string;
+    permissions: [];
 }

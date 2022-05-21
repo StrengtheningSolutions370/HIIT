@@ -1,14 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ModalController, ViewWillEnter } from '@ionic/angular';
+import { EmployeeType } from 'src/app/models/employeeType';
 
 @Component({
   selector: 'app-view-etype',
   templateUrl: './view-etype.component.html',
   styleUrls: ['./view-etype.component.scss'],
 })
-export class ViewEtypeComponent implements OnInit {
+export class ViewEtypeComponent implements ViewWillEnter {
+  @Input() employeeType: EmployeeType;
 
-  constructor() { }
+  constructor(private modalCtrl: ModalController, public fb: FormBuilder) { }
 
-  ngOnInit() {}
+  ionViewWillEnter() {
+    console.log('view Specific Employee Type -View Will Enter');
+    console.log(this.employeeType);
+  }
+
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  }
 
 }

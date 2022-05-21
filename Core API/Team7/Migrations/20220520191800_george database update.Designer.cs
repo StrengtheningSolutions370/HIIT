@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Team7.Context;
 
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    partial class AppDBModelSnapshot : ModelSnapshot
+    [Migration("20220520191800_george database update")]
+    partial class georgedatabaseupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -205,7 +207,7 @@ namespace Team7.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID1")
+                    b.Property<int?>("UserID1")
                         .HasColumnType("int");
 
                     b.HasKey("UserID");
@@ -975,7 +977,7 @@ namespace Team7.Migrations
 
                     b.HasKey("UserRoleID");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("UserRole");
                 });
 
             modelBuilder.Entity("Team7.Models.Venue", b =>
@@ -1168,9 +1170,7 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.User", "User")
                         .WithMany("Employee")
-                        .HasForeignKey("UserID1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserID1");
 
                     b.Navigation("EmployeeContract");
 

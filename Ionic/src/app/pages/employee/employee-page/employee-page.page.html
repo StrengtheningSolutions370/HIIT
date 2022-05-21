@@ -14,8 +14,9 @@
   </div>
   
   <ion-grid>
-    <div style="display: inline-block;width: 350px;height: 200px;margin-bottom: 5px;" *ngFor="let employee of employees">
-      <ion-card >
+    <div style="display: inline-block;width: 350px;height: 200px;margin-bottom: 5px;" >
+     <ion-col size="4" *ngFor="let employee of employees">
+      <ion-card>
         <div>
           <ion-card-header >
             <ion-avatar item-start button (click)="viewEmployeeInfoModal()">
@@ -48,6 +49,8 @@
             </ion-row>
           </ion-card-content>
       </ion-card>
+     </ion-col>
+     
     <!--<mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons> </mat-paginator-->
     </div>
   </ion-grid>

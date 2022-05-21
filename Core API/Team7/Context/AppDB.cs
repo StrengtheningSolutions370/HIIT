@@ -47,7 +47,7 @@ namespace Team7.Context
         //public virtual DbSet<SALE_CATEGORY> SALE_CATEGORY { get; set; }
         //public virtual DbSet<SALE_ITEM> SALE_ITEM { get; set; }
         //public virtual DbSet<SALE_LINE> SALE_LINE { get; set; }
-        public virtual DbSet<Schedule> Schedules { get; set;}
+        public virtual DbSet<Schedule> Schedules { get; set; }
         //public virtual DbSet<SESSION> SESSIONs { get; set; }
         //public virtual DbSet<STOCK_TAKE> STOCK_TAKE { get; set; }
         //public virtual DbSet<STOCK_TAKE_LINE> STOCK_TAKE_LINE { get; set; }
@@ -55,8 +55,8 @@ namespace Team7.Context
         //public virtual DbSet<SUPPLIER_ORDER> SUPPLIER_ORDER { get; set; }
         //public virtual DbSet<SUPPLIER_ORDER_LINE> SUPPLIER_ORDER_LINE { get; set; }
         //public virtual DbSet<TITLE> TITLEs { get; set; }
-        //public virtual DbSet<USER_ROLE> USER_ROLE { get; set; }
-        //public virtual DbSet<USER> USERS { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+        //public virtual DbSet<User> Users { get; set; }
         //public virtual DbSet<VAT> VATs { get; set; }
         public virtual DbSet<Venue> Venues { get; set;}
 
