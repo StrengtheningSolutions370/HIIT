@@ -14,6 +14,7 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MemberStatusID { get; set; }
+        [Required]
         public string Name { get; set; }
 
         public virtual ICollection<Member> Member { get; set; }

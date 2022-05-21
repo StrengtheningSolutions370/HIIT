@@ -13,6 +13,7 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TitleID { get; set; }
+        [Required]
         public string Description { get; set; }
 
         public virtual ICollection<User> User { get; set; }

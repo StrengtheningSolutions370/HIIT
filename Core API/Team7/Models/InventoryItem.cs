@@ -16,8 +16,11 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int InventoryItemID { get; set; }
-        public int SaleItemID { get; set; }
+        [Required]
+        public int? SaleItemID { get; set; }
+        [Required]
         public decimal CostPrice { get; set; }
+        [Required]
         public int Quantity { get; set; }
 
         public virtual SaleItem SaleItem { get; set; }

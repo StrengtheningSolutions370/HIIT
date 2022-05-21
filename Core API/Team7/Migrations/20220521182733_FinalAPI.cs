@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Team7.Migrations
 {
-    public partial class TestAPIGL : Migration
+    public partial class FinalAPI : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,8 @@ namespace Team7.Migrations
                 {
                     BookingTypeID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,7 +27,7 @@ namespace Team7.Migrations
                 {
                     EmployeeContractID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    File = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    File = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,8 +40,8 @@ namespace Team7.Migrations
                 {
                     EmployeeTypeID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,8 +54,8 @@ namespace Team7.Migrations
                 {
                     ExerciseCategoryID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +68,7 @@ namespace Team7.Migrations
                 {
                     MemberStatusID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,7 +81,7 @@ namespace Team7.Migrations
                 {
                     OrderStatusID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +94,7 @@ namespace Team7.Migrations
                 {
                     PaymentTypeID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,7 +107,7 @@ namespace Team7.Migrations
                 {
                     PermissionID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -120,7 +120,7 @@ namespace Team7.Migrations
                 {
                     QualificationTypeID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -133,7 +133,7 @@ namespace Team7.Migrations
                 {
                     RefundReasonID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,8 +146,8 @@ namespace Team7.Migrations
                 {
                     SaleCategoryID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -175,7 +175,7 @@ namespace Team7.Migrations
                     StockTakeID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -188,11 +188,11 @@ namespace Team7.Migrations
                 {
                     SupplierID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cell = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cell = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -205,7 +205,7 @@ namespace Team7.Migrations
                 {
                     TitleID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -218,8 +218,8 @@ namespace Team7.Migrations
                 {
                     UserRoleID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -246,9 +246,9 @@ namespace Team7.Migrations
                 {
                     VenueID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -262,7 +262,7 @@ namespace Team7.Migrations
                 {
                     WriteOffReasonID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -309,8 +309,8 @@ namespace Team7.Migrations
                 {
                     ExerciseID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExerciseCategoryID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -352,7 +352,7 @@ namespace Team7.Migrations
                 {
                     QualificationID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QualificationTypeID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -372,9 +372,9 @@ namespace Team7.Migrations
                 {
                     SaleItemID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Quotable = table.Column<bool>(type: "bit", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
@@ -468,8 +468,8 @@ namespace Team7.Migrations
                 {
                     UserID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cell = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cell = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserRoleID = table.Column<int>(type: "int", nullable: false),
                     TitleID = table.Column<int>(type: "int", nullable: false)
                 },
@@ -497,7 +497,7 @@ namespace Team7.Migrations
                     RefundID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ReceiptID = table.Column<int>(type: "int", nullable: false),
                     RefundReasonID = table.Column<int>(type: "int", nullable: false)
@@ -568,10 +568,10 @@ namespace Team7.Migrations
                     ClientID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Idemnity = table.Column<bool>(type: "bit", nullable: false),
-                    QrCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    QrCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -588,21 +588,20 @@ namespace Team7.Migrations
                 name: "Employees",
                 columns: table => new
                 {
-                    UserID = table.Column<int>(type: "int", nullable: false)
+                    EmployeeID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmployeeID = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    IDNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    IDNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QualificationID = table.Column<int>(type: "int", nullable: false),
                     EmployeeContractID = table.Column<int>(type: "int", nullable: false),
                     EmployeeTypeID = table.Column<int>(type: "int", nullable: false),
-                    UserID1 = table.Column<int>(type: "int", nullable: false)
+                    UserID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employees", x => x.UserID);
+                    table.PrimaryKey("PK_Employees", x => x.EmployeeID);
                     table.ForeignKey(
                         name: "FK_Employees_EmployeeContracts_EmployeeContractID",
                         column: x => x.EmployeeContractID,
@@ -622,8 +621,8 @@ namespace Team7.Migrations
                         principalColumn: "QualificationID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Employees_Users_UserID1",
-                        column: x => x.UserID1,
+                        name: "FK_Employees_Users_UserID",
+                        column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
@@ -636,7 +635,7 @@ namespace Team7.Migrations
                     PasswordID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Hashed = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Hashed = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -656,8 +655,8 @@ namespace Team7.Migrations
                 {
                     StockTakeLineID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StockTakeID = table.Column<int>(type: "int", nullable: true),
-                    InventoryItemID = table.Column<int>(type: "int", nullable: true),
+                    StockTakeID = table.Column<int>(type: "int", nullable: false),
+                    InventoryItemID = table.Column<int>(type: "int", nullable: false),
                     SaleItemID = table.Column<int>(type: "int", nullable: true),
                     Difference = table.Column<int>(type: "int", nullable: false)
                 },
@@ -669,7 +668,7 @@ namespace Team7.Migrations
                         column: x => x.InventoryItemID,
                         principalTable: "InventoryItems",
                         principalColumn: "InventoryItemID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_StockTakeLines_SaleItems_SaleItemID",
                         column: x => x.SaleItemID,
@@ -681,7 +680,7 @@ namespace Team7.Migrations
                         column: x => x.StockTakeID,
                         principalTable: "StockTakes",
                         principalColumn: "StockTakeID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -817,7 +816,7 @@ namespace Team7.Migrations
                 {
                     LessonID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmployeeID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -827,7 +826,7 @@ namespace Team7.Migrations
                         name: "FK_Lessons_Employees_EmployeeID",
                         column: x => x.EmployeeID,
                         principalTable: "Employees",
-                        principalColumn: "UserID",
+                        principalColumn: "EmployeeID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -837,7 +836,7 @@ namespace Team7.Migrations
                 {
                     MeasurementID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MemberID = table.Column<int>(type: "int", nullable: false),
+                    MemberID = table.Column<int>(type: "int", nullable: true),
                     MuscleMass = table.Column<double>(type: "float", nullable: true),
                     BodyFate = table.Column<double>(type: "float", nullable: true),
                     Waist = table.Column<double>(type: "float", nullable: true),
@@ -853,7 +852,7 @@ namespace Team7.Migrations
                         column: x => x.MemberID,
                         principalTable: "Members",
                         principalColumn: "MemberID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -863,10 +862,10 @@ namespace Team7.Migrations
                     SaleLineID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    ClientID = table.Column<int>(type: "int", nullable: true),
+                    ClientID = table.Column<int>(type: "int", nullable: false),
                     SaleID = table.Column<int>(type: "int", nullable: true),
-                    SaleItemID = table.Column<int>(type: "int", nullable: true),
-                    ReceiptID = table.Column<int>(type: "int", nullable: true)
+                    SaleItemID = table.Column<int>(type: "int", nullable: false),
+                    ReceiptID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -876,19 +875,19 @@ namespace Team7.Migrations
                         column: x => x.ClientID,
                         principalTable: "Clients",
                         principalColumn: "ClientID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SaleLines_Receipts_ReceiptID",
                         column: x => x.ReceiptID,
                         principalTable: "Receipts",
                         principalColumn: "ReceiptID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SaleLines_SaleItems_SaleItemID",
                         column: x => x.SaleItemID,
                         principalTable: "SaleItems",
                         principalColumn: "SaleItemID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SaleLines_Sales_SaleID",
                         column: x => x.SaleID,
@@ -968,22 +967,22 @@ namespace Team7.Migrations
                 name: "BookingAttendances",
                 columns: table => new
                 {
-                    BookingID = table.Column<int>(type: "int", nullable: false)
+                    BookingAttendanceID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ScheduleID = table.Column<int>(type: "int", nullable: false),
+                    BookingID = table.Column<int>(type: "int", nullable: false),
+                    ScheduleID = table.Column<int>(type: "int", nullable: true),
                     Attended = table.Column<bool>(type: "bit", nullable: false),
-                    ReceiptID = table.Column<int>(type: "int", nullable: false),
-                    BookingID1 = table.Column<int>(type: "int", nullable: true)
+                    ReceiptID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookingAttendances", x => x.BookingID);
+                    table.PrimaryKey("PK_BookingAttendances", x => x.BookingAttendanceID);
                     table.ForeignKey(
-                        name: "FK_BookingAttendances_Bookings_BookingID1",
-                        column: x => x.BookingID1,
+                        name: "FK_BookingAttendances_Bookings_BookingID",
+                        column: x => x.BookingID,
                         principalTable: "Bookings",
                         principalColumn: "BookingID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BookingAttendances_Receipts_ReceiptID",
                         column: x => x.ReceiptID,
@@ -995,13 +994,13 @@ namespace Team7.Migrations
                         column: x => x.ScheduleID,
                         principalTable: "Schedules",
                         principalColumn: "ScheduleID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookingAttendances_BookingID1",
+                name: "IX_BookingAttendances_BookingID",
                 table: "BookingAttendances",
-                column: "BookingID1");
+                column: "BookingID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookingAttendances_ReceiptID",
@@ -1049,9 +1048,9 @@ namespace Team7.Migrations
                 column: "QualificationID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employees_UserID1",
+                name: "IX_Employees_UserID",
                 table: "Employees",
-                column: "UserID1");
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Exercises_ExerciseCategoryID",
