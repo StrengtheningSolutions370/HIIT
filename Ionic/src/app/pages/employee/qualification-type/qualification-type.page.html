@@ -1,42 +1,70 @@
 
+<ion-header>
+  <ion-toolbar mode="ios">
+    <!-- <ion-item mode="ios" lines="none" padding-top="0px"> -->
+      <ion-buttons slot="start">
+        <ion-menu-button menu="mainMenu"></ion-menu-button>
+      </ion-buttons>
+      <ion-title slot="">Qualification Types</ion-title>
+      <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
+      <!--Can we change this dynamically when switching between tabs?-->
+    <!-- </ion-item> -->
+  </ion-toolbar>
+
+
+    <!--Menu toggle button that will display the menu-->
+</ion-header>
+
 <ion-content>
-
-  
-  <br/>
-  <!--Searchbar (must make function to search)-->
-  <ion-searchbar expand="block" placeholder='Search Qualification Types...'></ion-searchbar>
-
-  <br/><br/>
+  <!--Searchbar [(ngModel)] is used to bind the searchTerm to the class, to be called when filtering.-->
+  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="filter"
+    animated="true" debounce="200"></ion-searchbar>
 
   <div class="ion-text-center">
-    <!-- (click)="addQtypeModal()" -->
-    <ion-button color="success" style="margin-left:30%;margin-right:30%" >
-      Add Qualification Type
+    <ion-button color="success" (click)="qualificationService.addQualificationTypeInfoModal()">
+      Add Venue
       <ion-icon name="add" size="medium"></ion-icon>
     </ion-button>
   </div>
-
   <br/>
-
-  <ion-grid *ngFor="let qualificationType of qualificationTypes">
-    <ion-list> 
-      <ion-item-sliding >
-        <!-- (click)="viewQtypeModal() " -->
-        <ion-item button >
+  <ion-grid *ngIf="!isLoading">
+    <ion-list *ngFor="let qualificationType of qualificationTypeList | filter:filter, let i = index"> 
+      <ion-item-sliding>
+        <!-- Sending through the venue object to the venue service, to be viewed in the modal -->
+        <ion-item button (click)="qualificationService.viewQualificationTypeInfoModal(qualificationType)">
           <ion-label>
-            <!--Qualification Type Name-->
-            <h2>{{qualificationType.name}}</h2> <br/>
+            <h1>{{qualificationType.name}}</h1> <br/>
           </ion-label>
+          <ion-icon name="chevron-back-outline" size="small"></ion-icon>
         </ion-item>
         <ion-item-options side="end" >
-          <!-- (click)="updateQtypeModal() " -->
-          <ion-item-option color="secondary"  ><ion-icon name="refresh"></ion-icon>Update </ion-item-option>
-          <!-- (click)="deleteQtypeModal() " -->
-          <ion-item-option color="danger" ><ion-icon name="trash" size="medium"></ion-icon>Delete </ion-item-option>
+          <ion-item-option color="secondary" (click)="qualificationService.updateQualificationTypeInfoModal(qualificationType)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
+          <ion-item-option color="danger" (click)="qualificationService.deleteQualificationTypeInfoModal(qualificationType)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-  </ion-grid>
+  </ion-grid>   
+
+  <div class="ion-text-center " *ngIf="isLoading">
+    <ion-spinner name="circles"></ion-spinner>
+  </div>
+
+  <!-- <div style="width:40%;margin-left:30%;margin-right: 30%;" class="ion-text-center">
+    <ion-card>
+      <ion-card-header>
+        <img src="../../assets/NoSearch.png" style="width: 40%;">
+        <h1><strong>Sorry! No Results Found :( </strong></h1>
+      </ion-card-header>
+      <ion-card-content>
+        <br/>
+        <h3>Your search for " " did not return any results.</h3>
+        <h3>Please check your spelling or try a different search criteria. </h3>
+        <br/>
+      </ion-card-content>
+    </ion-card>
+  </div> -->
+
 
 </ion-content>
+
 
