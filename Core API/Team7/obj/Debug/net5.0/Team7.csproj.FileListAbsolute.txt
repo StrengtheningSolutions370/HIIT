@@ -129,3 +129,4 @@ D:\GitHub\DEV2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.dll
 D:\GitHub\DEV2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\ref\Team7.dll
 D:\GitHub\DEV2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.pdb
 D:\GitHub\DEV2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.genruntimeconfig.cache
+D:\GitHub\DEV2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.AssemblyReference.cache

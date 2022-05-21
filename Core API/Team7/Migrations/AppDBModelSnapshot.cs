@@ -710,19 +710,19 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClientID")
+                    b.Property<int?>("ClientID")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReceiptID")
+                    b.Property<int?>("ReceiptID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SaleID")
+                    b.Property<int?>("SaleID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SaleItemID")
+                    b.Property<int?>("SaleItemID")
                         .HasColumnType("int");
 
                     b.HasKey("SaleLineID");
@@ -811,7 +811,7 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.StockTakeLine", b =>
                 {
-                    b.Property<int>("StockTakeID")
+                    b.Property<int>("StockTakeLineID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -819,22 +819,22 @@ namespace Team7.Migrations
                     b.Property<int>("Difference")
                         .HasColumnType("int");
 
-                    b.Property<int>("InventoryItemID")
+                    b.Property<int?>("InventoryItemID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SaleItemID")
+                    b.Property<int?>("SaleItemID")
                         .HasColumnType("int");
 
-                    b.Property<int>("StockTakeID1")
+                    b.Property<int?>("StockTakeID")
                         .HasColumnType("int");
 
-                    b.HasKey("StockTakeID");
+                    b.HasKey("StockTakeLineID");
 
                     b.HasIndex("InventoryItemID");
 
                     b.HasIndex("SaleItemID");
 
-                    b.HasIndex("StockTakeID1");
+                    b.HasIndex("StockTakeID");
 
                     b.ToTable("StockTakeLines");
                 });
@@ -1369,27 +1369,19 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Client", "Client")
                         .WithMany("SaleLine")
-                        .HasForeignKey("ClientID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClientID");
 
                     b.HasOne("Team7.Models.Receipt", "Receipt")
                         .WithMany("SaleLine")
-                        .HasForeignKey("ReceiptID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReceiptID");
 
                     b.HasOne("Team7.Models.Sale", "Sale")
                         .WithMany("SaleLine")
-                        .HasForeignKey("SaleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleID");
 
                     b.HasOne("Team7.Models.SaleItem", "SaleItem")
                         .WithMany("SaleLine")
-                        .HasForeignKey("SaleItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleItemID");
 
                     b.Navigation("Client");
 
@@ -1439,21 +1431,15 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.InventoryItem", "InventoryItem")
                         .WithMany("StockTakeLine")
-                        .HasForeignKey("InventoryItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InventoryItemID");
 
                     b.HasOne("Team7.Models.SaleItem", "SaleItem")
                         .WithMany("StockTakeLine")
-                        .HasForeignKey("SaleItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleItemID");
 
                     b.HasOne("Team7.Models.StockTake", "StockTake")
                         .WithMany("StockTakeLine")
-                        .HasForeignKey("StockTakeID1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StockTakeID");
 
                     b.Navigation("InventoryItem");
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Team7.Migrations
 {
-    public partial class TestBuildDBGL : Migration
+    public partial class TestAPIGL : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -238,6 +238,22 @@ namespace Team7.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VATs", x => x.VATID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Venues",
+                columns: table => new
+                {
+                    VenueID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Capacity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Venues", x => x.VenueID);
                 });
 
             migrationBuilder.CreateTable(
@@ -640,10 +656,10 @@ namespace Team7.Migrations
                 {
                     StockTakeLineID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InventoryItemID = table.Column<int>(type: "int", nullable: false),
-                    SaleItemID = table.Column<int>(type: "int", nullable: false),
-                    Difference = table.Column<int>(type: "int", nullable: false),
-                    StockTakeID = table.Column<int>(type: "int", nullable: false)
+                    StockTakeID = table.Column<int>(type: "int", nullable: true),
+                    InventoryItemID = table.Column<int>(type: "int", nullable: true),
+                    SaleItemID = table.Column<int>(type: "int", nullable: true),
+                    Difference = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -653,19 +669,19 @@ namespace Team7.Migrations
                         column: x => x.InventoryItemID,
                         principalTable: "InventoryItems",
                         principalColumn: "InventoryItemID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StockTakeLines_SaleItems_SaleItemID",
                         column: x => x.SaleItemID,
                         principalTable: "SaleItems",
                         principalColumn: "SaleItemID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StockTakeLines_StockTakes_StockTakeID1",
+                        name: "FK_StockTakeLines_StockTakes_StockTakeID",
                         column: x => x.StockTakeID,
                         principalTable: "StockTakes",
                         principalColumn: "StockTakeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -816,6 +832,139 @@ namespace Team7.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Measurements",
+                columns: table => new
+                {
+                    MeasurementID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MemberID = table.Column<int>(type: "int", nullable: false),
+                    MuscleMass = table.Column<double>(type: "float", nullable: true),
+                    BodyFate = table.Column<double>(type: "float", nullable: true),
+                    Waist = table.Column<double>(type: "float", nullable: true),
+                    Height = table.Column<double>(type: "float", nullable: true),
+                    Weight = table.Column<double>(type: "float", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Measurements", x => x.MeasurementID);
+                    table.ForeignKey(
+                        name: "FK_Measurements_Members_MemberID",
+                        column: x => x.MemberID,
+                        principalTable: "Members",
+                        principalColumn: "MemberID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SaleLines",
+                columns: table => new
+                {
+                    SaleLineID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    ClientID = table.Column<int>(type: "int", nullable: true),
+                    SaleID = table.Column<int>(type: "int", nullable: true),
+                    SaleItemID = table.Column<int>(type: "int", nullable: true),
+                    ReceiptID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SaleLines", x => x.SaleLineID);
+                    table.ForeignKey(
+                        name: "FK_SaleLines_Clients_ClientID",
+                        column: x => x.ClientID,
+                        principalTable: "Clients",
+                        principalColumn: "ClientID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SaleLines_Receipts_ReceiptID",
+                        column: x => x.ReceiptID,
+                        principalTable: "Receipts",
+                        principalColumn: "ReceiptID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SaleLines_SaleItems_SaleItemID",
+                        column: x => x.SaleItemID,
+                        principalTable: "SaleItems",
+                        principalColumn: "SaleItemID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SaleLines_Sales_SaleID",
+                        column: x => x.SaleID,
+                        principalTable: "Sales",
+                        principalColumn: "SaleID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LessonPlans",
+                columns: table => new
+                {
+                    LessonPlanID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LessonID = table.Column<int>(type: "int", nullable: false),
+                    ExerciseID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LessonPlans", x => x.LessonPlanID);
+                    table.ForeignKey(
+                        name: "FK_LessonPlans_Exercises_ExerciseID",
+                        column: x => x.ExerciseID,
+                        principalTable: "Exercises",
+                        principalColumn: "ExerciseID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LessonPlans_Lessons_LessonID",
+                        column: x => x.LessonID,
+                        principalTable: "Lessons",
+                        principalColumn: "LessonID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Schedules",
+                columns: table => new
+                {
+                    ScheduleID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CapacityBooked = table.Column<int>(type: "int", nullable: false),
+                    VenueID = table.Column<int>(type: "int", nullable: false),
+                    BookingTypeID = table.Column<int>(type: "int", nullable: false),
+                    LessonPlanID = table.Column<int>(type: "int", nullable: false),
+                    DateSessionID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Schedules", x => x.ScheduleID);
+                    table.ForeignKey(
+                        name: "FK_Schedules_BookingTypes_BookingTypeID",
+                        column: x => x.BookingTypeID,
+                        principalTable: "BookingTypes",
+                        principalColumn: "BookingTypeID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Schedules_DateSessions_DateSessionID",
+                        column: x => x.DateSessionID,
+                        principalTable: "DateSessions",
+                        principalColumn: "DateSessionID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Schedules_LessonPlans_LessonPlanID",
+                        column: x => x.LessonPlanID,
+                        principalTable: "LessonPlans",
+                        principalColumn: "LessonPlanID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Schedules_Venues_VenueID",
+                        column: x => x.VenueID,
+                        principalTable: "Venues",
+                        principalColumn: "VenueID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookingAttendances",
                 columns: table => new
                 {
@@ -848,113 +997,6 @@ namespace Team7.Migrations
                         principalColumn: "ScheduleID",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "Measurements",
-                columns: table => new
-                {
-                    MeasurementID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MemberID = table.Column<int>(type: "int", nullable: false),
-                    MuscleMass = table.Column<double>(type: "float", nullable: true),
-                    BodyFate = table.Column<double>(type: "float", nullable: true),
-                    Waist = table.Column<double>(type: "float", nullable: true),
-                    Height = table.Column<double>(type: "float", nullable: true),
-                    Weight = table.Column<double>(type: "float", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Measurements", x => x.MeasurementID);
-                    table.ForeignKey(
-                        name: "FK_Measurements_Members_MemberID",
-                        column: x => x.MemberID,
-                        principalTable: "Members",
-                        principalColumn: "MemberID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SaleLines",
-                columns: table => new
-                {
-                    SaleLineID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    ClientID = table.Column<int>(type: "int", nullable: false),
-                    SaleID = table.Column<int>(type: "int", nullable: false),
-                    SaleItemID = table.Column<int>(type: "int", nullable: false),
-                    ReceiptID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SaleLines", x => x.SaleLineID);
-                    table.ForeignKey(
-                        name: "FK_SaleLines_Clients_ClientID",
-                        column: x => x.ClientID,
-                        principalTable: "Clients",
-                        principalColumn: "ClientID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SaleLines_Receipts_ReceiptID",
-                        column: x => x.ReceiptID,
-                        principalTable: "Receipts",
-                        principalColumn: "ReceiptID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SaleLines_SaleItems_SaleItemID",
-                        column: x => x.SaleItemID,
-                        principalTable: "SaleItems",
-                        principalColumn: "SaleItemID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SaleLines_Sales_SaleID",
-                        column: x => x.SaleID,
-                        principalTable: "Sales",
-                        principalColumn: "SaleID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LessonPlans",
-                columns: table => new
-                {
-                    LessonPlanID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LessonID = table.Column<int>(type: "int", nullable: false),
-                    ExerciseID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LessonPlans", x => x.LessonPlanID);
-                    table.ForeignKey(
-                        name: "FK_LessonPlans_Exercises_ExerciseID",
-                        column: x => x.ExerciseID,
-                        principalTable: "Exercises",
-                        principalColumn: "ExerciseID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LessonPlans_Lessons_LessonID",
-                        column: x => x.LessonID,
-                        principalTable: "Lessons",
-                        principalColumn: "LessonID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_BookingTypeID",
-                table: "Schedules",
-                column: "BookingTypeID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_DateSessionID",
-                table: "Schedules",
-                column: "DateSessionID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_LessonPlanID",
-                table: "Schedules",
-                column: "LessonPlanID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookingAttendances_BookingID1",
@@ -1117,6 +1159,26 @@ namespace Team7.Migrations
                 column: "ClientID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Schedules_BookingTypeID",
+                table: "Schedules",
+                column: "BookingTypeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedules_DateSessionID",
+                table: "Schedules",
+                column: "DateSessionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedules_LessonPlanID",
+                table: "Schedules",
+                column: "LessonPlanID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedules_VenueID",
+                table: "Schedules",
+                column: "VenueID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StockTakeLines_InventoryItemID",
                 table: "StockTakeLines",
                 column: "InventoryItemID");
@@ -1127,9 +1189,9 @@ namespace Team7.Migrations
                 column: "SaleItemID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StockTakeLines_StockTakeID1",
+                name: "IX_StockTakeLines_StockTakeID",
                 table: "StockTakeLines",
-                column: "StockTakeID1");
+                column: "StockTakeID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SupplierOrderLines_InventoryItemID",
@@ -1175,57 +1237,15 @@ namespace Team7.Migrations
                 name: "IX_WriteOffLines_WriteOffReasonID",
                 table: "WriteOffLines",
                 column: "WriteOffReasonID");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Schedules_BookingTypes_BookingTypeID",
-                table: "Schedules",
-                column: "BookingTypeID",
-                principalTable: "BookingTypes",
-                principalColumn: "BookingTypeID",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Schedules_DateSessions_DateSessionID",
-                table: "Schedules",
-                column: "DateSessionID",
-                principalTable: "DateSessions",
-                principalColumn: "DateSessionID",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Schedules_LessonPlans_LessonPlanID",
-                table: "Schedules",
-                column: "LessonPlanID",
-                principalTable: "LessonPlans",
-                principalColumn: "LessonPlanID",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Schedules_BookingTypes_BookingTypeID",
-                table: "Schedules");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Schedules_DateSessions_DateSessionID",
-                table: "Schedules");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Schedules_LessonPlans_LessonPlanID",
-                table: "Schedules");
-
             migrationBuilder.DropTable(
                 name: "BookingAttendances");
 
             migrationBuilder.DropTable(
                 name: "BookingPriceHistories");
-
-            migrationBuilder.DropTable(
-                name: "DateSessions");
-
-            migrationBuilder.DropTable(
-                name: "LessonPlans");
 
             migrationBuilder.DropTable(
                 name: "Measurements");
@@ -1261,16 +1281,7 @@ namespace Team7.Migrations
                 name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "BookingTypes");
-
-            migrationBuilder.DropTable(
-                name: "Sessions");
-
-            migrationBuilder.DropTable(
-                name: "Exercises");
-
-            migrationBuilder.DropTable(
-                name: "Lessons");
+                name: "Schedules");
 
             migrationBuilder.DropTable(
                 name: "Members");
@@ -1303,10 +1314,16 @@ namespace Team7.Migrations
                 name: "WriteOffs");
 
             migrationBuilder.DropTable(
-                name: "ExerciseCategories");
+                name: "BookingTypes");
 
             migrationBuilder.DropTable(
-                name: "Employees");
+                name: "DateSessions");
+
+            migrationBuilder.DropTable(
+                name: "LessonPlans");
+
+            migrationBuilder.DropTable(
+                name: "Venues");
 
             migrationBuilder.DropTable(
                 name: "MemberStatuses");
@@ -1327,6 +1344,24 @@ namespace Team7.Migrations
                 name: "SaleItems");
 
             migrationBuilder.DropTable(
+                name: "Sessions");
+
+            migrationBuilder.DropTable(
+                name: "Exercises");
+
+            migrationBuilder.DropTable(
+                name: "Lessons");
+
+            migrationBuilder.DropTable(
+                name: "SaleCategories");
+
+            migrationBuilder.DropTable(
+                name: "ExerciseCategories");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropTable(
                 name: "EmployeeContracts");
 
             migrationBuilder.DropTable(
@@ -1339,9 +1374,6 @@ namespace Team7.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "SaleCategories");
-
-            migrationBuilder.DropTable(
                 name: "QualificationTypes");
 
             migrationBuilder.DropTable(
@@ -1349,18 +1381,6 @@ namespace Team7.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserRoles");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Schedules_BookingTypeID",
-                table: "Schedules");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Schedules_DateSessionID",
-                table: "Schedules");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Schedules_LessonPlanID",
-                table: "Schedules");
         }
     }
 }

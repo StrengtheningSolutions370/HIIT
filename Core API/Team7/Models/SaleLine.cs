@@ -9,10 +9,10 @@ namespace Team7.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SaleLineID { get; set; }
         public int Quantity { get; set; }
-        public int ClientID { get; set; }
-        public int SaleID { get; set; }
-        public int SaleItemID { get; set; }
-        public int ReceiptID { get; set; }
+        public int? ClientID { get; set; }
+        public int? SaleID { get; set; }
+        public int? SaleItemID { get; set; }
+        public int? ReceiptID { get; set; }
 
         public virtual Client Client { get; set; }
         public virtual Receipt Receipt { get; set; }
