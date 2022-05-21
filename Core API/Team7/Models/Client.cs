@@ -29,9 +29,9 @@ namespace Team7.Models
         public virtual ICollection<Booking> Booking { get; set; }
         
         public virtual User User { get; set; }
-        
-        public virtual Member Member { get; set; }
-        
+
+        public virtual ICollection<Member> Member { get; set; }
+
         public virtual ICollection<Sale> Sale { get; set; }
         
         public virtual ICollection<SaleLine> SaleLine { get; set; }
