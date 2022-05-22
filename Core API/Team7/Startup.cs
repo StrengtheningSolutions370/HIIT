@@ -68,6 +68,8 @@ namespace Team7
 
 
             services.AddScoped<IVenueRepo, VenueRepo>();
+            services.AddScoped<ITitleRepo, TitleRepo>();
+            services.AddScoped<IQualificationTypeRepo, QualificationTypeRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
