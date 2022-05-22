@@ -9,6 +9,7 @@ import { DeleteQtypeComponent } from 'src/app/pages/employee/qualification-type/
 import { UpdateQtypeComponent } from 'src/app/pages/employee/qualification-type/update-qtype/update-qtype.component';
 import { ViewQtypeComponent } from 'src/app/pages/employee/qualification-type/view-qtype/view-qtype.component';
 import { ConfirmQtypeComponent } from 'src/app/pages/employee/qualification-type/confirm-qtype/confirm-qtype.component';
+import { AssociativeQtypeComponent } from 'src/app/pages/employee/qualification-type/associative-qtype/associative-qtype.component';
 
 @Injectable({
   providedIn: 'root'
@@ -110,10 +111,19 @@ async deleteQualificationTypeInfoModal(qualificationType: QualificationType) {
   let tempQualificationType = new QualificationType();
   tempQualificationType = Object.assign(qualificationType);
   console.log(tempQualificationType);
+  if (tempQualificationType.qualifications!= null && tempQualificationType.qualifications.length > 0){
+    const modal = await this.modalCtrl.create({
+      component: AssociativeQtypeComponent,
+        componentProps: {
+          qualificationType: tempQualificationType
+      }
+    });
+    await modal.present();
+  } else {
     const modal = await this.modalCtrl.create({
       component: DeleteQtypeComponent,
         componentProps: {
-          venue: tempQualificationType
+          qualificationType: tempQualificationType
       }
     });
 
@@ -129,7 +139,7 @@ async deleteQualificationTypeInfoModal(qualificationType: QualificationType) {
     await modal.present();
   }
 
-
+}
 //Display the view qualificationtype modal.
   //This method receives the selected qualificationtye object, from the qualificationtype page, in the modal through the componentProps.
 async viewQualificationTypeInfoModal(qualificationtype: QualificationType) {
@@ -140,7 +150,7 @@ async viewQualificationTypeInfoModal(qualificationtype: QualificationType) {
   const modal = await this.modalCtrl.create({
     component: ViewQtypeComponent,
     componentProps: {
-      venue:tempQualificationType
+      qualificationType:tempQualificationType
     }
   });
   await modal.present();
@@ -160,7 +170,7 @@ async confirmQualificationTypeModal(selection: number, qualificationType: any) {
     const modal = await this.modalCtrl.create({
       component: ConfirmQtypeComponent,
       componentProps: {
-        venue:tempQualificationType,
+        qualificationType:tempQualificationType,
         choice:selection
       }
     });
@@ -183,7 +193,7 @@ async confirmQualificationTypeModal(selection: number, qualificationType: any) {
     const modal = await this.modalCtrl.create({
       component: ConfirmQtypeComponent,
       componentProps: {
-        venue:tempQualificationType,
+        qualificationType:tempQualificationType,
         choice:selection
       }
     });

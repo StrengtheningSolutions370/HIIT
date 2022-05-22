@@ -15,7 +15,7 @@ import { USER_ROLE } from '../models/userRole';
 
 export class RepoService {
   base = 'https://localhost:44383/api/';
-  VenueController = 'Venue/';
+  VenueController = 'Venues/';
   TitleController = 'Title/';
   QualificationTypeController = 'QualificationType/';
 

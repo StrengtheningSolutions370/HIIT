@@ -45,7 +45,8 @@ export class UpdateQtypeComponent implements ViewWillEnter {
       const choice = 2;
       temp = {
         qualificationTypeID: this.qualificationType.qualificationTypeID,
-        name: this.uQTypeForm.value['qualificationTypeName']
+        name: this.uQTypeForm.value['qualificationTypeName'],
+        qualifications: []
       };
         console.log(temp);
        this.qualificationService.confirmQualificationTypeModal(choice,temp);
