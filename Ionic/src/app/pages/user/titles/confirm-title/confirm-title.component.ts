@@ -17,8 +17,8 @@ export class ConfirmTitleComponent{
     public router: Router, public activated: ActivatedRoute) {
    }
 
-   async dismissModal() {
-    await this.router.navigate(['../titles'],{relativeTo:this.activated});
+   dismissModal() {
+    //await this.router.navigate(['../titles'],{relativeTo:this.activated});
     this.modalCtrl.dismiss();
   };
   //1 = confirm ADD
@@ -57,6 +57,10 @@ export class ConfirmTitleComponent{
       console.log(this.title);
       this.dismissModal();
       this.titleService.addTitleInfoModal(this.title);
+    } else if (this.choice === 2){
+      console.log(this.title);
+      this.dismissModal();
+      this.titleService.updateTitleInfoModal(this.title);
     }
   }
 
