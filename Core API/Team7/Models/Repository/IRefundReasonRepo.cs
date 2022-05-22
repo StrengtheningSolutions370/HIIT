@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Team7.Models.Repository
 {
-    interface IRefundReasonRepo
+    public interface IRefundReasonRepo
     {
         void Add<T>(T Entity) where T : class;
 

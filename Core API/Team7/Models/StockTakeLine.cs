@@ -7,9 +7,11 @@ namespace Team7.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int StockTakeID { get; set; }
-        public int InventoryItemID { get; set; }
-        public int SaleItemID { get; set; }
+        public int StockTakeLineID { get; set; }
+        public int? InventoryItemID { get; set; }
+        public int? SaleItemID { get; set; }
+        public int? StockTakeID { get; set; }
+
         public int Difference { get; set; }
 
         public virtual InventoryItem InventoryItem { get; set; }

@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class ScheduleRepo //: IScheduleRepo
+    public class ScheduleRepo : IScheduleRepo
     {
         readonly private AppDB DB;
 

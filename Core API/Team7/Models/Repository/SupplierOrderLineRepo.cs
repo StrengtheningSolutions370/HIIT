@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class SupplierOrderLineRepo //: ISupplierOrderLineRepo
+    public class SupplierOrderLineRepo : ISupplierOrderLineRepo
     {
         readonly private AppDB DB;
 

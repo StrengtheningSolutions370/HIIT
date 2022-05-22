@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class QualificationTypeRepo //: IQualificationTypeRepo
+    public class QualificationTypeRepo : IQualificationTypeRepo
     {
 
         readonly private AppDB DB;

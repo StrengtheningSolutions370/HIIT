@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class DateSessionRepo //: IDateSessionRepo
+    public class DateSessionRepo : IDateSessionRepo
     {
         readonly private AppDB DB;
 
