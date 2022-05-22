@@ -14,6 +14,7 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WriteOffID { get; set; }
+        [Required]
         public System.DateTime Date { get; set; }
 
         public virtual ICollection<WriteOffLine> WriteOffLine { get; set; }

@@ -75,12 +75,12 @@ export class VenueService {
 
    matchingVenue(input: string){
     console.log('venueService: Repo -> Matching Venue');
-    this.repo.getMatch(input);
+    this.repo.getMatchVenue(input);
    }
 
    existingVenue(id: number){
     console.log('venueService: Repo -> Existing Venue');
-    this.repo.exists(id).subscribe(result =>
+    this.repo.existsVenue(id).subscribe(result =>
      console.log(result));
    }
 

@@ -8,11 +8,16 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RefundID { get; set; }
+        [Required]
         public System.DateTime Date { get; set; }
+        [Required]
         public string Notes { get; set; }
+        [Required]
         public decimal Total { get; set; }
-        public int ReceiptID { get; set; }
-        public int RefundReasonID { get; set; }
+        [Required]
+        public int? ReceiptID { get; set; }
+        [Required]
+        public int? RefundReasonID { get; set; }
 
         public virtual Receipt Receipt { get; set; }
         public virtual RefundReason RefundReason { get; set; }

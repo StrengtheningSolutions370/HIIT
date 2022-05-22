@@ -14,6 +14,7 @@ namespace Team7.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public int PermissionID { get; set; }
+        [Required]
         public string Description { get; set; }
 
         public virtual ICollection<UserRole> UserRole { get; set; }

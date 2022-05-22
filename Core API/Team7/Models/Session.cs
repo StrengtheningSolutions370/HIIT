@@ -14,7 +14,9 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SessionID { get; set; }
+        [Required]
         public System.DateTime Start { get; set; }
+        [Required]
         public System.DateTime End { get; set; }
         public virtual ICollection<DateSession> DateSession { get; set; }
     }

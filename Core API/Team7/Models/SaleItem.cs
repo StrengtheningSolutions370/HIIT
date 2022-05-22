@@ -18,13 +18,20 @@ namespace Team7.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public int SaleItemID { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public byte[] Photo { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public decimal Price { get; set; }
+        [Required]
         public bool Quotable { get; set; }
+        [Required]
         public int Quantity { get; set; }
-        public int SaleCategoryID { get; set; }
+        [Required]
+        public int? SaleCategoryID { get; set; }
 
         public virtual ICollection<InventoryItem> InventoryItem { get; set; }
         public virtual ICollection<PriceHistory> PriceHistory { get; set; }
