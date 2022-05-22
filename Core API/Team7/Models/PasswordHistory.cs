@@ -8,9 +8,12 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PasswordID { get; set; }
+        [Required]
         public System.DateTime Date { get; set; }
+        [Required]
         public string Hashed { get; set; }
-        public int UserID { get; set; }
+        [Required]
+        public int? UserID { get; set; }
 
         public virtual User User { get; set; }
     }

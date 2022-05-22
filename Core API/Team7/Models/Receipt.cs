@@ -15,10 +15,14 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ReceiptID { get; set; }
+        [Required]
         public System.DateTime DateTime { get; set; }
+        [Required]
         public double TotalVAT { get; set; }
+        [Required]
         public double Total { get; set; }
-        public int PaymentTypeID { get; set; }
+        [Required]
+        public int? PaymentTypeID { get; set; }
         public virtual ICollection<BookingAttendance> BookingAttendance { get; set; }
         public virtual PaymentType PaymentType { get; set; }
         public virtual ICollection<Refund> Refund { get; set; }
