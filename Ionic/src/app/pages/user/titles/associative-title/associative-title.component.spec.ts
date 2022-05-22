@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AddQypeComponent } from './add-qype.component';
+import { AssociativeTitleComponent } from './associative-title.component';
 
-describe('AddQypeComponent', () => {
-  let component: AddQypeComponent;
-  let fixture: ComponentFixture<AddQypeComponent>;
+describe('AssociativeTitleComponent', () => {
+  let component: AssociativeTitleComponent;
+  let fixture: ComponentFixture<AssociativeTitleComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddQypeComponent ],
+      declarations: [ AssociativeTitleComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AddQypeComponent);
+    fixture = TestBed.createComponent(AssociativeTitleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
