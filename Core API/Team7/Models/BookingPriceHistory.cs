@@ -12,9 +12,12 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookingPriceHistoryID { get; set; }
+        [Required]
         public System.DateTime Date { get; set; }
+        [Required]
         public decimal Amount { get; set; }
-        public int BookingTypeID { get; set; }
+        [Required]
+        public int? BookingTypeID { get; set; }
 
         public virtual BookingType BookingType { get; set; }
     }
