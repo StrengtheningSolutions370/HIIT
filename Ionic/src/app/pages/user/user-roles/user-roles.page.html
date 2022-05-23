@@ -3,17 +3,17 @@
   <ion-searchbar expand="block" placeholder='Search User Roles'></ion-searchbar>
 
   <div class="ion-text-center">
-    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="userService.addUserRoleInfoModal()">
+    <ion-button color="success" (click)="userService.addUserRoleInfoModal()">
       Add User Role
     </ion-button>
   </div>
  
   <ion-grid *ngFor="let user of userRoleList">
     <ion-list > 
-      <ion-item-sliding >
+      <ion-item-sliding>
         <ion-item button> <!--(click)=""-->
-          <ion-icon name="list-outline" size="large" style="padding-left:5%"></ion-icon>
-          <ion-label style="padding-left:2%;">
+          <ion-icon name="list-outline" size="large"></ion-icon>
+          <ion-label>
             <!--User Role Name-->
             <h1>{{user.name}}</h1> 
             <p>
@@ -30,6 +30,11 @@
       </ion-item-sliding>
     </ion-list>
   </ion-grid>
+  <br>
+  
+  <div class="ion-text-center " *ngIf="isLoading">
+    <ion-spinner name="circles"></ion-spinner>
+  </div>
 
   <!-- <div style="width:40%;margin-left:30%;margin-right: 30%;" class="ion-text-center">
     <ion-card>

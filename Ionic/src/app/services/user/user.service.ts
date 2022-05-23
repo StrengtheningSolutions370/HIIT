@@ -70,12 +70,12 @@ export class UserService {
 
   matchingUserRole(input: string) {
     console.log('User Service: Repo -> Matching User Role');
-    this.repo.getMatch(input);
+    this.repo.getMatchUserRole(input);
   }
 
   existingUserRole(id: number) {
     console.log('User Service: Repo -> Existing User Role');
-    this.repo.exists(id).subscribe(result =>
+    this.repo.existsUserRole(id).subscribe(result =>
       console.log(result));
   }
 
@@ -180,7 +180,7 @@ export class UserService {
         this.repo.getVenues().subscribe(result => {
           const tempResult = Object.assign(result);
           this._userRoleList.next(tempResult);
-          console.log('Updated user role list: Venue Service: confirm venue');
+          console.log('Updated user role list: Employee Service: confirm venue');
           console.log(this._userRoleList);
         });
       });
