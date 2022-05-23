@@ -13,7 +13,6 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentTypeID { get; set; }
-        [Required]
         public string Name { get; set; }
 
         public virtual ICollection<Receipt> Receipt { get; set; }

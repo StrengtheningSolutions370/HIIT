@@ -1,21 +1,16 @@
 
 <ion-content>
-
-  <br/>
   <!--Searchbar (must make function to search)-->
   <ion-searchbar expand="block" placeholder='Search Employee Types...'></ion-searchbar>
-  <br/><br/>
-
   <div class="ion-text-center">
     <!--(click)="addEmployeeTypeModal()"-->
-    <ion-button color="success" style="margin-left:30%;margin-right:30%"  >
+    <ion-button color="success">
       Add Employee Type
-      <ion-icon name="add" size="medium"></ion-icon>
     </ion-button>
   </div>
   <br/>
 
-  <ion-grid *ngFor="let employeeType of employeeTypes">
+  <ion-grid *ngFor="let employeeType of employeeTypeList">
     <ion-list > 
       <ion-item-sliding >
         <!--(click)="viewEmployeeTypeInfoModal()"-->

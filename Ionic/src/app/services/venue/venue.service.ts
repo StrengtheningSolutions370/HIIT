@@ -184,7 +184,7 @@ export class VenueService {
         this.repo.getVenues().subscribe(result => {
           var tempResult = Object.assign(result);
           this._venueList.next(tempResult);
-          console.log("Updated venue list: Venue Service: ADD confirm venue");
+          console.log("Updated venue list: Venue Service: confirm venue");
           console.log(this._venueList);
         });
       });
