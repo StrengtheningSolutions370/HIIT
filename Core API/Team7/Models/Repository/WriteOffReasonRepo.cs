@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class WriteOffReasonRepo //: IWriteOffReasonRepo
+    public class WriteOffReasonRepo : IWriteOffReasonRepo
     {
 
         readonly private AppDB DB;

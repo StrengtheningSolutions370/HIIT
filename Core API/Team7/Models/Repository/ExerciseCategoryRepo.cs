@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class ExerciseCategoryRepo //: IExerciseCategoryRepo
+    public class ExerciseCategoryRepo : IExerciseCategoryRepo
     {
         readonly private AppDB DB;
 

@@ -8,5 +8,6 @@ namespace Team7.Models
 {
     public class AppUser: IdentityUser
     {
+        //can add custom columns to ASPNET.Users in the db
     }
 }

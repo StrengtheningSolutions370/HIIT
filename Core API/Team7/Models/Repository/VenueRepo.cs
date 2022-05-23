@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class VenueRepo : IVenueRepo
+    public class VenueRepo: IVenueRepo
     {
         readonly private AppDB DB;
 
@@ -33,14 +33,14 @@ namespace Team7.Models.Repository
 
         public async Task<Venue[]> GetAllVenuesAsync()
         {
-            IQueryable<Venue> query = DB.Venues;
+            IQueryable<Venue> query = DB.Venue;
             return await query.ToArrayAsync();
 
         }
 
         public async Task<Venue[]> GetVenuesAsync(string input)
         {
-            IQueryable<Venue> query = DB.Venues.Where(v => v.Name == input || v.Address == input);
+            IQueryable<Venue> query = DB.Venue.Where(v => v.Name == input || v.Address == input);
             if (!query.Any())
             {
                 return null;
@@ -53,7 +53,7 @@ namespace Team7.Models.Repository
 
         public async Task<Venue> GetVenueIdAsync(int id)
         {
-            IQueryable<Venue> query = DB.Venues.Where(v => v.VenueID == id);
+            IQueryable<Venue> query = DB.Venue.Where(v => v.VenueID == id);
             if (!query.Any())
             {
                 return null;
