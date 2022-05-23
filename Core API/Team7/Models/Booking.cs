@@ -12,10 +12,9 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookingID { get; set; }
-        [Required]
         public DateTime Date { get; set; }
-        [Required]
-        public int? ClientID { get; set; }
+        
+        public int ClientID { get; set; }
 
         public virtual Client Client { get; set; }
     }

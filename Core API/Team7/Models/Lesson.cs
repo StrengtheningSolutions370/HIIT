@@ -15,10 +15,8 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int LessonID { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
-        public int? EmployeeID { get; set; }
+        public int EmployeeID { get; set; }
 
         public virtual Employee Employee { get; set; }
         public virtual ICollection<LessonPlan> LessonPlan { get; set; }

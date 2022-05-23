@@ -12,9 +12,9 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int VATID { get; set; }
-        [Required]
+
         public decimal Percentage { get; set; }
-        [Required]
+
         public  System.DateTime Date { get; set; }
     }
 }

@@ -8,15 +8,11 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SaleLineID { get; set; }
-        [Required]
         public int Quantity { get; set; }
-        [Required]
-        public int? ClientID { get; set; }
-        public int? SaleID { get; set; }
-        [Required]
-        public int? SaleItemID { get; set; }
-        [Required]
-        public int? ReceiptID { get; set; }
+        public int ClientID { get; set; }
+        public int SaleID { get; set; }
+        public int SaleItemID { get; set; }
+        public int ReceiptID { get; set; }
 
         public virtual Client Client { get; set; }
         public virtual Receipt Receipt { get; set; }

@@ -28,22 +28,13 @@ import { AddTitleComponent } from './pages/user/titles/add-title/add-title.compo
 import { UpdateTitleComponent } from './pages/user/titles/update-title/update-title.component';
 import { DeleteTitleComponent } from './pages/user/titles/delete-title/delete-title.component';
 import { ViewTitlesComponent } from './pages/user/titles/view-titles/view-titles.component';
-import { ConfirmTitleComponent } from './pages/user/titles/confirm-title/confirm-title.component';
-
-
-import { AddQtypeComponent } from './pages/employee/qualification-type/add-qtype/add-qtype.component';
-import { UpdateQtypeComponent } from './pages/employee/qualification-type/update-qtype/update-qtype.component';
-import { DeleteQtypeComponent } from './pages/employee/qualification-type/delete-qtype/delete-qtype.component';
-import { ViewQtypeComponent } from './pages/employee/qualification-type/view-qtype/view-qtype.component';
-import { ConfirmQtypeComponent } from './pages/employee/qualification-type/confirm-qtype/confirm-qtype.component';
 
 @NgModule({
   declarations: [AppComponent,
   AddVenueComponent, UpdateVenueComponent, ViewVenueInfoComponent, DeleteVenueComponent, ConfirmVenueComponent,AssociativeVenueComponent,
   AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent,
   AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent,
-  AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent,
-  AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent],
+  AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent ],
 
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],

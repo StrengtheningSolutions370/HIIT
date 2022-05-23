@@ -15,7 +15,6 @@ namespace Team7.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public int EmployeeContractID { get; set; }
-        [Required]
         public byte[] File { get; set; }
 
         public virtual ICollection<Employee> Employee { get; set; }

@@ -16,23 +16,15 @@ namespace Team7.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int EmployeeID { get; set; }
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string Surname { get; set; }
-        [Required]
-        public byte[] Photo { get; set; }
-        [Required]
-        public string IDNumber { get; set; }
-        [Required]
-        public int? QualificationID { get; set; }
-        [Required]
-        public int? EmployeeContractID { get; set; }
-        [Required]
-        public int? EmployeeTypeID { get; set; }
-        [Required]
         public int UserID { get; set; }
+        public int EmployeeID { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public byte[] Photo { get; set; }
+        public string IDNumber { get; set; }
+        public int QualificationID { get; set; }
+        public int EmployeeContractID { get; set; }
+        public int EmployeeTypeID { get; set; }
 
         public virtual EmployeeContract EmployeeContract { get; set; }
         public virtual EmployeeType EmployeeType { get; set; }

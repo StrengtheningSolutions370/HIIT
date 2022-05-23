@@ -15,14 +15,10 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserID { get; set; }
-        [Required]
         public string Email { get; set; }
-        [Required]
         public string Cell { get; set; }
-        [Required]
-        public int? UserRoleID { get; set; }
-        [Required]
-        public int? TitleID { get; set; }
+        public int UserRoleID { get; set; }
+        public int TitleID { get; set; }
 
         public virtual ICollection<Client> Client { get; set; }
         public virtual ICollection<Employee> Employee { get; set; }

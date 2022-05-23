@@ -14,7 +14,6 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WriteOffReasonID { get; set; }
-        [Required]
         public string Description { get; set; }
 
         public virtual ICollection<WriteOffLine> WriteOffLine { get; set; }

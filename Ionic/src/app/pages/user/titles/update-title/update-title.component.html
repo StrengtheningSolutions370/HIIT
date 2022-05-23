@@ -1,28 +1,40 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Edit Title Details</ion-title>
+    <ion-title>Update Title</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+<!--This modal is not complete, please check if it displays like "UpdateVenue"-->
+<!--Check the SCSS, TS AND HTML-->
+
 <ion-content>
-  <form [formGroup]="uTitleForm" (ngSubmit)="submitForm()"> 
-    <br/><br/>
+  <!--<form #uTitleForm="ngForm" (ngSubmit)="onSubmit(uTitleForm)">-->
+  <form #uTitleForm="ngForm">
+
+    <br/>     
+        
+    <ion-item>
+      <ion-label position="stacked">Title:</ion-label>
+      <ion-input required ngModel name #titleCtrl="ngModel" placeholder="Mr."></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="!titleCtrl.valid && titleCtrl.touched">
+      <p>Please enter a valid title</p>
+    </ion-text>
+
     <ion-item>
       <ion-label position="stacked">Description:</ion-label>
-      <ion-input formControlName="titleDescription"  type="text" required=""></ion-input>
-      <br/>
+      <ion-textarea required ngModel description #desCtrl="ngModel"
+      placeholder="a designation for a man"></ion-textarea>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.titleDescription.errors?.required">
-      Title Description is required.
-      <br/>
-    </span>
+    <ion-text color="danger" *ngIf="!desCtrl.valid && desCtrl.touched">
+      <p>Please enter a valid title description</p>
+    </ion-text>
+      
+    <br/>
 
-   
-    <br><br/>
-    <ion-button type="submit" color="secondary" [disabled]="!uTitleForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Title</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
-  </form>
+    <ion-button expand="block" color="secondary">Update Title</ion-button>
+</form>
 </ion-content>
