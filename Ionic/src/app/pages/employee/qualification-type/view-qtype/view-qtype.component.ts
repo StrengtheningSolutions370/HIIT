@@ -1,27 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, ViewWillEnter } from '@ionic/angular';
-import { QualificationType } from 'src/app/models/qualification-type';
-
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-view-qtype',
   templateUrl: './view-qtype.component.html',
   styleUrls: ['./view-qtype.component.scss'],
 })
-export class ViewQtypeComponent implements ViewWillEnter {
+export class ViewQtypeComponent implements OnInit {
 
-  @Input() qualificationType: QualificationType;
-  
-  constructor(private modalCtrl: ModalController, public fb:FormBuilder) { 
-  }
+  constructor() { }
 
-  ionViewWillEnter() {
-    console.log("viewSpecificQualificationType-ViewWillEnter");
-    console.log(this.qualificationType);
-  }
+  ngOnInit() {}
 
-  dismissModal() {
-    this.modalCtrl.dismiss();
-  }
 }

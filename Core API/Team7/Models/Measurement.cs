@@ -9,7 +9,7 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MeasurementID { get; set; }
-        public int? MemberID { get; set; }
+        public int MemberID { get; set; }
         public Nullable<double> MuscleMass { get; set; }
         public Nullable<double> BodyFate { get; set; }
         public Nullable<double> Waist { get; set; }
