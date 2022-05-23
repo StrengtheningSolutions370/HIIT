@@ -13,16 +13,11 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ScheduleID { get; set; }
-        [Required]
         public int CapacityBooked { get; set; }
-        [Required]
-        public int? VenueID { get; set; }
-        [Required]
-        public int? BookingTypeID { get; set; }
-        [Required]
-        public int? LessonPlanID { get; set; }
-        [Required]
-        public int? DateSessionID { get; set; }
+        public int VenueID { get; set; }
+        public int BookingTypeID { get; set; }
+        public int LessonPlanID { get; set; }
+        public int DateSessionID { get; set; }
 
         public virtual Venue Venue { get; set; }
         public virtual BookingType BookingType { get; set; }

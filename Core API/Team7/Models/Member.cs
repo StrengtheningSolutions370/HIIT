@@ -16,10 +16,8 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MemberID { get; set; }
-        [Required]
         public int ClientID { get; set; }
-        [Required]
-        public int? MemberStatusID { get; set; }
+        public int MemberStatusID { get; set; }
 
         public virtual Client Client { get; set; }
         public virtual ICollection<Measurement> Measurement { get; set; }

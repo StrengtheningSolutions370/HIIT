@@ -14,10 +14,8 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int LessonPlanID { get; set; }
-        [Required]
-        public int? LessonID { get; set; }
-        [Required]
-        public int? ExerciseID { get; set; }
+        public int LessonID { get; set; }
+        public int ExerciseID { get; set; }
 
         public virtual Exercise Exercise { get; set; }
         public virtual Lesson Lesson { get; set; }
