@@ -14,7 +14,9 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StockTakeID { get; set; }
+        [Required]
         public System.DateTime Date { get; set; }
+        [Required]
         public string Notes { get; set; }
 
         public virtual ICollection<StockTakeLine> StockTakeLine { get; set; }

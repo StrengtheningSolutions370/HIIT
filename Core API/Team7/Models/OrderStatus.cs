@@ -13,6 +13,7 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderStatusID { get; set; }
+        [Required]
         public string Description { get; set; }
 
         public virtual ICollection<SupplierOrder> SupplierOrder { get; set; }

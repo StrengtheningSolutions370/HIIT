@@ -13,8 +13,10 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SaleID { get; set; }
+        [Required]
         public System.DateTime Date { get; set; }
-        public int ClientID { get; set; }
+        [Required]
+        public int? ClientID { get; set; }
 
         public virtual Client Client { get; set; }
         public virtual ICollection<SaleLine> SaleLine { get; set; }
