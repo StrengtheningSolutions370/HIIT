@@ -24,5 +24,10 @@ namespace Team7.Models
         public virtual Client Client { get; set; }
         public virtual ICollection<Measurement> Measurement { get; set; }
         public virtual MemberStatus MemberStatus { get; set; }
+
+        public static implicit operator Member(HashSet<Member> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class VATRepo //: IVATRepo
+    public class VATRepo : IVATRepo
     {
 
         readonly private AppDB DB;

@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class PermissionRepo //: IPermissionRepo
+    public class PermissionRepo : IPermissionRepo
     {
         readonly private AppDB DB;
 

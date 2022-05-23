@@ -43,7 +43,7 @@ export class ConfirmVenueComponent {
     } else if (this.choice === 2){
       console.log('Update Venue from confirm:');
       //CallRepoToUpdate
-      this.venueService.updateVenue(venue.venueID,venue);
+      this.venueService.updateVenue(this.choice,venue);
     }
 
     //dismiss modal

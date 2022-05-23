@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class PasswordHistoryRepo //: IPasswordHistoryRepo
+    public class PasswordHistoryRepo : IPasswordHistoryRepo
     {
         readonly private AppDB DB;
 

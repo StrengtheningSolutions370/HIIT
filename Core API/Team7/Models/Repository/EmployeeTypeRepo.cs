@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class EmployeeTypeRepo //: IEmployeeTypeRepo
+    public class EmployeeTypeRepo : IEmployeeTypeRepo
     {
         readonly private AppDB DB;
 
