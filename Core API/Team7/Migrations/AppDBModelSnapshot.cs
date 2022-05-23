@@ -260,7 +260,7 @@ namespace Team7.Migrations
                     b.Property<bool>("Attended")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("BookingID1")
+                    b.Property<int>("BookingID1")
                         .HasColumnType("int");
 
                     b.Property<int>("ReceiptID")
@@ -401,7 +401,7 @@ namespace Team7.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID1")
+                    b.Property<int?>("UserID1")
                         .HasColumnType("int");
 
                     b.HasKey("UserID");
@@ -1022,7 +1022,7 @@ namespace Team7.Migrations
                     b.Property<int>("SaleItemID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StockTakeID1")
+                    b.Property<int>("StockTakeID1")
                         .HasColumnType("int");
 
                     b.HasKey("StockTakeID");
@@ -1357,7 +1357,9 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Booking", "Booking")
                         .WithMany()
-                        .HasForeignKey("BookingID1");
+                        .HasForeignKey("BookingID1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Team7.Models.Receipt", "Receipt")
                         .WithMany("BookingAttendance")
@@ -1433,9 +1435,7 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.User", "User")
                         .WithMany("Employee")
-                        .HasForeignKey("UserID1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserID1");
 
                     b.Navigation("EmployeeContract");
 
@@ -1699,7 +1699,9 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.StockTake", "StockTake")
                         .WithMany("StockTakeLine")
-                        .HasForeignKey("StockTakeID1");
+                        .HasForeignKey("StockTakeID1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("InventoryItem");
 
