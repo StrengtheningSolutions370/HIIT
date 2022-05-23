@@ -14,7 +14,9 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EmployeeTypeID { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
 
         public virtual ICollection<Employee> Employee { get; set; }

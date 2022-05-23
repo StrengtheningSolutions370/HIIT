@@ -9,9 +9,12 @@ namespace Team7.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public int PriceHistoryID { get; set; }
-        public int SaleItemID { get; set; }
+        [Required]
+        public int? SaleItemID { get; set; }
         public virtual SaleItem SaleItem { get; set; }
+        [Required]
         public System.DateTime Date { get; set; }
+        [Required]
         public decimal Amount { get; set; }
 
     }
