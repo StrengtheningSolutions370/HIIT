@@ -1,28 +1,42 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Delete Title Details</ion-title>
+    <ion-title>Delete Title</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="dismissModal()">Return</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+<!--This modal is not complete, please check if it displays like "DeleteVenue"-->
+<!--Check the SCSS, TS AND HTML-->
+
 <ion-content>
-    <br/><br/>
+  <form #TitleForm="ngForm">
+    <br/>
     <ion-label class="ion-text-center">
-      <p style="font-size:large; color: white;">Are you sure you want to delete the following title?</p>
+      <h3>Are you sure you want to delete the following title?</h3>
     </ion-label>
     <br/>
-
-    <ion-item > 
+    <ion-item>
       <ion-label>
-        <h2>Title Description: </h2>
-        <p class="ion-text-start">{{title.description}}</p>
+        <h2>Title : </h2>
+        <br/>
+        <!--Insert  Title Here-->
+        <p>Mr.</p>
       </ion-label>
     </ion-item>
 
-    <br>
-    <ion-button expand="block" type="ion-button" (click)="delete(title.titleID)" color="danger">Delete Title</ion-button>
+    <ion-item>
+      <ion-label>
+        <h2>Description : </h2>
+        <br/>
+        <!--Insert DESCRIPTION Here-->
+        <p>a designation for a man</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" color="tertiary">Delete Title</ion-button>
+  </form>
 </ion-content>
 
 
