@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-//using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +17,7 @@ using Team7.Context;
 using Team7.Factory;
 using Team7.Models;
 using Team7.Models.Repository;
+using System.Text;
 
 namespace Team7
 {
@@ -45,6 +46,18 @@ namespace Team7
                  options.User.RequireUniqueEmail = true;
              }).AddEntityFrameworkStores<AppDB>()
              .AddDefaultTokenProviders();
+
+            services.AddAuthentication()
+                    .AddCookie()
+                    .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            ValidIssuer = Configuration["Tokens:Issuer"],
+                            ValidAudience = Configuration["Tokens:Audience"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                        };
+                    });
 
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsPrincipalFactory>();
             services.Configure<DataProtectionTokenProviderOptions>(options =>

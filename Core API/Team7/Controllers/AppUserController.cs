@@ -2,9 +2,14 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Team7.Models;
 using Team7.ViewModels;
@@ -17,11 +22,15 @@ namespace Team7.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IUserClaimsPrincipalFactory<AppUser> _claimsPrincipalFactory;
+        private readonly IConfiguration _configuration;
 
-        public AppUserController(UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory)
+        public AppUserController(UserManager<AppUser> userManager,
+            IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _claimsPrincipalFactory = claimsPrincipalFactory;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -65,6 +74,7 @@ namespace Team7.Controllers
                 {
                     var principal = await _claimsPrincipalFactory.CreateAsync(user);
                     await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
+                    return GenerateJWTToken(user);
                 }
                 catch (Exception err)
                 {
@@ -75,8 +85,66 @@ namespace Team7.Controllers
                 return NotFound("Account with specified email does not exist. Please register a new account.");
             }
 
-            var loggedInUser = new UserViewModel { EmailAddress = user.Email, Password = user.PasswordHash };
-            return Ok(loggedInUser);
+            //var loggedInUser = new UserViewModel { EmailAddress = user.Email, Password = user.PasswordHash };
+            //return Ok(loggedInUser);
+        }
+
+        [HttpPost]
+        [Route("Logout")]
+        public async Task<IActionResult> Logout(UserViewModel userViewModel)
+        {
+            var user = await _userManager.FindByNameAsync(userViewModel.EmailAddress);
+
+            try
+            {
+                var principal = await _claimsPrincipalFactory.CreateAsync(user);
+                await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+                return Ok("Successfully logged out of account: " + user.Email);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err + "     Internal error. Please contact support");
+            }
+
+        //    if (user != null && await _userManager.CheckPasswordAsync(user, userViewModel.Password))
+        //    {
+
+        //    }
+        //    else
+        //    {
+        //        return NotFound("Account with specified email does not exist. Please register a new account.");
+        //    }
+
+        //    var loggedInUser = new UserViewModel { EmailAddress = user.Email, Password = user.PasswordHash };
+        //    return Ok(loggedInUser);
+         }
+
+        [HttpGet]
+        private ActionResult GenerateJWTToken(AppUser appUser)
+        {
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, appUser.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, appUser.UserName)
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+
+            var token = new JwtSecurityToken(
+                _configuration["Tokens:Issuer"],
+                _configuration["Tokens:Audience"],
+                claims,
+                signingCredentials: credentials,
+                expires: DateTime.UtcNow.AddHours(12)
+                );
+
+            return Created("", new { 
+            token = new JwtSecurityTokenHandler().WriteToken(token),
+            expiration = token.ValidTo
+            });
         }
     }
 }
