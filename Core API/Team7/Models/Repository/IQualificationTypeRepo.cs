@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Team7.Models.Repository
 {
-    interface IQualificationTypeRepo
+    public interface IQualificationTypeRepo
     {
         void Add<T>(T Entity) where T : class;
 
@@ -13,11 +13,11 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        //Task<QualificationType[]> GetAllQualificationTypesAsync();
+        Task<QualificationType[]> GetAllQualificationTypesAsync();
 
-        //Task<QualificationType[]> GetQualificationTypesAsync(string input);
+        Task<QualificationType[]> GetQualificationTypesAsync(string input);
 
-        //Task<QualificationType> GetQualificationTypeIdAsync(int id);
+        Task<QualificationType> GetQualificationTypeIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }

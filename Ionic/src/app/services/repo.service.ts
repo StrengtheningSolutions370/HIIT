@@ -7,6 +7,8 @@ import { map } from 'rxjs/operators';
 import { Venue } from 'src/app/models/venue';
 import { UserRole } from '../models/userRole';
 import { EmployeeType } from '../models/employeeType';
+import { Title } from 'src/app/models/title';
+import { QualificationType } from 'src/app/models/qualification-type';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,8 @@ export class RepoService {
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
   EmployeeTypeController = 'EmployeeType/';
+  TitleController = 'Title/';
+  QualificationTypeController = 'QualificationType/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -115,5 +119,61 @@ export class RepoService {
   existsEmployeeType(id: number): Observable<any> {
     return this.http.get(`${this.base + this.EmployeeTypeController}exists?id=${id}`, this.httpOptions);
   }
+
+ // Title:
+ // ------
+ // Create
+  createTitle(title: any): Observable<any>{
+    return this.http.post<any>(`${this.base+this.TitleController}add`,title,this.httpOptions);
+  }
+  //Update
+  updateTitle(titleId: number, title: Title): Observable<any>{
+    return this.http.put(`${this.base+this.TitleController}update?id=${titleId}`,title, this.httpOptions);
+  }
+  //Delete
+  deleteTitle(titleId: number): Observable<any>{
+    return this.http.delete(`${this.base+this.TitleController}delete?id=${titleId}`,this.httpOptions);
+  }
+  //GetAll
+  getTitles(): Observable<any>{
+    return this.http.get(`${this.base+this.TitleController}getAll`, this.httpOptions);
+  }
+  //GetMatch
+  getMatchTitle(input: string): Observable<any>{
+    return this.http.get(`${this.base+this.TitleController}getMatch?input=${input}`, this.httpOptions);
+  }
+  //Exists
+  existsTitle(id: number): Observable<any>{
+    return this.http.get(`${this.base+this.TitleController}exists?id=${id}`, this.httpOptions);
+  }
+
+   //QualificationType:
+  //------
+ // Create
+  createQualificationType(qualificationType: any): Observable<any>{
+    return this.http.post<any>(`${this.base+this.QualificationTypeController}add`,qualificationType,this.httpOptions);
+  }
+  //Update
+  updateQualificationType(qualificationTypeId: number, qualificationType: QualificationType): Observable<any>{
+    return this.http.put(`${this.base+this.QualificationTypeController}update?id=${qualificationTypeId}`,qualificationType, this.httpOptions);
+  }
+  //Delete
+  deleteQualificationType(qualificationTypeId: number): Observable<any>{
+    return this.http.delete(`${this.base+this.QualificationTypeController}delete?id=${qualificationTypeId}`,this.httpOptions);
+  }
+  //GetAll
+  getQualificationTypes(): Observable<any>{
+    return this.http.get(`${this.base+this.QualificationTypeController}getAll`, this.httpOptions);
+  }
+  //GetMatch
+  getMatchQualificationType(input: string): Observable<any>{
+    return this.http.get(`${this.base+this.QualificationTypeController}getMatch?input=${input}`, this.httpOptions);
+  }
+  //Exists
+  existsQualificationType(id: number): Observable<any>{
+    return this.http.get(`${this.base+this.QualificationTypeController}exists?id=${id}`, this.httpOptions);
+  }
+
+
 }
 

@@ -65,8 +65,9 @@ namespace Team7
             services.AddDbContext<AppDB>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("Josh")));
             services.AddScoped<IVenueRepo, VenueRepo>();
+            services.AddScoped<ITitleRepo, TitleRepo>();
+            services.AddScoped<IQualificationTypeRepo, QualificationTypeRepo>();
             services.AddScoped<IUserRoleRepo, UserRoleRepo>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

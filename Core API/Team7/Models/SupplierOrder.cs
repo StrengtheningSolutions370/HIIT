@@ -13,9 +13,12 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SupplierOrderID { get; set; }
+        [Required]
         public System.DateTime Date { get; set; }
-        public int OrderStatusID { get; set; }
-        public int SupplierID { get; set; }
+        [Required]
+        public int? OrderStatusID { get; set; }
+        [Required]
+        public int? SupplierID { get; set; }
 
         public virtual OrderStatus OrderStatus { get; set; }
         public virtual Supplier Supplier { get; set; }
