@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class PaymentTypeRepo //: IPaymentTypeRepo
+    public class PaymentTypeRepo : IPaymentTypeRepo
     {
         readonly private AppDB DB;
 

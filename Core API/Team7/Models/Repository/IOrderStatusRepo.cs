@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Team7.Models.Repository
 {
-    interface IOrderStatusRepo
+    public interface IOrderStatusRepo
     {
         void Add<T>(T Entity) where T : class;
 

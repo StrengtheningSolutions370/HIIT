@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Team7.Models.Repository
 {
-    interface IPaymentTypeRepo
+    public interface IPaymentTypeRepo
     {
         void Add<T>(T Entity) where T : class;
 

@@ -13,10 +13,10 @@ namespace Team7.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VenuesController : ControllerBase
+    public class VenueController : ControllerBase
     {
         private readonly IVenueRepo VenueRepo;
-        public VenuesController(IVenueRepo venueRepo)
+        public VenueController(IVenueRepo venueRepo)
         {
             this.VenueRepo = venueRepo;
         }

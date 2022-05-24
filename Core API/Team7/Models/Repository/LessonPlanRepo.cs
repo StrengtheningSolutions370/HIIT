@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
+using Team7.Models;
 
 
 namespace Team7.Models.Repository
 {
-    public class LessonPlanRepo //: ILesssonPlanRepo
+    public class LessonPlanRepo : ILessonPlanRepo
     {
         readonly private AppDB DB;
 

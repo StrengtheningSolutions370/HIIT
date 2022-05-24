@@ -1,5 +1,6 @@
 <ion-header>
   <ion-toolbar mode="ios">
+    <!--Menu toggle button that will display the menu-->
       <ion-buttons slot="start">
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
@@ -17,14 +18,15 @@
 
     <br/><br/>
   <div class="ion-text-center">
-    <ion-button color="success" (click)="venueService.addVenueInfoModal()">
+    <ion-button class="ion-text-center"color="success" (click)="venueService.addVenueInfoModal()">
       Add Venue
-      <ion-icon name="add" size="medium"></ion-icon>
+      <!-- <ion-icon name="add" size="medium"></ion-icon> -->
     </ion-button>
   </div>
-  <br/>
+  <br>
   <ion-grid *ngIf="!isLoading">
     <ion-list *ngFor="let venue of venueList | filter:filter, let i = index"> 
+      
       <ion-item-sliding>
         <!-- Sending through the venue object to the venue service, to be viewed in the modal -->
         <ion-item button (click)="venueService.viewVenueInfoModal(venue)">

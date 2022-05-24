@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class StockTakeLineRepo //: IStockTakeLineRepo
+    public class StockTakeLineRepo : IStockTakeLineRepo
     {
         readonly private AppDB DB;
 

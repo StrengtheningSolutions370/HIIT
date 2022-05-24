@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using Team7.Models;
 
 namespace Team7.Context
 {
-    public class AppDB: DbContext
+    public class AppDB: IdentityDbContext<AppUser>
     {
 
         public AppDB(DbContextOptions<AppDB> options):base(options)
@@ -15,54 +16,52 @@ namespace Team7.Context
 
         }
 
-        public virtual DbSet<Booking> Bookings{ get; set; }
-        public virtual DbSet<BookingAttendance> BookingAttendances{ get; set; }
-        public virtual DbSet<BookingPriceHistory> BookingPriceHistories { get; set; }
-        public virtual DbSet<BookingType> BookingTypes { get; set; }
-        public virtual DbSet<Client> Clients { get; set; }
-        public virtual DbSet<DateSession> DateSessions { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<EmployeeContract> EmployeeContracts { get; set; }
-        public virtual DbSet<EmployeeType> EmployeeTypes { get; set; }
-        public virtual DbSet<ExerciseCategory> ExerciseCategories { get; set; }
-        public virtual DbSet<Exercise> Exercises { get; set; }
-        public virtual DbSet<InventoryItem> InventoryItems { get; set; }
-        public virtual DbSet<Lesson> Lessons { get; set; }
-        public virtual DbSet<LessonPlan> LessonPlans { get; set; }
-        public virtual DbSet<Measurement> Measurements { get; set; }
-        public virtual DbSet<Member> Members { get; set; }
-        public virtual DbSet<MemberStatus> MemberStatuses { get; set; }
-        public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
-        public virtual DbSet<PasswordHistory> PasswordHistories { get; set; }
-        public virtual DbSet<PaymentType> PaymentTypes { get; set; }
-        public virtual DbSet<Permission> Permissions { get; set; }
-        public virtual DbSet<PriceHistory> PriceHistories { get; set; }
-        public virtual DbSet<Qualification> Qualifications { get; set; }
-        public virtual DbSet<QualificationType> QualificationTypes { get; set; }
-        public virtual DbSet<Receipt> Receipts { get; set; }
-        public virtual DbSet<Refund> Refunds { get; set; }
-        public virtual DbSet<RefundReason> RefundReasons { get; set; }
-        public virtual DbSet<Sale> Sales { get; set; }
-        public virtual DbSet<SaleCategory> SaleCategories { get; set; }
-        public virtual DbSet<SaleItem> SaleItems { get; set; }
-        public virtual DbSet<SaleLine> SaleLines { get; set; }
-        public virtual DbSet<Schedule> Schedules { get; set;}
-
-        public virtual DbSet<Session> Sessions { get; set; }
-        public virtual DbSet<StockTake> StockTakes { get; set; }
-        public virtual DbSet<StockTakeLine> StockTakeLines { get; set; }
-        public virtual DbSet<Supplier> Suppliers { get; set; }
-        public virtual DbSet<SupplierOrder> SupplierOrders { get; set; }
-        public virtual DbSet<SupplierOrderLine> SupplierOrderLines { get; set; }
-        public virtual DbSet<Title> Titles { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<VAT> VATs { get; set; }
-        public virtual DbSet<Venue> Venues { get; set;}
-
-        public virtual DbSet<WriteOff> WriteOffs { get; set; }
-        public virtual DbSet<WriteOffLine> WriteOffLines { get; set; }
-        public virtual DbSet<WriteOffReason> WriteOffReasons { get; set; }
+        public virtual DbSet<Booking> Booking{ get; set; }
+        public virtual DbSet<BookingAttendance> BookingAttendance{ get; set; }
+        public virtual DbSet<BookingPriceHistory> BookingPriceHistory { get; set; }
+        public virtual DbSet<BookingType> BookingType { get; set; }
+        public virtual DbSet<Client> Client { get; set; }
+        public virtual DbSet<DateSession> DateSession { get; set; }
+        public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<EmployeeContract> EmployeeContract { get; set; }
+        public virtual DbSet<EmployeeType> EmployeeType { get; set; }
+        public virtual DbSet<ExerciseCategory> ExerciseCategory { get; set; }
+        public virtual DbSet<Exercise> Exercise { get; set; }
+        public virtual DbSet<InventoryItem> InventoryItem { get; set; }
+        public virtual DbSet<Lesson> Lesson { get; set; }
+        public virtual DbSet<LessonPlan> LessonPlan { get; set; }
+        public virtual DbSet<Measurement> Measurement { get; set; }
+        public virtual DbSet<Member> Member { get; set; }
+        public virtual DbSet<MemberStatus> MemberStatus { get; set; }
+        public virtual DbSet<OrderStatus> OrderStatus { get; set; }
+        public virtual DbSet<PasswordHistory> PasswordHistory { get; set; }
+        public virtual DbSet<PaymentType> PaymentType { get; set; }
+        public virtual DbSet<Permission> Permission { get; set; }
+        public virtual DbSet<PriceHistory> PriceHistory { get; set; }
+        public virtual DbSet<Qualification> Qualification { get; set; }
+        public virtual DbSet<QualificationType> QualificationType { get; set; }
+        public virtual DbSet<Receipt> Receipt { get; set; }
+        public virtual DbSet<Refund> Refund { get; set; }
+        public virtual DbSet<RefundReason> RefundReason { get; set; }
+        public virtual DbSet<Sale> Sale { get; set; }
+        public virtual DbSet<SaleCategory> SaleCategory { get; set; }
+        public virtual DbSet<SaleItem> SaleItem { get; set; }
+        public virtual DbSet<SaleLine> SaleLine { get; set; }
+        public virtual DbSet<Schedule> Schedule { get; set;}
+        public virtual DbSet<Session> Session { get; set; }
+        public virtual DbSet<StockTake> StockTake { get; set; }
+        public virtual DbSet<StockTakeLine> StockTakeLine { get; set; }
+        public virtual DbSet<Supplier> Supplier { get; set; }
+        public virtual DbSet<SupplierOrder> SupplierOrder { get; set; }
+        public virtual DbSet<SupplierOrderLine> SupplierOrderLine { get; set; }
+        public virtual DbSet<Title> Title { get; set; }
+        public virtual DbSet<UserRole> UserRole { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<VAT> VAT { get; set; }
+        public virtual DbSet<Venue> Venue { get; set;}
+        public virtual DbSet<WriteOff> WriteOff { get; set; }
+        public virtual DbSet<WriteOffLine> WriteOffLine { get; set; }
+        public virtual DbSet<WriteOffReason> WriteOffReason { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

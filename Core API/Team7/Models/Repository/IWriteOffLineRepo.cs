@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Team7.Models.Repository
 {
-    interface IWriteOffLineRepo
+    public interface IWriteOffLineRepo
     {
         void Add<T>(T Entity) where T : class;
 
