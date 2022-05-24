@@ -7,6 +7,8 @@ import { map } from 'rxjs/operators';
 import { Venue } from 'src/app/models/venue';
 import { Title } from 'src/app/models/title';
 import { QualificationType } from 'src/app/models/qualification-type';
+import { appUser} from '../models/appUser';
+import { appUserRegister} from '../models/appUser';
 import { USER_ROLE } from '../models/userRole';
 
 @Injectable({
@@ -15,6 +17,7 @@ import { USER_ROLE } from '../models/userRole';
 
 export class RepoService {
   base = 'https://localhost:44383/api/';
+  AppUserController = 'AppUser/'
   VenueController = 'Venues/';
   TitleController = 'Title/';
   QualificationTypeController = 'QualificationType/';
@@ -30,6 +33,20 @@ export class RepoService {
   {
     //CRUDS in this repo file need to be used by subscribing to them in the relevant service.
     //E.g to use getVenues(); it must be subscribed to in the venue service
+  }
+
+  //AppUser:
+  //-------
+  //Register
+  register(userDetails: appUserRegister){
+    console.log(userDetails);
+    return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);
+  }
+
+  //Login
+  login(userDetails: appUser){
+    console.log(userDetails);
+    return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions)
   }
 
   //UserRole:
@@ -110,6 +127,7 @@ export class RepoService {
   existsTitle(id: number): Observable<any>{
     return this.http.get(`${this.base+this.TitleController}exists?id=${id}`, this.httpOptions);
   }
+  
 
    //QualificationType:
   //------

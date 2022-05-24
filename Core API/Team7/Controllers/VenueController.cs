@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,6 +26,7 @@ namespace Team7.Controllers
         // POST api/venues/add
         [HttpPost]
         [Route("add")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PostVenue(Venue venue)
         {
             try
@@ -128,6 +131,7 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
+
         public async Task<Venue> VenueExists(int id)
         {
             return await VenueRepo.GetVenueIdAsync(id);

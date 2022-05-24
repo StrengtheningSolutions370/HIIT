@@ -72,6 +72,29 @@ namespace Team7
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Team7", Version = "v1" });
                 //c.ResolveConflictingActions(desc => desc.First());
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Add new Bearer Token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string []{}
+                    }
+                });
             });
 
             services.AddCors(options =>
@@ -149,6 +172,7 @@ namespace Team7
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Team7 v1");
                     //c.RoutePrefix = string.Empty;
+
                 });
 
             }
