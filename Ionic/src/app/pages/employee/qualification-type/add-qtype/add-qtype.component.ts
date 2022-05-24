@@ -34,7 +34,7 @@ export class AddQtypeComponent implements ViewWillEnter {
     console.log("AddQualificationType-ViewWillEnter");
     console.log(this.qualificationType);
     if (this.qualificationType !=null){
-      this.cQTypeForm.controls.qualificationTypeName.setValue(this.qualificationType.name)
+      this.cQTypeForm.controls.qualificationTypeName.setValue(this.qualificationType.name);
     }
 
   }
@@ -44,9 +44,9 @@ export class AddQtypeComponent implements ViewWillEnter {
       console.log('Please provide all required fields');
       return false;
     }else{
-      var temp = {
+      const temp = {
         name: this.cQTypeForm.value['qualificationTypeName'],
-        qualifications: []       
+        qualifications: []
       };
       this.qualificationService.confirmQualificationTypeModal(1,temp);
       this.dismissModal();

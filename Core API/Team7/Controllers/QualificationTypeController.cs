@@ -87,47 +87,48 @@ namespace Team7.Controllers
 
 
         // GET: api/title/getAll
-        [HttpGet]
-        [Route("getAll")]
-        public async Task<IActionResult> GetQualificationTypes()
-        {
-            try
-            {
-                var qualificationTypeList = await QualificationTypeRepo.GetAllQualificationTypesAsync();
-                if (qualificationTypeList == null)
-                {
-                    return NotFound();
-                }
-                return Ok(qualificationTypeList);
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
-        }
-
-        // GET: api/title/getMatch/{input}
-        [HttpGet]
-        [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingQualificationTypes(string input)
-        {
-            try
-            {
-                var qualificationType = await QualificationTypeRepo.GetQualificationTypesAsync(input);
-                return Ok(qualificationType);
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
-
-        }
-
-        [HttpGet]
-        [Route("exists")]
-        public async Task<QualificationType> QualificationTypeExists(int id)
-        {
-            return await QualificationTypeRepo.GetQualificationTypeIdAsync(id);
-        }
+        //[HttpGet]
+        //[Route("getAll")]
+        //public async Task<IActionResult> GetQualificationTypes()
+        //{
+        //try
+        //{
+        //    var qualificationTypeList = await QualificationTypeRepo.GetAllQualificationTypesAsync();
+        //    if (qualificationTypeList == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(qualificationTypeList);
+        //}
+        //catch (Exception err)
+        //{
+        //    return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+        //}
     }
 }
+
+        //// GET: api/title/getMatch/{input}
+        //[HttpGet]
+        //[Route("getMatch")]
+        //public async Task<IActionResult> GetMatchingQualificationTypes(string input)
+        //{
+        //    //try
+        //    //{
+        //    //    var qualificationType = await QualificationTypeRepo.GetQualificationTypesAsync(input);
+        //    //    return Ok(qualificationType);
+        //    //}
+        //    //catch (Exception err)
+        //    //{
+        //    //    return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+        //    //}
+
+        //}
+
+//        [HttpGet]
+//        [Route("exists")]
+//        public async Task<QualificationType> QualificationTypeExists(int id)
+//        {
+//            return await QualificationTypeRepo.GetQualificationTypeIdAsync(id);
+//        }
+//    }
+//}

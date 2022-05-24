@@ -13,6 +13,7 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int QualificationTypeID { get; set; }
+        [Required]
         public string Name { get; set; }
 
         public virtual ICollection<Qualification> Qualification { get; set; }

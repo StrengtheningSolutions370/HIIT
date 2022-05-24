@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
 import { UserRole } from 'src/app/models/userRole';
@@ -12,12 +12,12 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./add-role.component.scss'],
 })
 export class AddRoleComponent implements ViewWillEnter {
-  @Input() userRole: UserRole;
 
   //Creating the form to add the new venue details, that will be displayed in the HTML component
   cUserRoleForm: FormGroup = this.formBuilder.group({
-    name: ['', [Validators.required]],
-    description: ['', [Validators.required]],
+    name: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    permissions: new FormArray([])
   });
 
   permissions=[
@@ -35,6 +35,7 @@ export class AddRoleComponent implements ViewWillEnter {
     }
   ];
 
+
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public userService: UserService, private router: Router, private currentRoute: ActivatedRoute,
     private  alertCtrl: AlertController ) { }
@@ -44,16 +45,18 @@ export class AddRoleComponent implements ViewWillEnter {
     return this.cUserRoleForm.controls;
   }
 
+  get permissionsFormArray() {
+    return this.cUserRoleForm.controls.permissions as FormArray;
+}
+
   ionViewWillEnter(): void {
     console.log('Add User Role - View Will Enter');
-    console.log(this.userRole);
-
-    if (this.userRole !=null){
-      this.cUserRoleForm.controls.name.setValue(this.userRole.name);
-      this.cUserRoleForm.controls.description.setValue(this.userRole.description);
-      this.cUserRoleForm.controls.permissions.setValue(this.userRole.permissions);
-    }
+    this.permissions.forEach(() =>
+    this.permissionsFormArray.push(new FormControl(false))
+  );
   }
+
+
 
   submitForm() {
     if (!this.cUserRoleForm.valid){
@@ -61,15 +64,14 @@ export class AddRoleComponent implements ViewWillEnter {
       return false;
     }else{
       const temp = {
-        name: this.cUserRoleForm.value['roleName'],
-        description: this.cUserRoleForm.value['roleDes'],
+        name: this.cUserRoleForm.value['name'],
+        description: this.cUserRoleForm.value['description'],
+        permissions: [],
+        //permissions: this.cUserRoleForm.value['permission'],
         users: []
       };
       this.userService.confirmUserRoleModal(1,temp);
       this.dismissModal();
-      // this.sucAdd();
-      // console.log("CurrentRoute:ADD");
-      // console.log(this.currentRoute.url);
     }
    }
 
@@ -102,5 +104,4 @@ export class AddRoleComponent implements ViewWillEnter {
   dismissModal() {
     this.modalCtrl.dismiss();
   }
-
 }

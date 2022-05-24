@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { EmployeeType } from 'src/app/models/employeeType';
+import { AddEmployeeComponent } from 'src/app/pages/employee/employee-page/add-employee/add-employee.component';
 import { AddEtypeComponent } from 'src/app/pages/employee/employee-type/add-etype/add-etype.component';
 import { AssociativeEtypeComponent } from 'src/app/pages/employee/employee-type/associative-etype/associative-etype.component';
 import { ConfirmEtypeComponent } from 'src/app/pages/employee/employee-type/confirm-etype/confirm-etype.component';
@@ -11,6 +12,7 @@ import { DeleteEtypeComponent } from 'src/app/pages/employee/employee-type/delet
 import { UpdateEtypeComponent } from 'src/app/pages/employee/employee-type/update-etype/update-etype.component';
 import { ViewEtypeComponent } from 'src/app/pages/employee/employee-type/view-etype/view-etype.component';
 import { RepoService } from '../repo.service';
+import { TitleService } from '../title/title.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,8 @@ export class EmployeeService {
     return this._employeeTypeList.asObservable();
   }
 
-  constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
+  constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController,
+     public titleService: TitleService) {
     //Receive the venues from the repo (API).
     this.repo.getEmployeeTypes().subscribe(result => {
       console.log('Employee Type List: Employee Service -> Get Employee Type');
@@ -207,5 +210,14 @@ export class EmployeeService {
     } else {
       console.log('BadOption: ' + selection);
     }
+  }
+
+  //Employee Modals
+  async addEmployeeInfoModal() {
+    const modal = await this.modalCtrl.create({
+      component : AddEmployeeComponent,
+    });
+    await modal.present();
+
   }
 }

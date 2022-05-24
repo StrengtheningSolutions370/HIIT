@@ -57,7 +57,7 @@ export class TitleService {
    }
 
   //Receives a title to update in the service title list.
-   updateTitle(id:number,title: any){
+   updateTitle(id: number,title: any){
      console.log('titleService: Repo -> Update Title');
      console.log(title);
 

@@ -38,23 +38,23 @@ export class RepoService {
   //------
   //Create
   createUserRole(user_role: UserRole): Observable<any> {
-    return this.http.post<any>(`${this.base + this.UserRoleController}postuserrole`, user_role, this.httpOptions);
+    return this.http.post<any>(`${this.base + this.UserRoleController}add`, user_role, this.httpOptions);
   }
   //Read
   getUserRoles(): Observable<any> {
-    return this.http.get(`${this.base + this.UserRoleController}getuserroles`, this.httpOptions);
+    return this.http.get(`${this.base + this.UserRoleController}getAll`, this.httpOptions);
   }
   //Update
   updateUserRole(userId: number, user_role: UserRole): Observable<any> {
-    return this.http.put(`${this.base + this.UserRoleController}putuserrole?id=${userId}`, user_role, this.httpOptions);
+    return this.http.put(`${this.base + this.UserRoleController}update?id=${userId}`, user_role, this.httpOptions);
   }
   //Delete
   deleteUserRole(userId: number): Observable<any> {
-    return this.http.delete(`${this.base + this.UserRoleController}deleteuserrole?id=${userId}`, this.httpOptions);
+    return this.http.delete(`${this.base + this.UserRoleController}delete?id=${userId}`, this.httpOptions);
   }
   //Exists
   userRoleExists(userId: number): Observable<any> {
-    return this.http.delete(`${this.base + this.UserRoleController}userroleexists?id=${userId}`, this.httpOptions);
+    return this.http.delete(`${this.base + this.UserRoleController}exists?id=${userId}`, this.httpOptions);
   }
   //GetMatch
   getMatchUserRole(input: string): Observable<any> {

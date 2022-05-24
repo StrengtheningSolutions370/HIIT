@@ -105,13 +105,14 @@ export class UserService {
 
   //Display the delete venue modal.
   //This method receives the selected venue object, from the venue page, in the modal through the componentProps.
-  async deleteVenueInfoModal(userRole: UserRole) {
+  async deleteUserRoleInfoModal(userRole: UserRole) {
     console.log('User Service: Delete User Role Modal Call');
     let tempUserRole = new UserRole();
     tempUserRole = Object.assign(userRole);
     console.log(tempUserRole);
-    if (tempUserRole.users != null && tempUserRole.users.length > 0 ||
-      tempUserRole.permissions != null && tempUserRole.permissions.length > 0) {
+    if (tempUserRole.users != null
+      // tempUserRole.permissions != null && tempUserRole.permissions.length > 0
+      ) {
       const modal = await this.modalCtrl.create({
         component: AssociativeRoleComponent,
         componentProps: {

@@ -8,9 +8,12 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SupplierOrderLineID { get; set; }
-        public int SupplierOrderID { get; set; }
+        [Required]
+        public int? SupplierOrderID { get; set; }
+        [Required]
         public int Quantity { get; set; }
-        public int InventoryItemID { get; set; }
+        [Required]
+        public int? InventoryItemID { get; set; }
 
         public virtual InventoryItem InventoryItem { get; set; }
         public virtual SupplierOrder SupplierOrder { get; set; }

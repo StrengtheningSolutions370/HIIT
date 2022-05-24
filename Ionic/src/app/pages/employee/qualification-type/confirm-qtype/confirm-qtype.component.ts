@@ -18,11 +18,6 @@ export class ConfirmQtypeComponent {
     public router: Router, public activated: ActivatedRoute) {
    }
 
-   //double check where it returns to with josh 
- async dismissModal() {
-    await this.router.navigate(['../qualification-type'],{relativeTo:this.activated});
-    this.modalCtrl.dismiss();
-  };
   //1 = confirm ADD
   //2 = confirm UPDATE
   confirmChanges(qualificationType: QualificationType){
@@ -62,4 +57,7 @@ export class ConfirmQtypeComponent {
     }
   }
 
+  async dismissModal() {
+    this.modalCtrl.dismiss();
+  };
 }

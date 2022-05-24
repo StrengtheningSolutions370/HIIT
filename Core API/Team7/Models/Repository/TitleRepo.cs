@@ -36,12 +36,11 @@ namespace Team7.Models.Repository
         {
             IQueryable<Title> query = DB.Title;
             return await query.ToArrayAsync();
-
         }
 
         public async Task<Title[]> GetTitlesAsync(string input)
         {
-            IQueryable<Title> query = DB.Title.Where(t => t.Description == input);
+            IQueryable<Title> query = DB.Title.Where(v => v.Description== input );
             if (!query.Any())
             {
                 return null;
@@ -50,12 +49,13 @@ namespace Team7.Models.Repository
             {
                 return await query.ToArrayAsync();
             }
+            return null;
 
         }
 
         public async Task<Title> GetTitleIdAsync(int id)
         {
-            IQueryable<Title> query = DB.Title.Where(t => t.TitleID == id);
+            IQueryable<Title> query = DB.Title.Where(v => v.TitleID == id);
             if (!query.Any())
             {
                 return null;
@@ -64,6 +64,7 @@ namespace Team7.Models.Repository
             {
                 return await query.SingleAsync();
             }
+            return null;
         }
 
         public async Task<bool> SaveChangesAsync()
@@ -73,3 +74,4 @@ namespace Team7.Models.Repository
         }
     }
 }
+
