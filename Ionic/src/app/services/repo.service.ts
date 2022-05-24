@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { Venue } from 'src/app/models/venue';
 import { Title } from 'src/app/models/title';
 import { QualificationType } from 'src/app/models/qualification-type';
+import { SaleCategory } from 'src/app/models/sale-category';
 import { USER_ROLE } from '../models/userRole';
 
 @Injectable({
@@ -18,6 +19,7 @@ export class RepoService {
   VenueController = 'Venues/';
   TitleController = 'Title/';
   QualificationTypeController = 'QualificationType/';
+  SaleCategoriesController = 'SaleCategories/';
 
   httpOptions = {
     headers: new HttpHeaders ({
@@ -119,7 +121,8 @@ export class RepoService {
   }
   //Update
   updateQualificationType(qualificationTypeId: number, qualificationType: QualificationType): Observable<any>{
-    return this.http.put(`${this.base+this.QualificationTypeController}update?id=${qualificationTypeId}`,qualificationType, this.httpOptions);
+    return this.http.put(`${this.base+this.QualificationTypeController}
+    update?id=${qualificationTypeId}`,qualificationType, this.httpOptions);
   }
   //Delete
   deleteQualificationType(qualificationTypeId: number): Observable<any>{
@@ -137,6 +140,34 @@ export class RepoService {
   existsQualificationType(id: number): Observable<any>{
     return this.http.get(`${this.base+this.QualificationTypeController}exists?id=${id}`, this.httpOptions);
   }
+
+ //SaleCategory:
+ //------
+ // Create
+ createSaleCategory(saleCategory: any): Observable<any>{
+  return this.http.post<any>(`${this.base+this.SaleCategoriesController}add`,saleCategory,this.httpOptions);
+}
+//Update
+updateSaleCategory(saleCategoryId: number, saleCategory: SaleCategory): Observable<any>{
+  return this.http.put(`${this.base+this.SaleCategoriesController}
+  update?id=${saleCategoryId}`,saleCategory, this.httpOptions);
+}
+//Delete
+deleteSaleCategory(saleCategoryId: number): Observable<any>{
+  return this.http.delete(`${this.base+this.SaleCategoriesController}delete?id=${saleCategoryId}`,this.httpOptions);
+}
+//GetAll
+getSaleCategory(): Observable<any>{
+  return this.http.get(`${this.base+this.SaleCategoriesController}getAll`, this.httpOptions);
+}
+//GetMatch
+getMatchSaleCategory(input: string): Observable<any>{
+  return this.http.get(`${this.base+this.SaleCategoriesController}getMatch?input=${input}`, this.httpOptions);
+}
+//Exists
+existsSaleCategory(id: number): Observable<any>{
+  return this.http.get(`${this.base+this.SaleCategoriesController}exists?id=${id}`, this.httpOptions);
+}
 
 
 }

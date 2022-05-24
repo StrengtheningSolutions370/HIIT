@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sale-category',
@@ -6,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sale-category.page.scss'],
 })
 export class SaleCategoryPage implements OnInit {
+
+  public filter: string;
+
+  saleCateSub: Subscription;
+
+  isLoading = true;
 
   categories = [
     {name : 'Shop',

@@ -2,23 +2,23 @@
 
     <br/>
     <!--Searchbar (must make function to search)-->
-    <ion-searchbar expand="block" placeholder='Search Sale Categories...'></ion-searchbar>
+    <ion-searchbar expand="block" placeholder='Search Sale Categories...' [(ngModel)]="filter"
+    animated="true" debounce="200"></ion-searchbar>
     <br/><br/>
   
     <div class="ion-text-center">
       <!-- (click)="addVATModal()" -->
-      <ion-button color="success" style="margin-left:30%;margin-right:30%" > 
+      <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="scategoryService.createSaleCategoryModal()"> 
         Add Sale Category
         <ion-icon name="add" size="medium"></ion-icon>
       </ion-button>
     </div>
     <br/>
   
-    <ion-grid *ngFor="let category of categories">
-      <ion-list > 
+    <ion-grid *ngIf="!isLoading" >
+      <ion-list *ngFor="let category of categories | filter:filter, let i = index"> 
         <ion-item-sliding >
-          <!-- (click)="viewVATModal()" -->
-          <ion-item button  >
+          <ion-item button (click)="scategoryService.viewSaleCategoryModal()" >
             <ion-icon name="basket-outline" size="large" style="padding-left:5%"></ion-icon>
             <ion-label style="padding-left:2% ;">
               <h1>{{category.name}}</h1>
