@@ -13,7 +13,7 @@ import { ViewTitlesComponent } from 'src/app/pages/user/titles/view-titles/view-
 import { ConfirmTitleComponent } from 'src/app/pages/user/titles/confirm-title/confirm-title.component';
 import { AssociativeTitleComponent } from 'src/app/pages/user/titles/associative-title/associative-title.component';
 import { RepoService } from '../repo.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -57,14 +57,13 @@ export class TitleService {
    }
 
   //Receives a title to update in the service title list.
-   updateTitle(id: number,title: any){
+   async updateTitle(id:number,title: any) : Promise<Observable<any>> {
      console.log('titleService: Repo -> Update Title');
      console.log(title);
 
      const currentTitle = this._titleList.value;
      const index = currentTitle.findIndex(x => x.titleID === id)
-     this.repo.updateTitle(title.titleID,title).subscribe(result =>
-      console.log(result));
+     return this.repo.updateTitle(title.titleID,title)
    }
 
   //Receives a title to delete in the service title list.
