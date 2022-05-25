@@ -18,7 +18,7 @@ import { USER_ROLE } from '../models/userRole';
 export class RepoService {
   base = 'https://localhost:44383/api/';
   AppUserController = 'AppUser/'
-  VenueController = 'Venues/';
+  VenueController = 'Venue/';
   TitleController = 'Title/';
   QualificationTypeController = 'QualificationType/';
 
@@ -77,7 +77,7 @@ export class RepoService {
   //------
   //Create
   createVenue(venue: any): Observable<any>{
-    return this.http.post<any>(`${this.base+this.VenueController}add`,venue,this.httpOptions);
+    return this.http.post<any>(`${this.base+this.VenueController}add`,venue);
   }
   //Update
   updateVenue(venueId: number, venue: Venue): Observable<any>{

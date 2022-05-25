@@ -1,16 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { appUser, appUserRegister } from 'src/app/models/appUser';
 import { GlobalService } from '../global/global.service';
 import { RepoService } from '../repo.service';
+import {StoreService} from '../storage/store.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private repo: RepoService, private global: GlobalService) { }
+  constructor(
+    private http: HttpClient,
+    private repo: RepoService,
+    private global: GlobalService,
+    private storage: StoreService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
   // formModel = this.fb.group({
   //   UserName: ['', Validators.required],
@@ -40,12 +48,14 @@ export class AuthService {
     });
   }
 
-  login(appUser: appUser) {
-    this.global.nativeLoad();
+  async login(appUser: appUser) {
+   await this.global.nativeLoad();
     this.repo.login(appUser).subscribe(result => {     
-     console.log(result);
-     this.global.endNativeLoad();
+      var token = result['token'];
+      this.storage.setKey('token',token);
    });
+   this.router.navigateByUrl('/home')
+   await this.global.endNativeLoad();
   }
 
   // login(formData) {

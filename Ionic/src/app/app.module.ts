@@ -5,7 +5,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AddVenueComponent } from './pages/venue/add-venue/add-venue.component';
 import { UpdateVenueComponent } from './pages/venue/update-venue/update-venue.component';
@@ -36,6 +36,7 @@ import { UpdateQtypeComponent } from './pages/employee/qualification-type/update
 import { DeleteQtypeComponent } from './pages/employee/qualification-type/delete-qtype/delete-qtype.component';
 import { ViewQtypeComponent } from './pages/employee/qualification-type/view-qtype/view-qtype.component';
 import { ConfirmQtypeComponent } from './pages/employee/qualification-type/confirm-qtype/confirm-qtype.component';
+import { AuthInterceptor } from './authentication/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent,
@@ -47,7 +48,7 @@ import { ConfirmQtypeComponent } from './pages/employee/qualification-type/confi
 
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-  bootstrap: [AppComponent],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

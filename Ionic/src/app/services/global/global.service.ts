@@ -50,7 +50,7 @@ export class GlobalService {
       const res = await this.loadingCtrl.create({
         message: message,
         spinner: spinner ? spinner : 'bubbles',
-        duration: 1000
+        duration: 3000
       });
       res.present().then(() => {
         if (!this.loading) {

@@ -27,7 +27,7 @@
   </div>
   <br/>
   <ion-grid *ngIf="!isLoading">
-    <ion-list *ngFor="let venue of venueList | filter:filter, let i = index"> 
+    <ion-list *ngFor="let venue of this.venueList | filter:filter, let i = index"> 
       <ion-item-sliding>
         <!-- Sending through the venue object to the venue service, to be viewed in the modal -->
         <ion-item button (click)="venueService.viewVenueInfoModal(venue)">

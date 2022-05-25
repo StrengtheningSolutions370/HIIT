@@ -25,7 +25,7 @@ export class DeleteVenueComponent implements ViewWillEnter {
   //Send through the id of the selected venue to be deleted in the venue service.
   async delete(id: number){
     this.venueService.deleteVenue(id);
-    await this.dismissModal();
+    this.dismissModal();
     this.sucDelete();
   }
 
@@ -47,9 +47,7 @@ export class DeleteVenueComponent implements ViewWillEnter {
   }
 
   //Close the modal and navigate back to the venue page.
-  async dismissModal() {
+  dismissModal() {
     this.modalCtrl.dismiss();
-    console.log(this.route);
-    await this.router.navigate(['../venues'],{relativeTo: this.route});
   }
 }

@@ -75,7 +75,7 @@ namespace Team7.Controllers
                 try
                 {
                     //var principal = await _claimsPrincipalFactory.CreateAsync(user);
-                   //await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
+                    //await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
                     return GenerateJWTToken(user);
                 }
                 catch (Exception err)
