@@ -39,10 +39,16 @@ export class TitlesPage implements OnInit{
   //   description : 'a designation for a person who is a teacher of the highest rank, or is a expert in their field'},
   // ];
 
-  constructor(public titleService: TitleService, public repo: RepoService) { }
+  constructor(public titleService: TitleService, public repo: RepoService) { 
+    this.populateTitles();
+  }
 
   ngOnInit() {
-    setTimeout(async () => {
+    this.populateTitles();
+  }
+
+
+  async populateTitles() {
       //Populate the venue list within the venue page, with the venue list from the venue service.
       this.titleSub = this.titleService.titleList.subscribe(results => {
         this.titleList = results;
@@ -50,19 +56,24 @@ export class TitlesPage implements OnInit{
         console.log('Title Page Init -> Title List');
         console.log(this.titleList);
       });
-    });
-    this.getTitles();
+
+    await this.getTitles();
   }
 
   //Receive venues from the repo in local page.
   async getTitles() {
-    setTimeout(async () => {
       this.isLoading = false;
-      await this.repo.getTitles();
-
-      console.log('Title Page -> Get Titles');
-      console.log(this.titleList);
-    }, 2000);
+       this.repo.getTitles().subscribe(
+        {
+          next: res => {
+            this.isLoading = false;
+            console.log(res);
+            this.titleList = res;
+          }
+        }
+      );
+      // console.log('Title Page -> Get Titles');
+      // console.log(this.titleList);
   }
 
 }
