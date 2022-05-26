@@ -35,14 +35,14 @@ namespace Team7.Models.Repository
 
         public async Task<QualificationType[]> GetAllQualificationTypesAsync()
         {
-            IQueryable<QualificationType> query = DB.QualificationTypes;
+            IQueryable<QualificationType> query = DB.QualificationType;
             return await query.ToArrayAsync();
 
         }
 
         public async Task<QualificationType[]> GetQualificationTypesAsync(string input)
         {
-            IQueryable<QualificationType> query = DB.QualificationTypes.Where(qt => qt.Name == input);
+            IQueryable<QualificationType> query = DB.QualificationType.Where(qt => qt.Name == input);
             if (!query.Any())
             {
                 return null;
@@ -56,7 +56,7 @@ namespace Team7.Models.Repository
 
         public async Task<QualificationType> GetQualificationTypeIdAsync(int id)
         {
-            IQueryable<QualificationType> query = DB.QualificationTypes.Where(qt => qt.QualificationTypeID == id);
+            IQueryable<QualificationType> query = DB.QualificationType.Where(qt => qt.QualificationTypeID == id);
             if (!query.Any())
             {
                 return null;

@@ -45,18 +45,9 @@ export class ConfirmTitleComponent{
     } else if (this.choice === 2){
       console.log('Update Title from confirm:');
       //CallRepoToUpdate
-      (await this.titleService.updateTitle(title.titleID,title)).subscribe(
-        {
-          next: data => {
-            this.dismissModal();
-            this.sucUpdate();
-          },
-          error: err => {
-
-          }
-        }
-      );
-      
+      await this.titleService.updateTitle(title.titleID,title);
+      this.dismissModal();
+      this.sucUpdate();
     }
 
     //dismiss modal
