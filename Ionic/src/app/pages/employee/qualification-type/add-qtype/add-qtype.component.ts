@@ -46,9 +46,10 @@ export class AddQtypeComponent implements ViewWillEnter {
         name: this.cQTypeForm.value['qualificationTypeName'],
         qualifications: []
       };
-      this.qualificationService.confirmQualificationTypeModal(1,temp);
       this.dismissModal();
-      // this.sucAdd();
+      this.qualificationService.confirmQualificationTypeModal(1,temp);
+     
+       //this.sucAdd();
       // console.log("CurrentRoute:ADD");
       // console.log(this.currentRoute.url);
     }

@@ -20,7 +20,7 @@
       <ion-input formControlName="qualificationTypeName" type="text" required="" id="qualificationTypeName" ></ion-input>
       <br/>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.venueName.errors?.required && cQTypeForm.get('qualificationTypeName').touched">
+    <span class="error ion-padding" *ngIf="errorControl.qualificationTypeName.errors?.required && cQTypeForm.get('qualificationTypeName').touched">
       Qualification Type name is required.<br/>
     </span>
 

@@ -40,7 +40,7 @@ namespace Team7.Models.Repository
 
         public async Task<Title[]> GetTitlesAsync(string input)
         {
-            IQueryable<Title> query = DB.Title.Where(v => v.Description== input );
+            IQueryable<Title> query = DB.Title.Where(t => t.Description == input);
             if (!query.Any())
             {
                 return null;
@@ -54,7 +54,7 @@ namespace Team7.Models.Repository
 
         public async Task<Title> GetTitleIdAsync(int id)
         {
-            IQueryable<Title> query = DB.Title.Where(v => v.TitleID == id);
+            IQueryable<Title> query = DB.Title.Where(t => t.TitleID == id);
             if (!query.Any())
             {
                 return null;

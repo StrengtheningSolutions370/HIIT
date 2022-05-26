@@ -24,56 +24,36 @@ export class TitlesPage implements OnInit{
 
   isLoading = true;
 
-  // titles = [
-  //   {name : 'Mr.',
-  //    description : 'a designation for a man'},
-  //   {name : 'Mrs',
-  //    description : 'a designation for a woman who is married'},
-  //   {name : 'Miss.',
-  //   description : 'a designation for a young woman '},
-  //   {name : 'Ms.',
-  //   description : 'a designation for a woman who is unmarried'},
-  //   {name : 'Dr.',
-  //   description : 'a designation for a person who has obtained a doctorate (commonly a PhD)'},
-  //   {name : 'Prof.',
-  //   description : 'a designation for a person who is a teacher of the highest rank, or is a expert in their field'},
-  // ];
-
   constructor(public titleService: TitleService, public repo: RepoService) { 
-    this.populateTitles();
+    // this.populateTitles();
+    this.fetchTitles();
+  }
+
+  fetchTitles() {
+    this.isLoading = true;
+    this.titleService.getAllTitles().subscribe(
+      {
+        next: data => {
+          console.log("FETCHING TITLES FROM DB");
+          console.log(data);
+          this.isLoading = false;
+          this.titleList = data;
+        }
+      }
+    )
   }
 
   ngOnInit() {
-    this.populateTitles();
-  }
 
-
-  async populateTitles() {
-      //Populate the venue list within the venue page, with the venue list from the venue service.
-      this.titleSub = this.titleService.titleList.subscribe(results => {
-        this.titleList = results;
-
-        console.log('Title Page Init -> Title List');
-        console.log(this.titleList);
-      });
-
-    await this.getTitles();
-  }
-
-  //Receive venues from the repo in local page.
-  async getTitles() {
-      this.isLoading = false;
-       this.repo.getTitles().subscribe(
-        {
-          next: res => {
-            this.isLoading = false;
-            console.log(res);
-            this.titleList = res;
-          }
+    this.titleService.fetchTitlesEvent.subscribe(
+      {
+        next: res => {
+          console.log('EMMIT TO GO FETCH THE TITLES AGAIN')
+          this.fetchTitles();
         }
-      );
-      // console.log('Title Page -> Get Titles');
-      // console.log(this.titleList);
+      }
+    );
+
   }
 
 }
