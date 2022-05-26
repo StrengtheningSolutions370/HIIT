@@ -46,17 +46,17 @@ export class AddTitleComponent implements ViewWillEnter {
       }else{
         var temp = {
           description: this.cTitleForm.value['titleDescription'],
-          users: []        
-        }; 
+          users: []
+        };
         this.dismissModal();
         this.titleService.confirmTitleModal(1,temp);
-       
+
         // this.sucAdd();
         // console.log("CurrentRoute:ADD");
         // console.log(this.currentRoute.url);
       }
      }
-  
+
     async sucAdd() {
       const toast = await this.toastCtrl.create({
         message: 'The Title has been successfully added!',
@@ -64,12 +64,12 @@ export class AddTitleComponent implements ViewWillEnter {
       });
       toast.present();
     }
-  
+
     //Once the modal has been dismissed.
     dismissModal() {
       this.modalCtrl.dismiss();
     };
-  
+
     async duplicateAlert() {
       const alert = await this.alertCtrl.create({
         header: 'Title Already Exists',
@@ -78,7 +78,7 @@ export class AddTitleComponent implements ViewWillEnter {
       });
       alert.present();
     }
-  
+
     async failureAlert() {
       const alert = await this.alertCtrl.create({
         header: 'Could not create title',
@@ -87,6 +87,4 @@ export class AddTitleComponent implements ViewWillEnter {
       });
       alert.present();
     }
-
-
 }

@@ -24,7 +24,7 @@ export class TitlesPage implements OnInit{
 
   isLoading = true;
 
-  constructor(public titleService: TitleService, public repo: RepoService) { 
+  constructor(public titleService: TitleService, public repo: RepoService) {
     // this.populateTitles();
     this.fetchTitles();
   }
@@ -34,13 +34,13 @@ export class TitlesPage implements OnInit{
     this.titleService.getAllTitles().subscribe(
       {
         next: data => {
-          console.log("FETCHING TITLES FROM DB");
+          console.log('FETCHING TITLES FROM DB');
           console.log(data);
           this.isLoading = false;
           this.titleList = data;
         }
       }
-    )
+    );
   }
 
   ngOnInit() {
@@ -48,7 +48,7 @@ export class TitlesPage implements OnInit{
     this.titleService.fetchTitlesEvent.subscribe(
       {
         next: res => {
-          console.log('EMMIT TO GO FETCH THE TITLES AGAIN')
+          console.log('EMMIT TO GO FETCH THE TITLES AGAIN');
           this.fetchTitles();
         }
       }

@@ -31,6 +31,12 @@ import { ViewTitlesComponent } from './pages/user/titles/view-titles/view-titles
 import { ConfirmTitleComponent } from './pages/user/titles/confirm-title/confirm-title.component';
 
 
+import { AddCategoryComponent } from './pages/sale/sale-category/add-category/add-category.component';
+import { UpdateCategoryComponent } from './pages/sale/sale-category/update-category/update-category.component';
+import { DeleteCategoryComponent } from './pages/sale/sale-category/delete-category/delete-category.component';
+import { ViewCategoryComponent } from './pages/sale/sale-category/view-category/view-category.component';
+import { ConfirmCategoryComponent } from './pages/sale/sale-category/confirm-category/confirm-category.component';
+
 import { AddQtypeComponent } from './pages/employee/qualification-type/add-qtype/add-qtype.component';
 import { UpdateQtypeComponent } from './pages/employee/qualification-type/update-qtype/update-qtype.component';
 import { DeleteQtypeComponent } from './pages/employee/qualification-type/delete-qtype/delete-qtype.component';
@@ -43,7 +49,8 @@ import { ConfirmQtypeComponent } from './pages/employee/qualification-type/confi
   AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent,
   AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent,
   AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent,
-  AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent],
+  AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent,
+  AddCategoryComponent, UpdateCategoryComponent, DeleteCategoryComponent, ViewCategoryComponent, ConfirmCategoryComponent],
 
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],

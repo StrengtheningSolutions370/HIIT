@@ -185,9 +185,9 @@ export class RepoService {
 }
 //Update
 updateSaleCategory(saleCategoryId: number, saleCategory: SaleCategory): Observable<any>{
-  return this.http.put(`${this.base+this.SaleCategoryController}
-  update?id=${saleCategoryId}`,saleCategory, this.httpOptions);
+  return this.http.put(`${this.base+this.SaleCategoryController}update?id=${saleCategoryId}`,saleCategory, this.httpOptions);
 }
+
 //Delete
 deleteSaleCategory(saleCategoryId: number): Observable<any>{
   return this.http.delete(`${this.base+this.SaleCategoryController}delete?id=${saleCategoryId}`,this.httpOptions);

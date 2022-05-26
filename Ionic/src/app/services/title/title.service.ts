@@ -31,7 +31,7 @@ export class TitleService {
     return this._titleList.asObservable();
   }
 
-  private temp : Title[];
+  private temp: Title[];
 
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
     //Receive the venues from the repo (API).
@@ -58,12 +58,12 @@ export class TitleService {
     )
    }
 
-   getAllTitles() : Observable<any> {
+   getAllTitles(): Observable<any> {
      return this.repo.getTitles();
    }
 
   //Receives a title to update in the service title list.
-   async updateTitle(id:number,title: any) {
+   async updateTitle(id: number,title: any) {
      return this.repo.updateTitle(title.titleID,title).subscribe(
        {
         next: () => {

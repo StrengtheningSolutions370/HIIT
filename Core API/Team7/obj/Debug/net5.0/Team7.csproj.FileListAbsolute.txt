@@ -22,3 +22,4 @@ D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\
 D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\ref\Team7.dll
 D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.pdb
 D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.genruntimeconfig.cache
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.AssemblyReference.cache
