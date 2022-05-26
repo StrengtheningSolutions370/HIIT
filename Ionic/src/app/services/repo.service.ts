@@ -22,7 +22,7 @@ export class RepoService {
   EmployeeTypeController = 'EmployeeType/';
   TitleController = 'Title/';
   QualificationTypeController = 'QualificationType/';
-  SaleCategoriesController = 'SaleCategoryController/';
+  SaleCategoryController = 'SaleCategory/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -181,28 +181,28 @@ export class RepoService {
  //------
  // Create
  createSaleCategory(saleCategory: any): Observable<any>{
-  return this.http.post<any>(`${this.base+this.SaleCategoriesController}add`,saleCategory,this.httpOptions);
+  return this.http.post<any>(`${this.base+this.SaleCategoryController}add`,saleCategory,this.httpOptions);
 }
 //Update
 updateSaleCategory(saleCategoryId: number, saleCategory: SaleCategory): Observable<any>{
-  return this.http.put(`${this.base+this.SaleCategoriesController}
+  return this.http.put(`${this.base+this.SaleCategoryController}
   update?id=${saleCategoryId}`,saleCategory, this.httpOptions);
 }
 //Delete
 deleteSaleCategory(saleCategoryId: number): Observable<any>{
-  return this.http.delete(`${this.base+this.SaleCategoriesController}delete?id=${saleCategoryId}`,this.httpOptions);
+  return this.http.delete(`${this.base+this.SaleCategoryController}delete?id=${saleCategoryId}`,this.httpOptions);
 }
 //GetAll
 getSaleCategory(): Observable<any>{
-  return this.http.get(`${this.base+this.SaleCategoriesController}getAll`, this.httpOptions);
+  return this.http.get(`${this.base+this.SaleCategoryController}getAll`, this.httpOptions);
 }
 //GetMatch
 getMatchSaleCategory(input: string): Observable<any>{
-  return this.http.get(`${this.base+this.SaleCategoriesController}getMatch?input=${input}`, this.httpOptions);
+  return this.http.get(`${this.base+this.SaleCategoryController}getMatch?input=${input}`, this.httpOptions);
 }
 //Exists
 existsSaleCategory(id: number): Observable<any>{
-  return this.http.get(`${this.base+this.SaleCategoriesController}exists?id=${id}`, this.httpOptions);
+  return this.http.get(`${this.base+this.SaleCategoryController}exists?id=${id}`, this.httpOptions);
 }
 
 
