@@ -63,3 +63,28 @@ C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\refint\Te
 C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.pdb
 C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.genruntimeconfig.cache
 C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\ref\Team7.dll
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.GeneratedMSBuildEditorConfig.editorconfig
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfoInputs.cache
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfo.cs
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.CoreCompileInputs.cache
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cs
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cache
+D:\Users\shann\Desktop\New folder (2)\net5.0\appsettings.Development.json
+D:\Users\shann\Desktop\New folder (2)\net5.0\appsettings.json
+D:\Users\shann\Desktop\New folder (2)\net5.0\Team7.exe
+D:\Users\shann\Desktop\New folder (2)\net5.0\Team7.deps.json
+D:\Users\shann\Desktop\New folder (2)\net5.0\Team7.runtimeconfig.json
+D:\Users\shann\Desktop\New folder (2)\net5.0\Team7.runtimeconfig.dev.json
+D:\Users\shann\Desktop\New folder (2)\net5.0\Team7.dll
+D:\Users\shann\Desktop\New folder (2)\net5.0\ref\Team7.dll
+D:\Users\shann\Desktop\New folder (2)\net5.0\Team7.pdb
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.AssemblyReference.cache
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\staticwebassets\Team7.StaticWebAssets.Manifest.cache
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\staticwebassets\Team7.StaticWebAssets.xml
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\scopedcss\bundle\Team7.styles.css
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.RazorTargetAssemblyInfo.cache
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.CopyComplete
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.dll
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\ref\Team7.dll
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.pdb
+D:\Lyné Keet\Desktop\370 Iteration5\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.genruntimeconfig.cache

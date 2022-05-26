@@ -20,12 +20,12 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ScategoryService {
+export class SalesService {
 
-  private _scategoryList = new BehaviorSubject<SaleCategory[]>([]);
+  private _salecategoryList = new BehaviorSubject<SaleCategory[]>([]);
 
-  public get scategoryList(){
-    return this._scategoryList.asObservable();
+  public get salecategoryList(){
+    return this._salecategoryList.asObservable();
   }
 
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
@@ -34,10 +34,10 @@ export class ScategoryService {
       console.log(result);
 
       var tempResult = Object.assign(result);
-      this._scategoryList.next(tempResult);
+      this._salecategoryList.next(tempResult);
 
       console.log('Sale Category List: Sale Category Service -> Updated Sale Category');
-      console.log(this._scategoryList);
+      console.log(this._salecategoryList);
     })
   }
 
@@ -50,7 +50,7 @@ export class ScategoryService {
       var tempResult = Object.assign(res);
       console.log("Sale Category Service: Create Sale Category");
       console.log(res);
-      this._scategoryList.next(tempResult.data);
+      this._salecategoryList.next(tempResult.data);
      });
    }
 
@@ -59,7 +59,7 @@ export class ScategoryService {
     console.log('sale category Service: Repo -> Update sale category');
     console.log(saleCategory);
 
-    const currentSaleCategory = this._scategoryList.value;
+    const currentSaleCategory = this._salecategoryList.value;
     const index = currentSaleCategory.findIndex(x => x.saleCategoryID === id)
     this.repo.updateSaleCategory(saleCategory.saleCategoryID,saleCategory).subscribe(result =>
      console.log(result));
@@ -132,9 +132,9 @@ export class ScategoryService {
       modal.onDidDismiss().then(() => {
         this.repo.getSaleCategory().subscribe(result => {
           var tempResult = Object.assign(result);
-          this._scategoryList.next(tempResult);
+          this._salecategoryList.next(tempResult);
           console.log("Updated sale category list: Sale Category Service: delete sale category");
-          console.log(this._scategoryList);
+          console.log(this._salecategoryList);
         });
       });
       await modal.present();
@@ -178,9 +178,9 @@ export class ScategoryService {
       modal.onDidDismiss().then(() => {
         this.repo.getSaleCategory().subscribe(result => {
           var tempResult = Object.assign(result);
-          this._scategoryList.next(tempResult);
+          this._salecategoryList.next(tempResult);
           console.log("Updated sale category list: Sale Category Service: ADD confirm sale category");
-          console.log(this._scategoryList);
+          console.log(this._salecategoryList);
         });
       });
       await modal.present();
@@ -199,9 +199,9 @@ export class ScategoryService {
       modal.onDidDismiss().then(() => {
         this.repo.getSaleCategory().subscribe(result => {
           var tempResult = Object.assign(result);
-          this._scategoryList.next(tempResult);
+          this._salecategoryList.next(tempResult);
           console.log("Updated sale category list: Sale Category Service: Update confirm sale category");
-          console.log(this._scategoryList);
+          console.log(this._salecategoryList);
         });
       });
       await modal.present();

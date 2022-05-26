@@ -35,13 +35,13 @@ namespace Team7.Models.Repository
 
         public async Task<UserRole[]> GetAllUserRolesAsync()
         {
-            IQueryable<UserRole> query = DB.UserRoles;
+            IQueryable<UserRole> query = DB.UserRole;
             return await query.ToArrayAsync();
         }
 
         public async Task<UserRole[]> GetUserRolesAsync(string input)
         {
-            IQueryable<UserRole> query = DB.UserRoles.Where(ur => ur.Name  == input || ur.Description == input);
+            IQueryable<UserRole> query = DB.UserRole.Where(ur => ur.Name  == input || ur.Description == input);
             if (!query.Any())
             {
                 return null;
@@ -54,7 +54,7 @@ namespace Team7.Models.Repository
 
         public async Task<UserRole> GetUserRoleIdAsync(int id)
         {
-            IQueryable<UserRole> query = DB.UserRoles.Where(ur => ur.UserRoleID == id);
+            IQueryable<UserRole> query = DB.UserRole.Where(ur => ur.UserRoleID == id);
             if (!query.Any())
             {
                 return null;

@@ -22,7 +22,7 @@ export class RepoService {
   EmployeeTypeController = 'EmployeeType/';
   TitleController = 'Title/';
   QualificationTypeController = 'QualificationType/';
-  SaleCategoriesController = 'SaleCategories/';
+  SaleCategoriesController = 'SaleCategoryController/';
 
   httpOptions = {
     headers: new HttpHeaders({

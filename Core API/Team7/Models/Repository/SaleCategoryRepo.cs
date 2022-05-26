@@ -34,14 +34,14 @@ namespace Team7.Models.Repository
 
         public async Task<SaleCategory[]> GetAllSaleCategorysAsync()
         {
-            IQueryable<SaleCategory> query = DB.SaleCategories;
+            IQueryable<SaleCategory> query = DB.SaleCategory;
             return await query.ToArrayAsync();
 
         }
 
         public async Task<SaleCategory[]> GetSaleCategorysAsync(string input)
         {
-            IQueryable<SaleCategory> query = DB.SaleCategories.Where(sc => sc.Name == input || sc.Description == input);
+            IQueryable<SaleCategory> query = DB.SaleCategory.Where(sc => sc.Name == input || sc.Description == input);
             if (!query.Any())
             {
                 return null;
@@ -55,7 +55,7 @@ namespace Team7.Models.Repository
 
         public async Task<SaleCategory> GetSaleCategoryIdAsync(int id)
         {
-            IQueryable<SaleCategory> query = DB.SaleCategories.Where(sc => sc.SaleCategoryID == id);
+            IQueryable<SaleCategory> query = DB.SaleCategory.Where(sc => sc.SaleCategoryID == id);
             if (!query.Any())
             {
                 return null;

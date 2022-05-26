@@ -10,8 +10,8 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220520191800_george database update")]
-    partial class georgedatabaseupdate
+    [Migration("20220524095550_UpdatedAPIMigrationLyne")]
+    partial class UpdatedAPIMigrationLyne
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,137 @@ namespace Team7.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
+                });
 
             modelBuilder.Entity("PermissionUserRole", b =>
                 {
@@ -36,6 +167,71 @@ namespace Team7.Migrations
                     b.ToTable("PermissionUserRole");
                 });
 
+            modelBuilder.Entity("Team7.Models.AppUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("Team7.Models.Booking", b =>
                 {
                     b.Property<int>("BookingID")
@@ -43,7 +239,8 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClientID")
+                    b.Property<int?>("ClientID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -58,7 +255,7 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.BookingAttendance", b =>
                 {
-                    b.Property<int>("BookingID")
+                    b.Property<int>("BookingAttendanceID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -66,18 +263,20 @@ namespace Team7.Migrations
                     b.Property<bool>("Attended")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("BookingID1")
+                    b.Property<int?>("BookingID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("ReceiptID")
+                    b.Property<int?>("ReceiptID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("ScheduleID")
+                    b.Property<int?>("ScheduleID")
                         .HasColumnType("int");
 
-                    b.HasKey("BookingID");
+                    b.HasKey("BookingAttendanceID");
 
-                    b.HasIndex("BookingID1");
+                    b.HasIndex("BookingID");
 
                     b.HasIndex("ReceiptID");
 
@@ -96,7 +295,8 @@ namespace Team7.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("BookingTypeID")
+                    b.Property<int?>("BookingTypeID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -117,9 +317,11 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BookingTypeID");
@@ -138,12 +340,14 @@ namespace Team7.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("QrCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserID")
@@ -166,7 +370,8 @@ namespace Team7.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SessionID")
+                    b.Property<int?>("SessionID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("DateSessionID");
@@ -178,39 +383,43 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.Employee", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<int>("EmployeeID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EmployeeContractID")
+                    b.Property<int?>("EmployeeContractID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("EmployeeID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployeeTypeID")
+                    b.Property<int?>("EmployeeTypeID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("IDNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Photo")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int>("QualificationID")
+                    b.Property<int?>("QualificationID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserID1")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.HasKey("UserID");
+                    b.HasKey("EmployeeID");
 
                     b.HasIndex("EmployeeContractID");
 
@@ -218,7 +427,7 @@ namespace Team7.Migrations
 
                     b.HasIndex("QualificationID");
 
-                    b.HasIndex("UserID1");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Employee");
                 });
@@ -231,6 +440,7 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<byte[]>("File")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("EmployeeContractID");
@@ -246,9 +456,11 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EmployeeTypeID");
@@ -264,12 +476,15 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ExerciseCategoryID")
+                    b.Property<int?>("ExerciseCategoryID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ExerciseID");
@@ -287,9 +502,11 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ExerciseCategoryID");
@@ -310,7 +527,8 @@ namespace Team7.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("SaleItemID")
+                    b.Property<int?>("SaleItemID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("InventoryItemID");
@@ -327,10 +545,12 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EmployeeID")
+                    b.Property<int?>("EmployeeID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LessonID");
@@ -347,10 +567,12 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ExerciseID")
+                    b.Property<int?>("ExerciseID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("LessonID")
+                    b.Property<int?>("LessonID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("LessonPlanID");
@@ -378,7 +600,7 @@ namespace Team7.Migrations
                     b.Property<double?>("Height")
                         .HasColumnType("float");
 
-                    b.Property<int>("MemberID")
+                    b.Property<int?>("MemberID")
                         .HasColumnType("int");
 
                     b.Property<double?>("MuscleMass")
@@ -407,13 +629,13 @@ namespace Team7.Migrations
                     b.Property<int>("ClientID")
                         .HasColumnType("int");
 
-                    b.Property<int>("MemberStatusID")
+                    b.Property<int?>("MemberStatusID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("MemberID");
 
-                    b.HasIndex("ClientID")
-                        .IsUnique();
+                    b.HasIndex("ClientID");
 
                     b.HasIndex("MemberStatusID");
 
@@ -428,6 +650,7 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MemberStatusID");
@@ -443,6 +666,7 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderStatusID");
@@ -461,9 +685,11 @@ namespace Team7.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Hashed")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
+                    b.Property<int?>("UserID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("PasswordID");
@@ -481,6 +707,7 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PaymentTypeID");
@@ -496,6 +723,7 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PermissionID");
@@ -516,7 +744,8 @@ namespace Team7.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SaleItemID")
+                    b.Property<int?>("SaleItemID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("PriceHistoryID");
@@ -534,9 +763,11 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("QualificationTypeID")
+                    b.Property<int?>("QualificationTypeID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("QualificationID");
@@ -554,6 +785,7 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("QualificationTypeID");
@@ -571,7 +803,8 @@ namespace Team7.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentTypeID")
+                    b.Property<int?>("PaymentTypeID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<double>("Total")
@@ -598,12 +831,15 @@ namespace Team7.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReceiptID")
+                    b.Property<int?>("ReceiptID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("RefundReasonID")
+                    b.Property<int?>("RefundReasonID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<decimal>("Total")
@@ -626,6 +862,7 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RefundReasonID");
@@ -640,7 +877,8 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClientID")
+                    b.Property<int?>("ClientID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -661,9 +899,11 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SaleCategoryID");
@@ -679,12 +919,15 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Photo")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<decimal>("Price")
@@ -696,7 +939,8 @@ namespace Team7.Migrations
                     b.Property<bool>("Quotable")
                         .HasColumnType("bit");
 
-                    b.Property<int>("SaleCategoryID")
+                    b.Property<int?>("SaleCategoryID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("SaleItemID");
@@ -713,19 +957,22 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClientID")
+                    b.Property<int?>("ClientID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReceiptID")
+                    b.Property<int?>("ReceiptID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("SaleID")
+                    b.Property<int?>("SaleID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SaleItemID")
+                    b.Property<int?>("SaleItemID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("SaleLineID");
@@ -748,19 +995,23 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BookingTypeID")
+                    b.Property<int?>("BookingTypeID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("CapacityBooked")
                         .HasColumnType("int");
 
-                    b.Property<int>("DateSessionID")
+                    b.Property<int?>("DateSessionID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("LessonPlanID")
+                    b.Property<int?>("LessonPlanID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("VenueID")
+                    b.Property<int?>("VenueID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("ScheduleID");
@@ -773,7 +1024,7 @@ namespace Team7.Migrations
 
                     b.HasIndex("VenueID");
 
-                    b.ToTable("Schedules");
+                    b.ToTable("Schedule");
                 });
 
             modelBuilder.Entity("Team7.Models.Session", b =>
@@ -805,6 +1056,7 @@ namespace Team7.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("StockTakeID");
@@ -814,7 +1066,7 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.StockTakeLine", b =>
                 {
-                    b.Property<int>("StockTakeID")
+                    b.Property<int>("StockTakeLineID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -822,22 +1074,24 @@ namespace Team7.Migrations
                     b.Property<int>("Difference")
                         .HasColumnType("int");
 
-                    b.Property<int>("InventoryItemID")
+                    b.Property<int?>("InventoryItemID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("SaleItemID")
+                    b.Property<int?>("SaleItemID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StockTakeID1")
+                    b.Property<int?>("StockTakeID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.HasKey("StockTakeID");
+                    b.HasKey("StockTakeLineID");
 
                     b.HasIndex("InventoryItemID");
 
                     b.HasIndex("SaleItemID");
 
-                    b.HasIndex("StockTakeID1");
+                    b.HasIndex("StockTakeID");
 
                     b.ToTable("StockTakeLine");
                 });
@@ -850,18 +1104,23 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Cell")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Surname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SupplierID");
@@ -879,10 +1138,12 @@ namespace Team7.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderStatusID")
+                    b.Property<int?>("OrderStatusID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("SupplierID")
+                    b.Property<int?>("SupplierID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("SupplierOrderID");
@@ -901,13 +1162,15 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("InventoryItemID")
+                    b.Property<int?>("InventoryItemID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("SupplierOrderID")
+                    b.Property<int?>("SupplierOrderID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("SupplierOrderLineID");
@@ -927,6 +1190,7 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TitleID");
@@ -942,15 +1206,19 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Cell")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TitleID")
+                    b.Property<int?>("TitleID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("UserRoleID")
+                    b.Property<int?>("UserRoleID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("UserID");
@@ -970,14 +1238,34 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserRoleID");
 
                     b.ToTable("UserRole");
+                });
+
+            modelBuilder.Entity("Team7.Models.VAT", b =>
+                {
+                    b.Property<int>("VATID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Percentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("VATID");
+
+                    b.ToTable("VAT");
                 });
 
             modelBuilder.Entity("Team7.Models.Venue", b =>
@@ -988,20 +1276,23 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("VenueID");
 
-                    b.ToTable("Venues");
+                    b.ToTable("Venue");
                 });
 
             modelBuilder.Entity("Team7.Models.WriteOff", b =>
@@ -1026,16 +1317,19 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("InventoryItemID")
+                    b.Property<int?>("InventoryItemID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("WriteOffID")
+                    b.Property<int?>("WriteOffID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("WriteOffReasonID")
+                    b.Property<int?>("WriteOffReasonID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("WriteOffLineID");
@@ -1057,11 +1351,63 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("WriteOffReasonID");
 
                     b.ToTable("WriteOffReason");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Team7.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Team7.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Team7.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Team7.Models.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PermissionUserRole", b =>
@@ -1094,7 +1440,9 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Booking", "Booking")
                         .WithMany()
-                        .HasForeignKey("BookingID1");
+                        .HasForeignKey("BookingID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Team7.Models.Receipt", "Receipt")
                         .WithMany("BookingAttendance")
@@ -1104,9 +1452,7 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.Schedule", "Schedule")
                         .WithMany("BookingAttendance")
-                        .HasForeignKey("ScheduleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ScheduleID");
 
                     b.Navigation("Booking");
 
@@ -1170,7 +1516,9 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.User", "User")
                         .WithMany("Employee")
-                        .HasForeignKey("UserID1");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("EmployeeContract");
 
@@ -1237,9 +1585,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Member", "Member")
                         .WithMany("Measurement")
-                        .HasForeignKey("MemberID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MemberID");
 
                     b.Navigation("Member");
                 });
@@ -1247,8 +1593,8 @@ namespace Team7.Migrations
             modelBuilder.Entity("Team7.Models.Member", b =>
                 {
                     b.HasOne("Team7.Models.Client", "Client")
-                        .WithOne("Member")
-                        .HasForeignKey("Team7.Models.Member", "ClientID")
+                        .WithMany("Member")
+                        .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1364,9 +1710,7 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.Sale", "Sale")
                         .WithMany("SaleLine")
-                        .HasForeignKey("SaleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleID");
 
                     b.HasOne("Team7.Models.SaleItem", "SaleItem")
                         .WithMany("SaleLine")
@@ -1426,19 +1770,17 @@ namespace Team7.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Team7.Models.SaleItem", "SaleItem")
+                    b.HasOne("Team7.Models.SaleItem", null)
                         .WithMany("StockTakeLine")
-                        .HasForeignKey("SaleItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleItemID");
 
                     b.HasOne("Team7.Models.StockTake", "StockTake")
                         .WithMany("StockTakeLine")
-                        .HasForeignKey("StockTakeID1");
+                        .HasForeignKey("StockTakeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("InventoryItem");
-
-                    b.Navigation("SaleItem");
 
                     b.Navigation("StockTake");
                 });
