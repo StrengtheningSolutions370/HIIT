@@ -31,8 +31,6 @@ export class AddQtypeComponent implements ViewWillEnter {
   }
 
   ionViewWillEnter(): void {
-    console.log("AddQualificationType-ViewWillEnter");
-    console.log(this.qualificationType);
     if (this.qualificationType !=null){
       this.cQTypeForm.controls.qualificationTypeName.setValue(this.qualificationType.name);
     }
@@ -72,7 +70,7 @@ export class AddQtypeComponent implements ViewWillEnter {
   async duplicateAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Qualification Type Already Exists',
-      message: 'The Qualificaion Type Information entered already exists on the system',
+      message: 'The Qualification Type Information entered already exists on the system',
       buttons: ['OK']
     });
     alert.present();

@@ -1,15 +1,13 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Create Employee</ion-title>
+  <ion-toolbar>e
+    <h1>Create New Employee</h1>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<!-- This modal is not complete, please compare with "Advenue" for the correct format -->
-<!-- Looks at the html, scss and typescript -->
-
+<!-- This modal is not complete, please compare with "Addvenue" for the correct format -->
 <ion-content>
   <form [formGroup]="cEmployeeForm" (ngSubmit)="submitForm()">
     <ion-item>
@@ -40,7 +38,7 @@
     </span>
     <ion-item>
       <ion-label>Select Titles</ion-label>
-      <ion-select formControlName="checkBoxTitles" placeholder="Select Title" >
+      <ion-select formArrayName="checkBoxTitles" placeholder="Select Title" >
         <ion-select-option *ngFor="let title of titleList">{{title.description}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -49,116 +47,49 @@
       <ion-input formControlName="idNumber" type="text" id="idNumber"></ion-input>
       <br />
     </ion-item>
-    <span class="error ion-padding"
+    <!-- <span class="error ion-padding"
       *ngIf="errorControl.idNumber.errors?.required && cEmployeeForm.get('idNumber').touched">
       ID number is required.
       <br />
-    </span>
-  </form>
-  <ion-item>
-    <ion-label position="floating">Phone Number:</ion-label>
-    <ion-input formControlName="phone" type="text" id="phone"></ion-input>
-    <br />
-  </ion-item>
-  <span class="error ion-padding"
+    </span> -->
+    <ion-item>
+      <ion-label position="floating">Phone Number:</ion-label>
+      <ion-input formControlName="phone" type="text" id="phone"></ion-input>
+      <br />
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Email:</ion-label>
+      <ion-input formControlName="email" type="email" id="email"></ion-input>
+      <br />
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Qualification Type</ion-label>
+      <ion-select formArrayName="checkBoxQualificationTypes" placeholder="Select Qualification Type">
+        <ion-select-option *ngFor="let qualificationType of qualificationTypeList">{{qualificationType.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Employee Type</ion-label>
+      <ion-select formArrayName="checkBoxEmployeeTypes" placeholder="Select Employee Type">
+        <ion-select-option *ngFor="let employeeType of employeeTypeList">{{employeeType.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button expand="block" color="success">Create Employee</ion-button>
+
+    
+  
+  <!-- <span class="error ion-padding"
     *ngIf="errorControl.idNumber.errors?.required && cEmployeeForm.get('phone').touched">
     ID number is required.
     <br />
-  </span>
-  <ion-item>
-    <ion-label position="floating">Email:</ion-label>
-    <ion-input formControlName="email" type="email" id="email"></ion-input>
-    <br />
-  </ion-item>
-  <span class="error ion-padding"
+  </span> -->
+  <!-- <span class="error ion-padding"
     *ngIf="errorControl.idNumber.errors?.required && cEmployeeForm.get('email').touched">
     ID number is required.
     <br />
-  </span>
-  <ion-item>
-    <ion-label>Select Qualification</ion-label>
-    <ion-select formControlName="checkBoxTitles" placeholder="Select Title" >
-      <ion-select-option *ngFor="let title of titleList">{{title.description}}</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-  <ion-row>
-    <ion-col>
-
-      <!-- <ion-item>
-            <ion-label position="floating">Name:</ion-label>
-            <ion-input required ngModel name #nameCtrl="ngModel"></ion-input>
-          </ion-item>
-          <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
-            <p>Please enter a valid employee name</p>
-          </ion-text>
-
-          <ion-item>
-            <ion-label position="floating">Surname:</ion-label>
-            <ion-input required ngModel surname #surnameCtrl="ngModel"></ion-input>
-          </ion-item>
-          <ion-text color="danger" *ngIf="!surnameCtrl.valid && surnameCtrl.touched">
-            <p>Please enter a valid employee surname</p>
-          </ion-text> -->
-
-      <!--Dropdown for title-->
-      <!-- <ion-item>
-            <ion-label>Titles</ion-label>
-            <ion-select placeholder="Select Title">
-              <ion-select-option *ngFor="let title of titles" [value]="title">{{title.name}}</ion-select-option>
-            </ion-select>
-          </ion-item>   -->
-
-      <!-- <ion-item>
-            <ion-label position="floating">ID Number:</ion-label>
-            <ion-input minlength="13" maxlength="13" required ngModel id #idCtrl="ngModel"></ion-input>
-          </ion-item>   
-          <ion-text color="danger" *ngIf="!idCtrl.valid && idCtrl.touched">
-            <p>Please enter a valid ID Number</p>
-          </ion-text>
-          
-          <ion-item>
-            <ion-label position="floating">Mobile Number:</ion-label>
-            <ion-input minlength="10" maxlength="10" required="true" required ngModel num #numCtrl="ngModel"></ion-input>
-          </ion-item>
-          <ion-text color="danger" *ngIf="!numCtrl.valid && numCtrl.touched">
-            <p>Please enter a valid mobile number</p>
-          </ion-text>
-            
-          <ion-item>
-            <ion-label position="floating">Email:</ion-label>
-              <ion-input required ngModel email #emailCtrl="ngModel"></ion-input>
-          </ion-item>
-          <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
-            <p>Please enter a valid email address</p>
-          </ion-text> -->
-
-      <!--Dropdown for qualification-->
-      <!-- <ion-item>
-            <ion-label>Qualification</ion-label>
-            <ion-select placeholder="Select Qualification">
-              <ion-select-option *ngFor="let qualification of qualifications" [value]="qualification">{{qualification.description}}</ion-select-option>
-            </ion-select>
-          </ion-item> -->
-
-      <!--Dropdown for qualificationType-->
-      <!-- <ion-item>
-            <ion-label>Qualification Type</ion-label>
-              <ion-select placeholder="Select Qualification Type">
-                <ion-select-option *ngFor="let qType of qualificationTypes" [value]="qType">{{qType.name}}</ion-select-option>
-              </ion-select>
-            </ion-item>  -->
-
-      <!-- Dropdown for employeeTypes
-          <ion-item>
-            <ion-label>Employee Type</ion-label>
-            <ion-select placeholder="Select Employee Type">
-              <ion-select-option *ngFor="let eType of employeeTypes" [value]="eType">{{eType.name}}</ion-select-option>
-            </ion-select>
-          </ion-item> -->
-
-    </ion-col>
-  </ion-row>
+  </span> -->
 
   <!-- <ion-item>
         <ion-label position="stacked">Employee Contract:</ion-label>
@@ -167,8 +98,6 @@
 
   <br />
   <!--(click)="employeeAdd()"-->
-  <ion-button expand="block" color="success">Create Employee</ion-button>
-
   <!-- <ion-content>
   <form [Formgroup]="cEmployeeForm" (ngSubmit) = "submitForm()">
 

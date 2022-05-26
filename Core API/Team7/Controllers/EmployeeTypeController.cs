@@ -17,10 +17,11 @@ namespace Team7.Controllers
             this.EmployeeTypeRepo = employeeTypeRepo;
         }
 
-        // POST api/employeeTypes/add
+
+        // POST api/EmployeeType/add
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> PostEmployeeType(EmployeeTypeRepo employeeType)
+        public async Task<IActionResult> PostQualificationType(EmployeeType employeeType)
         {
             try
             {
@@ -49,7 +50,7 @@ namespace Team7.Controllers
             {
                 toUpdate.Name = employeeType.Name;
                 toUpdate.Description = employeeType.Description;
-
+                toUpdate.Employee = employeeType.Employee;
                 //EmployeeTypeRepo.Update<Venue>(tempVenue);
                 await EmployeeTypeRepo.SaveChangesAsync();
                 return Ok("Successfully updated");
@@ -61,7 +62,7 @@ namespace Team7.Controllers
         }
 
 
-        // DELETE api/employeetypes/delete/5
+        // DELETE api/EmployeeType/delete/5
         [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteEmployeeType(int id)
@@ -84,7 +85,7 @@ namespace Team7.Controllers
         }
 
 
-        // GET: api/employeeTypes/getAll
+        // GET: api/EmployeeType/getAll
         [HttpGet]
         [Route("getAll")]
         public async Task<IActionResult> GetEmployeeTypes()
@@ -104,7 +105,7 @@ namespace Team7.Controllers
             }
         }
 
-        // GET: api/employeetypes/getMatch/{input}
+        // GET: api/EmployeeType/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
         public async Task<IActionResult> GetMatchingEmployeeTypes(string input)

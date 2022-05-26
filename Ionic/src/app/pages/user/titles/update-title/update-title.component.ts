@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
@@ -40,7 +41,7 @@ export class UpdateTitleComponent {
     else
     {
       console.log('InsideUpdateSubmit:');
-      var temp = new Title();
+      let temp = new Title();
       const choice = 2;
       temp = {
         titleID: this.title.titleID,

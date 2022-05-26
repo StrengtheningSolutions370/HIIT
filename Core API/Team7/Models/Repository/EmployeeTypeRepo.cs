@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
@@ -36,13 +34,12 @@ namespace Team7.Models.Repository
         {
             IQueryable<EmployeeType> query = DB.EmployeeType;
             return await query.ToArrayAsync();
-            return null;
 
         }
 
         public async Task<EmployeeType[]> GetEmployeeTypesAsync(string input)
         {
-            IQueryable<EmployeeType> query = DB.EmployeeType.Where(v => v.Name == input );
+            IQueryable<EmployeeType> query = DB.EmployeeType.Where(v => v.Name == input || v.Description == input);
             if (!query.Any())
             {
                 return null;
@@ -51,7 +48,6 @@ namespace Team7.Models.Repository
             {
                 return await query.ToArrayAsync();
             }
-            return null;
 
         }
 
@@ -66,7 +62,6 @@ namespace Team7.Models.Repository
             {
                 return await query.SingleAsync();
             }
-            return null;
         }
 
         public async Task<bool> SaveChangesAsync()

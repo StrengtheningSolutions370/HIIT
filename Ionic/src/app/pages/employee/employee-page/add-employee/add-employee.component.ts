@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Employee } from 'src/app/models/employee';
+import { EmployeeType } from 'src/app/models/employeeType';
+import { QualificationType } from 'src/app/models/qualification-type';
 import { Venue } from 'src/app/models/venue';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { RepoService } from 'src/app/services/repo.service';
@@ -21,9 +23,12 @@ import { requiredFileType } from '../file-upload/file-upload.component';
 export class AddEmployeeComponent implements OnInit{
   @Input() employee: Employee;
   titleList: Title[] = [];
-
+  qualificationTypeList: QualificationType[] = [];
+  employeeTypeList: EmployeeType[] = [];
   //Subscription variable to track live updates.
   titleSub: Subscription;
+  qualificationTypeSub: Subscription;
+  employeeTypeSub: Subscription;
 
   progress=0;
 
@@ -33,7 +38,9 @@ export class AddEmployeeComponent implements OnInit{
     surname: ['', [Validators.required]],
     photo: ['', [Validators.required,requiredFileType('png')]],
     idNumber: ['', [Validators.required]],
-    checkBoxTitles: this.formBuilder.array([], [Validators.required])
+    checkBoxTitles: this.formBuilder.array([], [Validators.required]),
+    checkBoxQualificationTypes: this.formBuilder.array([], [Validators.required]),
+    checkBoxEmployeeTypes: this.formBuilder.array([], [Validators.required])
   });
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
@@ -46,6 +53,13 @@ export class AddEmployeeComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.qualificationTypeSub = this.repo.getQualificationTypes().subscribe(qTypes => {
+      this.qualificationTypeList = qTypes;
+
+      console.log('Add Employee: NgOnIt: Return Qualification Type List');
+      console.log(this.qualificationTypeList);
+    });
+
     this.titleSub = this.repo.getTitles().subscribe(titles => {
       this.titleList = titles;
 
@@ -53,32 +67,44 @@ export class AddEmployeeComponent implements OnInit{
       console.log(this.titleList);
     });
 
-  }
+    this.employeeTypeSub = this.repo.getEmployeeTypes().subscribe(employeeTypes => {
+      this.employeeTypeList = employeeTypes;
 
-  updateCheckControl(cal, o) {
-    if (o.checked) {
-      cal.push(new FormControl(o.value));
-    } else {
-      cal.controls.forEach((item: FormControl, index) => {
-        if (item.value === o.value) {
-          cal.removeAt(index);
-          return;
-        }
-      });
-    }
-  }
-
-    onLoadCheckboxStatus() {
-    const checkboxArrayList: FormArray = this.cEmployeeForm.get('checkboxBoxTitles') as FormArray;
-    this.titleList.forEach(o => {
-      this.updateCheckControl(checkboxArrayList, o);
+      console.log('Add Employee: NgOnIt: Return Title List');
+      console.log(this.employeeTypeList);
     });
+
+
   }
 
-  onSelectionChange(e, i) {
-    const checkboxArrayList: FormArray = this.cEmployeeForm.get('checkboxBoxTitles') as FormArray;
-    this.updateCheckControl(checkboxArrayList, e.target);
-  }
+  // updateCheckControl(cal, o) {
+  //   if (o.checked) {
+  //     cal.push(new FormControl(o.value));
+  //   } else {
+  //     cal.controls.forEach((item: FormControl, index) => {
+  //       if (item.value === o.value) {
+  //         cal.removeAt(index);
+  //         return;
+  //       }
+  //     });
+  //   }
+  // }
+
+  //   onLoadCheckboxStatus() {
+  //   const checkboxArrayList: FormArray = this.cEmployeeForm.get('checkboxBoxTitles') as FormArray;
+  //   const checkboxArrayList1: FormArray = this.cEmployeeForm.get('checkboxBoxQualificationTypes') as FormArray;
+  //   this.titleList.forEach(o => {
+  //     this.updateCheckControl(checkboxArrayList, o);
+  //   });
+  //   this.qualificationTypeList.forEach(o => {
+  //     this.updateCheckControl(checkboxArrayList1, o);
+  //   });
+  // }
+
+  // onSelectionChange(e, i) {
+  //   const checkboxArrayList: FormArray = this.cEmployeeForm.get('checkboxBoxTitles') as FormArray;
+  //   this.updateCheckControl(checkboxArrayList, e.target);
+  // }
 
 
   ionViewWillEnter(): void {
@@ -91,6 +117,7 @@ export class AddEmployeeComponent implements OnInit{
       this.cEmployeeForm.controls.photo.setValue(this.employee.photo);
       this.cEmployeeForm.controls.idNumber.setValue(this.employee.idNumber);
       this.cEmployeeForm.controls.checkBoxTitles.setValue(this.titleList);
+      this.cEmployeeForm.controls.checkBoxQualificationTypes.setValue(this.qualificationTypeList);
     }
 
   }
@@ -153,6 +180,16 @@ export class AddEmployeeComponent implements OnInit{
 
       console.log('Add Employee Component -> Get Titles');
       console.log(this.titleList);
+    }, 2000);
+  }
+
+  async getQualificationTypes() {
+    setTimeout(async () => {
+      //this.isLoading = false;
+      await this.repo.getQualificationTypes();
+
+      console.log('Add Employee Component -> Get Qualification Types');
+      console.log(this.getQualificationTypes);
     }, 2000);
   }
 

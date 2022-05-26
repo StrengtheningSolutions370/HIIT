@@ -1,29 +1,12 @@
 
-<ion-header>
-  <ion-toolbar mode="ios">
-    <!-- <ion-item mode="ios" lines="none" padding-top="0px"> -->
-      <ion-buttons slot="start">
-        <ion-menu-button menu="mainMenu"></ion-menu-button>
-      </ion-buttons>
-      <ion-title slot="">Qualification Types</ion-title>
-      <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
-      <!--Can we change this dynamically when switching between tabs?-->
-    <!-- </ion-item> -->
-  </ion-toolbar>
-
-
-    <!--Menu toggle button that will display the menu-->
-</ion-header>
-
 <ion-content>
-  <!--Searchbar [(ngModel)] is used to bind the searchTerm to the class, to be called when filtering.-->
+
   <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="filter"
     animated="true" debounce="200"></ion-searchbar>
 
   <div class="ion-text-center">
     <ion-button color="success" (click)="qualificationService.addQualificationTypeInfoModal()">
       Add Qualification Type
-      <ion-icon name="add" size="medium"></ion-icon>
     </ion-button>
   </div>
   <br/>

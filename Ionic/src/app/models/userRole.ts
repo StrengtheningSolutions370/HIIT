@@ -1,7 +1,6 @@
 export class UserRole {
-    userRoleID: number;
+    userRoleID?: number;
     name: string;
     description: string;
     users: [];
-    permissions: [];
 }

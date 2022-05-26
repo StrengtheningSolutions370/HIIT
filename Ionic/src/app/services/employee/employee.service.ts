@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 import { Injectable } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { EmployeeType } from 'src/app/models/employeeType';
 import { AddEmployeeComponent } from 'src/app/pages/employee/employee-page/add-employee/add-employee.component';
 import { AddEtypeComponent } from 'src/app/pages/employee/employee-type/add-etype/add-etype.component';
@@ -55,14 +55,13 @@ export class EmployeeService {
   }
 
   //Receives a venue to update in the service venue list.
-  updateEmployeeType(id, employeeType: any) {
+  async updateEmployeeType(id, employeeType: any): Promise<Observable<any>> {
     console.log('Employee Service: Repo -> Update Employee Type');
     console.log(employeeType);
 
-    const currentEmployee = this._employeeTypeList.value;
-    const index = currentEmployee.findIndex(et => et.employeeTypeID === id);
-    this.repo.updateVenue(employeeType.employeeTypeID, employeeType).subscribe(result =>
-      console.log(result));
+    const currentEmployeeType = this._employeeTypeList.value;
+    const index = currentEmployeeType.findIndex(x => x.employeeTypeID === id);
+    return this.repo.updateEmployeeType(employeeType.employeeTypeID,employeeType);
   }
 
   //Receives a venue to delete in the service venue list.
@@ -108,7 +107,7 @@ export class EmployeeService {
 
   //Display the delete venue modal.
   //This method receives the selected venue object, from the venue page, in the modal through the componentProps.
-  async deleteVenueInfoModal(employeeType: EmployeeType) {
+  async deleteEmployeeTypeInfoModal(employeeType: EmployeeType) {
     console.log('Employee Service: Delete Employee Type Modal Call');
     let tempEmployee = new EmployeeType();
     tempEmployee = Object.assign(employeeType);

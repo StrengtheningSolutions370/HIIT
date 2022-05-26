@@ -99,6 +99,7 @@ namespace Team7
             services.AddScoped<IDateSessionRepo, DateSessionRepo>();
             services.AddScoped<IEmployeeContractRepo, EmployeeContractRepo>();
             services.AddScoped<IEmployeeRepo, EmployeeRepo>();
+            services.AddScoped<IEmployeeTypeRepo, EmployeeTypeRepo>();
             services.AddScoped<IExerciseCategoryRepo, ExerciseCategoryRepo>();
             services.AddScoped<IExerciseRepo, ExerciseRepo>();
             services.AddScoped<IInventoryItemRepo, InventoryItemRepo>();

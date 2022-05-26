@@ -49,7 +49,6 @@ namespace Team7.Models.Repository
             {
                 return await query.ToArrayAsync();
             }
-            return null;
 
         }
 
@@ -64,7 +63,6 @@ namespace Team7.Models.Repository
             {
                 return await query.SingleAsync();
             }
-            return null;
         }
 
         public async Task<bool> SaveChangesAsync()

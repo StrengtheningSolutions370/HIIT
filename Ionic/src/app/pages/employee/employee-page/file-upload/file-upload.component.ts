@@ -57,7 +57,6 @@ export function requiredFileType( type: string ) {
 
       return null;
     }
-
     return null;
   };
 }

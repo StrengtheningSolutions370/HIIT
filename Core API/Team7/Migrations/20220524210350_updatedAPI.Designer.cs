@@ -10,7 +10,7 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220523132608_UpdatedAPI")]
+    [Migration("20220524210350_updatedAPI")]
     partial class UpdatedAPI
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

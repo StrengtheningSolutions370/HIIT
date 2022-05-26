@@ -43,7 +43,7 @@ export class UserService {
   createUserRole(userRole: any) {
     console.log('User Service: Repo -> Create User Role');
     console.log(JSON.stringify(userRole));
-    this.repo.createVenue(userRole).subscribe(res => {
+    this.repo.createUserRole(userRole).subscribe(res => {
       const tempResult = Object.assign(res);
       console.log('User Role Service: Create User Role');
       console.log(res);
@@ -51,18 +51,18 @@ export class UserService {
     });
   }
 
-  //Receives a venue to update in the service venue list.
+  //Receives a user role to update in the service user role list.
   updateUserRole(id, userRole: any) {
-    console.log('venueService: Repo -> Update Venue');
+    console.log('User Service: Repo -> Update User Role');
     console.log(userRole);
 
-    const currentVenue = this._userRoleList.value;
-    const index = currentVenue.findIndex(x => x.userRoleID === id);
+    const currentUserRole = this._userRoleList.value;
+    const index = currentUserRole.findIndex(x => x.userRoleID === id);
     this.repo.updateVenue(userRole.userRoleID, userRole).subscribe(result =>
       console.log(result));
   }
 
-  //Receives a venue to delete in the service venue list.
+  //Receives a user role to delete in the service user role list.
   deleteUserRole(id: number) {
     this.repo.deleteUserRole(id).subscribe(result =>
       console.log(result));
@@ -164,24 +164,20 @@ export class UserService {
     console.log(selection);
     if (selection === 1) {
       console.log('Performing ADD');
-      let tempUserRole = new UserRole();
-      tempUserRole.userRoleID = 0;
-      tempUserRole = Object.assign(tempUserRole);
-      console.log(tempUserRole);
       const modal = await this.modalCtrl.create({
         component: ConfirmRoleComponent,
         componentProps: {
-          userRole: tempUserRole,
-          choice: selection
+          userRole,
+          selection
         }
       });
 
       //Update the current venue list with the venue list from the confirm modal.
       modal.onDidDismiss().then(() => {
-        this.repo.getVenues().subscribe(result => {
+        this.repo.getUserRoles().subscribe(result => {
           const tempResult = Object.assign(result);
           this._userRoleList.next(tempResult);
-          console.log('Updated user role list: Employee Service: confirm venue');
+          console.log('Updated user role list: User Service: confirm user role');
           console.log(this._userRoleList);
         });
       });
