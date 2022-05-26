@@ -2,9 +2,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Venue } from 'src/app/models/venue';
+import { UserRole } from '../models/userRole';
+import { EmployeeType } from '../models/employeeType';
 import { Title } from 'src/app/models/title';
 import { QualificationType } from 'src/app/models/qualification-type';
 import { appUser} from '../models/appUser';
@@ -19,18 +21,19 @@ export class RepoService {
   base = 'https://localhost:44383/api/';
   AppUserController = 'AppUser/'
   VenueController = 'Venue/';
+  UserRoleController = 'UserRole/';
+  EmployeeTypeController = 'EmployeeType/';
   TitleController = 'Title/';
   QualificationTypeController = 'QualificationType/';
 
   httpOptions = {
-    headers: new HttpHeaders ({
+    headers: new HttpHeaders({
       Accept: 'application/json',
       ContentType: 'application/json'
     }),
   };
 
-  constructor(public http: HttpClient)
-  {
+  constructor(public http: HttpClient) {
     //CRUDS in this repo file need to be used by subscribing to them in the relevant service.
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
@@ -52,24 +55,32 @@ export class RepoService {
   //UserRole:
   //------
   //Create
-  createUserRole(user_role: USER_ROLE): Observable<any>{
-    return this.http.post<any>(`${this.base}postuserrole`,user_role,this.httpOptions);
+  createUserRole(user_role: UserRole): Observable<any> {
+    return this.http.post(`${this.base + this.UserRoleController}add`, user_role, this.httpOptions);
   }
   //Read
-  getUserRoles(): Observable<any>{
-    return this.http.get(`${this.base}getuserroles`, this.httpOptions);
+  getUserRoles(): Observable<any> {
+    return this.http.get(`${this.base + this.UserRoleController}getAll`, this.httpOptions);
   }
   //Update
-  updateUserRole(userId: number, user_role: USER_ROLE): Observable<any>{
-    return this.http.put(`${this.base}putuserrole?id=${userId}`,user_role, this.httpOptions);
+  updateUserRole(userId: number, user_role: UserRole): Observable<any> {
+    return this.http.put(`${this.base + this.UserRoleController}update?id=${userId}`, user_role, this.httpOptions);
   }
   //Delete
-  deleteUserRole(userId: number): Observable<any>{
-    return this.http.delete(`${this.base}deleteuserrole?id=${userId}`,this.httpOptions);
+  deleteUserRole(userId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.UserRoleController}delete?id=${userId}`, this.httpOptions);
   }
   //Exists
-  userRoleExists(userId: number): Observable<any>{
-    return this.http.delete(`${this.base}userroleexists?id=${userId}`,this.httpOptions);
+  userRoleExists(userId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.UserRoleController}exists?id=${userId}`, this.httpOptions);
+  }
+  //GetMatch
+  getMatchUserRole(input: string): Observable<any> {
+    return this.http.get(`${this.base + this.UserRoleController}getMatch?input=${input}`, this.httpOptions);
+  }
+  //Exists
+  existsUserRole(id: number): Observable<any> {
+    return this.http.get(`${this.base + this.UserRoleController}exists?id=${id}`, this.httpOptions);
   }
 
 
@@ -80,26 +91,51 @@ export class RepoService {
     return this.http.post<any>(`${this.base+this.VenueController}add`,venue);
   }
   //Update
-  updateVenue(venueId: number, venue: Venue): Observable<any>{
-    return this.http.put(`${this.base+this.VenueController}update?id=${venueId}`,venue, this.httpOptions);
+  updateVenue(venueId: number, venue: Venue): Observable<any> {
+    return this.http.put(`${this.base + this.VenueController}update?id=${venueId}`, venue, this.httpOptions);
   }
   //Delete
-  deleteVenue(venueId: number): Observable<any>{
-    return this.http.delete(`${this.base+this.VenueController}delete?id=${venueId}`,this.httpOptions);
+  deleteVenue(venueId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.VenueController}delete?id=${venueId}`, this.httpOptions);
   }
   //GetAll
-  getVenues(): Observable<any>{
-    return this.http.get(`${this.base+this.VenueController}getAll`, this.httpOptions);
+  getVenues(): Observable<any> {
+    return this.http.get(`${this.base + this.VenueController}getAll`, this.httpOptions);
   }
   //GetMatch
-  getMatchVenue(input: string): Observable<any>{
-    return this.http.get(`${this.base+this.VenueController}getMatch?input=${input}`, this.httpOptions);
+  getMatchVenue(input: string): Observable<any> {
+    return this.http.get(`${this.base + this.VenueController}getMatch?input=${input}`, this.httpOptions);
   }
   //Exists
-  existsVenue(id: number): Observable<any>{
-    return this.http.get(`${this.base+this.VenueController}exists?id=${id}`, this.httpOptions);
+  existsVenue(id: number): Observable<any> {
+    return this.http.get(`${this.base + this.VenueController}exists?id=${id}`, this.httpOptions);
   }
 
+  //EmployeeType:
+  //------
+  //Create
+  createEmployeeType(employeeType: EmployeeType): Observable<any> {
+    return this.http.post<any>(`${this.base+ this.EmployeeTypeController}add`, employeeType, this.httpOptions);
+  }
+  //Read
+  getEmployeeTypes(): Observable<any> {
+    return this.http.get(`${this.base + this.EmployeeTypeController}getAll`, this.httpOptions);
+  }
+  //Update
+  updateEmployeeType(employeeTypeId: number, employeeType: EmployeeType): Observable<any> {
+    return this.http.put(`${this.base + this.EmployeeTypeController}update?id=${employeeTypeId}`, employeeType, this.httpOptions);
+  }
+  //Delete
+  deleteEmployeeType(employeeTypeId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.EmployeeTypeController}delete?id=${employeeTypeId}`, this.httpOptions);
+  }
+  getMatchEmployeeType(input: string): Observable<any> {
+    return this.http.get(`${this.base + this.EmployeeTypeController}getMatch?input=${input}`, this.httpOptions);
+  }
+  //Exists
+  existsEmployeeType(id: number): Observable<any> {
+    return this.http.get(`${this.base + this.EmployeeTypeController}exists?id=${id}`, this.httpOptions);
+  }
 
  // Title:
  // ------
@@ -137,7 +173,8 @@ export class RepoService {
   }
   //Update
   updateQualificationType(qualificationTypeId: number, qualificationType: QualificationType): Observable<any>{
-    return this.http.put(`${this.base+this.QualificationTypeController}update?id=${qualificationTypeId}`,qualificationType, this.httpOptions);
+    return this.http.put(`${this.base+this.QualificationTypeController}update?id=${qualificationTypeId}`,
+    qualificationType, this.httpOptions);
   }
   //Delete
   deleteQualificationType(qualificationTypeId: number): Observable<any>{

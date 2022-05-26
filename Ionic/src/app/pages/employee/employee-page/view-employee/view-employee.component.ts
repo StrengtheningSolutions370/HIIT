@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -7,6 +7,8 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./view-employee.component.scss'],
 })
 export class ViewEmployeeComponent implements OnInit {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  static FileUpload: any[] | Type<any>;
 
   constructor(private modalCtrl: ModalController) { }
 

@@ -7,20 +7,21 @@
   <br/>
 
   <div class="ion-text-center">
-    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addEmployeeInfoModal()">
+    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="employeeService.addEmployeeInfoModal()">
       Add Employee 
       <ion-icon name="add" size="medium"></ion-icon>
     </ion-button>
   </div>
   
   <ion-grid>
-    <div style="display: inline-block;width: 310px;height: 200px;margin-bottom: 5px;" *ngFor="let employee of employees">
-      <ion-card >
+    <div style="display: inline-block;width: 350px;height: 200px;margin-bottom: 5px;" >
+     <ion-col size="4" *ngFor="let employee of employees">
+      <ion-card>
         <div>
           <ion-card-header >
             <ion-avatar item-start button (click)="viewEmployeeInfoModal()">
               <!--Employee Image-->
-              <img src="../../assets/avatar.jpg">
+              <img src="../../assets/avatar.jpg" alt="img">
             </ion-avatar>
               <ion-card-title style="color:#e7e8ec;">
                 <!--Employee_Name ' ' Employee_Surname-->
@@ -48,6 +49,8 @@
             </ion-row>
           </ion-card-content>
       </ion-card>
+     </ion-col>
+     
     <!--<mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons> </mat-paginator-->
     </div>
   </ion-grid>

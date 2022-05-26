@@ -46,10 +46,8 @@ export class DeleteTitleComponent implements ViewWillEnter {
   }
 
   //Close the modal and navigate back to the venue page.
-  async dismissModal() {
+  dismissModal() {
     this.modalCtrl.dismiss();
-    console.log(this.route);
-    await this.router.navigate(['../titles'],{relativeTo: this.route});
   }
 
 }

@@ -63,9 +63,9 @@ namespace Team7.Context
         public virtual DbSet<WriteOffLine> WriteOffLine { get; set; }
         public virtual DbSet<WriteOffReason> WriteOffReason { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
         }
     }
 }

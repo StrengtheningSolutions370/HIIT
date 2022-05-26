@@ -37,6 +37,12 @@ import { DeleteQtypeComponent } from './pages/employee/qualification-type/delete
 import { ViewQtypeComponent } from './pages/employee/qualification-type/view-qtype/view-qtype.component';
 import { ConfirmQtypeComponent } from './pages/employee/qualification-type/confirm-qtype/confirm-qtype.component';
 import { AuthInterceptor } from './authentication/auth.interceptor';
+import { ConfirmRoleComponent } from './pages/user/user-roles/confirm-role/confirm-role.component';
+import { AddEtypeComponent } from './pages/employee/employee-type/add-etype/add-etype.component';
+import { ConfirmEtypeComponent } from './pages/employee/employee-type/confirm-etype/confirm-etype.component';
+import { UpdateEtypeComponent } from './pages/employee/employee-type/update-etype/update-etype.component';
+import { ViewEtypeComponent } from './pages/employee/employee-type/view-etype/view-etype.component';
+import { DeleteEtypeComponent } from './pages/employee/employee-type/delete-etype/delete-etype.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -44,7 +50,8 @@ import { AuthInterceptor } from './authentication/auth.interceptor';
   AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent,
   AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent,
   AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent,
-  AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent],
+  AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent,
+  ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent],
 
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
