@@ -14,16 +14,16 @@ export class ConfirmTitleComponent{
   @Input() title: Title;
 
   constructor(private modalCtrl: ModalController, public titleService: TitleService,
-    public router: Router, public activated: ActivatedRoute) {
+    public router: Router, public activated: ActivatedRoute, public toastCtrl : ToastController) {
    }
 
    dismissModal() {
-    //await this.router.navigate(['../titles'],{relativeTo:this.activated});
     this.modalCtrl.dismiss();
+    //this.router.navigate(['../titles'],{relativeTo:this.activated});
   };
   //1 = confirm ADD
   //2 = confirm UPDATE
-  confirmChanges(title: Title){
+  async confirmChanges(title: Title){
     console.log(this.choice);
     if (this.choice === 1){
       //search duplicates
@@ -37,31 +37,52 @@ export class ConfirmTitleComponent{
       else {
         console.log('Add Title from confirm:');
         //CallRepoToCreate
-        this.titleService.createTitle(title);
+        await this.titleService.createTitle(title);
+        await this.dismissModal();
+        this.sucAdd();
       }
 
     } else if (this.choice === 2){
       console.log('Update Title from confirm:');
       //CallRepoToUpdate
-      this.titleService.updateTitle(title.titleID,title);
+      await this.titleService.updateTitle(title.titleID,title);
+      this.dismissModal();
+      this.sucUpdate();
     }
 
     //dismiss modal
-    this.dismissModal();
+    // await this.dismissModal();
+    //
   }
 
-  returnFrom(){
+  async returnFrom(){
       //1 = return to ADD
       //2 = return to UPDATE
     if (this.choice === 1){
       console.log(this.title);
-      this.dismissModal();
+      await this.dismissModal();
       this.titleService.addTitleInfoModal(this.title);
     } else if (this.choice === 2){
       console.log(this.title);
-      this.dismissModal();
+      await this.dismissModal();
       this.titleService.updateTitleInfoModal(this.title);
     }
+  }
+
+  async sucAdd() {
+    const toast = await this.toastCtrl.create({
+      message: 'The Title has been successfully added!',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async sucUpdate() {
+    const toast = await this.toastCtrl.create({
+      message: 'The Title has been successfully updated!',
+      duration: 2000
+    });
+    toast.present();
   }
 
 

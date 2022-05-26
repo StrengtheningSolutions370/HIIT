@@ -23,31 +23,59 @@ qualificationTypeSub: Subscription;
 isLoading = true;
 
 
-constructor(public qualificationService: QualificationService, public repo: RepoService) { }
+constructor(public qualificationService: QualificationService, public repo: RepoService) { 
+  this.fetchQualificationTypes();
+}
 
 ngOnInit() {
-  setTimeout(async () => {
-    //Populate the qualificationtype list within the qualificationtype page, with the qulificationtype list from the qualification service.
-    this.qualificationTypeSub = this.qualificationService.qualificationtypeList.subscribe(results => {
-      this.qualificationTypeList = results;
-
-      console.log('Qualification type Page Init -> qualification type List');
-      console.log(this.qualificationTypeList);
-    });
-  });
-  this.getQualificationTypes();
+  this.qualificationService.fetchQualificationTypeEvent.subscribe(
+    {
+      next: res => {
+        console.log('EMIT TO GO FETCH THE QUALIFICATION TYPES AGAIN')
+        this.fetchQualificationTypes();
+      }
+    }
+  )
 }
 
-//Receive qualification type list from the repo in local page.
-async getQualificationTypes() {
-  setTimeout(async () => {
-    this.isLoading = false;
-    await this.repo.getQualificationTypes();
-
-    console.log('Qualification type Page -> Get qualification types');
-    console.log(this.qualificationTypeList);
-  }, 1500);
+fetchQualificationTypes() {
+  this.isLoading = true;
+  this.qualificationService.getAllQualificationTypes().subscribe(
+    {
+      next: data => {
+        console.log("FETCHING QUALIFICATION TYPES FROM DB");
+        console.log(data);
+        this.isLoading = false;
+        this.qualificationTypeList = data;
+      }
+    }
+  )
 }
+// async populateQualificationTypes(){
+//   //Populate the qualificationtype list within the qualificationtype page, with the qulificationtype list from the qualification service.
+//   this.qualificationTypeSub = this.qualificationService.qualificationtypeList.subscribe(results => {
+//     this.qualificationTypeList = results;
+
+//     console.log('Qualification type Page Init -> qualification type List');
+//     console.log(this.qualificationTypeList);
+// });
+// await this.getQualificationTypes();
+// }
+
+// //Receive qualification type list from the repo in local page.
+
+// async getQualificationTypes() {
+//   this.isLoading = false;
+//   this.repo.getQualificationTypes().subscribe(
+//     {
+//       next: res => {
+//         this.isLoading = false;
+//         console.log(res);
+//         this.qualificationTypeList = res;
+//       }
+//     }
+//   )
+// }
   // qualificationTypes = [
   //   {
   //     name : 'Diploma',
