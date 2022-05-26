@@ -49,7 +49,7 @@ export class DeleteQtypeComponent implements ViewWillEnter {
   //Close the modal and navigate back to the venue page.
   async dismissModal() {
     this.modalCtrl.dismiss();
-    console.log(this.route);
-    await this.router.navigate(['../qualification-type'],{relativeTo: this.route});
+    //console.log(this.route);/
+    //await this.router.navigate(['../qualification-type'],{relativeTo: this.route});
   }
 }
