@@ -7,15 +7,16 @@
       <ion-title slot="">Venues</ion-title>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
       <!--Can we change this dynamically when switching between tabs?-->
-    <!-- </ion-item> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <br/>
   <!--Searchbar [(ngModel)] is used to bind the searchTerm to the class, to be called when filtering.-->
-  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="filter"
+  <ion-searchbar expand="block" placeholder='Search Venue...' [(ngModel)]="filter"
     animated="true" debounce="200"></ion-searchbar>
 
+    <br/><br/>
   <div class="ion-text-center">
     <ion-button class="ion-text-center"color="success" (click)="venueService.addVenueInfoModal()">
       Add Venue

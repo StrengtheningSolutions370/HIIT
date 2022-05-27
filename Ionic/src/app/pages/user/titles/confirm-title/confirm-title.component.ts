@@ -84,6 +84,4 @@ export class ConfirmTitleComponent{
     });
     toast.present();
   }
-
-
 }

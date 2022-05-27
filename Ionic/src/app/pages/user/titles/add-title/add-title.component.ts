@@ -87,6 +87,4 @@ export class AddTitleComponent implements ViewWillEnter {
       });
       alert.present();
     }
-
-
 }

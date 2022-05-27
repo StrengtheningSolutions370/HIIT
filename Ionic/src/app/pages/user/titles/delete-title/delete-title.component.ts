@@ -17,7 +17,7 @@ export class DeleteTitleComponent implements ViewWillEnter {
     public titleService: TitleService, private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController) { }
 
     ionViewWillEnter() {
-      console.log("DeleteTitle - ViewWillEnter");
+      console.log('DeleteTitle - ViewWillEnter');
       console.log(this.title);
     }
 
@@ -45,7 +45,7 @@ export class DeleteTitleComponent implements ViewWillEnter {
     alert.present();
   }
 
-  //Close the modal and navigate back to the venue page.
+  //Close the modal and navigate back to the title page.
   dismissModal() {
     this.modalCtrl.dismiss();
   }

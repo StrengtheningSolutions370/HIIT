@@ -14,11 +14,6 @@ import { DeleteVenueComponent } from './pages/venue/delete-venue/delete-venue.co
 import { ConfirmVenueComponent } from './pages/venue/confirm-venue/confirm-venue.component';
 import { AssociativeVenueComponent } from './pages/venue/associative-venue/associative-venue.component';
 
-import { AddVatComponent } from './pages/sale/vat/add-vat/add-vat.component';
-import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
-import { DeleteVatComponent } from './pages/sale/vat/delete-vat/delete-vat.component';
-import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
-
 import { AddRoleComponent } from './pages/user/user-roles/add-role/add-role.component';
 import { UpdateRoleComponent } from './pages/user/user-roles/update-role/update-role.component';
 import { DeleteRoleComponent } from './pages/user/user-roles/delete-role/delete-role.component';
@@ -30,6 +25,12 @@ import { DeleteTitleComponent } from './pages/user/titles/delete-title/delete-ti
 import { ViewTitlesComponent } from './pages/user/titles/view-titles/view-titles.component';
 import { ConfirmTitleComponent } from './pages/user/titles/confirm-title/confirm-title.component';
 
+
+import { AddCategoryComponent } from './pages/sale/sale-category/add-category/add-category.component';
+import { UpdateCategoryComponent } from './pages/sale/sale-category/update-category/update-category.component';
+import { DeleteCategoryComponent } from './pages/sale/sale-category/delete-category/delete-category.component';
+import { ViewCategoryComponent } from './pages/sale/sale-category/view-category/view-category.component';
+import { ConfirmCategoryComponent } from './pages/sale/sale-category/confirm-category/confirm-category.component';
 
 import { AddQtypeComponent } from './pages/employee/qualification-type/add-qtype/add-qtype.component';
 import { UpdateQtypeComponent } from './pages/employee/qualification-type/update-qtype/update-qtype.component';
@@ -43,13 +44,19 @@ import { UpdateEtypeComponent } from './pages/employee/employee-type/update-etyp
 import { ViewEtypeComponent } from './pages/employee/employee-type/view-etype/view-etype.component';
 import { DeleteEtypeComponent } from './pages/employee/employee-type/delete-etype/delete-etype.component';
 
+import { AddVatComponent } from './pages/sale/vat/add-vat/add-vat.component';
+import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
+import { DeleteVatComponent } from './pages/sale/vat/delete-vat/delete-vat.component';
+import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
+import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
+
 @NgModule({
   declarations: [AppComponent,
   AddVenueComponent, UpdateVenueComponent, ViewVenueInfoComponent, DeleteVenueComponent, ConfirmVenueComponent,AssociativeVenueComponent,
-  AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent,
   AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent,
   AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent,
   AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent,
+  AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
   ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent],
 
   entryComponents: [],

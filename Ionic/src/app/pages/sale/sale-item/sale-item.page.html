@@ -1,17 +1,73 @@
 <ion-content>
-
-    <br/>
-    <!--Searchbar (must make function to search)-->
-    <ion-searchbar expand="block" placeholder='Search Sale Items...'></ion-searchbar>
-    <br/><br/>
   
-    <div class="ion-text-center">
-      <!-- (click)="addVATModal()" -->
-      <ion-button color="success" style="margin-left:30%;margin-right:30%" > 
-        Add Sale Item
-        <ion-icon name="add" size="medium"></ion-icon>
-      </ion-button>
+  <br/>
+  <ion-searchbar expand="block" placeholder='I am looking for...' cancelButtonText="Close"></ion-searchbar>
+
+  <br/>
+  <br/>
+
+  <div class="ion-text-center">
+    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addSitemInfoModal()">
+      Add Sale Item 
+      <ion-icon name="add" size="medium"></ion-icon>
+    </ion-button>
+  </div>
+  
+  <ion-grid>
+    <div style="display: inline-block;width: 350px;height: 200px;margin-bottom: 5px;" >
+
+      
+
+      <ion-col size="4"> 
+        <!-- loop goes in this tag -->
+
+
+      <ion-card>
+          <ion-card-header >
+            <ion-avatar item-start button (click)="viewSaleItemInfoModal()">
+              <!--Employee Image-->
+              <img src="../../assets/avatar.jpg">
+            </ion-avatar>
+              <ion-card-title style="color:#e7e8ec;">
+                <!--Employee_Name ' ' Employee_Surname-->
+                {{mock.Name}}
+              </ion-card-title>
+            </ion-card-header>
+          <ion-card-content style="color:#b1b2b6;">
+            
+            <ion-row>
+              <!--Employee Gender-->
+              Price: R{{mock.Price}}
+            </ion-row>
+            <ion-row>
+              <!--Employee email-->
+              Quantity in Stock: {{mock.Quantity}}
+            </ion-row>
+            <br />
+            <ion-row>
+              <!--Employee_Type-->
+              {{mock.Description}}
+            </ion-row>
+            <br />
+            <ion-row>
+              <ion-col col-4>
+                <ion-button class="fifty" color="secondary" (click)="updateModal()"><ion-icon name="refresh"></ion-icon>Update</ion-button>
+              </ion-col>
+              <ion-col col-4>
+                <ion-button class="fifty" color="tertiary" (click)="deleteModal()"> <ion-icon name="trash" size="medium"></ion-icon>Delete</ion-button>
+              </ion-col>
+              <!-- <ion-col col-4>
+                <ion-button class="hundred" color="primary" *ngIf="mock.Quotable" (click)="requestQuoteModal()"> <ion-icon name="document-outline" size="medium"></ion-icon>Request Quote</ion-button>
+              </ion-col> -->
+            </ion-row>
+          </ion-card-content>
+      </ion-card>
+     </ion-col>
+     
+    <!--<mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons> </mat-paginator-->
     </div>
-    <br/>
+  </ion-grid>
 
 </ion-content>
+
+
