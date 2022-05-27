@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,28 +32,25 @@ namespace Team7.Models.Repository
         }
 
 
-        //public async Task<Permission[]> GetAllPermissionsAsync()
-        //{
-        //    IQueryable<Permission> query = DB.Permission;
-        //    return await query.ToArrayAsync();
-        //    return null;
+        public async Task<Permission[]> GetAllPermissionsAsync()
+        {
+            IQueryable<Permission> query = DB.Permission;
+            return await query.ToArrayAsync();
 
-        //}
+        }
 
-        //public async Task<Permission[]> GetPermissionsAsync(string input)
-        //{
-        //    IQueryable<Permission> query = DB.Permission.Where(v => v.Name == input || v.Address == input);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.ToArrayAsync();
-        //    }
-        //    return null;
-
-        //}
+        public async Task<Permission[]> GetPermissionsAsync(string input)
+        {
+            IQueryable<Permission> query = DB.Permission.Where(v => v.Description == input);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.ToArrayAsync();
+            }
+        }
 
         //public async Task<Permission> GetPermissionIdAsync(int id)
         //{
@@ -72,6 +70,11 @@ namespace Team7.Models.Repository
         {
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
+        }
+
+        public Task<Permission> GetPermissionIdAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,3 +1,10 @@
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.AssemblyReference.cache
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfoInputs.cache
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfo.cs
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.CoreCompileInputs.cache
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Robyn\.nuget\packages\net5.0\appsettings.Development.json
 C:\Users\Robyn\.nuget\packages\net5.0\appsettings.json
 C:\Users\Robyn\.nuget\packages\net5.0\Team7.exe
@@ -6,13 +13,6 @@ C:\Users\Robyn\.nuget\packages\net5.0\Team7.runtimeconfig.json
 C:\Users\Robyn\.nuget\packages\net5.0\Team7.runtimeconfig.dev.json
 C:\Users\Robyn\.nuget\packages\net5.0\Team7.dll
 C:\Users\Robyn\.nuget\packages\net5.0\Team7.pdb
-C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.AssemblyReference.cache
-C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfoInputs.cache
-C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfo.cs
-C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.CoreCompileInputs.cache
-C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\scopedcss\bundle\Team7.styles.css
 C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\staticwebassets\Team7.StaticWebAssets.Manifest.cache
 C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.RazorTargetAssemblyInfo.cache

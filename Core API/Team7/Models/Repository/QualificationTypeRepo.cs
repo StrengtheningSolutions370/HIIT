@@ -40,55 +40,55 @@ namespace Team7.Models.Repository
 
     }
 
-    public async Task<QualificationType[]> GetQualificationTypesAsync(string input)
-    {
-        IQueryable<QualificationType> query = DB.QualificationType.Where(v => v.Name == input);
-        if (!query.Any())
-        {
-            return null;
-        }
-        else
-        {
-            DB.Update(Entity);
-        }
+    //public async Task<QualificationType[]> GetQualificationTypesAsync(string input)
+    //{
+    //    IQueryable<QualificationType> query = DB.QualificationType.Where(v => v.Name == input);
+    //    if (!query.Any())
+    //    {
+    //        return null;
+    //    }
+    //    else
+    //    {
+    //        DB.Update(Entity);
+    //    }
 
 
-        public async Task<QualificationType[]> GetAllQualificationTypesAsync()
-        {
-            IQueryable<QualificationType> query = DB.QualificationType;
-            return await query.ToArrayAsync();
-        }
-    }
+    //        public async Task<QualificationType[]> GetAllQualificationTypesAsync()
+    //    {
+    //        IQueryable<QualificationType> query = DB.QualificationType;
+    //        return await query.ToArrayAsync();
+    //    }
+    //}
 
-    public async Task<QualificationType> GetQualificationTypeIdAsync(int id)
-    {
-        IQueryable<QualificationType> query = DB.QualificationType.Where(v => v.QualificationTypeID == id);
-        if (!query.Any())
-        {
-            IQueryable<QualificationType> query = DB.QualificationType.Where(qt => qt.Name == input);
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return await query.ToArrayAsync();
-            }
+    //public async Task<QualificationType> GetQualificationTypeIdAsync(int id)
+    //{
+    //    IQueryable<QualificationType> query = DB.QualificationType.Where(v => v.QualificationTypeID == id);
+    //    if (!query.Any())
+    //    {
+    //        IQueryable<QualificationType> query = DB.QualificationType.Where(qt => qt.Name == input);
+    //        if (!query.Any())
+    //        {
+    //            return null;
+    //        }
+    //        else
+    //        {
+    //            return await query.ToArrayAsync();
+    //        }
 
-        }
-        else
-        {
-            IQueryable<QualificationType> query = DB.QualificationType.Where(qt => qt.QualificationTypeID == id);
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return await query.SingleAsync();
-            }
-        }
-    }
+    //    }
+    //    else
+    //    {
+    //        IQueryable<QualificationType> query = DB.QualificationType.Where(qt => qt.QualificationTypeID == id);
+    //        if (!query.Any())
+    //        {
+    //            return null;
+    //        }
+    //        else
+    //        {
+    //            return await query.SingleAsync();
+    //        }
+    //    }
+    //}
 
     public async Task<bool> SaveChangesAsync()
     {
@@ -97,6 +97,11 @@ namespace Team7.Models.Repository
     }
 
         public Task<QualificationType[]> GetQualificationTypeAasync(string input)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<QualificationType> IQualificationTypeRepo.GetQualificationTypeIdAsync(int id)
         {
             throw new NotImplementedException();
         }

@@ -25,7 +25,6 @@
 
   <ItemGroup>
 	<Folder Include="Context\" />
-	<Folder Include="Migrations\" />
 	  <Folder Include="Factory" />
   </ItemGroup>
 

@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { UserRolesPageRoutingModule } from './user-roles-routing.module';
 
 import { UserRolesPage } from './user-roles.page';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 
@@ -15,7 +16,8 @@ import { UserRolesPage } from './user-roles.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    UserRolesPageRoutingModule
+    UserRolesPageRoutingModule,
+    Ng2SearchPipeModule
   ],
   declarations: [UserRolesPage]
 })

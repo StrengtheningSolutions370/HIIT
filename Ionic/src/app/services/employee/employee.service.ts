@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable no-underscore-dangle */
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { EmployeeType } from 'src/app/models/employeeType';
@@ -18,6 +18,8 @@ import { TitleService } from '../title/title.service';
   providedIn: 'root'
 })
 export class EmployeeService {
+  @Output() fetchEmployeeTypesEvent = new EventEmitter<EmployeeType>();
+
   //Creating a venueList for all the venues in the service.
   private _employeeTypeList = new BehaviorSubject<EmployeeType[]>([]);
 
@@ -25,6 +27,8 @@ export class EmployeeService {
   public get employeeTypeList() {
     return this._employeeTypeList.asObservable();
   }
+
+  private temp: EmployeeType[];
 
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController,
      public titleService: TitleService) {
@@ -42,33 +46,38 @@ export class EmployeeService {
   }
 
   //Methods
-  //Add a venue to the venue list within the venue service.
+  //Add a employee type to the employee type list within the employee service.
   createEmployeeType(employeeType: any) {
-    console.log('Employee Service: Repo -> Create Employee Type');
-    console.log(JSON.stringify(employeeType));
-    this.repo.createEmployeeType(employeeType).subscribe(res => {
-      const tempResult = Object.assign(res);
-      console.log('Employee Service: Create Employee Type');
-      console.log(res);
-      this._employeeTypeList.next(tempResult.data);
+    this.repo.createEmployeeType(employeeType).subscribe({
+      next: () => {
+        console.log('EMPLOYEE TYPE CREATED');
+        this.fetchEmployeeTypesEvent.emit(employeeType);
+      }
     });
   }
 
+  getAllEmployeeTypes(): Observable<any>{
+    return this.repo.getEmployeeTypes();
+  }
+
   //Receives a venue to update in the service venue list.
-  async updateEmployeeType(id, employeeType: any): Promise<Observable<any>> {
-    console.log('Employee Service: Repo -> Update Employee Type');
-    console.log(employeeType);
-
-    const currentEmployeeType = this._employeeTypeList.value;
-    const index = currentEmployeeType.findIndex(x => x.employeeTypeID === id);
-    return this.repo.updateEmployeeType(employeeType.employeeTypeID,employeeType);
+  async updateEmployeeType(id, employeeType: any){
+    return this.repo.updateEmployeeType(employeeType.employeeTypeID,employeeType).subscribe(
+      {
+       next: () => {
+         console.log('EMPLOYEE TYPE UPDATED');
+         this.fetchEmployeeTypesEvent.emit(employeeType);
+       }
+      });
   }
 
-  //Receives a venue to delete in the service venue list.
-  deleteEmployeeType(id: number) {
-    this.repo.deleteEmployeeType(id).subscribe(result =>
-      console.log(result));
-  }
+  //Receives a title to delete in the service title list.
+  deleteEmployeeType(id: number){
+    this.repo.deleteEmployeeType(id).subscribe(result => {
+      console.log('EMPLOYEE TYPE DELETED');
+      this.fetchEmployeeTypesEvent.emit();
+    });
+   }
 
   matchingEmployeeType(input: string) {
     console.log('Employee Service: Repo -> Matching Employee Type');

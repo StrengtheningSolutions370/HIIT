@@ -25,6 +25,13 @@
         <p class="ion-text-start">{{userRole.description}}</p>
       </ion-label>
     </ion-item>
+<br>
+    <h3 class="ion-text-center">User Role Permissions:</h3>
+    <ion-item *ngFor="let permission of userRole.permissions">
+      <ion-list>
+          <p>{{permission}}</p>
+      </ion-list>
+    </ion-item>
     
     <br/><br/>
 

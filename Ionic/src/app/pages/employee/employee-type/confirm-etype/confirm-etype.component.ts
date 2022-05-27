@@ -46,17 +46,9 @@ export class ConfirmEtypeComponent{
     } else if (this.choice === 2){
       console.log('Update Employee Type from confirm:');
       //CallRepoToUpdate
-      (await this.employeeService.updateEmployeeType(employeeType.employeeTypeID,employeeType)).subscribe(
-        {
-          next: data => {
-            this.dismissModal();
-            this.sucUpdate();
-          },
-          error: err => {
-
-          }
-        }
-      );
+      await this.employeeService.updateEmployeeType(employeeType.employeeTypeID,employeeType);
+      await this.dismissModal();
+      this.sucUpdate();
     }
 
     //dismiss modal
