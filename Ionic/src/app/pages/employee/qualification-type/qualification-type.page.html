@@ -1,14 +1,13 @@
 
 
 <ion-content>
-  <!--Searchbar [(ngModel)] is used to bind the searchTerm to the class, to be called when filtering.-->
+
   <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="filter"
     animated="true" debounce="200"></ion-searchbar>
 
   <div class="ion-text-center">
     <ion-button color="success" (click)="qualificationService.addQualificationTypeInfoModal()">
       Add Qualification Type
-      <ion-icon name="add" size="medium"></ion-icon>
     </ion-button>
   </div>
   <br/>

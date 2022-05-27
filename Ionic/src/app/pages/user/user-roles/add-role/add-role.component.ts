@@ -1,6 +1,8 @@
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
 import { UserRole } from 'src/app/models/userRole';
@@ -11,13 +13,13 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './add-role.component.html',
   styleUrls: ['./add-role.component.scss'],
 })
-export class AddRoleComponent implements ViewWillEnter {
-  @Input() userRole: UserRole;
+export class AddRoleComponent {
 
   //Creating the form to add the new venue details, that will be displayed in the HTML component
   cUserRoleForm: FormGroup = this.formBuilder.group({
-    name: ['', [Validators.required]],
-    description: ['', [Validators.required]],
+    name: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
+    // permissions: this.formBuilder.array([], [Validators.required])
   });
 
   permissions=[
@@ -35,24 +37,15 @@ export class AddRoleComponent implements ViewWillEnter {
     }
   ];
 
+
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public userService: UserService, private router: Router, private currentRoute: ActivatedRoute,
     private  alertCtrl: AlertController ) { }
 
+
   //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
     return this.cUserRoleForm.controls;
-  }
-
-  ionViewWillEnter(): void {
-    console.log('Add User Role - View Will Enter');
-    console.log(this.userRole);
-
-    if (this.userRole !=null){
-      this.cUserRoleForm.controls.name.setValue(this.userRole.name);
-      this.cUserRoleForm.controls.description.setValue(this.userRole.description);
-      this.cUserRoleForm.controls.permissions.setValue(this.userRole.permissions);
-    }
   }
 
   submitForm() {
@@ -60,47 +53,22 @@ export class AddRoleComponent implements ViewWillEnter {
       console.log('Please provide all required fields');
       return false;
     }else{
-      const temp = {
-        name: this.cUserRoleForm.value['roleName'],
-        description: this.cUserRoleForm.value['roleDes'],
+      let temp = new UserRole();
+      temp = {
+        name: this.cUserRoleForm.value['name'],
+        description: this.cUserRoleForm.value['description'],
         users: []
       };
-      this.userService.confirmUserRoleModal(1,temp);
+      console.log(temp);
+      this.userService.confirmUserRoleModal(1, temp);
       this.dismissModal();
-      // this.sucAdd();
+      //this.sucAdd();
       // console.log("CurrentRoute:ADD");
       // console.log(this.currentRoute.url);
     }
    }
 
-  async sucAdd() {
-    const toast = await this.toastCtrl.create({
-      message: 'The User Role has been successfully added!',
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async duplicateAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'User Role Exists',
-      message: 'The User Role Information entered already exists on the system',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-
-  async failureAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Could not create user role',
-      message: 'There was an error updating the user role. Please try again',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-
   dismissModal() {
     this.modalCtrl.dismiss();
   }
-
 }

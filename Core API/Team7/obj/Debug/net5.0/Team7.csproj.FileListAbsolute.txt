@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\Users\shann\Desktop\New folder (2)\net5.0\appsettings.Development.json
 D:\Users\shann\Desktop\New folder (2)\net5.0\appsettings.json
 D:\Users\shann\Desktop\New folder (2)\net5.0\Team7.exe
@@ -22,3 +23,29 @@ D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Te
 D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\ref\Team7.dll
 D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.pdb
 D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.genruntimeconfig.cache
+=======
+C:\Users\Robyn\.nuget\packages\net5.0\appsettings.Development.json
+C:\Users\Robyn\.nuget\packages\net5.0\appsettings.json
+C:\Users\Robyn\.nuget\packages\net5.0\Team7.exe
+C:\Users\Robyn\.nuget\packages\net5.0\Team7.deps.json
+C:\Users\Robyn\.nuget\packages\net5.0\Team7.runtimeconfig.json
+C:\Users\Robyn\.nuget\packages\net5.0\Team7.runtimeconfig.dev.json
+C:\Users\Robyn\.nuget\packages\net5.0\Team7.dll
+C:\Users\Robyn\.nuget\packages\net5.0\Team7.pdb
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.AssemblyReference.cache
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfoInputs.cache
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfo.cs
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.CoreCompileInputs.cache
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\scopedcss\bundle\Team7.styles.css
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\staticwebassets\Team7.StaticWebAssets.Manifest.cache
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.RazorTargetAssemblyInfo.cache
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.CopyComplete
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.dll
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\refint\Team7.dll
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.pdb
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.genruntimeconfig.cache
+C:\Users\Robyn\Desktop\Dev2\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\ref\Team7.dll
+>>>>>>> d342971cee0dab7eff206b2296d218f4c6682105

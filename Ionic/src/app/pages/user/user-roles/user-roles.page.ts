@@ -15,7 +15,7 @@ export class UserRolesPage implements OnInit {
   //String used from the searchbar, used in the filter pipe to search venues.
   filter: string;
 
-  //Create local venue array to be populated onInit.
+  //Create local user role array to be populated onInit.
   userRoleList: UserRole[] = [];
 
   //Subscription variable to track live updates.
@@ -27,7 +27,7 @@ export class UserRolesPage implements OnInit {
 
   ngOnInit() {
     setTimeout(async () => {
-      //Populate the venue list within the venue page, with the venue list from the venue service.
+      //Populate the user role list within the user role page, with the user role list from the user service.
       this.userRoleSub = this.userService.userRoleList.subscribe(results => {
         this.userRoleList = results;
 
@@ -38,7 +38,7 @@ export class UserRolesPage implements OnInit {
     this.getUserRoles();
   }
 
-  //Receive venues from the repo in local page.
+  //Receive user roles from the repo in local page.
   async getUserRoles() {
     setTimeout(async () => {
       this.isLoading = false;

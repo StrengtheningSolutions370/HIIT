@@ -31,6 +31,12 @@ import { UpdateQtypeComponent } from './pages/employee/qualification-type/update
 import { DeleteQtypeComponent } from './pages/employee/qualification-type/delete-qtype/delete-qtype.component';
 import { ViewQtypeComponent } from './pages/employee/qualification-type/view-qtype/view-qtype.component';
 import { ConfirmQtypeComponent } from './pages/employee/qualification-type/confirm-qtype/confirm-qtype.component';
+import { ConfirmRoleComponent } from './pages/user/user-roles/confirm-role/confirm-role.component';
+import { AddEtypeComponent } from './pages/employee/employee-type/add-etype/add-etype.component';
+import { ConfirmEtypeComponent } from './pages/employee/employee-type/confirm-etype/confirm-etype.component';
+import { UpdateEtypeComponent } from './pages/employee/employee-type/update-etype/update-etype.component';
+import { ViewEtypeComponent } from './pages/employee/employee-type/view-etype/view-etype.component';
+import { DeleteEtypeComponent } from './pages/employee/employee-type/delete-etype/delete-etype.component';
 
 import { AddVatComponent } from './pages/sale/vat/add-vat/add-vat.component';
 import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
@@ -44,8 +50,8 @@ import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.co
   AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent,
   AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent,
   AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent,
-  AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent
-],
+  AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
+  ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent],
 
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
