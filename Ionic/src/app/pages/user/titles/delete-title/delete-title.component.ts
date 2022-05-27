@@ -45,7 +45,7 @@ export class DeleteTitleComponent implements ViewWillEnter {
     alert.present();
   }
 
-  //Close the modal and navigate back to the venue page.
+  //Close the modal and navigate back to the title page.
   dismissModal() {
     this.modalCtrl.dismiss();
   }

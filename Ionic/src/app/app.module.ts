@@ -14,11 +14,6 @@ import { DeleteVenueComponent } from './pages/venue/delete-venue/delete-venue.co
 import { ConfirmVenueComponent } from './pages/venue/confirm-venue/confirm-venue.component';
 import { AssociativeVenueComponent } from './pages/venue/associative-venue/associative-venue.component';
 
-import { AddVatComponent } from './pages/sale/vat/add-vat/add-vat.component';
-import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
-import { DeleteVatComponent } from './pages/sale/vat/delete-vat/delete-vat.component';
-import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
-
 import { AddRoleComponent } from './pages/user/user-roles/add-role/add-role.component';
 import { UpdateRoleComponent } from './pages/user/user-roles/update-role/update-role.component';
 import { DeleteRoleComponent } from './pages/user/user-roles/delete-role/delete-role.component';
@@ -37,13 +32,20 @@ import { DeleteQtypeComponent } from './pages/employee/qualification-type/delete
 import { ViewQtypeComponent } from './pages/employee/qualification-type/view-qtype/view-qtype.component';
 import { ConfirmQtypeComponent } from './pages/employee/qualification-type/confirm-qtype/confirm-qtype.component';
 
+import { AddVatComponent } from './pages/sale/vat/add-vat/add-vat.component';
+import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
+import { DeleteVatComponent } from './pages/sale/vat/delete-vat/delete-vat.component';
+import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
+import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
+
 @NgModule({
   declarations: [AppComponent,
   AddVenueComponent, UpdateVenueComponent, ViewVenueInfoComponent, DeleteVenueComponent, ConfirmVenueComponent,AssociativeVenueComponent,
-  AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent,
   AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent,
   AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent,
-  AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent],
+  AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent,
+  AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent
+],
 
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],

@@ -48,7 +48,7 @@ export class TitlesPage implements OnInit{
     this.titleService.fetchTitlesEvent.subscribe(
       {
         next: res => {
-          console.log('EMMIT TO GO FETCH THE TITLES AGAIN')
+          console.log('EMIT TO GO FETCH THE TITLES AGAIN')
           this.fetchTitles();
         }
       }

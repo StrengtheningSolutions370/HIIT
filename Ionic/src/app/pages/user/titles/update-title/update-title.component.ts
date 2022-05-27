@@ -25,7 +25,7 @@ export class UpdateTitleComponent {
   }
 
   ionViewWillEnter() {
-    console.log('UpdateVenue-ViewWillEnter');
+    console.log('UpdateTitle-ViewWillEnter');
     console.log(this.title);
     this.uTitleForm.controls.titleDescription.setValue(this.title.description);
     //Populate the update ttile form with the values received from the selected title object in the main page.
