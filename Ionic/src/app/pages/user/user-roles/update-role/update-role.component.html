@@ -1,48 +1,38 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Update User Role</ion-title>
+    <ion-title>Edit user Role Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<!--This modal is not complete, please check if it displays like "UpdateVenue"-->
-<!--Check the SCSS, TS AND HTML-->
-
 <ion-content>
-  <form #uUserRoleForm="ngForm">
-
-    <br/>     
-        
+  <form [formGroup]="uUserRoleForm" (ngSubmit)="submitForm()"> 
+    <br/><br/>
     <ion-item>
-      <ion-label position="stacked">User Role Name:</ion-label>
-      <ion-input required ngModel name #nameCtrl="ngModel" placeholder="Administrator"></ion-input>
+      <ion-label position="stacked">Name:</ion-label>
+      <ion-input formControlName="name"  type="text" required=""></ion-input>
+      <br/>
     </ion-item>
-    <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
-      <p>Please enter a valid user role name</p>
-    </ion-text>
-
+    <span class="error ion-padding" *ngIf="errorControl.name.errors?.required">
+      User role name is required.
+      <br/>
+    </span>
     <ion-item>
-      <ion-label position="stacked">User Role Description:</ion-label>
-      <ion-textarea required ngModel description #desCtrl="ngModel"
-      placeholder="a person responsible for carrying out administration of a business or organization"></ion-textarea>
+      <ion-label position="stacked">Description:</ion-label>
+      <ion-input formControlName="description"  type="text" required=""></ion-input>
+      <br/>
     </ion-item>
-    <ion-text color="danger" *ngIf="!nameCtrl.valid && nameCtrl.touched">
-      <p>Please enter a valid user role description</p>
-    </ion-text>
+    <span class="error ion-padding" *ngIf="errorControl.description.errors?.required">
+      User role description is required.
+      <br/>
+    </span>
 
-    <br/>
-    <ion-label class="ion-text-center">
-      <h3>Choose what this user will have access too</h3>
-    </ion-label>
-    <br/>
-    <ion-item *ngFor="let permission of permissions">
-      <ion-checkbox slot="start" ></ion-checkbox>{{permission.des}}
-    </ion-item>
-      
-    <br/>
-    <ion-button expand="block" color="secondary">Update User Role</ion-button>
-</form>
+   
+    <br><br/>
+    <ion-button type="submit" color="secondary" [disabled]="!uUserRoleForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Title</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
+  </form>
 </ion-content>
 

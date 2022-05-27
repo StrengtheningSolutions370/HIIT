@@ -44,7 +44,7 @@ export class AddTitleComponent implements ViewWillEnter {
         console.log('Please provide all required fields');
         return false;
       }else{
-        var temp = {
+        const temp = {
           description: this.cTitleForm.value['titleDescription'],
           users: []
         };

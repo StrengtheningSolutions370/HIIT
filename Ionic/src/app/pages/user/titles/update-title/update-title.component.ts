@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
@@ -25,7 +26,7 @@ export class UpdateTitleComponent {
   }
 
   ionViewWillEnter() {
-    console.log('UpdateVenue-ViewWillEnter');
+    console.log('UpdateTitle-ViewWillEnter');
     console.log(this.title);
     this.uTitleForm.controls.titleDescription.setValue(this.title.description);
     //Populate the update ttile form with the values received from the selected title object in the main page.
@@ -40,7 +41,7 @@ export class UpdateTitleComponent {
     else
     {
       console.log('InsideUpdateSubmit:');
-      var temp = new Title();
+      let temp = new Title();
       const choice = 2;
       temp = {
         titleID: this.title.titleID,

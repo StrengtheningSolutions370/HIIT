@@ -1,22 +1,62 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { Vat } from 'src/app/models/vat';
+import { RepoService } from 'src/app/services/repo.service';
+import { VatService } from 'src/app/services/vat/vat.service';
 
 @Component({
   selector: 'app-vat',
   templateUrl: './vat.page.html',
   styleUrls: ['./vat.page.scss'],
 })
-export class VATPage {
+export class VATPage implements OnInit{
 
-  vats = [
-    {percentage : '10%',
-     year : '1991'},
-    {percentage : '14%',
-     year : '1993'},
-     {percentage : '15%',
-     year : '2018'}
-  ];
+  //String used from the searchbar, used in the filter pipe to search titles.
+  public filter: string;
 
-  constructor() { }
+  //Create local vat array to be populated onInit.
+  vatList: Vat[] = [];
+
+  //Subscription variable to track live updates.
+  vatSub: Subscription;
+
+  isLoading = true;
+
+  constructor(public vatService: VatService, public repo: RepoService) { 
+    // this.populateTitles();
+    this.fetchVATs();
+  }
+
+  fetchVATs() {
+    this.isLoading = true;
+    this.vatService.getAllVats().subscribe(
+      {
+        next: data => {
+          console.log("FETCHING VATS FROM DB");
+          console.log(data);
+          this.isLoading = false;
+          this.vatList = data;
+        }
+      }
+    )
+  }
+
+  ngOnInit() {
+
+    this.vatService.fetchVatsEvent.subscribe(
+      {
+        next: res => {
+          console.log('EMIT TO GO FETCH THE VATS AGAIN')
+          this.fetchVATs();
+        }
+      }
+    );
+
+  }
+
+  dateFormatter(s : string) : string {
+    return s.split("T")[0];
+  }
 
 }

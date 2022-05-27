@@ -37,39 +37,40 @@ namespace Team7.Models.Repository
         {
             IQueryable<UserRole> query = DB.UserRole;
             return await query.ToArrayAsync();
+
         }
 
-        //public async Task<UserRole[]> GetUserRolesAsync(string input)
-        //{
-        //    IQueryable<UserRole> query = DB.UserRoles.Where(ur => ur.Name  == input || ur.Description == input);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.ToArrayAsync();
-        //    }
-        //}
+        public async Task<UserRole[]> GetUserRolesAsync(string input)
+        {
+            IQueryable<UserRole> query = DB.UserRole.Where(v => v.Name == input || v.Description == input);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.ToArrayAsync();
+            }
 
-        //public async Task<UserRole> GetUserRoleIdAsync(int id)
-        //{
-        //    IQueryable<UserRole> query = DB.UserRoles.Where(ur => ur.UserRoleID == id);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.SingleAsync();
-        //    }
-        //}
+        }
+
+        public async Task<UserRole> GetUserRoleIdAsync(int id)
+        {
+            IQueryable<UserRole> query = DB.UserRole.Where(v => v.UserRoleID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.SingleAsync();
+            }
+        }
 
         public async Task<bool> SaveChangesAsync()
         {
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
         }
-
     }
 }
