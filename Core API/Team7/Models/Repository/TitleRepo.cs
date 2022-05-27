@@ -36,7 +36,6 @@ namespace Team7.Models.Repository
         {
             IQueryable<Title> query = DB.Title;
             return await query.ToArrayAsync();
-
         }
 
         public async Task<Title[]> GetTitlesAsync(string input)
@@ -73,3 +72,4 @@ namespace Team7.Models.Repository
         }
     }
 }
+

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Lyné Keet\\Desktop\\370 Iteration5\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {}
+    "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {}
   },
   "projects": {
-    "D:\\Lyné Keet\\Desktop\\370 Iteration5\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {
+    "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Lyné Keet\\Desktop\\370 Iteration5\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
+        "projectUniqueName": "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
         "projectName": "Team7",
-        "projectPath": "D:\\Lyné Keet\\Desktop\\370 Iteration5\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
-        "packagesPath": "C:\\Users\\Lyné Keet\\.nuget\\packages\\",
-        "outputPath": "D:\\Lyné Keet\\Desktop\\370 Iteration5\\HIIT-Team7\\Core API\\Team7\\obj\\",
+        "projectPath": "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
+        "packagesPath": "C:\\Users\\shann\\.nuget\\packages\\",
+        "outputPath": "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Lyné Keet\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\shann\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -73,6 +73,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
+            },
+            "System.Threading.Tasks": {
+              "target": "Package",
+              "version": "[4.3.0, )"
             }
           },
           "imports": [
@@ -93,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

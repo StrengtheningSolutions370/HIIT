@@ -11,43 +11,35 @@
 <!--Check the SCSS, TS AND HTML-->
 
 <ion-content>
-  <form #dUserRoleForm="ngForm">
-    <br/>
-    <ion-label class="ion-text-center">
-      <h3>Are you sure you want to delete the following user role?</h3>
+  <br/><br/>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large; color: white;">Are you sure you want to delete the following user role?</p>
+  </ion-label>
+  <br/>
+
+  <ion-item > 
+    <ion-label>
+      <h2>User Role Name: </h2>
+      <p class="ion-text-start">{{userRole.name}}</p>
     </ion-label>
-    <br/>    
-        
-    <ion-item>
-      <ion-label>
-        <h2>User Role Name : </h2>
-        <!--Insert User Role Name Here-->
-        <p>Administrator</p>
-      </ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>
-        <h2>User Role Description : </h2>
-        <!--Insert Description Here-->
-        <p>a person responsible for carrying out administration of a business or organization</p>
-      </ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>
-        <h3>User Role Permissions :</h3>
-      </ion-label>
-    </ion-item>
-    <ion-item *ngFor="let permission of permissions">
-    <ul >
-      <li slot="start" style="color:#bfbfbf">{{permission.des}}</li>
-    </ul>
   </ion-item>
-      
-    <br/>
-    <ion-button expand="block" color="tertiary"> Delete User Role </ion-button>
-</form>
+
+  <ion-item>
+    <ion-label>
+      <h2>User Role Description</h2>
+      <p class="ion-text-start">{{userRole.description}}</p>
+  </ion-label>
+  </ion-item>
+
+  <!-- <ion-item>
+    <ion-label>
+      <h2>Permissions:</h2>
+      <p class="ion-text-start">{{venue.postalCode}}</p>
+    </ion-label>
+  </ion-item> -->
+  
+  <br>
+  <ion-button expand="block" type="ion-button" (click)="delete(userRole.userRoleID)" color="danger">Delete User Role</ion-button>
 </ion-content>
 
 

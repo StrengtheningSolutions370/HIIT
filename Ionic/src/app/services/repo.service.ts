@@ -9,6 +9,8 @@ import { UserRole } from '../models/userRole';
 import { EmployeeType } from '../models/employeeType';
 import { Title } from 'src/app/models/title';
 import { QualificationType } from 'src/app/models/qualification-type';
+import { Vat } from '../models/vat';
+import { SaleItem } from '../models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
 
 @Injectable({
@@ -22,7 +24,10 @@ export class RepoService {
   EmployeeTypeController = 'EmployeeType/';
   TitleController = 'Title/';
   QualificationTypeController = 'QualificationType/';
+  VatController = 'Vat/';
+  SaleItemController = 'SaleItem/';
   SaleCategoryController = 'SaleCategory/';
+
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -40,23 +45,23 @@ export class RepoService {
   //------
   //Create
   createUserRole(user_role: UserRole): Observable<any> {
-    return this.http.post<any>(`${this.base + this.UserRoleController}postuserrole`, user_role, this.httpOptions);
+    return this.http.post(`${this.base + this.UserRoleController}add`, user_role, this.httpOptions);
   }
   //Read
   getUserRoles(): Observable<any> {
-    return this.http.get(`${this.base + this.UserRoleController}getuserroles`, this.httpOptions);
+    return this.http.get(`${this.base + this.UserRoleController}getAll`, this.httpOptions);
   }
   //Update
   updateUserRole(userId: number, user_role: UserRole): Observable<any> {
-    return this.http.put(`${this.base + this.UserRoleController}putuserrole?id=${userId}`, user_role, this.httpOptions);
+    return this.http.put(`${this.base + this.UserRoleController}update?id=${userId}`, user_role, this.httpOptions);
   }
   //Delete
   deleteUserRole(userId: number): Observable<any> {
-    return this.http.delete(`${this.base + this.UserRoleController}deleteuserrole?id=${userId}`, this.httpOptions);
+    return this.http.delete(`${this.base + this.UserRoleController}delete?id=${userId}`, this.httpOptions);
   }
   //Exists
   userRoleExists(userId: number): Observable<any> {
-    return this.http.delete(`${this.base + this.UserRoleController}userroleexists?id=${userId}`, this.httpOptions);
+    return this.http.delete(`${this.base + this.UserRoleController}exists?id=${userId}`, this.httpOptions);
   }
   //GetMatch
   getMatchUserRole(input: string): Observable<any> {
@@ -99,20 +104,19 @@ export class RepoService {
   //------
   //Create
   createEmployeeType(employeeType: EmployeeType): Observable<any> {
-    return this.http.post<any>(`${this.base+ this.EmployeeTypeController}postemployeetype`, employeeType, this.httpOptions);
+    return this.http.post<any>(`${this.base+ this.EmployeeTypeController}add`, employeeType, this.httpOptions);
   }
   //Read
   getEmployeeTypes(): Observable<any> {
-    return this.http.get(`${this.base + this.EmployeeTypeController}getemployeetypes`, this.httpOptions);
+    return this.http.get(`${this.base + this.EmployeeTypeController}getAll`, this.httpOptions);
   }
   //Update
   updateEmployeeType(employeeTypeId: number, employeeType: EmployeeType): Observable<any> {
-    return this.http.put(`${this.base + this.EmployeeTypeController}
-    putemployeetype?id=${employeeTypeId}`, employeeTypeId, this.httpOptions);
+    return this.http.put(`${this.base + this.EmployeeTypeController}update?id=${employeeTypeId}`, employeeType, this.httpOptions);
   }
   //Delete
   deleteEmployeeType(employeeTypeId: number): Observable<any> {
-    return this.http.delete(`${this.base + this.EmployeeTypeController}deleteemployeetype?id=${employeeTypeId}`, this.httpOptions);
+    return this.http.delete(`${this.base + this.EmployeeTypeController}delete?id=${employeeTypeId}`, this.httpOptions);
   }
   getMatchEmployeeType(input: string): Observable<any> {
     return this.http.get(`${this.base + this.EmployeeTypeController}getMatch?input=${input}`, this.httpOptions);
@@ -157,6 +161,8 @@ export class RepoService {
   }
   //Update
   updateQualificationType(qualificationTypeId: number, qualificationType: QualificationType): Observable<any>{
+    return this.http.put(`${this.base+this.QualificationTypeController}update?id=${qualificationTypeId}`,
+    qualificationType, this.httpOptions);
     return this.http.put(`${this.base+this.QualificationTypeController}
     update?id=${qualificationTypeId}`,qualificationType, this.httpOptions);
   }
@@ -188,9 +194,34 @@ updateSaleCategory(saleCategoryId: number, saleCategory: SaleCategory): Observab
   return this.http.put(`${this.base+this.SaleCategoryController}update?id=${saleCategoryId}`,saleCategory, this.httpOptions);
 }
 
+  // VAT:
+ // ------
+/// Create
+ createVAT(vat: any): Observable<any>{
+  return this.http.post<any>(`${this.base+this.VatController}add`,vat,this.httpOptions);
 //Delete
 deleteSaleCategory(saleCategoryId: number): Observable<any>{
   return this.http.delete(`${this.base+this.SaleCategoryController}delete?id=${saleCategoryId}`,this.httpOptions);
+}
+//Update
+updateVat(vat: Vat): Observable<any>{
+  return this.http.put(`${this.base+this.VatController}update`,vat, this.httpOptions);
+}
+//Delete
+deleteVat(vatId: number): Observable<any>{
+  return this.http.delete(`${this.base+this.VatController}delete?id=${vatId}`,this.httpOptions);
+}
+//GetAll
+getVats(): Observable<any>{
+  return this.http.get(`${this.base+this.VatController}getAll`, this.httpOptions);
+}
+//GetMatch
+getMatchVat(input: string): Observable<any>{
+  return this.http.get(`${this.base+this.VatController}getMatch?input=${input}`, this.httpOptions);
+}
+//Exists
+existsVat(id: number): Observable<any>{
+  return this.http.get(`${this.base+this.VatController}exists?id=${id}`, this.httpOptions);
 }
 //GetAll
 getSaleCategory(): Observable<any>{
@@ -205,6 +236,32 @@ existsSaleCategory(id: number): Observable<any>{
   return this.http.get(`${this.base+this.SaleCategoryController}exists?id=${id}`, this.httpOptions);
 }
 
+ // SALE ITEM:
+ // ------
+/// Create
+createSaleItem(saleItem: any): Observable<any>{
+  return this.http.post<any>(`${this.base+this.SaleItemController}add`,saleItem,this.httpOptions);
+}
+//Update
+updateSaleItem(saleItem: SaleItem): Observable<any>{
+  return this.http.put(`${this.base+this.SaleItemController}update`,saleItem, this.httpOptions);
+}
+//Delete
+deleteSaleItem(SaleItemId: number): Observable<any>{
+  return this.http.delete(`${this.base+this.SaleItemController}delete?id=${SaleItemId}`,this.httpOptions);
+}
+//GetAll
+getSaleItems(): Observable<any>{
+  return this.http.get(`${this.base+this.SaleItemController}getAll`, this.httpOptions);
+}
+//GetMatch
+getMatchSaleItem(input: string): Observable<any>{
+  return this.http.get(`${this.base+this.SaleItemController}getMatch?input=${input}`, this.httpOptions);
+}
+//Exists
+existsSaleItem(id: number): Observable<any>{
+  return this.http.get(`${this.base+this.SaleItemController}exists?id=${id}`, this.httpOptions);
+}
 
 }
 

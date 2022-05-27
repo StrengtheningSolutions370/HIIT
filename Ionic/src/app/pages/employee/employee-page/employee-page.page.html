@@ -7,7 +7,7 @@
   <br/>
 
   <div class="ion-text-center">
-    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addEmployeeInfoModal()">
+    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="employeeService.addEmployeeInfoModal()">
       Add Employee 
       <ion-icon name="add" size="medium"></ion-icon>
     </ion-button>
@@ -21,7 +21,7 @@
           <ion-card-header >
             <ion-avatar item-start button (click)="viewEmployeeInfoModal()">
               <!--Employee Image-->
-              <img src="../../assets/avatar.jpg">
+              <img src="../../assets/avatar.jpg" alt="img">
             </ion-avatar>
               <ion-card-title style="color:#e7e8ec;">
                 <!--Employee_Name ' ' Employee_Surname-->

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SaleItem } from 'src/app/models/sale-item';
 
 @Component({
   selector: 'app-sale-item',
@@ -7,7 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SaleItemPage implements OnInit {
 
-  constructor() { }
+  mock = {
+    SaleItemID : 1,
+    Name : "Towel",
+    Photo : false,
+    Description : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut laborum recusandae fugiat rem soluta autem id illum quidem dignissimos mollitia.",
+    Price : 212.23,
+    Quotable : true,
+    Quantity : 9,
+    SaleCategoryID : 1,
+  }
+
+
+
+  constructor() {
+
+  }
 
   ngOnInit() {
   }
