@@ -17,7 +17,7 @@ export class DeleteTitleComponent implements ViewWillEnter {
     public titleService: TitleService, private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController) { }
 
     ionViewWillEnter() {
-      console.log("DeleteTitle - ViewWillEnter");
+      console.log('DeleteTitle - ViewWillEnter');
       console.log(this.title);
     }
 

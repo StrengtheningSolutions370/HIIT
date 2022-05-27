@@ -76,7 +76,7 @@ export class UpdateTitleComponent {
      alert.present();
    }
 
-   async DuplicateAlert() {
+   async duplicateAlert() {
      const alert = await this.alertCtrl.create({
        header: 'Title Already Exists',
        message: 'The Title Information entered already exists on the system',
@@ -85,7 +85,7 @@ export class UpdateTitleComponent {
     alert.present();
   }
 
-   async FailureAlert() {
+   async failureAlert() {
      const alert = await this.alertCtrl.create({
        header: 'Could not update title',
        subHeader : 'There was an error updating the title. Please try again',

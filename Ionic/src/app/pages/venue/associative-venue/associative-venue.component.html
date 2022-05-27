@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>Venue associated with a Schedule</ion-title>
+      <ion-buttons slot="end">
+        <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  
+<ion-content>
+    <br/>
+    <div class="ion-text-center">
+        <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">
+            The Venue_Name cannot be deleted because the following schedule/s are associated with it.
+        </p>
+
+        <ion-item > 
+            <ion-label>
+              <p class="ion-text-start">Insert a list of Schedules</p> 
+            </ion-label>
+        </ion-item>
+    </div>
+</ion-content>

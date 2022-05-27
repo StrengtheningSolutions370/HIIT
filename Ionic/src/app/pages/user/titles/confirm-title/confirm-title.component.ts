@@ -14,7 +14,7 @@ export class ConfirmTitleComponent{
   @Input() title: Title;
 
   constructor(private modalCtrl: ModalController, public titleService: TitleService,
-    public router: Router, public activated: ActivatedRoute, public toastCtrl : ToastController) {
+    public router: Router, public activated: ActivatedRoute, public toastCtrl: ToastController) {
    }
 
    dismissModal() {
@@ -84,6 +84,4 @@ export class ConfirmTitleComponent{
     });
     toast.present();
   }
-
-
 }
