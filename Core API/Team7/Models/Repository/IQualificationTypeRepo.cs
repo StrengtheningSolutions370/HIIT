@@ -15,10 +15,11 @@ namespace Team7.Models.Repository
 
         Task<QualificationType[]> GetAllQualificationTypesAsync();
 
-        Task<QualificationType[]> GetQualificationTypeAasync(string input);
+        Task<QualificationType[]> GetQualificationTypesAsync(string input);
 
+        Task<QualificationType> GetQualificationTypeIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
-        Task<QualificationType> GetQualificationTypeIdAsync(int id);
+        
     }
 }
