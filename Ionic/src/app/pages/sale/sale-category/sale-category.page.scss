@@ -6,11 +6,10 @@ ion-button{
 ion-searchbar{
     --background : white;
     --color: #221f1f;
-    --clear-button-color : #ff5b71;
+    --clear-button-color : #554f50;
     width: 80%;
     margin-left: 10%;
     margin-right: 10%;
-
 }
 
 ion-card {
@@ -20,8 +19,10 @@ ion-card {
 
 ion-button {
     border-radius : 10px;
+    width : 15%;
 }
 
 p {
     font-size: large;
+
 }

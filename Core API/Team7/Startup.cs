@@ -153,7 +153,7 @@ namespace Team7
             services.AddScoped<ISupplierRepo, SupplierRepo>();
             services.AddScoped<ITitleRepo, TitleRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
-            services.AddScoped<IUserRoleRepo, UserRoleRepo>();
+            //services.AddScoped<IUserRoleRepo, UserRoleRepo>();
             services.AddScoped<IVenueRepo, VenueRepo>();
             services.AddScoped<IWriteOffLineRepo, WriteOffLineRepo>();
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();

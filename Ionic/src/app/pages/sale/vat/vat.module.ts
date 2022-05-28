@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 
 import { VATPageRoutingModule } from './vat-routing.module';
 
@@ -14,7 +16,9 @@ import { VATPage } from './vat.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    VATPageRoutingModule
+    VATPageRoutingModule,
+    Ng2SearchPipeModule
+
   ],
   declarations: [VATPage]
 })
