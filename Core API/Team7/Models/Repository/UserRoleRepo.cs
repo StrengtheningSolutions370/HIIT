@@ -8,7 +8,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class UserRoleRepo : IUserRoleRepo
+    public class UserRoleRepo //: IUserRoleRepo
     {
 
         readonly private AppDB DB;
@@ -35,13 +35,14 @@ namespace Team7.Models.Repository
 
         public async Task<UserRole[]> GetAllUserRolesAsync()
         {
-            IQueryable<UserRole> query = DB.UserRoles;
+            IQueryable<UserRole> query = DB.UserRole;
             return await query.ToArrayAsync();
+
         }
 
         public async Task<UserRole[]> GetUserRolesAsync(string input)
         {
-            IQueryable<UserRole> query = DB.UserRoles.Where(ur => ur.Name  == input || ur.Description == input);
+            IQueryable<UserRole> query = DB.UserRole.Where(v => v.Name == input || v.Description == input);
             if (!query.Any())
             {
                 return null;
@@ -50,11 +51,12 @@ namespace Team7.Models.Repository
             {
                 return await query.ToArrayAsync();
             }
+
         }
 
         public async Task<UserRole> GetUserRoleIdAsync(int id)
         {
-            IQueryable<UserRole> query = DB.UserRoles.Where(ur => ur.UserRoleID == id);
+            IQueryable<UserRole> query = DB.UserRole.Where(v => v.UserRoleID == id);
             if (!query.Any())
             {
                 return null;
@@ -70,6 +72,5 @@ namespace Team7.Models.Repository
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
         }
-
     }
 }

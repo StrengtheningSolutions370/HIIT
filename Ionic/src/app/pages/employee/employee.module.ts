@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EmployeePageRoutingModule } from './employee-routing.module';
 
 import { EmployeePage } from './employee.page';
+import { FileUploadComponent } from './employee-page/file-upload/file-upload.component';
 //import { HeaderComponent } from 'src/app/components/header/header.component';
 
 @NgModule({

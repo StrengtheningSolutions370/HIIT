@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
-
+using Team7.Models.Repository;
 
 namespace Team7.Models.Repository
 {
@@ -35,14 +35,14 @@ namespace Team7.Models.Repository
 
         public async Task<QualificationType[]> GetAllQualificationTypesAsync()
         {
-            IQueryable<QualificationType> query = DB.QualificationTypes;
+            IQueryable<QualificationType> query = DB.QualificationType;
             return await query.ToArrayAsync();
 
         }
 
         public async Task<QualificationType[]> GetQualificationTypesAsync(string input)
         {
-            IQueryable<QualificationType> query = DB.QualificationTypes.Where(qt => qt.Name == input);
+            IQueryable<QualificationType> query = DB.QualificationType.Where(v => v.Name == input);
             if (!query.Any())
             {
                 return null;
@@ -51,12 +51,11 @@ namespace Team7.Models.Repository
             {
                 return await query.ToArrayAsync();
             }
-
         }
 
         public async Task<QualificationType> GetQualificationTypeIdAsync(int id)
         {
-            IQueryable<QualificationType> query = DB.QualificationTypes.Where(qt => qt.QualificationTypeID == id);
+            IQueryable<QualificationType> query = DB.QualificationType.Where(v => v.QualificationTypeID == id);
             if (!query.Any())
             {
                 return null;
@@ -67,10 +66,13 @@ namespace Team7.Models.Repository
             }
         }
 
+
         public async Task<bool> SaveChangesAsync()
         {
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
         }
+
+
     }
 }

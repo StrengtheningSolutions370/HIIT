@@ -10,9 +10,8 @@ import { QualificationType } from 'src/app/models/qualification-type';
   styleUrls: ['./view-qtype.component.scss'],
 })
 export class ViewQtypeComponent implements ViewWillEnter {
-
   @Input() qualificationType: QualificationType;
-  
+
   constructor(private modalCtrl: ModalController, public fb:FormBuilder) { 
   }
 

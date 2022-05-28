@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { EmployeeType } from 'src/app/models/employeeType';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
@@ -22,29 +21,41 @@ export class EmployeeTypePage implements OnInit {
 
   isLoading = true;
 
-  constructor(public employeeService: EmployeeService, public repo: RepoService) { }
+  constructor(public employeeService: EmployeeService, public repo: RepoService) {
+    this.populateEmployeeTypes();
+
+  }
 
   ngOnInit() {
-    setTimeout(async () => {
+    this.populateEmployeeTypes();
+  }
+
+
+  async populateEmployeeTypes() {
       //Populate the venue list within the venue page, with the venue list from the venue service.
       this.employeeTypeSub = this.employeeService.employeeTypeList.subscribe(results => {
         this.employeeTypeList = results;
 
-        console.log('Venue Page Init -> Venue List');
+        console.log('Employee Type Page Init -> Employee Type List');
         console.log(this.employeeTypeList);
       });
-    });
-    this.getEmployeeTypes();
+
+    await this.getEmployeeTypes();
   }
 
-    //Receive venues from the repo in local page.
-    async getEmployeeTypes() {
-      setTimeout(async () => {
-        this.isLoading = false;
-        this.repo.getEmployeeTypes();
-        console.log('Employee Type Page -> Get Employee Types');
-        console.log(this.employeeTypeList);
-      }, 1500);
-    }
-
+  //Receive venues from the repo in local page.
+  async getEmployeeTypes() {
+      this.isLoading = false;
+       this.repo.getEmployeeTypes().subscribe(
+        {
+          next: res => {
+            this.isLoading = false;
+            console.log(res);
+            this.employeeTypeList = res;
+          }
+        }
+      );
+      // console.log('Title Page -> Get Titles');
+      // console.log(this.titleList);
+  }
 }

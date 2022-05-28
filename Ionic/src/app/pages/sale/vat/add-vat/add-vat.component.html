@@ -17,17 +17,21 @@
     <p style="font-size:large">Please fill in the VAT information below.</p>
   </div>
   <ion-item>
-    <ion-label position="floating">Percentage :</ion-label>
+    <ion-label position="floating">Percentage:</ion-label>
     <ion-input formControlName="percentage" type="text" required="" id="percentage" ></ion-input>
     <br/>
   </ion-item>
   <span class="error ion-padding" *ngIf="errorControl.percentage.errors?.required && cVATForm.get('percentage').touched">
     VAT Percentage is required.<br/>
   </span>
-
+  <br>
+<span class="error ion-padding" *ngIf="errorControl.percentage.errors?.min">
+  Please enter a percentage above 0.
+  <br/>
+</span>
   <br/><br/>
 
-  <ion-button type="submit" color="success" [disabled]="!cVATForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Venue</ion-button>
+  <ion-button type="submit" color="success" [disabled]="!cVATForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create VAT</ion-button>
   <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
   
 </form>

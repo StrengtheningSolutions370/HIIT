@@ -88,7 +88,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
+            options.UseSqlServer(Configuration.GetConnectionString("Josh")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
@@ -99,6 +99,7 @@ namespace Team7
             services.AddScoped<IDateSessionRepo, DateSessionRepo>();
             services.AddScoped<IEmployeeContractRepo, EmployeeContractRepo>();
             services.AddScoped<IEmployeeRepo, EmployeeRepo>();
+            services.AddScoped<IEmployeeTypeRepo, EmployeeTypeRepo>();
             services.AddScoped<IExerciseCategoryRepo, ExerciseCategoryRepo>();
             services.AddScoped<IExerciseRepo, ExerciseRepo>();
             services.AddScoped<IInventoryItemRepo, InventoryItemRepo>();
@@ -129,7 +130,8 @@ namespace Team7
             services.AddScoped<ISupplierRepo, SupplierRepo>();
             services.AddScoped<ITitleRepo, TitleRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
-            services.AddScoped<IUserRoleRepo, UserRoleRepo>();
+            //services.AddScoped<IUserRoleRepo, UserRoleRepo>();
+            services.AddScoped<IVenueRepo, VenueRepo>();
             services.AddScoped<IWriteOffLineRepo, WriteOffLineRepo>();
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();

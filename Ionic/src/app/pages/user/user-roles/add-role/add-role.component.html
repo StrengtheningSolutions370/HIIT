@@ -8,43 +8,33 @@
 </ion-header>
 
 <ion-content>
-    <form [formGroup]="cUserRoleForm" (ngSubmit)="submitForm()">
-
-    <br/>    
-    
+  <form [formGroup]="cUserRoleForm" (ngSubmit)="submitForm()"> 
+    <br/>
     <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the User Role information below.</p>
+      <p style="font-size:large">Please fill in the user role information below.</p>
     </div>
-        
     <ion-item>
       <ion-label position="floating">Name:</ion-label>
-      <ion-input formControlName="roleName" type="text" required="" id="roleName"></ion-input>
+      <ion-input formControlName="name" type="text" required="" id="name" ></ion-input>
       <br/>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.userRoleName.errors?.required && cUserRoleForm.get('roleName').touched">
+    <!-- <span class="error ion-padding" *ngIf="errorControl.name.errors?.required && cUserRoleForm.get('name').touched">
       User role name is required.<br/>
-    </span>
-
+    </span> -->
     <ion-item>
       <ion-label position="floating">Description:</ion-label>
-      <ion-textarea formControlName="roleDes" required="" id="roleDes"></ion-textarea>
+      <ion-input formControlName="description" type="text" required="" id="description" ></ion-input>
       <br/>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.description.errors?.required && cUserRoleForm.get('roleDes').touched">
+    <!-- <span class="error ion-padding" *ngIf="errorControl.description.errors?.required && cUserRoleForm.get('description').touched">
       User role description is required.<br/>
-    </span>
-
-    <br/>
-    <div class="ion-text-left">
-      <p style="font-size:large">Please choose what the user will have access too.</p>
-    </div>
-    <br/>
-    <ion-item *ngFor="let permission of permissions">
-      <ion-checkbox slot="start" ></ion-checkbox>{{permission.description}
-    </ion-item>
-      
-    <br/>
-    <ion-button type="submit" color="success" [disabled]="!cUserRoleForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create User Role</ion-button>
+    </span> -->
+    
+    <br>
+    <br>
+    <ion-button type="submit" color="success" [disabled]="!cUserRoleForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;" >Create User Role</ion-button>
     <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
+    
   </form>
 </ion-content>
+

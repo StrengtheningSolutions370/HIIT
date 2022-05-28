@@ -83,10 +83,10 @@ namespace Team7.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
+
         }
 
-
-        // GET: api/title/getAll
+        //GET: api/title/getAll
         [HttpGet]
         [Route("getAll")]
         public async Task<IActionResult> GetQualificationTypes()
@@ -105,6 +105,7 @@ namespace Team7.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
         }
+
 
         // GET: api/title/getMatch/{input}
         [HttpGet]
@@ -129,5 +130,7 @@ namespace Team7.Controllers
         {
             return await QualificationTypeRepo.GetQualificationTypeIdAsync(id);
         }
+
     }
 }
+

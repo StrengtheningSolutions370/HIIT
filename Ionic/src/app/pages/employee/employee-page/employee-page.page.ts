@@ -1,5 +1,6 @@
 import { Component} from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { EmployeeService } from 'src/app/services/employee/employee.service';
 
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
@@ -96,15 +97,8 @@ export class EmployeePagePage {
     }
   ];
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController, public employeeService: EmployeeService) { }
 
-  async addEmployeeInfoModal() {
-    const modal = await this.modalCtrl.create({
-      component : AddEmployeeComponent
-    });
-    await modal.present();
-
-  }
 
   async updateEmployeeInfoModal() {
     const modal = await this.modalCtrl.create({

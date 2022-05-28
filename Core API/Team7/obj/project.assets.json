@@ -1115,7 +1115,7 @@
           "Microsoft.NETCore.Targets": "1.1.0"
         },
         "compile": {
-          "ref/netstandard1.5/_._": {}
+          "ref/netstandard1.5/System.Runtime.dll": {}
         }
       },
       "System.Runtime.Caching/4.7.0": {
@@ -1414,7 +1414,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {}
+          "ref/netstandard1.3/System.Threading.Tasks.dll": {}
         }
       },
       "System.Threading.Tasks.Extensions/4.3.0": {
@@ -5707,23 +5707,24 @@
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.17",
       "Microsoft.Extensions.Identity.Core >= 5.0.17",
       "Microsoft.Extensions.Identity.Stores >= 5.0.17",
-      "Swashbuckle.AspNetCore >= 5.6.3"
+      "Swashbuckle.AspNetCore >= 5.6.3",
+      "System.Threading.Tasks >= 4.3.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Robyn\\.nuget\\packages\\": {}
+    "C:\\Users\\shann\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
+      "projectUniqueName": "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
       "projectName": "Team7",
-      "projectPath": "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
-      "packagesPath": "C:\\Users\\Robyn\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\obj\\",
+      "projectPath": "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
+      "packagesPath": "C:\\Users\\shann\\.nuget\\packages\\",
+      "outputPath": "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Robyn\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\shann\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5782,6 +5783,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[5.6.3, )"
+          },
+          "System.Threading.Tasks": {
+            "target": "Package",
+            "version": "[4.3.0, )"
           }
         },
         "imports": [
@@ -5802,7 +5807,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
