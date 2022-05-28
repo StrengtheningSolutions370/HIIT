@@ -12,6 +12,7 @@ import { QualificationType } from 'src/app/models/qualification-type';
 import { Vat } from '../models/vat';
 import { SaleItem } from '../models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
+import { appUser, appUserRegister } from '../models/appUser';
 
 @Injectable({
   providedIn: 'root'
@@ -107,8 +108,8 @@ export class RepoService {
     return this.http.get(`${this.base + this.VenueController}getAll`, this.httpOptions);
   }
   //GetMatch
-  getMatchVenue(input: string): Observable<any> {
-    return this.http.get(`${this.base + this.VenueController}getMatch?input=${input}`, this.httpOptions);
+  getMatchVenue(name: string, address: string): Observable<any> {
+    return this.http.get(`${this.base + this.VenueController}getMatch?name=${name}&address=${address}`, this.httpOptions);
   }
   //Exists
   existsVenue(id: number): Observable<any> {

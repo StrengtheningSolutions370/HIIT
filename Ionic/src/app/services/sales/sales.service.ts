@@ -79,7 +79,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
    }
 
   //Receives a sale item to delete in the service vat list.
-   deleteVat(id: number){
+   deleteSaleItem(id: number){
     this.repo.deleteSaleItem(id).subscribe(
       {
         next: res => {

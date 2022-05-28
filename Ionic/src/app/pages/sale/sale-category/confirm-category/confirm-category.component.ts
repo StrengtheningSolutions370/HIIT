@@ -26,43 +26,43 @@ export class ConfirmCategoryComponent{
   //2 = confirm UPDATE
   async confirmChanges(saleCategory: SaleCategory){
     console.log(this.choice);
-    if (this.choice === 1){
-      //search duplicates
-      if (this.saleService.matchingSaleCategory(saleCategory.name) != null &&
-      this.saleService.matchingSaleCategory(saleCategory.description) != null)
-      {
-        console.log('Existing Sale Category: ' + saleCategory.name +': '+ saleCategory.description);
-        this.duplicateAlert();
-        return;
-      }
-      else{
-        console.log('Add Sale Category from confirm:');
-        //CallRepoToCreate
-        await this.saleService.createSaleCategory(saleCategory);
-        await this.dismissModal();
-        this.sucAdd();
-      }
-    } else if (this.choice === 2){
-      console.log('Update Sale Category from confirm:');
-      //CallRepoToUpdate
-      await this.saleService.updateSaleCategory(saleCategory.saleCategoryID,saleCategory);
-      this.dismissModal();
-      this.sucUpdate();
-    }
+    // if (this.choice === 1){
+    //   //search duplicates
+    //   if (this.saleService.matchingSaleCategory(saleCategory.name) != null &&
+    //   this.saleService.matchingSaleCategory(saleCategory.description) != null)
+    //   {
+    //     console.log('Existing Sale Category: ' + saleCategory.name +': '+ saleCategory.description);
+    //     this.duplicateAlert();
+    //     return;
+    //   }
+    //   else{
+    //     console.log('Add Sale Category from confirm:');
+    //     //CallRepoToCreate
+    //     await this.saleService.createSaleCategory(saleCategory);
+    //     await this.dismissModal();
+    //     this.sucAdd();
+    //   }
+    // } else if (this.choice === 2){
+    //   console.log('Update Sale Category from confirm:');
+    //   //CallRepoToUpdate
+    //   await this.saleService.updateSaleCategory(saleCategory.saleCategoryID,saleCategory);
+    //   this.dismissModal();
+    //   this.sucUpdate();
+    // }
   }
 
   async returnFrom(){
     //1 = return to ADD
     //2 = return to UPDATE
-    if (this.choice === 1){
-      console.log(this.saleCategory);
-      await this.dismissModal();
-      this.saleService.addSaleCategoryModal(this.saleCategory);
-    } else if (this.choice === 2){
-      console.log(this.saleCategory);
-      await this.dismissModal();
-      this.saleService.updateSaleCategoryModal(this.saleCategory);
-    }
+    // if (this.choice === 1){
+    //   console.log(this.saleCategory);
+    //   this.dismissModal();
+    //   this.saleService.addSaleCategoryModal(this.saleCategory);
+    // } else if (this.choice === 2){
+    //   console.log(this.saleCategory);
+    //   this.dismissModal();
+    //   this.saleService.updateSaleCategoryModal(this.saleCategory);
+    // }
   }
 
   async sucAdd() {

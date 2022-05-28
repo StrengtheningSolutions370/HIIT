@@ -92,7 +92,9 @@ namespace Team7
                                 Id = "Bearer"
                             }
                         },
+#pragma warning disable CA1825 // Avoid zero-length array allocations
                         new string []{}
+#pragma warning restore CA1825 // Avoid zero-length array allocations
                     }
                 });
             });
@@ -111,7 +113,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Josh")));
+            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();

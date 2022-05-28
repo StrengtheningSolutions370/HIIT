@@ -23,15 +23,15 @@ namespace Team7.Controllers
     public class AppUserController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IUserClaimsPrincipalFactory<AppUser> _claimsPrincipalFactory;
+        //private readonly IUserClaimsPrincipalFactory<AppUser> _claimsPrincipalFactory;
         private readonly IConfiguration _configuration;
 
         public AppUserController(UserManager<AppUser> userManager,
-            IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory,
+            //IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory,
             IConfiguration configuration)
         {
             _userManager = userManager;
-            _claimsPrincipalFactory = claimsPrincipalFactory;
+            //_claimsPrincipalFactory = claimsPrincipalFactory;
             _configuration = configuration;
         }
 
@@ -84,7 +84,7 @@ namespace Team7.Controllers
                 }
             } else
             {
-                return NotFound("Account with specified email does not exist. Please register a new account.");
+                return NotFound("The provided email or password is incorrect. Please check your password or register an account.");
             }
         }
 
