@@ -57,11 +57,11 @@ export class ConfirmCategoryComponent{
     if (this.choice === 1){
       console.log(this.saleCategory);
       await this.dismissModal();
-      this.saleService.addSaleCategoryModal(this.saleCategory);
+      this.saleService.addCategoryInfoModal(this.saleCategory);
     } else if (this.choice === 2){
       console.log(this.saleCategory);
       await this.dismissModal();
-      this.saleService.updateSaleCategoryModal(this.saleCategory);
+      this.saleService.updateCategoryInfoModal(this.saleCategory);
     }
   }
 
