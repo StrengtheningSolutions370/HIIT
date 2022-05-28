@@ -50,15 +50,22 @@ import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.compo
 import { DeleteVatComponent } from './pages/sale/vat/delete-vat/delete-vat.component';
 import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
 import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
+import { AssociativeQtypeComponent } from './pages/employee/qualification-type/associative-qtype/associative-qtype.component';
 
 @NgModule({
   declarations: [AppComponent,
+  //Venue
   AddVenueComponent, UpdateVenueComponent, ViewVenueInfoComponent, DeleteVenueComponent, ConfirmVenueComponent,AssociativeVenueComponent,
-  AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent,
+  //UserRole
+  AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent, ConfirmRoleComponent,
+  //Title
   AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent,
-  AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent,
+  //QualificationType
+  AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent, AssociativeQtypeComponent,
+  //VAT 
   AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
-  ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent],
+  //EmployeeType
+  AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent],
 
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
