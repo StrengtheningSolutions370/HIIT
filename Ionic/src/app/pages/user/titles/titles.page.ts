@@ -62,7 +62,7 @@ export class TitlesPage implements OnInit{
 
       console.log('Title Page -> Get Titles');
       console.log(this.titleList);
-    }, 1500);
+    }, 2000);
   }
 
 }

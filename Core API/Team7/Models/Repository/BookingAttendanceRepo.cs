@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class BookingAttendanceRepo //: IBookingAttendanceRepo
+    public class BookingAttendanceRepo : IBookingAttendanceRepo
     {
         readonly private AppDB DB;
 

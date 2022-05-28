@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Team7.Models.Repository
 {
-    interface ITitleRepo
+    public interface ITitleRepo
     {
         void Add<T>(T Entity) where T : class;
 
@@ -13,11 +13,11 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        //Task<Title[]> GetAllTitlesAsync();
+        Task<Title[]> GetAllTitlesAsync();
 
-        //Task<Title[]> GetTitlesAsync(string input);
+        Task<Title[]> GetTitlesAsync(string input);
 
-        //Task<Title> GetTitleIdAsync(int id);
+        Task<Title> GetTitleIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }

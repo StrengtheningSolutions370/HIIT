@@ -27,7 +27,7 @@ export class UpdateTitleComponent {
   ionViewWillEnter() {
     console.log('UpdateVenue-ViewWillEnter');
     console.log(this.title);
-    this.uTitleForm.controls.venueName.setValue(this.title.description);
+    this.uTitleForm.controls.titleDescription.setValue(this.title.description);
     //Populate the update ttile form with the values received from the selected title object in the main page.
   }
 
@@ -63,7 +63,7 @@ export class UpdateTitleComponent {
    }
 
   dismissModal() {
-    this.modalCtrl.dismiss(this.title);
+    this.modalCtrl.dismiss();
   }
 
    async InvalidAlert() {

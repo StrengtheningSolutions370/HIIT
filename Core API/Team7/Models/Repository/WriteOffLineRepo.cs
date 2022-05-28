@@ -7,12 +7,8 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class WriteOffLineRepo //: IWriteOffLineRepo
+    public class WriteOffLineRepo : IWriteOffLineRepo
     {
-<<<<<<< HEAD
-=======
-    
->>>>>>> developer
         readonly private AppDB DB;
 
         public WriteOffLineRepo(AppDB appDatabaseContext)

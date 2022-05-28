@@ -47,9 +47,10 @@ export class AddTitleComponent implements ViewWillEnter {
         var temp = {
           description: this.cTitleForm.value['titleDescription'],
           users: []        
-        };
-        this.titleService.confirmTitleModal(1,temp);
+        }; 
         this.dismissModal();
+        this.titleService.confirmTitleModal(1,temp);
+       
         // this.sucAdd();
         // console.log("CurrentRoute:ADD");
         // console.log(this.currentRoute.url);

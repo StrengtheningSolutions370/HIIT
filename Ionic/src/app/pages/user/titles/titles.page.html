@@ -2,8 +2,9 @@
 
   <br/>
   <!--Searchbar (must make function to search)-->
-  <ion-searchbar expand="block" placeholder='Search Titles...'></ion-searchbar>
-  <br/><br/>
+  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Title' [(ngModel)]="filter"
+    animated="true" debounce="200"></ion-searchbar>
+    <br/><br>
 
   <div class="ion-text-center">
     <ion-button color="success" (click)="titleService.addTitleInfoModal()">

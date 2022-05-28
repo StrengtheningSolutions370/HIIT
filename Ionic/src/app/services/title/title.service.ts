@@ -57,7 +57,7 @@ export class TitleService {
    }
 
   //Receives a title to update in the service title list.
-   updateTitle(id,title: any){
+   updateTitle(id:number,title: any){
      console.log('titleService: Repo -> Update Title');
      console.log(title);
 
@@ -112,14 +112,11 @@ export class TitleService {
   //This method receives the selected title object, from the title page, in the modal through the componentProps.
   async deleteTitleInfoModal(title: Title) {
     console.log("TitleService: DeleteTitleModalCall");
-    let tempTitle = new Title();
-    tempTitle = Object.assign(title);
-    console.log(tempTitle);
-    if (tempTitle.users!= null && tempTitle.users.length > 0){
+    if (title.users!= null && title.users.length > 0){
       const modal = await this.modalCtrl.create({
         component: AssociativeTitleComponent,
           componentProps: {
-            venue: tempTitle
+            title
         }
       });
       await modal.present();
@@ -127,7 +124,7 @@ export class TitleService {
       const modal = await this.modalCtrl.create({
         component: DeleteTitleComponent,
           componentProps: {
-            venue: tempTitle
+            title
         }
       });
 
@@ -162,20 +159,20 @@ export class TitleService {
 
   //Display the confirm create/update modal
   //Receives the selected title from the title page
-  async confirmTitleModal(selection: number, title: any) {
+  async confirmTitleModal(choice: number, title: any) {
     console.log('TitleService: ConfirmTitleModalCall');
-    console.log(selection);
-    if(selection === 1){
+    console.log(choice);
+    if(choice === 1){
       console.log("Performing ADD");
-      let tempTitle = new Title();
-      tempTitle.titleID = 0;
-      tempTitle = Object.assign(title);
-      console.log(tempTitle);
+      // let tempTitle = new Title();
+      // tempTitle.titleID = 0;
+      // tempTitle = Object.assign(title);
+      // console.log(tempTitle);
       const modal = await this.modalCtrl.create({
         component: ConfirmTitleComponent,
         componentProps: {
-          venue:tempTitle,
-          choice:selection
+          title,
+          choice
         }
       });
 
@@ -189,7 +186,7 @@ export class TitleService {
         });
       });
       await modal.present();
-    } else if (selection === 2){
+    } else if (choice === 2){
       console.log("Performing UPDATE");
       let tempTitle = new Title();
       tempTitle = Object.assign(title);
@@ -197,8 +194,8 @@ export class TitleService {
       const modal = await this.modalCtrl.create({
         component: ConfirmTitleComponent,
         componentProps: {
-          venue:tempTitle,
-          choice:selection
+          title,
+          choice
         }
       });
       modal.onDidDismiss().then(() => {
@@ -211,7 +208,7 @@ export class TitleService {
       });
       await modal.present();
     } else {
-      console.log("BadOption: " + selection)
+      console.log("BadOption: " + choice)
     }
   }
 }

@@ -45,7 +45,8 @@ export class AddQtypeComponent implements ViewWillEnter {
       return false;
     }else{
       var temp = {
-        name: this.cQTypeForm.value['qualificationTypeName']       
+        name: this.cQTypeForm.value['qualificationTypeName'],
+        qualifications: []       
       };
       this.qualificationService.confirmQualificationTypeModal(1,temp);
       this.dismissModal();
