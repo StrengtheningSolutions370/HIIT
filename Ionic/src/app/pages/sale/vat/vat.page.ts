@@ -28,6 +28,20 @@ export class VATPage implements OnInit{
     this.fetchVATs();
   }
 
+  fetchVATs() {
+    this.isLoading = true;
+    this.vatService.getAllVats().subscribe(
+      {
+        next: data => {
+          console.log("FETCHING VATS FROM DB");
+          console.log(data);
+          this.isLoading = false;
+          this.vatList = data;
+        }
+      }
+    )
+  }
+
   ngOnInit() {
 
     this.vatService.fetchVatsEvent.subscribe(
@@ -40,22 +54,6 @@ export class VATPage implements OnInit{
     );
 
   }
-
-  fetchVATs() {
-    this.isLoading = true;
-    this.vatService.getAllVats().subscribe(
-      {
-        next: data => {
-          console.log("FETCHING VATS FROM DB");
-          console.log(data.result);
-          this.isLoading = false;
-          this.vatList = data.result;
-        }
-      }
-    )
-  }
-
-
 
   dateFormatter(s : string) : string {
     return s.split("T")[0];

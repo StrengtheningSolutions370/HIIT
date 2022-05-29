@@ -36,9 +36,10 @@ namespace Team7.Models.Repository
         {
             IQueryable<SaleCategory> query = DB.SaleCategory;
             return await query.ToArrayAsync();
+
         }
 
-        public async Task<SaleCategory[]> GetSaleCategorysAsync(string input)
+        public async Task<object> GetSaleCategorysAsync(string input)
         {
             IQueryable<SaleCategory> query = DB.SaleCategory.Where(sc => sc.Name == input || sc.Description == input);
             if (!query.Any())
@@ -47,7 +48,18 @@ namespace Team7.Models.Repository
             }
             else
             {
-                return await query.ToArrayAsync();
+                return new
+                {
+                    result = await query.Select(sc => new
+                    {
+                        sc.SaleCategoryID,
+                        sc.Name,
+                        sc.Description,
+                        SaleItem = sc
+                            .SaleItem
+                            .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Price, si.Quotable, si.Quantity })
+                    }).ToListAsync()
+                };
             }
 
         }

@@ -26,7 +26,7 @@ namespace Team7.Controllers
             {
                 UserRoleRepo.Add(userRole);
                 await UserRoleRepo.SaveChangesAsync();
-                return Ok();
+                return Ok(userRole);
             }
             catch (Exception err)
             {
@@ -40,19 +40,18 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutUserRole(int id, [FromBody] UserRole userRole)
         {
-            var toUpdate = await UserRoleRepo._GetUserRoleIdAsync(id);
+            var toUpdate = await UserRoleRepo.GetUserRoleIdAsync(id);
             if (toUpdate == null)
             {
                 return NotFound("Could not find existing User Role with id:" + id);
             }
             try
             {
-                toUpdate.Name = userRole.Name;
                 toUpdate.Description = userRole.Description;
                 toUpdate.Permission = userRole.Permission;
-                UserRoleRepo.Update<UserRole>(toUpdate);
+                //VenueRepo.Update<Venue>(tempVenue);
                 await UserRoleRepo.SaveChangesAsync();
-                return Ok();
+                return Ok("Successfully updated");
             }
             catch (Exception err)
             {
@@ -66,10 +65,10 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteUserRole(int id)
         {
-            var tempUserRole = await UserRoleRepo._GetUserRoleIdAsync(id);
+            var tempUserRole = await UserRoleRepo.GetUserRoleIdAsync(id);
             if (tempUserRole == null)
             {
-                return NotFound("Could not find existing User Role with id:" + id);
+                return NotFound();
             }
             try
             {
@@ -91,8 +90,11 @@ namespace Team7.Controllers
         {
             try
             {
-                var userRoleList = await UserRoleRepo._GetAllUserRolesAsync();
-                if (userRoleList == null) return Ok(0);
+                var userRoleList = await UserRoleRepo.GetAllUserRolesAsync();
+                if (userRoleList == null)
+                {
+                    return NotFound();
+                }
                 return Ok(userRoleList);
             }
             catch (Exception err)
@@ -104,12 +106,11 @@ namespace Team7.Controllers
         // GET: api/UserRole/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingUserRoles(string name, string? description = null)
+        public async Task<IActionResult> GetMatchingUserRoles(string input)
         {
             try
             {
-                var userRole = await UserRoleRepo.GetUserRolesAsync(name,description);
-                if (userRole == null) return Ok(0);
+                var userRole = await UserRoleRepo.GetUserRolesAsync(input);
                 return Ok(userRole);
             }
             catch (Exception err)
@@ -121,19 +122,9 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
-        public async Task<object> UserRoleExists(int id)
+        public async Task<UserRole> UserRoleExists(int id)
         {
-            try
-            {
-                var userRole = await UserRoleRepo.GetUserRoleIdAsync(id);
-                if (userRole == null) return Ok(0);
-                return Ok(userRole);
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
-           
+            return await UserRoleRepo.GetUserRoleIdAsync(id);
         }
     }
 }

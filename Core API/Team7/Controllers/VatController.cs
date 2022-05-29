@@ -30,7 +30,7 @@ namespace Team7.Controllers
             {
                 VATRepo.Add(vat);
                 await VATRepo.SaveChangesAsync();
-                return Ok();
+                return Ok(vat);
             }
             catch (Exception err)
             {
@@ -39,15 +39,43 @@ namespace Team7.Controllers
 
         }
 
+        // PUT api/Vat/update/5
+        [HttpPut]
+        [Route("update")]
+        public async Task<IActionResult> PutVat(VAT vat)
+        {
+            var toUpdate = await VATRepo.GetVATIdAsync(vat.VATID);
+
+            if (toUpdate == null)
+            {
+                return NotFound("Could not find existing VAT with id:");
+            }
+
+            try
+            {
+                toUpdate.Percentage = vat.Percentage;
+                toUpdate.Date = vat.Date;
+                //VenueRepo.Update<Venue>(tempVenue);
+                await VATRepo.SaveChangesAsync();
+                return Ok("Successfully updated");
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+
+        }
+
+
         // DELETE api/Vat/delete/5
         [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteVat(int id)
         {
-            var tempVat = await VATRepo._GetVATIdAsync(id);
+            var tempVat = await VATRepo.GetVATIdAsync(id);
             if (tempVat == null)
             {
-                return NotFound("Could not find existing VAT with id:" + id);
+                return NotFound();
             }
             try
             {
@@ -72,7 +100,7 @@ namespace Team7.Controllers
                 var vatList = await VATRepo.GetAllVATsAsync();
                 if (vatList == null)
                 {
-                    return Ok(0);
+                    return NotFound();
                 }
                 return Ok(vatList);
             }
@@ -90,7 +118,6 @@ namespace Team7.Controllers
             try
             {
                 var vat = await VATRepo.GetVATsAsync(input);
-                if (vat == null) return Ok(0);
                 return Ok(vat);
             }
             catch (Exception err)
@@ -102,18 +129,9 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
-        public async Task<IActionResult> VATExists(int id)
+        public async Task<VAT> VATExists(int id)
         {
-            try
-            {
-                var VAT = await VATRepo._GetVATIdAsync(id);
-                if (VAT == null) return Ok(0);
-                return Ok(VAT);
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
+            return await VATRepo.GetVATIdAsync(id);
         }
     }
 }

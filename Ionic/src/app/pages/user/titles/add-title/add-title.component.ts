@@ -1,13 +1,12 @@
-import { Component,  Input } from '@angular/core';
-import { ViewWillEnter} from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component,  Input, OnInit } from '@angular/core';
+import { ModalController, ToastController, AlertController, ViewWillEnter} from '@ionic/angular';
+import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from 'src/app/models/title';
 import { TitleService } from 'src/app/services/title/title.service';
-import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-add-title',
@@ -24,8 +23,9 @@ export class AddTitleComponent implements ViewWillEnter {
   });
 
 
-  constructor(public global: GlobalService, public formBuilder: FormBuilder,
-    public titleService: TitleService ) { }
+  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
+    public titleService: TitleService, private router: Router, private currentRoute: ActivatedRoute,
+    private  alertCtrl: AlertController ) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
@@ -48,8 +48,43 @@ export class AddTitleComponent implements ViewWillEnter {
           description: this.cTitleForm.value['titleDescription'],
           users: []
         };
+        this.dismissModal();
         this.titleService.confirmTitleModal(1,temp);
-        this.global.dismissModal();
+
+        // this.sucAdd();
+        // console.log("CurrentRoute:ADD");
+        // console.log(this.currentRoute.url);
       }
      }
+
+    async sucAdd() {
+      const toast = await this.toastCtrl.create({
+        message: 'The Title has been successfully added!',
+        duration: 2000
+      });
+      toast.present();
+    }
+
+    //Once the modal has been dismissed.
+    dismissModal() {
+      this.modalCtrl.dismiss();
+    };
+
+    async duplicateAlert() {
+      const alert = await this.alertCtrl.create({
+        header: 'Title Already Exists',
+        message: 'The Title Information entered already exists on the system',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
+    async failureAlert() {
+      const alert = await this.alertCtrl.create({
+        header: 'Could not create title',
+        message: 'There was an error creating the title. Please try again',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
 }

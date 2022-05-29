@@ -1,6 +1,7 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { Title } from 'src/app/models/title';
-import { GlobalService } from 'src/app/services/global/global.service';
 import { TitleService } from 'src/app/services/title/title.service';
 
 @Component({
@@ -12,43 +13,46 @@ export class ConfirmTitleComponent{
   @Input() choice: number;
   @Input() title: Title;
 
-  constructor(public global: GlobalService, public titleService: TitleService) {
+  constructor(private modalCtrl: ModalController, public titleService: TitleService,
+    public router: Router, public activated: ActivatedRoute, public toastCtrl: ToastController) {
    }
 
-   async checkMatch(description: string): Promise<boolean>{
-    return this.titleService.matchingTitle(description).then(result => {
-      console.log(result);
-       if (result != 0){
-         this.global.showAlert("The Title information entered already exists on the system","Title Already Exists");
-         return true;
-       } else {
-         return false;
-       }
-     });
-   }
+   dismissModal() {
+    this.modalCtrl.dismiss();
+    //this.router.navigate(['../titles'],{relativeTo:this.activated});
+  };
   //1 = confirm ADD
   //2 = confirm UPDATE
-  confirmChanges(title: Title){
+  async confirmChanges(title: Title){
     console.log(this.choice);
-    this.checkMatch(title.description).then(result =>{
-        if (result == true){
-          return;
-        } else {
-          if (this.choice === 1){
-            console.log('Add Title from confirm:');
-            //CallRepoToCreate
-            this.titleService.createTitle(title);
-            this.global.showToast("The Title has been successfully added!");
-          } else if (this.choice === 2){
-            console.log('Update Title from confirm:');
-            //CallRepoToUpdate
-            this.titleService.updateTitle(title.titleID,title);
-            this.global.showToast("The Title has been successfully updated!");
-          }
-        }
-        this.global.dismissModal();
-    });
+    if (this.choice === 1){
+      //search duplicates
+      if (this.titleService.matchingTitle(title.description) != null)
+      {
+        console.log('Existing Title: ' + title.description);
+        //display duplicate alert
+        //failure alert
+        return;
+      }
+      else {
+        console.log('Add Title from confirm:');
+        //CallRepoToCreate
+        await this.titleService.createTitle(title);
+        await this.dismissModal();
+        this.sucAdd();
+      }
 
+    } else if (this.choice === 2){
+      console.log('Update Title from confirm:');
+      //CallRepoToUpdate
+      await this.titleService.updateTitle(title.titleID,title);
+      this.dismissModal();
+      this.sucUpdate();
+    }
+
+    //dismiss modal
+    // await this.dismissModal();
+    //
   }
 
   async returnFrom(){
@@ -56,12 +60,28 @@ export class ConfirmTitleComponent{
       //2 = return to UPDATE
     if (this.choice === 1){
       console.log(this.title);
-      this.global.dismissModal();
+      await this.dismissModal();
       this.titleService.addTitleInfoModal(this.title);
     } else if (this.choice === 2){
       console.log(this.title);
-      this.global.dismissModal();
+      await this.dismissModal();
       this.titleService.updateTitleInfoModal(this.title);
     }
+  }
+
+  async sucAdd() {
+    const toast = await this.toastCtrl.create({
+      message: 'The Title has been successfully added!',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async sucUpdate() {
+    const toast = await this.toastCtrl.create({
+      message: 'The Title has been successfully updated!',
+      duration: 2000
+    });
+    toast.present();
   }
 }

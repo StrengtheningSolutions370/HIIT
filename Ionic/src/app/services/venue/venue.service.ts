@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/semi */
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
 import { AddVenueComponent } from 'src/app/pages/venue/add-venue/add-venue.component';
@@ -13,7 +13,7 @@ import { ViewVenueInfoComponent } from 'src/app/pages/venue/view-venue-info/view
 import { ConfirmVenueComponent } from 'src/app/pages/venue/confirm-venue/confirm-venue.component';
 import { AssociativeVenueComponent } from 'src/app/pages/venue/associative-venue/associative-venue.component';
 import { RepoService } from '../repo.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +21,26 @@ import { Observable } from 'rxjs';
 
 export class VenueService {
 
-  @Output() fetchVenuesEvent = new EventEmitter<Venue>();
+  //Creating a venueList for all the venues in the service.
+  private _venueList = new BehaviorSubject<Venue[]>([]);
 
+  //Return the venue list as an observable.
+  public get venueList(){
+    return this._venueList.asObservable();
+  }
 
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
     //Receive the venues from the repo (API).
-    this.getAllVenues();
+    this.repo.getVenues().subscribe(result => {
+      console.log('Venue List: Venue Service -> Get Venues');
+      console.log(result);
+
+      var tempResult = Object.assign(result);
+      this._venueList.next(tempResult);
+
+      console.log('Venue List: Venue Service -> Updated Venues');
+      console.log(this._venueList);
+    })
   }
 
   //Methods
@@ -116,6 +130,16 @@ export class VenueService {
             venue: tempVenue
         }
       });
+
+      //Update the current venue list with the venue list from the delete modal.
+      modal.onDidDismiss().then(() => {
+        this.repo.getVenues().subscribe(result => {
+          var tempResult = Object.assign(result);
+          this._venueList.next(tempResult);
+          console.log("Updated venue list: Venue Service: delete venue");
+          console.log(this._venueList);
+        });
+      });
       await modal.present();
     }
   }
@@ -154,6 +178,16 @@ export class VenueService {
           choice:selection
         }
       });
+
+      //Update the current venue list with the venue list from the confirm modal.
+      modal.onDidDismiss().then(() => {
+        this.repo.getVenues().subscribe(result => {
+          var tempResult = Object.assign(result);
+          this._venueList.next(tempResult);
+          console.log("Updated venue list: Venue Service: ADD confirm venue");
+          console.log(this._venueList);
+        });
+      });
       await modal.present();
     } else if (selection === 2){
       console.log("Performing UPDATE");
@@ -166,6 +200,14 @@ export class VenueService {
           venue:tempVenue,
           choice:selection
         }
+      });
+      modal.onDidDismiss().then(() => {
+        this.repo.getVenues().subscribe(result => {
+          var tempResult = Object.assign(result);
+          this._venueList.next(tempResult);
+          console.log("Updated venue list: Venue Service: Update confirm venue");
+          console.log(this._venueList);
+        });
       });
       await modal.present();
     } else {

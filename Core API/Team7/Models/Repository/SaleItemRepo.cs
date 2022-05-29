@@ -36,10 +36,10 @@ namespace Team7.Models.Repository
         {
             IQueryable<SaleItem> query = DB.SaleItem;
             return await query.ToArrayAsync();
+
         }
 
-        //Response
-        public async Task<SaleItem[]> GetSaleItemsAsync(string name, string photo, string desc, decimal? price, bool quotable, int qty)
+        public async Task<SaleItem[]> GetSaleItemsAsync(string name, byte[] photo, string desc, decimal? price, bool quotable, int qty)
         {
             IQueryable<SaleItem> query = DB.SaleItem.Where(si => si.Name == name || si.Photo == photo || si.Description == desc || si.Price == price || si.Quotable == quotable || si.Quantity == qty);
             if (!query.Any())
@@ -72,7 +72,7 @@ namespace Team7.Models.Repository
             return await DB.SaveChangesAsync() > 0;
         }
 
-        public Task<SaleItem[]> GetSaleItemsAsync(string input)
+        Task<SaleItem[]> ISaleItemRepo.GetSaleItemsAsync(string input)
         {
             throw new NotImplementedException();
         }

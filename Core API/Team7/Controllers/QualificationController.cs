@@ -29,7 +29,7 @@ namespace Team7.Controllers
             {
                 qualificationRepo.Add(qualification);
                 await qualificationRepo.SaveChangesAsync();
-                return Ok();
+                return Ok(qualification);
             }
             catch (Exception err)
             {
@@ -53,7 +53,7 @@ namespace Team7.Controllers
                 toUpdate.Description = qualification.Description;
                 toUpdate.QualificationTypeID = qualification.QualificationTypeID;
                 await qualificationRepo.SaveChangesAsync();
-                return Ok();
+                return Ok("Successfully updated");
             }
             catch (Exception err)
             {
@@ -65,12 +65,12 @@ namespace Team7.Controllers
         // DELETE api/qualification/delete/5
         [HttpDelete]
         [Route("delete")]
-        public async Task<IActionResult> DeleteQualification(int id)
+        public async Task<IActionResult> DeleteVenue(int id)
         {
             var tempQualification = await qualificationRepo._GetQualificationIdAsync(id);
             if (tempQualification == null)
             {
-                return NotFound("Could not find existing Qualification with id:" + id);
+                return NotFound();
             }
             try
             {
@@ -88,19 +88,22 @@ namespace Team7.Controllers
         // GET: api/qualification/getAll
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetQualifications()
-        {
-            try
-            {
-                var qualificationList = await qualificationRepo.GetAllQualificationsAsync();
-                if (qualificationList == null)return Ok(0);
-                return Ok(qualificationList);
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
-        }
+        //public async Task<IActionResult> GetVenues()
+        //{
+        //    try
+        //    {
+        //        var qualificationList = await qualificationRepo.GetAllQualificationsAsync();
+        //        if (qualificationList == null)
+        //        {
+        //            return Ok(0);
+        //        }
+        //        return Ok(qualificationList);
+        //    }
+        //    catch (Exception err)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+        //    }
+        //}
 
         // GET: api/qualification/getMatch/{input}
         [HttpGet]
@@ -122,19 +125,10 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
+
         public async Task<object> QualificationExists(int id)
         {
-            try
-            {
-                var qualification = await qualificationRepo.GetQualificationIdAsync(id);
-                if (qualification == null) return Ok(0);
-                return Ok(qualification);
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
-
+            return await qualificationRepo.GetQualificationIdAsync(id);
         }
     }
 }

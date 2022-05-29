@@ -35,45 +35,9 @@ namespace Team7.Models.Repository
             IQueryable<EmployeeType> query = DB.EmployeeType;
             return await query.ToArrayAsync();
 
-        public async Task<EmployeeType[]> _GetAllEmployeeTypesAsync()
-        {
-            IQueryable<EmployeeType> query = DB.EmployeeType;
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return await query.ToArrayAsync();
-            }
-            /*IQueryable<EmployeeType> query = DB.EmployeeType;
-            return await query.ToArrayAsync();*/
-        }
-        public async Task<object> GetEmployeeTypesAsync(string input)
-        {
-            IQueryable<EmployeeType> query = DB.EmployeeType.Where(v => v.Name == input || v.Description == input);
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return new
-                {
-                    result = await query.Select(et => new
-                    {
-                        et.EmployeeTypeID,
-                        et.Name,
-                        et.Description,
-                        Employee = et
-                  .Employee
-                  .Select(e => new { e.EmployeeID, e.Name, e.Surname, e.Photo, e.IDNumber })
-                    }).ToListAsync()
-                };
-            }
         }
 
-        public async Task<EmployeeType[]> _GetEmployeeTypesAsync(string input)
+        public async Task<EmployeeType[]> GetEmployeeTypesAsync(string input)
         {
             IQueryable<EmployeeType> query = DB.EmployeeType.Where(v => v.Name == input || v.Description == input);
             if (!query.Any())
@@ -84,33 +48,10 @@ namespace Team7.Models.Repository
             {
                 return await query.ToArrayAsync();
             }
+
         }
 
-        public async Task<object> GetEmployeeTypeIdAsync(int id)
-        {
-            IQueryable<EmployeeType> query = DB.EmployeeType.Where(v => v.EmployeeTypeID == id);
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return new
-                {
-                    result = await query.Select(et => new
-                    {
-                        et.EmployeeTypeID,
-                        et.Name,
-                        et.Description,
-                        Employee = et
-                  .Employee
-                  .Select(e => new { e.EmployeeID, e.Name, e.Surname, e.Photo, e.IDNumber })
-                    }).ToListAsync()
-                };
-            }
-        }
-
-        public async Task<EmployeeType> _GetEmployeeTypeIdAsync(int id)
+        public async Task<EmployeeType> GetEmployeeTypeIdAsync(int id)
         {
             IQueryable<EmployeeType> query = DB.EmployeeType.Where(v => v.EmployeeTypeID == id);
             if (!query.Any())

@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>New VAT Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -32,7 +32,7 @@
   <br/><br/>
 
   <ion-button type="submit" color="success" [disabled]="!cVATForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create VAT</ion-button>
-  <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
+  <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
   
 </form>
 </ion-content>

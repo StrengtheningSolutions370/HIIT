@@ -7,7 +7,7 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class VenueRepo : IVenueRepo
+    public class VenueRepo: IVenueRepo
     {
         readonly private AppDB DB;
 
@@ -56,33 +56,21 @@ namespace Team7.Models.Repository
                     }).ToListAsync()
                 };
             }
-        }
-
-        public async Task<Venue[]> _GetAllVenuesAsync()
-        {
-            IQueryable<Venue> query = DB.Venue;
-
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return await query.ToArrayAsync();
-            }
+            /*IQueryable<Venue> query = DB.Venue;
+            return await query.ToArrayAsync();*/
 
         }
 
-        public async Task<object> GetVenuesAsync(string name, string? address)
+        public async Task<object> GetVenuesAsync(string input)
         {
             IQueryable<Venue> query = DB.Venue;
-            if (address == null)
+            /*if (address == null)
             {
-                query = DB.Venue.Where(v => v.Name == name || v.Address == name);
+                query = DB.Venue.Where(v => v.Name == name);
             } else
             {
                 query = DB.Venue.Where(v => v.Name == name || v.Address == address);
-            }
+            }*/
 
             if (!query.Any())
             {
@@ -91,7 +79,7 @@ namespace Team7.Models.Repository
             {
                 return new
                 {
-                    result = await query.Select(v => new
+                    result = await DB.Venue.Select(v => new
                     {
                         v.VenueID,
                         v.Name,
@@ -107,56 +95,7 @@ namespace Team7.Models.Repository
 
         }
 
-        public async Task<Venue[]> _GetVenuesAsync(string name, string? address)
-        {
-            IQueryable<Venue> query = DB.Venue;
-            if (address == null)
-            {
-                query = DB.Venue.Where(v => v.Name == name);
-            }
-            else
-            {
-                query = DB.Venue.Where(v => v.Name == name || v.Address == address);
-            }
-
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return await query.ToArrayAsync();
-            }
-
-        }
-
-        public async Task<object> GetVenueIdAsync(int id)
-        {
-            IQueryable<Venue> query = DB.Venue.Where(v => v.VenueID == id);
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                 return new
-                {
-                    result = await query.Select(v => new
-                    {
-                        v.VenueID,
-                        v.Name,
-                        v.Address,
-                        v.PostalCode,
-                        v.Capacity,
-                        Schedules = v
-                            .Schedules
-                            .Select(s => new {s.CapacityBooked })
-                    }).ToListAsync()
-                };
-            }
-        }
-
-        public async Task<Venue> _GetVenueIdAsync(int id)
+        public async Task<Venue> GetVenueIdAsync(int id)
         {
             IQueryable<Venue> query = DB.Venue.Where(v => v.VenueID == id);
             if (!query.Any())
