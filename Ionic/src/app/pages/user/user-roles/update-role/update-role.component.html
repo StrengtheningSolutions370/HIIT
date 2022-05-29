@@ -28,6 +28,15 @@
       User role description is required.
       <br/>
     </span>
+    <ion-label>Please select permissions:</ion-label>
+    <ion-item *ngFor="let permission of permissionList" let i="index">
+
+      <ion-label>{{permission.description}}</ion-label>
+      <ion-checkbox> slot="start" [value]="permission"
+        (ionChange)="onSelectionChange($event,i)">
+      </ion-checkbox>
+
+    </ion-item>
 
    
     <br><br/>

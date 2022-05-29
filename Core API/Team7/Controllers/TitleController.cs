@@ -48,7 +48,7 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutTitle(int id, [FromBody] Title title)
         {
-            var toUpdate = await TitleRepo.GetTitleIdAsync(id);
+            var toUpdate = await TitleRepo._GetTitleIdAsync(id);
             if (toUpdate == null)
             {
                 return NotFound("Could not find existing Title with id:" + id);
@@ -72,7 +72,7 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteTitle(int id)
         {
-            var tempTitle = await TitleRepo.GetTitleIdAsync(id);
+            var tempTitle = await TitleRepo._GetTitleIdAsync(id);
             if (tempTitle == null)
             {
                 return NotFound();
@@ -100,7 +100,7 @@ namespace Team7.Controllers
                 var titleList = await TitleRepo.GetAllTitlesAsync();
                 if (titleList == null)
                 {
-                    return NotFound();
+                    return Ok(0);
                 }
                 return Ok(titleList);
             }
@@ -131,7 +131,7 @@ namespace Team7.Controllers
         [Route("exists")]
         public async Task<Title> TitleExists(int id)
         {
-            return await TitleRepo.GetTitleIdAsync(id);
+            return await TitleRepo._GetTitleIdAsync(id);
         }
     }
 }

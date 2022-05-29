@@ -33,14 +33,43 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<VAT[]> GetAllVATsAsync()
+        public async Task<object> GetAllVATsAsync()
         {
             IQueryable<VAT> query = DB.VAT;
-            return await query.ToArrayAsync();
-
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await DB.VAT.Select(vat => new
+                    {
+                        vat.VATID,
+                        vat.Percentage,
+                        vat.Date
+                    }).ToListAsync()
+                };
+            }
+                /*IQueryable<VAT> query = DB.VAT;
+                return await query.ToArrayAsync();*/
         }
 
-        public async Task<VAT[]> GetVATsAsync(decimal? percentage, DateTime? date)
+        public async Task<VAT[]> _GetAllVATsAsync()
+        {
+            IQueryable<VAT> query = DB.VAT;
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.ToArrayAsync();
+            }   
+        }
+
+        public async Task<object> GetVATsAsync(decimal? percentage, DateTime? date)
         {
             IQueryable<VAT> query = DB.VAT.Where(v => v.Percentage == percentage || v.Date == date); 
             if (!query.Any())
@@ -49,12 +78,53 @@ namespace Team7.Models.Repository
             }
             else
             {
-                return await query.ToArrayAsync();
+                return new
+                {
+                    result = await DB.VAT.Select(vat => new
+                    {
+                        vat.VATID,
+                        vat.Percentage,
+                        vat.Date
+                    }).ToListAsync()
+                };
             }
-
         }
 
-        public async Task<VAT> GetVATIdAsync(int id)
+        public async Task<VAT[]> _GetVATsAsync(decimal? percentage, DateTime? date)
+        {
+            IQueryable<VAT> query = DB.VAT.Where(v => v.Percentage == percentage || v.Date == date);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.ToArrayAsync();
+            }
+        }
+
+        public async Task<object> GetVATIdAsync(int id)
+        {
+            IQueryable<VAT> query = DB.VAT.Where(v => v.VATID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await DB.VAT.Select(vat => new
+                    {
+                        vat.VATID,
+                        vat.Percentage,
+                        vat.Date
+                    }).ToListAsync()
+                };
+            }
+        }
+
+        public async Task<VAT> _GetVATIdAsync(int id)
         {
             IQueryable<VAT> query = DB.VAT.Where(v => v.VATID == id);
             if (!query.Any())
@@ -73,7 +143,12 @@ namespace Team7.Models.Repository
             return await DB.SaveChangesAsync() > 0;
         }
 
-        Task<VAT[]> IVATRepo.GetVATsAsync(string input)
+        Task<VAT[]> IVATRepo._GetVATsAsync(string input)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<object> IVATRepo.GetVATsAsync(string input)
         {
             throw new NotImplementedException();
         }

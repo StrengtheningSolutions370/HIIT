@@ -9,25 +9,25 @@ namespace Team7.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeTypeController : ControllerBase
+    public class EmployeeController : ControllerBase
     {
-        private readonly IEmployeeTypeRepo EmployeeTypeRepo;
-        public EmployeeTypeController(IEmployeeTypeRepo employeeTypeRepo)
+        private readonly IEmployeeRepo EmployeeRepo;
+        public EmployeeController(IEmployeeRepo employeeRepo)
         {
-            this.EmployeeTypeRepo = employeeTypeRepo;
+            this.EmployeeRepo = employeeRepo;
         }
 
 
-        // POST api/EmployeeType/add
+        // POST api/Employee/add
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> PostQualificationType(EmployeeType employeeType)
+        public async Task<IActionResult> PostQualificationType(Employee employee)
         {
             try
             {
-                EmployeeTypeRepo.Add(employeeType);
-                await EmployeeTypeRepo.SaveChangesAsync();
-                return Ok(employeeType);
+                EmployeeRepo.Add(employee);
+                await EmployeeRepo.SaveChangesAsync();
+                return Ok(employee);
             }
             catch (Exception err)
             {
@@ -36,23 +36,23 @@ namespace Team7.Controllers
 
         }
 
-        // PUT api/employeetypes/update/5
+        // PUT api/employees/update/5
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> PutEmployeeType(int id, [FromBody] EmployeeType employeeType)
+        public async Task<IActionResult> PutEmployee(int id, [FromBody] Employee employee)
         {
-            var toUpdate = await EmployeeTypeRepo._GetEmployeeTypeIdAsync(id);
+            var toUpdate = await EmployeeRepo._GetEmployeeIdAsync(id);
             if (toUpdate == null)
             {
                 return NotFound("Could not find existing employee type with id:" + id);
             }
             try
             {
-                toUpdate.Name = employeeType.Name;
-                toUpdate.Description = employeeType.Description;
-                toUpdate.Employee = employeeType.Employee;
-                //EmployeeTypeRepo.Update<Venue>(tempVenue);
-                await EmployeeTypeRepo.SaveChangesAsync();
+                toUpdate.Name = employee.Name;
+                toUpdate.Surname = employee.Surname;
+                toUpdate.Photo = employee.Photo;
+                toUpdate.IDNumber = employee.IDNumber;
+                await EmployeeRepo.SaveChangesAsync();
                 return Ok("Successfully updated");
             }
             catch (Exception err)
@@ -62,20 +62,20 @@ namespace Team7.Controllers
         }
 
 
-        // DELETE api/EmployeeType/delete/5
+        // DELETE api/Employee/delete/5
         [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteEmployeeType(int id)
         {
-            var tempEmployeeType = await EmployeeTypeRepo._GetEmployeeTypeIdAsync(id);
-            if (tempEmployeeType == null)
+            var tempEmployee = await EmployeeRepo._GetEmployeeIdAsync(id);
+            if (tempEmployee == null)
             {
                 return NotFound();
             }
             try
             {
-                EmployeeTypeRepo.Delete<EmployeeType>(tempEmployeeType);
-                await EmployeeTypeRepo.SaveChangesAsync();
+                EmployeeRepo.Delete<Employee>(tempEmployee);
+                await EmployeeRepo.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception err)
@@ -85,19 +85,19 @@ namespace Team7.Controllers
         }
 
 
-        // GET: api/EmployeeType/getAll
+        // GET: api/Employee/getAll
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetEmployeeTypes()
+        public async Task<IActionResult> GetEmployees()
         {
             try
             {
-                var employeeTypeList = await EmployeeTypeRepo.GetAllEmployeeTypesAsync();
-                if (employeeTypeList == null)
+                var employeeList = await EmployeeRepo.GetAllEmployeesAsync();
+                if (employeeList == null)
                 {
                     return NotFound();
                 }
-                return Ok(employeeTypeList);
+                return Ok(employeeList);
             }
             catch (Exception err)
             {
@@ -105,15 +105,15 @@ namespace Team7.Controllers
             }
         }
 
-        // GET: api/EmployeeType/getMatch/{input}
+        // GET: api/Employee/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingEmployeeTypes(string input)
+        public async Task<IActionResult> GetMatchingEmployees(string input)
         {
             try
             {
-                var venue = await EmployeeTypeRepo.GetEmployeeTypesAsync(input);
-                return Ok(venue);
+                var employee = await EmployeeRepo.GetEmployeesAsync(input);
+                return Ok(employee);
             }
             catch (Exception err)
             {
@@ -124,9 +124,9 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
-        public async Task<EmployeeType> EmployeeTypeExists(int id)
+        public async Task<Employee> EmployeeExists(int id)
         {
-            return await EmployeeTypeRepo._GetEmployeeTypeIdAsync(id);
+            return await EmployeeRepo._GetEmployeeIdAsync(id);
         }
     }
 }

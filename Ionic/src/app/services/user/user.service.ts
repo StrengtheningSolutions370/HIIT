@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable no-underscore-dangle */
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserRole } from 'src/app/models/userRole';
+import { Permission } from 'src/app/models/permission';
 import { AddRoleComponent } from 'src/app/pages/user/user-roles/add-role/add-role.component';
 import { AssociativeRoleComponent } from 'src/app/pages/user/user-roles/associative-role/associative-role.component';
 import { ConfirmRoleComponent } from 'src/app/pages/user/user-roles/confirm-role/confirm-role.component';
@@ -16,13 +17,24 @@ import { RepoService } from '../repo.service';
   providedIn: 'root'
 })
 export class UserService {
+  @Output() fetchUserRolesEvent = new EventEmitter<Permission>();
+  @Output() fetchPermissionEvent = new EventEmitter<Permission>();
+
   //Creating a user role list for all the venues in the service.
   private _userRoleList = new BehaviorSubject<UserRole[]>([]);
+  private _permissionList = new BehaviorSubject<Permission[]>([]);
+
 
   //Return the user role list as an observable.
   public get userRoleList() {
     return this._userRoleList.asObservable();
   }
+  public get permissionList() {
+    return this._permissionList.asObservable();
+  }
+
+  private temp: UserRole[];
+  private temp1: Permission[];
 
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
     //Receive the user roles from the repo (API).
@@ -36,37 +48,57 @@ export class UserService {
       console.log('User Role List: User Service -> Updated User Roles');
       console.log(this._userRoleList);
     });
-  }
 
-  //Methods
-  //Add a user role to the user role list within the user service.
-  createUserRole(userRole: any) {
-    console.log('User Service: Repo -> Create User Role');
-    console.log(JSON.stringify(userRole));
-    this.repo.createUserRole(userRole).subscribe(res => {
-      const tempResult = Object.assign(res);
-      console.log('User Role Service: Create User Role');
-      console.log(res);
-      this._userRoleList.next(tempResult.data);
+    this.repo.getPermissions().subscribe(result => {
+      console.log('Permission List: User Service -> Get Permissions');
+      console.log(result);
+
+      const tempResult = Object.assign(result);
+      this._userRoleList.next(tempResult);
+
+      console.log('User Role List: User Service -> Updated User Roles');
+      console.log(this._userRoleList);
     });
   }
 
+  getAllUserRoles(): Observable<any> {
+    return this.repo.getUserRoles();
+  }
+
+  getAllPermissions(): Observable<any> {
+    return this.repo.getPermissions();
+  }
+
+   //Methods
+  //Add a user role to the user role list within the user role service.
+  createUserRole(userRole: any){
+    this.repo.createUserRole(userRole).subscribe(
+      {
+        next: () => {
+          console.log('USER ROLE CREATED');
+          this.fetchUserRolesEvent.emit(userRole);
+        }
+      });
+   }
+
   //Receives a user role to update in the service user role list.
-  updateUserRole(id, userRole: any) {
-    console.log('User Service: Repo -> Update User Role');
-    console.log(userRole);
-
-    const currentUserRole = this._userRoleList.value;
-    const index = currentUserRole.findIndex(x => x.userRoleID === id);
-    this.repo.updateVenue(userRole.userRoleID, userRole).subscribe(result =>
-      console.log(result));
+  async updateUserRole(id: number,userRole: any) {
+    return this.repo.updateUserRole(userRole.userId,userRole).subscribe(
+      {
+       next: () => {
+         console.log('USER ROLE UPDATED');
+         this.fetchUserRolesEvent.emit(userRole);
+       }
+      }
+    );
   }
-
-  //Receives a user role to delete in the service user role list.
-  deleteUserRole(id: number) {
-    this.repo.deleteUserRole(id).subscribe(result =>
-      console.log(result));
-  }
+  //Receives a title to delete in the service title list.
+  deleteUserRole(id: number){
+    this.repo.deleteUserRole(id).subscribe(result => {
+      console.log('USER ROLE DELETED');
+      this.fetchUserRolesEvent.emit();
+    });
+   }
 
   matchingUserRole(input: string) {
     console.log('User Service: Repo -> Matching User Role');
@@ -97,7 +129,8 @@ export class UserService {
     const modal = await this.modalCtrl.create({
       component: UpdateRoleComponent,
       componentProps: {
-        userRole
+        userRole,
+        permissionList: this.permissionList
       }
     });
     await modal.present();

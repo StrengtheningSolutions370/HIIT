@@ -9,6 +9,6 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule
   ],
-  exports: []//HeaderComponent] 
+  exports: []//HeaderComponent]
 })
 export class ComponentsModule { }

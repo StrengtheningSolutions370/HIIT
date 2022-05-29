@@ -15,10 +15,15 @@ namespace Team7.Models.Repository
         void Update<T>(T Entity) where T : class;
 
         Task<object> GetAllQualificationsAsync();
+        Task<Qualification[]> _GetAllQualificationsAsync();
+        Task<object> GetQualificationsAsync(string description);
 
-        Task<object> GetQualificationsAsync(string input);
+        Task<Qualification[]> _GetQualificationsAsync(string description);
 
-        Task<Qualification> GetQualificationIdAsync(int id);
+        Task<object> GetQualificationIdAsync(int id);
+
+        Task<Qualification> _GetQualificationIdAsync(int id);
+
 
         Task<bool> SaveChangesAsync();
     }

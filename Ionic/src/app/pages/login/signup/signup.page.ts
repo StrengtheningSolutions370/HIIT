@@ -27,5 +27,17 @@ export class SignupPage implements OnInit {
     this.authServ.register(userRegister);
     // this.register(form)
   }
+  
+
+    // comparePasswords(fb: FormGroup) {
+  //   const confirmPswrdCtrl = fb.get('ConfirmPassword');
+  //   if (confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors) {
+  //     if (fb.get('Password').value !== confirmPswrdCtrl.value) {
+  //       confirmPswrdCtrl.setErrors({ passwordMismatch: true });
+  //     } else {
+  //       confirmPswrdCtrl.setErrors(null);
+  //     }
+  //   }
+  // }
 
 }
