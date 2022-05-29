@@ -80,9 +80,21 @@ namespace Team7.Models.Repository
 
         }
 
+        public async Task<Employee[]> _GetAllEmployeesAsync()
+        {
+            IQueryable<Employee> query = DB.Employee;
+            if(!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.ToArrayAsync();
+            }
+        }
         public async Task<object> GetEmployeesAsync(string input)
         {
-            IQueryable<Employee> query = DB.Employee.Where(v => v.Name == input);
+            IQueryable<Employee> query = DB.Employee.Where(e => e.Name == input);
             if (!query.Any())
             {
                 return null;
@@ -122,8 +134,61 @@ namespace Team7.Models.Repository
                 };
             }
         }
-
-        public async Task<Employee> GetEmployeeIdAsync(int id)
+        public async Task<Employee[]> _GetEmployeesAsync(string input)
+        {
+            IQueryable<Employee> query = DB.Employee.Where(e => e.Name == input);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.ToArrayAsync();
+            }
+        }
+        public async Task<object> GetEmployeeIdAsync(int id)
+        {
+            IQueryable<Employee> query = DB.Employee.Where(e => e.EmployeeID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await DB.Employee.Select(e => new
+                    {
+                        e.EmployeeID,
+                        e.Name,
+                        e.Surname,
+                        e.Photo,
+                        e.IDNumber,
+                        qualifications = new
+                        {
+                            e.QualificationID,
+                            e.Qualification
+                        },
+                        employeeContracts = new
+                        {
+                            e.EmployeeContractID,
+                            e.EmployeeContract
+                        },
+                        employeeTypes = new
+                        {
+                            e.EmployeeTypeID,
+                            e.EmployeeType
+                        },
+                        users = new
+                        {
+                            e.UserID,
+                            e.User
+                        }
+                    }).ToListAsync()
+                };
+            }
+        }
+        public async Task<Employee> _GetEmployeeIdAsync(int id)
         {
             IQueryable<Employee> query = DB.Employee.Where(e => e.EmployeeID == id);
             if (!query.Any())
