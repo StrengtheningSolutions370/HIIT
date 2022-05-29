@@ -41,7 +41,7 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutEmployee(int id, [FromBody] Employee employee)
         {
-            var toUpdate = await EmployeeRepo.GetEmployeeIdAsync(id);
+            var toUpdate = await EmployeeRepo._GetEmployeeIdAsync(id);
             if (toUpdate == null)
             {
                 return NotFound("Could not find existing employee type with id:" + id);
@@ -67,7 +67,7 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteEmployeeType(int id)
         {
-            var tempEmployee = await EmployeeRepo.GetEmployeeIdAsync(id);
+            var tempEmployee = await EmployeeRepo._GetEmployeeIdAsync(id);
             if (tempEmployee == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace Team7.Controllers
         [Route("exists")]
         public async Task<Employee> EmployeeExists(int id)
         {
-            return await EmployeeRepo.GetEmployeeIdAsync(id);
+            return await EmployeeRepo._GetEmployeeIdAsync(id);
         }
     }
 }
