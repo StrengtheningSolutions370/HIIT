@@ -203,6 +203,7 @@ updateSaleCategory(saleCategoryId: number, saleCategory: SaleCategory): Observab
 /// Create
  createVAT(vat: any): Observable<any>{
   return this.http.post<any>(`${this.base+this.VatController}add`,vat,this.httpOptions);
+ }
 //Delete
 deleteSaleCategory(saleCategoryId: number): Observable<any>{
   return this.http.delete(`${this.base+this.SaleCategoryController}delete?id=${saleCategoryId}`,this.httpOptions);

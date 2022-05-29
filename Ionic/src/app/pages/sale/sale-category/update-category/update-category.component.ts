@@ -32,28 +32,28 @@ export class UpdateCategoryComponent {
       this.uSaleCategoryForm.controls.categoryDescription.setValue(this.saleCategory.description);
     }
 
-    submitForm() {
-      if (!this.uSaleCategoryForm.valid) { //If the form has any validation errors, the form will not be submitted.
-        console.log('Please provide all required fields');
-        this.invalidAlert();
-        return false;
-      }
-      else
-      {
-        console.log('InsideUpdateSubmit:');
-        var temp = new SaleCategory();
-        const choice = 2;
-        temp = {
-          saleCategoryID: this.saleCategory.saleCategoryID,
-          name: this.uSaleCategoryForm.value['categoryName'],
-          description: this.uSaleCategoryForm.value['categoryDescription'],
-          items: []
-        };
-         console.log(temp);
-         this.saleService.confirmSaleCategoryModal(choice,temp);
-         this.dismissModal();
-      }
-  }
+  //   submitForm() {
+  //     if (!this.uSaleCategoryForm.valid) { //If the form has any validation errors, the form will not be submitted.
+  //       console.log('Please provide all required fields');
+  //       this.invalidAlert();
+  //       return false;
+  //     }
+  //     else
+  //     {
+  //       console.log('InsideUpdateSubmit:');
+  //       var temp = new SaleCategory();
+  //       const choice = 2;
+  //       temp = {
+  //         saleCategoryID: this.saleCategory.saleCategoryID,
+  //         name: this.uSaleCategoryForm.value['categoryName'],
+  //         description: this.uSaleCategoryForm.value['categoryDescription'],
+  //         items: []
+  //       };
+  //        console.log(temp);
+  //        this.saleService.confirmSaleCategoryModal(choice,temp);
+  //        this.dismissModal();
+  //     }
+  // }
 
   async sucUpdate() {
     const toast = await this.toastCtrl.create({

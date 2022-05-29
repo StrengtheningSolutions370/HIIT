@@ -21,73 +21,74 @@ export class ConfirmCategoryComponent{
   dismissModal() {
     this.modalCtrl.dismiss();
   };
+}
 
   //1 = confirm ADD
   //2 = confirm UPDATE
-  async confirmChanges(saleCategory: SaleCategory){
-    console.log(this.choice);
-    if (this.choice === 1){
-      //search duplicates
-      if (this.saleService.matchingSaleCategory(saleCategory.name) != null &&
-      this.saleService.matchingSaleCategory(saleCategory.description) != null)
-      {
-        console.log('Existing Sale Category: ' + saleCategory.name +': '+ saleCategory.description);
-        this.duplicateAlert();
-        return;
-      }
-      else{
-        console.log('Add Sale Category from confirm:');
-        //CallRepoToCreate
-        await this.saleService.createSaleCategory(saleCategory);
-        await this.dismissModal();
-        this.sucAdd();
-      }
-    } else if (this.choice === 2){
-      console.log('Update Sale Category from confirm:');
-      //CallRepoToUpdate
-      await this.saleService.updateSaleCategory(saleCategory.saleCategoryID,saleCategory);
-      this.dismissModal();
-      this.sucUpdate();
-    }
-  }
+//   async confirmChanges(saleCategory: SaleCategory){
+//     console.log(this.choice);
+//     if (this.choice === 1){
+//       //search duplicates
+//       if (this.saleService.matchingSaleCategory(saleCategory.name) != null &&
+//       this.saleService.matchingSaleCategory(saleCategory.description) != null)
+//       {
+//         console.log('Existing Sale Category: ' + saleCategory.name +': '+ saleCategory.description);
+//         this.duplicateAlert();
+//         return;
+//       }
+//       else{
+//         console.log('Add Sale Category from confirm:');
+//         //CallRepoToCreate
+//         await this.saleService.createSaleCategory(saleCategory);
+//         await this.dismissModal();
+//         this.sucAdd();
+//       }
+//     } else if (this.choice === 2){
+//       console.log('Update Sale Category from confirm:');
+//       //CallRepoToUpdate
+//       await this.saleService.updateSaleCategory(saleCategory.saleCategoryID,saleCategory);
+//       this.dismissModal();
+//       this.sucUpdate();
+//     }
+//   }
 
-  async returnFrom(){
-    //1 = return to ADD
-    //2 = return to UPDATE
-    if (this.choice === 1){
-      console.log(this.saleCategory);
-      await this.dismissModal();
-      this.saleService.addSaleCategoryModal(this.saleCategory);
-    } else if (this.choice === 2){
-      console.log(this.saleCategory);
-      await this.dismissModal();
-      this.saleService.updateSaleCategoryModal(this.saleCategory);
-    }
-  }
+//   async returnFrom(){
+//     //1 = return to ADD
+//     //2 = return to UPDATE
+//     if (this.choice === 1){
+//       console.log(this.saleCategory);
+//       await this.dismissModal();
+//       this.saleService.addSaleCategoryModal(this.saleCategory);
+//     } else if (this.choice === 2){
+//       console.log(this.saleCategory);
+//       await this.dismissModal();
+//       this.saleService.updateSaleCategoryModal(this.saleCategory);
+//     }
+//   }
 
-  async sucAdd() {
-    const toast = await this.toastCtrl.create({
-      message: 'The Sale Category has been successfully added!',
-      duration: 2000
-    });
-    toast.present();
-  }
+//   async sucAdd() {
+//     const toast = await this.toastCtrl.create({
+//       message: 'The Sale Category has been successfully added!',
+//       duration: 2000
+//     });
+//     toast.present();
+//   }
 
-  async sucUpdate() {
-    const toast = await this.toastCtrl.create({
-      message: 'The Sale Category has been successfully updated!',
-      duration: 2000
-    });
-    toast.present();
-  }
+//   async sucUpdate() {
+//     const toast = await this.toastCtrl.create({
+//       message: 'The Sale Category has been successfully updated!',
+//       duration: 2000
+//     });
+//     toast.present();
+//   }
 
-  async duplicateAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Sale Category Already Exists',
-      message: 'The Sale Category Information entered already exists on the system',
-      buttons: ['OK']
-    });
-   alert.present();
-  }
+//   async duplicateAlert() {
+//     const alert = await this.alertCtrl.create({
+//       header: 'Sale Category Already Exists',
+//       message: 'The Sale Category Information entered already exists on the system',
+//       buttons: ['OK']
+//     });
+//    alert.present();
+//   }
 
-}
+// }

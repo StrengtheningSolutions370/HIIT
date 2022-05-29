@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable no-underscore-dangle */
 import { Injectable, OnInit, Output, EventEmitter } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Vat } from 'src/app/models/vat';
@@ -24,28 +26,28 @@ public get vatList(){
   return this._vatList.asObservable();
 }
 
-private temp : Vat[];
+private temp: Vat[];
 
 constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
   //Receive the venues from the repo (API).
   this.repo.getVats().subscribe(result => {
     console.log('Vat List: Vat Service -> Get Vats');
     console.log(result);
-    var tempResult = Object.assign(result);
+    const tempResult = Object.assign(result);
     this._vatList.next(tempResult);
     console.log('Vat List: Vat Service -> Updated Vats');
     console.log(this._vatList);
-  })
+  });
 }
 
  //Methods
   //Add a vat to the vat list within the vat service.
   createVat(vat: any){
-    var today = new Date()
-    let vatTemp = {
+    const today = new Date();
+    const vatTemp = {
       percentage : vat.percentage,
       date: today.toISOString()
-    }
+    };
     this.repo.createVAT(vatTemp).subscribe(
       {
         next: () => {
@@ -53,15 +55,15 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
           this.fetchVatsEvent.emit(vat);
         }
       }
-    )
+    );
    }
 
-   getAllVats() : Observable<any> {
+   getAllVats(): Observable<any> {
      return this.repo.getVats();
    }
 
   //Receives a vat to update in the service vat list.
-   async updateVat(id:number,vat: any) {
+   async updateVat(id: number,vat: any) {
      return this.repo.updateVat(vat).subscribe(
        {
         next: () => {
@@ -69,12 +71,12 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
           this.fetchVatsEvent.emit(vat);
         }
        }
-     )
+     );
    }
 
   //Receives a vat to delete in the service vat list.
    deleteVat(id: number){
-     console.log('line 77 - > ' + id)
+     console.log('line 77 - > ' + id);
     this.repo.deleteVat(id).subscribe(
       {
         next: res => {
@@ -83,7 +85,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
           this.fetchVatsEvent.emit();
         },
         error: err => {
-          console.log("ÉRROR HERE")
+          console.log('ÉRROR HERE');
           console.log(err);
         }
       }
@@ -115,7 +117,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   //Display the update vat modal.
   //This method receives the selected vat object, from the vat page, in the modal through the componentProps.
   async updateVatInfoModal(vat: Vat) {
-    console.log("VatService: UpdateVatModalCall");
+    console.log('VatService: UpdateVatModalCall');
     const modal = await this.modalCtrl.create({
       component: UpdateVatComponent,
       componentProps:{
@@ -128,8 +130,8 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   //Display the delete vat modal.
   //This method receives the selected vat object, from the vat page, in the modal through the componentProps.
   async deleteVatInfoModal(vat: Vat) {
-    console.log("VatService: DeleteVatModalCall");
-    
+    console.log('VatService: DeleteVatModalCall');
+
       const modal = await this.modalCtrl.create({
         component: DeleteVatComponent,
           componentProps: {
@@ -140,20 +142,20 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
       //Update the current vat list with the vat list from the delete modal.
       modal.onDidDismiss().then(() => {
         this.repo.getVats().subscribe(result => {
-          var tempResult = Object.assign(result);
+          const tempResult = Object.assign(result);
           this._vatList.next(tempResult);
-          console.log("Updated vat list: Vat Service: delete vat");
+          console.log('Updated vat list: Vat Service: delete vat');
           console.log(this._vatList);
         });
       });
       await modal.present();
     }
-  
+
 
   //Display the view vat modal.
     //This method receives the selected vat object, from the vat page, in the modal through the componentProps.
   async viewVatInfoModal(vat: Vat) {
-    console.log("VatService: ViewVatModalCall");
+    console.log('VatService: ViewVatModalCall');
     let tempVat = new Vat();
     tempVat = Object.assign(vat);
     console.log(tempVat);
@@ -172,7 +174,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     console.log('VatService: ConfirmVatModalCall');
     console.log(choice);
     if(choice === 1){
-      console.log("Performing ADD");
+      console.log('Performing ADD');
       const modal = await this.modalCtrl.create({
         component: ConfirmVatComponent,
         componentProps: {
@@ -192,7 +194,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
     } else if (choice === 2){
 
-      console.log("Performing UPDATE");
+      console.log('Performing UPDATE');
 
 
       const modal = await this.modalCtrl.create({
@@ -213,7 +215,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
     } else {
 
-      console.log("BadOption: " + choice)
+      console.log('BadOption: ' + choice);
 
     }
   }

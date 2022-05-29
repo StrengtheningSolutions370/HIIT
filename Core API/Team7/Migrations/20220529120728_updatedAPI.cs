@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Team7.Migrations
 {
-    public partial class DBUpat : Migration
+    public partial class updatedAPI : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

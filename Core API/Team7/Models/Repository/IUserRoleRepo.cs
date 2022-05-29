@@ -7,13 +7,13 @@ namespace Team7.Models.Repository
 {
     public interface IUserRoleRepo
     {
-        void Add<T>(T Entity) where T : class;
+        void Add(object Entity);
 
         void Delete<T>(T Entity) where T : class;
 
         void Update<T>(T Entity) where T : class;
 
-        Task<UserRole[]> GetAllUserRolesAsync();
+        Task<object> GetAllUserRolesAsync();
 
         Task<UserRole[]> GetUserRolesAsync(string input);
 

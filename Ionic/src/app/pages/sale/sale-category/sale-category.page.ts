@@ -32,34 +32,34 @@ export class SaleCategoryPage implements OnInit {
 
   constructor(public saleService: SalesService, public repo: RepoService) {
     // this.populateTitles();
-     this.fetchSaleCategory();
+     //this.fetchSaleCategory();
   }
 
 
-  fetchSaleCategory() {
-    this.isLoading = true;
-    this.saleService.getAllSaleCategory().subscribe(
-      {
-        next: data => {
-          console.log('Fetching categories from DB');
-          console.log(data);
-          this.isLoading = false;
-          this.saleCategoryList = data;
-        }
-      }
-    );
-  }
+  // fetchSaleCategory() {
+  //   this.isLoading = true;
+  //   this.saleService.getAllSaleCategory().subscribe(
+  //     {
+  //       next: data => {
+  //         console.log('Fetching categories from DB');
+  //         console.log(data);
+  //         this.isLoading = false;
+  //         this.saleCategoryList = data;
+  //       }
+  //     }
+  //   );
+  // }
 
   ngOnInit() {
 
-    this.saleService.fetchSaleCategoryEvent.subscribe(
-      {
-        next: res => {
-          console.log('Fetch sale categories again');
-          this.fetchSaleCategory();
-        }
-      }
-    );
+    // this.saleService.fetchSaleCategoryEvent.subscribe(
+    //   {
+    //     next: res => {
+    //       console.log('Fetch sale categories again');
+    //       this.fetchSaleCategory();
+    //     }
+    //   }
+    // );
 
   }
 

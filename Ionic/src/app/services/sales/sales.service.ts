@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/semi */
+/* eslint-disable @typescript-eslint/type-annotation-spacing */
+/* eslint-disable no-underscore-dangle */
 import { Injectable, OnInit, Output, EventEmitter } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { SaleItem } from 'src/app/models/sale-item';
@@ -43,7 +49,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   //Add a saleitem to the saleitem list within the sales service.
   createSaleItem(saleItem: any){
     var today = new Date()
-    let saleItemTemp = {
+    const saleItemTemp = {
       Name : saleItem.Name,
       Photo: saleItem.Photo,
       Description: saleItem.Description,
@@ -88,7 +94,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
           this.fetchSaleItemsEvent.emit();
         },
         error: err => {
-          console.log("ÉRROR HERE")
+          console.log('ÉRROR HERE')
           console.log(err);
         }
       }
@@ -120,7 +126,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   //Display the update sale item modal.
   //This method receives the selected sale item object, from the sale item page, in the modal through the componentProps.
   async updateSaleItemInfoModal(saleItem: SaleItem) {
-    console.log("SalesService: UpdateSaleItemModalCall");
+    console.log('SalesService: UpdateSaleItemModalCall');
     const modal = await this.modalCtrl.create({
       component: UpdateSitemComponent,
       componentProps:{
@@ -133,8 +139,8 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   //Display the delete sale item modal.
   //This method receives the selected sale item object, from the sale item page, in the modal through the componentProps.
   async deleteSaleItemInfoModal(saleItem: SaleItem) {
-    console.log("SalesService: DeleteSaleItemModalCall");
-    
+    console.log('SalesService: DeleteSaleItemModalCall');
+
       const modal = await this.modalCtrl.create({
         component: DeleteSitemComponent,
           componentProps: {
@@ -147,18 +153,18 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
         this.repo.getSaleItems().subscribe(result => {
           var tempResult = Object.assign(result);
           this._saleItemList.next(tempResult);
-          console.log("Updated sale item list: Sales Service: delete sale item");
+          console.log('Updated sale item list: Sales Service: delete sale item');
           console.log(this._saleItemList);
         });
       });
       await modal.present();
     }
-  
+
 
   //Display the view sale item modal.
     //This method receives the selected sale item object, from the sale item page, in the modal through the componentProps.
   async viewSaleItemInfoModal(saleItem: SaleItem) {
-    console.log("SalesService: ViewSaleItemModalCall");
+    console.log('SalesService: ViewSaleItemModalCall');
     let tempSaleItem = new SaleItem();
     tempSaleItem = Object.assign(saleItem);
     console.log(tempSaleItem);
@@ -177,7 +183,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     console.log('SaleItemService: ConfirmSaleItemModalCall');
     console.log(choice);
     if(choice === 1){
-      console.log("Performing ADD");
+      console.log('Performing ADD');
       const modal = await this.modalCtrl.create({
         component: ConfirmSitemComponent,
         componentProps: {
@@ -197,7 +203,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
     } else if (choice === 2){
 
-      console.log("Performing UPDATE");
+      console.log('Performing UPDATE');
 
 
       const modal = await this.modalCtrl.create({
@@ -218,7 +224,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
     } else {
 
-      console.log("BadOption: " + choice)
+      console.log('BadOption: ' + choice)
 
     }
   }
