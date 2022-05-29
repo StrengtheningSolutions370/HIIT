@@ -13,9 +13,9 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        Task<Title[]> GetAllTitlesAsync();
+        Task<object> GetAllTitlesAsync();
 
-        Task<Title[]> GetTitlesAsync(string input);
+        Task<object> GetTitlesAsync(string input);
 
         Task<Title> GetTitleIdAsync(int id);
 

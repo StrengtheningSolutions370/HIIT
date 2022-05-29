@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { Permission } from 'src/app/models/permission';
 import { UserRole } from 'src/app/models/userRole';
 import { RepoService } from 'src/app/services/repo.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -12,41 +13,70 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./user-roles.page.scss'],
 })
 export class UserRolesPage implements OnInit {
-  //String used from the searchbar, used in the filter pipe to search venues.
-  filter: string;
+  //String used from the searchbar, used in the filter pipe to search titles.
+  public filter: string;
 
-  //Create local user role array to be populated onInit.
+  //Create local title array to be populated onInit.
   userRoleList: UserRole[] = [];
+  permissionList: Permission[] = [];
 
   //Subscription variable to track live updates.
   userRoleSub: Subscription;
+  permissionSub: Subscription;
 
   isLoading = true;
 
-  constructor(public userService: UserService, public repo: RepoService) { }
+  constructor(public userService: UserService, public repo: RepoService) {
+    // this.populateTitles();
+    this.fetchUserRoles();
+    this.fetchPermissions();
+  }
+
+  fetchUserRoles() {
+    this.isLoading = true;
+    this.userService.getAllUserRoles().subscribe(
+      {
+        next: data => {
+          console.log('FETCHING USER ROLES FROM DB');
+          console.log(data);
+          this.isLoading = false;
+          this.userRoleList = data;
+        }
+      }
+    );
+  }
+
+  fetchPermissions() {
+    this.isLoading = true;
+    this.userService.getAllPermissions().subscribe(
+      {
+        next: data => {
+          console.log('FETCHING PERMISSIONS FROM DB');
+          console.log(data);
+          this.isLoading = false;
+          this.permissionList = data;
+        }
+      }
+    );
+  }
 
   ngOnInit() {
-    setTimeout(async () => {
-      //Populate the user role list within the user role page, with the user role list from the user service.
-      this.userRoleSub = this.userService.userRoleList.subscribe(results => {
-        this.userRoleList = results;
 
-        console.log('User Role Page Init -> User Role List');
-        console.log(this.userRoleList);
-      });
-    });
-    this.getUserRoles();
+    this.userService.fetchUserRolesEvent.subscribe(
+      {
+        next: res => {
+          console.log('EMIT TO GO FETCH THE USER ROLES AGAIN');
+          this.fetchUserRoles();
+        }
+      }
+    );
+    this.userService.fetchPermissionEvent.subscribe(
+      {
+        next: res => {
+          console.log('EMIT TO GO FETCH THE PERMISSIONS AGAIN');
+          this.fetchPermissions();
+        }
+      }
+    );
   }
-
-  //Receive user roles from the repo in local page.
-  async getUserRoles() {
-    setTimeout(async () => {
-      this.isLoading = false;
-      await this.repo.getUserRoles();
-
-      console.log('User Role Page -> Get User Roles');
-      console.log(this.userRoleList);
-    }, 1500);
-  }
-
 }

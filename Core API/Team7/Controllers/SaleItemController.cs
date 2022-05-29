@@ -105,7 +105,7 @@ namespace Team7.Controllers
                 var saleItemList = await SaleItemRepo.GetAllSaleItemsAsync();
                 if (saleItemList == null)
                 {
-                    return NotFound();
+                    return Ok(0);
                 }
                 return Ok(saleItemList);
             }

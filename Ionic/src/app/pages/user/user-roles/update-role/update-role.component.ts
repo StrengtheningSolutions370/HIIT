@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { Permission } from 'src/app/models/permission';
 import { UserRole } from 'src/app/models/userRole';
 import { UserService } from 'src/app/services/user/user.service';
 import { VenueService } from 'src/app/services/venue/venue.service';
@@ -12,28 +14,16 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   templateUrl: './update-role.component.html',
   styleUrls: ['./update-role.component.scss'],
 })
-export class UpdateRoleComponent {
+export class UpdateRoleComponent implements OnInit{
   @Input() userRole: UserRole;
+  permissionList: Permission[];
+  permissionSub: Subscription;
 
-  permissions = [
-    {
-      des: 'Create employee accounts'
-    },
-    {
-      des: 'Update profile information'
-    },
-    {
-      des: 'View Access to client data '
-    },
-    {
-      des: 'Run as-hoc reporting'
-    }
-  ];
 
   uUserRoleForm: FormGroup = this.fb.group({
     name: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
-    // permissions: this.formBuilder.array([], [Validators.required])
+    checkboxPermissionList: this.fb.array([], [Validators.required])
   });
 
   constructor(private modalCtrl: ModalController,
@@ -45,12 +35,28 @@ export class UpdateRoleComponent {
     return this.uUserRoleForm.controls;
   }
 
+  ngOnInit(){
+    this.fetchPermissions();
+  }
+
   ionViewWillEnter() {
     console.log('Update User Role - View Will Enter');
     console.log(this.userRole);
     this.uUserRoleForm.controls.name.setValue(this.userRole.name);
     this.uUserRoleForm.controls.description.setValue(this.userRole.description);
     //Populate the update venue form with the values received from the selected venue object in the main page.
+  }
+
+  fetchPermissions() {
+    this.userService.getAllPermissions().subscribe(
+      {
+        next: data => {
+          console.log('FETCHING Permissions FROM DB');
+          console.log(data);
+          this.permissionList = data;
+        }
+      }
+    );
   }
 
   submitForm() {
@@ -67,6 +73,7 @@ export class UpdateRoleComponent {
         userRoleID: this.userRole.userRoleID,
         name: this.uUserRoleForm.value['name'],
         description: this.uUserRoleForm.value['description'],
+        permissions: this.uUserRoleForm.value['checkboxPermissionList'],
         users: []
       };
       console.log(temp);
@@ -74,6 +81,33 @@ export class UpdateRoleComponent {
       this.dismissModal();
       this.sucUpdate();
     }
+  }
+
+  updateCheckControl(cal, o) {
+    if (o.checked) {
+      cal.push(new FormControl(o.value));
+    } else {
+      cal.controls.forEach((permission: FormControl, index) => {
+        if (permission.value === o.value) {
+          cal.removeAt(index);
+          return;
+        }
+      });
+    }
+  }
+
+  onLoadCheckboxStatus() {
+    const checkboxPermissionList: FormArray = this.uUserRoleForm.get('checkboxPermissionList') as FormArray;
+    this.permissionList.forEach(o => {
+      this.updateCheckControl(checkboxPermissionList, o);
+    });
+  }
+
+  onSelectionChange(e, i) {
+    const checkboxPermissionList: FormArray = this.uUserRoleForm.get('checkboxPermissionList') as FormArray;
+    this.permissionList[i].permissionID = e.target.checked;
+    this.updateCheckControl(checkboxPermissionList, e.target);
+
   }
 
   async sucUpdate() {

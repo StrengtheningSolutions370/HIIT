@@ -29,6 +29,15 @@
     <!-- <span class="error ion-padding" *ngIf="errorControl.description.errors?.required && cUserRoleForm.get('description').touched">
       User role description is required.<br/>
     </span> -->
+      <p style="font-size:large" class="ion-text-center">Please select user role permissions:</p>
+    <ion-item *ngFor="let permission of permissionList; let i=index">
+
+      <ion-label>{{permission.description}}</ion-label>
+      <ion-checkbox slot="start" [value]="permission.description"
+        (ionChange)="onSelectionChange($event,i)">
+      </ion-checkbox>
+
+    </ion-item>
     
     <br>
     <br>

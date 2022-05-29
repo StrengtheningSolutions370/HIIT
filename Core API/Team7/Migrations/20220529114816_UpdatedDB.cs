@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Team7.Migrations
 {
-    public partial class initial : Migration
+    public partial class UpdatedDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,7 +66,7 @@ namespace Team7.Migrations
                 {
                     EmployeeContractID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    File = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                    File = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -737,7 +737,7 @@ namespace Team7.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IDNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QualificationID = table.Column<int>(type: "int", nullable: false),
                     EmployeeContractID = table.Column<int>(type: "int", nullable: false),
