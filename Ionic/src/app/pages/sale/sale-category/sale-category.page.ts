@@ -38,7 +38,7 @@ export class SaleCategoryPage implements OnInit {
 
   fetchSaleCategory() {
     this.isLoading = true;
-    this.saleService.getAllSaleCategories().subscribe(
+    this.saleService.getAllSaleCategory().subscribe(
       {
         next: data => {
           console.log('Fetching categories from DB');
@@ -52,7 +52,7 @@ export class SaleCategoryPage implements OnInit {
 
   ngOnInit() {
 
-    this.saleService.fetchSaleCategoriesEvent.subscribe(
+    this.saleService.fetchSaleCategoryEvent.subscribe(
       {
         next: res => {
           console.log('Fetch sale categories again');

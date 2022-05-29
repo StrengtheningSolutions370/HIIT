@@ -62,7 +62,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
   //Receives a vat to update in the service vat list.
    async updateVat(id:number,vat: any) {
-     return this.repo.updateVAT(id,vat).subscribe(
+     return this.repo.updateVat(vat).subscribe(
        {
         next: () => {
           console.log('VAT UPDATED');

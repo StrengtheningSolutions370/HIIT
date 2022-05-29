@@ -13,7 +13,7 @@ namespace Team7.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SaleCategoryController : ControllerBase
+    public class SaleCategoryController : Controller
     {
         private readonly ISaleCategoryRepo SaleCategoryRepo;
         public SaleCategoryController(ISaleCategoryRepo saleCategoryRepo)

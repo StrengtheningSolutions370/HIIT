@@ -34,19 +34,11 @@ export class TitlesPage implements OnInit{
     this.titleService.getAllTitles().subscribe(
       {
         next: data => {
-          //only if a 200OK comes back
           console.log('FETCHING TITLES FROM DB');
-          console.log(data); //object that comes back
+          console.log(data);
           this.isLoading = false;
           this.titleList = data;
-        },
-        error: err => {
-          console.log(err); //object that comes back
-          ///////
-          // Show the client UI that the API reaponded with !20OK
-          ///////
         }
-        
       }
     );
   }

@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { appUser } from 'src/app/models/appUser';
 import { AuthService } from '../../services/authentication/auth.service';
 import { GlobalService } from '../../services/global/global.service';
 
@@ -31,15 +30,15 @@ export class LoginPage implements OnInit {
   }
 
   async isLogged(){
-    // try{
-    //   this.global.nativeLoad();
-    //   const val = await this.auth.getId();
-    //   console.log(val);
-    //   if (val) {this.router.navigateByUrl('/home');}
-    //   this.global.endNativeLoad();
-    // } catch (err){
-    //   console.log(err);
-    // }
+    try{
+      this.global.nativeLoad();
+      const val = await this.auth.getId();
+      console.log(val);
+      if (val) {this.router.navigateByUrl('/home');}
+      this.global.endNativeLoad();
+    } catch (err){
+      console.log(err);
+    }
   }
 
 
@@ -52,24 +51,18 @@ export class LoginPage implements OnInit {
   }
 
 
-  login(loginForm: NgForm){
-    console.log(loginForm);
-    var userLogin = new appUser();
-    userLogin = {
-      emailAddress : loginForm.value.emailAddress,
-      password : loginForm.value.password 
-    }
-    this.auth.login(userLogin);
-    // this.isLoggedin = true;
-    // this.auth.login(frm.value.email, frm.value.password).then(res => {
-    //   console.log(res);
-    //   this.router.navigateByUrl('/home');
-    //   this.isLoggedin = false;
-    //   frm.reset();
-    // })
-    // .catch(err => {
-    //   console.log(err);
-    //   this.isLoggedin = false;
-    // });
+  login(frm: NgForm){
+    this.isLoggedin = true;
+    this.auth.login(frm.value.email, frm.value.password).then(res => {
+      console.log(res);
+      this.router.navigateByUrl('/home');
+      this.isLoggedin = false;
+      frm.reset();
+    })
+    .catch(err => {
+      console.log(err);
+      this.isLoggedin = false;
+    });
   }
+
 }

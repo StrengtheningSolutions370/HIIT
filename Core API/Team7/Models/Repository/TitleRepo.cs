@@ -32,18 +32,10 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<object> GetAllTitlesAsync()
+        public async Task<Title[]> GetAllTitlesAsync()
         {
-            return await DB.Title.Select(t => new
-            {
-                t.TitleID,
-                t.Description,
-                User = t
-                .User
-                .Select(u => new { u.UserID, u.Email, u.Cell })
-            }).ToListAsync();
-            /*IQueryable<Title> query = DB.Title;
-            return await query.ToArrayAsync();*/
+            IQueryable<Title> query = DB.Title;
+            return await query.ToArrayAsync();
         }
 
         public async Task<Title[]> GetTitlesAsync(string input)

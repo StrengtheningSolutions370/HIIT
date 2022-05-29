@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Team7.ViewModels;
 
 namespace Team7.Models.Repository
 {
@@ -14,11 +13,11 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        Task<object> GetAllQualificationsAsync();
+        //Task<Qualification[]> GetAllQualificationsAsync();
 
-        Task<object> GetQualificationsAsync(string input);
+        //Task<Qualification[]> GetQualificationsAsync(string input);
 
-        Task<Qualification> GetQualificationIdAsync(int id);
+        //Task<Qualification> GetQualificationIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }

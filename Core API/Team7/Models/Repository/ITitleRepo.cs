@@ -13,7 +13,7 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        Task<object> GetAllTitlesAsync();
+        Task<Title[]> GetAllTitlesAsync();
 
         Task<Title[]> GetTitlesAsync(string input);
 

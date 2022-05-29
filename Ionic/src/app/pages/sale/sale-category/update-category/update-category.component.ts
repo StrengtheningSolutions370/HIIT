@@ -50,7 +50,7 @@ export class UpdateCategoryComponent {
           items: []
         };
          console.log(temp);
-         //this.saleService.confirmSaleCategoryModal(choice,temp);
+         this.saleService.confirmSaleCategoryModal(choice,temp);
          this.dismissModal();
       }
   }

@@ -30,19 +30,10 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<object> GetAllEmployeeTypesAsync()
+        public async Task<EmployeeType[]> GetAllEmployeeTypesAsync()
         {
-            return await DB.EmployeeType.Select(et => new
-            {
-                et.EmployeeTypeID,
-                et.Name,
-                et.Description,
-                Employee = et
-                .Employee
-                .Select(e => new { e.EmployeeID, e.Name, e.Surname, e.Photo, e.IDNumber })
-            }).ToListAsync();
-            /*IQueryable<EmployeeType> query = DB.EmployeeType;
-            return await query.ToArrayAsync();*/
+            IQueryable<EmployeeType> query = DB.EmployeeType;
+            return await query.ToArrayAsync();
 
         }
 
