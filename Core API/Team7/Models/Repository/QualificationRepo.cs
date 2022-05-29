@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,11 +31,11 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<object> GetAllQualificationsAsync()
-        {
-            IQueryable<Qualification> query = DB.Qualification;
-            return await query.ToArrayAsync();
-            return null;
+        //public async Task<Qualification[]> GetAllQualificationsAsync()
+        //{
+        //    IQueryable<Qualification> query = DB.Qualification;
+        //    return await query.ToArrayAsync();
+        //    return null;
 
             if (!query.Any())
             {

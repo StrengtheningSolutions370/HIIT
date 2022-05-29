@@ -12,7 +12,6 @@ import { QualificationType } from 'src/app/models/qualification-type';
 import { Vat } from '../models/vat';
 import { SaleItem } from '../models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
-import { Qualification } from 'src/app/models/qualification';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,6 @@ export class RepoService {
   SaleItemController = 'SaleItem/';
   SaleCategoryController = 'SaleCategory/';
   PermissionController = 'Permission/';
-  QualificationController = 'Qualification/';
 
 
   httpOptions = {
@@ -47,20 +45,20 @@ export class RepoService {
   //AppUser:
   //-------
   //Register
-  // register(userDetails: appUserRegister){
-  //   return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);
-  // }
+  register(userDetails: appUserRegister){
+    return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);
+  }
 
   //Login
-  // login(userDetails: appUser){
-  //   return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions)
-  // }
+  login(userDetails: appUser){
+    return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions)
+  }
 
   //UserRole:
   //------
   //Create
   createUserRole(user_role: UserRole): Observable<any> {
-    return this.http.post<UserRole[]>(`${this.base + this.UserRoleController}add`, user_role, this.httpOptions);
+    return this.http.post(`${this.base + this.UserRoleController}add`, user_role, this.httpOptions);
   }
   //Read
   getUserRoles(): Observable<any> {
@@ -200,35 +198,6 @@ export class RepoService {
   existsQualificationType(id: number): Observable<any> {
     return this.http.get(`${this.base + this.QualificationTypeController}exists?id=${id}`, this.httpOptions);
   }
-
-  //Qualification:
-  //------
-  // Create
-  createQualification(qualification: any): Observable<any> {
-    return this.http.post<any>(`${this.base + this.QualificationController}add`, qualification, this.httpOptions);
-  }
-  //Update
-  updateQualification(qualificationId: number, qualification: Qualification): Observable<any> {
-    return this.http.put(`${this.base + this.QualificationController}update?id=${qualificationId}`,
-      qualification, this.httpOptions);
-  }
-  //Delete
-  deleteQualification(qualificationId: number): Observable<any> {
-    return this.http.delete(`${this.base + this.QualificationController}delete?id=${qualificationId}`, this.httpOptions);
-  }
-  //GetAll
-  getQualification(): Observable<any> {
-    return this.http.get(`${this.base + this.QualificationController}getAll`, this.httpOptions);
-  }
-  //GetMatch
-  getMatchQualification(input: string): Observable<any> {
-    return this.http.get(`${this.base + this.QualificationController}getMatch?input=${input}`, this.httpOptions);
-  }
-  //Exists
-  existsQualification(id: number): Observable<any> {
-    return this.http.get(`${this.base + this.QualificationController}exists?id=${id}`, this.httpOptions);
-  }
-
 
  //SaleCategory:
  //------

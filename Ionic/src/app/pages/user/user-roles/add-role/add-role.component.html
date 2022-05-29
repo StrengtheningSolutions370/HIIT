@@ -18,21 +18,19 @@
       <ion-input formControlName="name" type="text" required="" id="name" ></ion-input>
       <br/>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.name.errors?.required && cUserRoleForm.get('name').touched">
+    <!-- <span class="error ion-padding" *ngIf="errorControl.name.errors?.required && cUserRoleForm.get('name').touched">
       User role name is required.<br/>
-    </span>
-
+    </span> -->
     <ion-item>
       <ion-label position="floating">Description:</ion-label>
       <ion-input formControlName="description" type="text" required="" id="description" ></ion-input>
       <br/>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.description.errors?.required && cUserRoleForm.get('description').touched">
+    <!-- <span class="error ion-padding" *ngIf="errorControl.description.errors?.required && cUserRoleForm.get('description').touched">
       User role description is required.<br/>
-    </span>
-
+    </span> -->
       <p style="font-size:large" class="ion-text-center">Please select user role permissions:</p>
-    <ion-item *ngFor="let permission of permissionList; let i=index" name="permission" id="permission">
+    <ion-item *ngFor="let permission of permissionList; let i=index">
 
       <ion-label>{{permission.description}}</ion-label>
       <ion-checkbox slot="start" [value]="permission.description"
@@ -40,10 +38,7 @@
       </ion-checkbox>
 
     </ion-item>
-    <!-- <span class="error ion-padding" *ngIf="errorControl.permission.errors?.required && cUserRoleForm.get('permission').touched">
-      User role description is required.<br/>
-    </span>
-     -->
+    
     <br>
     <br>
     <ion-button type="submit" color="success" [disabled]="!cUserRoleForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;" >Create User Role</ion-button>

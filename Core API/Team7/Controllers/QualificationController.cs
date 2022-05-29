@@ -88,22 +88,22 @@ namespace Team7.Controllers
         // GET: api/qualification/getAll
         [HttpGet]
         [Route("getAll")]
-        //public async Task<IActionResult> GetVenues()
-        //{
-        //    try
-        //    {
-        //        var qualificationList = await qualificationRepo.GetAllQualificationsAsync();
-        //        if (qualificationList == null)
-        //        {
-        //            return Ok(0);
-        //        }
-        //        return Ok(qualificationList);
-        //    }
-        //    catch (Exception err)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-        //    }
-        //}
+        public async Task<IActionResult> GetVenues()
+        {
+            try
+            {
+                var qualificationList = await qualificationRepo.GetAllQualificationsAsync();
+                if (qualificationList == null)
+                {
+                    return Ok(0);
+                }
+                return Ok(qualificationList);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+        }
 
         // GET: api/qualification/getMatch/{input}
         [HttpGet]

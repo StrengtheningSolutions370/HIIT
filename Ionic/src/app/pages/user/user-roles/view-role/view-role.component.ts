@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { UserRole } from 'src/app/models/userRole';
 
 @Component({
   selector: 'app-view-role',
@@ -8,14 +7,23 @@ import { UserRole } from 'src/app/models/userRole';
   styleUrls: ['./view-role.component.scss'],
 })
 export class ViewRoleComponent  {
-  @Input() userRole: UserRole;
+
+  permissions=[
+    {
+      des : 'Create employee accounts'
+    },
+    {
+      des : 'Update profile information'
+    },
+    {
+      des : 'View Access to client data '
+    },
+    {
+      des : 'Run as-hoc reporting'
+    }
+  ];
 
   constructor(private modalCtrl: ModalController) { }
-
-  ionViewWillEnter() {
-    console.log('view Specific User Role - View Will Enter');
-    console.log(this.userRole);
-  }
 
   dismissModal() {
     this.modalCtrl.dismiss();

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController, ToastController, ViewWillEnter } from '@ionic/angular';
 import { EmployeeType } from 'src/app/models/employeeType';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
-import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-delete-etype',
@@ -15,7 +14,7 @@ export class DeleteEtypeComponent implements ViewWillEnter {
   @Input() employeeType: EmployeeType;
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
-    public employeeService: EmployeeService, private alertCtrl: AlertController, public global: GlobalService) { }
+    public employeeService: EmployeeService, private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController) { }
 
     ionViewWillEnter() {
       console.log('Delete Employee Type - View Will Enter');
@@ -28,7 +27,6 @@ export class DeleteEtypeComponent implements ViewWillEnter {
     await this.dismissModal();
     this.sucDelete();
   }
-
   async sucDelete() {
     const toast = await this.toastCtrl.create({
       message: 'The Employee Type has been successfully deleted!',
@@ -49,6 +47,8 @@ export class DeleteEtypeComponent implements ViewWillEnter {
   //Close the modal and navigate back to the venue page.
   async dismissModal() {
     this.modalCtrl.dismiss();
+    console.log(this.route);
+    await this.router.navigate(['../employee-type'],{relativeTo: this.route});
   }
 
 }
