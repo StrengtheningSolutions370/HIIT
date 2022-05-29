@@ -29,7 +29,7 @@ namespace Team7.Controllers
             {
                 qualificationRepo.Add(qualification);
                 await qualificationRepo.SaveChangesAsync();
-                return Ok(true);
+                return Ok();
             }
             catch (Exception err)
             {
@@ -53,7 +53,7 @@ namespace Team7.Controllers
                 toUpdate.Description = qualification.Description;
                 toUpdate.QualificationTypeID = qualification.QualificationTypeID;
                 await qualificationRepo.SaveChangesAsync();
-                return Ok("Successfully updated: " + toUpdate);
+                return Ok();
             }
             catch (Exception err)
             {
@@ -70,7 +70,7 @@ namespace Team7.Controllers
             var tempQualification = await qualificationRepo._GetQualificationIdAsync(id);
             if (tempQualification == null)
             {
-                return NotFound();
+                return NotFound("Could not find existing Qualification with id:" + id);
             }
             try
             {
@@ -93,10 +93,7 @@ namespace Team7.Controllers
             try
             {
                 var qualificationList = await qualificationRepo.GetAllQualificationsAsync();
-                if (qualificationList == null)
-                {
-                    return Ok(0);
-                }
+                if (qualificationList == null)return Ok(0);
                 return Ok(qualificationList);
             }
             catch (Exception err)
