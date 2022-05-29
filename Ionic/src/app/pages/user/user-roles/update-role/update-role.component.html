@@ -15,7 +15,7 @@
       <ion-input formControlName="name"  type="text" required=""></ion-input>
       <br/>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.name.errors?.required">
+    <span class="error ion-padding" *ngIf="errorControl.name.errors">
       User role name is required.
       <br/>
     </span>
@@ -24,10 +24,11 @@
       <ion-input formControlName="description"  type="text" required=""></ion-input>
       <br/>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.description.errors?.required">
+    <span class="error ion-padding" *ngIf="errorControl.description.errors">
       User role description is required.
       <br/>
     </span>
+
     <ion-label>Please select permissions:</ion-label>
     <ion-item *ngFor="let permission of permissionList" let i="index">
 

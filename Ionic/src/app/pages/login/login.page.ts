@@ -47,18 +47,18 @@ export class LoginPage implements OnInit {
       console.log('Somehow invalid submission');
       return;
     }
-    this.login(loginForm);
+    //this.login(loginForm);
   }
 
 
- async login(loginForm: NgForm){
-    var userLogin = new appUser();
-    userLogin = {
-      emailAddress : loginForm.value.emailAddress,
-      //add password encryption here
-      password : loginForm.value.password 
-    }
-    await this.auth.login(userLogin);
-  }
+//  async login(loginForm: NgForm){
+//     var userLogin = new appUser();
+//     userLogin = {
+//       emailAddress : loginForm.value.emailAddress,
+//       //add password encryption here
+//       password : loginForm.value.password
+//     }
+//     await this.auth.login(userLogin);
+//   }
 
 }

@@ -15,7 +15,7 @@
       <ion-label>
         <h2>User Role Name : </h2>
         <!--Insert User Role Name Here-->
-        <p>Administrator</p>
+        <p>{{userRole.name}}</p>
       </ion-label>
     </ion-item>
 
@@ -23,11 +23,15 @@
       <ion-label>
         <h2>User Role Description : </h2>
         <!--Insert Description Here-->
-        <p>a person responsible for carrying out administration of a business or organization</p>
+        <p>{{userRole.description}}<p>
       </ion-label>
     </ion-item>
+    
+    <br>
+    <ion-button color="light" class="ion-float-right" style="margin-right:10%;width:30% " (click)="dismissModal()">Return</ion-button>
 
 
+<!-- 
     <ion-item>
       <ion-label>
         <h3>User Role Permissions :</h3>
@@ -37,8 +41,7 @@
     <ul >
       <li slot="start" style="color:#bfbfbf">{{permission.des}}</li>
     </ul>
-  </ion-item>
-      
+  </ion-item> -->     
 </ion-content>
 
 

@@ -15,15 +15,19 @@
       <ion-input formControlName="name"  type="text" required=""></ion-input>
       <br/>
     </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.name.errors?.required">
+      Employee type name is required.
+      <br/>
+    </span>
     <ion-item>
       <ion-label position="stacked">Description:</ion-label>
       <ion-input formControlName="description" type="text" required=""></ion-input>
       <br/>
     </ion-item>
-    <!-- <span class="error ion-padding" *ngIf="errorControl.titleDescription.errors?.required">
+    <span class="error ion-padding" *ngIf="errorControl.description.errors?.required">
       Employee type description is required.
       <br/>
-    </span> -->
+    </span>
 
    
     <br><br/>

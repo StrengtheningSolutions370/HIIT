@@ -40,7 +40,7 @@ export class UserRolesPage implements OnInit {
           console.log('FETCHING USER ROLES FROM DB');
           console.log(data);
           this.isLoading = false;
-          this.userRoleList = data;
+          this.userRoleList = data.result;
         }
       }
     );

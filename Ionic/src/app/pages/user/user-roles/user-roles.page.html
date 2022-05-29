@@ -16,7 +16,7 @@
   <ion-grid *ngFor="let user of userRoleList | filter:filter, let i = index">
     <ion-list > 
       <ion-item-sliding>
-        <ion-item button> <!--(click)=""-->
+        <ion-item button (click)="userService.viewUserRoleInfoModal(user)">
           <ion-label>
             <!--User Role Name-->
             <h1>{{user.name}}</h1> 

@@ -77,34 +77,34 @@ export class AddEmployeeComponent implements OnInit{
 
   }
 
-  // updateCheckControl(cal, o) {
-  //   if (o.checked) {
-  //     cal.push(new FormControl(o.value));
-  //   } else {
-  //     cal.controls.forEach((item: FormControl, index) => {
-  //       if (item.value === o.value) {
-  //         cal.removeAt(index);
-  //         return;
-  //       }
-  //     });
-  //   }
-  // }
+  updateCheckControl(cal, o) {
+    if (o.checked) {
+      cal.push(new FormControl(o.value));
+    } else {
+      cal.controls.forEach((item: FormControl, index) => {
+        if (item.value === o.value) {
+          cal.removeAt(index);
+          return;
+        }
+      });
+    }
+  }
 
-  //   onLoadCheckboxStatus() {
-  //   const checkboxArrayList: FormArray = this.cEmployeeForm.get('checkboxBoxTitles') as FormArray;
-  //   const checkboxArrayList1: FormArray = this.cEmployeeForm.get('checkboxBoxQualificationTypes') as FormArray;
-  //   this.titleList.forEach(o => {
-  //     this.updateCheckControl(checkboxArrayList, o);
-  //   });
-  //   this.qualificationTypeList.forEach(o => {
-  //     this.updateCheckControl(checkboxArrayList1, o);
-  //   });
-  // }
+    onLoadCheckboxStatus() {
+    const checkboxArrayList: FormArray = this.cEmployeeForm.get('checkboxBoxTitles') as FormArray;
+    const checkboxArrayList1: FormArray = this.cEmployeeForm.get('checkboxBoxQualificationTypes') as FormArray;
+    this.titleList.forEach(o => {
+      this.updateCheckControl(checkboxArrayList, o);
+    });
+    this.qualificationTypeList.forEach(o => {
+      this.updateCheckControl(checkboxArrayList1, o);
+    });
+  }
 
-  // onSelectionChange(e, i) {
-  //   const checkboxArrayList: FormArray = this.cEmployeeForm.get('checkboxBoxTitles') as FormArray;
-  //   this.updateCheckControl(checkboxArrayList, e.target);
-  // }
+  onSelectionChange(e, i) {
+    const checkboxArrayList: FormArray = this.cEmployeeForm.get('checkboxBoxTitles') as FormArray;
+    this.updateCheckControl(checkboxArrayList, e.target);
+  }
 
 
   ionViewWillEnter(): void {
