@@ -44,9 +44,9 @@ export class VenuePage implements OnInit {
       {
         next: data => {
           console.log('FETCHING VENUES FROM DB');
-          console.log(data);
+          console.log(data.result);
           this.isLoading = false;
-          this.venueList = data;
+          this.venueList = data.result;
         }
       }
     );

@@ -1,12 +1,11 @@
 /* eslint-disable no-var */
 /* eslint-disable no-trailing-spaces */
-import { Component, Input, OnInit  } from '@angular/core';
-import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
+import { ViewWillEnter } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { VenueService } from 'src/app/services/venue/venue.service';
@@ -27,9 +26,8 @@ export class AddVenueComponent implements ViewWillEnter {
     capacity: ['', [Validators.required, Validators.min(1)]]
   });
 
-  constructor(private global: GlobalService, private toastCtrl: ToastController, public formBuilder: FormBuilder,
-    public venueService: VenueService, private router: Router, private currentRoute: ActivatedRoute,
-    private  alertCtrl: AlertController ) { }
+  constructor(public global: GlobalService,public formBuilder: FormBuilder,
+    public venueService: VenueService ) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {

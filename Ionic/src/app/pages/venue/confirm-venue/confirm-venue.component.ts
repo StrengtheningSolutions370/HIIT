@@ -22,6 +22,7 @@ export class ConfirmVenueComponent {
 
   async checkMatch(name:string, address:string): Promise<boolean>{
    return this.venueService.matchingVenue(name,address).then(result => {
+     console.log(result);
       if (result != 0){
         this.global.showAlert("The Venue information entered already exists on the system","Venue Already Exists");
         return true;
@@ -32,7 +33,9 @@ export class ConfirmVenueComponent {
   }
 
   confirmChanges(venue: Venue){
+    console.log(venue);
     this.checkMatch(venue.name,venue.address).then(result =>{
+      console.log(result);
       if (result == true){
         return;       
       } else {
