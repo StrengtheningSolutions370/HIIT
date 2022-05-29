@@ -1,7 +1,8 @@
 <ion-content>
   
   <br/>
-  <ion-searchbar expand="block" placeholder='I am looking for...' cancelButtonText="Close"></ion-searchbar>
+  <ion-searchbar expand="block" placeholder='Search Sale Items..' [(ngModel)]="filter"
+  animated="true" debounce="200"></ion-searchbar>
 
   <br/>
   <br/>
@@ -14,20 +15,19 @@
   </div>
   
   <ion-grid>
-    <div style="display: inline-block;width: 350px;height: 200px;margin-bottom: 5px;" >
+    <ion-row>
+    <!-- <div style="display: inline-block;width: 350px;height: 200px;margin-bottom: 5px;" > -->
 
-      
-
-      <ion-col size="4" *ngFor="let saleItem of saleItemList"> 
+      <ion-col size="4" *ngFor="let saleItem of saleItemList  | filter:filter"> 
         <!-- loop goes in this tag -->
-
 
       <ion-card>
           <ion-card-header >
-            <ion-avatar item-start button (click)="saleService.viewSaleItemInfoModal(saleItem)">
               <!--Employee Image-->
-              <img src="../../assets/avatar.jpg">
-            </ion-avatar>
+              <div class="centerimg">
+                <img [src]="createImg(saleItem.photo)">
+              </div>
+
               <ion-card-title style="color:#e7e8ec;">
                 <!--Employee_Name ' ' Employee_Surname-->
                 {{saleItem.Name}}
@@ -35,19 +35,20 @@
             </ion-card-header>
           <ion-card-content style="color:#b1b2b6;">
             
+           
             <ion-row>
               <!--Employee Gender-->
-              Price: R{{saleItem.Price}}
+              Price: R{{saleItem.price}}
             </ion-row>
             <ion-row>
               <!--Employee email-->
-              Quantity in Stock: {{saleItem.Quantity}}
+              Quantity in Stock: {{saleItem.quantity}}
             </ion-row>
-            <br />
             <ion-row>
               <!--Employee_Type-->
-              {{saleItem.Description}}
+              Description: {{saleItem.description}}
             </ion-row>
+         
             <br />
             <ion-row>
               <ion-col col-4>
@@ -62,10 +63,11 @@
             </ion-row>
           </ion-card-content>
       </ion-card>
-     </ion-col>
      
     <!--<mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons> </mat-paginator-->
-    </div>
+    <!-- </div> -->
+  </ion-col>
+  </ion-row>
   </ion-grid>
 
 </ion-content>

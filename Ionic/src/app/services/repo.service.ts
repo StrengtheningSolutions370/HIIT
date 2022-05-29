@@ -278,5 +278,9 @@ getMatchSaleItem(input: string): Observable<any>{
 existsSaleItem(id: number): Observable<any>{
   return this.http.get(`${this.base+this.SaleItemController}exists?id=${id}`, this.httpOptions);
 }
+//Image Upload
+uploadSaleItemImage(data : FormData) : Observable<any> {
+  return this.http.post('https://localhost:44383/api/SaleItem/upload', data)
+}
 
 }

@@ -16,7 +16,7 @@ export class SaleItemPage implements OnInit {
 public filter: string;
 
 //Create local title array to be populated onInit.
-saleItemList: SaleItem[] = [];
+saleItemList: any[] = [];
 
 //Subscription variable to track live updates.
 saleItemSub: Subscription;
@@ -63,16 +63,8 @@ ngOnInit() {
 
 }
 
-  mock = {
-    SaleItemID : 1,
-    Name : "Towel",
-    Photo : false,
-    Description : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut laborum recusandae fugiat rem soluta autem id illum quidem dignissimos mollitia.",
-    Price : 212.23,
-    Quotable : true,
-    Quantity : 9,
-    SaleCategoryID : 1,
-  }
-
+public createImg = (fileName: string) => { 
+  return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`; 
+}
 
 }

@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SaleItem } from 'src/app/models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { SalesService } from 'src/app/services/sales/sales.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { RepoService } from 'src/app/services/repo.service';
 
 @Component({
   selector: 'app-add-sitem',
@@ -59,17 +61,22 @@ export class AddSitemComponent implements ViewWillEnter {
 
  checkBoxToggle(check : any) {
    this.quotable = check.target.checked;
-   if (check) {
+   console.log(this.quotable);
+   if (this.quotable) {
      //is quotable
-     this.cSaleItemForm.controls.itemPrice.setValue(0);
-     this.cSaleItemForm.controls.itemQuantity.setValue(0);
+     this.cSaleItemForm.controls.itemPrice.setValue(1);
+     this.cSaleItemForm.controls.itemQuantity.setValue(1);
      return;
    }
+   console.log('here')
+    this.cSaleItemForm.controls.itemPrice.setValue(null);
+    this.cSaleItemForm.controls.itemQuantity.setValue(null);
+
  }
 
- constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
+ constructor(private http : HttpClient, private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
    public saleService: SalesService, private router: Router, private currentRoute: ActivatedRoute,
-   private  alertCtrl: AlertController ) { }
+   private  alertCtrl: AlertController, private repo : RepoService) { }
 
    //Used for validation within the form, if there are errors in the control, this method will return the errors.
    get errorControl() {
@@ -141,25 +148,40 @@ export class AddSitemComponent implements ViewWillEnter {
         return;
        }
 
-      var obj = new SaleItem();
-      obj.Name = this.cSaleItemForm.value['itemName'];
-      obj.Description = this.cSaleItemForm.value['itemDescription'];
-      obj.Photo = this.cSaleItemForm.value['itemPhoto'];
-      obj.Price = this.cSaleItemForm.value['itemPrice'];
-      obj.Price = this.cSaleItemForm.value['itemPrice'];
-      obj.Quotable = this.cSaleItemForm.value['itemQuotable'];
-      obj.Quantity = this.cSaleItemForm.value['itemQuantity'];
-      obj.SaleCategoryID = this.cSaleItemForm.value['itemSCategory'].split(',')[0];
+      var date = new Date();
 
-      this.dismissModal();
+       var epoch = date.getTime();
 
-      this.saleService.confirmSaleItemModal(1, obj, this.cSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
+       //form is valid for submission
+      var obj = {
+        Name: this.cSaleItemForm.controls['itemName'].value,
+        Photo: epoch + '_' + this.itemImage.name,
+        Description: this.cSaleItemForm.controls['itemDescription'].value,
+        price: this.cSaleItemForm.controls['itemPrice'].value,
+        quotable: this.cSaleItemForm.controls['itemQuotable'].value,
+        quantity: this.cSaleItemForm.controls['itemQuantity'].value,
+        SaleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
+        inventoryItem:[]
+      }
 
-      // this.sucAdd();
-      // console.log("CurrentRoute:ADD");
-      // console.log(this.currentRoute.url);
+
+      //wait for image to upload:
+      const formData = new FormData();
+        console.log(this.itemImage);
+        formData.append('file', this.itemImage, epoch + '_' + this.itemImage.name);
+
+        this.repo.uploadSaleItemImage(formData).subscribe({
+          next: data => {
+            this.dismissModal();
+            this.saleService.confirmSaleItemModal(1, obj, this.cSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
+          },
+          error: (err : HttpErrorResponse) => {
+            this.failureAlert();
+          }
+        });
 
       }
+
 
      async sucAdd() {
        const toast = await this.toastCtrl.create({
