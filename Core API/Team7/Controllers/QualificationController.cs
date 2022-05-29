@@ -92,12 +92,12 @@ namespace Team7.Controllers
         {
             try
             {
-                var venueList = await qualificationRepo.GetAllQualificationsAsync();
-                if (venueList == null)
+                var qualificationList = await qualificationRepo.GetAllQualificationsAsync();
+                if (qualificationList == null)
                 {
                     return Ok(0);
                 }
-                return Ok(venueList);
+                return Ok(qualificationList);
             }
             catch (Exception err)
             {
