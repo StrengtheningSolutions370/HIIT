@@ -30,15 +30,15 @@ export class LoginPage implements OnInit {
   }
 
   async isLogged(){
-    try{
-      this.global.nativeLoad();
-      const val = await this.auth.getId();
-      console.log(val);
-      if (val) {this.router.navigateByUrl('/home');}
-      this.global.endNativeLoad();
-    } catch (err){
-      console.log(err);
-    }
+    // try{
+    //   this.global.nativeLoad();
+    //   const token = await this.storage.getId();
+    //   console.log(val);
+    //   if (val) {this.router.navigateByUrl('/home');}
+    //   this.global.endNativeLoad();
+    // } catch (err){
+    //   console.log(err);
+    // }
   }
 
 
@@ -51,18 +51,14 @@ export class LoginPage implements OnInit {
   }
 
 
-  login(frm: NgForm){
-    this.isLoggedin = true;
-    this.auth.login(frm.value.email, frm.value.password).then(res => {
-      console.log(res);
-      this.router.navigateByUrl('/home');
-      this.isLoggedin = false;
-      frm.reset();
-    })
-    .catch(err => {
-      console.log(err);
-      this.isLoggedin = false;
-    });
+ async login(loginForm: NgForm){
+    var userLogin = new appUser();
+    userLogin = {
+      emailAddress : loginForm.value.emailAddress,
+      //add password encryption here
+      password : loginForm.value.password 
+    }
+    await this.auth.login(userLogin);
   }
 
 }

@@ -117,6 +117,7 @@ namespace Team7.Controllers
             try
             {
                 var venue = await VenueRepo.GetVenuesAsync(input);
+                if (venue == null) return Ok(0);
                 return Ok(venue);
             }
             catch (Exception err)

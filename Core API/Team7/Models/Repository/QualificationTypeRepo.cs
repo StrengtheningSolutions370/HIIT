@@ -101,7 +101,9 @@ namespace Team7.Models.Repository
             throw new NotImplementedException();
         }
 
-        Task<QualificationType> IQualificationTypeRepo.GetQualificationTypeIdAsync(int id)
+
+
+        public async Task<bool> SaveChangesAsync()
         {
             throw new NotImplementedException();
         }

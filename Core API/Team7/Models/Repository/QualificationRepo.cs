@@ -37,36 +37,86 @@ namespace Team7.Models.Repository
         //    return await query.ToArrayAsync();
         //    return null;
 
-        //}
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await DB.Qualification.Select(q => new
+                    {
+                        q.QualificationID,
+                        q.Description,
+                        qualificationType = new {q.QualificationTypeID, q.QualificationType.Name}
+                    }).ToListAsync()
+                };
+            }
+        }
 
-        //public async Task<Qualification[]> GetQualificationsAsync(string input)
-        //{
-        //    IQueryable<Qualification> query = DB.Qualification.Where(v => v.Name == input || v.Address == input);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.ToArrayAsync();
-        //    }
-        //    return null;
+        //RESPONSE
+        public async Task<object> GetQualificationsAsync(string description)
+        {
+            IQueryable<Qualification> query = DB.Qualification.Where(q => q.Description == description);
+            
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(q => new
+                    {
+                        q.QualificationID,
+                        q.Description,
+                        q.QualificationTypeID,
+                        q.QualificationType
+                    }).ToListAsync()
+                };
+            }
+        }
 
-        //}
+        public async Task<object> GetQualificationIdAsync(int id)
+        {
+            IQueryable<Qualification> query = DB.Qualification.Where(q => q.QualificationID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(q => new
+                    {
+                        q.QualificationID,
+                        q.Description,
+                        qualificationType = new
+                        {
+                            q.QualificationTypeID,
+                            q.QualificationType
+                        }
+                    }).ToListAsync()
+                };
+            }
+        }
 
-        //public async Task<Qualification> GetQualificationIdAsync(int id)
-        //{
-        //    IQueryable<Qualification> query = DB.Qualification.Where(v => v.VenueID == id);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.SingleAsync();
-        //    }
-        //    return null;
-        //}
+        public async Task<Qualification> _GetQualificationIdAsync(int id)
+        {
+            IQueryable<Qualification> query = DB.Qualification.Where(q => q.QualificationID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.SingleAsync();
+            }
+        }
+
 
         public async Task<bool> SaveChangesAsync()
         {

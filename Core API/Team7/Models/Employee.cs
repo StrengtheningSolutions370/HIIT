@@ -21,8 +21,7 @@ namespace Team7.Models
         public string Name { get; set; }
         [Required]
         public string Surname { get; set; }
-        [Required]
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
         [Required]
         public string IDNumber { get; set; }
         [Required]

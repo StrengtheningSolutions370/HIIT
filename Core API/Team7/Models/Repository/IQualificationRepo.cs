@@ -15,9 +15,12 @@ namespace Team7.Models.Repository
 
         //Task<Qualification[]> GetAllQualificationsAsync();
 
-        //Task<Qualification[]> GetQualificationsAsync(string input);
 
-        //Task<Qualification> GetQualificationIdAsync(int id);
+        Task<object> GetQualificationsAsync(string input);
+#pragma warning disable IDE1006 // Naming Styles
+        Task<Qualification> _GetQualificationIdAsync(int id);
+#pragma warning restore IDE1006 // Naming Styles
+        Task<object> GetQualificationIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }

@@ -2,7 +2,7 @@
   "version": 2,
   "dgSpecHash": "3tnpSswqPdXeA8YlokNw3XTk2U2qCQ5cGcZjECYmQyezWvXWeJVUhH8XSvmDi2Kkr0nY2hu5FWdRj4aBAWgH4Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
+  "projectFilePath": "D:\\Desktop\\University - Offline 3rd\\INF 370\\HIIT\\Core API\\Team7\\Team7.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Robyn\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Robyn\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.17\\microsoft.aspnetcore.authentication.jwtbearer.5.0.17.nupkg.sha512",

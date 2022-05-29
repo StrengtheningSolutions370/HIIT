@@ -42,6 +42,18 @@ export class RepoService {
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
 
+  //AppUser:
+  //-------
+  //Register
+  register(userDetails: appUserRegister){
+    return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);
+  }
+
+  //Login
+  login(userDetails: appUser){
+    return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions)
+  }
+
   //UserRole:
   //------
   //Create
