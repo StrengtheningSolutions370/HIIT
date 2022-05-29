@@ -49,8 +49,7 @@ namespace Team7.Models.Repository
                     {
                         q.QualificationID,
                         q.Description,
-                        q.QualificationTypeID,
-                        q.QualificationType
+                        qualificationType = new {q.QualificationTypeID, q.QualificationType.Name}
                     }).ToListAsync()
                 };
             }
@@ -78,10 +77,34 @@ namespace Team7.Models.Repository
                     }).ToListAsync()
                 };
             }
-
         }
 
-        public async Task<Qualification> GetQualificationIdAsync(int id)
+        public async Task<object> GetQualificationIdAsync(int id)
+        {
+            IQueryable<Qualification> query = DB.Qualification.Where(q => q.QualificationID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(q => new
+                    {
+                        q.QualificationID,
+                        q.Description,
+                        qualificationType = new
+                        {
+                            q.QualificationTypeID,
+                            q.QualificationType
+                        }
+                    }).ToListAsync()
+                };
+            }
+        }
+
+        public async Task<Qualification> _GetQualificationIdAsync(int id)
         {
             IQueryable<Qualification> query = DB.Qualification.Where(q => q.QualificationID == id);
             if (!query.Any())
@@ -93,6 +116,7 @@ namespace Team7.Models.Repository
                 return await query.SingleAsync();
             }
         }
+
 
         public async Task<bool> SaveChangesAsync()
         {

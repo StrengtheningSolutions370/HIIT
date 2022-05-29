@@ -48,13 +48,11 @@ export class RepoService {
   //-------
   //Register
   register(userDetails: appUserRegister){
-    console.log(userDetails);
     return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);
   }
 
   //Login
   login(userDetails: appUser){
-    console.log(userDetails);
     return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions)
   }
 
