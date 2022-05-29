@@ -14,9 +14,9 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        Task<Venue[]> GetAllVenuesAsync();
+        Task<object> GetAllVenuesAsync();
 
-        Task<Venue[]> GetVenuesAsync(string name, string? address);
+        Task<object> GetVenuesAsync(string input);
 
         Task<Venue> GetVenueIdAsync(int id);
 
