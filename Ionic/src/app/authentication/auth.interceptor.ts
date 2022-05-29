@@ -26,6 +26,9 @@ export class AuthInterceptor implements HttpInterceptor {
                 tap(
                     succ => { },
                     err => {
+                        if (err.status === 404){
+                            this.global.showAlert(err.error);
+                        }
                         //USER NOT LOGGED IN FOR AUTHENTICATED REQUESTS
                         if (err.status === 401) {
                             this.global.showAlert("Please make sure you are logged in");
@@ -35,9 +38,7 @@ export class AuthInterceptor implements HttpInterceptor {
                             console.log("Forbidden");
                             //still need to implement forbidden
                         //this.router.navigateByUrl('/forbidden');
-                        } else if (err.status === 404){
-                            this.global.showAlert(err.error);
-                        }
+                        } 
                     }
                 )
             );
