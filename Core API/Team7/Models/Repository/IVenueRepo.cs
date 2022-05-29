@@ -16,9 +16,15 @@ namespace Team7.Models.Repository
 
         Task<object> GetAllVenuesAsync();
 
-        Task<object> GetVenuesAsync(string input);
+        Task<Venue[]> _GetAllVenuesAsync();
 
-        Task<Venue> GetVenueIdAsync(int id);
+        Task<object> GetVenuesAsync(string name, string? address);
+
+        Task<Venue[]> _GetVenuesAsync(string name, string? address);
+
+        Task<object> GetVenueIdAsync(int id);
+
+        Task<Venue> _GetVenueIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }
