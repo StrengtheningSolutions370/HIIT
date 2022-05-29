@@ -19,6 +19,7 @@ export class AuthService {
   register(registerUser: appUserRegister) {
     this.repo.register(registerUser).subscribe(result => {
       console.log(result);
+      this.router.navigateByUrl('/login');
     });
   }
 
@@ -39,7 +40,7 @@ export class AuthService {
   async logout() {
     await this.global.nativeLoad();
     this.storage.deleteKey('token').then(result => {
-      this.router.navigateByUrl('/login')
+      this.router.navigateByUrl('/login');
       this.global.endNativeLoad();
     })
    }
