@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/member-ordering */
-/* eslint-disable no-underscore-dangle */
-import { Injectable, OnInit, Output, EventEmitter } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { Injectable, Output, EventEmitter } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Vat } from 'src/app/models/vat';
 import { AddVatComponent } from 'src/app/pages/sale/vat/add-vat/add-vat.component';
 import { DeleteVatComponent } from 'src/app/pages/sale/vat/delete-vat/delete-vat.component';
@@ -18,17 +16,7 @@ export class VatService {
 
   @Output() fetchVatsEvent = new EventEmitter<Vat>();
 
-//Creating a vatList for all the vats in the service.
-private _vatList = new BehaviorSubject<Vat[]>([]);
-
-//Return the vat list as an observable.
-public get vatList(){
-  return this._vatList.asObservable();
-}
-
-private temp: Vat[];
-
-constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
+constructor(public repo: RepoService, private modalCtrl: ModalController) {
   //Receive the venues from the repo (API).
   this.repo.getVats().subscribe(result => {
     console.log('Vat List: Vat Service -> Get Vats');
