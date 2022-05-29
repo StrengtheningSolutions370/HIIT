@@ -26,7 +26,7 @@ namespace Team7.Controllers
             {
                 UserRoleRepo.Add(userRole);
                 await UserRoleRepo.SaveChangesAsync();
-                return Ok(userRole);
+                return Ok();
             }
             catch (Exception err)
             {
@@ -52,7 +52,7 @@ namespace Team7.Controllers
                 toUpdate.Permission = userRole.Permission;
                 UserRoleRepo.Update<UserRole>(toUpdate);
                 await UserRoleRepo.SaveChangesAsync();
-                return Ok("Successfully updated");
+                return Ok();
             }
             catch (Exception err)
             {
@@ -69,7 +69,7 @@ namespace Team7.Controllers
             var tempUserRole = await UserRoleRepo._GetUserRoleIdAsync(id);
             if (tempUserRole == null)
             {
-                return Ok(0);
+                return NotFound("Could not find existing User Role with id:" + id);
             }
             try
             {
@@ -92,10 +92,7 @@ namespace Team7.Controllers
             try
             {
                 var userRoleList = await UserRoleRepo._GetAllUserRolesAsync();
-                if (userRoleList == null)
-                {
-                    return Ok(0);
-                }
+                if (userRoleList == null) return Ok(0);
                 return Ok(userRoleList);
             }
             catch (Exception err)

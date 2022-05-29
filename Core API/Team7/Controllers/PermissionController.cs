@@ -28,7 +28,7 @@ namespace Team7.Controllers
                 var permissionList = await PermissionRepo.GetAllPermissionsAsync();
                 if (permissionList == null)
                 {
-                    return NotFound();
+                    return Ok(0);
                 }
                 return Ok(permissionList);
             }

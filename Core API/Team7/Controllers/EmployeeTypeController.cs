@@ -27,7 +27,7 @@ namespace Team7.Controllers
             {
                 EmployeeTypeRepo.Add(employeeType);
                 await EmployeeTypeRepo.SaveChangesAsync();
-                return Ok(employeeType);
+                return Ok();
             }
             catch (Exception err)
             {
@@ -53,7 +53,7 @@ namespace Team7.Controllers
                 toUpdate.Employee = employeeType.Employee;
                 //EmployeeTypeRepo.Update<Venue>(tempVenue);
                 await EmployeeTypeRepo.SaveChangesAsync();
-                return Ok("Successfully updated");
+                return Ok();
             }
             catch (Exception err)
             {
@@ -70,7 +70,7 @@ namespace Team7.Controllers
             var tempEmployeeType = await EmployeeTypeRepo._GetEmployeeTypeIdAsync(id);
             if (tempEmployeeType == null)
             {
-                return NotFound();
+                return NotFound("Could not find existing employee type with id:" + id);
             }
             try
             {
@@ -93,10 +93,7 @@ namespace Team7.Controllers
             try
             {
                 var employeeTypeList = await EmployeeTypeRepo.GetAllEmployeeTypesAsync();
-                if (employeeTypeList == null)
-                {
-                    return NotFound();
-                }
+                if (employeeTypeList == null) return Ok(0);
                 return Ok(employeeTypeList);
             }
             catch (Exception err)
@@ -112,8 +109,9 @@ namespace Team7.Controllers
         {
             try
             {
-                var venue = await EmployeeTypeRepo.GetEmployeeTypesAsync(input);
-                return Ok(venue);
+                var employeeTypes = await EmployeeTypeRepo.GetEmployeeTypesAsync(input);
+                if (employeeTypes == null) return Ok(0);
+                return Ok(employeeTypes);
             }
             catch (Exception err)
             {
@@ -124,9 +122,18 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
-        public async Task<EmployeeType> EmployeeTypeExists(int id)
+        public async Task<IActionResult> EmployeeTypeExists(int id)
         {
-            return await EmployeeTypeRepo._GetEmployeeTypeIdAsync(id);
+            try
+            {
+                var employeeType = await EmployeeTypeRepo._GetEmployeeTypeIdAsync(id);
+                if (employeeType == null) return Ok(0);
+                return Ok(employeeType);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
         }
     }
 }

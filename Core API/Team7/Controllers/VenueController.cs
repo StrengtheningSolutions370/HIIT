@@ -33,7 +33,7 @@ namespace Team7.Controllers
             {
                 VenueRepo.Add(venue);
                 await VenueRepo.SaveChangesAsync();
-                return Ok(venue);
+                return Ok();
             }
             catch (Exception err)
             {
@@ -60,7 +60,7 @@ namespace Team7.Controllers
                 toUpdate.Capacity = venue.Capacity;
                 VenueRepo.Update<Venue>(toUpdate);
                 await VenueRepo.SaveChangesAsync();
-                return Ok("Successfully updated: " + toUpdate);
+                return Ok();
             }
             catch (Exception err)
             {
@@ -77,7 +77,7 @@ namespace Team7.Controllers
             var tempVenue = await VenueRepo._GetVenueIdAsync(id);
             if (tempVenue == null)
             {
-                return NotFound();
+                return NotFound("Could not find existing Venue with id:" + id);
             }
             try
             {
@@ -100,10 +100,7 @@ namespace Team7.Controllers
             try
             {
                 var venueList = await VenueRepo.GetAllVenuesAsync();
-                if (venueList == null)
-                {
-                    return NotFound();
-                }
+                if (venueList == null) return Ok(0);
                 return Ok(venueList);
             } 
             catch (Exception err)
