@@ -50,6 +50,13 @@ import { DeleteVatComponent } from './pages/sale/vat/delete-vat/delete-vat.compo
 import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
 import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
 
+import { AddSitemComponent } from './pages/sale/sale-item/add-sitem/add-sitem.component';
+import { UpdateSitemComponent } from './pages/sale/sale-item/update-sitem/update-sitem.component';
+import { DeleteSitemComponent } from './pages/sale/sale-item/delete-sitem/delete-sitem.component';
+import { ViewSitemComponent } from './pages/sale/sale-item/view-sitem/view-sitem.component';
+import { ConfirmSitemComponent } from './pages/sale/sale-item/confirm-sitem/confirm-sitem.component';
+
+
 
 @NgModule({
   declarations: [AppComponent,
@@ -59,7 +66,9 @@ import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.co
   AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent,
   AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
   ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
-  ConfirmCategoryComponent, AddCategoryComponent, ConfirmCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent],
+  ConfirmCategoryComponent, AddCategoryComponent, ConfirmCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent,
+  ConfirmSitemComponent, AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent
+],
 
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],

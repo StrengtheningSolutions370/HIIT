@@ -135,6 +135,8 @@ namespace Team7
             services.AddScoped<IWriteOffLineRepo, WriteOffLineRepo>();
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();
+            services.AddScoped<IVATRepo, VATRepo>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

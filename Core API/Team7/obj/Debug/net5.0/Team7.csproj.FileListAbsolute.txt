@@ -21,3 +21,4 @@ D:\Users\shann\Desktop\New folder (2)\net5.0\ref\Team7.dll
 D:\Users\shann\Desktop\New folder (2)\net5.0\Team7.pdb
 D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.CopyComplete
 D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.genruntimeconfig.cache
+D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.AssemblyReference.cache
