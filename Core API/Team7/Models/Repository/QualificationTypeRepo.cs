@@ -33,10 +33,18 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<QualificationType[]> GetAllQualificationTypesAsync()
+        public async Task<object> GetAllQualificationTypesAsync()
         {
-            IQueryable<QualificationType> query = DB.QualificationType;
-            return await query.ToArrayAsync();
+            return await DB.QualificationType.Select(qt => new
+            {
+                qt.QualificationTypeID,
+                qt.Name,
+                Qualifications = qt
+                .Qualification
+                .Select(q => new {q.QualificationID, q.Description})
+            }).ToListAsync();
+            //IQueryable<object> query = DB.QualificationType;
+            //return await query.ToArrayAsync();
 
         }
 

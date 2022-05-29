@@ -12,6 +12,7 @@ import { QualificationType } from 'src/app/models/qualification-type';
 import { Vat } from '../models/vat';
 import { SaleItem } from '../models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
+import { appUser, appUserRegister } from '../models/appUser';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ import { SaleCategory } from 'src/app/models/sale-category';
 
 export class RepoService {
   base = 'https://localhost:44383/api/';
+  AppUserController = 'AppUser/'
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
   EmployeeTypeController = 'EmployeeType/';
@@ -39,6 +41,20 @@ export class RepoService {
   constructor(public http: HttpClient) {
     //CRUDS in this repo file need to be used by subscribing to them in the relevant service.
     //E.g to use getVenues(); it must be subscribed to in the venue service
+  }
+
+  //AppUser:
+  //-------
+  //Register
+  register(userDetails: appUserRegister){
+    console.log(userDetails);
+    return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);
+  }
+
+  //Login
+  login(userDetails: appUser){
+    console.log(userDetails);
+    return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions)
   }
 
   //UserRole:
@@ -76,8 +92,8 @@ export class RepoService {
   //Venue:
   //------
   //Create
-  createVenue(venue: any): Observable<any> {
-    return this.http.post<any>(`${this.base + this.VenueController}add`, venue, this.httpOptions);
+  createVenue(venue: any): Observable<any>{
+    return this.http.post<any>(`${this.base+this.VenueController}add`,venue);
   }
   //Update
   updateVenue(venueId: number, venue: Venue): Observable<any> {
@@ -92,8 +108,8 @@ export class RepoService {
     return this.http.get(`${this.base + this.VenueController}getAll`, this.httpOptions);
   }
   //GetMatch
-  getMatchVenue(input: string): Observable<any> {
-    return this.http.get(`${this.base + this.VenueController}getMatch?input=${input}`, this.httpOptions);
+  getMatchVenue(name: string, address: string): Observable<any> {
+    return this.http.get(`${this.base + this.VenueController}getMatch?name=${name}&address=${address}`, this.httpOptions);
   }
   //Exists
   existsVenue(id: number): Observable<any> {
@@ -152,6 +168,7 @@ export class RepoService {
   existsTitle(id: number): Observable<any>{
     return this.http.get(`${this.base+this.TitleController}exists?id=${id}`, this.httpOptions);
   }
+  
 
    //QualificationType:
   //------

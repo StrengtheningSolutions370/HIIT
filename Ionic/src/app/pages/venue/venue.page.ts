@@ -12,7 +12,7 @@ import { VenueService } from 'src/app/services/venue/venue.service';
 })
 export class VenuePage implements OnInit {
   //String used from the searchbar, used in the filter pipe to search venues.
-  filter: string;
+  public filter: string;
 
   //Create local venue array to be populated onInit.
   venueList: Venue[] = [];
@@ -23,29 +23,32 @@ export class VenuePage implements OnInit {
   isLoading = true;
 
 
-  constructor(public venueService: VenueService, public repo: RepoService) { }
+  constructor(public venueService: VenueService, public repo: RepoService) {
+    this.fetchVenues();
+   }
 
   ngOnInit() {
-    setTimeout(async () => {
-      //Populate the venue list within the venue page, with the venue list from the venue service.
-      this.venueSub = this.venueService.venueList.subscribe(results => {
-        this.venueList = results;
-
-        console.log('Venue Page Init -> Venue List');
-        console.log(this.venueList);
-      });
-    });
-    this.getVenues();
+    this.venueService.fetchVenuesEvent.subscribe(
+      {
+        next: res => {
+          console.log('EMIT TO GO FETCH THE TITLES AGAIN')
+          this.fetchVenues();
+        }
+      }
+    );
   }
-
-  //Receive venues from the repo in local page.
-  async getVenues() {
-    setTimeout(async () => {
-      this.isLoading = false;
-      await this.repo.getVenues();
-
-      console.log('Venue Page -> Get Venues');
-      console.log(this.venueList);
-    }, 1500);
+  
+  fetchVenues() {
+    this.isLoading = true;
+    this.venueService.getAllVenues().subscribe(
+      {
+        next: data => {
+          console.log('FETCHING VENUES FROM DB');
+          console.log(data);
+          this.isLoading = false;
+          this.venueList = data;
+        }
+      }
+    );
   }
 }
