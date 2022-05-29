@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
 using Team7.ViewModels;
-using Ubiety.Dns.Core;
 
 namespace Team7.Models.Repository
 {

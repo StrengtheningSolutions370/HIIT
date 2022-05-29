@@ -14,13 +14,9 @@ export class ConfirmVenueComponent {
   @Input() choice: number;
   @Input() venue: Venue;
 
-  constructor(private modalCtrl: ModalController, public venueService: VenueService,
-    public router: Router, public activated: ActivatedRoute, public global: GlobalService) {
+  constructor(public venueService: VenueService, public global: GlobalService) {
    }
 
- async dismissModal() {
-    this.modalCtrl.dismiss();
-  };
   //1 = confirm ADD
   //2 = confirm UPDATE
 
@@ -51,8 +47,9 @@ export class ConfirmVenueComponent {
         }
       }
           //dismiss modal
-          this.dismissModal();
-    });   
+          this.global.dismissModal();
+    }); 
+
   }
 
   returnFrom(){
@@ -60,11 +57,11 @@ export class ConfirmVenueComponent {
       //2 = return to UPDATE
     if (this.choice === 1){
       console.log(this.venue);
-      this.dismissModal();
+      this.global.dismissModal();
       this.venueService.addVenueInfoModal(this.venue);
     } else if (this.choice === 2){
       console.log(this.venue);
-      this.dismissModal();
+      this.global.dismissModal();
       this.venueService.updateVenueInfoModal(this.venue);
     }
   }
