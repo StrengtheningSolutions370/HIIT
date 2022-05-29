@@ -20,10 +20,6 @@ filter: string;
 qualificationList: Qualification[] = [];
 qualificationTypeList: QualificationType[] = [];
 
-//Subscription variable to track live updates.
-qualificationTypeSub: Subscription;
-qualificationSub: Subscription;
-
 isLoading = true;
 
 
@@ -57,9 +53,9 @@ fetchQualifications() {
     {
       next: data => {
         console.log('FETCHING QUALIFICATION FROM DB');
-        console.log(data);
+        console.log(data.result);
         this.isLoading = false;
-        this.qualificationList = data;
+        this.qualificationList = data.result;
       }
     }
   );
@@ -71,12 +67,11 @@ fetchQualificationTypes() {
     {
       next: data => {
         console.log('FETCHING QUALIFICATION TYPES FROM DB');
-        console.log(data);
+        console.log(data.result);
         this.isLoading = false;
-        this.qualificationTypeList = data;
+        this.qualificationTypeList = data.result;
       }
     }
   );
 }
-
 }
