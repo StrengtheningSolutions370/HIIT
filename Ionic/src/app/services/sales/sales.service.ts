@@ -239,6 +239,17 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
             saleItem
         }
       });
+
+      //Update the current sale item list with the sale item list from the delete modal.
+      modal.onDidDismiss().then(() => {
+        this.repo.getSaleItems().subscribe(result => {
+          var tempResult = Object.assign(result);
+          this._saleItemList.next(tempResult);
+          console.log("Updated sale item list: Sales Service: delete sale item");
+          console.log(this._saleItemList);
+        });
+      });
+      await modal.present();
     }
 
       //Display the delete sale category modal.
@@ -253,16 +264,6 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
         }
       });
 
-      //Update the current sale item list with the sale item list from the delete modal.
-      modal.onDidDismiss().then(() => {
-        this.repo.getSaleItems().subscribe(result => {
-          var tempResult = Object.assign(result);
-          this._saleItemList.next(tempResult);
-          console.log("Updated sale item list: Sales Service: delete sale item");
-          console.log(this._saleItemList);
-        });
-      });
-      await modal.present();
     
 
     //Update the current sale category list with the sale category list from the delete modal.
@@ -313,7 +314,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
   //Display the confirm create/update modal
   //Receives the selected saleItem from the saleitem page
-  async confirmSaleItemModal(choice: number, saleItem: any) {
+  async confirmSaleItemModal(choice: number, saleItem: any, categoryName : string, image : any) {
     console.log('SaleItemService: ConfirmSaleItemModalCall');
     console.log(choice);
     if(choice === 1){
@@ -322,7 +323,9 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
         component: ConfirmSitemComponent,
         componentProps: {
           saleItem,
-          choice
+          choice,
+          categoryName,
+          image
         }
       });
 

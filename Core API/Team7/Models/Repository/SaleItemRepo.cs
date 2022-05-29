@@ -39,7 +39,7 @@ namespace Team7.Models.Repository
 
         }
 
-        public async Task<SaleItem[]> GetSaleItemsAsync(string name, byte[] photo, string desc, decimal? price, bool quotable, int qty)
+        public async Task<SaleItem[]> GetSaleItemsAsync(string name, string photo, string desc, decimal? price, bool quotable, int qty)
         {
             IQueryable<SaleItem> query = DB.SaleItem.Where(si => si.Name == name || si.Photo == photo || si.Description == desc || si.Price == price || si.Quotable == quotable || si.Quantity == qty);
             if (!query.Any())
