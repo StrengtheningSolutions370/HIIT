@@ -32,17 +32,90 @@ namespace Team7.Models.Repository
             DB.Update(Entity);
         }
 
-
-        public async Task<UserRole[]> GetAllUserRolesAsync()
+        public async Task<object> GetAllUserRolesAsync()
         {
             IQueryable<UserRole> query = DB.UserRole;
-            return await query.ToArrayAsync();
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(ur => new
+                    {
+                        ur.UserRoleID,
+                        ur.Name,
+                        ur.Description,
+                        Permissions = ur
+                        .Permission
+                        .Select(p => new { p.PermissionID, p.Description })
+                    }).ToListAsync()
+                };
+            }
+
+        }
+        public async Task<UserRole[]> _GetAllUserRolesAsync()
+        {
+            IQueryable<UserRole> query = DB.UserRole;
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.ToArrayAsync();
+            }
+            
+        }
+
+        public async Task<object> GetUserRolesAsync(string name, string? description)
+        {
+            IQueryable<UserRole> query;
+            if (description == null)
+            {
+                query = DB.UserRole.Where(v => v.Name == name || v.Description == name);
+            }
+            else
+            {
+                query = DB.UserRole.Where(v => v.Name == name || v.Description == description);
+            }
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(ur => new
+                    {
+                        ur.UserRoleID,
+                        ur.Name,
+                        ur.Description,
+                        Permissions = ur
+                        .Permission
+                        .Select(p => new { p.PermissionID, p.Description })
+                    }).ToListAsync()
+                };
+            }
 
         }
 
-        public async Task<object> GetUserRolesAsync(string name, string description)
+        public async Task<UserRole[]> _GetUserRolesAsync(string name, string? description)
         {
-            IQueryable<UserRole> query = DB.UserRole.Where(v => v.Name == name || v.Description == description);
+            IQueryable<UserRole> query;
+            if (description != null) 
+            {
+                query = DB.UserRole.Where(v => v.Name == name || v.Description == name);
+            } 
+            else
+            {
+                query = DB.UserRole.Where(v => v.Name == name || v.Description == description);
+            }
+
+
             if (!query.Any())
             {
                 return null;
@@ -54,7 +127,31 @@ namespace Team7.Models.Repository
 
         }
 
-        public async Task<UserRole> GetUserRoleIdAsync(int id)
+        public async Task<object> GetUserRoleIdAsync(int id)
+        {
+            IQueryable<UserRole> query = DB.UserRole.Where(v => v.UserRoleID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(ur => new
+                    {
+                        ur.UserRoleID,
+                        ur.Name,
+                        ur.Description,
+                        Permissions = ur
+                        .Permission
+                        .Select(p => new { p.PermissionID, p.Description })
+                    }).ToListAsync()
+                };
+            }
+        }
+
+        public async Task<UserRole> _GetUserRoleIdAsync(int id)
         {
             IQueryable<UserRole> query = DB.UserRole.Where(v => v.UserRoleID == id);
             if (!query.Any())
