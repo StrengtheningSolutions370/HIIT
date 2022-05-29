@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { appUser, appUserRegister } from 'src/app/models/appUser';
 import { GlobalService } from '../global/global.service';
 import { RepoService } from '../repo.service';
@@ -13,34 +11,10 @@ import {StoreService} from '../storage/store.service';
 export class AuthService {
 
   constructor(
-    private http: HttpClient,
     private repo: RepoService,
     private global: GlobalService,
     private storage: StoreService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) { }
-
-  // formModel = this.fb.group({
-  //   UserName: ['', Validators.required],
-  //   Email: ['', Validators.email],
-  //   FullName: [''],
-  //   Passwords: this.fb.group({
-  //     Password: ['', [Validators.required, Validators.minLength(4)]],
-  //     ConfirmPassword: ['', Validators.required]
-  //   }, { validator: this.comparePasswords })
-
-  // });
-
-  // comparePasswords(fb: FormGroup) {
-  //   const confirmPswrdCtrl = fb.get('ConfirmPassword');
-  //   if (confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors) {
-  //     if (fb.get('Password').value !== confirmPswrdCtrl.value) {
-  //       confirmPswrdCtrl.setErrors({ passwordMismatch: true });
-  //     } else {
-  //       confirmPswrdCtrl.setErrors(null);
-  //     }
-  //   }
-  // }
+    private router: Router) { }
 
   register(registerUser: appUserRegister) {
     this.repo.register(registerUser).subscribe(result => {
@@ -49,22 +23,26 @@ export class AuthService {
   }
 
   async login(appUser: appUser) {
-   await this.global.nativeLoad();
-    this.repo.login(appUser).subscribe(result => {     
+   await this.global.nativeLoad("loading...");
+    return this.repo.login(appUser).subscribe(result => { 
+      if (result){
+        console.log(result);
+      }    
       var token = result['token'];
       this.storage.setKey('token',token);
-   });
-   this.router.navigateByUrl('/home')
-   await this.global.endNativeLoad();
+      this.router.navigateByUrl('/home');   
+   }).add(() =>{this.global.endNativeLoad()});
+
+
   }
 
-  // login(formData) {
-  //   return this.http.post(environment.URL  + '/ApplicationUser/Login', formData);
-  // }
-
-  // getUserProfile() {
-  //   return this.http.get(environment.URL + '/UserProfile');
-  // }
+  async logout() {
+    await this.global.nativeLoad();
+    this.storage.deleteKey('token').then(result => {
+      this.router.navigateByUrl('/login')
+      this.global.endNativeLoad();
+    })
+   }
 
   // roleMatch(allowedRoles): boolean {
   //   let isMatch = false;

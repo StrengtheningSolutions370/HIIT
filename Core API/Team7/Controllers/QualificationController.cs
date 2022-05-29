@@ -43,7 +43,7 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutQualification(int id, [FromBody] Qualification qualification)
         {
-            var toUpdate = await qualificationRepo.GetQualificationIdAsync(id);
+            var toUpdate = await qualificationRepo._GetQualificationIdAsync(id);
                 if (toUpdate == null)
             {
                 return NotFound("Could not find existing Qualification with id:" + id);
@@ -67,7 +67,7 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteVenue(int id)
         {
-            var tempQualification = await qualificationRepo.GetQualificationIdAsync(id);
+            var tempQualification = await qualificationRepo._GetQualificationIdAsync(id);
             if (tempQualification == null)
             {
                 return NotFound();
@@ -126,7 +126,7 @@ namespace Team7.Controllers
         [HttpGet]
         [Route("exists")]
 
-        public async Task<Qualification> VenueExists(int id)
+        public async Task<object> QualificationExists(int id)
         {
             return await qualificationRepo.GetQualificationIdAsync(id);
         }
