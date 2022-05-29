@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>View {{title.description}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -21,5 +21,5 @@
     </ion-item>
   </div>
   <br>
-  <ion-button color="light" class="ion-float-right" style="margin-right:10%;width:30% " (click)="dismissModal()">Return</ion-button>
+  <ion-button color="light" class="ion-float-right" style="margin-right:10%;width:30% " (click)="this.global.dismissModal()">Return</ion-button>
 </ion-content>

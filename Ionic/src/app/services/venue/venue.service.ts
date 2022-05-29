@@ -123,14 +123,6 @@ export class VenueService {
             venue
         }
       });
-
-      //Update the current venue list with the venue list from the delete modal.
-      modal.onDidDismiss().then(() => {
-        this.repo.getVenues().subscribe(result => {
-          console.log("Updated venue list: Venue Service: delete venue");
-          console.log(result);
-        });
-      });
       await modal.present();
     }
   }
@@ -162,11 +154,6 @@ export class VenueService {
           choice
         }
       });
-
-      //Update the current venue list with the venue list from the confirm modal.
-      modal.onDidDismiss().then(() => {
-        this.repo.getVenues();
-      });
       await modal.present();
     } else if (choice === 2){
       console.log("Performing UPDATE");
@@ -176,9 +163,6 @@ export class VenueService {
           venue,
           choice
         }
-      });
-      modal.onDidDismiss().then(() => {
-        this.repo.getVenues();
       });
       await modal.present();
     } else {

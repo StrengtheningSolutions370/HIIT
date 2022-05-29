@@ -29,28 +29,6 @@ export class TitlesPage implements OnInit{
     this.fetchTitles();
   }
 
-  fetchTitles() {
-    this.isLoading = true;
-    this.titleService.getAllTitles().subscribe(
-      {
-        next: data => {
-          //only if a 200OK comes back
-          console.log('FETCHING TITLES FROM DB');
-          console.log(data); //object that comes back
-          this.isLoading = false;
-          this.titleList = data;
-        },
-        error: err => {
-          console.log(err); //object that comes back
-          ///////
-          // Show the client UI that the API reaponded with !20OK
-          ///////
-        }
-        
-      }
-    );
-  }
-
   ngOnInit() {
 
     this.titleService.fetchTitlesEvent.subscribe(
@@ -63,5 +41,29 @@ export class TitlesPage implements OnInit{
     );
 
   }
+
+  fetchTitles() {
+    this.isLoading = true;
+    this.titleService.getAllTitles().subscribe(
+      {
+        next: data => {
+          //only if a 200OK comes back
+          console.log('FETCHING TITLES FROM DB');
+          console.log(data.result); //object that comes back
+          this.isLoading = false;
+          this.titleList = data.result;
+        },
+        error: err => {
+          console.log(err); //object that comes back
+          ///////
+          // Show the client UI that the API reaponded with !20OK
+          ///////
+        }
+        
+      }
+    );
+  }
+
+
 
 }

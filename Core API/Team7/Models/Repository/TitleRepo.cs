@@ -41,18 +41,19 @@ namespace Team7.Models.Repository
             }
             else
             {
-                return await DB.Title.Select(t => new
+                return new
                 {
-                    t.TitleID,
-                    t.Description,
-                    User = t
-                    .User
-                    .Select(u => new { u.UserID, u.Email, u.Cell })
-                }).ToListAsync();
+                    result = await DB.Title.Select(t => new
+                    {
+                        t.TitleID,
+                        t.Description,
+                        User = t
+                        .User
+                        .Select(u => new { u.UserID, u.Email, u.Cell })
+                    }).ToListAsync()
+                };
+
             }
-            
-            /*IQueryable<Title> query = DB.Title;
-            return await query.ToArrayAsync();*/
         }
 
         public async Task<Title[]> _GetAllTitlesAsync()
