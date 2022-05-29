@@ -39,18 +39,16 @@ namespace Team7.Controllers
 
         }
 
-        // PUT api/Vat/update/5
+        /*// PUT api/Vat/update/5
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> PutVat(VAT vat)
+        public async Task<IActionResult> PutVat(int id, [FromBody] VAT vat)
         {
-            var toUpdate = await VATRepo.GetVATIdAsync(vat.VATID);
-
+            var toUpdate = await VATRepo._GetVATIdAsync(id);
             if (toUpdate == null)
             {
-                return NotFound("Could not find existing VAT with id:");
+                return NotFound("Could not find existing VAT with id:" + id);
             }
-
             try
             {
                 toUpdate.Percentage = vat.Percentage;
@@ -63,8 +61,7 @@ namespace Team7.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
-
-        }
+        }*/
 
 
         // DELETE api/Vat/delete/5
@@ -72,7 +69,7 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteVat(int id)
         {
-            var tempVat = await VATRepo.GetVATIdAsync(id);
+            var tempVat = await VATRepo._GetVATIdAsync(id);
             if (tempVat == null)
             {
                 return NotFound();
@@ -131,7 +128,7 @@ namespace Team7.Controllers
         [Route("exists")]
         public async Task<VAT> VATExists(int id)
         {
-            return await VATRepo.GetVATIdAsync(id);
+            return await VATRepo._GetVATIdAsync(id);
         }
     }
 }
