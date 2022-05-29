@@ -46,7 +46,7 @@ namespace Team7.Models.Repository
             return await query.ToArrayAsync();*/
         }
 
-        public async Task<Title[]> GetTitlesAsync(string input)
+        public async Task<object> GetTitlesAsync(string input)
         {
             IQueryable<Title> query = DB.Title.Where(t => t.Description == input);
             if (!query.Any())
@@ -55,7 +55,17 @@ namespace Team7.Models.Repository
             }
             else
             {
-                return await query.ToArrayAsync();
+                return new
+                {
+                    result = await query.Select(t => new
+                    {
+                        t.TitleID,
+                        t.Description,
+                        Users = t
+                            .User
+                            .Select(u => new { u.Email, u.Cell})
+                    }).ToListAsync()
+                };
             }
 
         }

@@ -10,8 +10,8 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220529010559_initial")]
-    partial class initial
+    [Migration("20220529114816_UpdatedDB")]
+    partial class UpdatedDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -405,7 +405,6 @@ namespace Team7.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Photo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("QualificationID")
@@ -439,9 +438,9 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<byte[]>("File")
+                    b.Property<string>("File")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EmployeeContractID");
 

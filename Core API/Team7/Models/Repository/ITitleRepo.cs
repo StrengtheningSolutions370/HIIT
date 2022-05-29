@@ -15,7 +15,7 @@ namespace Team7.Models.Repository
 
         Task<object> GetAllTitlesAsync();
 
-        Task<Title[]> GetTitlesAsync(string input);
+        Task<object> GetTitlesAsync(string input);
 
         Task<Title> GetTitleIdAsync(int id);
 

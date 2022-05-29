@@ -31,30 +31,66 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<Venue[]> GetAllVenuesAsync()
+        public async Task<object> GetAllVenuesAsync()
         {
             IQueryable<Venue> query = DB.Venue;
-            return await query.ToArrayAsync();
+
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await DB.Venue.Select(v => new
+                    {
+                        v.VenueID,
+                        v.Name,
+                        v.Address,
+                        v.PostalCode,
+                        v.Capacity,
+                        Schedules = v
+                            .Schedules
+                            .Select(s => new { s.CapacityBooked })
+                    }).ToListAsync()
+                };
+            }
+            /*IQueryable<Venue> query = DB.Venue;
+            return await query.ToArrayAsync();*/
 
         }
 
-        public async Task<Venue[]> GetVenuesAsync(string name, string? address)
+        public async Task<object> GetVenuesAsync(string input)
         {
-            IQueryable<Venue> query;
-            if (address == null)
+            IQueryable<Venue> query = DB.Venue;
+            /*if (address == null)
             {
                 query = DB.Venue.Where(v => v.Name == name);
             } else
             {
                 query = DB.Venue.Where(v => v.Name == name || v.Address == address);
-            }
-            
+            }*/
+
             if (!query.Any())
             {
                 return null;
             } else
             {
-                return await query.ToArrayAsync();
+                return new
+                {
+                    result = await DB.Venue.Select(v => new
+                    {
+                        v.VenueID,
+                        v.Name,
+                        v.Address,
+                        v.PostalCode,
+                        v.Capacity,
+                        Schedules = v
+                            .Schedules
+                            .Select(s => new { s.CapacityBooked })
+                    }).ToListAsync()
+                };
             }
 
         }

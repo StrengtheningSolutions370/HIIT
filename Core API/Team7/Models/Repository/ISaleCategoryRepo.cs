@@ -15,7 +15,7 @@ namespace Team7.Models.Repository
 
         Task<object> GetAllSaleCategorysAsync();
 
-        Task<SaleCategory[]> GetSaleCategorysAsync(string input);
+        Task<object> GetSaleCategorysAsync(string input);
 
         Task<SaleCategory> GetSaleCategoryIdAsync(int id);
 
