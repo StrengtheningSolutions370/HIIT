@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Delete Title Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -23,7 +23,7 @@
 
     <br>
     <ion-button expand="block" type="ion-button" (click)="delete(title.titleID)" color="danger" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Delete Title</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
 </ion-content>
 
 

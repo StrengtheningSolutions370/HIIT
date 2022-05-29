@@ -43,10 +43,12 @@ export class ConfirmVenueComponent {
             console.log('Add Venue from confirm:');
             //CallRepoToCreate
             this.venueService.createVenue(venue);
+            this.global.showToast("The Title has been successfully added!");
         } else if (this.choice === 2){
             console.log('Update Venue from confirm:');
             //CallRepoToUpdate
             this.venueService.updateVenue(venue.venueID,venue);
+            this.global.showToast("The Title has been successfully updated!");
         }
       }
           //dismiss modal

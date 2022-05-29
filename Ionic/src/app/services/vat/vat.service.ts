@@ -20,6 +20,10 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   this.getAllVats();
 }
 
+getAllVats() : Observable<any> {
+  return this.repo.getVats();
+}
+
  //Methods
   //Add a vat to the vat list within the vat service.
   createVat(vat: any){
@@ -38,9 +42,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     )
    }
 
-   getAllVats() : Observable<any> {
-     return this.repo.getVats();
-   }
+
 
   //Receives a vat to delete in the service vat list.
    deleteVat(id: number){
@@ -92,11 +94,6 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
             vat
         }
       });
-
-      //Update the current vat list with the vat list from the delete modal.
-      modal.onDidDismiss().then(() => {
-        this.getAllVats();
-      });
       await modal.present();
     }
   
@@ -123,11 +120,6 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
         componentProps: {
           vat
         }
-      });
-
-      //Update the current vat list with the vat list from the confirm modal.
-      modal.onDidDismiss().then(() => {
-        this.getAllVats();
       });
 
       await modal.present();
