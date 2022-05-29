@@ -54,15 +54,15 @@ export class ConfirmCategoryComponent{
   async returnFrom(){
     //1 = return to ADD
     //2 = return to UPDATE
-    // if (this.choice === 1){
-    //   console.log(this.saleCategory);
-    //   this.dismissModal();
-    //   this.saleService.addSaleCategoryModal(this.saleCategory);
-    // } else if (this.choice === 2){
-    //   console.log(this.saleCategory);
-    //   this.dismissModal();
-    //   this.saleService.updateSaleCategoryModal(this.saleCategory);
-    // }
+    if (this.choice === 1){
+      console.log(this.saleCategory);
+      await this.dismissModal();
+      this.saleService.addCategoryInfoModal(this.saleCategory);
+    } else if (this.choice === 2){
+      console.log(this.saleCategory);
+      await this.dismissModal();
+      this.saleService.updateCategoryInfoModal(this.saleCategory);
+    }
   }
 
   async sucAdd() {
