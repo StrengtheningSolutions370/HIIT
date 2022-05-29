@@ -38,28 +38,28 @@ export class SaleCategoryPage implements OnInit {
 
   fetchSaleCategory() {
     this.isLoading = true;
-    // this.saleService.getAllSaleCategory().subscribe(
-    //   {
-    //     next: data => {
-    //       console.log('Fetching categories from DB');
-    //       console.log(data);
-    //       this.isLoading = false;
-    //       this.saleCategoryList = data;
-    //     }
-    //   }
-    // );
+    this.saleService.getAllSaleCategories().subscribe(
+      {
+        next: data => {
+          console.log('Fetching categories from DB');
+          console.log(data);
+          this.isLoading = false;
+          this.saleCategoryList = data;
+        }
+      }
+    );
   }
 
   ngOnInit() {
 
-    // this.saleService.fetchSaleCategoryEvent.subscribe(
-    //   {
-    //     next: res => {
-    //       console.log('Fetch sale categories again');
-    //       this.fetchSaleCategory();
-    //     }
-    //   }
-    // );
+    this.saleService.fetchSaleCategoriesEvent.subscribe(
+      {
+        next: res => {
+          console.log('Fetch sale categories again');
+          this.fetchSaleCategory();
+        }
+      }
+    );
 
   }
 
