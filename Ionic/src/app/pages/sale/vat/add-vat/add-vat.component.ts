@@ -7,6 +7,7 @@ import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Vat } from 'src/app/models/vat';
 import { VatService } from 'src/app/services/vat/vat.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-add-vat',
@@ -23,7 +24,7 @@ export class AddVatComponent implements ViewWillEnter{
   });
 
 
-  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
+  constructor(public global: GlobalService, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public vatService: VatService, private router: Router, private currentRoute: ActivatedRoute,
     private  alertCtrl: AlertController ) { }
 
@@ -48,44 +49,9 @@ export class AddVatComponent implements ViewWillEnter{
           percentage: this.cVATForm.value['percentage'],
           date: IonDatetime       
         }; 
-        this.dismissModal();
-        this.vatService.confirmVatModal(1,temp);
-       
-        // this.sucAdd();
-        // console.log("CurrentRoute:ADD");
-        // console.log(this.currentRoute.url);
+        this.global.dismissModal();
+        this.global.showToast("The Vat has been successfully added!");
+        this.vatService.confirmVatModal(temp);
       }
      }
-  
-    async sucAdd() {
-      const toast = await this.toastCtrl.create({
-        message: 'The Vat has been successfully added!',
-        duration: 2000
-      });
-      toast.present();
-    }
-  
-    //Once the modal has been dismissed.
-    dismissModal() {
-      this.modalCtrl.dismiss();
-    };
-  
-    async duplicateAlert() {
-      const alert = await this.alertCtrl.create({
-        header: 'Vat Already Exists',
-        message: 'The Vat Information entered already exists on the system',
-        buttons: ['OK']
-      });
-      alert.present();
-    }
-  
-    async failureAlert() {
-      const alert = await this.alertCtrl.create({
-        header: 'Could not create vat',
-        message: 'There was an error creating the vat. Please try again',
-        buttons: ['OK']
-      });
-      alert.present();
-    }
-
 }
