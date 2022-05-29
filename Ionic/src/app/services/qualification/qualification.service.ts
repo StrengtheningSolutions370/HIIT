@@ -18,31 +18,23 @@ export class QualificationService {
 
   @Output() fetchQualificationTypeEvent = new EventEmitter<QualificationType>();
 
-  //QUALIFICATION-TYPE:
-//Creating a qtypeList for all the qtypes in the service.
-private _qualificationtypeList = new BehaviorSubject<QualificationType[]>([]);
-
-//Return the qtype list as an observable.
-public get qualificationtypeList(){
-  return this._qualificationtypeList.asObservable();
-}
 
 constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
-  //Receive the qtypes from the repo (API).
-  this.repo.getQualificationTypes().subscribe(result => {
-    console.log('QualificationType List: QualificationType Service -> Get QualificationType');
-    console.log(result);
-
-    var tempResult = Object.assign(result);
-    this._qualificationtypeList.next(tempResult);
-
-    console.log('QualificationType List: qualification type Service -> Updated qualification types');
-    console.log(this._qualificationtypeList);
-  })
-}
+  this.getAllQualifications();
+  this.getAllQualificationTypes();
+  }
 
 //Methods
-//Add a qualificationtype to the qualificationtype list within the qualification service.
+//Add a qualification type to the qualification type list within the qualification service.
+
+getAllQualificationTypes(): Observable<any> {
+  return this.repo.getQualificationTypes();
+}
+
+getAllQualifications(): Observable<any> {
+  return this.repo.getQualification();
+}
+
  createQualificationType(qualificationType: any){
   this.repo.createQualificationType(qualificationType).subscribe(
     {
@@ -54,12 +46,8 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   )
  }
 
- getAllQualificationTypes() : Observable<any> {
-  return this.repo.getQualificationTypes();
-}
-
-//Receives a qualificationtype to update in the service qualificationtype list.
- async updateQualificationType(id:number,qualificationType: any) {
+//Receives a qualification type to update in the service qualification type list.
+ async updateQualificationType(id: number,qualificationType: any) {
   return this.repo.updateQualificationType(qualificationType.qualificationTypeID,qualificationType).subscribe(
     {
      next: () => {
@@ -67,15 +55,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
        this.fetchQualificationTypeEvent.emit(qualificationType);
      }
     }
-  )
-  
-  
-  //  console.log('qualificationService: Repo -> Update qualificationtype');
-  //  console.log(qualificationType);
-
-  //  const currentQualificationType = this._qualificationtypeList.value;
-  //  const index = currentQualificationType.findIndex(x => x.qualificationTypeID === id)
-  //  return this.repo.updateQualificationType(qualificationType.qualificationTypeID,qualificationType)
+  );
  }
 
 //Receives a venue to delete in the service venue list.
@@ -88,14 +68,60 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
  }
 
- matchingQualificationType(input: string){
+ matchingQualificationType(input: string): Promise<any>{
   console.log('qualificationService: Repo -> Matching qualificationtype');
-  this.repo.getMatchQualificationType(input);
+  return this.repo.getMatchQualificationType(input).toPromise();
  }
 
  existingQualificationType(id: number){
   console.log('qualificationService: Repo -> Existing qualificationtype');
   this.repo.existsQualificationType(id).subscribe(result =>
+   console.log(result));
+ }
+
+
+ createQualification(qualification: any){
+  this.repo.createQualification(qualification).subscribe(
+    {
+      next: () => {
+        console.log('QUALIFICATION  CREATED');
+        this.fetchQualificationEvent.emit(qualification);
+      }
+    }
+  );
+ }
+
+
+//Receives a qualification to update in the service qualification list.
+ async updateQualification(id: number,qualification: any) {
+  return this.repo.updateQualificationType(qualification.qualificationID,qualification).subscribe(
+    {
+     next: () => {
+       console.log('QUALIFICATION  UPDATED');
+       this.fetchQualificationEvent.emit(qualification);
+     }
+    }
+  );
+ }
+
+//Receives a venue to delete in the service venue list.
+ deleteQualification(id: number){
+   this.repo.deleteQualification(id).subscribe(result =>
+   {
+    console.log('QUALIFICATION  DELETED');
+    this.fetchQualificationEvent.emit();
+   });
+
+ }
+
+ matchingQualification(input: string): Promise<any>{
+  console.log('qualificationService: Repo -> Matching qualification');
+  return this.repo.getMatchQualification(input).toPromise();
+ }
+
+ existingQualification(id: number){
+  console.log('qualificationService: Repo -> Existing qualification');
+  this.repo.existsQualification(id).subscribe(result =>
    console.log(result));
  }
 
@@ -149,16 +175,6 @@ async deleteQualificationTypeInfoModal(qualificationType: QualificationType) {
       }
     });
 
-    //Update the current qualificationtype list with the qualificationtype list from the delete modal.
-    modal.onDidDismiss().then(() => {
-      this.repo.getQualificationTypes().subscribe(result => {
-        var tempResult = Object.assign(result);
-        this._qualificationtypeList.next(tempResult);
-        console.log("Updated qualificationtype list: Qualification Service: delete qualificationtype");
-        console.log(this._qualificationtypeList);
-      });
-    });
-    
     await modal.present();
 
   }
@@ -183,20 +199,10 @@ async viewQualificationTypeInfoModal(qualificationtype: QualificationType) {
 //Display the confirm create/update modal
 //Receives the selected qualificationtype from the qualificationtype page
 async confirmQualificationTypeModal(choice: number, qualificationType: any) {
-
-  console.log('QualificationService: ConfirmQualificationTypeModalCall');
-  console.log(choice);
-
   if(choice === 1){
 
-    console.log("Performing ADD");
-    // let tempQualificationType = new QualificationType();
-    // tempQualificationType.qualificationTypeID = 0;
-    // tempQualificationType = Object.assign(qualificationType);
-    // console.log(tempQualificationType);
-
+    console.log('Performing ADD');
     const modal = await this.modalCtrl.create({
-
       component: ConfirmQtypeComponent,
       componentProps: {
         qualificationType,
@@ -204,28 +210,11 @@ async confirmQualificationTypeModal(choice: number, qualificationType: any) {
       }
 
     });
-
-    //Update the current venue list with the venue list from the confirm modal.
-    modal.onDidDismiss().then(() => {
-
-      // .repo.getQualificationTypes().subscribe(result => {
-      //   var tempResult = Object.assign(result);
-      //   this._qualificationtypeList.next(tempResult);
-      //   console.log("Updated qthisualificationtype list: Qualification Service: confirm qualificationtype");
-      //   console.log(this._qualificationtypeList);
-      //});
-      // this.repo.getQualificationTypes().subscribe(() => {});
-    });
-
     await modal.present();
 
   } else if (choice === 2){
 
-    console.log("Performing UPDATE");
-    let tempQualificationType = new QualificationType();
-    tempQualificationType = Object.assign(qualificationType);
-    console.log(tempQualificationType);
-    
+    console.log('Performing UPDATE');
     const modal = await this.modalCtrl.create({
       component: ConfirmQtypeComponent,
       componentProps: {
@@ -233,27 +222,96 @@ async confirmQualificationTypeModal(choice: number, qualificationType: any) {
         choice
       }
     });
-
-    modal.onDidDismiss().then(() => {
-
-      // this.repo.getQualificationTypes().subscribe(result => {
-      //   var tempResult = Object.assign(result);
-      //   this._qualificationtypeList.next(tempResult);
-      //   console.log("Updated qualificationtype list: Qualification Service: Update confirm qualificationtype");
-      //   console.log(this._qualificationtypeList);
-      //});
-
-      // this.repo.getQualificationTypes();
-
-    });
-
     await modal.present();
-    
   } else {
-
-    console.log("BadOption: " + choice);
-
+    console.log('BadOption: ' + choice);
   }
 }
 }
+
+
+//Display the delete venue modal.
+//This method receives the selected venue object, from the venue page, in the modal through the componentProps.
+async deleteQualificationInfoModal(qualification: Qualification) {
+  console.log('qualificationService: DeleteQualificationTypeModalCall');
+  let tempQualification = new Qualification();
+  tempQualification = Object.assign(qualification);
+  console.log(tempQualification);
+
+  if (tempQualification.qualificationTypes!= null && tempQualification.qualificationTypes.length > 0){
+    const modal = await this.modalCtrl.create({
+      component: AssociativeQualificationComponent,
+        componentProps: {
+          qualification: tempQualification
+      }
+    });
+    await modal.present();
+
+  } else {
+
+    const modal = await this.modalCtrl.create({
+      component: DeleteQualificationComponent,
+        componentProps: {
+          qualification: tempQualification
+      }
+    });
+    await modal.present();
+  }
+}
+//Display the view qualificationtype modal.
+  //This method receives the selected qualificationtye object, from the qualificationtype page, in the modal through the componentProps.
+async viewQualificationInfoModal(qualification: Qualification) {
+  console.log('Qualification Service: View Qualification ModalCall');
+  let tempQualification = new Qualification();
+  tempQualification = Object.assign(qualification);
+  console.log(tempQualification);
+  const modal = await this.modalCtrl.create({
+    component: ViewQualificationComponent,
+    componentProps: {
+      qualification:tempQualification
+    }
+  });
+  await modal.present();
+}
+
+//Display the confirm create/update modal
+//Receives the selected qualificationtype from the qualificationtype page
+async confirmQualificationModal(choice: number, qualification: any) {
+
+  console.log('QualificationService: ConfirmQualification ModalCall');
+  console.log(choice);
+
+  if(choice === 1){
+    console.log('Performing ADD');
+    const modal = await this.modalCtrl.create({
+      component: ConfirmQualificationComponent,
+      componentProps: {
+        qualification,
+        choice
+      }
+    });
+    await modal.present();
+
+  } else if (choice === 2){
+
+    console.log('Performing UPDATE');
+    let tempQualification = new Qualification();
+    tempQualification = Object.assign(qualification);
+    console.log(tempQualification);
+
+    const modal = await this.modalCtrl.create({
+      component: ConfirmQtypeComponent,
+      componentProps: {
+        qualification,
+        choice
+      }
+    });
+    await modal.present();
+
+  } else {
+    console.log('BadOption: ' + choice);
+  }
+}
+}
+
 
