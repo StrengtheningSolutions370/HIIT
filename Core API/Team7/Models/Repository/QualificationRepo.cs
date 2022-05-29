@@ -53,37 +53,7 @@ namespace Team7.Models.Repository
                         q.QualificationType
                     }).ToListAsync()
                 };
-                ////await query.Include(q => q.QualificationType).ToListAsync();
-                //query.Select(q => new
-                //{
-                //    qualificationType = 
-                //    q.QualificationTypeID,
-                //    q.Description
-                //});
-                //return await query.ToArrayAsync();
             }
-
-
-
-            //IQueryable<Qualification> query = DB.Qualification;
-            //var QualificationArray = await query.ToArrayAsync();
-            //QualificationViewModel[] qualificationViewModels = new QualificationViewModel[QualificationArray.Length];
-
-            //foreach (Qualification x in QualificationArray)
-            //{
-            //    var temp = DB.QualificationType.Where(qualificationType => qualificationType.QualificationTypeID == x.QualificationTypeID);
-            //    qualificationViewModels.Append(new QualificationViewModel(){
-            //        QualificationID = x.QualificationID,
-            //        Description = x.Description,
-            //        QualificationTypeID = x.QualificationTypeID,
-            //    QualificationType = temp.Single()});
-            //}
-            ////foreach(result in QualificationArray)
-            ////{
-
-            ////}
-            //return qualificationViewModels;
-
         }
 
         //RESPONSE
@@ -99,7 +69,7 @@ namespace Team7.Models.Repository
             {
                 return new
                 {
-                    result = await DB.Qualification.Select(q => new
+                    result = await query.Select(q => new
                     {
                         q.QualificationID,
                         q.Description,
@@ -107,14 +77,6 @@ namespace Team7.Models.Repository
                         q.QualificationType
                     }).ToListAsync()
                 };
-                ////await query.Include(q => q.QualificationType).ToListAsync();
-                //query.Select(q => new
-                //{
-                //    qualificationType = 
-                //    q.QualificationTypeID,
-                //    q.Description
-                //});
-                //return await query.ToArrayAsync();
             }
 
         }
