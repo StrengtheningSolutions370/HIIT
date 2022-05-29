@@ -22,40 +22,29 @@ export class EmployeeTypePage implements OnInit {
   isLoading = true;
 
   constructor(public employeeService: EmployeeService, public repo: RepoService) {
-    this.populateEmployeeTypes();
+    this.fetchEmployeeTypes();
+  }
 
+  fetchEmployeeTypes() {
+    this.isLoading = true;
+    this.employeeService.getAllEmployeeTypes().subscribe({
+      next: data => {
+        console.log('FETCHING EMPLOYEE TYPES FROM DB');
+        console.log(data);
+        this.isLoading = false;
+        this.employeeTypeList = data;
+      }
+    });
   }
 
   ngOnInit() {
-    this.populateEmployeeTypes();
+    this.employeeService.fetchEmployeeTypesEvent.subscribe({
+      next: res => {
+        console.log('EMIT TO FETCH EMPLOYEE TYPES AGAIN');
+        this.fetchEmployeeTypes();
+      }
+    });
   }
 
 
-  async populateEmployeeTypes() {
-      //Populate the venue list within the venue page, with the venue list from the venue service.
-      this.employeeTypeSub = this.employeeService.employeeTypeList.subscribe(results => {
-        this.employeeTypeList = results;
-
-        console.log('Employee Type Page Init -> Employee Type List');
-        console.log(this.employeeTypeList);
-      });
-
-    await this.getEmployeeTypes();
-  }
-
-  //Receive venues from the repo in local page.
-  async getEmployeeTypes() {
-      this.isLoading = false;
-       this.repo.getEmployeeTypes().subscribe(
-        {
-          next: res => {
-            this.isLoading = false;
-            console.log(res);
-            this.employeeTypeList = res;
-          }
-        }
-      );
-      // console.log('Title Page -> Get Titles');
-      // console.log(this.titleList);
-  }
 }

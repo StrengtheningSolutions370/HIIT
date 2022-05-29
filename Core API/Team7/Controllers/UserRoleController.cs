@@ -12,9 +12,9 @@ namespace Team7.Controllers
     public class UserRoleController : ControllerBase
     {
         private readonly IUserRoleRepo UserRoleRepo;
-        public UserRoleController(IUserRoleRepo UserRoleRepo)
+        public UserRoleController(IUserRoleRepo userRoleRepo)
         {
-            this.UserRoleRepo = UserRoleRepo;
+            this.UserRoleRepo = userRoleRepo;
         }
 
         // POST api/UserRole/add
@@ -43,13 +43,11 @@ namespace Team7.Controllers
             var toUpdate = await UserRoleRepo.GetUserRoleIdAsync(id);
             if (toUpdate == null)
             {
-                return NotFound("Could not find existing Venue with id:" + id);
+                return NotFound("Could not find existing User Role with id:" + id);
             }
             try
             {
-                toUpdate.Name = userRole.Name;
                 toUpdate.Description = userRole.Description;
-                toUpdate.User = userRole.User;
                 toUpdate.Permission = userRole.Permission;
                 //VenueRepo.Update<Venue>(tempVenue);
                 await UserRoleRepo.SaveChangesAsync();
@@ -74,7 +72,7 @@ namespace Team7.Controllers
             }
             try
             {
-                UserRoleRepo.Delete(tempUserRole);
+                UserRoleRepo.Delete<UserRole>(tempUserRole);
                 await UserRoleRepo.SaveChangesAsync();
                 return Ok();
             }
@@ -112,8 +110,8 @@ namespace Team7.Controllers
         {
             try
             {
-                var venue = await UserRoleRepo.GetUserRolesAsync(input);
-                return Ok(venue);
+                var userRole = await UserRoleRepo.GetUserRolesAsync(input);
+                return Ok(userRole);
             }
             catch (Exception err)
             {
