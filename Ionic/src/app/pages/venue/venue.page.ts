@@ -37,15 +37,18 @@ export class VenuePage implements OnInit {
     });
     this.getVenues();
   }
-
-  //Receive venues from the repo in local page.
-  async getVenues() {
-    setTimeout(async () => {
-      this.isLoading = false;
-      await this.repo.getVenues();
-
-      console.log('Venue Page -> Get Venues');
-      console.log(this.venueList);
-    }, 1500);
+  
+  fetchVenues() {
+    this.isLoading = true;
+    this.venueService.getAllVenues().subscribe(
+      {
+        next: data => {
+          console.log('FETCHING VENUES FROM DB');
+          console.log(data.result);
+          this.isLoading = false;
+          this.venueList = data.result;
+        }
+      }
+    );
   }
 }

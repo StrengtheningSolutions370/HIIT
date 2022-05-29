@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, ViewWillEnter } from '@ionic/angular';
+import { Component, Input } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { ViewWillEnter } from '@ionic/angular';
 import { Title } from 'src/app/models/title';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-view-titles',
@@ -11,16 +12,12 @@ import { Title } from 'src/app/models/title';
 export class ViewTitlesComponent implements ViewWillEnter{
   @Input() title: Title;
 
-  constructor(private modalCtrl: ModalController, public fb:FormBuilder) { 
+  constructor(public global: GlobalService, public fb:FormBuilder) { 
   }
 
   ionViewWillEnter() {
     console.log("viewSpecificTitle-ViewWillEnter");
     console.log(this.title);
-  }
-
-  dismissModal() {
-    this.modalCtrl.dismiss();
   }
 
 }

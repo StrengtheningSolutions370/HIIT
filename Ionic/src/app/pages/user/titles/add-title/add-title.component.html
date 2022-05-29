@@ -2,13 +2,11 @@
   <ion-toolbar>
     <ion-title>New Title Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<!--This modal is not complete, please check if it displays like "AddVenue"-->
-<!--Check the SCSS, TS AND HTML-->
 <ion-content>
   <!--<form #cVenueForm="ngForm" (ngSubmit)="onSubmit(cVenueForm)">-->
   <form [formGroup]="cTitleForm" (ngSubmit)="submitForm()"> 
@@ -27,34 +25,8 @@
     <br>
     <br>
     <ion-button type="submit" color="success" [disabled]="!cTitleForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Title</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
     
   </form>
 </ion-content>
-<!-- <ion-content>
-  <form #cTitleForm="ngForm">
-
-    <br/>     
-
-    <ion-item>
-      <ion-label position="floating">Title :</ion-label>
-      <ion-input required ngModel name #titleCtrl="ngModel"></ion-input>
-    </ion-item>
-    <ion-text color="danger" *ngIf="!titleCtrl.valid && titleCtrl.touched">
-      <p>Please enter a valid title</p>
-    </ion-text>
-
-    <ion-item>
-      <ion-label position="floating">Description :</ion-label>
-      <ion-textarea required ngModel name #desCtrl="ngModel"></ion-textarea>
-    </ion-item>
-    <ion-text color="danger" *ngIf="!desCtrl.valid && desCtrl.touched">
-      <p>Please enter a valid title description</p>
-    </ion-text> -->
-      
-    <!-- <br/>
-
-    <ion-button expand="block" color="success">Create Title</ion-button>
-</form>
-</ion-content> -->
 

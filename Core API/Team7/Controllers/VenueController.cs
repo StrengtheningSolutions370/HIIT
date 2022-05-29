@@ -30,7 +30,7 @@ namespace Team7.Controllers
             {
                 VenueRepo.Add(venue);
                 await VenueRepo.SaveChangesAsync();
-                return Ok(venue);
+                return Ok();
             }
             catch (Exception err)
             {
@@ -44,7 +44,7 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutVenue(int id, [FromBody] Venue venue)
         {
-            var toUpdate = await VenueRepo.GetVenueIdAsync(id);
+            var toUpdate = await VenueRepo._GetVenueIdAsync(id);
             if (toUpdate == null)
             {
                 return NotFound("Could not find existing Venue with id:" + id);
@@ -55,9 +55,9 @@ namespace Team7.Controllers
                 toUpdate.Name = venue.Name;
                 toUpdate.PostalCode = venue.PostalCode;
                 toUpdate.Capacity = venue.Capacity;
-                //VenueRepo.Update<Venue>(tempVenue);
+                VenueRepo.Update<Venue>(toUpdate);
                 await VenueRepo.SaveChangesAsync();
-                return Ok("Successfully updated");
+                return Ok();
             }
             catch (Exception err)
             {
@@ -71,10 +71,10 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteVenue(int id)
         {
-            var tempVenue = await VenueRepo.GetVenueIdAsync(id);
+            var tempVenue = await VenueRepo._GetVenueIdAsync(id);
             if (tempVenue == null)
             {
-                return NotFound();
+                return NotFound("Could not find existing Venue with id:" + id);
             }
             try
             {
@@ -97,10 +97,7 @@ namespace Team7.Controllers
             try
             {
                 var venueList = await VenueRepo.GetAllVenuesAsync();
-                if (venueList == null)
-                {
-                    return NotFound();
-                }
+                if (venueList == null) return Ok(0);
                 return Ok(venueList);
             } 
             catch (Exception err)
@@ -112,11 +109,11 @@ namespace Team7.Controllers
         // GET: api/venues/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingVenues(string input)
+        public async Task<IActionResult> GetMatchingVenues(string name, string? address = null)
         {
             try
             {
-                var venue = await VenueRepo.GetVenuesAsync(input);
+                var venue = await VenueRepo.GetVenuesAsync(name, address);
                 if (venue == null) return Ok(0);
                 return Ok(venue);
             }
@@ -131,7 +128,17 @@ namespace Team7.Controllers
         [Route("exists")]
         public async Task<Venue> VenueExists(int id)
         {
-            return await VenueRepo.GetVenueIdAsync(id);
+            try
+            {
+                var venue = await VenueRepo.GetVenueIdAsync(id);
+                if (venue == null) return Ok(0);
+                return Ok(venue);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+
         }
     }
 }
