@@ -72,6 +72,31 @@ namespace Team7
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Team7", Version = "v1" });
                 //c.ResolveConflictingActions(desc => desc.First());
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Add new Bearer Token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+#pragma warning disable CA1825 // Avoid zero-length array allocations
+                        new string []{}
+#pragma warning restore CA1825 // Avoid zero-length array allocations
+                    }
+                });
             });
 
             services.AddCors(options =>
@@ -88,7 +113,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Josh")));
+            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
@@ -132,9 +157,12 @@ namespace Team7
             services.AddScoped<IUserRepo, UserRepo>();
             //services.AddScoped<IUserRoleRepo, UserRoleRepo>();
             services.AddScoped<IVenueRepo, VenueRepo>();
+            services.AddScoped<IVATRepo, VATRepo>();
             services.AddScoped<IWriteOffLineRepo, WriteOffLineRepo>();
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();
+            services.AddScoped<IVATRepo, VATRepo>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -150,6 +178,7 @@ namespace Team7
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Team7 v1");
                     //c.RoutePrefix = string.Empty;
+
                 });
 
             }

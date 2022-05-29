@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Team7.Migrations
 {
-    public partial class UpdatedAPI : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -518,7 +518,7 @@ namespace Team7.Migrations
                     SaleItemID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Quotable = table.Column<bool>(type: "bit", nullable: false),
@@ -737,7 +737,7 @@ namespace Team7.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IDNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QualificationID = table.Column<int>(type: "int", nullable: false),
                     EmployeeContractID = table.Column<int>(type: "int", nullable: false),

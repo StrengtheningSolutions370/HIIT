@@ -1,3 +1,130 @@
-<p>
-  add-sitem works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>New Sale Item Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="cSaleItemForm" (ngSubmit)="submitForm()"> 
+    <br/>
+    <div class="ion-text-center">
+      <p style="font-size:large">Please fill in the sale item information below.</p>
+    </div>
+    <ion-item>
+      <ion-label position="floating">Name:</ion-label>
+      <ion-input formControlName="itemName" type="text" required="" id="itemName" ></ion-input>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.itemName.errors?.required && cSaleItemForm.get('itemName').touched">
+      Sale Item Name is required.<br/>
+    </span>
+    <ion-item>
+      <ion-label position="floating">Description:</ion-label>
+      <ion-textarea formControlName="itemDescription" type="text" required="" id="itemDescription" ></ion-textarea>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.itemDescription.errors?.required && cSaleItemForm.get('itemDescription').touched">
+      Sale Item Description is required.<br/>
+    </span>
+    <!-- <ion-item>
+      <ion-label position="floating">Photo:</ion-label>
+      <ion-input type="file" formControlName="itemPhoto" type="text" required="" id="itemPhoto" ></ion-input>
+      <br/>
+    </ion-item> -->
+
+    <ion-label position="floating">Photo:</ion-label>
+    <br />
+    <div class="ion-text-center">
+      <ion-button>
+        <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+        <ion-label slot="end">Upload Image</ion-label>
+        <input (change)="addImage($event)" type="file" id="file-input" accept="image/png, image/jpeg">
+      </ion-button>
+    </div>
+
+    <!-- <ion-item>
+      <ion-label position="floating">Quotable:</ion-label>
+      <ion-select formControlName="itemQuotable" type="text" required="" id="itemQuotable" >
+        <ion-select-option value="true">Yes</ion-select-option>
+        <ion-select-option value="false">No</ion-select-option>
+
+      </ion-select>
+      <br/>
+    </ion-item> -->
+
+    <ion-item>
+      <ion-checkbox formControlName="itemQuotable" (ionChange)="checkBoxToggle($event)" color="secondary" ></ion-checkbox>
+      <ion-label>
+        Quotable
+      </ion-label>
+    </ion-item>
+
+    <div *ngIf="!quotable">
+      <ion-item>
+        <ion-label position="floating">Price:</ion-label>
+        <ion-input type="file" formControlName="itemPrice" type="text" required="" id="itemPrice" ></ion-input>
+        <br/>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="errorControl.itemPrice.errors?.required && cSaleItemForm.get('itemPrice').touched">
+        Sale Item Price is required.<br/>
+      </span>
+      <ion-item>
+        <ion-label position="floating">Quantity:</ion-label>
+        <ion-input formControlName="itemQuantity" type="number" required="" id="itemQuantity" ></ion-input>
+        <br/>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.required && cSaleItemForm.get('itemQuantity').touched">
+        Item Quantity is required.
+        <br/>
+      </span>
+      <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.min">
+        Please enter a quantity above 0.
+        <br/>
+      </span>
+    </div>
+    <ion-item>
+      <ion-label position="floating">Sale Category:</ion-label>
+      <ion-select formControlName="itemSCategory" type="text" required="" id="itemSCategory" >
+        <ng-container *ngFor="let c of categoryDropDown">
+          <ion-select-option value="{{c.saleCategoryID}},{{c.name}}">{{ c.name }}</ion-select-option>
+        </ng-container>
+      </ion-select>
+      <br/>
+    </ion-item>
+    <br>
+    <br>
+    <ion-button type="submit" color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Sale Item</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
+    
+  </form>
+</ion-content>
+<!-- <ion-content>
+  <form #cTitleForm="ngForm">
+
+    <br/>     
+
+    <ion-item>
+      <ion-label position="floating">Title :</ion-label>
+      <ion-input required ngModel name #titleCtrl="ngModel"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="!titleCtrl.valid && titleCtrl.touched">
+      <p>Please enter a valid title</p>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Description :</ion-label>
+      <ion-textarea required ngModel name #desCtrl="ngModel"></ion-textarea>
+    </ion-item>
+    <ion-text color="danger" *ngIf="!desCtrl.valid && desCtrl.touched">
+      <p>Please enter a valid title description</p>
+    </ion-text> -->
+      
+    <!-- <br/>
+
+    <ion-button expand="block" color="success">Create Title</ion-button>
+</form>
+</ion-content> -->
+

@@ -89,7 +89,7 @@ namespace Team7.Controllers
         //GET: api/title/getAll
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetQualificationTypes()
+        public async Task<object> GetQualificationTypes()
         {
             try
             {
