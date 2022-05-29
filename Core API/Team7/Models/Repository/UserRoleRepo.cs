@@ -40,9 +40,9 @@ namespace Team7.Models.Repository
 
         }
 
-        public async Task<UserRole[]> GetUserRolesAsync(string input)
+        public async Task<object> GetUserRolesAsync(string name, string description)
         {
-            IQueryable<UserRole> query = DB.UserRole.Where(v => v.Name == input || v.Description == input);
+            IQueryable<UserRole> query = DB.UserRole.Where(v => v.Name == name || v.Description == description);
             if (!query.Any())
             {
                 return null;

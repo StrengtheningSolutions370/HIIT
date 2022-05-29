@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,20 +23,20 @@ namespace Team7.Controllers
     public class AppUserController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly IUserClaimsPrincipalFactory<AppUser> _claimsPrincipalFactory;
+        //private readonly IUserClaimsPrincipalFactory<AppUser> _claimsPrincipalFactory;
         private readonly IConfiguration _configuration;
 
         public AppUserController(UserManager<AppUser> userManager,
-            IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory,
+            //IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory,
             IConfiguration configuration)
         {
             _userManager = userManager;
-            _claimsPrincipalFactory = claimsPrincipalFactory;
+            //_claimsPrincipalFactory = claimsPrincipalFactory;
             _configuration = configuration;
         }
 
         [HttpPost]
-        [Route("Register")]
+        [Route("register")]
         public async Task<IActionResult> Register(UserViewModel userViewModel)
         {
             var user = await _userManager.FindByNameAsync(userViewModel.EmailAddress);
@@ -63,7 +65,7 @@ namespace Team7.Controllers
         }
 
         [HttpPost]
-        [Route("Login")]
+        [Route("login")]
         public async Task<IActionResult> Login(UserViewModel userViewModel)
         {
             var user = await _userManager.FindByNameAsync(userViewModel.EmailAddress);
@@ -72,8 +74,8 @@ namespace Team7.Controllers
             {
                 try
                 {
-                    var principal = await _claimsPrincipalFactory.CreateAsync(user);
-                    await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
+                    //var principal = await _claimsPrincipalFactory.CreateAsync(user);
+                    //await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
                     return GenerateJWTToken(user);
                 }
                 catch (Exception err)
@@ -82,42 +84,9 @@ namespace Team7.Controllers
                 }
             } else
             {
-                return NotFound("Account with specified email does not exist. Please register a new account.");
+                return NotFound("The provided email or password is incorrect. Please check your password or register an account.");
             }
-
-            //var loggedInUser = new UserViewModel { EmailAddress = user.Email, Password = user.PasswordHash };
-            //return Ok(loggedInUser);
         }
-
-        [HttpPost]
-        [Route("Logout")]
-        public async Task<IActionResult> Logout(UserViewModel userViewModel)
-        {
-            var user = await _userManager.FindByNameAsync(userViewModel.EmailAddress);
-
-            try
-            {
-                var principal = await _claimsPrincipalFactory.CreateAsync(user);
-                await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
-                return Ok("Successfully logged out of account: " + user.Email);
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err + "     Internal error. Please contact support");
-            }
-
-        //    if (user != null && await _userManager.CheckPasswordAsync(user, userViewModel.Password))
-        //    {
-
-        //    }
-        //    else
-        //    {
-        //        return NotFound("Account with specified email does not exist. Please register a new account.");
-        //    }
-
-        //    var loggedInUser = new UserViewModel { EmailAddress = user.Email, Password = user.PasswordHash };
-        //    return Ok(loggedInUser);
-         }
 
         [HttpGet]
         private ActionResult GenerateJWTToken(AppUser appUser)
@@ -141,10 +110,45 @@ namespace Team7.Controllers
                 expires: DateTime.UtcNow.AddHours(12)
                 );
 
-            return Created("", new { 
-            token = new JwtSecurityTokenHandler().WriteToken(token),
-            expiration = token.ValidTo
+            return Created("", new
+            {
+                //user sent through only for debugging - remove soon
+                user = appUser,
+                token = new JwtSecurityTokenHandler().WriteToken(token),
+                expiration = token.ValidTo
             });
         }
+
+        //[HttpPost]
+        //[Route("Logout")]
+        //[Authorize (AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //public async Task<IActionResult> Logout(UserViewModel userViewModel)
+        //{
+        //    var user = await _userManager.FindByNameAsync(userViewModel.EmailAddress);
+
+        //    try
+        //    {
+        //        await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+        //        return Ok("Successfully logged out of account: " + user.Email);
+        //    }
+        //    catch (Exception err)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, err + "     Internal error. Please contact support");
+        //    }
+
+        ////    if (user != null && await _userManager.CheckPasswordAsync(user, userViewModel.Password))
+        ////    {
+
+        ////    }
+        ////    else
+        ////    {
+        ////        return NotFound("Account with specified email does not exist. Please register a new account.");
+        ////    }
+
+        ////    var loggedInUser = new UserViewModel { EmailAddress = user.Email, Password = user.PasswordHash };
+        ////    return Ok(loggedInUser);
+        // }
+
+
     }
 }

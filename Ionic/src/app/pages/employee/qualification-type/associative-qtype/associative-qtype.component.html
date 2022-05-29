@@ -1,3 +1,25 @@
-<p>
-  associative-qtype works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>View {{qualificationType.name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br/>
+  <div class="ion-text-center">
+    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following qualifications are associated with the <br/> "{{qualificationType.name}}" qualification type</p>
+  
+
+    <ion-item *ngFor="let qualification of qualificationType.qualifications" > 
+      <ion-label>
+        <h2>Qualification Name:</h2>
+        <p class="ion-text-start">{{qualification['description']}}</p>
+      </ion-label>
+    </ion-item>
+  </div>
+  <br>
+  <ion-button color="light" class="ion-float-right" style="margin-right:10%;width:30% " (click)="this.global.dismissModal()">Return</ion-button>
+</ion-content>

@@ -1,7 +1,6 @@
 import { Injectable, OnInit, Output, EventEmitter  } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { QualificationType } from 'src/app/models/qualification-type';
-import { AssociativeVenueComponent } from 'src/app/pages/venue/associative-venue/associative-venue.component';
 import { RepoService } from '../repo.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AddQtypeComponent } from 'src/app/pages/employee/qualification-type/add-qtype/add-qtype.component';
@@ -127,15 +126,12 @@ async updateQualificationTypeInfoModal(qualificationType: QualificationType) {
 //This method receives the selected venue object, from the venue page, in the modal through the componentProps.
 async deleteQualificationTypeInfoModal(qualificationType: QualificationType) {
   console.log("qualificationService: DeleteQualificationTypeModalCall");
-  let tempQualificationType = new QualificationType();
-  tempQualificationType = Object.assign(qualificationType);
-  console.log(tempQualificationType);
 
-  if (tempQualificationType.qualifications!= null && tempQualificationType.qualifications.length > 0){
+  if (qualificationType.qualifications!= null && qualificationType.qualifications.length > 0){
     const modal = await this.modalCtrl.create({
       component: AssociativeQtypeComponent,
         componentProps: {
-          qualificationType: tempQualificationType
+          qualificationType
       }
     });
     await modal.present();
@@ -145,7 +141,7 @@ async deleteQualificationTypeInfoModal(qualificationType: QualificationType) {
     const modal = await this.modalCtrl.create({
       component: DeleteQtypeComponent,
         componentProps: {
-          qualificationType: tempQualificationType
+          qualificationType
       }
     });
 

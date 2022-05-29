@@ -38,9 +38,17 @@ namespace Team7.Models.Repository
 
         }
 
-        public async Task<Venue[]> GetVenuesAsync(string input)
+        public async Task<Venue[]> GetVenuesAsync(string name, string? address)
         {
-            IQueryable<Venue> query = DB.Venue.Where(v => v.Name == input || v.Address == input);
+            IQueryable<Venue> query;
+            if (address == null)
+            {
+                query = DB.Venue.Where(v => v.Name == name);
+            } else
+            {
+                query = DB.Venue.Where(v => v.Name == name || v.Address == address);
+            }
+            
             if (!query.Any())
             {
                 return null;

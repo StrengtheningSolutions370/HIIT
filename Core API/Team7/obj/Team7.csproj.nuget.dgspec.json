@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {}
+    "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {}
   },
   "projects": {
-    "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {
+    "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
+        "projectUniqueName": "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
         "projectName": "Team7",
-        "projectPath": "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
-        "packagesPath": "C:\\Users\\shann\\.nuget\\packages\\",
-        "outputPath": "D:\\Users\\shann\\Desktop\\MasterFinal\\HIIT-Team7\\Core API\\Team7\\obj\\",
+        "projectPath": "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\Team7.csproj",
+        "packagesPath": "C:\\Users\\Robyn\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Robyn\\Desktop\\Dev2\\HIIT-Team7\\Core API\\Team7\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\shann\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Robyn\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Azure.Core": {
+              "target": "Package",
+              "version": "[1.24.0, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[5.0.17, )"
@@ -70,6 +74,10 @@
               "target": "Package",
               "version": "[5.0.17, )"
             },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.29, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
@@ -97,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

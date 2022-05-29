@@ -31,8 +31,6 @@ export class TitleService {
     return this._titleList.asObservable();
   }
 
-  private temp: Title[];
-
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
     //Receive the venues from the repo (API).
     this.repo.getTitles().subscribe(result => {
@@ -58,13 +56,9 @@ export class TitleService {
     )
    }
 
-   getAllTitles(): Observable<any> {
-     return this.repo.getTitles();
-   }
-
   //Receives a title to update in the service title list.
-   async updateTitle(id: number,title: any) {
-     return this.repo.updateTitle(title.titleID,title).subscribe(
+   updateTitle(id: number,title: any) {
+     return this.repo.updateTitle(id,title).subscribe(
        {
         next: () => {
           console.log('TITLE UPDATED');
@@ -81,6 +75,10 @@ export class TitleService {
       this.fetchTitlesEvent.emit();
     });
    }
+
+   getAllTitles(): Observable<any> {
+    return this.repo.getTitles();
+  }
 
    matchingTitle(input: string){
     console.log('titleService: Repo -> Matching Title');
@@ -203,10 +201,6 @@ export class TitleService {
     } else if (choice === 2){
 
       console.log("Performing UPDATE");
-
-      let tempTitle = new Title();
-      tempTitle = Object.assign(title);
-      console.log(tempTitle);
 
       const modal = await this.modalCtrl.create({
         component: ConfirmTitleComponent,

@@ -73,9 +73,9 @@ namespace Team7.Models.Repository
             return await DB.SaveChangesAsync() > 0;
         }
 
-        Task<VAT[]> IVATRepo.GetVATsAsync(string input)
+        Task<object]> IVATRepo.GetVATsAsync(string input)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
