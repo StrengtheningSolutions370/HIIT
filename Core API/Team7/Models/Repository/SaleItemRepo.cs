@@ -32,35 +32,14 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<object> GetAllSaleItemsAsync()
+        public async Task<SaleItem[]> GetAllSaleItemsAsync()
         {
             IQueryable<SaleItem> query = DB.SaleItem;
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return new
-                {
-                    result = await DB.SaleItem.Select(si => new
-                    {
-                        si.SaleItemID,
-                        si.Photo,
-                        si.Description,
-                        si.Name,
-                        si.Price,
-                        si.Quotable,
-                        si.Quantity, 
-                        si.SaleCategoryID,
-                        si.SaleCategory
-                    }).ToListAsync()
-                };
-            }
+            return await query.ToArrayAsync();
+
         }
 
-        //Response
-        public async Task<object> GetSaleItemsAsync(string name, string photo, string desc, decimal? price, bool quotable, int qty)
+        public async Task<SaleItem[]> GetSaleItemsAsync(string name, byte[] photo, string desc, decimal? price, bool quotable, int qty)
         {
             IQueryable<SaleItem> query = DB.SaleItem.Where(si => si.Name == name || si.Photo == photo || si.Description == desc || si.Price == price || si.Quotable == quotable || si.Quantity == qty);
             if (!query.Any())
@@ -69,21 +48,7 @@ namespace Team7.Models.Repository
             }
             else
             {
-                return new
-                {
-                    result = await DB.SaleItem.Select(si => new
-                    {
-                        si.SaleItemID,
-                        si.Photo,
-                        si.Description,
-                        si.Name,
-                        si.Price,
-                        si.Quotable,
-                        si.Quantity,
-                        si.SaleCategoryID,
-                        si.SaleCategory
-                    }).ToListAsync()
-                };
+                return await query.ToArrayAsync();
             }
 
         }
@@ -107,7 +72,7 @@ namespace Team7.Models.Repository
             return await DB.SaveChangesAsync() > 0;
         }
 
-        public Task<object> GetSaleItemsAsync(string input)
+        Task<SaleItem[]> ISaleItemRepo.GetSaleItemsAsync(string input)
         {
             throw new NotImplementedException();
         }

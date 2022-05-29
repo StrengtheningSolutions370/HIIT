@@ -3,9 +3,9 @@ import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
-import { AlertController, ViewWillEnter } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
 import { QualificationType } from 'src/app/models/qualification-type';
-import { GlobalService } from 'src/app/services/global/global.service';
 import { QualificationService } from 'src/app/services/qualification/qualification.service';
 
 @Component({
@@ -21,10 +21,8 @@ export class AddQtypeComponent implements ViewWillEnter {
     qualificationTypeName: ['', [Validators.required]]
   });
 
-  constructor(
-    public global: GlobalService,
-    public formBuilder: FormBuilder,
-    public qualificationService: QualificationService,
+  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
+    public qualificationService: QualificationService, private router: Router, private currentRoute: ActivatedRoute,
     private  alertCtrl: AlertController ) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.
@@ -48,14 +46,27 @@ export class AddQtypeComponent implements ViewWillEnter {
         name: this.cQTypeForm.value['qualificationTypeName'],
         qualifications: []
       };
-      this.global.dismissModal();
+      this.dismissModal();
       this.qualificationService.confirmQualificationTypeModal(1,temp);
-      
+     
        //this.sucAdd();
       // console.log("CurrentRoute:ADD");
       // console.log(this.currentRoute.url);
     }
    }
+
+   async sucAdd() {
+    const toast = await this.toastCtrl.create({
+      message: 'The Qualification Type has been successfully added!',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  //Once the modal has been dismissed.
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  };
 
   async duplicateAlert() {
     const alert = await this.alertCtrl.create({

@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/semi */
-import { Injectable, OnInit, Output, EventEmitter } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
 import { AddVenueComponent } from 'src/app/pages/venue/add-venue/add-venue.component';
@@ -13,7 +13,7 @@ import { ViewVenueInfoComponent } from 'src/app/pages/venue/view-venue-info/view
 import { ConfirmVenueComponent } from 'src/app/pages/venue/confirm-venue/confirm-venue.component';
 import { AssociativeVenueComponent } from 'src/app/pages/venue/associative-venue/associative-venue.component';
 import { RepoService } from '../repo.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +21,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export class VenueService {
 
-  @Output() fetchVenuesEvent = new EventEmitter<Venue>();
-
   //Creating a venueList for all the venues in the service.
   private _venueList = new BehaviorSubject<Venue[]>([]);
-  public match: boolean;
 
   //Return the venue list as an observable.
   public get venueList(){
@@ -35,6 +32,9 @@ export class VenueService {
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
     //Receive the venues from the repo (API).
     this.repo.getVenues().subscribe(result => {
+      console.log('Venue List: Venue Service -> Get Venues');
+      console.log(result);
+
       var tempResult = Object.assign(result);
       this._venueList.next(tempResult);
 
@@ -46,46 +46,36 @@ export class VenueService {
   //Methods
   //Add a venue to the venue list within the venue service.
    createVenue(venue: any){
-    this.repo.createVenue(venue).subscribe(
-      {
-        next: () => {
-          console.log('VENUE CREATED');
-          this.fetchVenuesEvent.emit(venue);
-        }
-      }
-    )
+     console.log('venueService: Repo -> Create Venue');
+     console.log(JSON.stringify(venue));
+     this.repo.createVenue(venue).subscribe(res=> {
+      var tempResult = Object.assign(res);
+      console.log("Venue Service: Create venue");
+      console.log(res);
+      this._venueList.next(tempResult.data);
+     });
    }
 
   //Receives a venue to update in the service venue list.
-   updateVenue(id: number,venue: any){
-     if (id != venue.venueID){
-       console.log("ERROR IN VENUE UPDATE - MISMATCH ID");
-       return;
-     }
-    return this.repo.updateVenue(id,venue).subscribe(
-      {
-       next: () => {
-         console.log('VENUE UPDATED');
-         this.fetchVenuesEvent.emit(venue);
-       }
-      }
-    )
+   updateVenue(id,venue: any){
+     console.log('venueService: Repo -> Update Venue');
+     console.log(venue);
+
+     const currentVenue = this._venueList.value;
+     const index = currentVenue.findIndex(x => x.venueID === id)
+     this.repo.updateVenue(venue.venueID,venue).subscribe(result =>
+      console.log(result));
    }
 
   //Receives a venue to delete in the service venue list.
    deleteVenue(id: number){
-    this.repo.deleteVenue(id).subscribe(result => {
-      console.log('VENUE DELETED');
-      this.fetchVenuesEvent.emit();
-    });
+     this.repo.deleteVenue(id).subscribe(result =>
+      console.log(result));
    }
 
-   getAllVenues(): Observable<any> {
-     return this.repo.getVenues();
-   }
-
-   matchingVenue(name: string, address:string): Promise<any>{
-    return this.repo.getMatchVenue(name,address).toPromise();
+   matchingVenue(input: string){
+    console.log('venueService: Repo -> Matching Venue');
+    this.repo.getMatchVenue(input);
    }
 
    existingVenue(id: number){
@@ -122,11 +112,14 @@ export class VenueService {
   //This method receives the selected venue object, from the venue page, in the modal through the componentProps.
   async deleteVenueInfoModal(venue: Venue) {
     console.log("VenueService: DeleteVenueModalCall");
-    if (venue.schedules!= null && venue.schedules.length > 0){
+    let tempVenue = new Venue();
+    tempVenue = Object.assign(venue);
+    console.log(tempVenue);
+    if (tempVenue.schedules!= null && tempVenue.schedules.length > 0){
       const modal = await this.modalCtrl.create({
         component: AssociativeVenueComponent,
           componentProps: {
-            venue
+            venue: tempVenue
         }
       });
       await modal.present();
@@ -134,7 +127,7 @@ export class VenueService {
       const modal = await this.modalCtrl.create({
         component: DeleteVenueComponent,
           componentProps: {
-            venue
+            venue: tempVenue
         }
       });
 
@@ -155,10 +148,13 @@ export class VenueService {
     //This method receives the selected venue object, from the venue page, in the modal through the componentProps.
   async viewVenueInfoModal(venue: Venue) {
     console.log("VenueService: ViewVenueModalCall");
+    let tempVenue = new Venue();
+    tempVenue = Object.assign(venue);
+    console.log(tempVenue);
     const modal = await this.modalCtrl.create({
       component: ViewVenueInfoComponent,
       componentProps: {
-        venue
+        venue:tempVenue
       }
     });
     await modal.present();
@@ -166,50 +162,56 @@ export class VenueService {
 
   //Display the confirm create/update modal
   //Receives the selected venue from the venue page
-  async confirmVenueModal(choice: number, venue: any) {
+  async confirmVenueModal(selection: number, venue: any) {
     console.log('VenueService: ConfirmVenueModalCall');
-    console.log(choice);
-    if(choice === 1){
+    console.log(selection);
+    if(selection === 1){
       console.log("Performing ADD");
+      let tempVenue = new Venue();
+      tempVenue.venueID = 0;
+      tempVenue = Object.assign(venue);
+      console.log(tempVenue);
       const modal = await this.modalCtrl.create({
         component: ConfirmVenueComponent,
         componentProps: {
-          venue,
-          choice
+          venue:tempVenue,
+          choice:selection
         }
       });
 
       //Update the current venue list with the venue list from the confirm modal.
       modal.onDidDismiss().then(() => {
-        this.repo.getVenues();
+        this.repo.getVenues().subscribe(result => {
+          var tempResult = Object.assign(result);
+          this._venueList.next(tempResult);
+          console.log("Updated venue list: Venue Service: ADD confirm venue");
+          console.log(this._venueList);
+        });
       });
       await modal.present();
-    } else if (choice === 2){
+    } else if (selection === 2){
       console.log("Performing UPDATE");
+      let tempVenue = new Venue();
+      tempVenue = Object.assign(venue);
+      console.log(tempVenue);
       const modal = await this.modalCtrl.create({
         component: ConfirmVenueComponent,
         componentProps: {
-          venue,
-          choice
+          venue:tempVenue,
+          choice:selection
         }
       });
       modal.onDidDismiss().then(() => {
-        this.repo.getVenues();
+        this.repo.getVenues().subscribe(result => {
+          var tempResult = Object.assign(result);
+          this._venueList.next(tempResult);
+          console.log("Updated venue list: Venue Service: Update confirm venue");
+          console.log(this._venueList);
+        });
       });
       await modal.present();
     } else {
-      console.log("BadOption: " + choice)
+      console.log("BadOption: " + selection)
     }
-  }
-
-  async associativeVenueModal(venue: Venue) {
-    console.log("VenueService: AssociativeModalCall");
-    const modal = await this.modalCtrl.create({
-      component: AssociativeVenueComponent,
-      componentProps: {
-        venue
-      }
-    });
-    await modal.present();
   }
 }

@@ -19,7 +19,7 @@
               <div padding>
                 <ion-item>
                   <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
-                  <ion-input type="email" name="emailAddress" ngModel email #emailCtrl="ngModel" placeholder="Email" required ></ion-input>
+                  <ion-input type="email" name="mail" ngModel email #emailCtrl="ngModel" placeholder="Email" required ></ion-input>
                 </ion-item>
                 <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
                   <p>Please enter a valid email address</p>

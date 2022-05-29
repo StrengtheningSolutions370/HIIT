@@ -20,11 +20,13 @@
   <div class="ion-text-center">
     <ion-button class="ion-text-center"color="success" (click)="venueService.addVenueInfoModal()">
       Add Venue
+      <!-- <ion-icon name="add" size="medium"></ion-icon> -->
     </ion-button>
   </div>
   <br>
   <ion-grid *ngIf="!isLoading">
-    <ion-list *ngFor="let venue of this.venueList | filter:filter, let i = index"> 
+    <ion-list *ngFor="let venue of venueList | filter:filter, let i = index"> 
+      
       <ion-item-sliding>
         <!-- Sending through the venue object to the venue service, to be viewed in the modal -->
         <ion-item button (click)="venueService.viewVenueInfoModal(venue)">

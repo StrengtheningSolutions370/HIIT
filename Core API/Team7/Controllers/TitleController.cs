@@ -100,7 +100,7 @@ namespace Team7.Controllers
                 var titleList = await TitleRepo.GetAllTitlesAsync();
                 if (titleList == null)
                 {
-                    return Ok(0);
+                    return NotFound();
                 }
                 return Ok(titleList);
             }

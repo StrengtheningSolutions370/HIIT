@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,7 +24,6 @@ namespace Team7.Controllers
         // POST api/venues/add
         [HttpPost]
         [Route("add")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PostVenue(Venue venue)
         {
             try
@@ -115,12 +112,11 @@ namespace Team7.Controllers
         // GET: api/venues/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingVenues(string name, string? address)
+        public async Task<IActionResult> GetMatchingVenues(string input)
         {
             try
             {
-                var venue = await VenueRepo.GetVenuesAsync(name,address);
-                if (venue == null) return Ok(0);
+                var venue = await VenueRepo.GetVenuesAsync(input);
                 return Ok(venue);
             }
             catch (Exception err)
@@ -132,7 +128,6 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
-
         public async Task<Venue> VenueExists(int id)
         {
             return await VenueRepo.GetVenueIdAsync(id);

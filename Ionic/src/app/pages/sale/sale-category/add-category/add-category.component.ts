@@ -51,7 +51,7 @@ export class AddCategoryComponent implements ViewWillEnter {
             items: []
           };
           this.dismissModal();
-          //this.saleService.confirmSaleCategoryModal(1,temp);
+          this.saleService.confirmSaleCategoryModal(1,temp);
 
           // this.sucAdd();
           // console.log("CurrentRoute:ADD");
