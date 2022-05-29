@@ -66,7 +66,6 @@ namespace Team7.Models.Repository
             {
                 return await query.ToArrayAsync();
             }
-            
         }
 
         public async Task<object> GetTitlesAsync(string input)

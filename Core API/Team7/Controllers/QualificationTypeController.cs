@@ -44,7 +44,7 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutQualificationType(int id, [FromBody] QualificationType qualificationType)
         {
-            var toUpdate = await QualificationTypeRepo.GetQualificationTypeIdAsync(id);
+            var toUpdate = await QualificationTypeRepo._GetQualificationTypeIdAsync(id);
             if (toUpdate == null)
             {
                 return NotFound("Could not find existing Qualification Type with id:" + id);
@@ -68,7 +68,7 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteQualificationType(int id)
         {
-            var tempQualificationType = await QualificationTypeRepo.GetQualificationTypeIdAsync(id);
+            var tempQualificationType = await QualificationTypeRepo._GetQualificationTypeIdAsync(id);
             if (tempQualificationType == null)
             {
                 return NotFound();
@@ -128,7 +128,7 @@ namespace Team7.Controllers
         [Route("exists")]
         public async Task<QualificationType> QualificationTypeExists(int id)
         {
-            return await QualificationTypeRepo.GetQualificationTypeIdAsync(id);
+            return await QualificationTypeRepo._GetQualificationTypeIdAsync(id);
         }
 
     }
