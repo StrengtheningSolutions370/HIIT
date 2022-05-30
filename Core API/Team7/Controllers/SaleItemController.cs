@@ -8,6 +8,8 @@ using Team7.Models.Repository;
 using Team7.Models;
 using Microsoft.EntityFrameworkCore;
 using Team7.Context;
+using System.IO;
+using System.Net.Http.Headers;
 
 namespace Team7.Controllers
 {
@@ -15,6 +17,8 @@ namespace Team7.Controllers
     [ApiController]
     public class SaleItemController : ControllerBase
     {
+        const string PATH = "./Assets/";
+
         private readonly ISaleItemRepo SaleItemRepo;
         public SaleItemController(ISaleItemRepo saleItemRepo)
         {
@@ -28,6 +32,7 @@ namespace Team7.Controllers
         {
             try
             {
+                
                 SaleItemRepo.Add(saleItem);
                 await SaleItemRepo.SaveChangesAsync();
                 return Ok(saleItem);
@@ -37,6 +42,44 @@ namespace Team7.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
 
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        [Route("upload")]
+        public async Task<IActionResult> UploadAsync()
+        {
+            try
+            {
+                var formCollection = await Request.ReadFormAsync();
+                var file = formCollection.Files.First();
+                var folderName = Path.Combine("Resources", "Images", "saleItemImages");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                if (file.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                    return Ok(new { dbPath });
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+        }
+
+        static void createFile(byte[] data)
+        {
+            using var stream = System.IO.File.Create(PATH);
+            stream.Write(data, 0, data.Length);
         }
 
         // PUT api/SaleItem/update/5
@@ -86,6 +129,10 @@ namespace Team7.Controllers
             {
                 SaleItemRepo.Delete<SaleItem>(tempSaleItem);
                 await SaleItemRepo.SaveChangesAsync();
+
+                var fileToDelete = tempSaleItem.Photo;
+                System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", fileToDelete));
+
                 return Ok();
             }
             catch (Exception err)

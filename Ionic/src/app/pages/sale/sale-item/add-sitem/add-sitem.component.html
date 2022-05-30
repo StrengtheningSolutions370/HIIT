@@ -26,6 +26,7 @@
       <ion-textarea formControlName="itemDescription" type="text" required="" id="itemDescription" ></ion-textarea>
       <br/>
     </ion-item>
+
     <span class="error ion-padding" *ngIf="errorControl.itemDescription.errors?.required && cSaleItemForm.get('itemDescription').touched">
       Sale Item Description is required.<br/>
     </span>
@@ -35,15 +36,11 @@
       <br/>
     </ion-item> -->
 
-    <ion-label position="floating">Photo:</ion-label>
-    <br />
-    <div class="ion-text-center">
-      <ion-button>
-        <ion-icon lazy="true" slot="start" name="image"></ion-icon>
-        <ion-label slot="end">Upload Image</ion-label>
+    <ion-item>
+        <ion-label>Photo:</ion-label>
         <input (change)="addImage($event)" type="file" id="file-input" accept="image/png, image/jpeg">
-      </ion-button>
-    </div>
+    </ion-item>
+   
 
     <!-- <ion-item>
       <ion-label position="floating">Quotable:</ion-label>
@@ -65,7 +62,7 @@
     <div *ngIf="!quotable">
       <ion-item>
         <ion-label position="floating">Price:</ion-label>
-        <ion-input type="file" formControlName="itemPrice" type="text" required="" id="itemPrice" ></ion-input>
+        <ion-input type="file" formControlName="itemPrice" type="number" required="" id="itemPrice" ></ion-input>
         <br/>
       </ion-item>
       <span class="error ion-padding" *ngIf="errorControl.itemPrice.errors?.required && cSaleItemForm.get('itemPrice').touched">

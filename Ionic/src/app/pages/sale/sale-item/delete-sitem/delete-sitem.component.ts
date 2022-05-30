@@ -12,8 +12,11 @@ import { SalesService } from 'src/app/services/sales/sales.service';
 })
 export class DeleteSitemComponent implements ViewWillEnter {
 
-  @Input() saleItem: SaleItem;
+  @Input() saleItem: any;
   @Input() categoryName: string;
+  @Input() image:any;
+
+  currentCategory! : string;
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public saleService: SalesService, private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController) { }
@@ -21,9 +24,10 @@ export class DeleteSitemComponent implements ViewWillEnter {
     ionViewWillEnter() {
       console.log('DeleteSaleItem - ViewWillEnter');
       console.log(this.saleItem);
+      this.convertToName();
     }
   
-    //Send through the id of the selected title to be deleted in the title service.
+    //Send through the id of the selected sale item to be deleted in the sale item service.
     async delete(id: number){
       this.saleService.deleteSaleItem(id);
       await this.dismissModal();
@@ -50,6 +54,24 @@ export class DeleteSitemComponent implements ViewWillEnter {
     //Close the modal and navigate back to the venue page.
     dismissModal() {
       this.modalCtrl.dismiss();
+    }
+
+    public createImg = (fileName: string) => { 
+      return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`; 
+    }
+
+    convertToName() {
+      this.saleService.getAllSaleCategories().subscribe(
+        {
+          next: data => {
+            data.forEach(element => {
+              if (element.saleCategoryId == this.saleItem.saleCategoryId) {
+                this.currentCategory = element.name;
+              }
+            });
+          }
+        }
+      )
     }
   
 

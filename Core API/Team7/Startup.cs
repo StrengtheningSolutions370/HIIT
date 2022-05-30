@@ -18,6 +18,9 @@ using Team7.Factory;
 using Team7.Models;
 using Team7.Models.Repository;
 using System.Text;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace Team7
 {
@@ -182,6 +185,15 @@ namespace Team7
                 });
 
             }
+
+            app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources")
+            });
 
             app.UseHttpsRedirection();
 
