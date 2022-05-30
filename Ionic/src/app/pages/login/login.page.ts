@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { appUser } from 'src/app/models/appUser';
 import { AuthService } from '../../services/authentication/auth.service';
 import { GlobalService } from '../../services/global/global.service';
 
@@ -60,5 +61,4 @@ export class LoginPage implements OnInit {
     }
     await this.auth.login(userLogin);
   }
-
 }

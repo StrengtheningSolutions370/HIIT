@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Azure;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
-
+using Team7.ViewModels;
 
 namespace Team7.Models.Repository
 {
@@ -31,11 +33,9 @@ namespace Team7.Models.Repository
         }
 
 
-        //public async Task<Qualification[]> GetAllQualificationsAsync()
-        //{
-        //    IQueryable<Qualification> query = DB.Qualification;
-        //    return await query.ToArrayAsync();
-        //    return null;
+        public async Task<object> GetAllQualificationsAsync()
+        {
+            IQueryable<Qualification> query = DB.Qualification;
 
             if (!query.Any())
             {
@@ -55,7 +55,20 @@ namespace Team7.Models.Repository
             }
         }
 
-        //RESPONSE
+        public async Task<Qualification[]> _GetAllQualificationsAsync()
+        {
+            IQueryable<Qualification> query = DB.Qualification;
+
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.ToArrayAsync();
+            }
+        }
+
         public async Task<object> GetQualificationsAsync(string description)
         {
             IQueryable<Qualification> query = DB.Qualification.Where(q => q.Description == description);
@@ -76,6 +89,20 @@ namespace Team7.Models.Repository
                         q.QualificationType
                     }).ToListAsync()
                 };
+            }
+        }
+
+        public async Task<Qualification[]> _GetQualificationsAsync(string description)
+        {
+            IQueryable<Qualification> query = DB.Qualification.Where(q => q.Description == description);
+
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.ToArrayAsync();
             }
         }
 

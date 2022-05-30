@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
 @Component({
@@ -13,41 +14,47 @@ export class ConfirmVenueComponent {
   @Input() choice: number;
   @Input() venue: Venue;
 
-  constructor(private modalCtrl: ModalController, public venueService: VenueService,
-    public router: Router, public activated: ActivatedRoute) {
+  constructor(public venueService: VenueService, public global: GlobalService) {
    }
 
- async dismissModal() {
-    await this.router.navigate(['../venues'],{relativeTo:this.activated});
-    this.modalCtrl.dismiss();
-  };
   //1 = confirm ADD
   //2 = confirm UPDATE
+
+  async checkMatch(name:string, address:string): Promise<boolean>{
+   return this.venueService.matchingVenue(name,address).then(result => {
+     console.log(result);
+      if (result != 0){
+        this.global.showAlert("The Venue information entered already exists on the system","Venue Already Exists");
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
   confirmChanges(venue: Venue){
-    console.log(this.choice);
-    if (this.choice === 1){
-      //search duplicates
-      if (this.venueService.matchingVenue(venue.address) != null || this.venueService.matchingVenue(venue.name) != null)
-      {
-        console.log('Existing Venue: ' + venue.address + ' <-Address ++ Name -> ' + venue.name);
-        //display duplicate alert
-        //failure alert
-        return;
+    console.log(venue);
+    this.checkMatch(venue.name,venue.address).then(result =>{
+      console.log(result);
+      if (result == true){
+        return;       
+      } else {
+        if (this.choice === 1){
+            console.log('Add Venue from confirm:');
+            //CallRepoToCreate
+            this.venueService.createVenue(venue);
+            this.global.showToast("The Title has been successfully added!");
+        } else if (this.choice === 2){
+            console.log('Update Venue from confirm:');
+            //CallRepoToUpdate
+            this.venueService.updateVenue(venue.venueID,venue);
+            this.global.showToast("The Title has been successfully updated!");
+        }
       }
-      else {
-        console.log('Add Venue from confirm:');
-        //CallRepoToCreate
-        this.venueService.createVenue(venue);
-      }
+          //dismiss modal
+          this.global.dismissModal();
+    }); 
 
-    } else if (this.choice === 2){
-      console.log('Update Venue from confirm:');
-      //CallRepoToUpdate
-      this.venueService.updateVenue(this.choice,venue);
-    }
-
-    //dismiss modal
-    this.dismissModal();
   }
 
   returnFrom(){
@@ -55,11 +62,11 @@ export class ConfirmVenueComponent {
       //2 = return to UPDATE
     if (this.choice === 1){
       console.log(this.venue);
-      this.dismissModal();
+      this.global.dismissModal();
       this.venueService.addVenueInfoModal(this.venue);
     } else if (this.choice === 2){
       console.log(this.venue);
-      this.dismissModal();
+      this.global.dismissModal();
       this.venueService.updateVenueInfoModal(this.venue);
     }
   }

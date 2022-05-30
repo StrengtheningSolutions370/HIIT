@@ -32,10 +32,41 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<Title[]> GetAllTitlesAsync()
+        public async Task<object> GetAllTitlesAsync()
         {
             IQueryable<Title> query = DB.Title;
-            return await query.ToArrayAsync();
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await DB.Title.Select(t => new
+                    {
+                        t.TitleID,
+                        t.Description,
+                        User = t
+                        .User
+                        .Select(u => new { u.UserID, u.Email, u.Cell })
+                    }).ToListAsync()
+                };
+
+            }
+        }
+
+        public async Task<Title[]> _GetAllTitlesAsync()
+        {
+            IQueryable<Title> query = DB.Title;
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.ToArrayAsync();
+            }
         }
 
         public async Task<object> GetTitlesAsync(string input)
@@ -59,10 +90,43 @@ namespace Team7.Models.Repository
                     }).ToListAsync()
                 };
             }
+        }
+        public async Task<Title[]> _GetTitlesAsync(string input)
+        {
+            IQueryable<Title> query = DB.Title.Where(t => t.Description == input);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.ToArrayAsync();
+            }
 
         }
-
-        public async Task<Title> GetTitleIdAsync(int id)
+        public async Task<object> GetTitleIdAsync(int id)
+        {
+            IQueryable<Title> query = DB.Title.Where(t => t.TitleID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(t => new
+                    {
+                        t.TitleID,
+                        t.Description,
+                        Users = t
+                            .User
+                            .Select(u => new { u.Email, u.Cell })
+                    }).ToListAsync()
+                };
+            }
+        }
+        public async Task<Title> _GetTitleIdAsync(int id)
         {
             IQueryable<Title> query = DB.Title.Where(t => t.TitleID == id);
             if (!query.Any())

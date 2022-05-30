@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Team7.ViewModels;
 
 namespace Team7.Models.Repository
 {
@@ -13,14 +14,16 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        //Task<Qualification[]> GetAllQualificationsAsync();
+        Task<object> GetAllQualificationsAsync();
+        Task<Qualification[]> _GetAllQualificationsAsync();
+        Task<object> GetQualificationsAsync(string description);
 
+        Task<Qualification[]> _GetQualificationsAsync(string description);
 
-        Task<object> GetQualificationsAsync(string input);
-#pragma warning disable IDE1006 // Naming Styles
-        Task<Qualification> _GetQualificationIdAsync(int id);
-#pragma warning restore IDE1006 // Naming Styles
         Task<object> GetQualificationIdAsync(int id);
+
+        Task<Qualification> _GetQualificationIdAsync(int id);
+
 
         Task<bool> SaveChangesAsync();
     }

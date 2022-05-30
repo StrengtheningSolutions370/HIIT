@@ -1,4 +1,3 @@
-/* eslint-disable new-parens */
 import { Component, Input, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -28,14 +27,8 @@ export class ConfirmRoleComponent implements ViewWillEnter{
   async confirmChanges(userRole: UserRole){
     console.log(this.choice);
     // if (this.choice === 1){
-      console.log(userRole);
       console.log('Add user role from confirm:');
       //CallRepoToCreate
-      const permissionRole = {
-        name: userRole.name,
-        description: userRole.description,
-        permissions: userRole.permissions,
-      };
       await this.userService.createUserRole(userRole);
       await this.dismissModal();
       this.sucAdd();

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { appUserRegister } from 'src/app/models/appUser';
+import { AuthService } from 'src/app/services/authentication/auth.service';
 
 
 @Component({
@@ -10,15 +12,20 @@ import { NgForm } from '@angular/forms';
 export class SignupPage implements OnInit {
 
   isLoading = false;
-  constructor() { }
+  constructor(private authServ: AuthService) { }
 
   ngOnInit() {
   }
 
-  onSubmit(form: NgForm){
-    if(!form.valid) {return;}
+  onSubmit(registerForm: NgForm){
+    if(!registerForm.valid) {return;}
+    var userRegister = new appUserRegister();
+    userRegister = {
+      emailAddress : registerForm.value.emailAddress,
+      password : registerForm.value.password 
+    }
+    this.authServ.register(userRegister);
     // this.register(form)
-
   }
   
 

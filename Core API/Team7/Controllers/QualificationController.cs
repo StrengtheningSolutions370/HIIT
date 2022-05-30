@@ -29,7 +29,7 @@ namespace Team7.Controllers
             {
                 qualificationRepo.Add(qualification);
                 await qualificationRepo.SaveChangesAsync();
-                return Ok(qualification);
+                return Ok();
             }
             catch (Exception err)
             {
@@ -53,7 +53,7 @@ namespace Team7.Controllers
                 toUpdate.Description = qualification.Description;
                 toUpdate.QualificationTypeID = qualification.QualificationTypeID;
                 await qualificationRepo.SaveChangesAsync();
-                return Ok("Successfully updated");
+                return Ok();
             }
             catch (Exception err)
             {
@@ -65,12 +65,12 @@ namespace Team7.Controllers
         // DELETE api/qualification/delete/5
         [HttpDelete]
         [Route("delete")]
-        public async Task<IActionResult> DeleteVenue(int id)
+        public async Task<IActionResult> DeleteQualification(int id)
         {
             var tempQualification = await qualificationRepo._GetQualificationIdAsync(id);
             if (tempQualification == null)
             {
-                return NotFound();
+                return NotFound("Could not find existing Qualification with id:" + id);
             }
             try
             {
@@ -88,15 +88,12 @@ namespace Team7.Controllers
         // GET: api/qualification/getAll
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetVenues()
+        public async Task<IActionResult> GetQualifications()
         {
             try
             {
                 var qualificationList = await qualificationRepo.GetAllQualificationsAsync();
-                if (qualificationList == null)
-                {
-                    return Ok(0);
-                }
+                if (qualificationList == null)return Ok(0);
                 return Ok(qualificationList);
             }
             catch (Exception err)
@@ -125,10 +122,19 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
-
         public async Task<object> QualificationExists(int id)
         {
-            return await qualificationRepo.GetQualificationIdAsync(id);
+            try
+            {
+                var qualification = await qualificationRepo.GetQualificationIdAsync(id);
+                if (qualification == null) return Ok(0);
+                return Ok(qualification);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+
         }
     }
 }

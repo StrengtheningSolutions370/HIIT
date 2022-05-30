@@ -2,7 +2,7 @@
     <ion-toolbar>
       <ion-title>Venue associated with a Schedule</ion-title>
       <ion-buttons slot="end">
-        <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+        <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -12,13 +12,14 @@
     <br/>
     <div class="ion-text-center">
         <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">
-            The Venue_Name cannot be deleted because the following schedule/s are associated with it.
+            The {{venue.name}} cannot be deleted because the following schedule/s are associated with it.
         </p>
 
-        <ion-item > 
-            <ion-label>
-              <p class="ion-text-start">Insert a list of Schedules</p> 
-            </ion-label>
-        </ion-item>
+        <ion-list> 
+          <ion-item *ngFor="let schedule of venue.schedules">
+            <ion-label>Schedule with ID: </ion-label>
+            <ion-label>{{schedule.scheduleID}}</ion-label>
+          </ion-item>
+        </ion-list>
     </div>
 </ion-content>

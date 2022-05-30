@@ -24,11 +24,11 @@ export class DeleteCategoryComponent implements ViewWillEnter {
   }
 
   //Send through the id of the selected title to be deleted in the title service.
-  // async delete(id: number){
-  //   this.saleService.deleteSaleCategory(id);
-  //   await this.dismissModal();
-  //   this.sucDelete();
-  // }
+  async delete(id: number){
+    //this.saleService.deleteSaleCategory(id);
+    this.dismissModal();
+    this.sucDelete();
+  }
 
   async sucDelete() {
     const toast = await this.toastCtrl.create({

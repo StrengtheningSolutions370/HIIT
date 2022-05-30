@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/semi */
-import { Injectable, OnInit, Output, EventEmitter } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Title } from 'src/app/models/title';
 import { AddTitleComponent } from 'src/app/pages/user/titles/add-title/add-title.component';
@@ -13,7 +13,7 @@ import { ViewTitlesComponent } from 'src/app/pages/user/titles/view-titles/view-
 import { ConfirmTitleComponent } from 'src/app/pages/user/titles/confirm-title/confirm-title.component';
 import { AssociativeTitleComponent } from 'src/app/pages/user/titles/associative-title/associative-title.component';
 import { RepoService } from '../repo.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,26 +23,13 @@ export class TitleService {
 
   @Output() fetchTitlesEvent = new EventEmitter<Title>();
 
-  //Creating a titleList for all the titles in the service.
-  private _titleList = new BehaviorSubject<Title[]>([]);
-
-  //Return the venue list as an observable.
-  public get titleList(){
-    return this._titleList.asObservable();
-  }
-
-  private temp: Title[];
-
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
     //Receive the venues from the repo (API).
-    this.repo.getTitles().subscribe(result => {
-      console.log('Title List: Title Service -> Get Titles');
-      console.log(result);
-      var tempResult = Object.assign(result);
-      this._titleList.next(tempResult);
-      console.log('Title List: Title Service -> Updated Titles');
-      console.log(this._titleList);
-    })
+    this.getAllTitles();
+  }
+
+  getAllTitles(): Observable<any> {
+    return this.repo.getTitles();
   }
 
   //Methods
@@ -58,13 +45,9 @@ export class TitleService {
     )
    }
 
-   getAllTitles(): Observable<any> {
-     return this.repo.getTitles();
-   }
-
   //Receives a title to update in the service title list.
-   async updateTitle(id: number,title: any) {
-     return this.repo.updateTitle(title.titleID,title).subscribe(
+   updateTitle(id: number,title: any) {
+     return this.repo.updateTitle(id,title).subscribe(
        {
         next: () => {
           console.log('TITLE UPDATED');
@@ -80,11 +63,11 @@ export class TitleService {
       console.log('TITLE DELETED');
       this.fetchTitlesEvent.emit();
     });
-   }
+   }  
 
-   matchingTitle(input: string){
+   matchingTitle(input: string): Promise<any>{
     console.log('titleService: Repo -> Matching Title');
-    this.repo.getMatchTitle(input);
+    return this.repo.getMatchTitle(input).toPromise();
    }
 
    existingTitle(id: number){
@@ -136,16 +119,6 @@ export class TitleService {
             title
         }
       });
-
-      //Update the current title list with the title list from the delete modal.
-      modal.onDidDismiss().then(() => {
-        this.repo.getTitles().subscribe(result => {
-          var tempResult = Object.assign(result);
-          this._titleList.next(tempResult);
-          console.log("Updated title list: Title Service: delete title");
-          console.log(this._titleList);
-        });
-      });
       await modal.present();
     }
   }
@@ -154,13 +127,10 @@ export class TitleService {
     //This method receives the selected title object, from the title page, in the modal through the componentProps.
   async viewTitleInfoModal(title: Title) {
     console.log("TitleService: ViewTitleModalCall");
-    let tempTitle = new Title();
-    tempTitle = Object.assign(title);
-    console.log(tempTitle);
     const modal = await this.modalCtrl.create({
       component: ViewTitlesComponent,
       componentProps: {
-        title:tempTitle
+        title
       }
     });
     await modal.present();
@@ -173,10 +143,6 @@ export class TitleService {
     console.log(choice);
     if(choice === 1){
       console.log("Performing ADD");
-      // let tempTitle = new Title();
-      // tempTitle.titleID = 0;
-      // tempTitle = Object.assign(title);
-      // console.log(tempTitle);
       const modal = await this.modalCtrl.create({
         component: ConfirmTitleComponent,
         componentProps: {
@@ -184,49 +150,17 @@ export class TitleService {
           choice
         }
       });
-
-      //Update the current venue list with the venue list from the confirm modal.
-      modal.onDidDismiss().then(() => {
-
-        // this.repo.getTitles().subscribe(result => {
-        //   var tempResult = Object.assign(result);
-        //   this._titleList.next(tempResult);
-        //   console.log("Updated title list: Title Service: confirm title");
-        //   console.log(this._titleList);
-        // });
-        this.repo.getTitles();
-
-      });
-
       await modal.present();
 
     } else if (choice === 2){
 
       console.log("Performing UPDATE");
-
-      let tempTitle = new Title();
-      tempTitle = Object.assign(title);
-      console.log(tempTitle);
-
       const modal = await this.modalCtrl.create({
         component: ConfirmTitleComponent,
         componentProps: {
           title,
           choice
         }
-      });
-
-      modal.onDidDismiss().then(() => {
-
-        // this.repo.getTitles().subscribe(result => {
-        //   var tempResult = Object.assign(result);
-        //   this._titleList.next(tempResult);
-        //   console.log("Updated title list: Title Service: Update confirm title");
-        //   console.log(this._titleList);
-        // });
-
-        this.repo.getTitles();
-
       });
 
       await modal.present();

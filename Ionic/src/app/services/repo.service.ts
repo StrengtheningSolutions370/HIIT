@@ -12,6 +12,7 @@ import { QualificationType } from 'src/app/models/qualification-type';
 import { Vat } from '../models/vat';
 import { SaleItem } from '../models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
+import { appUser, appUserRegister } from '../models/appUser';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ import { SaleCategory } from 'src/app/models/sale-category';
 
 export class RepoService {
   base = 'https://localhost:44383/api/';
+  AppUserController = 'AppUser/'
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
   EmployeeTypeController = 'EmployeeType/';
@@ -94,8 +96,8 @@ export class RepoService {
   //Venue:
   //------
   //Create
-  createVenue(venue: any): Observable<any> {
-    return this.http.post<any>(`${this.base + this.VenueController}add`, venue, this.httpOptions);
+  createVenue(venue: any): Observable<any>{
+    return this.http.post<any>(`${this.base+this.VenueController}add`,venue);
   }
   //Update
   updateVenue(venueId: number, venue: Venue): Observable<any> {
@@ -110,8 +112,8 @@ export class RepoService {
     return this.http.get(`${this.base + this.VenueController}getAll`, this.httpOptions);
   }
   //GetMatch
-  getMatchVenue(input: string): Observable<any> {
-    return this.http.get(`${this.base + this.VenueController}getMatch?input=${input}`, this.httpOptions);
+  getMatchVenue(name: string, address: string): Observable<any> {
+    return this.http.get(`${this.base + this.VenueController}getMatch?name=${name}&address=${address}`, this.httpOptions);
   }
   //Exists
   existsVenue(id: number): Observable<any> {
@@ -170,6 +172,7 @@ export class RepoService {
   existsTitle(id: number): Observable<any> {
     return this.http.get(`${this.base + this.TitleController}exists?id=${id}`, this.httpOptions);
   }
+  
 
   //QualificationType:
   //------
@@ -178,9 +181,8 @@ export class RepoService {
     return this.http.post<any>(`${this.base + this.QualificationTypeController}add`, qualificationType, this.httpOptions);
   }
   //Update
-  updateQualificationType(qualificationTypeId: number, qualificationType: QualificationType): Observable<any> {
-    return this.http.put(`${this.base + this.QualificationTypeController}update?id=${qualificationTypeId}`,
-      qualificationType, this.httpOptions);
+  updateQualificationType(qualificationTypeId: number, qualificationType: QualificationType): Observable<any>{
+    return this.http.put(`${this.base+this.QualificationTypeController}update?id=${qualificationType}`,qualificationType, this.httpOptions);
   }
   //Delete
   deleteQualificationType(qualificationTypeId: number): Observable<any> {
@@ -209,6 +211,23 @@ export class RepoService {
 updateSaleCategory(saleCategoryId: number, saleCategory: SaleCategory): Observable<any>{
   return this.http.put(`${this.base+this.SaleCategoryController}update?id=${saleCategoryId}`,saleCategory, this.httpOptions);
 }
+//Delete
+deleteSaleCategory(saleCategoryId: number): Observable<any>{
+  return this.http.delete(`${this.base+this.SaleCategoryController}delete?id=${saleCategoryId}`,this.httpOptions);
+}
+//GetAll
+getSaleCategory(): Observable<any>{
+  return this.http.get(`${this.base+this.SaleCategoryController}getAll`, this.httpOptions);
+}
+//GetMatch
+getMatchSaleCategory(input: string): Observable<any>{
+  return this.http.get(`${this.base+this.SaleCategoryController}getMatch?input=${input}`, this.httpOptions);
+}
+//Exists
+existsSaleCategory(id: number): Observable<any>{
+  return this.http.get(`${this.base+this.SaleCategoryController}exists?id=${id}`, this.httpOptions);
+}
+
 
   // VAT:
  // ------
@@ -216,13 +235,9 @@ updateSaleCategory(saleCategoryId: number, saleCategory: SaleCategory): Observab
  createVAT(vat: any): Observable<any>{
   return this.http.post<any>(`${this.base+this.VatController}add`,vat,this.httpOptions);
  }
-//Delete
-deleteSaleCategory(saleCategoryId: number): Observable<any>{
-  return this.http.delete(`${this.base+this.SaleCategoryController}delete?id=${saleCategoryId}`,this.httpOptions);
-}
 //Update
-updateVat(vat: Vat): Observable<any>{
-  return this.http.put(`${this.base+this.VatController}update`,vat, this.httpOptions);
+updateVAT(vatId: number, vat: Vat): Observable<any>{
+  return this.http.put(`${this.base+this.VatController}update?id=${vatId}`,vat, this.httpOptions);
 }
 //Delete
 deleteVat(vatId: number): Observable<any>{
@@ -239,18 +254,6 @@ getMatchVat(input: string): Observable<any>{
 //Exists
 existsVat(id: number): Observable<any>{
   return this.http.get(`${this.base+this.VatController}exists?id=${id}`, this.httpOptions);
-}
-//GetAll
-getSaleCategory(): Observable<any>{
-  return this.http.get(`${this.base+this.SaleCategoryController}getAll`, this.httpOptions);
-}
-//GetMatch
-getMatchSaleCategory(input: string): Observable<any>{
-  return this.http.get(`${this.base+this.SaleCategoryController}getMatch?input=${input}`, this.httpOptions);
-}
-//Exists
-existsSaleCategory(id: number): Observable<any>{
-  return this.http.get(`${this.base+this.SaleCategoryController}exists?id=${id}`, this.httpOptions);
 }
 
  // SALE ITEM:
@@ -281,4 +284,3 @@ existsSaleItem(id: number): Observable<any>{
 }
 
 }
-

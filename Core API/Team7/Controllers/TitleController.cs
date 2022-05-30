@@ -34,7 +34,7 @@ namespace Team7.Controllers
             {
                 TitleRepo.Add(title);
                 await TitleRepo.SaveChangesAsync();
-                return Ok(title);
+                return Ok();
             }
             catch (Exception err)
             {
@@ -48,7 +48,7 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutTitle(int id, [FromBody] Title title)
         {
-            var toUpdate = await TitleRepo.GetTitleIdAsync(id);
+            var toUpdate = await TitleRepo._GetTitleIdAsync(id);
             if (toUpdate == null)
             {
                 return NotFound("Could not find existing Title with id:" + id);
@@ -58,7 +58,7 @@ namespace Team7.Controllers
                 toUpdate.Description = title.Description;
                 //VenueRepo.Update<Venue>(tempVenue);
                 await TitleRepo.SaveChangesAsync();
-                return Ok("Successfully updated");
+                return Ok();
             }
             catch (Exception err)
             {
@@ -72,10 +72,10 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteTitle(int id)
         {
-            var tempTitle = await TitleRepo.GetTitleIdAsync(id);
+            var tempTitle = await TitleRepo._GetTitleIdAsync(id);
             if (tempTitle == null)
             {
-                return NotFound();
+                return NotFound("Could not find existing Title with id:" + id);
             }
             try
             {
@@ -98,10 +98,7 @@ namespace Team7.Controllers
             try
             {
                 var titleList = await TitleRepo.GetAllTitlesAsync();
-                if (titleList == null)
-                {
-                    return NotFound();
-                }
+                if (titleList == null)return Ok(0);
                 return Ok(titleList);
             }
             catch (Exception err)
@@ -118,6 +115,7 @@ namespace Team7.Controllers
             try
             {
                 var title = await TitleRepo.GetTitlesAsync(input);
+                if (title == null) return Ok(0);
                 return Ok(title);
             }
             catch (Exception err)
@@ -129,9 +127,18 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
-        public async Task<Title> TitleExists(int id)
+        public async Task<IActionResult> TitleExists(int id)
         {
-            return await TitleRepo.GetTitleIdAsync(id);
+            try
+            {
+                var title = await TitleRepo._GetTitleIdAsync(id);
+                if (title == null) return Ok(0);
+                return Ok(title);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
         }
     }
 }

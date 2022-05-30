@@ -27,7 +27,7 @@ namespace Team7.Controllers
             {
                 EmployeeRepo.Add(employee);
                 await EmployeeRepo.SaveChangesAsync();
-                return Ok(employee);
+                return Ok();
             }
             catch (Exception err)
             {
@@ -41,10 +41,10 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutEmployee(int id, [FromBody] Employee employee)
         {
-            var toUpdate = await EmployeeRepo.GetEmployeeIdAsync(id);
+            var toUpdate = await EmployeeRepo._GetEmployeeIdAsync(id);
             if (toUpdate == null)
             {
-                return NotFound("Could not find existing employee type with id:" + id);
+                return NotFound("Could not find existing employee with id:" + id);
             }
             try
             {
@@ -53,7 +53,7 @@ namespace Team7.Controllers
                 toUpdate.Photo = employee.Photo;
                 toUpdate.IDNumber = employee.IDNumber;
                 await EmployeeRepo.SaveChangesAsync();
-                return Ok("Successfully updated");
+                return Ok();
             }
             catch (Exception err)
             {
@@ -67,10 +67,10 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteEmployeeType(int id)
         {
-            var tempEmployee = await EmployeeRepo.GetEmployeeIdAsync(id);
+            var tempEmployee = await EmployeeRepo._GetEmployeeIdAsync(id);
             if (tempEmployee == null)
             {
-                return NotFound();
+                return NotFound("Could not find existing Qualification Type with id:" + id);
             }
             try
             {
@@ -93,10 +93,7 @@ namespace Team7.Controllers
             try
             {
                 var employeeList = await EmployeeRepo.GetAllEmployeesAsync();
-                if (employeeList == null)
-                {
-                    return NotFound();
-                }
+                if (employeeList == null) return Ok(0);
                 return Ok(employeeList);
             }
             catch (Exception err)
@@ -112,8 +109,9 @@ namespace Team7.Controllers
         {
             try
             {
-                var employee = await EmployeeRepo.GetEmployeesAsync(input);
-                return Ok(employee);
+                var employees = await EmployeeRepo.GetEmployeesAsync(input);
+                if (employees == null) return Ok(0);
+                return Ok(employees);
             }
             catch (Exception err)
             {
@@ -124,9 +122,18 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
-        public async Task<Employee> EmployeeExists(int id)
+        public async Task<IActionResult> EmployeeExists(int id)
         {
-            return await EmployeeRepo.GetEmployeeIdAsync(id);
+            try
+            {
+                var qualificationType = await EmployeeRepo._GetEmployeeIdAsync(id);
+                if (qualificationType == null) return Ok(0);
+                return Ok(qualificationType);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
         }
     }
 }

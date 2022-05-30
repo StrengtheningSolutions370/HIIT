@@ -14,10 +14,13 @@ namespace Team7.Models.Repository
         void Update<T>(T Entity) where T : class;
 
         Task<object> GetAllEmployeesAsync();
+        Task<Employee[]> _GetAllEmployeesAsync();
 
         Task<object> GetEmployeesAsync(string input);
+        Task<Employee[]> _GetEmployeesAsync(string input);
 
-        Task<Employee> GetEmployeeIdAsync(int id);
+        Task<object> GetEmployeeIdAsync(int id);
+        Task<Employee> _GetEmployeeIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }

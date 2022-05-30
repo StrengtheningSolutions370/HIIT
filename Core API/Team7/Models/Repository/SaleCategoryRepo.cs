@@ -32,11 +32,17 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<SaleCategory[]> GetAllSaleCategorysAsync()
+        public async Task<object> GetAllSaleCategorysAsync()
         {
-            IQueryable<SaleCategory> query = DB.SaleCategory;
-            return await query.ToArrayAsync();
-
+            return await DB.SaleCategory.Select(sc => new
+            {
+                sc.SaleCategoryID,
+                sc.Name,
+                sc.Description,
+                SaleItem = sc
+                .SaleItem
+                .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Price, si.Quotable, si.Quantity})
+            }).ToListAsync();
         }
 
         public async Task<object> GetSaleCategorysAsync(string input)
