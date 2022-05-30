@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit VAT Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="uVATForm" (ngSubmit)="submitForm()"> 
+    <br/><br/>
+    <ion-item>
+      <ion-label position="stacked">Percentage:</ion-label>
+      <ion-input formControlName="percentage"  type="text" required=""></ion-input>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.percentage.errors?.required">
+     VAT Percentage is required.
+      <br/>
+    </span>
+    <span class="error ion-padding" *ngIf="errorControl.percentage.errors?.min">
+      Please enter a percentage above 0.
+      <br/>
+    </span>
+   
+    <br><br/>
+    <ion-button type="submit" color="secondary" [disabled]="!uVATForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update VAT</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
+  </form>
+</ion-content>

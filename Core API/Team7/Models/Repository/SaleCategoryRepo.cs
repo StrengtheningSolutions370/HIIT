@@ -34,15 +34,19 @@ namespace Team7.Models.Repository
 
         public async Task<object> GetAllSaleCategorysAsync()
         {
-            return await DB.SaleCategory.Select(sc => new
-            {
-                sc.SaleCategoryID,
-                sc.Name,
-                sc.Description,
-                SaleItem = sc
-                .SaleItem
-                .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Price, si.Quotable, si.Quantity})
-            }).ToListAsync();
+            //return await DB.SaleCategory.Select(sc => new
+            //{
+            //    sc.SaleCategoryID,
+            //    sc.Name,
+            //    sc.Description,
+            //    SaleItem = sc
+            //    .SaleItem
+            //    .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Price, si.Quotable, si.Quantity})
+            //}).ToListAsync();
+
+            IQueryable<SaleCategory> query = DB.SaleCategory;
+            return await query.ToArrayAsync();
+
         }
 
         public async Task<object> GetSaleCategorysAsync(string input)
@@ -87,6 +91,17 @@ namespace Team7.Models.Repository
         {
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
+        }
+
+        Task<SaleCategory[]> ISaleCategoryRepo.GetAllSaleCategorysAsync()
+        {
+            IQueryable<SaleCategory> query = DB.SaleCategory;
+            return query.ToArrayAsync();
+        }
+
+        Task<SaleCategory[]> ISaleCategoryRepo.GetSaleCategorysAsync(string input)
+        {
+            throw new NotImplementedException();
         }
     }
 }

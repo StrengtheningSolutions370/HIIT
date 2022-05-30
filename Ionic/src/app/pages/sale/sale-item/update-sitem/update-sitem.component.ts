@@ -218,16 +218,9 @@ checkBoxToggle(check : any) {
    this.uSaleItemForm.controls.itemQuantity.setValue(1);
    return;
  }
- console.log('here')
   this.uSaleItemForm.controls.itemPrice.setValue(this.oldPrice);
   this.uSaleItemForm.controls.itemQuantity.setValue(this.oldQuantity);
 
-}
-
-setDD = (o1, o2) => {
-  console.log('here................')
-
-  return o1.saleCategoryID && o2.saleCategoryID ? o1.saleCategoryID === o2.saleCategoryID : o1 == o2;
 }
 
 constructor(private http : HttpClient, private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
@@ -278,10 +271,7 @@ constructor(private http : HttpClient, private modalCtrl: ModalController, priva
 
    submitForm() {
 
-    console.log(this.itemImage);
-
      if (!this.uSaleItemForm.valid){
-
       //manual verification:
       if (this.quotable) {
         //price & quantity should be 0
@@ -294,37 +284,30 @@ constructor(private http : HttpClient, private modalCtrl: ModalController, priva
           this.failureAlert();
           return;
         }
-        if (this.uSaleItemForm.controls['itemPhoto'].value == null) {
-          this.failureAlert();
-          return;
-        }
-        if (this.uSaleItemForm.controls['itemSCategory'].value == null) {
-          this.failureAlert();
-          return;
-        }
-
       }
       else {
         this.failureAlert();
         return;
       }
-       
      }
 
-     //if image was uploaded:
-     if (this.itemImageBase64String == null) {
+     if (this.uSaleItemForm.controls['itemSCategory'].value[0] == null) {
       this.failureAlert();
       return;
+    }
+
+    
+     var fName = this.saleItem.photo;
+     if (this.itemImage == null) {
+      var date = new Date();
+      var epoch = date.getTime();
+      fName = this.saleItem.photo;
      }
-
-    var date = new Date();
-
-     var epoch = date.getTime();
 
      //form is valid for submission
     var obj = {
       Name: this.uSaleItemForm.controls['itemName'].value,
-      Photo: epoch + '_' + this.itemImage.name,
+      Photo: fName,
       Description: this.uSaleItemForm.controls['itemDescription'].value,
       Price: Number(this.uSaleItemForm.controls['itemPrice'].value),
       Quotable: this.quotable,
@@ -337,20 +320,46 @@ constructor(private http : HttpClient, private modalCtrl: ModalController, priva
     console.log(obj);
 
 
-    //wait for image to upload:
-    const formData = new FormData();
-      console.log(this.itemImage);
-      formData.append('file', this.itemImage, epoch + '_' + this.itemImage.name);
+    
 
-      this.repo.uploadSaleItemImage(formData).subscribe({
-        next: data => {
-          this.dismissModal();
-          this.saleService.confirmSaleItemModal(1, obj, this.uSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
-        },
-        error: (err : HttpErrorResponse) => {
-          this.failureAlert();
-        }
-      });
+      //remove the old image
+      if (this.itemImage != null) {
+        //wait for image to upload:
+        const formData = new FormData();
+        console.log(this.itemImage);
+        formData.append('file', this.itemImage, fName);
+
+        this.repo.reuploadSaleItemImage(this.saleItem.photo).subscribe({
+          next: data => {
+
+            console.log(data);
+            //upload the new image
+            // this.repo.uploadSaleItemImage(formData).subscribe({
+            //   next: data => {
+  
+            //     //update the obj in db
+            //     // this.repo.updateSaleItem()
+            //     this.dismissModal();
+            //     this.saleService.confirmSaleItemModal(1, obj, this.uSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
+  
+            //   },
+            //   error: (err : HttpErrorResponse) => {
+            //     this.failureAlert();
+            //   }
+            // });
+
+          },
+          error: err => {
+  
+          }
+        })
+
+
+      } else {
+
+        //image did not change
+
+      }
 
     }
 
@@ -386,4 +395,8 @@ constructor(private http : HttpClient, private modalCtrl: ModalController, priva
      });
      alert.present();
    }
+
+   public createImg = (fileName: string) => { 
+    return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`; 
+  }
 }

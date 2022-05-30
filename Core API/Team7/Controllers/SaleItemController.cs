@@ -76,6 +76,14 @@ namespace Team7.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("deletephoto")]
+        public async Task<IActionResult> Delphoto(string id)
+        {
+            System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", id));
+            return Ok();
+        }
+
         static void createFile(byte[] data)
         {
             using var stream = System.IO.File.Create(PATH);

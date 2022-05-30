@@ -64,6 +64,8 @@ import { AddVatComponent } from './pages/sale/vat/add-vat/add-vat.component';
 import { DeleteVatComponent } from './pages/sale/vat/delete-vat/delete-vat.component';
 import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
 import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
+import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
+
 
 
 
@@ -81,7 +83,7 @@ import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.co
   //QualificationType
   AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent, AssociativeQtypeComponent,
   //VAT 
-  AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
+  AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent, UpdateVatComponent,
   //EmployeeType
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
   ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,

@@ -50,8 +50,8 @@ export class AddVatComponent implements ViewWillEnter{
           date: IonDatetime       
         }; 
         this.global.dismissModal();
-        this.global.showToast("The Vat has been successfully added!");
-        this.vatService.confirmVatModal(temp);
+       
+        this.vatService.confirmVatModal(1,temp);
       }
      }
 }

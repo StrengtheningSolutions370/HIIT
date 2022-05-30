@@ -286,5 +286,9 @@ existsSaleItem(id: number): Observable<any>{
 uploadSaleItemImage(data : FormData) : Observable<any> {
   return this.http.post('https://localhost:44383/api/SaleItem/upload', data)
 }
+//reImage Upload
+reuploadSaleItemImage(id : string) : Observable<any> {
+  return this.http.delete(`https://localhost:44383/api/SaleItem/deletephoto?name=${id}`)
+}
 
 }

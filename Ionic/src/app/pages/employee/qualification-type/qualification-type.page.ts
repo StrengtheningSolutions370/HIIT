@@ -44,9 +44,9 @@ fetchQualificationTypes() {
     {
       next: data => {
         console.log("FETCHING QUALIFICATION TYPES FROM DB");
-        console.log(data);
+        console.log(data.result);
         this.isLoading = false;
-        this.qualificationTypeList = data;
+        this.qualificationTypeList = data.result;
       }
     }
   )

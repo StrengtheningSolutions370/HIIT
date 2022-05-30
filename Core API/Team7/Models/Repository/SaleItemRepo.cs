@@ -32,31 +32,34 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<object> GetAllSaleItemsAsync()
+        public async Task<SaleItem[]> GetAllSaleItemsAsync()
         {
+
             IQueryable<SaleItem> query = DB.SaleItem;
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return new
-                {
-                    result = await DB.SaleItem.Select(si => new
-                    {
-                        si.SaleItemID,
-                        si.Photo,
-                        si.Description,
-                        si.Name,
-                        si.Price,
-                        si.Quotable,
-                        si.Quantity, 
-                        si.SaleCategoryID,
-                        si.SaleCategory
-                    }).ToListAsync()
-                };
-            }
+            return await query.ToArrayAsync();
+            //IQueryable<SaleItem> query = DB.SaleItem;
+            //if (!query.Any())
+            //{
+            //    return null;
+            //}
+            //else
+            //{
+            //    return new
+            //    {
+            //        result = await DB.SaleItem.Select(si => new
+            //        {
+            //            si.SaleItemID,
+            //            si.Photo,
+            //            si.Description,
+            //            si.Name,
+            //            si.Price,
+            //            si.Quotable,
+            //            si.Quantity, 
+            //            si.SaleCategoryID,
+            //            si.SaleCategory
+            //        }).ToListAsync()
+            //    };
+            //}
         }
 
         //Response
@@ -108,6 +111,11 @@ namespace Team7.Models.Repository
         }
 
         public Task<object> GetSaleItemsAsync(string input)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<SaleItem[]> ISaleItemRepo.GetSaleItemsAsync(string input)
         {
             throw new NotImplementedException();
         }

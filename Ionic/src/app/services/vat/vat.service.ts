@@ -7,6 +7,7 @@ import { ViewVatComponent } from 'src/app/pages/sale/vat/view-vat/view-vat.compo
 import { ConfirmVatComponent } from 'src/app/pages/sale/vat/confirm-vat/confirm-vat.component';
 import { RepoService } from '../repo.service';
 import { Observable } from 'rxjs';
+import { UpdateVatComponent } from 'src/app/pages/sale/vat/update-vat/update-vat.component';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,17 @@ getAllVats() : Observable<any> {
    }
 
 
+  //Receives a vat to update in the service vat list.
+   async updateVat(id:number,vat: any) {
+     return this.repo.updateVAT(id,vat).subscribe(
+       {
+        next: () => {
+          console.log('VAT UPDATED');
+          this.fetchVatsEvent.emit(vat);
+        }
+       }
+     )
+   }
 
   //Receives a vat to delete in the service vat list.
    deleteVat(id: number){
@@ -98,6 +110,19 @@ getAllVats() : Observable<any> {
     }
   
 
+    //Display the update vat modal.
+  //This method receives the selected vat object, from the vat page, in the modal through the componentProps.
+  async updateVatInfoModal(vat: Vat) {
+    console.log("VatService: UpdateVatModalCall");
+    const modal = await this.modalCtrl.create({
+      component: UpdateVatComponent,
+      componentProps:{
+        vat
+      }
+    });
+    await modal.present();
+  }
+
   //Display the view vat modal.
     //This method receives the selected vat object, from the vat page, in the modal through the componentProps.
   async viewVatInfoModal(vat: Vat) {
@@ -113,15 +138,53 @@ getAllVats() : Observable<any> {
 
   //Display the confirm create/update modal
   //Receives the selected vat from the vat page
-  async confirmVatModal(vat: any) {
-    console.log('VatService: ConfirmVatModalCall - Performing ADD');
+  async confirmVatModal(choice: number, vat: any) {
+    console.log('VatService: ConfirmVatModalCall');
+    console.log(choice);
+    if(choice === 1){
+      console.log("Performing ADD");
       const modal = await this.modalCtrl.create({
         component: ConfirmVatComponent,
         componentProps: {
-          vat
+          vat,
+          choice
         }
       });
 
+      //Update the current vat list with the vat list from the confirm modal.
+      modal.onDidDismiss().then(() => {
+
+        this.repo.getVats();
+
+      });
+
       await modal.present();
+
+    } else if (choice === 2){
+
+      console.log("Performing UPDATE");
+
+
+      const modal = await this.modalCtrl.create({
+        component: ConfirmVatComponent,
+        componentProps: {
+          vat,
+          choice
+        }
+      });
+
+      modal.onDidDismiss().then(() => {
+
+        this.repo.getVats();
+
+      });
+
+      await modal.present();
+
+    } else {
+
+      console.log("BadOption: " + choice)
+
+    }
   }
 }

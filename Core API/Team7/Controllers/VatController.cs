@@ -39,6 +39,30 @@ namespace Team7.Controllers
 
         }
 
+        // PUT api/Vat/update/5
+        [HttpPut]
+        [Route("update")]
+        public async Task<IActionResult> PutVat(int id, [FromBody] VAT vat)
+        {
+            var toUpdate = await VATRepo._GetVATIdAsync(id);
+            if (toUpdate == null)
+            {
+                return NotFound("Could not find existing VAT with id:" + id);
+            }
+            try
+            {
+                toUpdate.Percentage = vat.Percentage;
+                toUpdate.Date = vat.Date;
+                //VenueRepo.Update<Venue>(tempVenue);
+                await VATRepo.SaveChangesAsync();
+                return Ok("Successfully updated");
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+        }
+
         // DELETE api/Vat/delete/5
         [HttpDelete]
         [Route("delete")]
