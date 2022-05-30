@@ -131,6 +131,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
   //Receives a sale item to delete in the service vat list.
    deleteSaleItem(id: number){
+     console.log('HERE = ' + id)
     this.repo.deleteSaleItem(id).subscribe(
       {
         next: res => {
@@ -232,11 +233,11 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   //This method receives the selected sale item object, from the sale item page, in the modal through the componentProps.
   async deleteSaleItemInfoModal(saleItem: SaleItem) {
     console.log("SalesService: DeleteSaleItemModalCall");
-    
+
       const modal = await this.modalCtrl.create({
         component: DeleteSitemComponent,
           componentProps: {
-            saleItem
+            saleItem,
         }
       });
 

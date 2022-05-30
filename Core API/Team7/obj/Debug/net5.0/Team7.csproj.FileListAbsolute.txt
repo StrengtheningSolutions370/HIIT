@@ -1,9 +1,3 @@
-D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.GeneratedMSBuildEditorConfig.editorconfig
-D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfoInputs.cache
-D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfo.cs
-D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.CoreCompileInputs.cache
-D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cs
-D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cache
 D:\Users\shann\Desktop\New folder (2)\net5.0\appsettings.Development.json
 D:\Users\shann\Desktop\New folder (2)\net5.0\appsettings.json
 D:\Users\shann\Desktop\New folder (2)\net5.0\Team7.exe
@@ -14,6 +8,12 @@ D:\Users\shann\Desktop\New folder (2)\net5.0\Team7.dll
 D:\Users\shann\Desktop\New folder (2)\net5.0\ref\Team7.dll
 D:\Users\shann\Desktop\New folder (2)\net5.0\Team7.pdb
 D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.AssemblyReference.cache
+D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.GeneratedMSBuildEditorConfig.editorconfig
+D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfoInputs.cache
+D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.AssemblyInfo.cs
+D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.csproj.CoreCompileInputs.cache
+D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cs
+D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.MvcApplicationPartsAssemblyInfo.cache
 D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\scopedcss\bundle\Team7.styles.css
 D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\staticwebassets\Team7.StaticWebAssets.Manifest.cache
 D:\Users\shann\Desktop\MasterFinal\HIIT-Team7\Core API\Team7\obj\Debug\net5.0\Team7.RazorTargetAssemblyInfo.cache

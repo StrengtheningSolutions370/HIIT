@@ -403,7 +403,6 @@ namespace Team7.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Photo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("QualificationID")

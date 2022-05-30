@@ -129,6 +129,10 @@ namespace Team7.Controllers
             {
                 SaleItemRepo.Delete<SaleItem>(tempSaleItem);
                 await SaleItemRepo.SaveChangesAsync();
+
+                var fileToDelete = tempSaleItem.Photo;
+                System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", fileToDelete));
+
                 return Ok();
             }
             catch (Exception err)

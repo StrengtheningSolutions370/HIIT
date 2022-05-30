@@ -157,12 +157,15 @@ export class AddSitemComponent implements ViewWillEnter {
         Name: this.cSaleItemForm.controls['itemName'].value,
         Photo: epoch + '_' + this.itemImage.name,
         Description: this.cSaleItemForm.controls['itemDescription'].value,
-        price: this.cSaleItemForm.controls['itemPrice'].value,
-        quotable: this.cSaleItemForm.controls['itemQuotable'].value,
-        quantity: this.cSaleItemForm.controls['itemQuantity'].value,
+        Price: Number(this.cSaleItemForm.controls['itemPrice'].value),
+        Quotable: this.quotable,
+        Quantity: this.cSaleItemForm.controls['itemQuantity'].value,
         SaleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
         inventoryItem:[]
       }
+
+      console.log('ob');
+      console.log(obj);
 
 
       //wait for image to upload:
