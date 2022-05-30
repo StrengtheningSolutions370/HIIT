@@ -26,6 +26,9 @@ export class UpdateSitemComponent {
 //   itemImage! : File;
 //   itemImageBase64String! : any;
 
+
+
+
 //   uSaleItemForm: FormGroup = new FormGroup({
 //     itemName: new FormControl('', [Validators.required]),
 //     itemDescription: new FormControl('', [Validators.required]),
