@@ -11,7 +11,7 @@ import { SalesService } from 'src/app/services/sales/sales.service';
 })
 export class ConfirmSitemComponent {
   @Input() choice: number;
-  @Input() saleItem: SaleItem;
+  @Input() saleItem: any;
   @Input() categoryName: string;
   @Input() image : any;
   alertCtrl: any;
@@ -45,11 +45,11 @@ export class ConfirmSitemComponent {
         this.sucAdd();
       }
     } else if (this.choice === 2){
-      console.log('Update Sale Item from confirm:');
       //CallRepoToUpdate
-      await this.saleService.updateSaleItem(saleItem.SaleItemID,saleItem);
+      await this.saleService.updateSaleItem(saleItem);
       this.dismissModal();
       this.sucUpdate();
+
     }
   }
 
@@ -61,7 +61,9 @@ export class ConfirmSitemComponent {
       await this.dismissModal();
       this.saleService.addSaleItemInfoModal(this.saleItem);
     } else if (this.choice === 2){
-      console.log(this.saleItem);
+
+      console.log('CHECK ID HERE')
+      console.log(this.saleItem)
       await this.dismissModal();
       this.saleService.updateSaleItemInfoModal(this.saleItem);
     }

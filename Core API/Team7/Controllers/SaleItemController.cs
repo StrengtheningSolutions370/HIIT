@@ -78,9 +78,9 @@ namespace Team7.Controllers
 
         [HttpDelete]
         [Route("deletephoto")]
-        public async Task<IActionResult> Delphoto(string id)
+        public async Task<IActionResult> Delphoto(string name)
         {
-            System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", id));
+            System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", name));
             return Ok();
         }
 
@@ -112,7 +112,9 @@ namespace Team7.Controllers
                 toUpdate.Quantity = saleItem.Quantity;
 
                 //VenueRepo.Update<Venue>(tempVenue);
+                SaleItemRepo.Update<SaleItem>(toUpdate);
                 await SaleItemRepo.SaveChangesAsync();
+
                 return Ok("Successfully updated");
             }
             catch (Exception err)

@@ -106,12 +106,15 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   }
 
   //Receives a sale item to update in the service sale  list.
-   async updateSaleItem(id:number,saleItem: any) {
+   async updateSaleItem(saleItem: any) {
      return this.repo.updateSaleItem(saleItem).subscribe(
        {
         next: () => {
           console.log('SALE ITEM UPDATED');
           this.fetchSaleItemsEvent.emit(saleItem);
+        },
+        error: err => {
+          console.log('SALE ITEM UPDATED FAILED');
         }
        }
      )
@@ -348,13 +351,16 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
         component: ConfirmSitemComponent,
         componentProps: {
           saleItem,
-          choice
+          choice,
+          categoryName,
+          image
         }
       });
 
       modal.onDidDismiss().then(() => {
 
-        this.repo.getSaleItems();
+        // this.repo.getSaleItems();
+        // this.updateSaleItemInfoModal(saleItem);
 
       });
 

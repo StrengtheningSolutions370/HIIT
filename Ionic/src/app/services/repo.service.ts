@@ -264,6 +264,8 @@ createSaleItem(saleItem: any): Observable<any>{
 }
 //Update
 updateSaleItem(saleItem: SaleItem): Observable<any>{
+  console.log('THE UPDATE IBJECT:');
+  console.log(saleItem);
   return this.http.put(`${this.base+this.SaleItemController}update`,saleItem, this.httpOptions);
 }
 //Delete

@@ -226,7 +226,6 @@ checkBoxToggle(check : any) {
 constructor(private http : HttpClient, private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
  public saleService: SalesService, private router: Router, private currentRoute: ActivatedRoute,
  private  alertCtrl: AlertController, private repo : RepoService) {
-
 }
 
  //Used for validation within the form, if there are errors in the control, this method will return the errors.
@@ -298,21 +297,22 @@ constructor(private http : HttpClient, private modalCtrl: ModalController, priva
 
     
      var fName = this.saleItem.photo;
-     if (this.itemImage == null) {
+     if (this.itemImage != null) {
       var date = new Date();
       var epoch = date.getTime();
-      fName = this.saleItem.photo;
+      fName = epoch + '_' + this.itemImage.name;
      }
 
      //form is valid for submission
     var obj = {
-      Name: this.uSaleItemForm.controls['itemName'].value,
-      Photo: fName,
-      Description: this.uSaleItemForm.controls['itemDescription'].value,
-      Price: Number(this.uSaleItemForm.controls['itemPrice'].value),
-      Quotable: this.quotable,
-      Quantity: this.uSaleItemForm.controls['itemQuantity'].value,
-      SaleCategoryID: this.uSaleItemForm.controls['itemSCategory'].value.split(',')[0],
+      name: this.uSaleItemForm.controls['itemName'].value,
+      saleItemID: this.saleItem.saleItemID,
+      photo: fName,
+      description: this.uSaleItemForm.controls['itemDescription'].value[0],
+      price: Number(this.uSaleItemForm.controls['itemPrice'].value),
+      quotable: this.quotable,
+      quantity: this.uSaleItemForm.controls['itemQuantity'].value,
+      saleCategoryID: Number(this.uSaleItemForm.controls['itemSCategory'].value.split(',')[0]),
       inventoryItem:[]
     }
 
@@ -320,9 +320,8 @@ constructor(private http : HttpClient, private modalCtrl: ModalController, priva
     console.log(obj);
 
 
-    
 
-      //remove the old image
+      // remove the old image
       if (this.itemImage != null) {
         //wait for image to upload:
         const formData = new FormData();
@@ -332,25 +331,25 @@ constructor(private http : HttpClient, private modalCtrl: ModalController, priva
         this.repo.reuploadSaleItemImage(this.saleItem.photo).subscribe({
           next: data => {
 
-            console.log(data);
-            //upload the new image
-            // this.repo.uploadSaleItemImage(formData).subscribe({
-            //   next: data => {
+            // console.log(data);
+            // upload the new image
+            this.repo.uploadSaleItemImage(formData).subscribe({
+              next: data => {
   
-            //     //update the obj in db
-            //     // this.repo.updateSaleItem()
-            //     this.dismissModal();
-            //     this.saleService.confirmSaleItemModal(1, obj, this.uSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
+                //update the obj in db
+                // this.repo.updateSaleItem()
+                this.dismissModal();
+                this.saleService.confirmSaleItemModal(2, obj, this.uSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
   
-            //   },
-            //   error: (err : HttpErrorResponse) => {
-            //     this.failureAlert();
-            //   }
-            // });
+              },
+              error: (err : HttpErrorResponse) => {
+                this.failureAlert();
+              }
+            });
 
           },
           error: err => {
-  
+            console.log('ERROR FILE DELETE');
           }
         })
 
@@ -358,6 +357,8 @@ constructor(private http : HttpClient, private modalCtrl: ModalController, priva
       } else {
 
         //image did not change
+        this.dismissModal();
+        this.saleService.confirmSaleItemModal(2, obj, this.uSaleItemForm.value['itemSCategory'].split(',')[1], this.createImg(this.saleItem.photo));
 
       }
 
