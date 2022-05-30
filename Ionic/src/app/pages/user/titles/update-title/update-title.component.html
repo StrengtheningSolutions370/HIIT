@@ -1,37 +1,28 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Update Title</ion-title>
+    <ion-title>Edit Title Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!--<form #uTitleForm="ngForm" (ngSubmit)="onSubmit(uTitleForm)">-->
-  <form #uTitleForm="ngForm">
-
-    <br/>     
-        
-    <ion-item>
-      <ion-label position="stacked">Title:</ion-label>
-      <ion-input required ngModel name #titleCtrl="ngModel" placeholder="Mr."></ion-input>
-    </ion-item>
-    <ion-text color="danger" *ngIf="!titleCtrl.valid && titleCtrl.touched">
-      <p>Please enter a valid title</p>
-    </ion-text>
-
+  <form [formGroup]="uTitleForm" (ngSubmit)="submitForm()"> 
+    <br/><br/>
     <ion-item>
       <ion-label position="stacked">Description:</ion-label>
-      <ion-textarea required ngModel description #desCtrl="ngModel"
-      placeholder="a designation for a man"></ion-textarea>
+      <ion-input formControlName="titleDescription"  type="text" required=""></ion-input>
+      <br/>
     </ion-item>
-    <ion-text color="danger" *ngIf="!desCtrl.valid && desCtrl.touched">
-      <p>Please enter a valid title description</p>
-    </ion-text>
-      
-    <br/>
+    <span class="error ion-padding" *ngIf="errorControl.titleDescription.errors?.required">
+      Title Description is required.
+      <br/>
+    </span>
 
-    <ion-button expand="block" color="secondary">Update Title</ion-button>
-</form>
+   
+    <br><br/>
+    <ion-button type="submit" color="secondary" [disabled]="!uTitleForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Title</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
+  </form>
 </ion-content>

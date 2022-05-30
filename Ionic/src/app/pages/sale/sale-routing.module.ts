@@ -19,14 +19,19 @@ const routes: Routes = [
       {
         path: 'vat',
         loadChildren: () => import('./vat/vat.module').then( m => m.VATPageModule)
+      },
+      {
+        path: 'refund-reason',
+        loadChildren: () => import('./refund-reason/refund-reason.module').then( m => m.RefundReasonPageModule)
       }
     ]
   },
   {
     path: '',
-    redirectTo: 'tabs',
+    redirectTo: 'tabs/sale-item',
     pathMatch: 'full'
   }
+
 ];
 
 @NgModule({

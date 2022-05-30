@@ -1,28 +1,39 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Create VAT</ion-title>
+    <ion-title>New VAT Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+<!--This modal is not complete, please check if it displays like "AddVenue"-->
+<!--Check the SCSS, TS AND HTML-->
+
 <ion-content>
-  <!--<form #cQualificationForm="ngForm" (ngSubmit)="onSubmit(cQualificationForm)">-->
-  <form #cQualificationForm="ngForm">
-
-    <br/>     
-
-    <ion-item>
-      <ion-label position="floating">VAT Percentage:</ion-label>
-      <ion-input required ngModel name #percentageCtrl="ngModel"></ion-input>
-    </ion-item>
-    <ion-text color="danger" *ngIf="!percentageCtrl.valid && percentageCtrl.touched">
-      <p>Please enter a valid VAT percentage</p>
-    </ion-text>
-      
+<form [formGroup]="cVATForm" (ngSubmit)="submitForm()"> 
+  <br/>
+  <div class="ion-text-center">
+    <p style="font-size:large">Please fill in the VAT information below.</p>
+  </div>
+  <ion-item>
+    <ion-label position="floating">Percentage:</ion-label>
+    <ion-input formControlName="percentage" type="text" required="" id="percentage" ></ion-input>
     <br/>
-    <!--(click)="employeeAdd()"-->
-    <ion-button expand="block" color="success">Create VAT</ion-button>
+  </ion-item>
+  <span class="error ion-padding" *ngIf="errorControl.percentage.errors?.required && cVATForm.get('percentage').touched">
+    VAT Percentage is required.<br/>
+  </span>
+  <br>
+<span class="error ion-padding" *ngIf="errorControl.percentage.errors?.min">
+  Please enter a percentage above 0.
+  <br/>
+</span>
+  <br/><br/>
+
+  <ion-button type="submit" color="success" [disabled]="!cVATForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create VAT</ion-button>
+  <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
+  
 </form>
 </ion-content>
+

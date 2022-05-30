@@ -1,6 +1,29 @@
 ion-title {
-    font-family: Cabin,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-family: 'Montserrat', sans-serif;;
     font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+}
+
+ion-item {
+    font-size: large;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+span {
+    color : tertiary;
+    font-size: large;
+    margin-left: 12%;  
+}
+
+span {
+    color : danger;
+    font-size: large;
+    padding-bottom: 20px;
+    margin-left: 12%; 
+}
+
+ion-item {
+    font-size: large;
+    margin-left: 10%;
+    margin-right: 10%;
 }

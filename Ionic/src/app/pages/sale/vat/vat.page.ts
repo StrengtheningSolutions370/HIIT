@@ -1,55 +1,64 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-
-import { AddVatComponent } from './add-vat/add-vat.component';
-import { UpdateVatComponent } from './update-vat/update-vat.component';
-import { DeleteVatComponent } from './delete-vat/delete-vat.component';
-import { ViewVatComponent } from './view-vat/view-vat.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { Vat } from 'src/app/models/vat';
+import { RepoService } from 'src/app/services/repo.service';
+import { VatService } from 'src/app/services/vat/vat.service';
 
 @Component({
   selector: 'app-vat',
   templateUrl: './vat.page.html',
   styleUrls: ['./vat.page.scss'],
 })
-export class VATPage {
+export class VATPage implements OnInit{
 
-  vats = [
-    {percentage : '10%',
-     year : '1991'},
-    {percentage : '14%',
-     year : '1993'},
-     {percentage : '15%',
-     year : '2018'}
-  ];
+  //String used from the searchbar, used in the filter pipe to search titles.
+  public filter: string;
 
-  constructor(private modalCtrl: ModalController) { }
+  //Create local vat array to be populated onInit.
+  vatList: Vat[] = [];
 
-  async addVATModal() {
-    const modal = await this.modalCtrl.create({
-      component : AddVatComponent
-     });
-    await modal.present();
-}
+  //Subscription variable to track live updates.
+  vatSub: Subscription;
 
-  async updateVATModal() {
-    const modal = await this.modalCtrl.create({
-      component : UpdateVatComponent
-    });
-    await modal.present();
+  isLoading = true;
+
+  constructor(public vatService: VatService, public repo: RepoService) { 
+    // this.populateTitles();
+    this.fetchVATs();
   }
 
-  async deleteVATModal() {
-    const modal = await this.modalCtrl.create({
-      component : DeleteVatComponent
-    });
-    await modal.present();
+  ngOnInit() {
+
+    this.vatService.fetchVatsEvent.subscribe(
+      {
+        next: res => {
+          console.log('EMIT TO GO FETCH THE VATS AGAIN')
+          this.fetchVATs();
+        }
+      }
+    );
+
   }
 
-  async viewVATModal() {
-   const modal = await this.modalCtrl.create({
-      component : ViewVatComponent
-    });
-    await modal.present();
-}
+  fetchVATs() {
+    this.isLoading = true;
+    this.vatService.getAllVats().subscribe(
+      {
+        next: data => {
+          console.log("FETCHING VATS FROM DB");
+          console.log(data.result);
+          this.isLoading = false;
+          this.vatList = data.result;
+        }
+      }
+    )
+  }
+
+
+
+  dateFormatter(s : string) : string {
+    return s.split("T")[0];
+  }
 
 }

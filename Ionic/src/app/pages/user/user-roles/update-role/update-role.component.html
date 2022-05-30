@@ -1,3 +1,47 @@
-<p>
-  update-role works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit user Role Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="uUserRoleForm" (ngSubmit)="submitForm()"> 
+    <br/><br/>
+    <ion-item>
+      <ion-label position="stacked">Name:</ion-label>
+      <ion-input formControlName="name"  type="text" required=""></ion-input>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.name.errors?.required">
+      User role name is required.
+      <br/>
+    </span>
+    <ion-item>
+      <ion-label position="stacked">Description:</ion-label>
+      <ion-input formControlName="description"  type="text" required=""></ion-input>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.description.errors?.required">
+      User role description is required.
+      <br/>
+    </span>
+    <ion-label>Please select permissions:</ion-label>
+    <ion-item *ngFor="let permission of permissionList" let i="index">
+
+      <ion-label>{{permission.description}}</ion-label>
+      <ion-checkbox> slot="start" [value]="permission"
+        (ionChange)="onSelectionChange($event,i)">
+      </ion-checkbox>
+
+    </ion-item>
+
+   
+    <br><br/>
+    <ion-button type="submit" color="secondary" [disabled]="!uUserRoleForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Title</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
+  </form>
+</ion-content>
+

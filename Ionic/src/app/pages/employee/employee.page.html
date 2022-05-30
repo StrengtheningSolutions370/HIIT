@@ -1,8 +1,19 @@
-<app-header></app-header>
+<ion-header>
+  <ion-toolbar mode="ios">
+    <!--Menu toggle button that will display the menu-->
+      <ion-buttons slot="start">
+        <ion-menu-button menu="mainMenu"></ion-menu-button>
+      </ion-buttons>
+      <ion-title slot="">Employees</ion-title>
+      <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
+      <!--Can we change this dynamically when switching between tabs?-->
+    <!-- </ion-item> -->
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <ion-tabs>
-    <ion-tab-bar slot="top">
+    <ion-tab-bar slot="top" >
       <ion-tab-button tab="employee-page">
         <ion-label>Employee</ion-label>
       </ion-tab-button>
@@ -22,3 +33,8 @@
     </ion-tab-bar>
   </ion-tabs>
 </ion-content>
+
+<!-- <ion-footer style="margin-left:20px;margin-bottom: 10px;">
+  Bester Strength and Conditioning | info@besterstrengthandconditioning.co.za
+  <br>
+</ion-footer> -->

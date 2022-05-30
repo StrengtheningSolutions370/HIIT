@@ -1,61 +1,69 @@
-import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { Title } from 'src/app/models/title';
+import { RepoService } from 'src/app/services/repo.service';
+import { TitleService } from 'src/app/services/title/title.service';
 
-import { AddTitleComponent } from './add-title/add-title.component';
-import { UpdateTitleComponent } from './update-title/update-title.component';
-import { DeleteTitleComponent } from './delete-title/delete-title.component';
-import { ViewTitlesComponent } from './view-titles/view-titles.component';
 
 @Component({
   selector: 'app-titles',
   templateUrl: './titles.page.html',
   styleUrls: ['./titles.page.scss'],
 })
-export class TitlesPage {
+export class TitlesPage implements OnInit{
 
-  titles = [
-    {name : 'Mr.',
-     description : 'a designation for a man'},
-    {name : 'Mrs',
-     description : 'a designation for a woman who is married'},
-    {name : 'Miss.',
-    description : 'a designation for a young woman '},
-    {name : 'Ms.',
-    description : 'a designation for a woman who is unmarried'},
-    {name : 'Dr.',
-    description : 'a designation for a person who has obtained a doctorate (commonly a PhD)'},
-    {name : 'Prof.',
-    description : 'a designation for a person who is a teacher of the highest rank, or is a expert in their field'},
-  ];
+  //String used from the searchbar, used in the filter pipe to search titles.
+  public filter: string;
 
-  constructor(private modalCtrl: ModalController) { }
+  //Create local title array to be populated onInit.
+  titleList: Title[] = [];
 
-  async addTitleModal() {
-    const modal = await this.modalCtrl.create({
-      component : AddTitleComponent
-     });
-    await modal.present();
-}
+  //Subscription variable to track live updates.
+  titleSub: Subscription;
 
-  async updateTitleModal() {
-    const modal = await this.modalCtrl.create({
-      component : UpdateTitleComponent
-    });
-    await modal.present();
+  isLoading = true;
+
+  constructor(public titleService: TitleService, public repo: RepoService) {
+    // this.populateTitles();
+    this.fetchTitles();
   }
 
-  async deleteTitleModal() {
-    const modal = await this.modalCtrl.create({
-      component : DeleteTitleComponent
-    });
-    await modal.present();
+  ngOnInit() {
+
+    this.titleService.fetchTitlesEvent.subscribe(
+      {
+        next: res => {
+          console.log('EMIT TO GO FETCH THE TITLES AGAIN')
+          this.fetchTitles();
+        }
+      }
+    );
+
   }
 
-  async viewTitleModal() {
-   const modal = await this.modalCtrl.create({
-      component : ViewTitlesComponent
-    });
-    await modal.present();
-}
+  fetchTitles() {
+    this.isLoading = true;
+    this.titleService.getAllTitles().subscribe(
+      {
+        next: data => {
+          //only if a 200OK comes back
+          console.log('FETCHING TITLES FROM DB');
+          console.log(data.result); //object that comes back
+          this.isLoading = false;
+          this.titleList = data.result;
+        },
+        error: err => {
+          console.log(err); //object that comes back
+          ///////
+          // Show the client UI that the API reaponded with !20OK
+          ///////
+        }
+        
+      }
+    );
+  }
+
+
 
 }

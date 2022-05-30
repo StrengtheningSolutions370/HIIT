@@ -1,3 +1,75 @@
 <ion-content>
+  
+  <br/>
+  <ion-searchbar expand="block" placeholder='Search Sale Items..' [(ngModel)]="filter"
+  animated="true" debounce="200"></ion-searchbar>
+
+  <br/>
+  <br/>
+
+  <div class="ion-text-center">
+    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="saleService.addSaleItemInfoModal()">
+      Add Sale Item 
+      <ion-icon name="add" size="medium"></ion-icon>
+    </ion-button>
+  </div>
+  
+  <ion-grid>
+    <ion-row>
+    <!-- <div style="display: inline-block;width: 350px;height: 200px;margin-bottom: 5px;" > -->
+
+      <ion-col size="4" *ngFor="let saleItem of saleItemList  | filter:filter"> 
+        <!-- loop goes in this tag -->
+
+      <ion-card>
+          <ion-card-header >
+              <!--Employee Image-->
+              <div class="centerimg">
+                <img [src]="createImg(saleItem.photo)">
+              </div>
+
+              <ion-card-title style="color:#e7e8ec;">
+                <!--Employee_Name ' ' Employee_Surname-->
+               {{saleItem.name}}
+              </ion-card-title>
+            </ion-card-header>
+          <ion-card-content style="color:#b1b2b6;">
+            
+           
+            <ion-row>
+              <!--Employee Gender-->
+              Price: R{{saleItem.price}}
+            </ion-row>
+            <ion-row>
+              <!--Employee email-->
+              Quantity in Stock: {{saleItem.quantity}}
+            </ion-row>
+            <ion-row>
+              <!--Employee_Type-->
+              Description: {{saleItem.description}}
+            </ion-row>
+         
+            <br />
+            <ion-row>
+              <ion-col col-4>
+                <ion-button class="fifty" color="secondary" (click)="saleService.updateSaleItemInfoModal(saleItem)"><ion-icon name="refresh"></ion-icon>Update</ion-button>
+              </ion-col>
+              <ion-col col-4>
+                <ion-button class="fifty" color="tertiary" (click)="saleService.deleteSaleItemInfoModal(saleItem)"> <ion-icon name="trash" size="medium"></ion-icon>Delete</ion-button>
+              </ion-col>
+              <!-- <ion-col col-4>
+                <ion-button class="hundred" color="primary" *ngIf="saleItem.Quotable" (click)="requestQuoteModal()"> <ion-icon name="document-outline" size="medium"></ion-icon>Request Quote</ion-button>
+              </ion-col> -->
+            </ion-row>
+          </ion-card-content>
+      </ion-card>
+     
+    <!--<mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons> </mat-paginator-->
+    <!-- </div> -->
+  </ion-col>
+  </ion-row>
+  </ion-grid>
 
 </ion-content>
+
+

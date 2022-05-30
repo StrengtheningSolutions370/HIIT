@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/quotes */
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, ViewWillEnter } from '@ionic/angular';
-import { VENUE } from 'src/app/models/venue';
+import { ModalController, ToastController, ViewWillEnter, AlertController } from '@ionic/angular';
+import { Venue } from 'src/app/models/venue';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { VenueService } from 'src/app/services/venue/venue.service';
 
 @Component({
@@ -11,27 +13,21 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   styleUrls: ['./delete-venue.component.scss'],
 })
 export class DeleteVenueComponent implements ViewWillEnter {
-  @Input() venue: VENUE;
+  @Input() venue: Venue;
 
-  constructor(private modalCtrl: ModalController, private alertCtrl: ToastController, public formBuilder: FormBuilder,
-    public venueService: VenueService, private router: Router, private route: ActivatedRoute) { }
-    
+  constructor(public global: GlobalService, private toastCtrl: ToastController, public formBuilder: FormBuilder,
+    public venueService: VenueService, private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController) { }
+
   ionViewWillEnter() {
     console.log("DeleteVenue - ViewWillEnter");
     console.log(this.venue);
   }
 
-  async delete(id:number){
-    console.log("DeleteVenue-BtnClick("+id+")");
+  //Send through the id of the selected venue to be deleted in the venue service.
+  async delete(id: number){
     this.venueService.deleteVenue(id);
-    await this.dismissModal();
+    this.global.dismissModal();
+    //Look at customizing toasts if necessary
+    this.global.showToast("The Venue has been successfully deleted!")
   }
-
-  async dismissModal() {
-    this.modalCtrl.dismiss();
-    console.log(this.route);
-    await this.router.navigate(['../venue'],{relativeTo: this.route});
-
-  }
-
 }

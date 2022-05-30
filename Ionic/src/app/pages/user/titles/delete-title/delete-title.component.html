@@ -1,40 +1,29 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Delete Title</ion-title>
+    <ion-title>Delete Title Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()">Return</ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!--<form #dTitleForm="ngForm" (ngSubmit)="onSubmit(dTitleForm)">-->
-  <form #TitleForm="ngForm">
-    <br/>
+    <br/><br/>
     <ion-label class="ion-text-center">
-      <h3>Are you sure you want to delete the following title?</h3>
+      <p style="font-size:large; color: white;">Are you sure you want to delete the following title?</p>
     </ion-label>
     <br/>
-    <ion-item>
+
+    <ion-item > 
       <ion-label>
-        <h2>Title : </h2>
-        <br/>
-        <!--Insert  Title Here-->
-        <p>Mr.</p>
+        <h2>Title Description: </h2>
+        <p class="ion-text-start">{{title.description}}</p>
       </ion-label>
     </ion-item>
 
-    <ion-item>
-      <ion-label>
-        <h2>Description : </h2>
-        <br/>
-        <!--Insert DESCRIPTION Here-->
-        <p>a designation for a man</p>
-      </ion-label>
-    </ion-item>
-
-    <ion-button expand="block" type="submit" color="tertiary">Delete Title</ion-button>
-  </form>
+    <br>
+    <ion-button expand="block" type="ion-button" (click)="delete(title.titleID)" color="danger" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Delete Title</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
 </ion-content>
 
 

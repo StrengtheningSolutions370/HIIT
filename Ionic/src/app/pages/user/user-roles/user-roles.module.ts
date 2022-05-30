@@ -7,19 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { UserRolesPageRoutingModule } from './user-roles-routing.module';
 
 import { UserRolesPage } from './user-roles.page';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
-import { AddRoleComponent } from './add-role/add-role.component';
-import { UpdateRoleComponent } from './update-role/update-role.component';
-import { DeleteRoleComponent } from './delete-role/delete-role.component';
-import { ViewRoleComponent } from './view-role/view-role.component';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    UserRolesPageRoutingModule
+    UserRolesPageRoutingModule,
+    Ng2SearchPipeModule
   ],
-  declarations: [UserRolesPage, AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent ]
+  declarations: [UserRolesPage]
 })
 export class UserRolesPageModule {}

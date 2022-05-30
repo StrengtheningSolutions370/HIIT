@@ -3,23 +3,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 
 import { VATPageRoutingModule } from './vat-routing.module';
 
 import { VATPage } from './vat.page';
 
-import { AddVatComponent } from './add-vat/add-vat.component';
-import { UpdateVatComponent } from './update-vat/update-vat.component';
-import { DeleteVatComponent } from './delete-vat/delete-vat.component';
-import { ViewVatComponent } from './view-vat/view-vat.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    VATPageRoutingModule
+    VATPageRoutingModule,
+    Ng2SearchPipeModule
+
   ],
-  declarations: [VATPage, AddVatComponent, UpdateVatComponent, DeleteVatComponent, ViewVatComponent ]
+  declarations: [VATPage]
 })
 export class VATPageModule {}

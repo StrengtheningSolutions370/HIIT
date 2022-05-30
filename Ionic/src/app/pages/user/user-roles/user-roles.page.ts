@@ -1,67 +1,82 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+import { Permission } from 'src/app/models/permission';
+import { UserRole } from 'src/app/models/userRole';
+import { RepoService } from 'src/app/services/repo.service';
+import { UserService } from 'src/app/services/user/user.service';
 
-import { AddRoleComponent } from './add-role/add-role.component';
-import { UpdateRoleComponent } from './update-role/update-role.component';
-import { DeleteRoleComponent } from './delete-role/delete-role.component';
-import { ViewRoleComponent } from './view-role/view-role.component';
 
 @Component({
   selector: 'app-user-roles',
   templateUrl: './user-roles.page.html',
   styleUrls: ['./user-roles.page.scss'],
 })
-export class UserRolesPage {
+export class UserRolesPage implements OnInit {
+  //String used from the searchbar, used in the filter pipe to search titles.
+  public filter: string;
 
-  userRoles = [
-    {
-      name : 'Administrator',
-      description : 'a person responsible for carrying out the administration of a business or organization'
-    },
-    {
-      name : 'Trainer',
-      description : 'one whose occupation is to guide or instruct people in fitness and exercise routines a personal trainer ',
-    },
-    {
-      name : 'Client',
-      description : 'a person training at the gym',
-    },
-    {
-      name : 'Member',
-      description : 'a person training at the gym and tracking their performance',
-    }
-  ];
+  //Create local title array to be populated onInit.
+  userRoleList: UserRole[] = [];
+  permissionList: Permission[] = [];
 
-  constructor(private modalCtrl: ModalController) { }
+  //Subscription variable to track live updates.
+  userRoleSub: Subscription;
+  permissionSub: Subscription;
 
-  async addUserRoleModal() {
-     const modal = await this.modalCtrl.create({
-       component : AddRoleComponent
-      });
-     await modal.present();
- }
+  isLoading = true;
 
-   async updateUserRoleModal() {
-     const modal = await this.modalCtrl.create({
-       component : UpdateRoleComponent
-     });
-     await modal.present();
-   }
+  constructor(public userService: UserService, public repo: RepoService) {
+    // this.populateTitles();
+    this.fetchUserRoles();
+    this.fetchPermissions();
+  }
 
-   async deleteUserRoleModal() {
-     const modal = await this.modalCtrl.create({
-       component : DeleteRoleComponent
-     });
-     await modal.present();
-   }
+  fetchUserRoles() {
+    this.isLoading = true;
+    this.userService.getAllUserRoles().subscribe(
+      {
+        next: data => {
+          console.log('FETCHING USER ROLES FROM DB');
+          console.log(data);
+          this.isLoading = false;
+          this.userRoleList = data;
+        }
+      }
+    );
+  }
 
-   async viewUserRoleModal() {
-    const modal = await this.modalCtrl.create({
-       component : ViewRoleComponent
-     });
-     await modal.present();
- }
+  fetchPermissions() {
+    this.isLoading = true;
+    this.userService.getAllPermissions().subscribe(
+      {
+        next: data => {
+          console.log('FETCHING PERMISSIONS FROM DB');
+          console.log(data);
+          this.isLoading = false;
+          this.permissionList = data;
+        }
+      }
+    );
+  }
 
+  ngOnInit() {
 
-
+    this.userService.fetchUserRolesEvent.subscribe(
+      {
+        next: res => {
+          console.log('EMIT TO GO FETCH THE USER ROLES AGAIN');
+          this.fetchUserRoles();
+        }
+      }
+    );
+    this.userService.fetchPermissionEvent.subscribe(
+      {
+        next: res => {
+          console.log('EMIT TO GO FETCH THE PERMISSIONS AGAIN');
+          this.fetchPermissions();
+        }
+      }
+    );
+  }
 }
