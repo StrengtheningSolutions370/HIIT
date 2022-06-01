@@ -1,0 +1,13 @@
+name: direct commit prevention
+
+on: 
+  pull_request:
+    branches: 
+      - developer
+
+jobs: 
+  job: 
+    name: require pull request to developer
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo protecting developer from direct commit
