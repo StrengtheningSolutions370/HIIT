@@ -10,8 +10,8 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220529180231_Initial")]
-    partial class Initial
+    [Migration("20220613101805_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,21 +152,6 @@ namespace Team7.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PermissionUserRole", b =>
-                {
-                    b.Property<int>("PermissionID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserRoleID")
-                        .HasColumnType("int");
-
-                    b.HasKey("PermissionID", "UserRoleID");
-
-                    b.HasIndex("UserRoleID");
-
-                    b.ToTable("PermissionUserRole");
-                });
-
             modelBuilder.Entity("Team7.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -212,6 +197,9 @@ namespace Team7.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TitleID")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -228,6 +216,8 @@ namespace Team7.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("TitleID");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -355,8 +345,6 @@ namespace Team7.Migrations
 
                     b.HasKey("ClientID");
 
-                    b.HasIndex("UserID");
-
                     b.ToTable("Client");
                 });
 
@@ -425,8 +413,6 @@ namespace Team7.Migrations
                     b.HasIndex("EmployeeTypeID");
 
                     b.HasIndex("QualificationID");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("Employee");
                 });
@@ -693,8 +679,6 @@ namespace Team7.Migrations
 
                     b.HasKey("PasswordID");
 
-                    b.HasIndex("UserID");
-
                     b.ToTable("PasswordHistory");
                 });
 
@@ -712,22 +696,6 @@ namespace Team7.Migrations
                     b.HasKey("PaymentTypeID");
 
                     b.ToTable("PaymentType");
-                });
-
-            modelBuilder.Entity("Team7.Models.Permission", b =>
-                {
-                    b.Property<int>("PermissionID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PermissionID");
-
-                    b.ToTable("Permission");
                 });
 
             modelBuilder.Entity("Team7.Models.PriceHistory", b =>
@@ -1197,58 +1165,6 @@ namespace Team7.Migrations
                     b.ToTable("Title");
                 });
 
-            modelBuilder.Entity("Team7.Models.User", b =>
-                {
-                    b.Property<int>("UserID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Cell")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TitleID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserRoleID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.HasKey("UserID");
-
-                    b.HasIndex("TitleID");
-
-                    b.HasIndex("UserRoleID");
-
-                    b.ToTable("User");
-                });
-
-            modelBuilder.Entity("Team7.Models.UserRole", b =>
-                {
-                    b.Property<int>("UserRoleID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserRoleID");
-
-                    b.ToTable("UserRole");
-                });
-
             modelBuilder.Entity("Team7.Models.VAT", b =>
                 {
                     b.Property<int>("VATID")
@@ -1409,19 +1325,13 @@ namespace Team7.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PermissionUserRole", b =>
+            modelBuilder.Entity("Team7.Models.AppUser", b =>
                 {
-                    b.HasOne("Team7.Models.Permission", null)
+                    b.HasOne("Team7.Models.Title", "Title")
                         .WithMany()
-                        .HasForeignKey("PermissionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TitleID");
 
-                    b.HasOne("Team7.Models.UserRole", null)
-                        .WithMany()
-                        .HasForeignKey("UserRoleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Title");
                 });
 
             modelBuilder.Entity("Team7.Models.Booking", b =>
@@ -1471,17 +1381,6 @@ namespace Team7.Migrations
                     b.Navigation("BookingType");
                 });
 
-            modelBuilder.Entity("Team7.Models.Client", b =>
-                {
-                    b.HasOne("Team7.Models.User", "User")
-                        .WithMany("Client")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Team7.Models.DateSession", b =>
                 {
                     b.HasOne("Team7.Models.Session", "Session")
@@ -1513,19 +1412,11 @@ namespace Team7.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Team7.Models.User", "User")
-                        .WithMany("Employee")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("EmployeeContract");
 
                     b.Navigation("EmployeeType");
 
                     b.Navigation("Qualification");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Team7.Models.Exercise", b =>
@@ -1606,17 +1497,6 @@ namespace Team7.Migrations
                     b.Navigation("Client");
 
                     b.Navigation("MemberStatus");
-                });
-
-            modelBuilder.Entity("Team7.Models.PasswordHistory", b =>
-                {
-                    b.HasOne("Team7.Models.User", "User")
-                        .WithMany("PasswordHistory")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Team7.Models.PriceHistory", b =>
@@ -1822,25 +1702,6 @@ namespace Team7.Migrations
                     b.Navigation("SupplierOrder");
                 });
 
-            modelBuilder.Entity("Team7.Models.User", b =>
-                {
-                    b.HasOne("Team7.Models.Title", "Title")
-                        .WithMany("User")
-                        .HasForeignKey("TitleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Team7.Models.UserRole", "UserRole")
-                        .WithMany("User")
-                        .HasForeignKey("UserRoleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Title");
-
-                    b.Navigation("UserRole");
-                });
-
             modelBuilder.Entity("Team7.Models.WriteOffLine", b =>
                 {
                     b.HasOne("Team7.Models.InventoryItem", "InventoryItem")
@@ -2023,25 +1884,6 @@ namespace Team7.Migrations
             modelBuilder.Entity("Team7.Models.SupplierOrder", b =>
                 {
                     b.Navigation("SupplierOrderLine");
-                });
-
-            modelBuilder.Entity("Team7.Models.Title", b =>
-                {
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Team7.Models.User", b =>
-                {
-                    b.Navigation("Client");
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("PasswordHistory");
-                });
-
-            modelBuilder.Entity("Team7.Models.UserRole", b =>
-                {
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Team7.Models.Venue", b =>

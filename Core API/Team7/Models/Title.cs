@@ -8,7 +8,7 @@ namespace Team7.Models
     {
         public Title()
         {
-            this.User = new HashSet<User>();
+           /* this.User = new HashSet<User>();*/
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -16,6 +16,5 @@ namespace Team7.Models
         [Required]
         public string Description { get; set; }
 
-        public virtual ICollection<User> User { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace Team7.ViewModels
 
         public string Password { get; set; }
 
+        public string role { get; set; }
 
     }
 }

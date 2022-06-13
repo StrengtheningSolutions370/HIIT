@@ -11,9 +11,11 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Team7.Models;
+using Team7.Services;
 using Team7.ViewModels;
 
 namespace Team7.Controllers
@@ -25,20 +27,37 @@ namespace Team7.Controllers
         private readonly UserManager<AppUser> _userManager;
         //private readonly IUserClaimsPrincipalFactory<AppUser> _claimsPrincipalFactory;
         private readonly IConfiguration _configuration;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AppUserController(UserManager<AppUser> userManager,
-            //IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory,
-            IConfiguration configuration)
+        public AppUserController(UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             //_claimsPrincipalFactory = claimsPrincipalFactory;
             _configuration = configuration;
+            _roleManager = roleManager;
         }
 
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register(UserViewModel userViewModel)
         {
+
+            var role = "client";
+
+            //check if role exists:
+            var exists = await _roleManager.FindByNameAsync(role);
+            if (exists == null)
+            {
+                //role does not exists yet:
+                //create the role here:
+                IdentityRole newRole = new IdentityRole
+                {
+                    Name = role
+                };
+                IdentityResult result = await _roleManager.CreateAsync(newRole);
+
+            }
+
             var user = await _userManager.FindByNameAsync(userViewModel.EmailAddress);
 
             if (user == null)
@@ -52,6 +71,11 @@ namespace Team7.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(user, userViewModel.Password);
+
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, role);
+                }
 
                 if (result.Errors.Any())
                 {
@@ -80,12 +104,25 @@ namespace Team7.Controllers
                 }
                 catch (Exception err)
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, err + "     Internal error. Please contact support");
+                    return StatusCode(StatusCodes.Status500InternalServerError, err + " Internal error. Please contact support");
                 }
             } else
             {
                 return NotFound("The provided email or password is incorrect. Please check your password or register an account.");
             }
+        }
+
+        static String sha256(string val)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            using (SHA256 hasher = SHA256Managed.Create())
+            {
+                Encoding encoder = Encoding.UTF8;
+                Byte[] result = hasher.ComputeHash(encoder.GetBytes(val));
+                foreach (Byte b in result)
+                    stringBuilder.Append(b.ToString("x2"));
+            }
+            return stringBuilder.ToString();
         }
 
         [HttpGet]

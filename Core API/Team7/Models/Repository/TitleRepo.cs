@@ -47,9 +47,6 @@ namespace Team7.Models.Repository
                     {
                         t.TitleID,
                         t.Description,
-                        User = t
-                        .User
-                        .Select(u => new { u.UserID, u.Email, u.Cell })
                     }).ToListAsync()
                 };
 
@@ -84,9 +81,6 @@ namespace Team7.Models.Repository
                     {
                         t.TitleID,
                         t.Description,
-                        Users = t
-                            .User
-                            .Select(u => new { u.Email, u.Cell})
                     }).ToListAsync()
                 };
             }
@@ -119,9 +113,6 @@ namespace Team7.Models.Repository
                     {
                         t.TitleID,
                         t.Description,
-                        Users = t
-                            .User
-                            .Select(u => new { u.Email, u.Cell })
                     }).ToListAsync()
                 };
             }

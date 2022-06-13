@@ -21,29 +21,48 @@ using System.Text;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Team7.Services;
 
 namespace Team7
 {
     public class Startup
     {
         readonly string corsPolicy = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
 
+        /*async void addRoles()
+        {
+            //add roles to the db:
+            string[] roles = { "ADMIN", "CLIENT", "MEMBER", "TRAINER", "GENERALEMPLOYEE" };
+            foreach (string role in roles)
+            {
+                IdentityRole newRole = new IdentityRole
+                {
+                    Name = role
+                };
+                //creating the role:
+                IdentityResult result = await _roleManager.CreateAsync(newRole);
+            }
+        }*/
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             //Authentication configuration
             services.AddIdentity<AppUser, IdentityRole>(options =>
              {
                  options.Password.RequireDigit = true;
                  options.Password.RequireUppercase = false;
                  options.Password.RequireLowercase = false;
-                 options.Password.RequireNonAlphanumeric = false;                 
+                 options.Password.RequireNonAlphanumeric = false;
                  options.Password.RequiredLength = 8;
                  options.Password.RequiredUniqueChars = 1;
                  options.User.RequireUniqueEmail = true;
@@ -61,6 +80,8 @@ namespace Team7
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
                         };
                     });
+
+
 
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsPrincipalFactory>();
             services.Configure<DataProtectionTokenProviderOptions>(options =>
@@ -139,7 +160,6 @@ namespace Team7
             services.AddScoped<IOrderStatusRepo, OrderStatusRepo>();
             services.AddScoped<IPasswordHistoryRepo, PasswordHistoryRepo>();
             services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();
-            services.AddScoped<IPermissionRepo, PermissionRepo>();
             services.AddScoped<IPriceHistoryRepo, PriceHistoryRepo>();
             services.AddScoped<IQualificationRepo, QualificationRepo>();
             services.AddScoped<IQualificationTypeRepo, QualificationTypeRepo>();
@@ -157,8 +177,6 @@ namespace Team7
             services.AddScoped<ISupplierOrderRepo, SupplierOrderRepo>();
             services.AddScoped<ISupplierRepo, SupplierRepo>();
             services.AddScoped<ITitleRepo, TitleRepo>();
-            services.AddScoped<IUserRepo, UserRepo>();
-            services.AddScoped<IUserRoleRepo, UserRoleRepo>();
             services.AddScoped<IVenueRepo, VenueRepo>();
             services.AddScoped<IVATRepo, VATRepo>();
             services.AddScoped<IWriteOffLineRepo, WriteOffLineRepo>();

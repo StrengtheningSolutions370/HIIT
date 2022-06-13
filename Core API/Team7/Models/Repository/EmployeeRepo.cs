@@ -67,11 +67,11 @@ namespace Team7.Models.Repository
                             e.EmployeeTypeID,
                             e.EmployeeType
                         },
-                        users = new
+                        /*users = new
                         {
                             e.UserID,
                             e.User
-                        }
+                        }*/
                     }).ToListAsync()
                 };
             }
@@ -125,11 +125,11 @@ namespace Team7.Models.Repository
                             e.EmployeeTypeID,
                             e.EmployeeType
                         },
-                        users = new
+                        /*users = new
                         {
                             e.UserID,
                             e.User
-                        }
+                        }*/
                     }).ToListAsync()
                 };
             }
@@ -179,11 +179,11 @@ namespace Team7.Models.Repository
                             e.EmployeeTypeID,
                             e.EmployeeType
                         },
-                        users = new
+                        /*users = new
                         {
                             e.UserID,
                             e.User
-                        }
+                        }*/
                     }).ToListAsync()
                 };
             }
