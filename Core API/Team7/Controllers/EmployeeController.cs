@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -93,6 +95,14 @@ namespace Team7.Controllers
                 return Forbid("Account with provided email address already exists");
             }
             return Ok("Account created successfully");
+        }
+
+        [HttpGet]
+        [Route("authtest")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        public async Task<IActionResult> authtest()
+        {
+            return Ok("HERE");
         }
 
         // PUT api/employees/update/5

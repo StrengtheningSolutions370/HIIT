@@ -100,7 +100,7 @@ namespace Team7.Controllers
                 {
                     //var principal = await _claimsPrincipalFactory.CreateAsync(user);
                     //await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
-                    return GenerateJWTToken(user);
+                    return Ok(await GenerateJWTTokenAsync(user));
                 }
                 catch (Exception err)
                 {
@@ -126,18 +126,20 @@ namespace Team7.Controllers
         }
 
         [HttpGet]
-        private ActionResult GenerateJWTToken(AppUser appUser)
+        private async Task <object> GenerateJWTTokenAsync(AppUser appUser)
         {
+            var roleArray = await _userManager.GetRolesAsync(appUser);
+
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, appUser.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, appUser.UserName)
+                new Claim(JwtRegisteredClaimNames.UniqueName, appUser.UserName),
+                new Claim(ClaimTypes.Role, roleArray[0])
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
 
             var token = new JwtSecurityToken(
                 _configuration["Tokens:Issuer"],
