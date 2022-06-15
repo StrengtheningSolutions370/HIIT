@@ -11,5 +11,10 @@ namespace Team7.Models
         //can add custom columns to ASPNET.Users in the db
 
         public virtual Title Title { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
     }
 }

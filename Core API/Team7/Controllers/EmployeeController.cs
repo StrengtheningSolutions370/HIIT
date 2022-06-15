@@ -26,31 +26,16 @@ namespace Team7.Controllers
             _userManager = userManager;
         }
 
-
-        // POST api/Employee/add
-        /*[HttpPost]
-        [Route("add")]
-        public async Task<IActionResult> PostQualificationType(Employee employee)
-        {
-            try
-            {
-                EmployeeRepo.Add(employee);
-                await EmployeeRepo.SaveChangesAsync();
-                return Ok();
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
-
-        }*/
-
         [HttpPost]
-        [Route("add")]
-        public async Task<IActionResult> Register(UserViewModel userViewModel)
+        [Route("addAdmin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "superuser")]
+        public async Task<IActionResult> RegisterAdmin(UserViewModel userViewModel)
         {
 
-            //
+            if (userViewModel.role != "admin")
+            {
+                return BadRequest();
+            }
 
             //check if role exists:
             var exists = await _roleManager.FindByNameAsync(userViewModel.role);
@@ -75,7 +60,75 @@ namespace Team7.Controllers
                 {
                     Id = Guid.NewGuid().ToString(),
                     UserName = userViewModel.EmailAddress,
-                    Email = userViewModel.EmailAddress
+                    Email = userViewModel.EmailAddress,
+                    PhoneNumber = userViewModel.phoneNumber,
+                    FirstName = userViewModel.firstName,
+                    LastName = userViewModel.lastName,
+                };
+
+                var result = await _userManager.CreateAsync(user, userViewModel.Password);
+
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, userViewModel.role);
+                }
+
+                if (result.Errors.Any())
+                {
+                    StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
+                }
+            }
+            else
+            {
+                return Forbid("Account with provided email address already exists");
+            }
+            return Ok("Account created successfully");
+        }
+
+        [HttpPost]
+        [Route("addEmployee")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, superuser")]
+        public async Task<IActionResult> RegisterEmployee(UserViewModel userViewModel)
+        {
+
+            string[] supportedRole = { "trainer", "generalemployee" };
+            bool flag = false;
+            foreach (var role in supportedRole)
+                if (role == userViewModel.role)
+                {
+                    flag = true;
+                    break;
+                }
+            if (!flag)
+                StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Role creation not supported");
+
+            //check if role exists:
+            var exists = await _roleManager.FindByNameAsync(userViewModel.role);
+            if (exists == null)
+            {
+                //role does not exists yet:
+                //create the role here:
+                IdentityRole newRole = new IdentityRole
+                {
+                    Name = userViewModel.role
+                };
+                IdentityResult result = await _roleManager.CreateAsync(newRole);
+
+            }
+
+            var user = await _userManager.FindByNameAsync(userViewModel.EmailAddress);
+
+            if (user == null)
+            {
+                //Create new user - no existing account with matching email address
+                user = new AppUser
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = userViewModel.EmailAddress,
+                    Email = userViewModel.EmailAddress,
+                    PhoneNumber = userViewModel.phoneNumber,
+                    FirstName = userViewModel.firstName,
+                    LastName = userViewModel.lastName,
                 };
 
                 var result = await _userManager.CreateAsync(user, userViewModel.Password);

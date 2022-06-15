@@ -10,7 +10,7 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220613204733_initial")]
+    [Migration("20220615093807_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,6 +170,12 @@ namespace Team7.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");

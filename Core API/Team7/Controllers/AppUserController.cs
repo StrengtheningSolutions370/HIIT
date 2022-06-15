@@ -42,6 +42,7 @@ namespace Team7.Controllers
         public async Task<IActionResult> Register(UserViewModel userViewModel)
         {
 
+            //force role to client
             var role = "client";
 
             //check if role exists:
@@ -67,20 +68,25 @@ namespace Team7.Controllers
                 {
                     Id = Guid.NewGuid().ToString(),
                     UserName = userViewModel.EmailAddress,
-                    Email = userViewModel.EmailAddress
+                    Email = userViewModel.EmailAddress,
+                    PhoneNumber = userViewModel.phoneNumber,
+                    FirstName = userViewModel.firstName,
+                    LastName = userViewModel.lastName,
                 };
 
                 var result = await _userManager.CreateAsync(user, userViewModel.Password);
 
+                //adding role to the client
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, role);
+                    await _userManager.AddToRoleAsync(user, role); //role="client"
                 }
 
                 if (result.Errors.Any())
                 {
                     StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
                 }
+
             } else
             {
                 return Forbid("Account with provided email address already exists");
