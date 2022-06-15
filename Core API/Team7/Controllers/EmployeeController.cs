@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Models;
@@ -26,7 +28,7 @@ namespace Team7.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
+       /* [HttpPost]
         [Route("addAdmin")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "superuser")]
         public async Task<IActionResult> RegisterAdmin(UserViewModel userViewModel)
@@ -83,6 +85,26 @@ namespace Team7.Controllers
                 return Forbid("Account with provided email address already exists");
             }
             return Ok("Account created successfully");
+        }*/
+
+        [HttpPost]
+        [Route("token")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Token()
+        {
+            var header = HttpContext.Request.Headers["Authorization"][0];
+            var token = header.Substring(header.IndexOf(" ") + 1);
+            var handler = new JwtSecurityTokenHandler();
+            var jwt = handler.ReadJwtToken(token);
+            string sub = jwt.Subject;
+            //linking to query for the sub's role:
+
+            var userRole = await _userManager.GetRolesAsync(await _userManager.FindByNameAsync( sub ));
+
+            return Ok(new
+            {
+                role = userRole[0]
+            });
         }
 
         [HttpPost]
@@ -148,14 +170,6 @@ namespace Team7.Controllers
                 return Forbid("Account with provided email address already exists");
             }
             return Ok("Account created successfully");
-        }
-
-        [HttpGet]
-        [Route("authtest")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        public async Task<IActionResult> authtest()
-        {
-            return Ok("HERE");
         }
 
         // PUT api/employees/update/5

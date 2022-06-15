@@ -37,21 +37,6 @@ namespace Team7
 
         public IConfiguration Configuration { get; }
 
-        /*async void addRoles()
-        {
-            //add roles to the db:
-            string[] roles = { "ADMIN", "CLIENT", "MEMBER", "TRAINER", "GENERALEMPLOYEE" };
-            foreach (string role in roles)
-            {
-                IdentityRole newRole = new IdentityRole
-                {
-                    Name = role
-                };
-                //creating the role:
-                IdentityResult result = await _roleManager.CreateAsync(newRole);
-            }
-        }*/
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
