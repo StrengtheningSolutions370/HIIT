@@ -28,16 +28,13 @@ namespace Team7.Controllers
             _userManager = userManager;
         }
 
-       /* [HttpPost]
+        [HttpPost]
         [Route("addAdmin")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "superuser")]
         public async Task<IActionResult> RegisterAdmin(UserViewModel userViewModel)
         {
 
-            if (userViewModel.role != "admin")
-            {
-                return BadRequest();
-            }
+            var role = "admin";
 
             //check if role exists:
             var exists = await _roleManager.FindByNameAsync(userViewModel.role);
@@ -47,7 +44,7 @@ namespace Team7.Controllers
                 //create the role here:
                 IdentityRole newRole = new IdentityRole
                 {
-                    Name = userViewModel.role
+                    Name = role
                 };
                 IdentityResult result = await _roleManager.CreateAsync(newRole);
 
@@ -72,7 +69,7 @@ namespace Team7.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, userViewModel.role);
+                    await _userManager.AddToRoleAsync(user, role);
                 }
 
                 if (result.Errors.Any())
@@ -85,7 +82,7 @@ namespace Team7.Controllers
                 return Forbid("Account with provided email address already exists");
             }
             return Ok("Account created successfully");
-        }*/
+        }
 
         [HttpPost]
         [Route("token")]
@@ -122,7 +119,7 @@ namespace Team7.Controllers
                     break;
                 }
             if (!flag)
-                StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Role creation not supported");
+                return BadRequest();
 
             //check if role exists:
             var exists = await _roleManager.FindByNameAsync(userViewModel.role);

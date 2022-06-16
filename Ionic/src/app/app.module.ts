@@ -66,6 +66,11 @@ import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
 import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
 import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
 
+//SIDEMENU IMPORTS:
+import { SidemenuComponent } from './sidemenu/sidemenu.component';
+
+
+
 
 
 
@@ -88,7 +93,8 @@ import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.compo
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
   ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
   ConfirmCategoryComponent, AddCategoryComponent, ConfirmCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent,
-  ConfirmSitemComponent, AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent
+  ConfirmSitemComponent, AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+  SidemenuComponent
 ],
 
   entryComponents: [],
