@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { AuthService } from './services/authentication/auth.service';
+import { StoreService } from './services/storage/store.service';
 import { VenueService } from './services/venue/venue.service';
 
 @Component({
@@ -10,25 +14,16 @@ import { VenueService } from './services/venue/venue.service';
 })
 export class AppComponent implements OnInit {
 
-  shownav! : boolean;
+  hide = false;
 
-  constructor(venueService: VenueService, private router : Router) {
-    this.shownav = false;
-    this.router.events.subscribe((event: any) => {
-        console.log(event.url)
-        var route = event.url;
-        if (route == '/login' || route == '/' || route == '/login/signup') {
-          this.shownav == false;
-        } else {
-          this.shownav = true;
-        }
-    })
+  constructor(venueService: VenueService, private auth : AuthService) {
     
   }
-
   
   ngOnInit() {
-    // console.log(this.router.url);
+    this.auth.isLoggedIn.subscribe(log => {
+      this.hide = log;
+    })
   }
 
 

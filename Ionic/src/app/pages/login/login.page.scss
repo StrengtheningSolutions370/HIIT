@@ -8,17 +8,17 @@ ion-avatar {
         }
 }
 
-ion-item{
+ion-item {
     --background: white;
     --color: #363636;
 }
 
-ion-button{
+ion-button {
     --background: #4570e9;
     --color: white;
 }
 
-ion-card{
+ion-card {
     --background: #202020;
     --color: white; 
     padding-bottom: 40PX;
@@ -30,13 +30,17 @@ ion-card{
     margin-top: 5%;
 }
 
-h1{
+h1 {
     font-family: Cabin,Helvetica Neue,Helvetica,Arial,sans-serif;
     font-weight: 700;
     margin: 0 0 35px;
     letter-spacing: 1px;
     text-transform: uppercase;
-  }
+}
+
+app-sidemenu {
+    display: none !important;
+}
   
   
 
