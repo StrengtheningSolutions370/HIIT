@@ -21,7 +21,7 @@ export class StoreService {
     return (await Storage.get({key:keyIn})).value;
   }
 
-  async deleteKey(keyIn:string){
+  async deleteKey(keyIn: string){
     return (await Storage.remove({key:keyIn}));
   }
 }

@@ -10,8 +10,8 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220529180231_Initial")]
-    partial class Initial
+    [Migration("20220614111501_FirstImport")]
+    partial class FirstImport
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

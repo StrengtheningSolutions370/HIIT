@@ -31,13 +31,13 @@ export class VenuePage implements OnInit {
     this.venueService.fetchVenuesEvent.subscribe(
       {
         next: res => {
-          console.log('EMIT TO GO FETCH THE TITLES AGAIN')
+          console.log('EMIT TO GO FETCH THE TITLES AGAIN');
           this.fetchVenues();
         }
       }
     );
   }
-  
+
   fetchVenues() {
     this.isLoading = true;
     this.venueService.getAllVenues().subscribe(
