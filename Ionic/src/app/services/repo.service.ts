@@ -47,27 +47,27 @@ export class RepoService {
   //AppUser:
   //-------
   //Register
-  register(userDetails: appUserRegister){
+  register(userDetails: appUserRegister) {
     return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);
   }
 
   //Login
-  login(userDetails: appUser){
+  login(userDetails: appUser) : Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions)
   }
 
   //UserRole:
   //------
   //Create
-  createUserRole(user_role: UserRole): Observable<any> {
+  createUserRole(user_role: UserRole) : Observable<any> {
     return this.http.post(`${this.base + this.UserRoleController}add`, user_role, this.httpOptions);
   }
   //Read
-  getUserRoles(): Observable<any> {
+  getUserRoles() : Observable<any> {
     return this.http.get(`${this.base + this.UserRoleController}getAll`, this.httpOptions);
   }
   //Update
-  updateUserRole(userId: number, user_role: UserRole){
+  updateUserRole(userId: number, user_role: UserRole) {
     return this.http.put(`${this.base + this.UserRoleController}update?id=${userId}`, user_role, this.httpOptions);
   }
   //Delete

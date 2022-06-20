@@ -10,6 +10,9 @@ namespace Team7.Context
 {
     public class AppDB: IdentityDbContext<AppUser>
     {
+        public AppDB()
+        {
+        }
 
         public AppDB(DbContextOptions<AppDB> options):base(options)
         {
@@ -36,7 +39,6 @@ namespace Team7.Context
         public virtual DbSet<OrderStatus> OrderStatus { get; set; }
         public virtual DbSet<PasswordHistory> PasswordHistory { get; set; }
         public virtual DbSet<PaymentType> PaymentType { get; set; }
-        public virtual DbSet<Permission> Permission { get; set; }
         public virtual DbSet<PriceHistory> PriceHistory { get; set; }
         public virtual DbSet<Qualification> Qualification { get; set; }
         public virtual DbSet<QualificationType> QualificationType { get; set; }
@@ -55,13 +57,11 @@ namespace Team7.Context
         public virtual DbSet<SupplierOrder> SupplierOrder { get; set; }
         public virtual DbSet<SupplierOrderLine> SupplierOrderLine { get; set; }
         public virtual DbSet<Title> Title { get; set; }
-        public virtual DbSet<UserRole> UserRole { get; set; }
-        public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<VAT> VAT { get; set; }
         public virtual DbSet<Venue> Venue { get; set;}
         public virtual DbSet<WriteOff> WriteOff { get; set; }
         public virtual DbSet<WriteOffLine> WriteOffLine { get; set; }
         public virtual DbSet<WriteOffReason> WriteOffReason { get; set; }
+        public virtual DbSet<VAT> VAT { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
