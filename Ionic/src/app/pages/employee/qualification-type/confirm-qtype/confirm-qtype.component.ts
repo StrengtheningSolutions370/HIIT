@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { QualificationType } from 'src/app/models/qualification-type';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { QualificationService } from 'src/app/services/qualification/qualification.service';
 
 @Component({
@@ -14,15 +14,10 @@ export class ConfirmQtypeComponent {
   @Input() choice: number;
   @Input() qualificationType: QualificationType;
 
-  constructor(private modalCtrl: ModalController, public qualificationService: QualificationService,
-    public router: Router, public activated: ActivatedRoute, public toastCtrl : ToastController) {
+  constructor(public qualificationService: QualificationService,
+    public router: Router, public activated: ActivatedRoute, public global: GlobalService) {
    }
 
-   //double check where it returns to with josh 
- async dismissModal() {
-    //await this.router.navigate(['../qualification-type'],{relativeTo:this.activated});
-    this.modalCtrl.dismiss();
-  };
   //1 = confirm ADD
   //2 = confirm UPDATE
   async confirmChanges(qualificationType: QualificationType){
@@ -32,6 +27,7 @@ export class ConfirmQtypeComponent {
       if (this.qualificationService.matchingQualificationType(qualificationType.name) != null)
       {
         console.log('Existing QualificationType: ' + qualificationType.name);
+        this.global.showAlert("The Qualification Type already exists, please choose a different name");
         //display duplicate alert
         //failure alert
         return;
@@ -40,8 +36,8 @@ export class ConfirmQtypeComponent {
         console.log('Add Qualification Type from confirm:');
         //CallRepoToCreate
         await this.qualificationService.createQualificationType(qualificationType);
-        await this.dismissModal();
-        this.sucAdd();
+        this.global.dismissModal();
+        this.global.showToast("The Qualification Type has been successfully added!");
       }
     }
 
@@ -49,13 +45,9 @@ export class ConfirmQtypeComponent {
       console.log('Update Qualification Type from confirm:');
       //CallRepoToUpdate
       await this.qualificationService.updateQualificationType(qualificationType.qualificationTypeID,qualificationType);
-      this.dismissModal();
-      this.sucUpdate();
+      this.global.dismissModal();
+      this.global.showToast("The Qualification Type has been successfully updated!");
         }
-    
-
-    //dismiss modal
-   // this.dismissModal();
   }
 
   async returnFrom(){
@@ -63,30 +55,14 @@ export class ConfirmQtypeComponent {
       //2 = return to UPDATE
     if (this.choice === 1){
       console.log(this.qualificationType);
-      await this.dismissModal();
+      this.global.dismissModal();
       this.qualificationService.addQualificationTypeInfoModal(this.qualificationType);
     }
     else if (this.choice === 2){
       console.log(this.qualificationType);
-      await this.dismissModal();
+      this.global.dismissModal();
       this.qualificationService.updateQualificationTypeInfoModal(this.qualificationType);
     }
-  }
-
-  async sucAdd() {
-    const toast = await this.toastCtrl.create({
-      message: 'The Qualification Type has been successfully added!',
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async sucUpdate() {
-    const toast = await this.toastCtrl.create({
-      message: 'The Qualification Type has been successfully updated!',
-      duration: 2000
-    });
-    toast.present();
   }
 
 }

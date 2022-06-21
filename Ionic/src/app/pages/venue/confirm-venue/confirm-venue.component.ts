@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, AlertController } from '@ionic/angular';
+import { Component, Input} from '@angular/core';
 import { Venue } from 'src/app/models/venue';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { VenueService } from 'src/app/services/venue/venue.service';
@@ -32,7 +30,7 @@ export class ConfirmVenueComponent {
     });
   }
 
-  confirmChanges(venue: Venue){
+  async confirmChanges(venue: Venue){
     console.log(venue);
     this.checkMatch(venue.name,venue.address).then(result =>{
       console.log(result);
