@@ -73,7 +73,7 @@ namespace Team7.Models.Repository
 
         }
 
-        public async Task<object> GetVenuesAsync(string name, string? address)
+        public async Task<object> GetVenuesAsync(string name, string address = null)
         {
             IQueryable<Venue> query = DB.Venue;
             if (address == null)
@@ -107,7 +107,7 @@ namespace Team7.Models.Repository
 
         }
 
-        public async Task<Venue[]> _GetVenuesAsync(string name, string? address)
+        public async Task<Venue[]> _GetVenuesAsync(string name, string address = null)
         {
             IQueryable<Venue> query = DB.Venue;
             if (address == null)

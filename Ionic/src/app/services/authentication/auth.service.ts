@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { BehaviorSubject } from 'rxjs';
 import { appUser, appUserRegister } from 'src/app/models/appUser';
 import { GlobalService } from '../global/global.service';
 import { RepoService } from '../repo.service';
@@ -10,39 +12,60 @@ import {StoreService} from '../storage/store.service';
 })
 export class AuthService {
 
+  //////////////
+  //navbar authentication with observable
+  private loggedIn = new BehaviorSubject<boolean>(false);
+
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
+  }
+
+  navLogin() {
+    this.loggedIn.next(true);
+    console.log('navLogin called');
+  }
+
+  navLogout() {
+    this.loggedIn.next(false);
+    console.log('navLogout called');
+  }
+  //////////////
+
   constructor(
     private repo: RepoService,
     private global: GlobalService,
     private storage: StoreService,
-    private router: Router) { }
+    private router: Router,
+    private cookie : CookieService) { }
 
   register(registerUser: appUserRegister) {
     this.repo.register(registerUser).subscribe(result => {
-      console.log(result);
-      this.router.navigateByUrl('/login');
+      this.router.navigate(['login']);
     });
   }
 
   async login(appUser: appUser) {
    await this.global.nativeLoad("loading...");
-    return this.repo.login(appUser).subscribe(result => { 
-      if (result){
-        console.log(result);
-      }    
-      var token = result['token'];
-      this.storage.setKey('token',token);
-      this.router.navigateByUrl('/home');   
+    return this.repo.login(appUser).subscribe((result : any) => { 
+      var token = result.value.token;
+      var expiration = result.value.expiration;
+      var date = new Date(expiration);
+      var epoch = date.getTime(); //convert TZ string to epoch
+      this.cookie.set('token', token, epoch);
+      this.navLogin(); //change observable to show navbar
+      this.router.navigate(['home']);   
    }).add(() =>{this.global.endNativeLoad()});
-
-
   }
 
   async logout() {
-    await this.global.nativeLoad();
-    this.storage.deleteKey('token').then(result => {
-      this.router.navigateByUrl('/login');
-      this.global.endNativeLoad();
-    })
+    // await this.global.nativeLoad();
+    // this.storage.deleteKey('token').then(result => {
+    //   this.router.navigateByUrl('/login');
+    //   this.global.endNativeLoad();
+    // })
+    this.cookie.deleteAll(); //removes all cookies from client
+    this.navLogout();
+    this.router.navigate(['login']); //route user back to login
    }
 
   // roleMatch(allowedRoles): boolean {

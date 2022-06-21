@@ -6,4 +6,8 @@ export class appUser {
 export class appUserRegister {
     emailAddress: string;
     password: string;
+    role: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
 }

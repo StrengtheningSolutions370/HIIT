@@ -13,7 +13,6 @@ import { Vat } from '../models/vat';
 import { SaleItem } from '../models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { appUser, appUserRegister } from '../models/appUser';
-import { Qualification } from '../models/qualification';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +20,7 @@ import { Qualification } from '../models/qualification';
 
 export class RepoService {
   base = 'https://localhost:44383/api/';
-  AppUserController = 'AppUser/';
+  AppUserController = 'AppUser/'
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
   EmployeeTypeController = 'EmployeeType/';
@@ -31,7 +30,6 @@ export class RepoService {
   SaleItemController = 'SaleItem/';
   SaleCategoryController = 'SaleCategory/';
   PermissionController = 'Permission/';
-  QualificationController = 'Qualification/';
 
 
   httpOptions = {
@@ -49,27 +47,27 @@ export class RepoService {
   //AppUser:
   //-------
   //Register
-  register(userDetails: appUserRegister){
+  register(userDetails: appUserRegister) {
     return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);
   }
 
   //Login
-  login(userDetails: appUser){
-    return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
+  login(userDetails: appUser) : Observable<any> {
+    return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions)
   }
 
   //UserRole:
   //------
   //Create
-  createUserRole(user_role: UserRole): Observable<any> {
+  createUserRole(user_role: UserRole) : Observable<any> {
     return this.http.post(`${this.base + this.UserRoleController}add`, user_role, this.httpOptions);
   }
   //Read
-  getUserRoles(): Observable<any> {
+  getUserRoles() : Observable<any> {
     return this.http.get(`${this.base + this.UserRoleController}getAll`, this.httpOptions);
   }
   //Update
-  updateUserRole(userId: number, user_role: UserRole){
+  updateUserRole(userId: number, user_role: UserRole) {
     return this.http.put(`${this.base + this.UserRoleController}update?id=${userId}`, user_role, this.httpOptions);
   }
   //Delete
@@ -174,7 +172,7 @@ export class RepoService {
   existsTitle(id: number): Observable<any> {
     return this.http.get(`${this.base + this.TitleController}exists?id=${id}`, this.httpOptions);
   }
-
+  
 
   //QualificationType:
   //------
@@ -201,32 +199,6 @@ export class RepoService {
   //Exists
   existsQualificationType(id: number): Observable<any> {
     return this.http.get(`${this.base + this.QualificationTypeController}exists?id=${id}`, this.httpOptions);
-  }
-
-    //Qualification:
-  //------
-  //Create
-  createQualification(qualification: Qualification): Observable<any> {
-    return this.http.post<any>(`${this.base + this.QualificationController}add`, qualification, this.httpOptions);
-  }
-  //Read
-  getQualifications(): Observable<any> {
-    return this.http.get(`${this.base + this.QualificationController}getAll`, this.httpOptions);
-  }
-  //Update
-  updateQualification(qualificationId: number, qualification: Qualification): Observable<any> {
-    return this.http.put(`${this.base + this.EmployeeTypeController}update?id=${qualificationId}`, qualification, this.httpOptions);
-  }
-  //Delete
-  deleteQualification(qualificationId: number): Observable<any> {
-    return this.http.delete(`${this.base + this.QualificationController}delete?id=${qualificationId}`, this.httpOptions);
-  }
-  getMatchQualification(input: string): Observable<any> {
-    return this.http.get(`${this.base + this.QualificationController}getMatch?input=${input}`, this.httpOptions);
-  }
-  //Exists
-  existsQualification(id: number): Observable<any> {
-    return this.http.get(`${this.base + this.QualificationController}exists?id=${id}`, this.httpOptions);
   }
 
  //SaleCategory:
@@ -313,12 +285,12 @@ existsSaleItem(id: number): Observable<any>{
   return this.http.get(`${this.base+this.SaleItemController}exists?id=${id}`, this.httpOptions);
 }
 //Image Upload
-uploadSaleItemImage(data: FormData): Observable<any> {
-  return this.http.post('https://localhost:44383/api/SaleItem/upload', data);
+uploadSaleItemImage(data : FormData) : Observable<any> {
+  return this.http.post('https://localhost:44383/api/SaleItem/upload', data)
 }
 //reImage Upload
-reuploadSaleItemImage(id: string): Observable<any> {
-  return this.http.delete(`https://localhost:44383/api/SaleItem/deletephoto?name=${id}`);
+reuploadSaleItemImage(id : string) : Observable<any> {
+  return this.http.delete(`https://localhost:44383/api/SaleItem/deletephoto?name=${id}`)
 }
 
 }

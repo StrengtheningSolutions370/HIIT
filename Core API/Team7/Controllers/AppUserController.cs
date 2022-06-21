@@ -11,9 +11,11 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Team7.Models;
+using Team7.Services;
 using Team7.ViewModels;
 
 namespace Team7.Controllers
@@ -25,20 +27,38 @@ namespace Team7.Controllers
         private readonly UserManager<AppUser> _userManager;
         //private readonly IUserClaimsPrincipalFactory<AppUser> _claimsPrincipalFactory;
         private readonly IConfiguration _configuration;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AppUserController(UserManager<AppUser> userManager,
-            //IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory,
-            IConfiguration configuration)
+        public AppUserController(UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             //_claimsPrincipalFactory = claimsPrincipalFactory;
             _configuration = configuration;
+            _roleManager = roleManager;
         }
 
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register(UserViewModel userViewModel)
         {
+
+            //force role to client
+            var role = "client";
+
+            //check if role exists:
+            var exists = await _roleManager.FindByNameAsync(role);
+            if (exists == null)
+            {
+                //role does not exists yet:
+                //create the role here:
+                IdentityRole newRole = new IdentityRole
+                {
+                    Name = role
+                };
+                IdentityResult result = await _roleManager.CreateAsync(newRole);
+
+            }
+
             var user = await _userManager.FindByNameAsync(userViewModel.EmailAddress);
 
             if (user == null)
@@ -48,15 +68,25 @@ namespace Team7.Controllers
                 {
                     Id = Guid.NewGuid().ToString(),
                     UserName = userViewModel.EmailAddress,
-                    Email = userViewModel.EmailAddress
+                    Email = userViewModel.EmailAddress,
+                    PhoneNumber = userViewModel.phoneNumber,
+                    FirstName = userViewModel.firstName,
+                    LastName = userViewModel.lastName,
                 };
 
                 var result = await _userManager.CreateAsync(user, userViewModel.Password);
+
+                //adding role to the client
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, role); //role="client"
+                }
 
                 if (result.Errors.Any())
                 {
                     StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
                 }
+
             } else
             {
                 return Forbid("Account with provided email address already exists");
@@ -76,11 +106,11 @@ namespace Team7.Controllers
                 {
                     //var principal = await _claimsPrincipalFactory.CreateAsync(user);
                     //await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, principal);
-                    return GenerateJWTToken(user);
+                    return Ok(await GenerateJWTTokenAsync(user));
                 }
                 catch (Exception err)
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, err + "     Internal error. Please contact support");
+                    return StatusCode(StatusCodes.Status500InternalServerError, err + " Internal error. Please contact support");
                 }
             } else
             {
@@ -88,19 +118,34 @@ namespace Team7.Controllers
             }
         }
 
-        [HttpGet]
-        private ActionResult GenerateJWTToken(AppUser appUser)
+        static String sha256(string val)
         {
+            StringBuilder stringBuilder = new StringBuilder();
+            using (SHA256 hasher = SHA256Managed.Create())
+            {
+                Encoding encoder = Encoding.UTF8;
+                Byte[] result = hasher.ComputeHash(encoder.GetBytes(val));
+                foreach (Byte b in result)
+                    stringBuilder.Append(b.ToString("x2"));
+            }
+            return stringBuilder.ToString();
+        }
+
+        [HttpGet]
+        private async Task <object> GenerateJWTTokenAsync(AppUser appUser)
+        {
+            var roleArray = await _userManager.GetRolesAsync(appUser);
+
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, appUser.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, appUser.UserName)
+                new Claim(JwtRegisteredClaimNames.UniqueName, appUser.UserName),
+                new Claim(ClaimTypes.Role, roleArray[0])
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
 
             var token = new JwtSecurityToken(
                 _configuration["Tokens:Issuer"],

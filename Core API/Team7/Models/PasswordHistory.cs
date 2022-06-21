@@ -14,7 +14,5 @@ namespace Team7.Models
         public string Hashed { get; set; }
         [Required]
         public int? UserID { get; set; }
-
-        public virtual User User { get; set; }
     }
 }
