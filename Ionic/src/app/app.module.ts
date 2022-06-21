@@ -74,12 +74,6 @@ import { UpdateQualificationComponent } from './pages/employee/qualification/upd
 import { ViewQualificationComponent } from './pages/employee/qualification/view-qualification/view-qualification.component';
 import { AddQualificationComponent } from './pages/employee/qualification/add-qualification/add-qualification.component';
 
-
-
-
-
-
-
 @NgModule({
   declarations: [AppComponent,
   //Venue
@@ -98,7 +92,7 @@ import { AddQualificationComponent } from './pages/employee/qualification/add-qu
   ConfirmCategoryComponent, AddCategoryComponent, ConfirmCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent,
   ConfirmSitemComponent, AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
   //Qualification
-  AddQualificationComponent, UpdateQualificationComponent, DeleteQualificationComponent, ViewQualificationComponent, ConfirmQualificationComponent, AssociativeQualificationComponent,
+  AddQualificationComponent, UpdateQualificationComponent, DeleteQualificationComponent, ViewQualificationComponent, ConfirmQualificationComponent, AssociativeQualificationComponent
 ],
 
   entryComponents: [],

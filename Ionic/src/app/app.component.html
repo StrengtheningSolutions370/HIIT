@@ -7,15 +7,17 @@
       </ion-toolbar>
     </ion-header>
 
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="../assets/avatar.jpg" alt text="BSC">
-        </ion-avatar>
-        <ion-label>Stacey Steward</ion-label>
-      </ion-item>
 
     <ion-content>
       <ion-list>
+        <ion-menu-toggle>
+          <ion-item routerLink="/profile">
+            <ion-avatar slot="start">
+              <img src="../assets/avatar.jpg" alt text="BSC">
+            </ion-avatar>
+            <ion-label>My Profile</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
         <ion-menu-toggle>
           <ion-item routerLink="/home">
             <ion-icon name="home-outline" slot="start"></ion-icon>
