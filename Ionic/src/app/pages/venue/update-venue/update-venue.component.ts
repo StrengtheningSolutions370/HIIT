@@ -34,16 +34,22 @@ export class UpdateVenueComponent implements ViewWillEnter {
   ionViewWillEnter() {
       console.log('UpdateVenue-ViewWillEnter');
       console.log(this.venue);
-      this.uVenueForm.controls.venueName.setValue(this.venue.name);
-      this.uVenueForm.controls.location.setValue(this.venue.address);
-      this.uVenueForm.controls.postalCode.setValue(this.venue.postalCode);
-      this.uVenueForm.controls.capacity.setValue(this.venue.capacity);
+      if (this.venue != null){
+        this.uVenueForm.controls.venueName.setValue(this.venue.name);
+        this.uVenueForm.controls.location.setValue(this.venue.address);
+        this.uVenueForm.controls.postalCode.setValue(this.venue.postalCode);
+        this.uVenueForm.controls.capacity.setValue(this.venue.capacity);
+      } else {
+        this.global.showAlert("No venue selected for update","Update Venue Error");
+        this.global.dismissModal();
+      }
+
     //Populate the update venue form with the values received from the selected venue object in the main page.
   }
 
   submitForm() {
-    if (!this.uVenueForm.valid) { //If the form has any validation errors, the form will not be submitted.
-      console.log('Please provide all required fields');
+    if (!this.uVenueForm.valid) { //Should never be able to reach this since form submit is disabled while it is invalid
+      this.global.showAlert('Please provide all required fields',"Venue Form Invalid");
       this.global.dismissModal();
       return false;
     }
@@ -58,6 +64,7 @@ export class UpdateVenueComponent implements ViewWillEnter {
         address: this.uVenueForm.value['location'],
         postalCode: this.uVenueForm.value['postalCode'],
         capacity: this.uVenueForm.value['capacity'],
+        //Need to look at passing associated entities - making sure update isnt replacing array with empty array for:
         schedules: []
       };
         console.log(temp);

@@ -1,3 +1,8 @@
+/* eslint-disable no-var */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/dot-notation */
+/* eslint-disable @typescript-eslint/quotes */
 import { Component, Input} from '@angular/core';
 import { Venue } from 'src/app/models/venue';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -10,18 +15,20 @@ import { VenueService } from 'src/app/services/venue/venue.service';
 })
 export class ConfirmVenueComponent {
   @Input() choice: number;
+  //1 = confirm ADD
+  //2 = confirm UPDATE
+
   @Input() venue: Venue;
 
   constructor(public venueService: VenueService, public global: GlobalService) {
    }
 
-  //1 = confirm ADD
-  //2 = confirm UPDATE
+
 
   async checkMatch(name:string, address:string): Promise<boolean>{
    return this.venueService.matchingVenue(name,address).then(result => {
      console.log(result);
-      if (result != 0){
+      if (result != false){
         this.global.showAlert("The Venue information entered already exists on the system","Venue Already Exists");
         return true;
       } else {
@@ -32,7 +39,7 @@ export class ConfirmVenueComponent {
 
   async confirmChanges(venue: Venue){
     console.log(venue);
-    this.checkMatch(venue.name,venue.address).then(result =>{
+    await this.checkMatch(venue.name,venue.address).then(result =>{
       console.log(result);
       if (result == true){
         return;       
