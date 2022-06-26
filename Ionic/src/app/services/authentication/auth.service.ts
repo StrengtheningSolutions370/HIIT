@@ -22,12 +22,10 @@ export class AuthService {
 
   navLogin() {
     this.loggedIn.next(true);
-    console.log('navLogin called');
   }
 
   navLogout() {
     this.loggedIn.next(false);
-    console.log('navLogout called');
   }
   //////////////
 
