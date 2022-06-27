@@ -1,19 +1,25 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { Roles } from './models/roles.enum';
+import { AuthGaurdService } from './services/authentication/auth-gaurd.service';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    canActivate: [AuthGaurdService],
+    data: {
+      roles: [Roles.Client, Roles.Admin]
+    }
   },
   {
     path: 'employees',
-    loadChildren: () => import('./pages/employee/employee.module').then( m => m.EmployeePageModule)
+    loadChildren: () => import('./pages/employee/employee.module').then( m => m.EmployeePageModule),
   },
   {
     path: 'trainers',
@@ -62,9 +68,11 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
-  }
-
-
+  },
+  {
+    path: '**', //this route object must be last
+    redirectTo: 'login',
+  },
 ];
 
 @NgModule({

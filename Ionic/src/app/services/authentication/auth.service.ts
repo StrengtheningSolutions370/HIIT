@@ -27,6 +27,10 @@ export class AuthService {
   navLogout() {
     this.loggedIn.next(false);
   }
+
+  getState(): boolean {
+    return this.loggedIn.value;
+  }
   //////////////
 
   constructor(
