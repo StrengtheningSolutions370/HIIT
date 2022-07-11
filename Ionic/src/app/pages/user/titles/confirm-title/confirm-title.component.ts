@@ -9,16 +9,17 @@ import { TitleService } from 'src/app/services/title/title.service';
   styleUrls: ['./confirm-title.component.scss'],
 })
 export class ConfirmTitleComponent{
+  //1 = confirm ADD
+  //2 = confirm UPDATE
   @Input() choice: number;
   @Input() title: Title;
 
-  constructor(public global: GlobalService, public titleService: TitleService) {
-   }
+  constructor(public global: GlobalService, public titleService: TitleService) {}
 
    async checkMatch(description: string): Promise<boolean>{
     return this.titleService.matchingTitle(description).then(result => {
       console.log(result);
-       if (result != 0){
+       if (result != false){
          this.global.showAlert("The Title information entered already exists on the system","Title Already Exists");
          return true;
        } else {
@@ -26,11 +27,10 @@ export class ConfirmTitleComponent{
        }
      });
    }
-  //1 = confirm ADD
-  //2 = confirm UPDATE
-  confirmChanges(title: Title){
+
+  async confirmChanges(title: Title){
     console.log(this.choice);
-    this.checkMatch(title.description).then(result =>{
+    await this.checkMatch(title.description).then(result =>{
         if (result == true){
           return;
         } else {

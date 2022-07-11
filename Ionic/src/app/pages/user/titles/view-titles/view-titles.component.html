@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>View {{title.description}}</ion-title>
+    <ion-title>View "{{title.description}}"</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
@@ -10,12 +10,12 @@
 <ion-content>
   <br/>
   <div class="ion-text-center">
-    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following information is associated with the <br/> "{{title.description}}" title</p>
-  
+    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following information corresponds with the selected title</p>
+    <br/>
 
     <ion-item > 
       <ion-label>
-        <h2>Title Description:</h2>
+        <h2>Description:</h2>
         <p class="ion-text-start">{{title.description}}</p>
       </ion-label>
     </ion-item>

@@ -47,6 +47,9 @@ namespace Team7.Models.Repository
                     {
                         t.TitleID,
                         t.Description,
+                        Users = t
+                        .User
+                        .Select(u => new { u.FirstName, u.LastName, u.UserName, u.Email})
                     }).ToListAsync()
                 };
 

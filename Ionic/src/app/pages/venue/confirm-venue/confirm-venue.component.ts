@@ -14,15 +14,13 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   styleUrls: ['./confirm-venue.component.scss'],
 })
 export class ConfirmVenueComponent {
-  @Input() choice: number;
+  
   //1 = confirm ADD
   //2 = confirm UPDATE
-
+  @Input() choice: number;
   @Input() venue: Venue;
 
-  constructor(public venueService: VenueService, public global: GlobalService) {
-   }
-
+  constructor(public venueService: VenueService, public global: GlobalService) {}
 
 
   async checkMatch(name:string, address:string): Promise<boolean>{
@@ -48,12 +46,12 @@ export class ConfirmVenueComponent {
             console.log('Add Venue from confirm:');
             //CallRepoToCreate
             this.venueService.createVenue(venue);
-            this.global.showToast("The Title has been successfully added!");
+            this.global.showToast("The Venue has been successfully added!");
         } else if (this.choice === 2){
             console.log('Update Venue from confirm:');
             //CallRepoToUpdate
             this.venueService.updateVenue(venue.venueID,venue);
-            this.global.showToast("The Title has been successfully updated!");
+            this.global.showToast("The Venue has been successfully updated!");
         }
       }
           //dismiss modal
