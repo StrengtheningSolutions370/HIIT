@@ -22,7 +22,11 @@ export class SignupPage implements OnInit {
     var userRegister = new appUserRegister();
     userRegister = {
       emailAddress : registerForm.value.emailAddress,
-      password : registerForm.value.password 
+      password : registerForm.value.password,
+      role: "client", //does not override role in api
+      firstName: registerForm.value.firstName,
+      lastName: registerForm.value.lastName,
+      phoneNumber: registerForm.value.phone
     }
     this.authServ.register(userRegister);
     // this.register(form)

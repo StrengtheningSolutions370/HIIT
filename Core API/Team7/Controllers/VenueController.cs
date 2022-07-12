@@ -112,7 +112,7 @@ namespace Team7.Controllers
         // GET: api/venues/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingVenues(string name, string? address = null)
+        public async Task<IActionResult> GetMatchingVenues(string name, string address = null)
         {
             try
             {
@@ -129,7 +129,6 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
-
         public async Task<IActionResult> VenueExists(int id)
         {
             try

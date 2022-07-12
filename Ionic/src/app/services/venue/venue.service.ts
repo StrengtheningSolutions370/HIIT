@@ -4,7 +4,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/semi */
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
 import { AddVenueComponent } from 'src/app/pages/venue/add-venue/add-venue.component';
 import { DeleteVenueComponent } from 'src/app/pages/venue/delete-venue/delete-venue.component';
@@ -24,7 +24,7 @@ export class VenueService {
   @Output() fetchVenuesEvent = new EventEmitter<Venue>();
 
 
-  constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
+  constructor(public repo: RepoService, private modalCtrl: ModalController) {
     //Receive the venues from the repo (API).
     this.getAllVenues();
   }

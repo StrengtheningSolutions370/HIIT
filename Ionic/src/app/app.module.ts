@@ -66,11 +66,8 @@ import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
 import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
 import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
 
-
-
-
-
-
+//SIDEMENU IMPORTS:
+import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -82,14 +79,16 @@ import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.compo
   AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent,
   //QualificationType
   AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent, AssociativeQtypeComponent,
-  //VAT
+  //VAT 
   AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent, UpdateVatComponent,
   //EmployeeType
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
-  //Sale Category
-  ConfirmCategoryComponent, AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent,
- //Sale Item
-  ConfirmSitemComponent, AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent
+  //SalesCategory
+  AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent,
+  //SalesItem
+  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+  //SideMenu
+  SidemenuComponent
 ],
 
   entryComponents: [],

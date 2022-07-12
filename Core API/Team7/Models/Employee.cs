@@ -36,7 +36,6 @@ namespace Team7.Models
         public virtual EmployeeContract EmployeeContract { get; set; }
         public virtual EmployeeType EmployeeType { get; set; }
         public virtual Qualification Qualification { get; set; }
-        public virtual User User { get; set; }
         public virtual ICollection<Lesson> Lesson { get; set; }
     }
 }
