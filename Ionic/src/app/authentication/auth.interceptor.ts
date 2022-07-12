@@ -26,6 +26,9 @@ export class AuthInterceptor implements HttpInterceptor {
                 tap(
                     succ => { },
                     err => {
+                        console.log("ERROR CAUGHT IN AUTH INTERCEPTOR:");
+                        console.log(err);
+                        this.global.showAlert(err.error);
                         if (err.status === 404){
                             this.global.showAlert(err.error);
                         }

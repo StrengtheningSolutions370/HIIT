@@ -7,8 +7,8 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
-import { GlobalService } from 'src/app/services/global/global.service';
 import { VenueService } from 'src/app/services/venue/venue.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-add-venue',
@@ -56,7 +56,6 @@ export class AddVenueComponent implements ViewWillEnter {
         address: this.cVenueForm.value['location'],
         postalCode: this.cVenueForm.value['postalCode'],
         capacity: this.cVenueForm.value['capacity'],
-        //Need to look at passing associated entities (also in update so it doesnt wipe the existing associated entities array)
         schedules: []        
       };
       this.venueService.confirmVenueModal(1,temp);

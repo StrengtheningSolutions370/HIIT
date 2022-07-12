@@ -29,6 +29,7 @@ import { UpdateTitleComponent } from './pages/user/titles/update-title/update-ti
 import { DeleteTitleComponent } from './pages/user/titles/delete-title/delete-title.component';
 import { ViewTitlesComponent } from './pages/user/titles/view-titles/view-titles.component';
 import { ConfirmTitleComponent } from './pages/user/titles/confirm-title/confirm-title.component';
+import { AssociativeTitleComponent } from './pages/user/titles/associative-title/associative-title.component';
 
 //SALE CATEGORY IMPORTS:
 import { AddCategoryComponent } from './pages/sale/sale-category/add-category/add-category.component';
@@ -76,7 +77,7 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   //UserRole
   AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent, ConfirmRoleComponent,
   //Title
-  AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent,
+  AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent, AssociativeTitleComponent,
   //QualificationType
   AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent, AssociativeQtypeComponent,
   //VAT 
