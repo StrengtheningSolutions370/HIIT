@@ -70,7 +70,9 @@ export class GlobalService {
         message: message,
         duration: duration,
         color: color,
-        position: position
+        position: position,
+        keyboardClose: true,
+        cssClass: 'toastCenter'
       });
       toast.present();
     }

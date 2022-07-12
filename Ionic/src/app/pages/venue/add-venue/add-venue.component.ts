@@ -56,7 +56,6 @@ export class AddVenueComponent implements ViewWillEnter {
         address: this.cVenueForm.value['location'],
         postalCode: this.cVenueForm.value['postalCode'],
         capacity: this.cVenueForm.value['capacity'],
-        //Need to look at passing associated entities (also in update so it doesnt wipe the existing associated entities array)
         schedules: []        
       };
       this.venueService.confirmVenueModal(1,temp);

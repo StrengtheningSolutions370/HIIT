@@ -30,6 +30,6 @@ export class DeleteTitleComponent implements ViewWillEnter {
     }
     this.titleService.deleteTitle(id);
     this.global.dismissModal();
-    this.global.showToast("The Title has been successfully deleted!");
+    this.global.showToast("The title has been successfully deleted!");
   }
 }

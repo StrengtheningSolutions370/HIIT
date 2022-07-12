@@ -28,6 +28,6 @@ export class DeleteVenueComponent {
     }
     this.venueService.deleteVenue(id);
     this.global.dismissModal();
-    this.global.showToast("The Venue has been successfully deleted!")
+    this.global.showToast("The venue has been successfully deleted!")
   }
 }

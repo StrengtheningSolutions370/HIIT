@@ -20,7 +20,7 @@ export class ConfirmTitleComponent{
     return this.titleService.matchingTitle(description).then(result => {
       console.log(result);
        if (result != false){
-         this.global.showAlert("The Title information entered already exists on the system","Title Already Exists");
+         this.global.showAlert("The title information entered already exists on the system","Title Already Exists");
          return true;
        } else {
          return false;
@@ -38,12 +38,12 @@ export class ConfirmTitleComponent{
             console.log('Add Title from confirm:');
             //CallRepoToCreate
             this.titleService.createTitle(title);
-            this.global.showToast("The Title has been successfully added!");
+            this.global.showToast("The title has been successfully added!");
           } else if (this.choice === 2){
             console.log('Update Title from confirm:');
             //CallRepoToUpdate
             this.titleService.updateTitle(title.titleID,title);
-            this.global.showToast("The Title has been successfully updated!");
+            this.global.showToast("The title has been successfully updated!");
           }
         }
         this.global.dismissModal();

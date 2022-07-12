@@ -27,7 +27,7 @@ export class ConfirmVenueComponent {
    return this.venueService.matchingVenue(name,address).then(result => {
      console.log(result);
       if (result != false){
-        this.global.showAlert("The Venue information entered already exists on the system","Venue Already Exists");
+        this.global.showAlert("The venue information entered already exists on the system","Venue Already Exists");
         return true;
       } else {
         return false;
@@ -46,12 +46,12 @@ export class ConfirmVenueComponent {
             console.log('Add Venue from confirm:');
             //CallRepoToCreate
             this.venueService.createVenue(venue);
-            this.global.showToast("The Venue has been successfully added!");
+            this.global.showToast("The venue has been successfully added!");
         } else if (this.choice === 2){
             console.log('Update Venue from confirm:');
             //CallRepoToUpdate
             this.venueService.updateVenue(venue.venueID,venue);
-            this.global.showToast("The Venue has been successfully updated!");
+            this.global.showToast("The venue has been successfully updated!");
         }
       }
           //dismiss modal
