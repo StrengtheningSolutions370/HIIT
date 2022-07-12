@@ -1,10 +1,10 @@
 /* eslint-disable no-var */
 /* eslint-disable no-trailing-spaces */
-import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
+import { Component, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -56,6 +56,7 @@ export class AddVenueComponent implements ViewWillEnter {
         address: this.cVenueForm.value['location'],
         postalCode: this.cVenueForm.value['postalCode'],
         capacity: this.cVenueForm.value['capacity'],
+        //Need to look at passing associated entities (also in update so it doesnt wipe the existing associated entities array)
         schedules: []        
       };
       this.venueService.confirmVenueModal(1,temp);

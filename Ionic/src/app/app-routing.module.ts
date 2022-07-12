@@ -12,6 +12,7 @@ export const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Client, Roles.Admin]

@@ -1,4 +1,4 @@
-import { Injectable, OnInit, Output, EventEmitter  } from '@angular/core';
+import { Injectable, Output, EventEmitter  } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { QualificationType } from 'src/app/models/qualification-type';
 import { RepoService } from '../repo.service';
