@@ -96,16 +96,19 @@
             <ion-label>Reports</ion-label>
           </ion-item>
         </ion-menu-toggle>
-
-        <ion-menu-toggle>
-          <ion-item routerLink="login">
-            <ion-icon name="arrow-back" slot="start"></ion-icon>
-            <ion-label>Logout</ion-label>
-          </ion-item>
-        </ion-menu-toggle>
-
-      </ion-list>
+        
+      </ion-list>      
     </ion-content>
+
+    <ion-footer >
+      <ion-menu-toggle>
+        <ion-item routerLink="login">
+          <ion-icon name="arrow-back" slot="start"></ion-icon>
+          <ion-label>Logout</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-footer>
+
   </ion-menu>
   <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>
