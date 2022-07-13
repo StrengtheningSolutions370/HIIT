@@ -5,7 +5,6 @@ import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { StoreService } from '../services/storage/store.service';
 import { GlobalService } from '../services/global/global.service';
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -16,13 +15,25 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-         this.store.getKey('token').then(result => this.tokenTemp = result);
-        // this.tokenTemp = this.cookie.get('token');
+
+        this.store.getKey('token').then(result => this.tokenTemp = result);
+
         if (this.tokenTemp != null) {
+
             const clonedReq = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer ' + this.tokenTemp)
             });
-            console.log(clonedReq);
+
+            // console.log(clonedReq);
+
+            const tokenObject = this.global.decodeToken(this.tokenTemp);
+            const now = new Date().getTime();
+            if (tokenObject.exp <= now) {
+                //token is no longer valid:
+                this.router.navigate(['login']);
+                return;
+            }
+
             return next.handle(clonedReq).pipe(
                 tap(
                     succ => { },
@@ -46,6 +57,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     }
                 )
             );
+
         } else {
             return next.handle(req.clone());
         }
