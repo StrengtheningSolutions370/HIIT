@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { Title } from 'src/app/models/title';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -12,7 +11,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class ViewTitlesComponent implements ViewWillEnter{
   @Input() title: Title;
 
-  constructor(public global: GlobalService, public fb:FormBuilder) { 
+  constructor(public global: GlobalService) { 
   }
 
   ionViewWillEnter() {

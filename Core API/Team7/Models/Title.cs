@@ -8,13 +8,15 @@ namespace Team7.Models
     {
         public Title()
         {
-           /* this.User = new HashSet<User>();*/
+           this.User = new HashSet<AppUser>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TitleID { get; set; }
         [Required]
         public string Description { get; set; }
+
+        public virtual ICollection<AppUser> User { get; set; }
 
     }
 }

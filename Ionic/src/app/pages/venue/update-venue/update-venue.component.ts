@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/member-ordering */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
@@ -57,62 +57,20 @@ export class UpdateVenueComponent implements ViewWillEnter {
     {
       console.log('InsideUpdateSubmit:');
       let temp = new Venue();
-      const choice = 2;
+      const choice = 2; //update choice
       temp = {
         venueID: this.venue.venueID,
         name: this.uVenueForm.value['venueName'],
         address: this.uVenueForm.value['location'],
         postalCode: this.uVenueForm.value['postalCode'],
         capacity: this.uVenueForm.value['capacity'],
-        //Need to look at passing associated entities - making sure update isnt replacing array with empty array for:
-        schedules: []
+        //passing null does not change the schedules array
+        schedules: null
       };
         console.log(temp);
        this.venueService.confirmVenueModal(choice,temp);
        this.global.dismissModal();
     }
-}
-
-  //  async sucUpdate() {
-  //    const toast = await this.toastCtrl.create({
-  //      message: 'The Venue has been successfully updated!',
-  //      duration: 2000,
-  //      position : 'top'
-  //    });
-  //    toast.present();
-  //  }
-
-  // dismissModal() {
-  //   this.modalCtrl.dismiss(this.venue);
-  // }
-
-  //  async InvalidAlert() {
-  //    const alert = await this.alertCtrl.create({
-  //      header: 'Invalid Input',
-  //      message: 'Please provide all required fields and ensure that the information is in the correct format',
-  //      buttons: ['OK']
-  //    });
-  //    alert.present();
-  //  }
-
-  //  async DuplicateAlert() {
-  //    const alert = await this.alertCtrl.create({
-  //      header: 'Venue Already Exists',
-  //      message: 'The Venue Information entered already exists on the system',
-  //      buttons: ['OK']
-  //    });
-  //   alert.present();
-  // }
-
-  //  async FailureAlert() {
-  //    const alert = await this.alertCtrl.create({
-  //      header: 'Could not update venue',
-  //      subHeader : 'There was an error updating the venue. Please try again',
-  //      //Enter SQL Code Error here
-  //      message: 'SQL Code Error',
-  //      buttons: ['OK']
-  //    });
-  //    alert.present();
-  //  }
+  }
 }
 
