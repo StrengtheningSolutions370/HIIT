@@ -3,11 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Team7.Migrations
 {
-<<<<<<<< HEAD:Core API/Team7/Migrations/20220614111501_FirstImport.cs
-    public partial class FirstImport : Migration
-========
     public partial class azure : Migration
->>>>>>>> developer:Core API/Team7/Migrations/20220616095515_azure.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

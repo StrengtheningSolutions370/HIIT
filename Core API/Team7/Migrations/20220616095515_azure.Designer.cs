@@ -10,13 +10,8 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-<<<<<<<< HEAD:Core API/Team7/Migrations/20220614111501_FirstImport.Designer.cs
-    [Migration("20220614111501_FirstImport")]
-    partial class FirstImport
-========
     [Migration("20220616095515_azure")]
     partial class azure
->>>>>>>> developer:Core API/Team7/Migrations/20220616095515_azure.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

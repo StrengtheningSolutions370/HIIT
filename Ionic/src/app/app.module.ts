@@ -69,14 +69,6 @@ import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.compo
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
-
-
-
-
-
-
-
-
 @NgModule({
   declarations: [AppComponent,
   //Venue
