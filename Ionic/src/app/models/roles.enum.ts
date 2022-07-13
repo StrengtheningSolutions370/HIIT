@@ -4,5 +4,5 @@ export enum Roles {
     GeneralEmployee = 'generalemployee',
     Trainer = 'trainer',
     Client = 'client',
-    Memeber = 'member'
+    Member = 'member'
 }

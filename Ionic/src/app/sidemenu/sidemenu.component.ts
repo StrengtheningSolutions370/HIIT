@@ -17,27 +17,30 @@ export class SidemenuComponent implements OnInit {
   admin = false;
   superuser = false;
   trainer = false;
+  role! : string;
 
   constructor(private auth: AuthService, private cookie : CookieService, private repo : RepoService) { }
 
   ngOnInit() {
 
-    const token = this.cookie.get("token");
-    this.repo.getUserRole(token).subscribe({
-      next: (data : any) => {
-        const r = data.role;
-        if (r == 'client')
-          this.client = true;
-        if (r == 'member')
-          this.member = true;
-        if (r == 'admin')
-          this.admin = true;
-        if (r == 'superuser')
-          this.superuser = true;
-        if (r == 'trainer')
-          this.trainer = true;
-      }
-    })
+    // const token = this.cookie.get("token");
+    // this.repo.getUserRole(token).subscribe({
+    //   next: (data : any) => {
+    //     const r = data.role;
+    //     if (r == 'client')
+    //       this.client = true;
+    //     if (r == 'member')
+    //       this.member = true;
+    //     if (r == 'admin')
+    //       this.admin = true;
+    //     if (r == 'superuser')
+    //       this.superuser = true;
+    //     if (r == 'trainer')
+    //       this.trainer = true;
+    //   }
+    // })
+    this.superuser = true;
+    this.role = "Super User";
 
   }
 
