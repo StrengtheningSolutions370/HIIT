@@ -11,14 +11,13 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthInterceptor implements HttpInterceptor {
     tokenTemp : string;
 
-    constructor(private router: Router, private store: StoreService, private global: GlobalService, private cookie : CookieService) {
+    constructor(private router: Router, private store: StoreService, private global: GlobalService) {
 
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        //  this.store.getKey('token').then(result => 
-        //     this.tokenTemp = result);
-        this.tokenTemp = this.cookie.get('token');
+         this.store.getKey('token').then(result => this.tokenTemp = result);
+        // this.tokenTemp = this.cookie.get('token');
         if (this.tokenTemp != null) {
             const clonedReq = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer ' + this.tokenTemp)

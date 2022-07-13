@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject } from 'rxjs';
 import { appUser, appUserRegister } from 'src/app/models/appUser';
 import { GlobalService } from '../global/global.service';
@@ -37,8 +36,7 @@ export class AuthService {
     private repo: RepoService,
     private global: GlobalService,
     private storage: StoreService,
-    private router: Router,
-    private cookie : CookieService) { }
+    private router: Router) { }
 
   register(registerUser: appUserRegister) {
     this.repo.register(registerUser).subscribe(result => {
@@ -53,7 +51,7 @@ export class AuthService {
       var expiration = result.value.expiration;
       var date = new Date(expiration);
       var epoch = date.getTime(); //convert TZ string to epoch
-      this.cookie.set('token', token, epoch);
+      this.storage.setKey('token', token);
       this.navLogin(); //change observable to show navbar
       this.router.navigate(['home']);   
    }).add(() =>{this.global.endNativeLoad()});
@@ -65,7 +63,6 @@ export class AuthService {
     //   this.router.navigateByUrl('/login');
     //   this.global.endNativeLoad();
     // })
-    this.cookie.delete('token', '/'); //removes all cookies from client
     this.navLogout();
     this.router.navigate(['login']); //route user back to login
    }
