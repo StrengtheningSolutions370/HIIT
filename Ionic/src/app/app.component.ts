@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
     
   }
   
+  
   ngOnInit() {
     this.auth.isLoggedIn.subscribe(log => {
       this.hide = log;

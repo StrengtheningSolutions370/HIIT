@@ -65,7 +65,7 @@ export class AuthService {
     //   this.router.navigateByUrl('/login');
     //   this.global.endNativeLoad();
     // })
-    this.cookie.deleteAll(); //removes all cookies from client
+    this.cookie.delete('token', '/'); //removes all cookies from client
     this.navLogout();
     this.router.navigate(['login']); //route user back to login
    }

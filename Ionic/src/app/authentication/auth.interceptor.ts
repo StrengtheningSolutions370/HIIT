@@ -5,18 +5,20 @@ import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { StoreService } from '../services/storage/store.service';
 import { GlobalService } from '../services/global/global.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     tokenTemp : string;
 
-    constructor(private router: Router, private store: StoreService, private global: GlobalService) {
+    constructor(private router: Router, private store: StoreService, private global: GlobalService, private cookie : CookieService) {
 
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-         this.store.getKey('token').then(result => 
-            this.tokenTemp = result);
+        //  this.store.getKey('token').then(result => 
+        //     this.tokenTemp = result);
+        this.tokenTemp = this.cookie.get('token');
         if (this.tokenTemp != null) {
             const clonedReq = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer ' + this.tokenTemp)
