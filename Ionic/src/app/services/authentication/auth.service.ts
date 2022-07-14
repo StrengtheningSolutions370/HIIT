@@ -45,6 +45,9 @@ export class AuthService {
   }
 
   async login(appUser: appUser) {
+
+  await this.storage.deleteKey('token');
+
    await this.global.nativeLoad("loading...");
     return this.repo.login(appUser).subscribe((result : any) => { 
       var token = result.value.token;
@@ -64,6 +67,7 @@ export class AuthService {
     //   this.global.endNativeLoad();
     // })
     this.navLogout();
+    this.storage.deleteKey('token');
     this.router.navigate(['login']); //route user back to login
    }
 

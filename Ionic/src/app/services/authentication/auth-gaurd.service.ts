@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
+import { RepoService } from '../repo.service';
+import { StoreService } from '../storage/store.service';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -9,36 +11,49 @@ import { AuthService } from './auth.service';
 export class AuthGaurdService {
 
   roles : any;
+  userRole! : string;
 
-  constructor(private router: Router, private auth: AuthService) { }
+  constructor(private router: Router, private auth: AuthService, private storage : StoreService, private repo : RepoService) { }
 
-  canActivate(next: ActivatedRouteSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+  async canActivate(next: ActivatedRouteSnapshot): Promise<Observable<boolean> | Promise<boolean> | boolean> {
     var roles = next.data.roles; //this contains the roles passed from the router
     // console.log(roles);
 
-    //place API call to check the current role of the logged in user using the JWT token endpoint
-    var roleFromAPI = 'client'; //for example the API returns 'admin'
-    /////////////
 
-    //check if user has required role with API
-    var flag = false;
-    roles.map(el => {
-      if (el == roleFromAPI)
-        flag = true;
+    return new Promise((res, rej) => {
+      this.storage.getKey('token').then(token => {
+        this.repo.getUserRole(token).subscribe(r => {
+          const role = r.role;
+          //check if user has required role with API
+          var flag = false;
+          roles.map(el => {
+            if (el == role) {
+              flag = true;
+              return;
+            }
+          })
+  
+          //check if user is logged in
+          if (!this.auth.getState()) {
+            flag = false;
+          }
+          
+          //if output == false -> redirect to login else continue
+          if (!flag) {
+            this.router.navigate(['login']);
+            console.log('auth gaurd sent back to login')
+            // return false; //prevent lazy load carrying on
+            res(false);
+          }
+          res(true);
+  
+        })
+      })
     })
 
-    //check if user is logged in
-    if (!this.auth.getState()) {
-      flag = false;
-    }
-    
-    //if output == false -> redirect to login else continue
-    if (!flag) {
-      this.router.navigate(['login']);
-      return false; //prevent lazy load carrying on
-    }
+    /////////////
 
-    return true;
+
 
   }
 

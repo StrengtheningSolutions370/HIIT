@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { StoreService } from '../services/storage/store.service';
 import { GlobalService } from '../services/global/global.service';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -27,9 +28,11 @@ export class AuthInterceptor implements HttpInterceptor {
             // console.log(clonedReq);
 
             const tokenObject = this.global.decodeToken(this.tokenTemp);
-            const now = new Date().getTime();
+            const now = Math.trunc(new Date().getTime() / 1000);
             if (tokenObject.exp <= now) {
                 //token is no longer valid:
+                console.log('token in storage is expired');
+                this.store.deleteKey('token');
                 this.router.navigate(['login']);
                 return;
             }
@@ -52,7 +55,7 @@ export class AuthInterceptor implements HttpInterceptor {
                         } else if (err.status === 403) {
                             console.log("Forbidden");
                             //still need to implement forbidden
-                        //this.router.navigateByUrl('/forbidden');
+                            //this.router.navigateByUrl('/forbidden');
                         } 
                     }
                 )

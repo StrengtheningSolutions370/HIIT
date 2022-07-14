@@ -24,7 +24,7 @@ export class SidemenuComponent implements OnInit {
   ngOnInit() {
 
     this.storage.getKey('token').then(token => {
-
+      // console.log('role from side menu', token)
       this.repo.getUserRole(token).subscribe({
       next: (data : any) => {
         const r = data.role;
@@ -43,8 +43,6 @@ export class SidemenuComponent implements OnInit {
 
     })
 
- 
-   
 
   }
 
