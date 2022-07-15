@@ -3,6 +3,8 @@
 import { Injectable } from '@angular/core';
 import { AlertController,LoadingController,ModalController,ToastController } from '@ionic/angular';
 
+declare const Buffer;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -82,4 +84,14 @@ export class GlobalService {
     dismissModal() {
       this.modalCtrl.dismiss();
     };
+
+    //JWT DECODER
+    //------
+    decodeToken(token : string) : any {
+      const payload = token.split('.')[1];//takes the paylaod from the tokem
+      // const decodeJson = Buffer.from(payload, 'base64').toString();
+      // return JSON.parse(decodeJson);
+      return JSON.parse(atob(payload));
+    }
+
 }

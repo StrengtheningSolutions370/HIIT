@@ -6,94 +6,179 @@
   </ion-header>
 
     <ion-item>
-      <ion-avatar slot="start">
-        <img src="../assets/avatar.jpg" alt text="BSC">
-      </ion-avatar>
-      <ion-label>Stacey Steward</ion-label>
+        <ion-item routerLink="/profile">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-label routerLink="/profile">Stacey Steward</ion-label>
+        </ion-item>
+      <br>
+      {{ role }}
     </ion-item>
 
   <ion-content>
     <ion-list>
-      <ion-menu-toggle>
+
+      <!-- <ion-menu-toggle *ngIf="client || trainer || member || superuser || admin">
+        <ion-item routerLink="/profile">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label>My Profile</ion-label>
+        </ion-item>
+      </ion-menu-toggle> -->
+
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="/home">
           <ion-icon name="home-outline" slot="start"></ion-icon>
           <ion-label>Home</ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="member">
+        <ion-item routerLink="/measurements">
+          <ion-icon name="walk-outline" slot="start"></ion-icon>
+          <ion-label>Measurements</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="client || member">
+        <ion-item routerLink="/trainers">
+          <ion-icon name="walk-outline" slot="start"></ion-icon>
+          <ion-label>Trainers Information</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="client || member">
+        <ion-item routerLink="/bookings">
+          <ion-icon name="calendar-number-outline" slot="start"></ion-icon>
+          <ion-label>Bookings</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="client || member">
+        <ion-item routerLink="/shop">
+          <ion-icon name="cart-outline" slot="start"></ion-icon>
+          <ion-label>Shop</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="client || member">
+        <ion-item routerLink="/cart">
+          <ion-icon name="bag-outline" slot="start"></ion-icon>
+          <ion-label>Cart</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="trainer">
+        <ion-item routerLink="/sesssions">
+          <ion-icon name="book-outline" slot="start"></ion-icon>
+          <ion-label>Sessions</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="trainer">
+        <ion-item routerLink="/schedule">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label>Schedule</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="trainer">
+        <ion-item routerLink="/exercises">
+          <ion-icon name="bicycle-outline" slot="start"></ion-icon>
+          <ion-label>Exercises</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="trainer">
+        <ion-item routerLink="/lessonplans">
+          <ion-icon name="document-text-outline" slot="start"></ion-icon>
+          <ion-label>Lesson Plans</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="user">
           <ion-icon name="list-outline" slot="start"></ion-icon>
           <ion-label>Users</ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="employees">
           <ion-icon name="people-outline" slot="start"></ion-icon>
           <ion-label>Employees</ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-menu-toggle>
+
+      <!-- <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="trainers">
           <ion-icon name="barbell-outline" slot="start"></ion-icon>
           <ion-label>Trainers</ion-label>
         </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle>
+      </ion-menu-toggle> -->
+
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="venues">
           <ion-icon name="business-outline" slot="start"></ion-icon>
           <ion-label>Venues</ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-menu-toggle>
+
+      <!-- <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="member">
           <ion-icon name="people-circle-outline" slot="start"></ion-icon>
           <ion-label>Members</ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="clients">
           <ion-icon name="happy-outline" slot="start"></ion-icon>
           <ion-label>Clients</ion-label>
         </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle>
+      </ion-menu-toggle> -->
+
+      <ion-menu-toggle *ngIf="superuser || admin || client || member">
         <ion-item routerLink="payments">
           <ion-icon name="cash-outline" slot="start"></ion-icon>
           <ion-label>Payment</ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="sales">
           <ion-icon name="cart-outline" slot="start"></ion-icon>
           <ion-label>Sale</ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="inventory">
           <ion-icon name="file-tray-full-outline" slot="start"></ion-icon>
           <ion-label>Inventory</ion-label>
         </ion-item>
       </ion-menu-toggle>
-      <ion-menu-toggle>
+      
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="suppliers">
           <ion-icon name="clipboard-outline" slot="start"></ion-icon>
           <ion-label>Suppliers</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle>
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="stock">
           <ion-icon name="checkmark-outline" slot="start"></ion-icon>
           <ion-label>Stock</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle>
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="reports">
           <ion-icon name="bar-chart-outline" slot="start"></ion-icon>
           <ion-label>Reports</ion-label>
         </ion-item>
       </ion-menu-toggle>
+
+      
 
       <ion-menu-toggle>
         <ion-item (click)="logout()">
