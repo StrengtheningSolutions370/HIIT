@@ -1,0 +1,9 @@
+{
+  "name": "Testnew1",
+  "address": "108 Brooks St.",
+  "postalCode": "0021",
+  "capacity": 2,
+  "schedules": null
+}
+
+//null does not remove existing value for schedule array

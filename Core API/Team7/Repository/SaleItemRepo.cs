@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
@@ -20,6 +18,7 @@ namespace Team7.Models.Repository
         public void Add<T>(T Entity) where T : class
         {
             DB.Add(Entity);
+            //Need to instantiate a record for price history using current date
         }
 
         public void Delete<T>(T Entity) where T : class
@@ -29,43 +28,15 @@ namespace Team7.Models.Repository
         public void Update<T>(T Entity) where T : class
         {
             DB.Update(Entity);
+            //If price is updated, need to instantiate a new record for price history
+            //Need to instantiate a record for price history using current date
         }
 
 
-        public async Task<SaleItem[]> GetAllSaleItemsAsync()
+        public async Task<object> GetAllSaleItemsAsync()
         {
 
             IQueryable<SaleItem> query = DB.SaleItem;
-            return await query.ToArrayAsync();
-            //IQueryable<SaleItem> query = DB.SaleItem;
-            //if (!query.Any())
-            //{
-            //    return null;
-            //}
-            //else
-            //{
-            //    return new
-            //    {
-            //        result = await DB.SaleItem.Select(si => new
-            //        {
-            //            si.SaleItemID,
-            //            si.Photo,
-            //            si.Description,
-            //            si.Name,
-            //            si.Price,
-            //            si.Quotable,
-            //            si.Quantity, 
-            //            si.SaleCategoryID,
-            //            si.SaleCategory
-            //        }).ToListAsync()
-            //    };
-            //}
-        }
-
-        //Response
-        public async Task<object> GetSaleItemsAsync(string name, string photo, string desc, decimal? price, bool quotable, int qty)
-        {
-            IQueryable<SaleItem> query = DB.SaleItem.Where(si => si.Name == name || si.Photo == photo || si.Description == desc || si.Price == price || si.Quotable == quotable || si.Quantity == qty);
             if (!query.Any())
             {
                 return null;
@@ -77,21 +48,132 @@ namespace Team7.Models.Repository
                     result = await DB.SaleItem.Select(si => new
                     {
                         si.SaleItemID,
+                        si.Name,
                         si.Photo,
                         si.Description,
-                        si.Name,
                         si.Price,
                         si.Quotable,
                         si.Quantity,
-                        si.SaleCategoryID,
-                        si.SaleCategory
+                        SaleCategoryName = si.SaleCategory.Name,
+                        SaleCategoryDescription = si.SaleCategory.Description,
+                        InventoryItem = si
+                        .InventoryItem
+                        .Select(i => new {i.InventoryItemID, i.Quantity}),
+                        PriceHistory = si
+                        .PriceHistory
+                        .Select(ph => new {ph.Date, ph.Amount}),
+                        StockTake = si.StockTakeLine.Select(stl => new { 
+                            id = stl.StockTake.StockTakeID,
+                            StockTakeDate = stl.StockTake.Date,
+                            StockTakeNotes = stl.StockTake.Notes
+                        }),
+                        StockTakeLine = si
+                        .StockTakeLine
+                        .Select(stl => new
+                        {
+                            stl.StockTakeID,
+                            stl.StockTakeLineID,
+                            stl.Difference
+                        })
+                    }).ToListAsync()
+                };
+            }
+        }
+
+        public async Task<object> GetSaleItemsAsync(string name, string desc)
+        {
+            IQueryable<SaleItem> query = DB.SaleItem.Where(si => si.Name == name || si.Description == desc);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(si => new
+                    {
+                        si.SaleItemID,
+                        si.Name,
+                        si.Photo,
+                        si.Description,
+                        si.Price,
+                        si.Quotable,
+                        si.Quantity,
+                        SaleCategoryName = si.SaleCategory.Name,
+                        SaleCategoryDescription = si.SaleCategory.Description,
+                        InventoryItem = si
+                        .InventoryItem
+                        .Select(i => new { i.InventoryItemID, i.Quantity }),
+                        PriceHistory = si
+                        .PriceHistory
+                        .Select(ph => new { ph.Date, ph.Amount }),
+                        StockTake = si.StockTakeLine.Select(stl => new {
+                            id = stl.StockTake.StockTakeID,
+                            StockTakeDate = stl.StockTake.Date,
+                            StockTakeNotes = stl.StockTake.Notes
+                        }),
+                        StockTakeLine = si
+                        .StockTakeLine
+                        .Select(stl => new
+                        {
+                            stl.StockTakeID,
+                            stl.StockTakeLineID,
+                            stl.Difference
+                        })
                     }).ToListAsync()
                 };
             }
 
         }
 
-        public async Task<SaleItem> GetSaleItemIdAsync(int id)
+        public async Task<object> GetSaleItemIdAsync(int id)
+        {
+            IQueryable<SaleItem> query = DB.SaleItem.Where(si => si.SaleItemID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(si => new
+                    {
+                        si.SaleItemID,
+                        si.Name,
+                        si.Photo,
+                        si.Description,
+                        si.Price,
+                        si.Quotable,
+                        si.Quantity,
+                        SaleCategoryName = si.SaleCategory.Name,
+                        SaleCategoryDescription = si.SaleCategory.Description,
+                        InventoryItem = si
+                        .InventoryItem
+                        .Select(i => new { i.InventoryItemID, i.Quantity }),
+                        PriceHistory = si
+                        .PriceHistory
+                        .Select(ph => new { ph.Date, ph.Amount }),
+                        StockTake = si.StockTakeLine.Select(stl => new {
+                            id = stl.StockTake.StockTakeID,
+                            StockTakeDate = stl.StockTake.Date,
+                            StockTakeNotes = stl.StockTake.Notes
+                        }),
+                        StockTakeLine = si
+                        .StockTakeLine
+                        .Select(stl => new
+                        {
+                            stl.StockTakeID,
+                            stl.StockTakeLineID,
+                            stl.Difference
+                        })
+                    }).ToListAsync()
+                };
+            }
+        }
+
+        public async Task<SaleItem> _GetSaleItemIdAsync(int id)
         {
             IQueryable<SaleItem> query = DB.SaleItem.Where(si => si.SaleItemID == id);
             if (!query.Any())
@@ -108,16 +190,6 @@ namespace Team7.Models.Repository
         {
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
-        }
-
-        public Task<object> GetSaleItemsAsync(string input)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<SaleItem[]> ISaleItemRepo.GetSaleItemsAsync(string input)
-        {
-            throw new NotImplementedException();
         }
     }
 }

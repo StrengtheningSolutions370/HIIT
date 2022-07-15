@@ -76,12 +76,6 @@ export class VenueService {
     return this.repo.getMatchVenue(name,address).toPromise();
    }
 
-   existingVenue(id: number){
-    console.log('venueService: Repo -> Existing Venue');
-    this.repo.existsVenue(id).subscribe(result =>
-     console.log(result));
-   }
-
   //Modals
   async addVenueInfoModal(venue?: Venue) {
     const modal = await this.modalCtrl.create({

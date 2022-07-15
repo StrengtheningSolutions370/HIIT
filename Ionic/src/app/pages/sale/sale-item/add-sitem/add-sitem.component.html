@@ -11,7 +11,7 @@
   <form [formGroup]="cSaleItemForm" (ngSubmit)="submitForm()"> 
     <br/>
     <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the sale item information below.</p>
+      <p style="font-size:large">Please fill in the sale item information below</p>
     </div>
     <ion-item>
       <ion-label position="floating">Name:</ion-label>
@@ -19,7 +19,7 @@
       <br/>
     </ion-item>
     <span class="error ion-padding" *ngIf="errorControl.itemName.errors?.required && cSaleItemForm.get('itemName').touched">
-      Sale Item Name is required.<br/>
+      Name is required<br/>
     </span>
     <ion-item>
       <ion-label position="floating">Description:</ion-label>
@@ -28,7 +28,7 @@
     </ion-item>
 
     <span class="error ion-padding" *ngIf="errorControl.itemDescription.errors?.required && cSaleItemForm.get('itemDescription').touched">
-      Sale Item Description is required.<br/>
+      Description is required<br/>
     </span>
     <!-- <ion-item>
       <ion-label position="floating">Photo:</ion-label>
@@ -53,9 +53,9 @@
     </ion-item> -->
 
     <ion-item>
-      <ion-checkbox formControlName="itemQuotable" (ionChange)="checkBoxToggle($event)" color="secondary" ></ion-checkbox>
+      
       <ion-label>
-        Quotable
+       <p>Quotable <ion-checkbox formControlName="itemQuotable" (ionChange)="checkBoxToggle($event)" color="secondary" ></ion-checkbox></p>
       </ion-label>
     </ion-item>
 
@@ -66,7 +66,7 @@
         <br/>
       </ion-item>
       <span class="error ion-padding" *ngIf="errorControl.itemPrice.errors?.required && cSaleItemForm.get('itemPrice').touched">
-        Sale Item Price is required.<br/>
+       Price is required <br/>
       </span>
       <ion-item>
         <ion-label position="floating">Quantity:</ion-label>
@@ -74,12 +74,10 @@
         <br/>
       </ion-item>
       <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.required && cSaleItemForm.get('itemQuantity').touched">
-        Item Quantity is required.
-        <br/>
+          Quantity is required <br/>
       </span>
       <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.min">
-        Please enter a quantity above 0.
-        <br/>
+        Quantity must be greater than 0 <br/>
       </span>
     </div>
     <ion-item>

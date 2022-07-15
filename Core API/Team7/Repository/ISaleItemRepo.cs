@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Team7.Models.Repository
 {
@@ -13,11 +10,12 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        Task<SaleItem[]> GetAllSaleItemsAsync();
+        Task<object> GetAllSaleItemsAsync();
 
-        Task<SaleItem[]> GetSaleItemsAsync(string input);
+        Task<object> GetSaleItemsAsync(string name, string description);
 
-        Task<SaleItem> GetSaleItemIdAsync(int id);
+        Task<object> GetSaleItemIdAsync(int id);
+        Task<SaleItem> _GetSaleItemIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }

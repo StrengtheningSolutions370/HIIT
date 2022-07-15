@@ -1,4 +1,9 @@
-import { Injectable, OnInit, Output, EventEmitter } from '@angular/core';
+/* eslint-disable @typescript-eslint/quotes */
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable @typescript-eslint/semi */
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { SaleItem } from 'src/app/models/sale-item';
 import { AddSitemComponent } from 'src/app/pages/sale/sale-item/add-sitem/add-sitem.component';
@@ -23,45 +28,31 @@ export class SalesService {
   @Output() fetchSaleItemsEvent = new EventEmitter<SaleItem>();
   @Output() fetchSaleCategoriesEvent = new EventEmitter<SaleCategory>();
 
-  //Creating a saleitemList for all the saleitems in the service.
-private _saleItemList = new BehaviorSubject<SaleItem[]>([]);
-//Creating a salecategoryList for all the salecategories in the service.
-private _saleCategoryList = new BehaviorSubject<SaleCategory[]>([]);
-
-//Return the sale item list as an observable.
-public get saleItemList(){
-  return this._saleItemList.asObservable();
-}
-//Return the sale category list as an observable.
-public get saleCategoryList(){
-  return this._saleCategoryList.asObservable();
-}
-
-private tempSI : SaleItem[];
-private tempSC : SaleCategory[];
-
-
 constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
-  //Receive the sale items from the repo (API).
-  this.repo.getSaleItems().subscribe(result => {
-    console.log('SaleItem List: Sales Service -> Get SaleItems');
-    console.log(result);
-    var tempResult = Object.assign(result);
-    this._saleItemList.next(tempResult);
-    console.log('SaleItem List: Sales Service -> Updated SaleItems');
-    console.log(this._saleItemList);
-  })
-
-    //Receive the sale categories from the repo (API).
-  this.repo.getSaleCategory().subscribe(result => {
-    console.log('SaleCategory List: Sales Service -> Get SaleCategories');
-    console.log(result);
-    var tempResult = Object.assign(result);
-    this._saleCategoryList.next(tempResult);
-    console.log('SaleCategory List: Sales Service -> Updated SaleCategories');
-    console.log(this._saleCategoryList);
-  })
+  this.getAllSaleCategories();
+  this.getAllSaleItems();
 }
+
+//READS:
+
+  getAllSaleItems() : Observable<any> {
+    return this.repo.getSaleItems();
+  }
+
+  getAllSaleCategories() : Observable<any> {
+    return this.repo.getSaleCategory();
+  }
+
+  matchingSaleItem(input: string){
+    console.log('saleService: Repo -> Matching saleItem');
+    this.repo.getMatchSaleItem(input);
+   }
+
+   matchingSaleCategory(input: string){
+    console.log('saleService: Repo -> Matching saleCategory');
+    this.repo.getMatchSaleCategory(input);
+   }
+
 
  //Methods
   //Add a saleitem to the saleitem list within the sales service.
@@ -97,13 +88,6 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     )
    }
 
-   getAllSaleItems() : Observable<any> {
-     return this.repo.getSaleItems();
-   }
-
-   getAllSaleCategories() : Observable<any> {
-    return this.repo.getSaleCategory();
-  }
 
   //Receives a sale item to update in the service sale  list.
    async updateSaleItem(saleItem: any) {
@@ -167,21 +151,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
       );
      }
 
-   matchingSaleItem(input: string){
-    console.log('saleService: Repo -> Matching saleItem');
-    this.repo.getMatchSaleItem(input);
-   }
 
-   matchingSaleCategory(input: string){
-    console.log('saleService: Repo -> Matching saleCategory');
-    this.repo.getMatchSaleCategory(input);
-   }
-
-   existingSaleItem(id: number){
-    console.log('saleItemService: Repo -> Existing Sale Item');
-    this.repo.existsSaleItem(id).subscribe(result =>
-     console.log(result));
-   }
 
   //Modals
   async addSaleItemInfoModal(saleItem?: SaleItem) {
@@ -248,9 +218,9 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
       modal.onDidDismiss().then(() => {
         this.repo.getSaleItems().subscribe(result => {
           var tempResult = Object.assign(result);
-          this._saleItemList.next(tempResult);
+          //this._saleItemList.next(tempResult);
           console.log("Updated sale item list: Sales Service: delete sale item");
-          console.log(this._saleItemList);
+          //console.log(this._saleItemList);
         });
       });
       await modal.present();
@@ -274,9 +244,9 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     modal.onDidDismiss().then(() => {
       this.repo.getSaleCategory().subscribe(result => {
         var tempResult = Object.assign(result);
-        this._saleCategoryList.next(tempResult);
+        //this._saleCategoryList.next(tempResult);
         console.log("Updated sale category list: Sales Service: delete sale category");
-        console.log(this._saleCategoryList);
+        //this._saleCategoryList);
       });
     });
     await modal.present();

@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Models.Repository;
 using Team7.Models;
-using Microsoft.EntityFrameworkCore;
-using Team7.Context;
 using System.IO;
 using System.Net.Http.Headers;
 
@@ -34,8 +31,13 @@ namespace Team7.Controllers
             {
                 
                 SaleItemRepo.Add(saleItem);
-                await SaleItemRepo.SaveChangesAsync();
-                return Ok(saleItem);
+                if(await SaleItemRepo.SaveChangesAsync())
+                {
+                    return Ok("Successfully added: {" + saleItem.Name +", " + saleItem.Description +"} with ID - " + saleItem.SaleItemID);
+                } else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
+                }
             }
             catch (Exception err)
             {
@@ -70,9 +72,9 @@ namespace Team7.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch (Exception err)
             {
-                return StatusCode(500, $"Internal server error: {ex}");
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
         }
 
@@ -84,22 +86,16 @@ namespace Team7.Controllers
             return Ok();
         }
 
-        static void createFile(byte[] data)
-        {
-            using var stream = System.IO.File.Create(PATH);
-            stream.Write(data, 0, data.Length);
-        }
-
         // PUT api/SaleItem/update/5
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> PutSaleItem(SaleItem saleItem)
+        public async Task<IActionResult> PutSaleItem(int id, SaleItem saleItem)
         {
-            var toUpdate = await SaleItemRepo.GetSaleItemIdAsync(saleItem.SaleItemID);
+            var toUpdate = await SaleItemRepo._GetSaleItemIdAsync(id);
 
             if (toUpdate == null)
             {
-                return NotFound("Could not find existing sale item with id:");
+                return NotFound("Could not find existing sale item with ID - " + saleItem.SaleItemID);
             }
 
             try
@@ -111,11 +107,14 @@ namespace Team7.Controllers
                 toUpdate.Quotable = saleItem.Quotable;
                 toUpdate.Quantity = saleItem.Quantity;
 
-                //VenueRepo.Update<Venue>(tempVenue);
                 SaleItemRepo.Update<SaleItem>(toUpdate);
-                await SaleItemRepo.SaveChangesAsync();
-
-                return Ok("Successfully updated");
+                if (await SaleItemRepo.SaveChangesAsync())
+                {
+                    return Ok("Successfully updated: {" + toUpdate.Name + ", " + toUpdate.Description + "} with ID - " + id);
+                } else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to update value in the database. Contact support.");
+                }
             }
             catch (Exception err)
             {
@@ -124,13 +123,12 @@ namespace Team7.Controllers
 
         }
 
-
         // DELETE api/SaleItem/delete/5
         [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteSaleItem(int id)
         {
-            var tempSaleItem = await SaleItemRepo.GetSaleItemIdAsync(id);
+            var tempSaleItem = await SaleItemRepo._GetSaleItemIdAsync(id);
             if (tempSaleItem == null)
             {
                 return NotFound();
@@ -138,12 +136,16 @@ namespace Team7.Controllers
             try
             {
                 SaleItemRepo.Delete<SaleItem>(tempSaleItem);
-                await SaleItemRepo.SaveChangesAsync();
-
-                var fileToDelete = tempSaleItem.Photo;
-                System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", fileToDelete));
-
-                return Ok();
+                if (await SaleItemRepo.SaveChangesAsync())
+                {
+                    var fileToDelete = tempSaleItem.Photo;
+                    System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", fileToDelete));
+                    return Ok("Successfully deleted with ID - " + id);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
+                }
             }
             catch (Exception err)
             {
@@ -175,25 +177,24 @@ namespace Team7.Controllers
         // GET: api/SaleItem/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingSaleItems(string input)
+        public async Task<IActionResult> GetMatchingSaleItems(string name, string description)
         {
             try
             {
-                var saleItem = await SaleItemRepo.GetSaleItemsAsync(input);
-                return Ok(saleItem);
+                var saleItem = await SaleItemRepo.GetSaleItemsAsync(name, description);
+                if (saleItem == null)
+                {
+                    return Ok(0);
+                } else
+                {
+                    return Ok(saleItem);
+                }                
             }
             catch (Exception err)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
 
-        }
-
-        [HttpGet]
-        [Route("exists")]
-        public async Task<SaleItem> SaleItemExists(int id)
-        {
-            return await SaleItemRepo.GetSaleItemIdAsync(id);
         }
     }
 }

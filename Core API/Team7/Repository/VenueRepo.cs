@@ -52,37 +52,15 @@ namespace Team7.Models.Repository
                         v.Capacity,
                         Schedules = v
                             .Schedules
-                            .Select(s => new { s.CapacityBooked })
+                            .Select(s => new { s.ScheduleID, s.CapacityBooked })
                     }).ToListAsync()
                 };
             }
         }
 
-        public async Task<Venue[]> _GetAllVenuesAsync()
+        public async Task<object> GetVenuesAsync(string name, string address)
         {
-            IQueryable<Venue> query = DB.Venue;
-
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return await query.ToArrayAsync();
-            }
-
-        }
-
-        public async Task<object> GetVenuesAsync(string name, string address = null)
-        {
-            IQueryable<Venue> query = DB.Venue;
-            if (address == null)
-            {
-                query = DB.Venue.Where(v => v.Name == name || v.Address == name);
-            } else
-            {
-                query = DB.Venue.Where(v => v.Name == name || v.Address == address);
-            }
+            IQueryable<Venue> query = DB.Venue.Where(v => v.Name == name || v.Address == address);
 
             if (!query.Any())
             {
@@ -100,32 +78,9 @@ namespace Team7.Models.Repository
                         v.Capacity,
                         Schedules = v
                             .Schedules
-                            .Select(s => new { s.CapacityBooked })
+                            .Select(s => new { s.ScheduleID, s.CapacityBooked })
                     }).ToListAsync()
                 };
-            }
-
-        }
-
-        public async Task<Venue[]> _GetVenuesAsync(string name, string address = null)
-        {
-            IQueryable<Venue> query = DB.Venue;
-            if (address == null)
-            {
-                query = DB.Venue.Where(v => v.Name == name);
-            }
-            else
-            {
-                query = DB.Venue.Where(v => v.Name == name || v.Address == address);
-            }
-
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return await query.ToArrayAsync();
             }
 
         }
@@ -150,7 +105,7 @@ namespace Team7.Models.Repository
                         v.Capacity,
                         Schedules = v
                             .Schedules
-                            .Select(s => new {s.CapacityBooked })
+                            .Select(s => new { s.ScheduleID, s.CapacityBooked })
                     }).ToListAsync()
                 };
             }

@@ -16,11 +16,7 @@ namespace Team7.Models.Repository
 
         Task<object> GetAllVenuesAsync();
 
-        Task<Venue[]> _GetAllVenuesAsync();
-
         Task<object> GetVenuesAsync(string name, string address);
-
-        Task<Venue[]> _GetVenuesAsync(string name, string address);
 
         Task<object> GetVenueIdAsync(int id);
 

@@ -14,9 +14,7 @@ namespace Team7.Models.Repository
         void Update<T>(T Entity) where T : class;
 
         Task<object> GetAllVATsAsync();
-        Task<VAT[]> _GetAllVATsAsync();
-        Task<object> GetVATsAsync(string input);
-        Task<VAT[]> _GetVATsAsync(string input);
+        Task<object> GetVATsAsync(decimal? percentage, DateTime? date);
         Task<object> GetVATIdAsync(int id);
         Task<VAT> _GetVATIdAsync(int id);
         Task<bool> SaveChangesAsync();
