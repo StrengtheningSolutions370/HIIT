@@ -1,8 +1,8 @@
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable no-underscore-dangle */
-import { Injectable, OnInit, Output, EventEmitter  } from '@angular/core';
+/* eslint-disable max-len */
+
+import { Injectable, Output, EventEmitter  } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { QualificationType } from 'src/app/models/qualification-type';
 import { RepoService } from '../repo.service';
@@ -86,29 +86,25 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   );
  }
 
+   //Receives a venue to update in the service venue list.
+   updateQualificationTypes(id: number, qualificationType: any){
+    if (id !== qualificationType.qualificationID){
+      console.log('ERROR IN QUALIFICATION UPDATE - MISMATCH ID');
+      return;
+    }
+   return this.repo.updateQualificationType(id,qualificationType).subscribe(
+     {
+      next: () => {
+        console.log('VENUE UPDATED');
+        this.fetchQualificationTypeEvent.emit(qualificationType);
+      }
+     }
+   );
+  }
+
  getAllQualificationTypes(): Observable<any> {
   return this.repo.getQualificationTypes();
 }
-
-//Receives a qualificationtype to update in the service qualificationtype list.
- async updateQualificationType(id: number,qualificationType: any) {
-  return this.repo.updateQualificationType(qualificationType.qualificationTypeID,qualificationType).subscribe(
-    {
-     next: () => {
-       console.log('QUALIFICATION TYPE UPDATED');
-       this.fetchQualificationTypeEvent.emit(qualificationType);
-     }
-    }
-  );
-
-
-  //  console.log('qualificationService: Repo -> Update qualificationtype');
-  //  console.log(qualificationType);
-
-  //  const currentQualificationType = this._qualificationtypeList.value;
-  //  const index = currentQualificationType.findIndex(x => x.qualificationTypeID === id)
-  //  return this.repo.updateQualificationType(qualificationType.qualificationTypeID,qualificationType)
- }
 
 //Receives a venue to delete in the service venue list.
  deleteQualificationType(id: number){
@@ -243,7 +239,7 @@ async deleteQualificationTypeInfoModal(qualificationType: QualificationType) {
 
 }
 //Display the view qualificationtype modal.
-  //This method receives the selected qualificationtye object, from the qualificationtype page, in the modal through the componentProps.
+  //This method receives the selected qualificationtype object, from the qualificationtype page, in the modal through the componentProps.
 async viewQualificationTypeInfoModal(qualificationtype: QualificationType) {
   console.log('QualificationTypeService: ViewQualificationTypeModalCall');
   let tempQualificationType = new QualificationType();
@@ -289,7 +285,7 @@ async confirmQualificationTypeModal(choice: number, qualificationType: any) {
       // .repo.getQualificationTypes().subscribe(result => {
       //   var tempResult = Object.assign(result);
       //   this._qualificationtypeList.next(tempResult);
-      //   console.log("Updated qthisualificationtype list: Qualification Service: confirm qualificationtype");
+      //   console.log("Updated qualificationtype list: Qualification Service: confirm qualificationtype");
       //   console.log(this._qualificationtypeList);
       //});
       // this.repo.getQualificationTypes().subscribe(() => {});

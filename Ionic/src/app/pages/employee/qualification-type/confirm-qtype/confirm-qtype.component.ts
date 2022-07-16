@@ -48,11 +48,10 @@ export class ConfirmQtypeComponent {
      else if (this.choice === 2){
       console.log('Update Qualification Type from confirm:');
       //CallRepoToUpdate
-      await this.qualificationService.updateQualificationType(qualificationType.qualificationTypeID,qualificationType);
+      await this.qualificationService.updateQualificationTypes(qualificationType.qualificationTypeID,qualificationType);
       this.dismissModal();
       this.sucUpdate();
         }
-    
 
     //dismiss modal
    // this.dismissModal();

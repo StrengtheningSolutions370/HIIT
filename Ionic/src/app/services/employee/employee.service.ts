@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable no-underscore-dangle */
 import { EventEmitter, Injectable, Output } from '@angular/core';
@@ -20,29 +21,10 @@ import { TitleService } from '../title/title.service';
 export class EmployeeService {
   @Output() fetchEmployeeTypesEvent = new EventEmitter<EmployeeType>();
 
-  //Creating a venueList for all the venues in the service.
-  private _employeeTypeList = new BehaviorSubject<EmployeeType[]>([]);
-
-  //Return the venue list as an observable.
-  public get employeeTypeList() {
-    return this._employeeTypeList.asObservable();
-  }
-
-  private temp: EmployeeType[];
-
   constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController,
-     public titleService: TitleService) {
+    public titleService: TitleService) {
     //Receive the venues from the repo (API).
-    this.repo.getEmployeeTypes().subscribe(result => {
-      console.log('Employee Type List: Employee Service -> Get Employee Type');
-      console.log(result);
-
-      const tempResult = Object.assign(result);
-      this._employeeTypeList.next(tempResult);
-
-      console.log('Employee Type List: Employee Service -> Updated Employee Types');
-      console.log(this._employeeTypeList);
-    });
+    this.getAllEmployeeTypes();
   }
 
   //Methods
@@ -56,33 +38,38 @@ export class EmployeeService {
     });
   }
 
-  getAllEmployeeTypes(): Observable<any>{
+  //Receives a venue to update in the service venue list.
+  updateEmployeeType(id: number, employeeType: any) {
+    if (id !== employeeType.employeeTypeID) {
+      console.log("ERROR IN EMPLOYEE TYPE UPDATE - MISMATCH ID");
+      return;
+    }
+    return this.repo.updateEmployeeType(id, employeeType).subscribe(
+      {
+        next: () => {
+          console.log('VENUE UPDATED');
+          this.fetchEmployeeTypesEvent.emit(employeeType);
+        }
+      }
+    );
+  }
+
+  //Receives a venue to delete in the service venue list.
+  deleteEmployeeType(id: number) {
+    this.repo.deleteEmployeeType(id).subscribe(result => {
+      console.log('VENUE DELETED');
+      this.fetchEmployeeTypesEvent.emit();
+    });
+  }
+
+  getAllEmployeeTypes(): Observable<any> {
     return this.repo.getEmployeeTypes();
   }
 
-  //Receives a venue to update in the service venue list.
-  async updateEmployeeType(id, employeeType: any){
-    return this.repo.updateEmployeeType(employeeType.employeeTypeID,employeeType).subscribe(
-      {
-       next: () => {
-         console.log('EMPLOYEE TYPE UPDATED');
-         this.fetchEmployeeTypesEvent.emit(employeeType);
-       }
-      });
-  }
 
-  //Receives a title to delete in the service title list.
-  deleteEmployeeType(id: number){
-    this.repo.deleteEmployeeType(id).subscribe(result => {
-      console.log('EMPLOYEE TYPE DELETED');
-      this.fetchEmployeeTypesEvent.emit();
-    });
+  matchingEmployeeType(name: string): Promise<any>{
+    return this.repo.getMatchEmployeeType(name).toPromise();
    }
-
-  matchingEmployeeType(input: string) {
-    console.log('Employee Service: Repo -> Matching Employee Type');
-    this.repo.getMatchEmployeeType(input);
-  }
 
   existingEmployeeType(id: number) {
     console.log('Employee Service: Repo -> Existing Employee Type');
@@ -117,115 +104,78 @@ export class EmployeeService {
   //Display the delete venue modal.
   //This method receives the selected venue object, from the venue page, in the modal through the componentProps.
   async deleteEmployeeTypeInfoModal(employeeType: EmployeeType) {
-    console.log('Employee Service: Delete Employee Type Modal Call');
-    let tempEmployee = new EmployeeType();
-    tempEmployee = Object.assign(employeeType);
-    console.log(tempEmployee);
-    if (tempEmployee.employees != null && tempEmployee.employees.length > 0) {
+    console.log("VenueService: DeleteVenueModalCall");
+    if (employeeType.employees != null && employeeType.employees.length > 0){
       const modal = await this.modalCtrl.create({
         component: AssociativeEtypeComponent,
-        componentProps: {
-          employeeType: tempEmployee
+          componentProps: {
+            employeeType
         }
       });
       await modal.present();
     } else {
       const modal = await this.modalCtrl.create({
         component: DeleteEtypeComponent,
-        componentProps: {
-          employeeType: tempEmployee
+          componentProps: {
+            employeeType
         }
-      });
-
-      //Update the current venue list with the venue list from the delete modal.
-      modal.onDidDismiss().then(() => {
-        this.repo.getEmployeeTypes().subscribe(result => {
-          const tempResult = Object.assign(result);
-          this._employeeTypeList.next(tempResult);
-          console.log('Updated employee type list: Employee Service: delete employee type');
-          console.log(this._employeeTypeList);
-        });
       });
       await modal.present();
     }
   }
+
   //Display the view venue modal.
-  //This method receives the selected venue object, from the venue page, in the modal through the componentProps.
-  async viewEmployeeTypeInfoModal(employeeType: EmployeeType) {
-    console.log('Employee Service: View Employee Type Modal Call');
-    let tempEmployeeType = new EmployeeType();
-    tempEmployeeType = Object.assign(employeeType);
-    console.log(tempEmployeeType);
+    //This method receives the selected venue object, from the venue page, in the modal through the componentProps.
+    async viewEmployeeTypeInfoModal(employeeType: EmployeeType) {
+      console.log("VenueService: ViewVenueModalCall");
+      const modal = await this.modalCtrl.create({
+        component: ViewEtypeComponent,
+        componentProps: {
+          employeeType
+        }
+      });
+      await modal.present();
+    }
+
+  //Display the confirm create/update modal
+  //Receives the selected venue from the venue page
+  async confirmEmployeeTypeModal(choice: number, employeeType: any) {
+    console.log('VenueService: ConfirmVenueModalCall');
+    console.log(choice);
+    if(choice === 1){
+      console.log("Performing ADD");
+      const modal = await this.modalCtrl.create({
+        component: ConfirmEtypeComponent,
+        componentProps: {
+          employeeType,
+          choice
+        }
+      });
+      await modal.present();
+    } else if (choice === 2){
+      console.log("Performing UPDATE");
+      const modal = await this.modalCtrl.create({
+        component: ConfirmEtypeComponent,
+        componentProps: {
+          employeeType,
+          choice
+        }
+      });
+      await modal.present();
+    } else {
+      console.log("BadOption: " + choice)
+    }
+  }
+
+  async associativeVenueModal(employeeType: EmployeeType) {
+    console.log("VenueService: AssociativeModalCall");
     const modal = await this.modalCtrl.create({
-      component: ViewEtypeComponent,
+      component: AssociativeEtypeComponent,
       componentProps: {
-        employeeType: tempEmployeeType
+        employeeType
       }
     });
     await modal.present();
   }
-
-  //Display the confirm create/update modal
-  //Receives the selected venue from the venue page
-  async confirmEmployeeTypeModal(selection: number, employeeType: any) {
-    console.log('Employee Service: Confirm Employee Type Modal Call');
-    console.log(selection);
-    if (selection === 1) {
-      console.log('Performing ADD');
-      let tempEmployeeType = new EmployeeType();
-      tempEmployeeType.employeeTypeID = 0;
-      tempEmployeeType = Object.assign(employeeType);
-      console.log(tempEmployeeType);
-      const modal = await this.modalCtrl.create({
-        component: ConfirmEtypeComponent,
-        componentProps: {
-          employeeType: tempEmployeeType,
-          choice: selection
-        }
-      });
-
-      //Update the current venue list with the venue list from the confirm modal.
-      modal.onDidDismiss().then(() => {
-        this.repo.getEmployeeTypes().subscribe(result => {
-          const tempResult = Object.assign(result);
-          this._employeeTypeList.next(tempResult);
-          console.log('Updated employee type list: Employee Service: confirm employee');
-          console.log(this._employeeTypeList);
-        });
-      });
-      await modal.present();
-    } else if (selection === 2) {
-      console.log('Performing UPDATE');
-      let tempEmployeeType = new EmployeeType();
-      tempEmployeeType = Object.assign(employeeType);
-      console.log(tempEmployeeType);
-      const modal = await this.modalCtrl.create({
-        component: ConfirmEtypeComponent,
-        componentProps: {
-          employeeType: tempEmployeeType,
-          choice: selection
-        }
-      });
-      modal.onDidDismiss().then(() => {
-        this.repo.getEmployeeTypes().subscribe(result => {
-          const tempResult = Object.assign(result);
-          this._employeeTypeList.next(tempResult);
-          console.log('Updated employee type list: Employee Service: Update confirm employee');
-          console.log(this._employeeTypeList);
-        });
-      });
-      await modal.present();
-    } else {
-      console.log('BadOption: ' + selection);
-    }
-  }
-
-  //Employee Modals
-  async addEmployeeInfoModal() {
-    const modal = await this.modalCtrl.create({
-      component : AddEmployeeComponent,
-    });
-    await modal.present();
-
-  }
 }
+

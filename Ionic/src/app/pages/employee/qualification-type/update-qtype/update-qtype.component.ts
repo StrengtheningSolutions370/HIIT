@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
@@ -28,7 +30,7 @@ export class UpdateQtypeComponent implements ViewWillEnter {
   ionViewWillEnter() {
       console.log('UpdateQualificationType-ViewWillEnter');
       console.log(this.qualificationType);
-      this.uQTypeForm.controls.qualificationTypeName.setValue(this.qualificationType.name)
+      this.uQTypeForm.controls.qualificationTypeName.setValue(this.qualificationType.name);
     //Populate the update qualification type form with the values received from the selected qualification type object in the main page.
   }
 
@@ -41,7 +43,7 @@ export class UpdateQtypeComponent implements ViewWillEnter {
     else
     {
       console.log('InsideUpdateSubmit:');
-      var temp = new QualificationType();
+      let temp = new QualificationType();
       const choice = 2;
       temp = {
         qualificationTypeID: this.qualificationType.qualificationTypeID,

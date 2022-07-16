@@ -1,3 +1,6 @@
+/* eslint-disable no-var */
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/no-shadow */
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -36,7 +39,7 @@ export class AuthService {
     private global: GlobalService,
     private storage: StoreService,
     private router: Router,
-    private cookie : CookieService) { }
+    private cookie: CookieService) { }
 
   register(registerUser: appUserRegister) {
     this.repo.register(registerUser).subscribe(result => {
@@ -45,16 +48,16 @@ export class AuthService {
   }
 
   async login(appUser: appUser) {
-   await this.global.nativeLoad("loading...");
-    return this.repo.login(appUser).subscribe((result : any) => { 
+   await this.global.nativeLoad('loading...');
+    return this.repo.login(appUser).subscribe((result: any) => {
       var token = result.value.token;
       var expiration = result.value.expiration;
       var date = new Date(expiration);
       var epoch = date.getTime(); //convert TZ string to epoch
       this.cookie.set('token', token, epoch);
       this.navLogin(); //change observable to show navbar
-      this.router.navigate(['home']);   
-   }).add(() =>{this.global.endNativeLoad()});
+      this.router.navigate(['home']);
+   }).add(() =>{this.global.endNativeLoad();});
   }
 
   async logout() {
