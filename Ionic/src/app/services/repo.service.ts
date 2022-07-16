@@ -218,6 +218,7 @@ export class RepoService {
   //Delete
   deleteQualification(qualificationTypeId: number): Observable<any> {
     return this.http.delete(`${this.base + this.QualificationController}delete?id=${qualificationTypeId}`, this.httpOptions);
+
   }
   //GetAll
   getQualifications(): Observable<any> {
