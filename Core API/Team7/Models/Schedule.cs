@@ -19,7 +19,6 @@ namespace Team7.Models
         public int? VenueID { get; set; }
         [Required]
         public int? BookingTypeID { get; set; }
-        [Required]
         public int? LessonPlanID { get; set; }
         [Required]
         public int? DateSessionID { get; set; }
