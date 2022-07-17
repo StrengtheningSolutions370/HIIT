@@ -10,8 +10,8 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220616095515_azure")]
-    partial class azure
+    [Migration("20220717133513_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1334,7 +1334,7 @@ namespace Team7.Migrations
             modelBuilder.Entity("Team7.Models.AppUser", b =>
                 {
                     b.HasOne("Team7.Models.Title", "Title")
-                        .WithMany()
+                        .WithMany("User")
                         .HasForeignKey("TitleID");
 
                     b.Navigation("Title");
@@ -1890,6 +1890,11 @@ namespace Team7.Migrations
             modelBuilder.Entity("Team7.Models.SupplierOrder", b =>
                 {
                     b.Navigation("SupplierOrderLine");
+                });
+
+            modelBuilder.Entity("Team7.Models.Title", b =>
+                {
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Team7.Models.Venue", b =>
