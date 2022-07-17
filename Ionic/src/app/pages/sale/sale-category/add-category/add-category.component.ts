@@ -47,7 +47,7 @@ export class AddCategoryComponent implements ViewWillEnter {
           const temp = {
             name: this.cSaleCategoryForm.value['categoryName'],
             description: this.cSaleCategoryForm.value['categoryDescription'],
-            items: []
+            items: null
           };
           this.global.dismissModal();
           this.saleService.confirmSaleCategoryModal(1,temp);

@@ -12,7 +12,7 @@ import { UpdateSitemComponent } from 'src/app/pages/sale/sale-item/update-sitem/
 import { ViewSitemComponent } from 'src/app/pages/sale/sale-item/view-sitem/view-sitem.component';
 import { ConfirmSitemComponent } from 'src/app/pages/sale/sale-item/confirm-sitem/confirm-sitem.component';
 import { RepoService } from '../repo.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { AddCategoryComponent } from 'src/app/pages/sale/sale-category/add-category/add-category.component';
 import { DeleteCategoryComponent } from 'src/app/pages/sale/sale-category/delete-category/delete-category.component';
@@ -43,31 +43,21 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     return this.repo.getSaleCategory();
   }
 
-  matchingSaleItem(input: string){
+  matchingSaleItem(name: string, description: string):Promise<any>{
     console.log('saleService: Repo -> Matching saleItem');
-    this.repo.getMatchSaleItem(input);
+    return this.repo.getMatchSaleItem(name, description).toPromise();
    }
 
-   matchingSaleCategory(input: string){
+   matchingSaleCategory(name: string, description: string):Promise<any>{
     console.log('saleService: Repo -> Matching saleCategory');
-    this.repo.getMatchSaleCategory(input);
+    return this.repo.getMatchSaleCategory(name, description).toPromise();
    }
 
 
  //Methods
   //Add a saleitem to the saleitem list within the sales service.
   createSaleItem(saleItem: any){
-    var today = new Date()
-    let saleItemTemp = {
-      Name : saleItem.Name,
-      Photo: saleItem.Photo,
-      Description: saleItem.Description,
-      Price: saleItem.Price,
-      Quotable: saleItem.Quotable,
-      Quantity: saleItem.Quantity,
-      SaleCategoryID: saleItem.SaleCategoryID
-    }
-    this.repo.createSaleItem(saleItemTemp).subscribe(
+    this.repo.createSaleItem(saleItem).subscribe(
       {
         next: () => {
           console.log('SALE ITEM CREATED');
@@ -108,7 +98,8 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
    async updateSaleCategory(id:number,saleCategory: any) {
     return this.repo.updateSaleCategory(id,saleCategory).subscribe(
       {
-       next: () => {
+       next: (res) => {
+        console.log(res);
          console.log('SALE CATEGORY UPDATED');
          this.fetchSaleCategoriesEvent.emit(saleCategory);
        }
@@ -153,7 +144,8 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
 
 
-  //Modals
+  //Modals:
+  //CREATE Sale Item
   async addSaleItemInfoModal(saleItem?: SaleItem) {
     const modal = await this.modalCtrl.create({
       component: AddSitemComponent,
@@ -163,8 +155,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     });
     await modal.present();
   }
-
-  //Modals
+  //CREATE Sale Category
   async addCategoryInfoModal(saleCategory?: SaleCategory) {
     const modal = await this.modalCtrl.create({
       component: AddCategoryComponent,
@@ -175,8 +166,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     await modal.present();
   }
 
-  //Display the update sale item modal.
-  //This method receives the selected sale item object, from the sale item page, in the modal through the componentProps.
+  //UPDATE Sale item
   async updateSaleItemInfoModal(saleItem: SaleItem) {
     console.log("SalesService: UpdateSaleItemModalCall");
     const modal = await this.modalCtrl.create({
@@ -188,8 +178,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     await modal.present();
   }
 
-  //Display the update sale category modal.
-  //This method receives the selected sale category object, from the sale category page, in the modal through the componentProps.
+  //UPDATE Sale category
   async updateCategoryInfoModal(saleCategory: SaleCategory) {
     console.log("SalesService: UpdateSaleItemModalCall");
     const modal = await this.modalCtrl.create({
@@ -202,32 +191,30 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   }
 
 
-  //Display the delete sale item modal.
-  //This method receives the selected sale item object, from the sale item page, in the modal through the componentProps.
+  //DELETE Sale item
   async deleteSaleItemInfoModal(saleItem: SaleItem) {
     console.log("SalesService: DeleteSaleItemModalCall");
 
       const modal = await this.modalCtrl.create({
         component: DeleteSitemComponent,
           componentProps: {
-            saleItem,
+            saleItem
         }
       });
 
       //Update the current sale item list with the sale item list from the delete modal.
-      modal.onDidDismiss().then(() => {
-        this.repo.getSaleItems().subscribe(result => {
-          var tempResult = Object.assign(result);
-          //this._saleItemList.next(tempResult);
-          console.log("Updated sale item list: Sales Service: delete sale item");
-          //console.log(this._saleItemList);
-        });
-      });
+      // modal.onDidDismiss().then(() => {
+      //   this.repo.getSaleItems().subscribe(result => {
+      //     var tempResult = Object.assign(result);
+      //     //this._saleItemList.next(tempResult);
+      //     console.log("Updated sale item list: Sales Service: delete sale item");
+      //     //console.log(this._saleItemList);
+      //   });
+      // });
       await modal.present();
     }
 
-      //Display the delete sale category modal.
-  //This method receives the selected sale category object, from the sale category page, in the modal through the componentProps.
+   //DELETE Sale Category
   async deleteCategoryInfoModal(saleCategory: SaleCategory) {
     console.log("SalesService: DeleteSaleCategoryModalCall");
     
@@ -241,53 +228,50 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     
 
     //Update the current sale category list with the sale category list from the delete modal.
-    modal.onDidDismiss().then(() => {
-      this.repo.getSaleCategory().subscribe(result => {
-        var tempResult = Object.assign(result);
-        //this._saleCategoryList.next(tempResult);
-        console.log("Updated sale category list: Sales Service: delete sale category");
-        //this._saleCategoryList);
-      });
-    });
+    // modal.onDidDismiss().then(() => {
+    //   this.repo.getSaleCategory().subscribe(result => {
+    //     var tempResult = Object.assign(result);
+    //     //this._saleCategoryList.next(tempResult);
+    //     console.log("Updated sale category list: Sales Service: delete sale category");
+    //     //this._saleCategoryList);
+    //   });
+    // });
     await modal.present();
   }
   
 
-  //Display the view sale item modal.
-    //This method receives the selected sale item object, from the sale item page, in the modal through the componentProps.
+  //VIEW Sale Item
   async viewSaleItemInfoModal(saleItem: SaleItem) {
     console.log("SalesService: ViewSaleItemModalCall");
-    let tempSaleItem = new SaleItem();
-    tempSaleItem = Object.assign(saleItem);
-    console.log(tempSaleItem);
+    // let tempSaleItem = new SaleItem();
+    // tempSaleItem = Object.assign(saleItem);
+    // console.log(tempSaleItem);
     const modal = await this.modalCtrl.create({
       component: ViewSitemComponent,
       componentProps: {
-        saleItem:tempSaleItem
+        saleItem
       }
     });
     await modal.present();
   }
 
-  //Display the view sale category modal.
-    //This method receives the selected sale category object, from the sale category page, in the modal through the componentProps.
-    async viewCategoryInfoModal(saleCategory: SaleCategory) {
-      console.log("SalesService: ViewSaleCategoryModalCall");
-      let tempSaleCategory = new SaleCategory();
-      tempSaleCategory = Object.assign(saleCategory);
-      console.log(tempSaleCategory);
-      const modal = await this.modalCtrl.create({
-        component: ViewCategoryComponent,
-        componentProps: {
-          saleCategory:tempSaleCategory
-        }
-      });
-      await modal.present();
-    }
+  //VIEW Sale Category
+  async viewCategoryInfoModal(saleCategory: SaleCategory) {
+    console.log("SalesService: ViewSaleCategoryModalCall");
+    // let tempSaleCategory = new SaleCategory();
+    // tempSaleCategory = Object.assign(saleCategory);
+    // console.log(tempSaleCategory);
+    const modal = await this.modalCtrl.create({
+      component: ViewCategoryComponent,
+      componentProps: {
+        saleCategory
+      }
+    });
+    await modal.present();
+  }
   
 
-  //Display the confirm create/update modal
-  //Receives the selected saleItem from the saleitem page
+  //CONFIRM Sale item
   async confirmSaleItemModal(choice: number, saleItem: any, categoryName : string, image : any) {
     console.log('SaleItemService: ConfirmSaleItemModalCall');
     console.log(choice);
@@ -303,12 +287,12 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
         }
       });
 
-      //Update the current vat list with the vat list from the confirm modal.
-      modal.onDidDismiss().then(() => {
+      // //Update the current vat list with the vat list from the confirm modal.
+      // modal.onDidDismiss().then(() => {
 
-        this.repo.getSaleItems();
+      //   this.repo.getSaleItems();
 
-      });
+      // });
 
       await modal.present();
 
@@ -327,12 +311,12 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
         }
       });
 
-      modal.onDidDismiss().then(() => {
+      // modal.onDidDismiss().then(() => {
 
-        // this.repo.getSaleItems();
-        // this.updateSaleItemInfoModal(saleItem);
+      //   // this.repo.getSaleItems();
+      //   // this.updateSaleItemInfoModal(saleItem);
 
-      });
+      // });
 
       await modal.present();
 
@@ -343,8 +327,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     }
   }
 
-  //Display the confirm create/update modal
-  //Receives the selected saleCategory from the salecategory page
+  //CONFIRM Sale category
   async confirmSaleCategoryModal(choice: number, saleCategory: any) {
     console.log('SaleService: ConfirmSaleCategoryModalCall');
     console.log(choice);
@@ -359,11 +342,11 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
       });
 
       //Update the current vat list with the vat list from the confirm modal.
-      modal.onDidDismiss().then(() => {
+      // modal.onDidDismiss().then(() => {
 
-        this.repo.getSaleCategory();
+      //   this.repo.getSaleCategory();
 
-      });
+      // });
 
       await modal.present();
 
@@ -380,11 +363,11 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
         }
       });
 
-      modal.onDidDismiss().then(() => {
+      // modal.onDidDismiss().then(() => {
 
-        this.repo.getSaleCategory();
+      //   this.repo.getSaleCategory();
 
-      });
+      // });
 
       await modal.present();
 

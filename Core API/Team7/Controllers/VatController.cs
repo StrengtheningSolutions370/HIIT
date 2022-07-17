@@ -27,7 +27,7 @@ namespace Team7.Controllers
                 VATRepo.Add(vat);
                 if (await VATRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully added: {" + vat.Percentage + ' ' + vat.Date + "} with ID - " + vat.VATID);
+                    return Ok();
                 } else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
@@ -56,7 +56,7 @@ namespace Team7.Controllers
                 VATRepo.Delete<VAT>(tempVat);
                 if (await VATRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully deleted with ID - " + id);
+                    return Ok();
                 }
                 else
                 {

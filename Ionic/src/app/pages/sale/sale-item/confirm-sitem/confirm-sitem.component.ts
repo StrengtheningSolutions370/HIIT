@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, AlertController } from '@ionic/angular';
+import { Component, Input} from '@angular/core';
 import { SaleItem } from 'src/app/models/sale-item';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { SalesService } from 'src/app/services/sales/sales.service';
 
 @Component({
@@ -16,13 +15,20 @@ export class ConfirmSitemComponent {
   @Input() image : any;
   alertCtrl: any;
 
-  constructor(private modalCtrl: ModalController, public saleService: SalesService,
-    public router: Router, public activated: ActivatedRoute, public toastCtrl: ToastController, alertCtrl: AlertController ) {
+  constructor(public global: GlobalService, public saleService: SalesService) {
   }
 
-  dismissModal() {
-    this.modalCtrl.dismiss();
-  };
+  async checkMatch(name: string, description:string): Promise<boolean>{
+    return this.saleService.matchingSaleItem(name,description).then(result => {
+      console.log(result);
+       if (result != false){
+         this.global.showAlert("The title information entered already exists on the system","Title Already Exists");
+         return true;
+       } else {
+         return false;
+       }
+     });
+   }
 
   //1 = confirm ADD
   //2 = confirm UPDATE
@@ -30,25 +36,24 @@ export class ConfirmSitemComponent {
     console.log(this.choice);
     if (this.choice === 1){
       //search duplicates
-      if (this.saleService.matchingSaleItem(saleItem.Name) != null &&
-      this.saleService.matchingSaleItem(saleItem.Description) != null)
+      if (this.saleService.matchingSaleItem(saleItem.Name,saleItem.Description) != null)
       {
-        console.log('Existing Sale Item: ' + saleItem.Name +': '+ saleItem.Description);
-        this.duplicateAlert();
+        console.log('Existing Sale Item: ' + saleItem.Name +' with description -> '+ saleItem.Description);
+        this.global.showAlert('The Sale Item Information entered already exists on the system','Sale Item Already Exists')        
         return;
       }
       else{
         console.log('Add Sale Item from confirm:');
         //CallRepoToCreate
-        await this.saleService.createSaleItem(saleItem);
-        await this.dismissModal();
-        this.sucAdd();
+        this.saleService.createSaleItem(saleItem);
+        this.global.dismissModal();
+        this.global.showToast("The Sale Item has been successfully added!");
       }
     } else if (this.choice === 2){
       //CallRepoToUpdate
       await this.saleService.updateSaleItem(saleItem);
-      this.dismissModal();
-      this.sucUpdate();
+      this.global.dismissModal();
+      this.global.showToast('The Sale Item has been successfully updated!');
 
     }
   }
@@ -58,40 +63,13 @@ export class ConfirmSitemComponent {
     //2 = return to UPDATE
     if (this.choice === 1){
       console.log(this.saleItem);
-      await this.dismissModal();
+      this.global.dismissModal();
       this.saleService.addSaleItemInfoModal(this.saleItem);
     } else if (this.choice === 2){
-
-      console.log('CHECK ID HERE')
-      console.log(this.saleItem)
-      await this.dismissModal();
+      console.log('CHECK ID HERE');
+      console.log(this.saleItem);
+      this.global.dismissModal();
       this.saleService.updateSaleItemInfoModal(this.saleItem);
     }
   }
-
-  async sucAdd() {
-    const toast = await this.toastCtrl.create({
-      message: 'The Sale Item has been successfully added!',
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async sucUpdate() {
-    const toast = await this.toastCtrl.create({
-      message: 'The Sale Item has been successfully updated!',
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async duplicateAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Sale Item Already Exists',
-      message: 'The Sale Item Information entered already exists on the system',
-      buttons: ['OK']
-    });
-   alert.present();
-  }
-
 }

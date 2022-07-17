@@ -4,7 +4,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/semi */
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { Title } from 'src/app/models/title';
 import { AddTitleComponent } from 'src/app/pages/user/titles/add-title/add-title.component';
 import { DeleteTitleComponent } from 'src/app/pages/user/titles/delete-title/delete-title.component';

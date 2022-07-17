@@ -27,7 +27,7 @@ namespace Team7.Controllers
                 SaleCategoryRepo.Add(saleCategory);
                 if (await SaleCategoryRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully added: {" + saleCategory.Name +", " + saleCategory.Description + "} with ID - " + saleCategory.SaleCategoryID);
+                    return Ok();
                 } else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
@@ -58,7 +58,7 @@ namespace Team7.Controllers
 
                 if (await SaleCategoryRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully updated: {" + saleCategory.Name + ", " + saleCategory.Description + "} with ID - " + id);
+                    return Ok();
                 } else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to update value in the database. Contact support.");
@@ -87,7 +87,7 @@ namespace Team7.Controllers
                 SaleCategoryRepo.Delete<SaleCategory>(tempSaleCategory);
                 if (await SaleCategoryRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully deleted with ID - " + id);
+                    return Ok();
                 }
                 else
                 {

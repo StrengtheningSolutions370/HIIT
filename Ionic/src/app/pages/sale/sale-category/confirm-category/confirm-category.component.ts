@@ -15,12 +15,23 @@ export class ConfirmCategoryComponent{
   constructor(private global: GlobalService, public saleService: SalesService) {
   }
 
+  async checkMatch(name:string, address:string): Promise<boolean>{
+    return this.saleService.matchingSaleCategory(name,address).then(result => {
+      console.log(result);
+       if (result != false){
+         this.global.showAlert("The sale category information entered already exists on the system","Sale Category Already Exists");
+         return true;
+       } else {
+         return false;
+       }
+     });
+   }
+
   //1 = confirm ADD
   //2 = confirm UPDATE
   async confirmChanges(saleCategory: SaleCategory){
     //search duplicates
-    if (this.saleService.matchingSaleCategory(saleCategory.name) != null &&
-    this.saleService.matchingSaleCategory(saleCategory.description) != null)
+    if (this.saleService.matchingSaleCategory(saleCategory.name,saleCategory.description) != null)
     {
       console.log('Existing Sale Category: ' + saleCategory.name +': '+ saleCategory.description);
       this.global.showAlert('The Sale Category Information entered already exists on the system','Sale Category Already Exists')
@@ -29,13 +40,13 @@ export class ConfirmCategoryComponent{
     if (this.choice === 1){      
         console.log('Add Sale Category from confirm:');
         //CallRepoToCreate
-        await this.saleService.createSaleCategory(saleCategory);
+        this.saleService.createSaleCategory(saleCategory);
         this.global.dismissModal();
         this.global.showToast('The Sale Category has been successfully added!');
     } else if (this.choice === 2){
       console.log('Update Sale Category from confirm:');
       //CallRepoToUpdate
-      await this.saleService.updateSaleCategory(saleCategory.saleCategoryID,saleCategory);
+      this.saleService.updateSaleCategory(saleCategory.saleCategoryID,saleCategory);
       this.global.dismissModal();
       this.global.showToast('The Sale Category has been successfully updated!');
     }

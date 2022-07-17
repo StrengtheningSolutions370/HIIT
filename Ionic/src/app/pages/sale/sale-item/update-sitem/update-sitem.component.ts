@@ -1,13 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
-import { SaleItem } from 'src/app/models/sale-item';
+import { Component, Input} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ViewWillEnter } from '@ionic/angular';
 import { SalesService } from 'src/app/services/sales/sales.service';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { RepoService } from 'src/app/services/repo.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { merge } from 'rxjs';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 
 
@@ -17,151 +16,6 @@ import { merge } from 'rxjs';
   styleUrls: ['./update-sitem.component.scss'],
 })
 export class UpdateSitemComponent {
-
-//   @Input() saleItem: SaleItem;
-//   categoryDropDown! : SaleCategory[];
-
-//   quotable = false;
-
-//   itemImage! : File;
-//   itemImageBase64String! : any;
-
-
-
-
-//   uSaleItemForm: FormGroup = new FormGroup({
-//     itemName: new FormControl('', [Validators.required]),
-//     itemDescription: new FormControl('', [Validators.required]),
-//     itemQuantity: new FormControl('', [Validators.required, Validators.min(1)]),
-//     itemPhoto: [],
-//     itemPrice: [, [Validators.required]],
-//     itemSCategory: [],
-//     itemQuotable: []
-//   });
-
-//   updateImage(event : any) {
-//     this.itemImage = event.target.files[0];
-//    console.log(this.itemImage);
-//     const re = /^image*/;
- 
-//     if (this.itemImage.type.match(re)) {
-//      this.getBase64(this.itemImage);
-//     }
-//    }
-
-//    getBase64(file : File) {
-//     var reader = new FileReader();
-//     reader.readAsDataURL(file);
-//     reader.onload = () => {
-//       // console.log(reader.result);
-//       this.itemImageBase64String = reader.result;
-//     };
-//     reader.onerror = (error) => {
-//       this.itemImageBase64String = null;
-//     };
-//  }
-
-//  checkBoxToggle(check : any) {
-//   this.quotable = check.target.checked;
-//   console.log(this.quotable);
-//   if (this.quotable) {
-//     //is quotable
-//     this.uSaleItemForm.controls.itemPrice.setValue(1);
-//     this.uSaleItemForm.controls.itemQuantity.setValue(1);
-//     return;
-//   }
-//   console.log('here')
-//    this.uSaleItemForm.controls.itemPrice.setValue(null);
-//    this.uSaleItemForm.controls.itemQuantity.setValue(null);
-
-// }
-
-
-//  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public fb: FormBuilder,
-//   public saleService: SalesService, private alertCtrl: AlertController) { }
-
-//     //Used for validation within the form, if there are errors in the control, this method will return the errors.
-//     get errorControl() {
-//       return this.uSaleItemForm.controls;
-//     }
-
-//     ionViewWillEnter() {
-//       console.log('UpdateSaleItem-ViewWillEnter');
-//       console.log(this.saleItem);
-//       this.uSaleItemForm.controls.itemName.setValue(this.saleItem.Name);
-//       this.uSaleItemForm.controls.itemDescription.setValue(this.saleItem.Description);
-//       this.uSaleItemForm.controls.itemQuantity.setValue(this.saleItem.Quantity);
-//       this.uSaleItemForm.controls.itemPhoto.setValue(this.saleItem.Photo);
-//       this.uSaleItemForm.controls.itemPrice.setValue(this.saleItem.Price);
-//       this.uSaleItemForm.controls.itemSCategory.setValue(this.saleItem.SaleCategoryID);
-//     }
-
-//     //populating the dropdown for saleCategory:
-//     this.saleService.getAllSaleCategories().subscribe(
-//       {
-//         next: data => {
-//           this.categoryDropDown = data;
-//           console.log(data);
-//         }
-//       }
-//     )
-
-//     submitForm() {
-//       if (!this.uSaleItemForm.valid) { //If the form has any validation errors, the form will not be submitted.
-//         console.log('Please provide all required fields');
-//         this.invalidAlert();
-//         return false;
-//       }
-//       else
-//       {
-//         console.log('InsideUpdateSubmit:');
-//         var temp = new SaleItem();
-//         const choice = 2;
-//         temp = {
-//           SaleItemID: this.saleItem.SaleItemID,
-//           Name: this.uSaleItemForm.value['itemName'],
-//           Description: this.uSaleItemForm.value['itemDescription'],
-//           Quantity: this.uSaleItemForm.value['itemQuantity'],
-//           Photo: this.uSaleItemForm.value['itemPhoto'],
-//           Price: this.uSaleItemForm.value['itemPrice'],
-//           SaleCategoryID: this.uSaleItemForm.value['itemSCategory']
-//         };
-//          console.log(temp);
-//          this.saleService.confirmSaleItemModal(choice,temp);
-//          this.dismissModal();
-//       }
-//   }
-
-//   async sucUpdate() {
-//     const toast = await this.toastCtrl.create({
-//       message: 'The Sale Item has been successfully updated!',
-//       duration: 2000,
-//       position : 'top'
-//     });
-//     toast.present();
-//   }
-
-//  dismissModal() {
-//    this.modalCtrl.dismiss();
-//  }
-
-//  async invalidAlert() {
-//   const alert = await this.alertCtrl.create({
-//     header: 'Invalid Input',
-//     message: 'Please provide all required fields and ensure that the information is in the correct format',
-//     buttons: ['OK']
-//   });
-//   alert.present();
-// }
-
-// async failureAlert() {
-//   const alert = await this.alertCtrl.create({
-//     header: 'Could not update sale item',
-//     subHeader : 'There was an error updating the sale item. Please try again',
-//     buttons: ['OK']
-//   });
-//   alert.present();
-// }
 
 @Input() saleItem: any;
 categoryDropDown! : SaleCategory[];
@@ -226,9 +80,8 @@ checkBoxToggle(check : any) {
 
 }
 
-constructor(private http : HttpClient, private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
- public saleService: SalesService, private router: Router, private currentRoute: ActivatedRoute,
- private  alertCtrl: AlertController, private repo : RepoService) {
+constructor(private http : HttpClient, private global: GlobalService, public formBuilder: FormBuilder,
+ public saleService: SalesService, private repo : RepoService) {
 }
 
  //Used for validation within the form, if there are errors in the control, this method will return the errors.
@@ -279,22 +132,22 @@ constructor(private http : HttpClient, private modalCtrl: ModalController, priva
         //price & quantity should be 0
         
         if (this.uSaleItemForm.controls['itemName'].value == null) {
-          this.failureAlert();
+          this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
           return;
         }
         if (this.uSaleItemForm.controls['itemDescription'].value == null) {
-          this.failureAlert();
+          this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
           return;
         }
       }
       else {
-        this.failureAlert();
+        this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
         return;
       }
      }
 
      if (this.uSaleItemForm.controls['itemSCategory'].value[0] == null) {
-      this.failureAlert();
+      this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
       return;
     }
 
@@ -331,7 +184,7 @@ constructor(private http : HttpClient, private modalCtrl: ModalController, priva
         console.log(this.itemImage);
         formData.append('file', this.itemImage, fName);
 
-        this.repo.reuploadSaleItemImage(this.saleItem.photo).subscribe({
+        this.repo.deleteSaleItemImage(this.saleItem.photo).subscribe({
           next: data => {
 
             // console.log(data);
@@ -341,64 +194,32 @@ constructor(private http : HttpClient, private modalCtrl: ModalController, priva
   
                 //update the obj in db
                 // this.repo.updateSaleItem()
-                this.dismissModal();
+                this.global.dismissModal();
                 this.saleService.confirmSaleItemModal(2, obj, this.uSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
   
               },
               error: (err : HttpErrorResponse) => {
-                this.failureAlert();
+                console.log(err);
+                this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
               }
             });
 
           },
           error: err => {
             console.log('ERROR FILE DELETE');
+            console.log(err);
           }
         })
 
 
       } else {
-
         //image did not change
-        this.dismissModal();
+        this.global.dismissModal();
         this.saleService.confirmSaleItemModal(2, obj, this.uSaleItemForm.value['itemSCategory'].split(',')[1], this.createImg(this.saleItem.photo));
 
       }
 
     }
-
-
-   async sucAdd() {
-     const toast = await this.toastCtrl.create({
-       message: 'The Sale Item has been successfully added!',
-       duration: 2000,
-       position : 'top'
-     });
-     toast.present();
-   }
-
-   //Once the modal has been dismissed.
-   dismissModal() {
-     this.modalCtrl.dismiss();
-   };
-
-   async duplicateAlert() {
-     const alert = await this.alertCtrl.create({
-       header: 'Sale Item Already Exists',
-       message: 'The Sale Item Information entered already exists on the system',
-       buttons: ['OK']
-     });
-     alert.present();
-   }
-
-   async failureAlert() {
-     const alert = await this.alertCtrl.create({
-       header: 'Could not create sale item',
-       message: 'There was an error creating the sale item. Please try again',
-       buttons: ['OK']
-     });
-     alert.present();
-   }
 
    public createImg = (fileName: string) => { 
     return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`; 

@@ -33,7 +33,7 @@ namespace Team7.Controllers
                 SaleItemRepo.Add(saleItem);
                 if(await SaleItemRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully added: {" + saleItem.Name +", " + saleItem.Description +"} with ID - " + saleItem.SaleItemID);
+                    return Ok();
                 } else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
@@ -110,7 +110,7 @@ namespace Team7.Controllers
                 SaleItemRepo.Update<SaleItem>(toUpdate);
                 if (await SaleItemRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully updated: {" + toUpdate.Name + ", " + toUpdate.Description + "} with ID - " + id);
+                    return Ok();
                 } else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to update value in the database. Contact support.");
@@ -140,7 +140,7 @@ namespace Team7.Controllers
                 {
                     var fileToDelete = tempSaleItem.Photo;
                     System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", fileToDelete));
-                    return Ok("Successfully deleted with ID - " + id);
+                    return Ok();
                 }
                 else
                 {

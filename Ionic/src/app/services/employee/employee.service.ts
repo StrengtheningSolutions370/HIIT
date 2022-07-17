@@ -84,11 +84,6 @@ export class EmployeeService {
     this.repo.getMatchEmployeeType(input);
   }
 
-  existingEmployeeType(id: number) {
-    console.log('Employee Service: Repo -> Existing Employee Type');
-    this.repo.existsEmployeeType(id).subscribe(result =>
-      console.log(result));
-  }
 
   //Modals
   async addEmployeeTypeInfoModal(employeeType?: EmployeeType) {

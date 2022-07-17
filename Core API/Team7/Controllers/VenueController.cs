@@ -30,7 +30,7 @@ namespace Team7.Controllers
                 VenueRepo.Add(venue);
                 if (await VenueRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully added: {" + venue.Name + ", " + venue.Address + "} with ID - " + venue.VenueID);
+                    return Ok();
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace Team7.Controllers
 
                 if (await VenueRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully updated: {" + toUpdate.Name + ", " + toUpdate.Address + ", " + toUpdate.PostalCode + ", " + toUpdate.Capacity +"} with ID - " + id);
+                    return Ok();
                 }
                 else
                 {
@@ -94,7 +94,7 @@ namespace Team7.Controllers
                 VenueRepo.Delete<Venue>(tempVenue);
                 if (await VenueRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully deleted with ID - " + id);
+                    return Ok();
                 }
                 else
                 {

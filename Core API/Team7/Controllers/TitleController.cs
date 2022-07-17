@@ -28,7 +28,7 @@ namespace Team7.Controllers
                 TitleRepo.Add(title);
                 if (await TitleRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully added: {" + title.Description + "} with ID - " + title.TitleID);
+                    return Ok();
                 } else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
@@ -50,7 +50,7 @@ namespace Team7.Controllers
             var toUpdate = await TitleRepo._GetTitleIdAsync(id);
             if (toUpdate == null)
             {
-                return NotFound("Could not find existing Title with ID - " + id);
+                return NotFound();
             }
             try
             {
@@ -58,7 +58,7 @@ namespace Team7.Controllers
                 
                 if (await TitleRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully updated: {" + title.Description + "} with ID: " + id);
+                    return Ok();
                 } else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to update value in the database. Contact support.");
@@ -79,14 +79,14 @@ namespace Team7.Controllers
             var tempTitle = await TitleRepo._GetTitleIdAsync(id);
             if (tempTitle == null)
             {
-                return NotFound("Could not find existing Title with ID - " + id);
+                return NotFound();
             }
             try
             {
                 TitleRepo.Delete<Title>(tempTitle);
                 if (await TitleRepo.SaveChangesAsync())
                 {
-                    return Ok("Successfully deleted with ID - " + id);
+                    return Ok();
                 } else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");

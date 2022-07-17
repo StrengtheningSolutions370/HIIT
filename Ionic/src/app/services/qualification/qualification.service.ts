@@ -92,12 +92,6 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   this.repo.getMatchQualificationType(input);
  }
 
- existingQualificationType(id: number){
-  console.log('qualificationService: Repo -> Existing qualificationtype');
-  this.repo.existsQualificationType(id).subscribe(result =>
-   console.log(result));
- }
-
 //Modals
 async addQualificationTypeInfoModal(qualificationType?: QualificationType) {
   const modal = await this.modalCtrl.create({
