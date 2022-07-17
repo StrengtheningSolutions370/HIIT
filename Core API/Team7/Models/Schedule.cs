@@ -23,12 +23,15 @@ namespace Team7.Models
         public int? LessonPlanID { get; set; }
         [Required]
         public int? DateSessionID { get; set; }
+        [Required]
+        public int? EmployeeID { get; set; }
 
         public virtual Venue Venue { get; set; }
         public virtual BookingType BookingType { get; set; }
         public virtual ICollection<BookingAttendance> BookingAttendance { get; set; }
         public virtual DateSession DateSession { get; set; }
         public virtual LessonPlan LessonPlan { get; set; }
+        public virtual Employee Employee { get; set; }
 
 
     }
