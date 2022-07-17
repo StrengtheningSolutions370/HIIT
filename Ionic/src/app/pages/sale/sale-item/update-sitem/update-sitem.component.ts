@@ -80,7 +80,7 @@ checkBoxToggle(check : any) {
 
 }
 
-constructor(private http : HttpClient, private global: GlobalService, public formBuilder: FormBuilder,
+constructor(private global: GlobalService, public formBuilder: FormBuilder,
  public saleService: SalesService, private repo : RepoService) {
 }
 
@@ -95,7 +95,7 @@ constructor(private http : HttpClient, private global: GlobalService, public for
   this.saleService.getAllSaleCategories().subscribe(
     {
       next: data => {
-        this.categoryDropDown = data;
+        this.categoryDropDown = data.result;
         console.log(data);
       }
     }
@@ -104,10 +104,9 @@ constructor(private http : HttpClient, private global: GlobalService, public for
   console.log("AddSaleItem-ViewWillEnter");
   if (this.saleItem !=null){
 
-    this.quotable = this.saleItem.quotable;
-    this.checkBoxToggle(this.quotable);
+    this.checkBoxToggle(this.saleItem.quotable);
 
-    if (!this.quotable) {
+    if (!this.saleItem.quotable) {
       this.oldPrice = this.saleItem.price;
       this.oldQuantity = this.saleItem.quantity;
     }
@@ -117,34 +116,34 @@ constructor(private http : HttpClient, private global: GlobalService, public for
       itemDescription : [this.saleItem.description],
       itemPhoto : this.itemImageBase64String,
       itemPrice : [this.saleItem.price],
-      itemQuotable : [false],
-      itemQuantity : [this.saleItem.quantity],
-      itemSCategory : [this.saleItem.SaleCategoryID],
+      itemQuotable : [this.saleItem.quotable],
+      itemSCategory : [this.saleItem.SaleCategoryID]
     })
+
   }
   }
 
    submitForm() {
 
-     if (!this.uSaleItemForm.valid){
-      //manual verification:
-      if (this.quotable) {
-        //price & quantity should be 0
+    //  if (!this.uSaleItemForm.valid){
+    //   //manual verification:
+    //   if (this.quotable) {
+    //     //price & quantity should be 0
         
-        if (this.uSaleItemForm.controls['itemName'].value == null) {
-          this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
-          return;
-        }
-        if (this.uSaleItemForm.controls['itemDescription'].value == null) {
-          this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
-          return;
-        }
-      }
-      else {
-        this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
-        return;
-      }
-     }
+    //     if (this.uSaleItemForm.controls['itemName'].value == null) {
+    //       this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
+    //       return;
+    //     }
+    //     if (this.uSaleItemForm.controls['itemDescription'].value == null) {
+    //       this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
+    //       return;
+    //     }
+    //   }
+    //   else {
+    //     this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
+    //     return;
+    //   }
+    //  }
 
      if (this.uSaleItemForm.controls['itemSCategory'].value[0] == null) {
       this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
@@ -169,7 +168,7 @@ constructor(private http : HttpClient, private global: GlobalService, public for
       quotable: this.quotable,
       quantity: this.uSaleItemForm.controls['itemQuantity'].value,
       saleCategoryID: Number(this.uSaleItemForm.controls['itemSCategory'].value.split(',')[0]),
-      inventoryItem:[]
+      inventoryItem:null
     }
 
     console.log('ob');

@@ -152,9 +152,28 @@ export class RepoService {
     return this.http.get(`${this.base + this.QualificationTypeController}getMatch?input=${input}`, this.httpOptions);
   }
 
- //SaleCategory:
- //------
- // Create
+// VAT:
+// ------
+/// Create
+ createVAT(vat: any): Observable<any>{
+  return this.http.post<any>(`${this.base+this.VatController}add`,vat,this.httpOptions);
+ }
+//Delete
+deleteVat(vatId: number): Observable<any>{
+  return this.http.delete(`${this.base+this.VatController}delete?id=${vatId}`,this.httpOptions);
+}
+//GetAll
+getVats(): Observable<any>{
+  return this.http.get(`${this.base+this.VatController}getAll`, this.httpOptions);
+}
+//GetMatch
+getMatchVat(percentage:number, date: any): Observable<any>{
+  return this.http.get(`${this.base+this.VatController}getMatch?percentage=${percentage}&date=${date}`, this.httpOptions);
+}
+
+//SaleCategory:
+//------
+// Create
  createSaleCategory(saleCategory: any): Observable<any>{
   return this.http.post<any>(`${this.base+this.SaleCategoryController}add`,saleCategory,this.httpOptions);
 }
@@ -175,25 +194,6 @@ getMatchSaleCategory(name: string, description: string): Observable<any>{
   return this.http.get(`${this.base+this.SaleCategoryController}getMatch?name=${name}&description=${description}`, this.httpOptions);
 }
 
-// VAT:
-// ------
-/// Create
- createVAT(vat: any): Observable<any>{
-  return this.http.post<any>(`${this.base+this.VatController}add`,vat,this.httpOptions);
- }
-//Delete
-deleteVat(vatId: number): Observable<any>{
-  return this.http.delete(`${this.base+this.VatController}delete?id=${vatId}`,this.httpOptions);
-}
-//GetAll
-getVats(): Observable<any>{
-  return this.http.get(`${this.base+this.VatController}getAll`, this.httpOptions);
-}
-//GetMatch
-getMatchVat(percentage:number, date: any): Observable<any>{
-  return this.http.get(`${this.base+this.VatController}getMatch?percentage=${percentage}&date=${date}`, this.httpOptions);
-}
-
 // SALE ITEM:
 // ------
 /// Create
@@ -202,8 +202,6 @@ createSaleItem(saleItem: any): Observable<any>{
 }
 //Update
 updateSaleItem(saleItem: SaleItem): Observable<any>{
-  console.log('THE UPDATE IBJECT:');
-  console.log(saleItem);
   return this.http.put(`${this.base+this.SaleItemController}update`,saleItem, this.httpOptions);
 }
 //Delete

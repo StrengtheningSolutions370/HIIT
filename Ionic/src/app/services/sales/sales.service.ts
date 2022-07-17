@@ -243,9 +243,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   //VIEW Sale Item
   async viewSaleItemInfoModal(saleItem: SaleItem) {
     console.log("SalesService: ViewSaleItemModalCall");
-    // let tempSaleItem = new SaleItem();
-    // tempSaleItem = Object.assign(saleItem);
-    // console.log(tempSaleItem);
+    console.log(saleItem)
     const modal = await this.modalCtrl.create({
       component: ViewSitemComponent,
       componentProps: {

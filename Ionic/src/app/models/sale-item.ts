@@ -6,5 +6,5 @@ export class SaleItem {
     Price: number;
     Quotable: boolean;
     Quantity: number;
-    SaleCategoryID: number
+    SaleCategoryID: number;
 }

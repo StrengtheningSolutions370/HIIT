@@ -13,7 +13,6 @@ export class ConfirmSitemComponent {
   @Input() saleItem: any;
   @Input() categoryName: string;
   @Input() image : any;
-  alertCtrl: any;
 
   constructor(public global: GlobalService, public saleService: SalesService) {
   }
@@ -21,7 +20,7 @@ export class ConfirmSitemComponent {
   async checkMatch(name: string, description:string): Promise<boolean>{
     return this.saleService.matchingSaleItem(name,description).then(result => {
       console.log(result);
-       if (result != false){
+       if (result != 0){
          this.global.showAlert("The title information entered already exists on the system","Title Already Exists");
          return true;
        } else {
@@ -34,40 +33,33 @@ export class ConfirmSitemComponent {
   //2 = confirm UPDATE
   async confirmChanges(saleItem: SaleItem){
     console.log(this.choice);
-    if (this.choice === 1){
-      //search duplicates
-      if (this.saleService.matchingSaleItem(saleItem.Name,saleItem.Description) != null)
-      {
-        console.log('Existing Sale Item: ' + saleItem.Name +' with description -> '+ saleItem.Description);
-        this.global.showAlert('The Sale Item Information entered already exists on the system','Sale Item Already Exists')        
-        return;
-      }
-      else{
-        console.log('Add Sale Item from confirm:');
-        //CallRepoToCreate
-        this.saleService.createSaleItem(saleItem);
-        this.global.dismissModal();
-        this.global.showToast("The Sale Item has been successfully added!");
-      }
-    } else if (this.choice === 2){
-      //CallRepoToUpdate
-      await this.saleService.updateSaleItem(saleItem);
-      this.global.dismissModal();
-      this.global.showToast('The Sale Item has been successfully updated!');
-
-    }
+      this.checkMatch(saleItem.Name, saleItem.Description).then(result => {
+        if (result == true){
+          return;
+        } else {
+            if (this.choice === 1){
+            console.log('Add Sale Item from confirm:');
+            //CallRepoToCreate
+            this.saleService.createSaleItem(saleItem);
+            this.global.dismissModal();
+            this.global.showToast("The Sale Item has been successfully added!");
+          } else if (this.choice === 2){
+            //CallRepoToUpdate
+            this.saleService.updateSaleItem(saleItem);
+            this.global.dismissModal();
+            this.global.showToast('The Sale Item has been successfully updated!');    
+          }
+        }
+      });
   }
 
   async returnFrom(){
     //1 = return to ADD
     //2 = return to UPDATE
     if (this.choice === 1){
-      console.log(this.saleItem);
       this.global.dismissModal();
       this.saleService.addSaleItemInfoModal(this.saleItem);
     } else if (this.choice === 2){
-      console.log('CHECK ID HERE');
-      console.log(this.saleItem);
       this.global.dismissModal();
       this.saleService.updateSaleItemInfoModal(this.saleItem);
     }

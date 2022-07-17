@@ -15,6 +15,11 @@ export class GlobalService {
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController) { }
 
+    //IMAGE manipulation
+    //--------
+    public createImg = (fileName: string) => { 
+      return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
+    }
 
     //LOADS
     //------

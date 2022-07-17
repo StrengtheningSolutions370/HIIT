@@ -1,5 +1,4 @@
 <ion-content>
-  
   <br/>
   <ion-searchbar expand="block" placeholder='Search Sale Items..' [(ngModel)]="filter"
   animated="true" debounce="200"></ion-searchbar>
@@ -21,33 +20,26 @@
       <ion-col size="4" *ngFor="let saleItem of saleItemList  | filter:filter"> 
         <!-- loop goes in this tag -->
 
-      <ion-card>
-          <ion-card-header >
-              <!--Employee Image-->
+      <ion-card >
+          <ion-card-header (click)="saleService.viewSaleItemInfoModal(saleItem)">
+              <!--Sale Image
               <div class="centerimg">
                 <img [src]="createImg(saleItem.photo)">
-              </div>
-
+              </div>-->
               <ion-card-title style="color:#e7e8ec;">
-                <!--Employee_Name ' ' Employee_Surname-->
                {{saleItem.name}}
-              </ion-card-title>
+              </ion-card-title>                          
+            <ion-row *ngIf="saleItem.Qoutable == false">
+              Price: <p class="ion-text-right">R{{saleItem.price}}</p>
+            </ion-row>
+            <ion-row *ngIf="saleItem.Qoutable == false"> 
+              Quantity in Stock: <p class="ion-text-right">{{saleItem.quantity}}></p>
+            </ion-row>
             </ion-card-header>
           <ion-card-content style="color:#b1b2b6;">
-            
-           
-            <ion-row>
-              <!--Employee Gender-->
-              Price: R{{saleItem.price}}
-            </ion-row>
-            <ion-row>
-              <!--Employee email-->
-              Quantity in Stock: {{saleItem.quantity}}
-            </ion-row>
-            <ion-row>
-              <!--Employee_Type-->
+            <!--<ion-row>
               Description: {{saleItem.description}}
-            </ion-row>
+            </ion-row>-->
          
             <br />
             <ion-row>
@@ -63,9 +55,6 @@
             </ion-row>
           </ion-card-content>
       </ion-card>
-     
-    <!--<mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons> </mat-paginator-->
-    <!-- </div> -->
   </ion-col>
   </ion-row>
   </ion-grid>

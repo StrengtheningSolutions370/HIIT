@@ -122,9 +122,6 @@
 
     <ion-item > 
       <ion-label>
-        <h2>Photo:</h2>
-        <br />
-        <!-- <p class="ion-text-start">{{image}}</p> -->
         <img src="{{createImg(saleItem.photo)}}">
       </ion-label>
     </ion-item>
@@ -134,16 +131,6 @@
         <input (change)="addImage($event)" type="file" id="file-input" accept="image/png, image/jpeg">
     </ion-item>
    
-
-    <!-- <ion-item>
-      <ion-label position="floating">Quotable:</ion-label>
-      <ion-select formControlName="itemQuotable" type="text" required="" id="itemQuotable" >
-        <ion-select-option value="true">Yes</ion-select-option>
-        <ion-select-option value="false">No</ion-select-option>
-
-      </ion-select>
-      <br/>
-    </ion-item> -->
 
     <ion-item>
       <ion-checkbox [checked]="quotable" (ionChange)="checkBoxToggle($event.target.checked)" color="secondary" ></ion-checkbox>
