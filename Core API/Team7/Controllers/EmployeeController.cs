@@ -106,11 +106,11 @@ namespace Team7.Controllers
 
         [HttpPost]
         [Route("addEmployee")]
-        /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, superuser")]*/
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, superuser")]
         public async Task<IActionResult> RegisterEmployee(UserViewModel userViewModel)
         {
 
-            /*string[] supportedRole = { "trainer", "generalemployee" };
+            string[] supportedRole = { "trainer", "generalemployee" };
             bool flag = false;
             foreach (var role in supportedRole)
                 if (role == userViewModel.role)
@@ -119,7 +119,7 @@ namespace Team7.Controllers
                     break;
                 }
             if (!flag)
-                return BadRequest();*/
+                return BadRequest();
 
             //check if role exists:
             var exists = await _roleManager.FindByNameAsync(userViewModel.role);
