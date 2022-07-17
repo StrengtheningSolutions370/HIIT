@@ -4,8 +4,7 @@ import { ViewWillEnter } from '@ionic/angular';
 import { SalesService } from 'src/app/services/sales/sales.service';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { RepoService } from 'src/app/services/repo.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { GlobalService } from 'src/app/services/global/global.service';
 
 
@@ -15,7 +14,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
   templateUrl: './update-sitem.component.html',
   styleUrls: ['./update-sitem.component.scss'],
 })
-export class UpdateSitemComponent {
+export class UpdateSitemComponent implements ViewWillEnter{
 
 @Input() saleItem: any;
 categoryDropDown! : SaleCategory[];
@@ -37,7 +36,7 @@ uSaleItemForm: FormGroup = this.formBuilder.group({
  itemQuantity : [, [Validators.required, Validators.min(1)]],
  itemPhoto: [],
  itemPrice: [, [Validators.required]],
- itemSCategory: [],
+ itemSCategory: [,[Validators.required]],
  itemQuotable: []
 });
 
@@ -64,20 +63,8 @@ getBase64(file : File) {
 }
 
 checkBoxToggle(check : any) {
- this.quotable = check;
- if (this.quotable) {
-   //is quotable
-
-   this.oldPrice = this.uSaleItemForm.controls['itemPrice'].value;
-   this.oldQuantity = this.uSaleItemForm.controls['itemQuantity'].value;
-
-   this.uSaleItemForm.controls.itemPrice.setValue(1);
-   this.uSaleItemForm.controls.itemQuantity.setValue(1);
-   return;
- }
-  this.uSaleItemForm.controls.itemPrice.setValue(this.oldPrice);
-  this.uSaleItemForm.controls.itemQuantity.setValue(this.oldQuantity);
-
+  this.quotable = check.target.checked;
+  console.log(this.quotable);
 }
 
 constructor(private global: GlobalService, public formBuilder: FormBuilder,
@@ -101,10 +88,11 @@ constructor(private global: GlobalService, public formBuilder: FormBuilder,
     }
   )
 
-  console.log("AddSaleItem-ViewWillEnter");
-  if (this.saleItem !=null){
+  console.log("UpdateSaleItem-ViewWillEnter");
+    console.log(this.saleItem.quotable);
 
-    this.checkBoxToggle(this.saleItem.quotable);
+    //this.checkBoxToggle(this.saleItem.quotable);
+    console.log("HERRE");
 
     if (!this.saleItem.quotable) {
       this.oldPrice = this.saleItem.price;
@@ -115,12 +103,9 @@ constructor(private global: GlobalService, public formBuilder: FormBuilder,
       itemName : [this.saleItem.name],
       itemDescription : [this.saleItem.description],
       itemPhoto : this.itemImageBase64String,
-      itemPrice : [this.saleItem.price],
       itemQuotable : [this.saleItem.quotable],
       itemSCategory : [this.saleItem.SaleCategoryID]
     })
-
-  }
   }
 
    submitForm() {
@@ -146,7 +131,7 @@ constructor(private global: GlobalService, public formBuilder: FormBuilder,
     //  }
 
      if (this.uSaleItemForm.controls['itemSCategory'].value[0] == null) {
-      this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
+      this.global.showAlert("No Sale Category provided","Error creating sale item");
       return;
     }
 

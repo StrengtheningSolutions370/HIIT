@@ -1,4 +1,4 @@
-import { Component,  Input, OnInit } from '@angular/core';
+import { Component,  Input } from '@angular/core';
 import { ViewWillEnter} from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -33,7 +33,7 @@ export class AddSitemComponent implements ViewWillEnter {
    itemQuantity : ['', [Validators.required, Validators.min(1)]],
    itemPhoto: [],
    itemPrice: ['', [Validators.required, Validators.min(1)]],
-   itemSCategory: [],
+   itemSCategory: ['',[Validators.required]],
    itemQuotable: []
  });
 
@@ -63,20 +63,28 @@ export class AddSitemComponent implements ViewWillEnter {
  checkBoxToggle(check : any) {
    this.quotable = check.target.checked;
    console.log(this.quotable);
-   if (this.quotable) {
-     //is quotable
-     this.cSaleItemForm.controls.itemPrice.setValue(1);
-     this.cSaleItemForm.controls.itemQuantity.setValue(1);
-     return;
-   }
-   console.log('here')
-    this.cSaleItemForm.controls.itemPrice.setValue(null);
-    this.cSaleItemForm.controls.itemQuantity.setValue(null);
-
+  //  if (this.quotable) {
+  //    //is quotable
+  //    this.cSaleItemForm.controls.itemPrice.setValue(1);
+  //    this.cSaleItemForm.controls.itemQuantity.setValue(1);
+  //    return;
+  //  }
+  //  console.log('here')
+  //   this.cSaleItemForm.controls.itemPrice.setValue();
+  //   this.cSaleItemForm.controls.itemQuantity.setValue(null);
  }
 
  constructor(private global: GlobalService, public formBuilder: FormBuilder,
-   public saleService: SalesService, private repo : RepoService) { }
+   public saleService: SalesService, private repo : RepoService) { 
+    this.saleService.getAllSaleCategories().subscribe(
+      {
+        next: data => {
+          this.categoryDropDown = data.result;
+          console.log(data);
+        }
+      }
+    )
+   }
 
    //Used for validation within the form, if there are errors in the control, this method will return the errors.
    get errorControl() {
@@ -104,14 +112,14 @@ export class AddSitemComponent implements ViewWillEnter {
       this.cSaleItemForm.controls.itemPrice.setValue(this.saleItem.Price);
       this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.Quotable);
       this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.Quantity);
-      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.SaleCategoryID)
-
+      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.SaleCategoryID);
     }
     }
 
      submitForm() {
 
        //if image was uploaded:
+       //Confirm if this is optional, if so remove alert
        if (this.itemImageBase64String == null) {
         this.global.showAlert("Image failed to upload, please try again.","Image Error");
           return;       
@@ -120,14 +128,22 @@ export class AddSitemComponent implements ViewWillEnter {
       var date = new Date();
       var epoch = date.getTime();
 
+      let qoutableTemp = this.quotable;
+      let priceTemp = Number(this.cSaleItemForm.controls['itemPrice'].value);
+      let qtyTemp = this.cSaleItemForm.controls['itemQuantity'].value;
+      if (qoutableTemp){
+        priceTemp = null;
+        qtyTemp = null;
+      }
+
        //form is valid for submission
       var obj = {
         Name: this.cSaleItemForm.controls['itemName'].value,
         Photo: epoch + '_' + this.itemImage.name,
         Description: this.cSaleItemForm.controls['itemDescription'].value,
-        Price: Number(this.cSaleItemForm.controls['itemPrice'].value),
         Quotable: this.quotable,
-        Quantity: this.cSaleItemForm.controls['itemQuantity'].value,
+        Price: priceTemp,
+        Quantity: qtyTemp,
         SaleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
         inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
       }
@@ -147,10 +163,11 @@ export class AddSitemComponent implements ViewWillEnter {
             this.saleService.confirmSaleItemModal(1, obj, this.cSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
           },
           error: (err : HttpErrorResponse) => {
-            this.global.showAlert(err.error,"ERROR");
+            this.global.showAlert(err.error,"ERROR uploading image");
           return;  
           }
         });
 
       }
+
 }

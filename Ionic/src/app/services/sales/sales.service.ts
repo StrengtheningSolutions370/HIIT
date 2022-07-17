@@ -19,6 +19,7 @@ import { DeleteCategoryComponent } from 'src/app/pages/sale/sale-category/delete
 import { UpdateCategoryComponent } from 'src/app/pages/sale/sale-category/update-category/update-category.component';
 import { ViewCategoryComponent } from 'src/app/pages/sale/sale-category/view-category/view-category.component';
 import { ConfirmCategoryComponent } from 'src/app/pages/sale/sale-category/confirm-category/confirm-category.component';
+import { AssociativeCategoryComponent } from 'src/app/pages/sale/sale-category/associative-category/associative-category.component';
 
 @Injectable({
   providedIn: 'root'
@@ -146,11 +147,12 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
   //Modals:
   //CREATE Sale Item
-  async addSaleItemInfoModal(saleItem?: SaleItem) {
+  async addSaleItemInfoModal(saleItem?: SaleItem, image?: any) {
     const modal = await this.modalCtrl.create({
       component: AddSitemComponent,
       componentProps:{
-        saleItem
+        saleItem,
+        image
       }
     });
     await modal.present();
@@ -169,6 +171,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   //UPDATE Sale item
   async updateSaleItemInfoModal(saleItem: SaleItem) {
     console.log("SalesService: UpdateSaleItemModalCall");
+    console.log(saleItem);
     const modal = await this.modalCtrl.create({
       component: UpdateSitemComponent,
       componentProps:{
@@ -215,28 +218,25 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     }
 
    //DELETE Sale Category
-  async deleteCategoryInfoModal(saleCategory: SaleCategory) {
+  async deleteCategoryInfoModal(saleCategory: any) {
     console.log("SalesService: DeleteSaleCategoryModalCall");
-    
+    if (saleCategory.saleItem!= null && saleCategory.saleItem.length > 0){
+      const modal = await this.modalCtrl.create({
+        component: AssociativeCategoryComponent,
+          componentProps: {
+            saleCategory
+        }
+      });
+      await modal.present();
+    } else {
       const modal = await this.modalCtrl.create({
         component: DeleteCategoryComponent,
           componentProps: {
             saleCategory
         }
       });
-
-    
-
-    //Update the current sale category list with the sale category list from the delete modal.
-    // modal.onDidDismiss().then(() => {
-    //   this.repo.getSaleCategory().subscribe(result => {
-    //     var tempResult = Object.assign(result);
-    //     //this._saleCategoryList.next(tempResult);
-    //     console.log("Updated sale category list: Sales Service: delete sale category");
-    //     //this._saleCategoryList);
-    //   });
-    // });
-    await modal.present();
+      await modal.present();
+    }
   }
   
 

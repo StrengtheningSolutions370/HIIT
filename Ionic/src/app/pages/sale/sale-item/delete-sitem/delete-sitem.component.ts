@@ -40,8 +40,10 @@ export class DeleteSitemComponent implements ViewWillEnter {
       this.saleService.getAllSaleCategories().subscribe(
         {
           next: data => {
-            data.forEach(element => {
-              if (element.saleCategoryId == this.saleItem.saleCategoryId) {
+            console.log(data.result)
+            data.result.forEach(element => {
+              console.log(this.saleItem.saleCategoryId);
+              if (element.saleCategoryID == this.saleItem.saleCategoryId) {
                 this.currentCategory = element.name;
               }
             });

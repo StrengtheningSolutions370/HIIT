@@ -1,91 +1,8 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>Edit Sale Item Details</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <form [formGroup]="uSaleItemForm" (ngSubmit)="submitForm()"> 
-    <br/><br/>
-    <ion-item>
-      <ion-label position="stacked">Name:</ion-label>
-      <ion-input formControlName="itemName"  type="text" required=""></ion-input>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.itemName.errors?.required">
-      Sale Item Name is required.
-      <br/>
-    </span>
-
-    <ion-item>
-      <ion-label position="stacked">Description:</ion-label>
-      <ion-textarea formControlName="itemDescription"  type="text" required=""></ion-textarea>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.itemDescription.errors?.required">
-      Sale Item Description is required.
-      <br/>
-    </span>
-
-    <ion-item>
-      <ion-label>Photo:</ion-label>
-      <input (change)="updateImage($event)" type="file" id="file-input" accept="image/png, image/jpeg">
-  </ion-item>
-
-  <ion-item>
-    <ion-checkbox formControlName="itemQuotable" (ionChange)="checkBoxToggle($event)" color="secondary" ></ion-checkbox>
-    <ion-label>
-      Quotable
-    </ion-label>
-  </ion-item>
-
-  <div *ngIf="!quotable">
-    <ion-item>
-      <ion-label position="floating">Price:</ion-label>
-      <ion-input type="file" formControlName="itemPrice" type="number" required="" id="itemPrice" ></ion-input>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.itemPrice.errors?.required && uSaleItemForm.get('itemPrice').touched">
-      Sale Item Price is required.<br/>
-    </span>
-    <ion-item>
-      <ion-label position="floating">Quantity:</ion-label>
-      <ion-input formControlName="itemQuantity" type="number" required="" id="itemQuantity" ></ion-input>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.required && uSaleItemForm.get('itemQuantity').touched">
-      Item Quantity is required.
-      <br/>
-    </span>
-    <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.min">
-      Please enter a quantity above 0.
-      <br/>
-    </span>
-  </div>
-  <ion-item>
-    <ion-label position="floating">Sale Category:</ion-label>
-    <ion-select formControlName="itemSCategory" type="text" required="" id="itemSCategory" >
-      <ng-container *ngFor="let c of categoryDropDown">
-        <ion-select-option value="{{c.saleCategoryID}},{{c.name}}">{{ c.name }}</ion-select-option>
-      </ng-container>
-    </ion-select>
-    <br/>
-  </ion-item>
-    <br><br/>
-    <ion-button type="submit" color="secondary" [disabled]="!uSaleItemForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Sale Item</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
-  </form>
-</ion-content> -->
-
-
 <ion-header>
   <ion-toolbar>
     <ion-title>Edit Sale Item Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -94,7 +11,7 @@
   <form [formGroup]="uSaleItemForm" (ngSubmit)="submitForm()"> 
     <br/>
     <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the sale item information below.</p>
+      <p style="font-size:large">Please fill in the sale item information below</p>
     </div>
     <ion-item>
       <ion-label position="floating">Name:</ion-label>
@@ -102,7 +19,7 @@
       <br/>
     </ion-item>
     <span class="error ion-padding" *ngIf="errorControl.itemName.errors?.required && uSaleItemForm.get('itemName').touched">
-      Sale Item Name is required.<br/>
+      Name is required<br/>
     </span>
     <ion-item>
       <ion-label position="floating">Description:</ion-label>
@@ -111,16 +28,10 @@
     </ion-item>
 
     <span class="error ion-padding" *ngIf="errorControl.itemDescription.errors?.required && uSaleItemForm.get('itemDescription').touched">
-      Sale Item Description is required.<br/>
+      Description is required<br/>
     </span>
-    <!-- <ion-item>
-      <ion-label position="floating">Photo:</ion-label>
-      <ion-input type="file" formControlName="itemPhoto" type="text" required="" id="itemPhoto" ></ion-input>
-      <br/>
-    </ion-item> -->
 
-
-    <ion-item > 
+    <ion-item *ngIf="saleItem.photo != null"> 
       <ion-label>
         <img src="{{createImg(saleItem.photo)}}">
       </ion-label>
@@ -131,22 +42,23 @@
         <input (change)="addImage($event)" type="file" id="file-input" accept="image/png, image/jpeg">
     </ion-item>
    
-
-    <ion-item>
-      <ion-checkbox [checked]="quotable" (ionChange)="checkBoxToggle($event.target.checked)" color="secondary" ></ion-checkbox>
+    <ion-item>      
       <ion-label>
-        Quotable
+       <p>Quotable <ion-checkbox formControlName="itemQuotable" (ionChange)="checkBoxToggle($event)" color="secondary" ></ion-checkbox></p>
       </ion-label>
     </ion-item>
 
-    <div *ngIf="!quotable">
+    <div *ngIf="!this.quotable">
       <ion-item>
         <ion-label position="floating">Price:</ion-label>
-        <ion-input type="file" formControlName="itemPrice" type="number" required="" id="itemPrice" ></ion-input>
+        <ion-input type="number" formControlName="itemPrice" type="number" required="" id="itemPrice" ></ion-input>
         <br/>
       </ion-item>
       <span class="error ion-padding" *ngIf="errorControl.itemPrice.errors?.required && uSaleItemForm.get('itemPrice').touched">
-        Price is required<br/>
+       Price is required <br/>
+      </span>
+      <span class="error ion-padding" *ngIf="errorControl.itemPrice.errors?.min && uSaleItemForm.get('itemPrice').touched">
+       Price must be greater than 0<br/>
       </span>
       <ion-item>
         <ion-label position="floating">Quantity:</ion-label>
@@ -154,59 +66,28 @@
         <br/>
       </ion-item>
       <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.required && uSaleItemForm.get('itemQuantity').touched">
-        Quantity is required
-        <br/>
+       Quantity is required <br/>
       </span>
-      <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.min">
-        Please enter a quantity above 0.
-        <br/>
+      <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.min && uSaleItemForm.get('itemQuantity').touched">
+       Quantity must be greater than 0<br/>
       </span>
     </div>
     <ion-item>
       <ion-label position="floating">Sale Category:</ion-label>
       <ion-select formControlName="itemSCategory" type="text" required="" id="itemSCategory" >
-        <ng-container *ngFor="let c of categoryDropDown">
-          <ng-container *ngIf="c.saleCategoryID == saleItem.saleCategoryID">
-            <ion-select-option value="{{c.saleCategoryID}},{{c.name}}" [attr.selected]="checked">{{ c.name }} *</ion-select-option>
-          </ng-container>
-          <ng-container *ngIf="c.saleCategoryID != saleItem.saleCategoryID">
-            <ion-select-option value="{{c.saleCategoryID}},{{c.name}}">{{ c.name }}</ion-select-option>
-          </ng-container>
+        <ng-container *ngFor="let c of this.categoryDropDown">
+          <ion-select-option value="{{c.saleCategoryID}},{{c.name}}">{{ c.name }}</ion-select-option>
         </ng-container>
       </ion-select>
       <br/>
     </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.itemSCategory.errors?.required && uSaleItemForm.get('itemSCategory').touched">
+      Category is required <br/>
+     </span>
     <br>
     <br>
-    <ion-button type="submit" color="secondary" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Sale Item</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
-    
+    <ion-button type="submit" color="secondary" [disabled]="!uSaleItemForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Sale Item</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
   </form>
 </ion-content>
-<!-- <ion-content>
-  <form #cTitleForm="ngForm">
-
-    <br/>     
-
-    <ion-item>
-      <ion-label position="floating">Title :</ion-label>
-      <ion-input required ngModel name #titleCtrl="ngModel"></ion-input>
-    </ion-item>
-    <ion-text color="danger" *ngIf="!titleCtrl.valid && titleCtrl.touched">
-      <p>Please enter a valid title</p>
-    </ion-text>
-
-    <ion-item>
-      <ion-label position="floating">Description :</ion-label>
-      <ion-textarea required ngModel name #desCtrl="ngModel"></ion-textarea>
-    </ion-item>
-    <ion-text color="danger" *ngIf="!desCtrl.valid && desCtrl.touched">
-      <p>Please enter a valid title description</p>
-    </ion-text> -->
-      
-    <!-- <br/>
-
-    <ion-button expand="block" color="success">Create Title</ion-button>
-</form>
-</ion-content> -->
 
