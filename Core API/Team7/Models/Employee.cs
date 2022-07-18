@@ -37,5 +37,6 @@ namespace Team7.Models
         public virtual EmployeeType EmployeeType { get; set; }
         public virtual Qualification Qualification { get; set; }
         public virtual ICollection<Lesson> Lesson { get; set; }
+        public virtual ICollection<Schedule> Schedule { get; set; }
     }
 }
