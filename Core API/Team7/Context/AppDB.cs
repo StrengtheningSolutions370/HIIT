@@ -42,7 +42,7 @@ namespace Team7.Context
         public virtual DbSet<PriceHistory> PriceHistory { get; set; }
         public virtual DbSet<Qualification> Qualification { get; set; }
         public virtual DbSet<QualificationType> QualificationType { get; set; }
-        public virtual DbSet<Receipt> Receipt { get; set; }
+        public virtual DbSet<Payment> Payment { get; set; }
         public virtual DbSet<Refund> Refund { get; set; }
         public virtual DbSet<RefundReason> RefundReason { get; set; }
         public virtual DbSet<Sale> Sale { get; set; }

@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { Roles } from './models/roles.enum';
 
-const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
-    path: 'profile',
-    loadChildren: () => import('./pages/profile/profile/profile.module').then( m => m.ProfilePageModule)
-  },
+export const AllRoles = [Roles.SuperUser, Roles.Admin, Roles.Client, Roles.Member, Roles.GeneralEmployee, Roles.Trainer];
+
+export const routes: Routes = [
+  // {
+  //   path: '',
+  //   redirectTo: 'home',
+  //   pathMatch: 'full'
+  // },
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
