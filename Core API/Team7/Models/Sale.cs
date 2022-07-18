@@ -9,7 +9,6 @@ namespace Team7.Models
         public Sale()
         {
             this.SaleLine = new HashSet<SaleLine>();
-            this.Payment = new HashSet<Payment>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -17,9 +16,10 @@ namespace Team7.Models
         [Required]
         public System.DateTime Date { get; set; }
         [Required]
-        public int UserID { get; set; }
+        public int? ClientID { get; set; }
 
+        public virtual Client Client { get; set; }
         public virtual ICollection<SaleLine> SaleLine { get; set; }
-        public virtual ICollection<Payment> Payment { get; set; }
+        
     }
 }

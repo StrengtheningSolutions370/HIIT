@@ -8,7 +8,7 @@ namespace Team7.Models
     {
         public PaymentType()
         {
-            this.Payment = new HashSet<Payment>();
+            this.Receipt = new HashSet<Receipt>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -16,6 +16,6 @@ namespace Team7.Models
         [Required]
         public string Name { get; set; }
 
-        public virtual ICollection<Payment> Payment { get; set; }
+        public virtual ICollection<Receipt> Receipt { get; set; }
     }
 }

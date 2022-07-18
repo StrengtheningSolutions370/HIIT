@@ -6,13 +6,12 @@ import { Router } from '@angular/router';
 import { StoreService } from '../services/storage/store.service';
 import { GlobalService } from '../services/global/global.service';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
-import { AuthService } from '../services/authentication/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     tokenTemp : string;
 
-    constructor(private router: Router, private store: StoreService, private global: GlobalService, private auth : AuthService) {
+    constructor(private router: Router, private store: StoreService, private global: GlobalService) {
 
     }
 
@@ -35,7 +34,6 @@ export class AuthInterceptor implements HttpInterceptor {
                 console.log('token in storage is expired');
                 this.store.deleteKey('token');
                 this.router.navigate(['login']);
-                this.auth.logout();
                 return;
             }
 
