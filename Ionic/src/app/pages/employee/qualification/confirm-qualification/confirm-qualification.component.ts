@@ -17,11 +17,12 @@ export class ConfirmQualificationComponent{
   @Input() qualificationType: QualificationType;
 
   constructor(public qualificationService: QualificationService, public global: GlobalService) { }
-  async checkMatch(description: string,): Promise<boolean>{
+
+  async checkMatch(description: string): Promise<boolean>{
     return this.qualificationService.matchingQualification(description).then(result => {
       console.log(result);
-       if (result !== 0){
-         this.global.showAlert('The Qualification information entered already exists on the system','Qualification Already Exists');
+       if (result !== false){
+         this.global.showAlert('The qualification information entered already exists on the system','Qualification Already Exists');
          return true;
        } else {
          return false;
@@ -54,7 +55,7 @@ export class ConfirmQualificationComponent{
             console.log(temp);
             //CallRepoToUpdate
             this.qualificationService.updateQualification(qualification.qualificationID,temp);
-            this.global.showToast('The Title has been successfully updated!');
+            this.global.showToast('The Qualification has been successfully updated!');
         }
       }
           //dismiss modal

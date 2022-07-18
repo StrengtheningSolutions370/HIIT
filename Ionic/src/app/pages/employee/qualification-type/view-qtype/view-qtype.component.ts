@@ -12,11 +12,11 @@ import { QualificationType } from 'src/app/models/qualification-type';
 export class ViewQtypeComponent implements ViewWillEnter {
   @Input() qualificationType: QualificationType;
 
-  constructor(private modalCtrl: ModalController, public fb:FormBuilder) { 
+  constructor(private modalCtrl: ModalController, public fb: FormBuilder) {
   }
 
   ionViewWillEnter() {
-    console.log("viewSpecificQualificationType-ViewWillEnter");
+    console.log('viewSpecificQualificationType-ViewWillEnter');
     console.log(this.qualificationType);
   }
 

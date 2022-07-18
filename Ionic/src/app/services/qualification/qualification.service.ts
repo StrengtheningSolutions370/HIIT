@@ -128,21 +128,6 @@ export class QualificationService {
     );
   }
 
-    // //Receives a sale item to update in the service sale  list.
-    // async updateSaleItem(saleItem: any) {
-    //   return this.repo.updateSaleItem(saleItem).subscribe(
-    //     {
-    //      next: () => {
-    //        console.log('SALE ITEM UPDATED');
-    //        this.fetchSaleItemsEvent.emit(saleItem);
-    //      },
-    //      error: err => {
-    //        console.log('SALE ITEM UPDATED FAILED');
-    //      }
-    //     }
-    //   );
-    // }
-
   //Receives a qualification to delete in the service qualification list.
   deleteQualification(id: number) {
     this.repo.deleteQualification(id).subscribe(result => {
@@ -152,16 +137,16 @@ export class QualificationService {
 
   }
 
-  matchingQualification(description: string): Promise<any> {
-    return this.repo.getMatchQualification(description).toPromise();
-  }
+  matchingQualification(input: string): Promise<any>{
+    console.log('Qualification Service: Repo -> Matching Qualification');
+    return this.repo.getMatchQualification(input).toPromise();
+   }
 
-  existingQualification(id: number) {
-    console.log('qualificationService: Repo -> Existing qualification');
+   existingQualification(id: number){
+    console.log('Qualification Service: Repo -> Existing Qualification');
     this.repo.existsQualification(id).subscribe(result =>
-      console.log(result));
-  }
-
+     console.log(result));
+   }
   //Modals
   async addQualificationTypeInfoModal(qualificationType?: QualificationType) {
     const modal = await this.modalCtrl.create({
@@ -312,13 +297,12 @@ export class QualificationService {
   }
   //Display the view qualificationtype modal.
   //This method receives the selected qualification object, from the qualificationtype page, in the modal through the componentProps.
-  async viewQualificationInfoModal(qualification: Qualification, qualificationType: string) {
+  async viewQualificationInfoModal(qualification: Qualification) {
     console.log('QualificationTypeService: ViewQualificationTypeModalCall');
     const modal = await this.modalCtrl.create({
       component: ViewQualificationComponent,
       componentProps: {
-        qualification,
-        qualificationType
+        qualification
       }
     });
     await modal.present();
