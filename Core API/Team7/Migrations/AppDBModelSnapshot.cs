@@ -1332,7 +1332,7 @@ namespace Team7.Migrations
             modelBuilder.Entity("Team7.Models.AppUser", b =>
                 {
                     b.HasOne("Team7.Models.Title", "Title")
-                        .WithMany()
+                        .WithMany("User")
                         .HasForeignKey("TitleID");
 
                     b.Navigation("Title");
@@ -1888,6 +1888,11 @@ namespace Team7.Migrations
             modelBuilder.Entity("Team7.Models.SupplierOrder", b =>
                 {
                     b.Navigation("SupplierOrderLine");
+                });
+
+            modelBuilder.Entity("Team7.Models.Title", b =>
+                {
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Team7.Models.Venue", b =>

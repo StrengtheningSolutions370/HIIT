@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Component, Input, OnInit} from '@angular/core';
-import { FormArray, FormBuilder,FormControl,FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder,FormControl,FormGroup, FormGroupName, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AllRoles } from 'src/app/app-routing.module';
 import { Employee } from 'src/app/models/employee';
 import { EmployeeType } from 'src/app/models/employeeType';
 import { QualificationType } from 'src/app/models/qualification-type';
 import { Venue } from 'src/app/models/venue';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { RepoService } from 'src/app/services/repo.service';
+import { StoreService } from 'src/app/services/storage/store.service';
 import { TitleService } from 'src/app/services/title/title.service';
 import { requiredFileType } from '../file-upload/file-upload.component';
 
@@ -22,8 +24,8 @@ import { requiredFileType } from '../file-upload/file-upload.component';
 })
 export class AddEmployeeComponent implements OnInit{
   @Input() employee: Employee;
-  titleList: Title[] = [];
-  qualificationTypeList: QualificationType[] = [];
+  titleList: any[] = [];
+  qualificationTypeList: any[] = [];
   employeeTypeList: EmployeeType[] = [];
   //Subscription variable to track live updates.
   titleSub: Subscription;
@@ -31,21 +33,23 @@ export class AddEmployeeComponent implements OnInit{
   employeeTypeSub: Subscription;
 
   progress=0;
+  cEmployeeForm! : FormGroup;
+  roles! : any;
 
   //Creating the form to add the new venue details, that will be displayed in the HTML component
-  cEmployeeForm: FormGroup = this.formBuilder.group({
-    name: ['', [Validators.required]],
-    surname: ['', [Validators.required]],
-    photo: ['', [Validators.required,requiredFileType('png')]],
-    idNumber: ['', [Validators.required]],
-    checkBoxTitles: this.formBuilder.array([], [Validators.required]),
-    checkBoxQualificationTypes: this.formBuilder.array([], [Validators.required]),
-    checkBoxEmployeeTypes: this.formBuilder.array([], [Validators.required])
-  });
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public employeeService: EmployeeService, private router: Router,private currentRoute: ActivatedRoute,
-    private  alertCtrl: AlertController, public titleService: TitleService, public repo: RepoService  ) { }
+    private  alertCtrl: AlertController, public titleService: TitleService, public repo: RepoService, private storage : StoreService) {
+      this.roles = AllRoles;
+      this.storage.getKey('token').then((token : any) => {
+        this.repo.getUserRole(token).subscribe({
+          next: (data : any) => {
+            
+          }
+        })
+      })
+    }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
@@ -53,26 +57,55 @@ export class AddEmployeeComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.qualificationTypeSub = this.repo.getQualificationTypes().subscribe(qTypes => {
-      this.qualificationTypeList = qTypes;
 
-      console.log('Add Employee: NgOnIt: Return Qualification Type List');
-      console.log(this.qualificationTypeList);
+    this.cEmployeeForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      contract: ['', [Validators.required]],
+      email: ['', [Validators.email]],
+      surname: ['', [Validators.required]],
+      photo: ['', [Validators.required, requiredFileType('png')]],
+      idNumber: ['', [Validators.required]],
+      title: ['', [Validators.required]],
+      phone: ['', [Validators.pattern(/[0-9]{10}/)]],
+      checkBoxTitles: this.formBuilder.array([], [Validators.required]),
+      checkBoxQualificationTypes: this.formBuilder.array([], [Validators.required]),
+      checkBoxEmployeeTypes: this.formBuilder.array([], [Validators.required])
     });
 
-    this.titleSub = this.repo.getTitles().subscribe(titles => {
-      this.titleList = titles;
+    //getting qualifications for drop down
+    this.repo.getQualificationTypes().subscribe({
+      next: (data : any) => {
+        this.qualificationTypeList = data.result;
+      }
+    })
 
-      console.log('Add Employee: NgOnIt: Return Title List');
-      console.log(this.titleList);
-    });
+    //getting titles for drop down
+    this.repo.getTitles().subscribe({
+      next: (data : any) => {
+        this.titleList = data.result;
+      }
+    })
 
-    this.employeeTypeSub = this.repo.getEmployeeTypes().subscribe(employeeTypes => {
-      this.employeeTypeList = employeeTypes;
+    // this.qualificationTypeSub = this.repo.getQualificationTypes().subscribe(qTypes => {
+    //   this.qualificationTypeList = qTypes;
 
-      console.log('Add Employee: NgOnIt: Return Title List');
-      console.log(this.employeeTypeList);
-    });
+    //   console.log('Add Employee: NgOnIt: Return Qualification Type List');
+    //   console.log(this.qualificationTypeList);
+    // });
+
+    // this.titleSub = this.repo.getTitles().subscribe(titles => {
+    //   this.titleList = titles;
+
+    //   console.log('Add Employee: NgOnIt: Return Title List');
+    //   console.log(this.titleList);
+    // });
+
+    // this.employeeTypeSub = this.repo.getEmployeeTypes().subscribe(employeeTypes => {
+    //   this.employeeTypeList = employeeTypes;
+
+    //   console.log('Add Employee: NgOnIt: Return Title List');
+    //   console.log(this.employeeTypeList);
+    // });
 
 
   }
@@ -108,18 +141,20 @@ export class AddEmployeeComponent implements OnInit{
 
 
   ionViewWillEnter(): void {
-    if (this.employee !=null){
+    if (this.employee != null) {
       console.log('Add Employee - View Will Enter');
       console.log(this.employee);
-
       this.cEmployeeForm.controls.name.setValue(this.employee.name);
+      this.cEmployeeForm.controls.contract.setValue(this.employee.contract);
+      this.cEmployeeForm.controls.title.setValue(this.employee.title);
+      this.cEmployeeForm.controls.email.setValue(this.employee.email);
+      this.cEmployeeForm.controls.phone.setValue(this.employee.phone);
       this.cEmployeeForm.controls.surname.setValue(this.employee.surname);
       this.cEmployeeForm.controls.photo.setValue(this.employee.photo);
       this.cEmployeeForm.controls.idNumber.setValue(this.employee.idNumber);
       this.cEmployeeForm.controls.checkBoxTitles.setValue(this.titleList);
       this.cEmployeeForm.controls.checkBoxQualificationTypes.setValue(this.qualificationTypeList);
     }
-
   }
 
   submitForm() {
@@ -173,24 +208,33 @@ export class AddEmployeeComponent implements OnInit{
     alert.present();
   }
 
-  async getTitles() {
-    setTimeout(async () => {
-      //this.isLoading = false;
-      await this.repo.getTitles();
+  // async getTitles() {
+  //   setTimeout(async () => {
+  //     //this.isLoading = false;
+  //     await this.repo.getTitles();
 
-      console.log('Add Employee Component -> Get Titles');
-      console.log(this.titleList);
-    }, 2000);
-  }
+  //     console.log('Add Employee Component -> Get Titles');
+  //     console.log(this.titleList);
+  //   }, 2000);
+  // }
 
-  async getQualificationTypes() {
-    setTimeout(async () => {
-      //this.isLoading = false;
-      await this.repo.getQualificationTypes();
+  // async getQualificationTypes() {
+  //   // setTimeout(async () => {
+  //   //   //this.isLoading = false;
+  //   //   await this.repo.getQualificationTypes();
 
-      console.log('Add Employee Component -> Get Qualification Types');
-      console.log(this.getQualificationTypes);
-    }, 2000);
-  }
+  //   //   console.log('Add Employee Component -> Get Qualification Types');
+  //   //   console.log(this.getQualificationTypes);
+  //   // }, 2000);
+    // this.repo.getQualificationTypes().subscribe({
+    //   next: (data : any) => {
+    //     this.qualificationTypeList = data;
+    //     data.result.map((el : any) => {
+    //       this.qualificationTypeList.push({name : el.name});
+    //     })
+    //     console.log('qualis', this.qualificationTypeList)
+    //   }
+    // })
+  // }
 
 }

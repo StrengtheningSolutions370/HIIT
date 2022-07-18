@@ -15,7 +15,25 @@ export class AuthService {
   //navbar authentication with observable
   private loggedIn = new BehaviorSubject<boolean>(false);
 
+  async checkToken() {
+    var token = await this.storage.getKey('token');
+    if (token == null) {
+      this.loggedIn.next(false);
+    }
+    else {
+      var tokenObj = this.global.decodeToken(token);
+      if (tokenObj == null) {
+        this.loggedIn.next(false);
+      }
+      else if (!this.global.validateTokenData(tokenObj)) {
+        this.loggedIn.next(false);
+      }
+      else this.loggedIn.next(true);
+    }
+  }
+
   get isLoggedIn() {
+    this.checkToken();
     return this.loggedIn.asObservable();
   }
 
@@ -27,7 +45,8 @@ export class AuthService {
     this.loggedIn.next(false);
   }
 
-  getState(): boolean {
+  async getState() {
+    await this.checkToken();
     return this.loggedIn.value;
   }
   //////////////
