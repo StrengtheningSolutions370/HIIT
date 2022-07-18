@@ -21,7 +21,6 @@ namespace Team7.Models
         public int? ReceiptID { get; set; }
 
         public virtual Booking Booking { get; set; }
-        public virtual Receipt Receipt { get; set; }
         public virtual Schedule Schedule { get; set; }
     }
 }

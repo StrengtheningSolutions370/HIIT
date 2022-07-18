@@ -99,4 +99,12 @@ export class GlobalService {
       return JSON.parse(atob(payload));
     }
 
+    validateTokenData(token : any) : boolean {
+      const now = Math.trunc(new Date().getTime() / 1000);
+      if (token.exp <= now) {
+        return false;
+      }
+      return true;
+    }
+
 }
