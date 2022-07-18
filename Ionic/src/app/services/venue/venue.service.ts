@@ -29,6 +29,10 @@ export class VenueService {
     this.getAllVenues();
   }
 
+  getAllVenues(): Observable<any> {
+    return this.repo.getVenues();
+  }
+
   //Methods
   //Add a venue to the venue list within the venue service.
    createVenue(venue: any){
@@ -66,9 +70,7 @@ export class VenueService {
     });
    }
 
-   getAllVenues(): Observable<any> {
-     return this.repo.getVenues();
-   }
+
 
    matchingVenue(name: string, address:string): Promise<any>{
     return this.repo.getMatchVenue(name,address).toPromise();

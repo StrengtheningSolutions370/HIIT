@@ -8,15 +8,19 @@
 </ion-header>
 
 <ion-content>
+  <br/>
+  <div class="ion-text-center">
+    <p style="font-size:large">Please update the title information below</p>
+  </div>
+
   <form [formGroup]="uTitleForm" (ngSubmit)="submitForm()"> 
-    <br/><br/>
     <ion-item>
       <ion-label position="stacked">Description:</ion-label>
       <ion-input formControlName="titleDescription"  type="text" required=""></ion-input>
       <br/>
     </ion-item>
     <span class="error ion-padding" *ngIf="errorControl.titleDescription.errors?.required">
-      Title Description is required.
+     Description is required.
       <br/>
     </span>
 

@@ -9,28 +9,28 @@ import { TitleService } from 'src/app/services/title/title.service';
   styleUrls: ['./confirm-title.component.scss'],
 })
 export class ConfirmTitleComponent{
+  //1 = confirm ADD
+  //2 = confirm UPDATE
   @Input() choice: number;
   @Input() title: Title;
 
-  constructor(public global: GlobalService, public titleService: TitleService) {
-   }
+  constructor(public global: GlobalService, public titleService: TitleService) {}
 
    async checkMatch(description: string): Promise<boolean>{
     return this.titleService.matchingTitle(description).then(result => {
       console.log(result);
-       if (result != 0){
-         this.global.showAlert("The Title information entered already exists on the system","Title Already Exists");
+       if (result != false){
+         this.global.showAlert("The title information entered already exists on the system","Title Already Exists");
          return true;
        } else {
          return false;
        }
      });
    }
-  //1 = confirm ADD
-  //2 = confirm UPDATE
-  confirmChanges(title: Title){
+
+  async confirmChanges(title: Title){
     console.log(this.choice);
-    this.checkMatch(title.description).then(result =>{
+    await this.checkMatch(title.description).then(result =>{
         if (result == true){
           return;
         } else {
@@ -38,12 +38,12 @@ export class ConfirmTitleComponent{
             console.log('Add Title from confirm:');
             //CallRepoToCreate
             this.titleService.createTitle(title);
-            this.global.showToast("The Title has been successfully added!");
+            this.global.showToast("The title has been successfully added!");
           } else if (this.choice === 2){
             console.log('Update Title from confirm:');
             //CallRepoToUpdate
             this.titleService.updateTitle(title.titleID,title);
-            this.global.showToast("The Title has been successfully updated!");
+            this.global.showToast("The title has been successfully updated!");
           }
         }
         this.global.dismissModal();
