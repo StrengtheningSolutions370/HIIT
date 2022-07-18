@@ -96,19 +96,10 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   //VAT
   AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent, UpdateVatComponent,
   //EmployeeType
-<<<<<<< HEAD
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,AssociativeEtypeComponent,
   ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
   ConfirmCategoryComponent, AddCategoryComponent, ConfirmCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent,
   ConfirmSitemComponent, AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
-=======
-  AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
-  //SalesCategory
-  AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent,
-  //SalesItem
-  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
-  //SideMenu
->>>>>>> developer
   SidemenuComponent
 ],
 

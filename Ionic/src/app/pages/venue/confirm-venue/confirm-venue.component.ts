@@ -1,16 +1,10 @@
-<<<<<<< HEAD
 /* eslint-disable eqeqeq */
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, AlertController } from '@ionic/angular';
-=======
 /* eslint-disable no-var */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
 import { Component, Input} from '@angular/core';
->>>>>>> developer
 import { Venue } from 'src/app/models/venue';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { VenueService } from 'src/app/services/venue/venue.service';
@@ -30,7 +24,7 @@ export class ConfirmVenueComponent {
   constructor(public venueService: VenueService, public global: GlobalService) {}
 
 
-  async checkMatch(name:string, address:string): Promise<boolean>{
+  async checkMatch(name: string, address: string): Promise<boolean>{
    return this.venueService.matchingVenue(name,address).then(result => {
      console.log(result);
       if (result != false){

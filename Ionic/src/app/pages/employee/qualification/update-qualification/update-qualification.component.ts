@@ -43,7 +43,7 @@ export class UpdateQualificationComponent implements ViewWillEnter {
           }
         }
       );
-      console.log("AddTitle-ViewWillEnter");
+      console.log('AddTitle-ViewWillEnter');
       console.log(this.qualification);
       if (this.qualification != null) {
         this.uQualificationForm.controls.description.setValue(this.qualification.description);
