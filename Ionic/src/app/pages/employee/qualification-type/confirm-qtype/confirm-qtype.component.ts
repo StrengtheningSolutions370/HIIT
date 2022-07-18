@@ -18,7 +18,7 @@ export class ConfirmQtypeComponent {
     public router: Router, public activated: ActivatedRoute, public toastCtrl : ToastController) {
    }
 
-   //double check where it returns to with josh 
+//double check where it returns to with josh
  async dismissModal() {
     //await this.router.navigate(['../qualification-type'],{relativeTo:this.activated});
     this.modalCtrl.dismiss();

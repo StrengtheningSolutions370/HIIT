@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Qualification } from 'src/app/models/qualification';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-associative-qualification',
@@ -6,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./associative-qualification.component.scss'],
 })
 export class AssociativeQualificationComponent implements OnInit {
+  @Input() qualification: Qualification;
 
-  constructor() { }
+  constructor(public global: GlobalService) { }
 
   ngOnInit() {}
 

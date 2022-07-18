@@ -14,6 +14,7 @@ import { Vat } from '../models/vat';
 import { SaleItem } from '../models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { appUser, appUserRegister } from '../models/appUser';
+import { Qualification } from '../models/qualification';
 
 @Injectable({
   providedIn: 'root'
@@ -205,19 +206,19 @@ export class RepoService {
     return this.http.get(`${this.base + this.QualificationTypeController}exists?id=${id}`, this.httpOptions);
   }
 
-    //Qualification:
+  //Qualification:
   //------
   // Create
-  createQualification(qualificationType: any): Observable<any> {
-    return this.http.post<any>(`${this.base + this.QualificationTypeController}add`, qualificationType, this.httpOptions);
+  createQualification(qualification: any): Observable<any> {
+    return this.http.post<any>(`${this.base + this.QualificationController}add`, qualification, this.httpOptions);
   }
   //Update
-  updateQualification(qualificationTypeId: number, qualificationType: QualificationType): Observable<any>{
-    return this.http.put(`${this.base+this.QualificationController}update?id=${qualificationType}`,qualificationType, this.httpOptions);
+  updateQualification(qualificationId: number, qualification: any): Observable<any>{
+    return this.http.put(`${this.base+this.QualificationController}update?id=${qualificationId}`,qualification, this.httpOptions);
   }
   //Delete
-  deleteQualification(qualificationTypeId: number): Observable<any> {
-    return this.http.delete(`${this.base + this.QualificationController}delete?id=${qualificationTypeId}`, this.httpOptions);
+  deleteQualification(qualificationId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.QualificationController}delete?id=${qualificationId}`, this.httpOptions);
 
   }
   //GetAll

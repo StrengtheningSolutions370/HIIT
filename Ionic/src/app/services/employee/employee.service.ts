@@ -21,7 +21,7 @@ import { TitleService } from '../title/title.service';
 export class EmployeeService {
   @Output() fetchEmployeeTypesEvent = new EventEmitter<EmployeeType>();
 
-  constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController,
+  constructor(public repo: RepoService, private modalCtrl: ModalController,
     public titleService: TitleService) {
     //Receive the venues from the repo (API).
     this.getAllEmployeeTypes();

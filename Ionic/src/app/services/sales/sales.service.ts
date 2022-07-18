@@ -377,7 +377,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   }
 
   //Display the confirm create/update modal
-  //Receives the selected saleCategory from the salecategory page
+  //Receives the selected saleCategory from the sale category page
   async confirmSaleCategoryModal(choice: number, saleCategory: any) {
     console.log('SaleService: ConfirmSaleCategoryModalCall');
     console.log(choice);

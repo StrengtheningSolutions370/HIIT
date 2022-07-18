@@ -30,11 +30,11 @@ namespace Team7.Controllers
 
         [HttpPost]
         [Route("addAdmin")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "superuser")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "superuser")]
         public async Task<IActionResult> RegisterAdmin(UserViewModel userViewModel)
         {
 
-            var role = "admin";
+            var role = "superuser";
 
             //check if role exists:
             var exists = await _roleManager.FindByNameAsync(userViewModel.role);
