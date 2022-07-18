@@ -4,3 +4,6 @@ export class EmployeeType {
     description: string;
     employees: [];
 }
+
+//Only for sending to CREATE or UPDATE 
+//When receiving you use ANY

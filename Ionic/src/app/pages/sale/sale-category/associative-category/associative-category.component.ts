@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { GlobalService } from 'src/app/services/global/global.service';
 

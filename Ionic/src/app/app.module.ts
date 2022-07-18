@@ -30,6 +30,7 @@ import { UpdateCategoryComponent } from './pages/sale/sale-category/update-categ
 import { DeleteCategoryComponent } from './pages/sale/sale-category/delete-category/delete-category.component';
 import { ViewCategoryComponent } from './pages/sale/sale-category/view-category/view-category.component';
 import { ConfirmCategoryComponent } from './pages/sale/sale-category/confirm-category/confirm-category.component';
+import { AssociativeCategoryComponent } from './pages/sale/sale-category/associative-category/associative-category.component';
 
 //SALE ITEM IMPORTS:
 import { AddSitemComponent } from './pages/sale/sale-item/add-sitem/add-sitem.component';
@@ -75,7 +76,7 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   //EmployeeType
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
   //SalesCategory
-  AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent,
+  AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent, AssociativeCategoryComponent,
   //SalesItem
   AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
   //SideMenu

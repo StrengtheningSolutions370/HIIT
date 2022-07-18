@@ -137,7 +137,7 @@ export class RepoService {
   }
   //Update
   updateQualificationType(qualificationTypeId: number, qualificationType: QualificationType): Observable<any>{
-    return this.http.put(`${this.base+this.QualificationTypeController}update?id=${qualificationType}`,qualificationType, this.httpOptions);
+    return this.http.put(`${this.base+this.QualificationTypeController}update?id=${qualificationTypeId}`,qualificationType, this.httpOptions);
   }
   //Delete
   deleteQualificationType(qualificationTypeId: number): Observable<any> {
@@ -201,12 +201,12 @@ createSaleItem(saleItem: any): Observable<any>{
   return this.http.post<any>(`${this.base+this.SaleItemController}add`,saleItem,this.httpOptions);
 }
 //Update
-updateSaleItem(saleItem: SaleItem): Observable<any>{
-  return this.http.put(`${this.base+this.SaleItemController}update`,saleItem, this.httpOptions);
+updateSaleItem(saleItemId: number, saleItem: SaleItem): Observable<any>{
+  return this.http.put(`${this.base+this.SaleItemController}update?id=${saleItemId}`,saleItem, this.httpOptions);
 }
 //Delete
-deleteSaleItem(SaleItemId: number): Observable<any>{
-  return this.http.delete(`${this.base+this.SaleItemController}delete?id=${SaleItemId}`,this.httpOptions);
+deleteSaleItem(saleItemId: number): Observable<any>{
+  return this.http.delete(`${this.base+this.SaleItemController}delete?id=${saleItemId}`,this.httpOptions);
 }
 //GetAll
 getSaleItems(): Observable<any>{

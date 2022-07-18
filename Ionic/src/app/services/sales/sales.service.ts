@@ -82,7 +82,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
   //Receives a sale item to update in the service sale  list.
    async updateSaleItem(saleItem: any) {
-     return this.repo.updateSaleItem(saleItem).subscribe(
+     return this.repo.updateSaleItem(saleItem.saleItemID,saleItem).subscribe(
        {
         next: () => {
           console.log('SALE ITEM UPDATED');
@@ -221,6 +221,8 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   async deleteCategoryInfoModal(saleCategory: any) {
     console.log("SalesService: DeleteSaleCategoryModalCall");
     if (saleCategory.saleItem!= null && saleCategory.saleItem.length > 0){
+      console.log("SalesService: Found associative in delete");
+      console.log(saleCategory);
       const modal = await this.modalCtrl.create({
         component: AssociativeCategoryComponent,
           componentProps: {
@@ -297,7 +299,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     } else if (choice === 2){
 
       console.log("Performing UPDATE");
-
+      console.log(saleItem);
 
       const modal = await this.modalCtrl.create({
         component: ConfirmSitemComponent,

@@ -63,15 +63,15 @@ export class AddSitemComponent implements ViewWillEnter {
  checkBoxToggle(check : any) {
    this.quotable = check.target.checked;
    console.log(this.quotable);
-  //  if (this.quotable) {
-  //    //is quotable
-  //    this.cSaleItemForm.controls.itemPrice.setValue(1);
-  //    this.cSaleItemForm.controls.itemQuantity.setValue(1);
-  //    return;
-  //  }
-  //  console.log('here')
-  //   this.cSaleItemForm.controls.itemPrice.setValue();
-  //   this.cSaleItemForm.controls.itemQuantity.setValue(null);
+   if (this.quotable) {
+     //is quotable
+     this.cSaleItemForm.controls.itemPrice.disable();
+     this.cSaleItemForm.controls.itemQuantity.disable();
+     return;
+   }
+   console.log('here')
+   this.cSaleItemForm.controls.itemPrice.enable();
+   this.cSaleItemForm.controls.itemQuantity.enable();
  }
 
  constructor(private global: GlobalService, public formBuilder: FormBuilder,
@@ -104,15 +104,16 @@ export class AddSitemComponent implements ViewWillEnter {
     )
 
     console.log("AddSaleItem-ViewWillEnter");
-    console.log(this.saleItem);
+
     if (this.saleItem !=null){
-      this.cSaleItemForm.controls.itemName.setValue(this.saleItem.Name);
-      this.cSaleItemForm.controls.itemDescription.setValue(this.saleItem.Description);
+      console.log(this.saleItem);
+      this.cSaleItemForm.controls.itemName.setValue(this.saleItem.name);
+      this.cSaleItemForm.controls.itemDescription.setValue(this.saleItem.description);
       this.cSaleItemForm.controls.itemPhoto.setValue(this.itemImageBase64String);
-      this.cSaleItemForm.controls.itemPrice.setValue(this.saleItem.Price);
-      this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.Quotable);
-      this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.Quantity);
-      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.SaleCategoryID);
+      this.cSaleItemForm.controls.itemPrice.setValue(this.saleItem.price);
+      this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.quotable);
+      this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.quantity);
+      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.saleCategoryID);
     }
     }
 
@@ -125,26 +126,32 @@ export class AddSitemComponent implements ViewWillEnter {
           return;       
        }
 
+       if (this.cSaleItemForm.controls['itemSCategory'].value[0] == null) {
+        this.global.showAlert("No Sale Category provided","Error updating sale item");
+        return;
+      }
+
       var date = new Date();
       var epoch = date.getTime();
 
       let qoutableTemp = this.quotable;
       let priceTemp = Number(this.cSaleItemForm.controls['itemPrice'].value);
       let qtyTemp = this.cSaleItemForm.controls['itemQuantity'].value;
+
       if (qoutableTemp){
-        priceTemp = null;
-        qtyTemp = null;
+        priceTemp = 0;
+        qtyTemp = 0;
       }
 
        //form is valid for submission
       var obj = {
-        Name: this.cSaleItemForm.controls['itemName'].value,
-        Photo: epoch + '_' + this.itemImage.name,
-        Description: this.cSaleItemForm.controls['itemDescription'].value,
-        Quotable: this.quotable,
-        Price: priceTemp,
-        Quantity: qtyTemp,
-        SaleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
+        name: this.cSaleItemForm.controls['itemName'].value,
+        photo: epoch + '_' + this.itemImage.name,
+        description: this.cSaleItemForm.controls['itemDescription'].value,
+        quotable: this.quotable,
+        price: priceTemp,
+        quantity: qtyTemp,
+        saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
         inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
       }
 

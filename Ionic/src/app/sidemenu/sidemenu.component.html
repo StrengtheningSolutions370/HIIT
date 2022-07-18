@@ -31,63 +31,63 @@
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="member">
+      <ion-menu-toggle *ngIf="superuser || member">
         <ion-item routerLink="/measurements">
           <ion-icon name="walk-outline" slot="start"></ion-icon>
           <ion-label>Measurements</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="client || member">
+      <ion-menu-toggle *ngIf="superuser || client || member">
         <ion-item routerLink="/trainers">
           <ion-icon name="walk-outline" slot="start"></ion-icon>
           <ion-label>Trainers Information</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="client || member">
+      <ion-menu-toggle *ngIf="superuser || client || member">
         <ion-item routerLink="/bookings">
           <ion-icon name="calendar-number-outline" slot="start"></ion-icon>
           <ion-label>Bookings</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="client || member">
+      <ion-menu-toggle *ngIf="superuser || client || member">
         <ion-item routerLink="/shop">
           <ion-icon name="cart-outline" slot="start"></ion-icon>
           <ion-label>Shop</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="client || member">
+      <ion-menu-toggle *ngIf="superuser || client || member">
         <ion-item routerLink="/cart">
           <ion-icon name="bag-outline" slot="start"></ion-icon>
           <ion-label>Cart</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="trainer">
+      <ion-menu-toggle *ngIf="superuser || trainer">
         <ion-item routerLink="/sesssions">
           <ion-icon name="book-outline" slot="start"></ion-icon>
           <ion-label>Sessions</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="trainer">
+      <ion-menu-toggle *ngIf="superuser || trainer">
         <ion-item routerLink="/schedule">
           <ion-icon name="calendar-outline" slot="start"></ion-icon>
           <ion-label>Schedule</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="trainer">
+      <ion-menu-toggle *ngIf="superuser || trainer">
         <ion-item routerLink="/exercises">
           <ion-icon name="bicycle-outline" slot="start"></ion-icon>
           <ion-label>Exercises</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="trainer">
+      <ion-menu-toggle *ngIf="superuser || trainer">
         <ion-item routerLink="/lessonplans">
           <ion-icon name="document-text-outline" slot="start"></ion-icon>
           <ion-label>Lesson Plans</ion-label>

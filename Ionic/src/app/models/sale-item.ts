@@ -1,10 +1,10 @@
 export class SaleItem {
-    SaleItemID : number;
-    Name: string;
-    Photo: number;
-    Description: string;
-    Price: number;
-    Quotable: boolean;
-    Quantity: number;
-    SaleCategoryID: number;
+    saleItemID : number;
+    name: string;
+    photo: number;
+    description: string;
+    price: number;
+    quotable: boolean;
+    quantity: number;
+    saleCategoryID: number;
 }

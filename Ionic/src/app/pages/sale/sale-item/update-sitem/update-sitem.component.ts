@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { SalesService } from 'src/app/services/sales/sales.service';
 import { SaleCategory } from 'src/app/models/sale-category';
@@ -18,26 +18,18 @@ export class UpdateSitemComponent implements ViewWillEnter{
 
 @Input() saleItem: any;
 categoryDropDown! : SaleCategory[];
-
-quotable = false;
-
 itemImage! : File;
 itemImageBase64String! : any;
+quotable! : boolean;
 
-oldPrice! : number;
-oldQuantity! : number;
-
-checked = true;
-
-//Creating the form to add the new sale category details, that will be displayed in the HTML component
-uSaleItemForm: FormGroup = this.formBuilder.group({
- itemName : [, [Validators.required]],
- itemDescription : [, [Validators.required]],
- itemQuantity : [, [Validators.required, Validators.min(1)]],
- itemPhoto: [],
- itemPrice: [, [Validators.required]],
- itemSCategory: [,[Validators.required]],
- itemQuotable: []
+uSaleItemForm: FormGroup = new FormGroup({
+  itemName: new FormControl('', [Validators.required]),
+  itemDescription: new FormControl('', [Validators.required]),
+  itemQuantity: new FormControl('', [Validators.required, Validators.min(1)]),
+  itemPhoto: new FormControl(''),
+  itemPrice: new FormControl('', [Validators.required, Validators.min(1)]),
+  itemSCategory: new FormControl(''),
+  itemQuotable: new FormControl('')
 });
 
 addImage(event : any) {
@@ -63,8 +55,18 @@ getBase64(file : File) {
 }
 
 checkBoxToggle(check : any) {
+  console.log("CheckBoxToggle: Inside Update Sale");
+  console.log(check.target.checked);
   this.quotable = check.target.checked;
-  console.log(this.quotable);
+  if (this.quotable) {
+    //is quotable
+    this.uSaleItemForm.controls.itemPrice.disable();
+    this.uSaleItemForm.controls.itemQuantity.disable();
+    return;
+  }
+  console.log('here')
+  this.uSaleItemForm.controls.itemPrice.enable();
+  this.uSaleItemForm.controls.itemQuantity.enable();
 }
 
 constructor(private global: GlobalService, public formBuilder: FormBuilder,
@@ -88,51 +90,58 @@ constructor(private global: GlobalService, public formBuilder: FormBuilder,
     }
   )
 
-  console.log("UpdateSaleItem-ViewWillEnter");
-    console.log(this.saleItem.quotable);
+  console.log("UpdateSaleItem-ViewWillEnter");    
 
-    //this.checkBoxToggle(this.saleItem.quotable);
-    console.log("HERRE");
-
-    if (!this.saleItem.quotable) {
-      this.oldPrice = this.saleItem.price;
-      this.oldQuantity = this.saleItem.quantity;
+    if (this.saleItem != null){
+      this.quotable = this.saleItem.quotable;
+      if (!this.quotable) {
+        console.log("NOT quotable - reset price?");
+        console.log(this.saleItem.price);
+        console.log(this.saleItem.quantity);
+        this.uSaleItemForm.controls['itemPrice'].setValue(this.saleItem.price);
+        this.uSaleItemForm.controls['itemQuantity'].setValue(this.saleItem.quantity);
+      }
+      this.uSaleItemForm.controls['itemName'].setValue(this.saleItem.name);
+      this.uSaleItemForm.controls['itemDescription'].setValue(this.saleItem.description);
+      this.uSaleItemForm.controls['itemPhoto'].setValue(this.itemImageBase64String);
+      this.uSaleItemForm.controls['itemQuotable'].setValue(this.saleItem.quotable);
+      this.uSaleItemForm.controls['itemSCategory'].setValue(this.saleItem.SaleCategoryID);
+    } else {
+      this.global.showAlert("No venue selected for update","Update Venue Error");
+      this.global.dismissModal();
     }
 
-    this.uSaleItemForm.reset({
-      itemName : [this.saleItem.name],
-      itemDescription : [this.saleItem.description],
-      itemPhoto : this.itemImageBase64String,
-      itemQuotable : [this.saleItem.quotable],
-      itemSCategory : [this.saleItem.SaleCategoryID]
-    })
+    //this.checkBoxToggle(this.saleItem.quotable);
+
+
+
+      // this.uSaleItemForm.reset({
+      //   itemPrice : ,
+      //    : this.saleItem.quantity
+      // })}
+
+    // this.uSaleItemForm.reset({
+    //   itemName : [this.saleItem.name],
+    //   itemDescription : [this.saleItem.description],
+    //   itemPhoto : this.itemImageBase64String,
+    //   itemQuotable : this.saleItem.quotable,
+    //   itemSCategory : [this.saleItem.SaleCategoryID]
+    // })
   }
 
    submitForm() {
 
-    //  if (!this.uSaleItemForm.valid){
-    //   //manual verification:
-    //   if (this.quotable) {
-    //     //price & quantity should be 0
-        
-    //     if (this.uSaleItemForm.controls['itemName'].value == null) {
-    //       this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
-    //       return;
-    //     }
-    //     if (this.uSaleItemForm.controls['itemDescription'].value == null) {
-    //       this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
-    //       return;
-    //     }
-    //   }
-    //   else {
-    //     this.global.showAlert("There was an error creating the sale item. Please try again","Could not create sale item");
-    //     return;
-    //   }
-    //  }
-
      if (this.uSaleItemForm.controls['itemSCategory'].value[0] == null) {
-      this.global.showAlert("No Sale Category provided","Error creating sale item");
+      this.global.showAlert("No Sale Category provided","Error updating sale item");
       return;
+    }
+
+    let priceTemp = Number(this.uSaleItemForm.controls['itemPrice'].value);
+    let qtyTemp = this.uSaleItemForm.controls['itemQuantity'].value;
+
+    if (this.quotable){
+      priceTemp = 0;
+      qtyTemp = 0;
     }
 
     
@@ -148,10 +157,10 @@ constructor(private global: GlobalService, public formBuilder: FormBuilder,
       name: this.uSaleItemForm.controls['itemName'].value,
       saleItemID: this.saleItem.saleItemID,
       photo: fName,
-      description: this.uSaleItemForm.controls['itemDescription'].value[0],
-      price: Number(this.uSaleItemForm.controls['itemPrice'].value),
+      description: this.uSaleItemForm.controls['itemDescription'].value,
+      price: priceTemp,
       quotable: this.quotable,
-      quantity: this.uSaleItemForm.controls['itemQuantity'].value,
+      quantity: qtyTemp,
       saleCategoryID: Number(this.uSaleItemForm.controls['itemSCategory'].value.split(',')[0]),
       inventoryItem:null
     }
@@ -159,9 +168,7 @@ constructor(private global: GlobalService, public formBuilder: FormBuilder,
     console.log('ob');
     console.log(obj);
 
-
-
-      // remove the old image
+    // remove the old image
       if (this.itemImage != null) {
         //wait for image to upload:
         const formData = new FormData();

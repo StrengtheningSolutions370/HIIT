@@ -28,6 +28,7 @@ export class SidemenuComponent implements OnInit {
       this.repo.getUserRole(token).subscribe({
       next: (data : any) => {
         const r = data.role;
+        this.role = r;
         if (r == 'client')
           this.client = true;
         if (r == 'member')
