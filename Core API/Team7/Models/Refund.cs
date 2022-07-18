@@ -15,11 +15,11 @@ namespace Team7.Models
         [Required]
         public decimal Total { get; set; }
         [Required]
-        public int? PaymentID { get; set; }
+        public int? ReceiptID { get; set; }
         [Required]
         public int? RefundReasonID { get; set; }
 
-        public virtual Payment Payment { get; set; }
+        public virtual Receipt Receipt { get; set; }
         public virtual RefundReason RefundReason { get; set; }
     }
 }

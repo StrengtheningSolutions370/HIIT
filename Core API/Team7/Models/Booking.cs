@@ -9,12 +9,6 @@ namespace Team7.Models
 {
     public class Booking
     {
-        public Booking()
-        {
-            this.Payment = new HashSet<Payment>();
-            this.BookingAttendance = new HashSet<BookingAttendance>();
-        }
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookingID { get; set; }
@@ -24,8 +18,5 @@ namespace Team7.Models
         public int? ClientID { get; set; }
 
         public virtual Client Client { get; set; }
-
-        public virtual ICollection<Payment> Payment { get; set; }
-        public virtual ICollection<BookingAttendance> BookingAttendance { get; set; }
     }
 }
