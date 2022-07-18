@@ -17,20 +17,20 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    if (this.store.getKey('token') != null) {
-      // const roles = next.data.permittedRoles as Array<string>;
-      // if (roles) {
-      //   // if (this.service.roleMatch(roles)) { return true; } else {
-      //   //   this.router.navigate(['/forbidden']);
-      //   //   return false;
-      //   // }
-      // }
-      // return true;
+    // if (this.store.getKey('token') != null) {
+    //   // const roles = next.data.permittedRoles as Array<string>;
+    //   // if (roles) {
+    //   //   // if (this.service.roleMatch(roles)) { return true; } else {
+    //   //   //   this.router.navigate(['/forbidden']);
+    //   //   //   return false;
+    //   //   // }
+    //   // }
+    //   // return true;
+    //   return true;
+    // } else {
+    //   // this.router.navigate(['/pages/login']);
+    //   return false;
+    // }
       return true;
-    } else {
-      this.router.navigate(['/pages/login']);
-      return false;
-    }
-
   }
 }
