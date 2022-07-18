@@ -25,8 +25,9 @@ import { requiredFileType } from '../file-upload/file-upload.component';
 export class AddEmployeeComponent implements OnInit{
   @Input() employee: Employee;
   titleList: any[] = [];
+  employeeTypeList: any[] = [];
+  qualificationList: any[] = [];
   qualificationTypeList: any[] = [];
-  employeeTypeList: EmployeeType[] = [];
   //Subscription variable to track live updates.
   titleSub: Subscription;
   qualificationTypeSub: Subscription;
@@ -45,7 +46,7 @@ export class AddEmployeeComponent implements OnInit{
       this.storage.getKey('token').then((token : any) => {
         this.repo.getUserRole(token).subscribe({
           next: (data : any) => {
-            
+
           }
         })
       })

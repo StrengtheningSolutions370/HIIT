@@ -67,6 +67,13 @@ import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
 import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
 import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
 
+//EMPLOYEE IMPORTS:
+import { AddEmployeeComponent } from './pages/employee/employee-page/add-employee/add-employee.component';
+import { DeleteEmployeeComponent } from './pages/employee/employee-page/delete-employee/delete-employee.component';
+import { ViewEmployeeComponent } from './pages/employee/employee-page/view-employee/view-employee.component';
+import { ConfirmEmployeeComponent } from './pages/employee/employee-page/confirm-employee/confirm-employee.component';
+import { UpdateEmployeeComponent } from './pages/employee/employee-page/update-employee/update-employee.component';
+
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
@@ -89,7 +96,9 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   //SalesItem
   AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
   //SideMenu
-  SidemenuComponent
+  SidemenuComponent, 
+  //Employee
+  AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent
 ],
 
   entryComponents: [],
