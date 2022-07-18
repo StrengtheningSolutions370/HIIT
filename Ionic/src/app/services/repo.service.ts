@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Injectable } from '@angular/core';
@@ -13,6 +14,7 @@ import { Vat } from '../models/vat';
 import { SaleItem } from '../models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { appUser, appUserRegister } from '../models/appUser';
+import { Qualification } from '../models/qualification';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +22,13 @@ import { appUser, appUserRegister } from '../models/appUser';
 
 export class RepoService {
   base = 'https://localhost:44383/api/';
-  AppUserController = 'AppUser/'
+  AppUserController = 'AppUser/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
   EmployeeTypeController = 'EmployeeType/';
   TitleController = 'Title/';
   QualificationTypeController = 'QualificationType/';
+  QualificationController = 'Qualification/';
   VatController = 'Vat/';
   SaleItemController = 'SaleItem/';
   SaleCategoryController = 'SaleCategory/';
@@ -57,18 +60,18 @@ export class RepoService {
   }
 
   //Login
-  login(userDetails: appUser) : Observable<any> {
-    return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions)
+  login(userDetails: appUser): Observable<any> {
+    return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
   }
 
   //UserRole:
   //------
   //Create
-  createUserRole(user_role: UserRole) : Observable<any> {
+  createUserRole(user_role: UserRole): Observable<any> {
     return this.http.post(`${this.base + this.UserRoleController}add`, user_role, this.httpOptions);
   }
   //Read
-  getUserRoles() : Observable<any> {
+  getUserRoles(): Observable<any> {
     return this.http.get(`${this.base + this.UserRoleController}getAll`, this.httpOptions);
   }
   //Update
@@ -127,22 +130,23 @@ export class RepoService {
 
   //EmployeeType:
   //------
-  //Create
-  createEmployeeType(employeeType: EmployeeType): Observable<any> {
+  // Create
+  createEmployeeType(employeeType: any): Observable<any> {
     return this.http.post<any>(`${this.base + this.EmployeeTypeController}add`, employeeType, this.httpOptions);
   }
-  //Read
+  //Update
+  updateEmployeeType(employeeTypeId: number, employeeType: QualificationType): Observable<any>{
+    return this.http.put(`${this.base+this.EmployeeTypeController}update?id=${employeeTypeId}`, employeeType, this.httpOptions);
+  }
+  //Delete
+  deleteEmployeeType(qualificationTypeId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.EmployeeTypeController}delete?id=${qualificationTypeId}`, this.httpOptions);
+  }
+  //GetAll
   getEmployeeTypes(): Observable<any> {
     return this.http.get(`${this.base + this.EmployeeTypeController}getAll`, this.httpOptions);
   }
-  //Update
-  updateEmployeeType(employeeTypeId: number, employeeType: EmployeeType): Observable<any> {
-    return this.http.put(`${this.base + this.EmployeeTypeController}update?id=${employeeTypeId}`, employeeType, this.httpOptions);
-  }
-  //Delete
-  deleteEmployeeType(employeeTypeId: number): Observable<any> {
-    return this.http.delete(`${this.base + this.EmployeeTypeController}delete?id=${employeeTypeId}`, this.httpOptions);
-  }
+  //GetMatch
   getMatchEmployeeType(input: string): Observable<any> {
     return this.http.get(`${this.base + this.EmployeeTypeController}getMatch?input=${input}`, this.httpOptions);
   }
@@ -150,6 +154,7 @@ export class RepoService {
   existsEmployeeType(id: number): Observable<any> {
     return this.http.get(`${this.base + this.EmployeeTypeController}exists?id=${id}`, this.httpOptions);
   }
+
 
   // Title:
   // ------
@@ -177,7 +182,7 @@ export class RepoService {
   existsTitle(id: number): Observable<any> {
     return this.http.get(`${this.base + this.TitleController}exists?id=${id}`, this.httpOptions);
   }
-  
+
 
   //QualificationType:
   //------
@@ -187,7 +192,7 @@ export class RepoService {
   }
   //Update
   updateQualificationType(qualificationTypeId: number, qualificationType: QualificationType): Observable<any>{
-    return this.http.put(`${this.base+this.QualificationTypeController}update?id=${qualificationType}`,qualificationType, this.httpOptions);
+    return this.http.put(`${this.base+this.QualificationTypeController}update?id=${qualificationTypeId}`,qualificationType, this.httpOptions);
   }
   //Delete
   deleteQualificationType(qualificationTypeId: number): Observable<any> {
@@ -204,6 +209,34 @@ export class RepoService {
   //Exists
   existsQualificationType(id: number): Observable<any> {
     return this.http.get(`${this.base + this.QualificationTypeController}exists?id=${id}`, this.httpOptions);
+  }
+
+  //Qualification:
+  //------
+  // Create
+  createQualification(qualification: any): Observable<any> {
+    return this.http.post<any>(`${this.base + this.QualificationController}add`, qualification, this.httpOptions);
+  }
+  //Update
+  updateQualification(qualificationId: number, qualification: any): Observable<any>{
+    return this.http.put(`${this.base+this.QualificationController}update?id=${qualificationId}`,qualification, this.httpOptions);
+  }
+  //Delete
+  deleteQualification(qualificationId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.QualificationController}delete?id=${qualificationId}`, this.httpOptions);
+
+  }
+  //GetAll
+  getQualifications(): Observable<any> {
+    return this.http.get(`${this.base + this.QualificationController}getAll`, this.httpOptions);
+  }
+  //GetMatch
+  getMatchQualification(input: string): Observable<any> {
+    return this.http.get(`${this.base + this.QualificationController}getMatch?input=${input}`, this.httpOptions);
+  }
+  //Exists
+  existsQualification(id: number): Observable<any> {
+    return this.http.get(`${this.base + this.QualificationController}exists?id=${id}`, this.httpOptions);
   }
 
  //SaleCategory:
@@ -269,7 +302,7 @@ createSaleItem(saleItem: any): Observable<any>{
 }
 //Update
 updateSaleItem(saleItem: SaleItem): Observable<any>{
-  console.log('THE UPDATE IBJECT:');
+  console.log('THE UPDATE OBJECT:');
   console.log(saleItem);
   return this.http.put(`${this.base+this.SaleItemController}update`,saleItem, this.httpOptions);
 }
@@ -290,12 +323,12 @@ existsSaleItem(id: number): Observable<any>{
   return this.http.get(`${this.base+this.SaleItemController}exists?id=${id}`, this.httpOptions);
 }
 //Image Upload
-uploadSaleItemImage(data : FormData) : Observable<any> {
-  return this.http.post('https://localhost:44383/api/SaleItem/upload', data)
+uploadSaleItemImage(data: FormData): Observable<any> {
+  return this.http.post('https://localhost:44383/api/SaleItem/upload', data);
 }
 //reImage Upload
-reuploadSaleItemImage(id : string) : Observable<any> {
-  return this.http.delete(`https://localhost:44383/api/SaleItem/deletephoto?name=${id}`)
+reuploadSaleItemImage(id: string): Observable<any> {
+  return this.http.delete(`https://localhost:44383/api/SaleItem/deletephoto?name=${id}`);
 }
 
 }

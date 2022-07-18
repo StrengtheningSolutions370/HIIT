@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ActivatedRouteSnapshot, RouteReuseStrategy } from '@angular/router';
@@ -53,12 +54,21 @@ import { ViewQtypeComponent } from './pages/employee/qualification-type/view-qty
 import { ConfirmQtypeComponent } from './pages/employee/qualification-type/confirm-qtype/confirm-qtype.component';
 import { AssociativeQtypeComponent } from './pages/employee/qualification-type/associative-qtype/associative-qtype.component';
 
+//EMPLOYEE_QUALIFICATION IMPORTS:
+import { AddQualificationComponent } from './pages/employee/qualification/add-qualification/add-qualification.component';
+import { UpdateQualificationComponent } from './pages/employee/qualification/update-qualification/update-qualification.component';
+import { DeleteQualificationComponent } from './pages/employee/qualification/delete-qualification/delete-qualification.component';
+import { ViewQualificationComponent } from './pages/employee/qualification/view-qualification/view-qualification.component';
+import { ConfirmQualificationComponent } from './pages/employee/qualification/confirm-qualification/confirm-qualification.component';
+import { AssociativeQualificationComponent } from './pages/employee/qualification/associative-qualification/associative-qualification.component';
+
 //EMPLOYEE_TYPE IMPORTS:
 import { AddEtypeComponent } from './pages/employee/employee-type/add-etype/add-etype.component';
 import { UpdateEtypeComponent } from './pages/employee/employee-type/update-etype/update-etype.component';
 import { DeleteEtypeComponent } from './pages/employee/employee-type/delete-etype/delete-etype.component';
 import { ViewEtypeComponent } from './pages/employee/employee-type/view-etype/view-etype.component';
 import { ConfirmEtypeComponent } from './pages/employee/employee-type/confirm-etype/confirm-etype.component';
+import { AssociativeEtypeComponent } from './pages/employee/employee-type/associative-etype/associative-etype.component';
 
 //VAT IMPORTS:
 import { AddVatComponent } from './pages/sale/vat/add-vat/add-vat.component';
@@ -80,15 +90,16 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent, AssociativeTitleComponent,
   //QualificationType
   AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent, AssociativeQtypeComponent,
-  //VAT 
+  //Qualification
+  AddQualificationComponent, UpdateQualificationComponent,DeleteQualificationComponent, ViewQualificationComponent, ConfirmQualificationComponent,
+  AssociativeQualificationComponent,
+  //VAT
   AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent, UpdateVatComponent,
   //EmployeeType
-  AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
-  //SalesCategory
-  AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent,
-  //SalesItem
-  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
-  //SideMenu
+  AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,AssociativeEtypeComponent,
+  ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
+  ConfirmCategoryComponent, AddCategoryComponent, ConfirmCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent,
+  ConfirmSitemComponent, AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
   SidemenuComponent
 ],
 
