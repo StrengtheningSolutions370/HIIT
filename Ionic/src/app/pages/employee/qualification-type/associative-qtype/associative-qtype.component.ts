@@ -8,7 +8,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
   styleUrls: ['./associative-qtype.component.scss'],
 })
 export class AssociativeQtypeComponent implements OnInit {
-  @Input() qualificationType: QualificationType
+  @Input() qualificationType: QualificationType;
   constructor(public global: GlobalService) { }
 
   ngOnInit() {}

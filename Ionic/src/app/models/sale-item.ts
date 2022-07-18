@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export class SaleItem {
     saleItemID : number;
     name: string;

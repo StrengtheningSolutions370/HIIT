@@ -29,15 +29,14 @@ export class VenuePage implements OnInit {
   ngOnInit() {
     this.venueService.fetchVenuesEvent.subscribe(
       {
-        next: (_res: any) => {
+        next: res => {
           console.log('EMIT TO GO FETCH THE TITLES AGAIN');
-          console.log(_res);
           this.fetchVenues();
         }
       }
     );
   }
-  
+
   fetchVenues() {
     this.isLoading = true;
     this.venueService.getAllVenues().subscribe(

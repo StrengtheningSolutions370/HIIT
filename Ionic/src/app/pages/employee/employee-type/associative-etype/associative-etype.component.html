@@ -1,3 +1,25 @@
-<p>
-  associative-etype works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Employee Type associated with an Employee</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <br/>
+  <div class="ion-text-center">
+      <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">
+          The {{employeeType.name}} cannot be deleted because the following employee/s are associated with it.
+      </p>
+
+      <ion-list> 
+        <ion-item *ngFor="let employee of employeeType.employees">
+          <ion-label>Employee with ID: </ion-label>
+          <ion-label>{{employee}}</ion-label>
+        </ion-item>
+      </ion-list>
+  </div>
+</ion-content>

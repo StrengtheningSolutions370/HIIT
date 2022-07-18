@@ -1,6 +1,8 @@
 import { Component,  Input } from '@angular/core';
 import { ViewWillEnter} from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
@@ -19,12 +21,12 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class AddSitemComponent implements ViewWillEnter {
 
   @Input() saleItem: SaleItem;
-  categoryDropDown! : SaleCategory[];
+  categoryDropDown!: SaleCategory[];
 
   quotable = false;
 
-  itemImage! : File;
-  itemImageBase64String! : any;
+  itemImage!: File;
+  itemImageBase64String!: any;
 
   //Creating the form to add the new sale category details, that will be displayed in the HTML component
   cSaleItemForm: FormGroup = this.formBuilder.group({
@@ -37,7 +39,7 @@ export class AddSitemComponent implements ViewWillEnter {
    itemQuotable: []
  });
 
- addImage(event : any) {
+ addImage(event: any) {
    this.itemImage = event.target.files[0];
   console.log(this.itemImage);
    const re = /^image*/;
@@ -47,8 +49,8 @@ export class AddSitemComponent implements ViewWillEnter {
    }
   }
 
-  getBase64(file : File) {
-    var reader = new FileReader();
+  getBase64(file: File) {
+    const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       // console.log(reader.result);
@@ -60,7 +62,7 @@ export class AddSitemComponent implements ViewWillEnter {
     };
  }
 
- checkBoxToggle(check : any) {
+ checkBoxToggle(check: any) {
    this.quotable = check.target.checked;
    console.log(this.quotable);
    if (this.quotable) {
@@ -101,7 +103,7 @@ export class AddSitemComponent implements ViewWillEnter {
           console.log(data);
         }
       }
-    )
+    );
 
     console.log("AddSaleItem-ViewWillEnter");
 
@@ -120,11 +122,11 @@ export class AddSitemComponent implements ViewWillEnter {
      submitForm() {
 
        //if image was uploaded:
-       //Confirm if this is optional, if so remove alert
        if (this.itemImageBase64String == null) {
         this.global.showAlert("Image failed to upload, please try again.","Image Error");
           return;       
        }
+
 
        if (this.cSaleItemForm.controls['itemSCategory'].value[0] == null) {
         this.global.showAlert("No Sale Category provided","Error updating sale item");
@@ -154,6 +156,7 @@ export class AddSitemComponent implements ViewWillEnter {
         saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
         inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
       }
+
 
       console.log('ob');
       console.log(obj);
