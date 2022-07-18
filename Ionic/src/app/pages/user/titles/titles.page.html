@@ -1,9 +1,9 @@
 <ion-content>
-
+<br/>
   <!--Searchbar (must make function to search)-->
   <ion-searchbar expand="block" placeholder='Search Titles...' [(ngModel)]="filter"
     animated="true" debounce="200"></ion-searchbar>
-
+    <br/>
   <div class="ion-text-center">
     <ion-button color="success" (click)="titleService.addTitleInfoModal()">
       Add Title
@@ -18,10 +18,6 @@
         <ion-item button (click)="titleService.viewTitleInfoModal(title)">
           <ion-label>
             <h1>{{title.description}}</h1> <br/> 
-            <!-- <p> -->
-              <!--Title Description-->
-              <!-- {{title.description}}<br/>
-            </p> -->
           </ion-label>
           <ion-icon name="chevron-back-outline" size="small"></ion-icon>
         </ion-item>
