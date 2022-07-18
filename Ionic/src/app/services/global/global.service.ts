@@ -3,6 +3,8 @@
 import { Injectable } from '@angular/core';
 import { AlertController,LoadingController,ModalController,ToastController } from '@ionic/angular';
 
+declare const Buffer;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -65,12 +67,14 @@ export class GlobalService {
     //TOASTS
     //------
 
-    async showToast(message:string, color?:string, position:any = "bottom", duration = 5000) {
+    async showToast(message:string, duration = 2000, position:any = "bottom",  color?:string) {
       const toast = await this.toastCtrl.create({
         message: message,
         duration: duration,
         color: color,
-        position: position
+        position: position,
+        keyboardClose: true,
+        cssClass: 'toastCenter'
       });
       toast.present();
     }
@@ -80,4 +84,14 @@ export class GlobalService {
     dismissModal() {
       this.modalCtrl.dismiss();
     };
+
+    //JWT DECODER
+    //------
+    decodeToken(token : string) : any {
+      const payload = token.split('.')[1];//takes the paylaod from the tokem
+      // const decodeJson = Buffer.from(payload, 'base64').toString();
+      // return JSON.parse(decodeJson);
+      return JSON.parse(atob(payload));
+    }
+
 }

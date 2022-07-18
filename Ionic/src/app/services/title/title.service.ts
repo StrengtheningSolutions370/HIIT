@@ -40,6 +40,8 @@ export class TitleService {
         next: () => {
           console.log('TITLE CREATED');
           this.fetchTitlesEvent.emit(title);
+        }, 
+        error: () => {
         }
       }
     )
@@ -170,5 +172,16 @@ export class TitleService {
       console.log("BadOption: " + choice)
 
     }
+  }
+
+  async associativeTitleModal(title: Title) {
+    console.log("TitleService: AssociativeModalCall");
+    const modal = await this.modalCtrl.create({
+      component: AssociativeTitleComponent,
+      componentProps: {
+        title
+      }
+    });
+    await modal.present();
   }
 }

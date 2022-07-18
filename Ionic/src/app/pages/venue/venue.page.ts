@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Venue } from 'src/app/models/venue';
 import { RepoService } from 'src/app/services/repo.service';
@@ -45,8 +44,8 @@ export class VenuePage implements OnInit {
         next: data => {
           console.log('FETCHING VENUES FROM DB');
           console.log(data.result);
-          this.isLoading = false;
           this.venueList = data.result;
+          this.isLoading = false;
         }
       }
     );

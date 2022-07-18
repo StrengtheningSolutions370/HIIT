@@ -84,7 +84,7 @@ namespace Team7.Controllers
             return Ok("Account created successfully");
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("token")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Token()

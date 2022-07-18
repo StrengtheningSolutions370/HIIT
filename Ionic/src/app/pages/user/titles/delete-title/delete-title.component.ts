@@ -21,9 +21,15 @@ export class DeleteTitleComponent implements ViewWillEnter {
     }
 
   //Send through the id of the selected title to be deleted in the title service.
-  delete(id: number){
+  async delete(id: number){
+    if (this.title.users != null){
+      if (this.title.users.length > 0){
+        this.titleService.associativeTitleModal(this.title);
+        return;
+      }
+    }
     this.titleService.deleteTitle(id);
     this.global.dismissModal();
-    this.global.showToast("The Title has been successfully deleted!");
+    this.global.showToast("The title has been successfully deleted!");
   }
 }

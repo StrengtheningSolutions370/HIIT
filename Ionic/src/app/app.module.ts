@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import { ActivatedRouteSnapshot, RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +30,7 @@ import { UpdateTitleComponent } from './pages/user/titles/update-title/update-ti
 import { DeleteTitleComponent } from './pages/user/titles/delete-title/delete-title.component';
 import { ViewTitlesComponent } from './pages/user/titles/view-titles/view-titles.component';
 import { ConfirmTitleComponent } from './pages/user/titles/confirm-title/confirm-title.component';
+import { AssociativeTitleComponent } from './pages/user/titles/associative-title/associative-title.component';
 
 //SALE CATEGORY IMPORTS:
 import { AddCategoryComponent } from './pages/sale/sale-category/add-category/add-category.component';
@@ -79,14 +80,6 @@ import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.compo
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
-
-
-
-
-
-
-
-
 @NgModule({
   declarations: [AppComponent,
   //Venue
@@ -94,7 +87,7 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   //UserRole
   AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent, ConfirmRoleComponent,
   //Title
-  AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent,
+  AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent, AssociativeTitleComponent,
   //QualificationType
   AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent, AssociativeQtypeComponent,
   //Qualification
@@ -103,10 +96,19 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   //VAT
   AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent, UpdateVatComponent,
   //EmployeeType
+<<<<<<< HEAD
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,AssociativeEtypeComponent,
   ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
   ConfirmCategoryComponent, AddCategoryComponent, ConfirmCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent,
   ConfirmSitemComponent, AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+=======
+  AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
+  //SalesCategory
+  AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent,
+  //SalesItem
+  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+  //SideMenu
+>>>>>>> developer
   SidemenuComponent
 ],
 

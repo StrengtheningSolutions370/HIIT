@@ -33,6 +33,7 @@ export class RepoService {
   SaleItemController = 'SaleItem/';
   SaleCategoryController = 'SaleCategory/';
   PermissionController = 'Permission/';
+  EmployeeController = 'Employee/';
 
 
   httpOptions = {
@@ -45,6 +46,10 @@ export class RepoService {
   constructor(public http: HttpClient) {
     //CRUDS in this repo file need to be used by subscribing to them in the relevant service.
     //E.g to use getVenues(); it must be subscribed to in the venue service
+  }
+
+  getUserRole(token : string) : Observable<any>{
+    return this.http.get(`${this.base + this.EmployeeController}token`, { headers : new HttpHeaders({'Authorization': 'Bearer ' + token}) });
   }
 
   //AppUser:
