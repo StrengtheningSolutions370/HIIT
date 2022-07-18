@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Team7.Context;
 
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    partial class AppDBModelSnapshot : ModelSnapshot
+    [Migration("20220718091944_inital")]
+    partial class inital
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,6 +273,8 @@ namespace Team7.Migrations
                     b.HasKey("BookingAttendanceID");
 
                     b.HasIndex("BookingID");
+
+                    b.HasIndex("ReceiptID");
 
                     b.HasIndex("ScheduleID");
 
@@ -675,42 +679,13 @@ namespace Team7.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
+                    b.Property<int?>("UserID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("PasswordID");
 
                     b.ToTable("PasswordHistory");
-                });
-
-            modelBuilder.Entity("Team7.Models.Payment", b =>
-                {
-                    b.Property<int>("PaymentID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BookingID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PaymentTypeID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SaleID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.HasKey("PaymentID");
-
-                    b.HasIndex("BookingID");
-
-                    b.HasIndex("PaymentTypeID");
-
-                    b.HasIndex("SaleID");
-
-                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("Team7.Models.PaymentType", b =>
@@ -791,6 +766,33 @@ namespace Team7.Migrations
                     b.ToTable("QualificationType");
                 });
 
+            modelBuilder.Entity("Team7.Models.Receipt", b =>
+                {
+                    b.Property<int>("ReceiptID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("PaymentTypeID")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TotalVAT")
+                        .HasColumnType("float");
+
+                    b.HasKey("ReceiptID");
+
+                    b.HasIndex("PaymentTypeID");
+
+                    b.ToTable("Receipt");
+                });
+
             modelBuilder.Entity("Team7.Models.Refund", b =>
                 {
                     b.Property<int>("RefundID")
@@ -805,7 +807,7 @@ namespace Team7.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PaymentID")
+                    b.Property<int?>("ReceiptID")
                         .IsRequired()
                         .HasColumnType("int");
 
@@ -818,7 +820,7 @@ namespace Team7.Migrations
 
                     b.HasKey("RefundID");
 
-                    b.HasIndex("PaymentID");
+                    b.HasIndex("ReceiptID");
 
                     b.HasIndex("RefundReasonID");
 
@@ -849,13 +851,11 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ClientID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
 
                     b.HasKey("SaleID");
 
@@ -937,6 +937,10 @@ namespace Team7.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ReceiptID")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.Property<int?>("SaleID")
                         .HasColumnType("int");
 
@@ -947,6 +951,8 @@ namespace Team7.Migrations
                     b.HasKey("SaleLineID");
 
                     b.HasIndex("ClientID");
+
+                    b.HasIndex("ReceiptID");
 
                     b.HasIndex("SaleID");
 
@@ -973,11 +979,8 @@ namespace Team7.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int?>("EmployeeID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<int?>("LessonPlanID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("VenueID")
@@ -989,8 +992,6 @@ namespace Team7.Migrations
                     b.HasIndex("BookingTypeID");
 
                     b.HasIndex("DateSessionID");
-
-                    b.HasIndex("EmployeeID");
 
                     b.HasIndex("LessonPlanID");
 
@@ -1353,8 +1354,14 @@ namespace Team7.Migrations
             modelBuilder.Entity("Team7.Models.BookingAttendance", b =>
                 {
                     b.HasOne("Team7.Models.Booking", "Booking")
-                        .WithMany("BookingAttendance")
+                        .WithMany()
                         .HasForeignKey("BookingID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Team7.Models.Receipt", "Receipt")
+                        .WithMany("BookingAttendance")
+                        .HasForeignKey("ReceiptID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1363,6 +1370,8 @@ namespace Team7.Migrations
                         .HasForeignKey("ScheduleID");
 
                     b.Navigation("Booking");
+
+                    b.Navigation("Receipt");
 
                     b.Navigation("Schedule");
                 });
@@ -1496,33 +1505,6 @@ namespace Team7.Migrations
                     b.Navigation("MemberStatus");
                 });
 
-            modelBuilder.Entity("Team7.Models.Payment", b =>
-                {
-                    b.HasOne("Team7.Models.Booking", "Booking")
-                        .WithMany("Payment")
-                        .HasForeignKey("BookingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Team7.Models.PaymentType", "PaymentType")
-                        .WithMany("Payment")
-                        .HasForeignKey("PaymentTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Team7.Models.Sale", "Sale")
-                        .WithMany("Payment")
-                        .HasForeignKey("SaleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Booking");
-
-                    b.Navigation("PaymentType");
-
-                    b.Navigation("Sale");
-                });
-
             modelBuilder.Entity("Team7.Models.PriceHistory", b =>
                 {
                     b.HasOne("Team7.Models.SaleItem", "SaleItem")
@@ -1545,11 +1527,22 @@ namespace Team7.Migrations
                     b.Navigation("QualificationType");
                 });
 
+            modelBuilder.Entity("Team7.Models.Receipt", b =>
+                {
+                    b.HasOne("Team7.Models.PaymentType", "PaymentType")
+                        .WithMany("Receipt")
+                        .HasForeignKey("PaymentTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PaymentType");
+                });
+
             modelBuilder.Entity("Team7.Models.Refund", b =>
                 {
-                    b.HasOne("Team7.Models.Payment", "Payment")
+                    b.HasOne("Team7.Models.Receipt", "Receipt")
                         .WithMany("Refund")
-                        .HasForeignKey("PaymentID")
+                        .HasForeignKey("ReceiptID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1559,16 +1552,20 @@ namespace Team7.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Payment");
+                    b.Navigation("Receipt");
 
                     b.Navigation("RefundReason");
                 });
 
             modelBuilder.Entity("Team7.Models.Sale", b =>
                 {
-                    b.HasOne("Team7.Models.Client", null)
+                    b.HasOne("Team7.Models.Client", "Client")
                         .WithMany("Sale")
-                        .HasForeignKey("ClientID");
+                        .HasForeignKey("ClientID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("Team7.Models.SaleItem", b =>
@@ -1590,6 +1587,12 @@ namespace Team7.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Team7.Models.Receipt", "Receipt")
+                        .WithMany("SaleLine")
+                        .HasForeignKey("ReceiptID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Team7.Models.Sale", "Sale")
                         .WithMany("SaleLine")
                         .HasForeignKey("SaleID");
@@ -1601,6 +1604,8 @@ namespace Team7.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+
+                    b.Navigation("Receipt");
 
                     b.Navigation("Sale");
 
@@ -1621,15 +1626,11 @@ namespace Team7.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Team7.Models.Employee", "Employee")
-                        .WithMany("Schedule")
-                        .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Team7.Models.LessonPlan", "LessonPlan")
                         .WithMany("Schedule")
-                        .HasForeignKey("LessonPlanID");
+                        .HasForeignKey("LessonPlanID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Team7.Models.Venue", "Venue")
                         .WithMany("Schedules")
@@ -1640,8 +1641,6 @@ namespace Team7.Migrations
                     b.Navigation("BookingType");
 
                     b.Navigation("DateSession");
-
-                    b.Navigation("Employee");
 
                     b.Navigation("LessonPlan");
 
@@ -1736,13 +1735,6 @@ namespace Team7.Migrations
                     b.Navigation("WriteOffReason");
                 });
 
-            modelBuilder.Entity("Team7.Models.Booking", b =>
-                {
-                    b.Navigation("BookingAttendance");
-
-                    b.Navigation("Payment");
-                });
-
             modelBuilder.Entity("Team7.Models.BookingType", b =>
                 {
                     b.Navigation("BookingPriceHistory");
@@ -1769,8 +1761,6 @@ namespace Team7.Migrations
             modelBuilder.Entity("Team7.Models.Employee", b =>
                 {
                     b.Navigation("Lesson");
-
-                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("Team7.Models.EmployeeContract", b =>
@@ -1827,14 +1817,9 @@ namespace Team7.Migrations
                     b.Navigation("SupplierOrder");
                 });
 
-            modelBuilder.Entity("Team7.Models.Payment", b =>
-                {
-                    b.Navigation("Refund");
-                });
-
             modelBuilder.Entity("Team7.Models.PaymentType", b =>
                 {
-                    b.Navigation("Payment");
+                    b.Navigation("Receipt");
                 });
 
             modelBuilder.Entity("Team7.Models.Qualification", b =>
@@ -1847,6 +1832,15 @@ namespace Team7.Migrations
                     b.Navigation("Qualification");
                 });
 
+            modelBuilder.Entity("Team7.Models.Receipt", b =>
+                {
+                    b.Navigation("BookingAttendance");
+
+                    b.Navigation("Refund");
+
+                    b.Navigation("SaleLine");
+                });
+
             modelBuilder.Entity("Team7.Models.RefundReason", b =>
                 {
                     b.Navigation("Refund");
@@ -1854,8 +1848,6 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.Sale", b =>
                 {
-                    b.Navigation("Payment");
-
                     b.Navigation("SaleLine");
                 });
 
