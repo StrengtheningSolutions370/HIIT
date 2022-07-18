@@ -32,7 +32,7 @@ export class UpdateTitleComponent implements ViewWillEnter {
     if (this.title != null){
       this.uTitleForm.controls.titleDescription.setValue(this.title.description);
     } else {
-      this.global.showAlert("No title selected for update","Update Title Error");
+      this.global.showAlert('No title selected for update','Update Title Error');
       this.global.dismissModal();
     }
   }
@@ -40,7 +40,7 @@ export class UpdateTitleComponent implements ViewWillEnter {
   submitForm() {
     if (!this.uTitleForm.valid) { //If the form has any validation errors, the form will not be submitted.
       console.log('Please provide all required fields');
-      this.global.showAlert("Please provide all required fields");
+      this.global.showAlert('Please provide all required fields');
       return false;
     }
     else
@@ -50,7 +50,7 @@ export class UpdateTitleComponent implements ViewWillEnter {
       const choice = 2; //Update choice
       temp = {
         titleID: this.title.titleID,
-        description: this.uTitleForm.value['titleDescription'],
+        description: this.uTitleForm.value.titleDescription,
         //passing null does not change the users array
         users: null
       };

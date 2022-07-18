@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Component,  Input, OnInit } from '@angular/core';
 import { ModalController, ToastController, AlertController, ViewWillEnter} from '@ionic/angular';
 import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
@@ -19,12 +21,12 @@ import { RepoService } from 'src/app/services/repo.service';
 export class AddSitemComponent implements ViewWillEnter {
 
   @Input() saleItem: SaleItem;
-  categoryDropDown! : SaleCategory[];
+  categoryDropDown!: SaleCategory[];
 
   quotable = false;
 
-  itemImage! : File;
-  itemImageBase64String! : any;
+  itemImage!: File;
+  itemImageBase64String!: any;
 
   //Creating the form to add the new sale category details, that will be displayed in the HTML component
   cSaleItemForm: FormGroup = this.formBuilder.group({
@@ -37,7 +39,7 @@ export class AddSitemComponent implements ViewWillEnter {
    itemQuotable: []
  });
 
- addImage(event : any) {
+ addImage(event: any) {
    this.itemImage = event.target.files[0];
   console.log(this.itemImage);
    const re = /^image*/;
@@ -47,8 +49,8 @@ export class AddSitemComponent implements ViewWillEnter {
    }
   }
 
-  getBase64(file : File) {
-    var reader = new FileReader();
+  getBase64(file: File) {
+    const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       // console.log(reader.result);
@@ -59,7 +61,7 @@ export class AddSitemComponent implements ViewWillEnter {
     };
  }
 
- checkBoxToggle(check : any) {
+ checkBoxToggle(check: any) {
    this.quotable = check.target.checked;
    console.log(this.quotable);
    if (this.quotable) {
@@ -68,15 +70,16 @@ export class AddSitemComponent implements ViewWillEnter {
      this.cSaleItemForm.controls.itemQuantity.setValue(1);
      return;
    }
-   console.log('here')
+   console.log('here');
     this.cSaleItemForm.controls.itemPrice.setValue(null);
     this.cSaleItemForm.controls.itemQuantity.setValue(null);
 
  }
 
- constructor(private http : HttpClient, private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
+ constructor(private http: HttpClient, private modalCtrl: ModalController, private toastCtrl: ToastController,
+   public formBuilder: FormBuilder,
    public saleService: SalesService, private router: Router, private currentRoute: ActivatedRoute,
-   private  alertCtrl: AlertController, private repo : RepoService) { }
+   private  alertCtrl: AlertController, private repo: RepoService) { }
 
    //Used for validation within the form, if there are errors in the control, this method will return the errors.
    get errorControl() {
@@ -93,7 +96,7 @@ export class AddSitemComponent implements ViewWillEnter {
           console.log(data);
         }
       }
-    )
+    );
 
     console.log("AddSaleItem-ViewWillEnter");
     console.log(this.saleItem);
@@ -104,7 +107,7 @@ export class AddSitemComponent implements ViewWillEnter {
       this.cSaleItemForm.controls.itemPrice.setValue(this.saleItem.Price);
       this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.Quotable);
       this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.Quantity);
-      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.SaleCategoryID)
+      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.SaleCategoryID);
 
     }
     }
@@ -116,7 +119,7 @@ export class AddSitemComponent implements ViewWillEnter {
         //manual verification:
         if (this.quotable) {
           //price & quantity should be 0
-          
+
           if (this.cSaleItemForm.controls['itemName'].value == null) {
             this.failureAlert();
             return;
@@ -139,7 +142,7 @@ export class AddSitemComponent implements ViewWillEnter {
           this.failureAlert();
           return;
         }
-         
+
        }
 
        //if image was uploaded:
@@ -148,12 +151,12 @@ export class AddSitemComponent implements ViewWillEnter {
         return;
        }
 
-      var date = new Date();
+      const date = new Date();
 
-       var epoch = date.getTime();
+       const epoch = date.getTime();
 
        //form is valid for submission
-      var obj = {
+      const obj = {
         Name: this.cSaleItemForm.controls['itemName'].value,
         Photo: epoch + '_' + this.itemImage.name,
         Description: this.cSaleItemForm.controls['itemDescription'].value,
@@ -162,7 +165,7 @@ export class AddSitemComponent implements ViewWillEnter {
         Quantity: this.cSaleItemForm.controls['itemQuantity'].value,
         SaleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
         inventoryItem:[]
-      }
+      };
 
       console.log('ob');
       console.log(obj);
@@ -178,7 +181,7 @@ export class AddSitemComponent implements ViewWillEnter {
             this.dismissModal();
             this.saleService.confirmSaleItemModal(1, obj, this.cSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
           },
-          error: (err : HttpErrorResponse) => {
+          error: (err: HttpErrorResponse) => {
             this.failureAlert();
           }
         });

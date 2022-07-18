@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/quotes */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -35,7 +36,7 @@ ngOnInit() {
         this.fetchQualificationTypes();
       }
     }
-  )
+  );
 }
 
 fetchQualificationTypes() {
@@ -49,51 +50,6 @@ fetchQualificationTypes() {
         this.qualificationTypeList = data.result;
       }
     }
-  )
+  );
 }
-// async populateQualificationTypes(){
-//   //Populate the qualificationtype list within the qualificationtype page, with the qulificationtype list from the qualification service.
-//   this.qualificationTypeSub = this.qualificationService.qualificationtypeList.subscribe(results => {
-//     this.qualificationTypeList = results;
-
-//     console.log('Qualification type Page Init -> qualification type List');
-//     console.log(this.qualificationTypeList);
-// });
-// await this.getQualificationTypes();
-// }
-
-// //Receive qualification type list from the repo in local page.
-
-// async getQualificationTypes() {
-//   this.isLoading = false;
-//   this.repo.getQualificationTypes().subscribe(
-//     {
-//       next: res => {
-//         this.isLoading = false;
-//         console.log(res);
-//         this.qualificationTypeList = res;
-//       }
-//     }
-//   )
-// }
-  // qualificationTypes = [
-  //   {
-  //     name : 'Diploma',
-  //   },
-  //   {
-  //     name : 'Certificate',
-  //   },
-  //   {
-  //     name : 'Postgraduate Study',
-  //   },
-  //   {
-  //     name : 'Bachelors degree',
-  //   }
-  // ];
-
-  // constructor() { }
-
-  // ngOnInit() {
-  // }
-
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject } from 'rxjs';
 import { appUser, appUserRegister } from 'src/app/models/appUser';
 import { GlobalService } from '../global/global.service';
@@ -39,6 +40,7 @@ export class AuthService {
 
   navLogin() {
     this.loggedIn.next(true);
+    console.log('navLogin called');
   }
 
   navLogout() {
@@ -55,7 +57,8 @@ export class AuthService {
     private repo: RepoService,
     private global: GlobalService,
     private storage: StoreService,
-    private router: Router) { }
+    private router: Router,
+    private cookie: CookieService) { }
 
   register(registerUser: appUserRegister) {
     this.repo.register(registerUser).subscribe(result => {
@@ -64,19 +67,17 @@ export class AuthService {
   }
 
   async login(appUser: appUser) {
-
-  await this.storage.deleteKey('token');
-
-   await this.global.nativeLoad("loading...");
-    return this.repo.login(appUser).subscribe((result : any) => { 
+   await this.global.nativeLoad('loading...');
+    return this.repo.login(appUser).subscribe((result: any) => {
       var token = result.value.token;
       var expiration = result.value.expiration;
       var date = new Date(expiration);
       var epoch = date.getTime(); //convert TZ string to epoch
-      this.storage.setKey('token', token);
+
+      this.cookie.set('token', token, epoch);
       this.navLogin(); //change observable to show navbar
-      this.router.navigate(['home']);   
-   }).add(() =>{this.global.endNativeLoad()});
+      this.router.navigate(['home']);
+   }).add(() =>{this.global.endNativeLoad();});
   }
 
   async logout() {
@@ -85,8 +86,8 @@ export class AuthService {
     //   this.router.navigateByUrl('/login');
     //   this.global.endNativeLoad();
     // })
+    this.cookie.deleteAll(); //removes all cookies from client
     this.navLogout();
-    this.storage.deleteKey('token');
     this.router.navigate(['login']); //route user back to login
    }
 
