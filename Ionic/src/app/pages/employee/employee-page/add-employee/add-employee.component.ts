@@ -46,6 +46,9 @@ export class AddEmployeeComponent implements OnInit{
   contract! : File;
   contractFlag = false;
 
+  showProfile = false;
+  imgSrc = '';
+
   //Creating the form to add the new venue details, that will be displayed in the HTML component
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
@@ -142,8 +145,25 @@ export class AddEmployeeComponent implements OnInit{
   }
 
   addPhoto(event : any) {
+
+    this.imgSrc = '';
+    this.photo = null;
+    this.showProfile = false;
+
+    if (event.target.files.length == 0)
+      return;
+
     this.photoFlag = true;
     this.photo = event.target.files[0];
+
+
+    const reader = new FileReader();
+    reader.onload = (event : any) => {
+      this.imgSrc = event.target.result;
+      this.showProfile = true;
+    }
+    reader.readAsDataURL(this.photo);
+
   }
 
   validateContract(contract : FormControl) : {[valtype : string] : string} | null {

@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <h1>New Employee Details</h1>
+    <ion-title>New Employee Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -16,10 +16,12 @@
       <p style="font-size:large">Please fill in the Employee information below.</p>
     </div>
 
+    <ion-img *ngIf="showProfile" src="{{imgSrc}}" (click)="photo.click()"></ion-img>
+
     <ion-item>
       <ion-label position="stacked">Profile Photo:</ion-label>
       <!-- <app-file-upload formControlName="photo"></app-file-upload> -->
-      <ion-input (change)="addPhoto($event)" formControlName="photo" type="file" id="photo"></ion-input>
+      <input #photo (change)="addPhoto($event)" formControlName="photo" type="file" id="photo">
     </ion-item>
     <span class="error ion-padding"
       *ngIf="photoFlag && errorControl.photo.errors && cEmployeeForm.get('photo').touched">
@@ -155,7 +157,7 @@
     </span>
 
 
-    <ion-button (click)="submitForm()" expand="block" color="success">Create Employee</ion-button>
+    <ion-button (click)="submitForm()" expand="block" color="success" [disabled]="cEmployeeForm.invalid">Create Employee</ion-button>
 
     
   

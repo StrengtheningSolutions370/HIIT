@@ -1,5 +1,29 @@
 ion-title {
-    font-family: Cabin,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-family: 'Montserrat', sans-serif;;
     font-weight: 500;
-    text-transform: uppercase;
+}
+
+ion-item, ion-button {
+    font-size: large;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+ion-button {
+    margin-bottom: 8%;
+    margin-top: 2%;
+}
+
+span {
+    color : tertiary;
+    font-size: large;
+    margin-left: 12%;  
+}
+
+ion-img {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    height: 200px;
 }
