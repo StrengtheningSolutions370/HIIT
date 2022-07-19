@@ -57,51 +57,36 @@ export class AuthService {
     private repo: RepoService,
     private global: GlobalService,
     private storage: StoreService,
-    private router: Router,
-    private cookie: CookieService) { }
+    private router: Router) { }
 
-  register(registerUser: appUserRegister) {
-    this.repo.register(registerUser).subscribe(result => {
-      this.router.navigate(['login']);
+  async register(registerUser: appUserRegister) {
+    await this.storage.deleteKey('token').then(() => {
+      this.repo.register(registerUser).subscribe(result => {
+        this.router.navigate(['login']);
+      });
     });
+    
   }
 
   async login(appUser: appUser) {
-   await this.global.nativeLoad('loading...');
-    return this.repo.login(appUser).subscribe((result: any) => {
+    await this.storage.deleteKey('token');
+    await this.global.nativeLoad('loading...');
+    return this.repo.login(appUser).subscribe((result : any) => {
       var token = result.value.token;
       var expiration = result.value.expiration;
       var date = new Date(expiration);
       var epoch = date.getTime(); //convert TZ string to epoch
-
-      this.cookie.set('token', token, epoch);
+      this.storage.setKey('token', token);
       this.navLogin(); //change observable to show navbar
       this.router.navigate(['home']);
-   }).add(() =>{this.global.endNativeLoad();});
+    }).add(() =>{this.global.endNativeLoad()});
   }
 
   async logout() {
-    // await this.global.nativeLoad();
-    // this.storage.deleteKey('token').then(result => {
-    //   this.router.navigateByUrl('/login');
-    //   this.global.endNativeLoad();
-    // })
-    this.cookie.deleteAll(); //removes all cookies from client
-    this.navLogout();
-    this.router.navigate(['login']); //route user back to login
+    this.storage.deleteKey('token').then(() => {
+      this.navLogout();
+      this.router.navigate(['login']); //route user back to login
+    })
    }
-
-  // roleMatch(allowedRoles): boolean {
-  //   let isMatch = false;
-  //   const payLoad = JSON.parse(window.atob(localStorage.getItem('token').split('.')[1]));
-  //   const userRole = payLoad.role;
-  //   allowedRoles.forEach(element => {
-  //     if (userRole === element) {
-  //       isMatch = true;
-  //       return false;
-  //     }
-  //   });
-  //   return isMatch;
-  // }
 
 }
