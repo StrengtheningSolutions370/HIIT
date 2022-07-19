@@ -17,10 +17,9 @@
     <ion-list *ngFor="let category of exerciseCategoryList | filter:filter, let i = index"> 
       <ion-item-sliding >
         <ion-item button (click)="exerciseService.viewExerciseCategoryInfoModal(category)" >
-          <ion-icon name="basket-outline" size="large" style="padding-left:5%"></ion-icon>
           <ion-label style="padding-left:2% ;">
-            <h1>{{category.exerciseCategoryName}}</h1>
-            <p style="font-size:large"> {{category.exerciseCategoryDescription}}</p>
+            <h1>{{category.name}}</h1>
+            <p style="font-size:large"> {{category.description}}</p>
           </ion-label >
           <ion-icon name="chevron-back-outline" size="small"></ion-icon>
         </ion-item>

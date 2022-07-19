@@ -43,8 +43,7 @@ export class ExerciseCategoryPage implements OnInit {
           console.log('Fetching exercise categories from DB');
           console.log(data);
           this.isLoading = false;
-          this.exerciseCategoryList = data;
-          console.log(this.exerciseCategoryList);
+          this.exerciseCategoryList = data.result;
         }
       }
     );
