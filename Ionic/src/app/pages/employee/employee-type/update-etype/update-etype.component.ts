@@ -7,6 +7,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AlertController, ModalController, ToastController, ViewWillEnter } from '@ionic/angular';
 import { EmployeeType } from 'src/app/models/employeeType';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-update-etype',
@@ -22,7 +23,7 @@ export class UpdateEtypeComponent implements ViewWillEnter {
   });
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public fb: FormBuilder,
-    public employeeService: EmployeeService, private alertCtrl: AlertController) { }
+    public employeeService: EmployeeService, private alertCtrl: AlertController, public global: GlobalService) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
@@ -56,22 +57,18 @@ export class UpdateEtypeComponent implements ViewWillEnter {
       };
         console.log(temp);
        this.employeeService.confirmEmployeeTypeModal(choice,temp);
-       this.dismissModal();
+       this.global.dismissModal();
     }
   }
 
    async sucUpdate() {
      const toast = await this.toastCtrl.create({
-       message: 'The Title has been successfully updated!',
+       message: 'The Employee Type has been successfully updated!',
        duration: 2000,
        position : 'top'
      });
      toast.present();
    }
-
-  dismissModal() {
-    this.modalCtrl.dismiss();
-  }
 
    async InvalidAlert() {
      const alert = await this.alertCtrl.create({

@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-var */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -23,7 +24,7 @@ export class ConfirmVenueComponent {
   constructor(public venueService: VenueService, public global: GlobalService) {}
 
 
-  async checkMatch(name:string, address:string): Promise<boolean>{
+  async checkMatch(name: string, address: string): Promise<boolean>{
    return this.venueService.matchingVenue(name,address).then(result => {
      console.log(result);
       if (result != false){

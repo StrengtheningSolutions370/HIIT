@@ -1,89 +1,78 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { EmployeeType } from 'src/app/models/employeeType';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
-import { VenueService } from 'src/app/services/venue/venue.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-confirm-etype',
   templateUrl: './confirm-etype.component.html',
   styleUrls: ['./confirm-etype.component.scss'],
 })
-export class ConfirmEtypeComponent{
+export class ConfirmEtypeComponent {
   @Input() choice: number;
   @Input() employeeType: EmployeeType;
 
-  constructor(private modalCtrl: ModalController, public employeeService: EmployeeService,
+  constructor(public global: GlobalService, public employeeService: EmployeeService,
     public router: Router, public activated: ActivatedRoute, public toastCtrl: ToastController) {
-   }
-
-   dismissModal() {
-    this.modalCtrl.dismiss();
-    //this.router.navigate(['../titles'],{relativeTo:this.activated});
-  };
-  //1 = confirm ADD
-  //2 = confirm UPDATE
-  async confirmChanges(employeeType: EmployeeType){
-    console.log(this.choice);
-    if (this.choice === 1){
-      //search duplicates
-      if (this.employeeService.matchingEmployeeType(employeeType.description) != null)
-      {
-        console.log('Existing Title: ' + employeeType.description);
-        //display duplicate alert
-        //failure alert
-        return;
-      }
-      else {
-        console.log('Add Employee Type from confirm:');
-        //CallRepoToCreate
-        await this.employeeService.createEmployeeType(employeeType);
-        await this.dismissModal();
-        this.sucAdd();
-      }
-
-    } else if (this.choice === 2){
-      console.log('Update Employee Type from confirm:');
-      //CallRepoToUpdate
-      await this.employeeService.updateEmployeeType(employeeType.employeeTypeID,employeeType);
-      await this.dismissModal();
-      this.sucUpdate();
-    }
-
-    //dismiss modal
-    // await this.dismissModal();
-    //
   }
 
-  async returnFrom(){
-      //1 = return to ADD
-      //2 = return to UPDATE
-    if (this.choice === 1){
+  //1 = confirm ADD
+  //2 = confirm UPDATE
+
+  async checkMatch(name: string): Promise<boolean> {
+    return this.employeeService.matchingEmployeeType(name).then(result => {
+      console.log(result);
+      if (result !== 0) {
+        this.global.showAlert('The Employee Type information entered already exists on the system', 'Employee Type Already Exists');
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
+  confirmChanges(employeeType: EmployeeType) {
+    console.log(employeeType);
+    this.checkMatch(employeeType.name).then(result => {
+      console.log(result);
+      if (result === true) {
+        return;
+      } else {
+        if (this.choice === 1) {
+          console.log('Add Employee Type from confirm:');
+          //CallRepoToCreate
+          this.employeeService.createEmployeeType(employeeType);
+          this.global.showToast('The Title has been successfully added!');
+        } else if (this.choice === 2) {
+          console.log('Update Venue from confirm:');
+          //CallRepoToUpdate
+          this.employeeService.updateEmployeeType(employeeType.employeeTypeID, employeeType);
+          this.global.showToast('The Employee Type has been successfully updated!');
+        }
+      }
+      //dismiss modal
+      this.global.dismissModal();
+    });
+
+  }
+
+  returnFrom() {
+    //1 = return to ADD
+    //2 = return to UPDATE
+    if (this.choice === 1) {
       console.log(this.employeeType);
-      await this.dismissModal();
+      this.global.dismissModal();
       this.employeeService.addEmployeeTypeInfoModal(this.employeeType);
-    } else if (this.choice === 2){
+    } else if (this.choice === 2) {
       console.log(this.employeeType);
-      await this.dismissModal();
+      this.global.dismissModal();
       this.employeeService.updateEmployeeTypeInfoModal(this.employeeType);
     }
   }
 
-  async sucAdd() {
-    const toast = await this.toastCtrl.create({
-      message: 'The employee type has been successfully added!',
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async sucUpdate() {
-    const toast = await this.toastCtrl.create({
-      message: 'The employee type has been successfully updated!',
-      duration: 2000
-    });
-    toast.present();
-  }
-
 }
+
+
+

@@ -2,7 +2,7 @@
 
 <ion-content>
 
-  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Venue' [(ngModel)]="filter"
+  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Qualification Type...' [(ngModel)]="filter"
     animated="true" debounce="200"></ion-searchbar>
 
     <br/><br/>
@@ -33,23 +33,6 @@
   <div class="ion-text-center " *ngIf="isLoading">
     <ion-spinner name="circles"></ion-spinner>
   </div>
-
-  <!-- <div style="width:40%;margin-left:30%;margin-right: 30%;" class="ion-text-center">
-    <ion-card>
-      <ion-card-header>
-        <img src="../../assets/NoSearch.png" style="width: 40%;">
-        <h1><strong>Sorry! No Results Found :( </strong></h1>
-      </ion-card-header>
-      <ion-card-content>
-        <br/>
-        <h3>Your search for " " did not return any results.</h3>
-        <h3>Please check your spelling or try a different search criteria. </h3>
-        <br/>
-      </ion-card-content>
-    </ion-card>
-  </div> -->
-
-
 </ion-content>
 
 

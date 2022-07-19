@@ -50,7 +50,7 @@ export class VenueService {
 
   //UPDATE:
    updateVenue(id: number,venue: any){
-     if (id != venue.venueID){
+     if (id !== venue.venueID){
        console.log("ERROR IN VENUE UPDATE - MISMATCH ID");
        return;
      }

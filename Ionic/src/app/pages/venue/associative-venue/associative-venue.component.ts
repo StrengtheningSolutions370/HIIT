@@ -11,7 +11,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 
 export class AssociativeVenueComponent implements OnInit {
   @Input() venue: Venue;
-  
+
   constructor(public global: GlobalService) { }
 
   ngOnInit() {}
