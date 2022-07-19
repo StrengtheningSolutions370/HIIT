@@ -15,7 +15,7 @@
       <ion-input formControlName="exerciseCategoryName"  type="text" required=""></ion-input>
       <br/>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.categoryName.errors?.required">
+    <span class="error ion-padding" *ngIf="errorControl.exerciseCategoryName.errors?.required">
       Exercise Category Name is required.
       <br/>
     </span>
@@ -25,7 +25,7 @@
       <ion-textarea formControlName="exerciseCategoryDescription"  type="text" required=""></ion-textarea>
       <br/>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.categoryDescription.errors?.required">
+    <span class="error ion-padding" *ngIf="errorControl.exerciseCategoryDescription.errors?.required">
       Exercise Category Description is required.
       <br/>
     </span>

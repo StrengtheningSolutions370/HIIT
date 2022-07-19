@@ -13,8 +13,8 @@ export class UpdateExerciseCategoryComponent {
   @Input() exerciseCategory: ExerciseCategory;
   
   uExerciseCategoryForm: FormGroup = new FormGroup({
-    exercisecategoryDescription: new FormControl('', [Validators.required]),
-    exercisecategoryName: new FormControl('', [Validators.required])
+    exerciseCategoryDescription: new FormControl('', [Validators.required]),
+    exerciseCategoryName: new FormControl('', [Validators.required])
   });
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public fb: FormBuilder,
@@ -28,12 +28,13 @@ export class UpdateExerciseCategoryComponent {
   ionViewWillEnter() {
     console.log('UpdateExerciseCategory-ViewWillEnter');
     console.log(this.exerciseCategory);
-    this.uExerciseCategoryForm.controls.exercisecategoryName.setValue(this.exerciseCategory.name);
-    this.uExerciseCategoryForm.controls.exercisecategoryDescription.setValue(this.exerciseCategory.description);
+    this.uExerciseCategoryForm.controls.exerciseCategoryName.setValue(this.exerciseCategory.name);
+    this.uExerciseCategoryForm.controls.exerciseCategoryDescription.setValue(this.exerciseCategory.description);
   }
 
   submitForm() {
-    if (!this.uExerciseCategoryForm.valid) { //If the form has any validation errors, the form will not be submitted.
+    if 
+    (!this.uExerciseCategoryForm.valid) { //If the form has any validation errors, the form will not be submitted.
       console.log('Please provide all required fields');
       this.invalidAlert();
       return false;

@@ -67,9 +67,9 @@ export class ExerciseService {
     });
    }  
 
-   matchingExerciseCategory(input: string): Promise<any>{
-    console.log('exercisecategoryService: Repo -> Matching Exercise category');
-    return this.repo.getMatchExerciseCategory(input).toPromise();
+   matchingExerciseCategory(input: string){
+    console.log('ExerciseService: Repo -> Matching ExerciseCategory');
+    this.repo.getMatchExerciseCategory(input);
    }
 
    existingExerciseCategory(id: number){
@@ -93,6 +93,7 @@ export class ExerciseService {
   //This method receives the selected exercise category object, from the exercise category page, in the modal through the componentProps.
   async updateExerciseCategoryInfoModal(exerciseCategory: ExerciseCategory) {
     console.log("ExerciseCategoryService: UpdateExerciseCategoryModalCall");
+    
     const modal = await this.modalCtrl.create({
       component: UpdateExerciseCategoryComponent,
       componentProps:{

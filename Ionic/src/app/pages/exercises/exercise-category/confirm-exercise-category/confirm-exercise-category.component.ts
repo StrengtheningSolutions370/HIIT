@@ -37,17 +37,22 @@ export class ConfirmExerciseCategoryComponent implements OnInit {
         this.duplicateAlert();
         return;
       }
-      else{
+      else
+      {
         console.log('Add Exercise Category from confirm:');
+        console.log(exerciseCategory.description);
         //CallRepoToCreate
         await this.exerciseService.createExersiceCategory(exerciseCategory);
          this.dismissModal();
         this.sucAdd();
       }
-    } else if (this.choice === 2){
+    }
+    else if (this.choice === 2)
+    {
       console.log('Update Exercise Category from confirm:');
       //CallRepoToUpdate
       await this.exerciseService.updateExerciseCategory(exerciseCategory.exerciseCategoryID,exerciseCategory);
+      console.log(exerciseCategory.description)
       this.dismissModal();
       this.sucUpdate();
     }
