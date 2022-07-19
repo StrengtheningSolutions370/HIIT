@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AllRoles } from 'src/app/app-routing.module';
+import { ComponentsModule } from 'src/app/components/components.module';
 import { Employee } from 'src/app/models/employee';
 import { EmployeeType } from 'src/app/models/employeeType';
 import { QualificationType } from 'src/app/models/qualification-type';
@@ -38,6 +39,11 @@ export class AddEmployeeComponent implements OnInit{
   cEmployeeForm! : FormGroup;
   roles! : any;
 
+  photo! : File;
+  photoFlag = false;
+  contract! : File;
+  contractFlag = false;
+
   //Creating the form to add the new venue details, that will be displayed in the HTML component
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
@@ -63,16 +69,22 @@ export class AddEmployeeComponent implements OnInit{
 
     this.cEmployeeForm = this.formBuilder.group({
       name: ['', [Validators.required]],
-      contract: ['', [Validators.required]],
-      email: ['', [Validators.email]],
+      contract: ['', [this.validateContract]],
+      email: ['', [Validators.required, Validators.email]],
       surname: ['', [Validators.required]],
-      //photo: ['', [Validators.required, requiredFileType('png')]],
-      idNumber: ['', [Validators.required]],
-      title: ['', [Validators.required]],
+      photo: ['', [this.validatePhoto]],
+      idNumber: ['', [this.validateIDNumber]],
       phone: ['', [Validators.pattern(/[0-9]{10}/)]],
-      checkBoxTitles: this.formBuilder.array([], [Validators.required]),
-      checkBoxQualificationTypes: this.formBuilder.array([], [Validators.required]),
-      checkBoxEmployeeTypes: this.formBuilder.array([], [Validators.required])
+      
+      titleId: ['', [Validators.required]],
+      qualificationId : ['', Validators.required],
+      employeeTypeId: ['', Validators.required],
+
+      role: ['', Validators.required]
+      // checkBoxTitles: this.formBuilder.array([], [Validators.required]),
+      // checkBoxQualificationTypes: this.formBuilder.array([], [Validators.required]),
+      // checkBoxEmployeeTypes: this.formBuilder.array([], [Validators.required])
+
     });
 
     //getting employee types for drop down
@@ -80,51 +92,79 @@ export class AddEmployeeComponent implements OnInit{
       next: (data : any) => {
         this.employeeTypeList = data.result;
       }
-    })
+    });
 
     //getting qualifications for drop down
     this.repo.getQualifications().subscribe({
       next: (data : any) => {
         this.qualificationList = data.result;
       }
-    })
+    });
 
     //getting qualifications for drop down
     this.repo.getQualificationTypes().subscribe({
       next: (data : any) => {
         this.qualificationTypeList = data.result;
       }
-    })
+    });
 
     //getting titles for drop down
     this.repo.getTitles().subscribe({
       next: (data : any) => {
         this.titleList = data.result;
       }
-    })
+    });
 
-    // this.qualificationTypeSub = this.repo.getQualificationTypes().subscribe(qTypes => {
-    //   this.qualificationTypeList = qTypes;
+  }
 
-    //   console.log('Add Employee: NgOnIt: Return Qualification Type List');
-    //   console.log(this.qualificationTypeList);
-    // });
+  addContract(event : any) {
+    this.contractFlag = true;
+    this.contract = event.target.files[0];
+  }
 
-    // this.titleSub = this.repo.getTitles().subscribe(titles => {
-    //   this.titleList = titles;
+  addPhoto(event : any) {
+    this.photoFlag = true;
+    this.photo = event.target.files[0];
+  }
 
-    //   console.log('Add Employee: NgOnIt: Return Title List');
-    //   console.log(this.titleList);
-    // });
+  validateContract(contract : FormControl) : {[valtype : string] : string} | null {
+    const pattern = /.((pdf))$/
+    if (!pattern.test(contract.value)) {
+      return {'errormsg' : 'Please submit .png, .jpg or .jpeg'}
+    }
+    return null;
+  }
 
-    // this.employeeTypeSub = this.repo.getEmployeeTypes().subscribe(employeeTypes => {
-    //   this.employeeTypeList = employeeTypes;
+  validatePhoto(contract : FormControl) : {[valtype : string] : string} | null {
+    const pattern = /.((png)|(jpg)|(jpeg))$/
+    if (!pattern.test(contract.value)) {
+      return {'errormsg' : 'Please submit .png, .jpg or .jpeg'}
+    }
+    return null;
+  }
 
-    //   console.log('Add Employee: NgOnIt: Return Title List');
-    //   console.log(this.employeeTypeList);
-    // });
+  validateIDNumber(id : FormControl) : {[valtype : string] : string} | null {
+    let IDNum = id.value;
 
-
+    const pattern = /^[0-9]{13}/;
+    if (!pattern.test(IDNum)) {
+      return {'errormsg' : 'Please enter id number'}
+    }
+    //validate with check digit:
+    var checkdigit = 0;
+    var count = 0;
+    for (var i = 0; i < IDNum.length - 1; i++) {
+      var multiple = count % 2 + 1;
+      count++;
+      var temp = multiple * + IDNum[i];
+      temp = Math.floor(temp / 10) + (temp % 10);
+      checkdigit += temp;
+    }
+    checkdigit = (checkdigit * 9) % 10;
+    if (checkdigit != IDNum[IDNum.length - 1]) {
+      return {'errormsg': 'Entered id number is not valid'}
+    }
+    return null;
   }
 
   // updateCheckControl(cal, o) {
@@ -176,23 +216,43 @@ export class AddEmployeeComponent implements OnInit{
   }
 
   submitForm() {
-    if (!this.cEmployeeForm.valid){
-      console.log('Please provide all required fields');
-      return false;
-    }else{
-      const temp = {
-        name: this.cEmployeeForm.value['name'],
-        surname: this.cEmployeeForm.value['surname'],
-        photo: this.cEmployeeForm.value['photo'],
-        idNumber: this.cEmployeeForm.value['idNumber'],
-        title: this.cEmployeeForm.value['checkboxBoxTitles']
-      };
-      this.employeeService.confirmEmployeeTypeModal(1,temp);
-      this.dismissModal();
-      // this.sucAdd();
-      // console.log("CurrentRoute:ADD");
-      // console.log(this.currentRoute.url);
-    }
+    // if (!this.cEmployeeForm.valid){
+    //   console.log('Please provide all required fields');
+    //   return false;
+    // }else{
+    //   const temp = {
+    //     name: this.cEmployeeForm.value['name'],
+    //     surname: this.cEmployeeForm.value['surname'],
+    //     photo: this.cEmployeeForm.value['photo'],
+    //     idNumber: this.cEmployeeForm.value['idNumber'],
+    //     title: this.cEmployeeForm.value['checkboxBoxTitles']
+    //   };
+    //   this.employeeService.confirmEmployeeTypeModal(1,temp);
+    //   this.dismissModal();
+    //   // this.sucAdd();
+    //   // console.log("CurrentRoute:ADD");
+    //   // console.log(this.currentRoute.url);
+    // }
+
+    // if (!this.cEmployeeForm.valid) return;
+
+    const emp = new Employee();
+
+    emp.Name = this.cEmployeeForm.value['name'];
+    emp.Surname = this.cEmployeeForm.value[''];
+    emp.Photo = this.photo;
+    emp.Contract = this.contract;
+    emp.IDNumber = this.cEmployeeForm.value['id'];
+    emp.Phone = this.cEmployeeForm.value['phone'];
+    emp.Email = this.cEmployeeForm.value['email'];
+
+    emp.TitleID = this.cEmployeeForm.value['titleId'];
+    emp.EmployeeTypeID = this.cEmployeeForm.value[''];
+    emp.QualificationTypeID = this.cEmployeeForm.value[''];
+    emp.QualificationID = this.cEmployeeForm.value[''];
+
+    console.log('emp', emp)
+
    }
 
   async sucAdd() {
@@ -225,6 +285,7 @@ export class AddEmployeeComponent implements OnInit{
     });
     alert.present();
   }
+
 
   // async getTitles() {
   //   setTimeout(async () => {

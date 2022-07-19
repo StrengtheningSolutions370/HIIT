@@ -316,6 +316,7 @@ export class QualificationService {
     console.log(choice);
 
     if (choice === 1) {
+
       console.log('Performing ADD');
       const modal = await this.modalCtrl.create({
         component: ConfirmQualificationComponent,
@@ -326,6 +327,7 @@ export class QualificationService {
         }
       });
       await modal.present();
+      
     } else if (choice === 2) {
 
       console.log('Performing UPDATE');
@@ -341,6 +343,7 @@ export class QualificationService {
     } else {
       console.log('BadOption: ' + choice);
     }
+    
   }
 
   async associativeVenueModal(qualification: Qualification) {

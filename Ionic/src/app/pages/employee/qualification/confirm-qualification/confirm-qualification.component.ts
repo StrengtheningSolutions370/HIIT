@@ -12,6 +12,7 @@ import { QualificationService } from 'src/app/services/qualification/qualificati
   styleUrls: ['./confirm-qualification.component.scss'],
 })
 export class ConfirmQualificationComponent{
+
   @Input() choice: number;
   @Input() qualification: Qualification;
   @Input() qualificationType: QualificationType;
@@ -20,8 +21,8 @@ export class ConfirmQualificationComponent{
 
   async checkMatch(description: string): Promise<boolean>{
     return this.qualificationService.matchingQualification(description).then(result => {
-      console.log(result);
-       if (result !== false){
+      console.log('matchresult', result);
+       if (result == false){
          this.global.showAlert('The qualification information entered already exists on the system','Qualification Already Exists');
          return true;
        } else {

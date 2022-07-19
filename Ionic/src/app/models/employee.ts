@@ -2,13 +2,13 @@ export class Employee{
     EmployeeID: number;
     Name: string;
     Surname: string;
-    Photo: any;
-    IDNumber: any;
+    Photo: File;
+    IDNumber: string;
     Phone : string;
     Email : string;
     TitleID : number;
     EmployeeTypeID : number;
     QualificationID: number;
     QualificationTypeID: number;
-    Contract : any;
+    Contract : File;
 }

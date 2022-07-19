@@ -21,12 +21,7 @@ export class AddQualificationComponent implements OnInit {
   @Input() qualification: Qualification;
   qualificationTypeDropDown!: QualificationType[];
 
-  //Creating the form to add the new sale category details, that will be displayed in the HTML component
-  cQualificationForm: FormGroup = this.formBuilder.group({
-    description: [, [Validators.required]],
-    qualificationType: [],
-  });
-
+  cQualificationForm! : FormGroup;
 
   constructor(private toastCtrl: ToastController,
     public formBuilder: FormBuilder,
@@ -73,13 +68,18 @@ export class AddQualificationComponent implements OnInit {
 
   async sucAdd() {
     const toast = await this.toastCtrl.create({
-      message: 'The Sale Item has been successfully added!',
+      message: 'The Qualification has been successfully added!',
       duration: 2000,
       position: 'top'
     });
     toast.present();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.cQualificationForm = this.formBuilder.group({
+      description: ['', [Validators.required]],
+      qualificationType: ['', [Validators.required]],
+    });
+  }
 
 }
