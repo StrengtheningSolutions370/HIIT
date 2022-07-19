@@ -67,6 +67,14 @@ import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
 import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
 import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
 
+//EXERCISE CATEGORY IMPORTS:
+import { AddExerciseCategoryComponent } from './pages/exercises/exercise-category/add-exercise-category/add-exercise-category.component'; 
+import { UpdateExerciseCategoryComponent } from './pages/exercises/exercise-category/update-exercise-category/update-exercise-category.component'; 
+import { DeleteExerciseCategoryComponent } from './pages/exercises/exercise-category/delete-exercise-category/delete-exercise-category.component'; 
+import { ViewExerciseCategoryComponent } from './pages/exercises/exercise-category/view-exercise-category/view-exercise-category.component'; 
+import { ConfirmExerciseCategoryComponent } from './pages/exercises/exercise-category/confirm-exercise-category/confirm-exercise-category.component'; 
+import { AssociativeExerciseCategoryComponent } from './pages/exercises/exercise-category/associative-exercise-category/associative-exercise-category.component'; 
+
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
@@ -88,6 +96,8 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent,
   //SalesItem
   AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+  //ExerciseCategory
+  AddExerciseCategoryComponent, UpdateExerciseCategoryComponent, DeleteExerciseCategoryComponent, ViewExerciseCategoryComponent, ConfirmExerciseCategoryComponent, AssociativeExerciseCategoryComponent,
   //SideMenu
   SidemenuComponent
 ],

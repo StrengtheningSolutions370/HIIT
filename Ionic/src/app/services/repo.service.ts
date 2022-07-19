@@ -13,6 +13,7 @@ import { Vat } from '../models/vat';
 import { SaleItem } from '../models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { appUser, appUserRegister } from '../models/appUser';
+import { ExerciseCategory } from '../models/exercise-category';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,7 @@ export class RepoService {
   SaleCategoryController = 'SaleCategory/';
   PermissionController = 'Permission/';
   EmployeeController = 'Employee/';
+  ExerciseCategoryController = 'ExerciseCategory/';
 
 
   httpOptions = {
@@ -297,5 +299,32 @@ uploadSaleItemImage(data : FormData) : Observable<any> {
 reuploadSaleItemImage(id : string) : Observable<any> {
   return this.http.delete(`https://localhost:44383/api/SaleItem/deletephoto?name=${id}`)
 }
+
+// ExerciseCategory:
+  // ------
+  // Create
+  createExerciseCategory(exerciseCategory: any): Observable<any> {
+    return this.http.post<any>(`${this.base + this.ExerciseCategoryController}add`, exerciseCategory, this.httpOptions);
+  }
+  //Update
+  updateExerciseCategory(exerciseCategoryId: number, exerciseCategory: ExerciseCategory): Observable<any> {
+    return this.http.put(`${this.base + this.ExerciseCategoryController}update?id=${exerciseCategoryId}`, exerciseCategory, this.httpOptions);
+  }
+  //Delete
+  deleteExerciseCategory(exerciseCategoryId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.ExerciseCategoryController}delete?id=${exerciseCategoryId}`, this.httpOptions);
+  }
+  //GetAll
+  getExerciseCategory(): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseCategoryController}getAll`, this.httpOptions);
+  }
+  //GetMatch
+  getMatchExerciseCategory(input: string): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseCategoryController}getMatch?input=${input}`, this.httpOptions);
+  }
+  //Exists
+  existsExerciseCategory(id: number): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseCategoryController}exists?id=${id}`, this.httpOptions);
+  }
 
 }

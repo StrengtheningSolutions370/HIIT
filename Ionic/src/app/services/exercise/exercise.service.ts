@@ -5,13 +5,13 @@
 /* eslint-disable @typescript-eslint/semi */
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { ExerciseCategory } from 'src/app/models/exerciseCategory';
-import { AddExerciseCategoryComponent } from 'src/app/pages/exercise/exercise-category/add-exercise-category/add-exercise-category.component'; 
-import { DeleteExerciseCategoryComponent } from 'src/app/pages/exercise/exercise-category/delete-exercise-category/delete-exercise-category.component'; 
-import { UpdateExerciseCategoryComponent } from 'src/app/pages/exercise/exercise-category/update-exercise-category/update-exercise-category.component'; 
-import { ViewExerciseCategoryComponent } from 'src/app/pages/exercise/exercise-category/view-exercise-category/view-exercise-category.component'; 
-import { ConfirmExerciseCategoryComponent } from 'src/app/pages/exercise/exercise-category/confirm-exercise-category/confirm-exercise-category.component'; 
-import { AssociativeExerciseCategoryComponent } from 'src/app/pages/exercise/exercise-category/associative-exercise-category/associative-exercise-category.component'; 
+import { ExerciseCategory } from 'src/app/models/exercise-category'; 
+import { AddExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/add-exercise-category/add-exercise-category.component'; 
+import { DeleteExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/delete-exercise-category/delete-exercise-category.component'; 
+import { UpdateExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/update-exercise-category/update-exercise-category.component'; 
+import { ViewExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/view-exercise-category/view-exercise-category.component'; 
+import { ConfirmExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/confirm-exercise-category/confirm-exercise-category.component'; 
+import { AssociativeExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/associative-exercise-category/associative-exercise-category.component';  
 import { RepoService } from '../repo.service';
 import { Observable } from 'rxjs';
 
@@ -19,7 +19,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 
-export class ExersiceService {
+export class ExerciseService {
 
   @Output() fetchExerciseCategorysEvent = new EventEmitter<ExerciseCategory>();
 
