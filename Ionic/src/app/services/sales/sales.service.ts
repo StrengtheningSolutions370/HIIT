@@ -270,9 +270,6 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
             saleCategory
         }
       });
-
-
-
     //Update the current sale category list with the sale category list from the delete modal.
     modal.onDidDismiss().then(() => {
       this.repo.getSaleCategory().subscribe(result => {

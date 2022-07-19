@@ -77,6 +77,13 @@ import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
 import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
 import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
 
+//EMPLOYEE IMPORTS:
+import { AddEmployeeComponent } from './pages/employee/employee-page/add-employee/add-employee.component';
+import { DeleteEmployeeComponent } from './pages/employee/employee-page/delete-employee/delete-employee.component';
+import { ViewEmployeeComponent } from './pages/employee/employee-page/view-employee/view-employee.component';
+import { ConfirmEmployeeComponent } from './pages/employee/employee-page/confirm-employee/confirm-employee.component';
+import { UpdateEmployeeComponent } from './pages/employee/employee-page/update-employee/update-employee.component';
+
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
@@ -97,10 +104,15 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent, UpdateVatComponent,
   //EmployeeType
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,AssociativeEtypeComponent,
-  ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
+  //Sale Category
   ConfirmCategoryComponent, AddCategoryComponent, ConfirmCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent,
+  //Sale Item
   ConfirmSitemComponent, AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
-  SidemenuComponent
+  //Side Menu
+  SidemenuComponent,
+  //Employee
+  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent
+
 ],
 
   entryComponents: [],

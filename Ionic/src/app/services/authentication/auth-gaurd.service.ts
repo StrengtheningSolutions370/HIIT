@@ -21,6 +21,12 @@ export class AuthGaurdService {
 
     return new Promise((res, rej) => {
       this.storage.getKey('token').then(token => {
+
+        if (token == null) {
+          res(false);
+          return;
+        }
+
         this.repo.getUserRole(token).subscribe(r => {
 
           const role = r.role;
@@ -49,12 +55,10 @@ export class AuthGaurdService {
   
         })
       })
+
     })
 
     /////////////
-
-
-
   }
 
 }

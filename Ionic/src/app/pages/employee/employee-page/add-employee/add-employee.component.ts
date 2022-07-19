@@ -15,7 +15,6 @@ import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { StoreService } from 'src/app/services/storage/store.service';
 import { TitleService } from 'src/app/services/title/title.service';
-import { requiredFileType } from '../file-upload/file-upload.component';
 
 @Component({
   selector: 'app-add-employee',
@@ -23,10 +22,13 @@ import { requiredFileType } from '../file-upload/file-upload.component';
   styleUrls: ['./add-employee.component.scss'],
 })
 export class AddEmployeeComponent implements OnInit{
+
   @Input() employee: Employee;
+  
   titleList: any[] = [];
+  employeeTypeList: any[] = [];
+  qualificationList: any[] = [];
   qualificationTypeList: any[] = [];
-  employeeTypeList: EmployeeType[] = [];
   //Subscription variable to track live updates.
   titleSub: Subscription;
   qualificationTypeSub: Subscription;
@@ -41,11 +43,12 @@ export class AddEmployeeComponent implements OnInit{
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public employeeService: EmployeeService, private router: Router,private currentRoute: ActivatedRoute,
     private  alertCtrl: AlertController, public titleService: TitleService, public repo: RepoService, private storage : StoreService) {
-      this.roles = AllRoles;
+      //this.roles = AllRoles;
       this.storage.getKey('token').then((token : any) => {
         this.repo.getUserRole(token).subscribe({
           next: (data : any) => {
-            
+            //check for who you can create - superuser can create admins:
+            console.log('data from create', data);
           }
         })
       })
@@ -63,7 +66,7 @@ export class AddEmployeeComponent implements OnInit{
       contract: ['', [Validators.required]],
       email: ['', [Validators.email]],
       surname: ['', [Validators.required]],
-      photo: ['', [Validators.required, requiredFileType('png')]],
+      //photo: ['', [Validators.required, requiredFileType('png')]],
       idNumber: ['', [Validators.required]],
       title: ['', [Validators.required]],
       phone: ['', [Validators.pattern(/[0-9]{10}/)]],
@@ -71,6 +74,20 @@ export class AddEmployeeComponent implements OnInit{
       checkBoxQualificationTypes: this.formBuilder.array([], [Validators.required]),
       checkBoxEmployeeTypes: this.formBuilder.array([], [Validators.required])
     });
+
+    //getting employee types for drop down
+    this.repo.getEmployeeTypes().subscribe({
+      next: (data : any) => {
+        this.employeeTypeList = data.result;
+      }
+    })
+
+    //getting qualifications for drop down
+    this.repo.getQualifications().subscribe({
+      next: (data : any) => {
+        this.qualificationList = data.result;
+      }
+    })
 
     //getting qualifications for drop down
     this.repo.getQualificationTypes().subscribe({
@@ -144,14 +161,15 @@ export class AddEmployeeComponent implements OnInit{
     if (this.employee != null) {
       console.log('Add Employee - View Will Enter');
       console.log(this.employee);
-      this.cEmployeeForm.controls.name.setValue(this.employee.name);
-      this.cEmployeeForm.controls.contract.setValue(this.employee.contract);
-      this.cEmployeeForm.controls.title.setValue(this.employee.title);
-      this.cEmployeeForm.controls.email.setValue(this.employee.email);
-      this.cEmployeeForm.controls.phone.setValue(this.employee.phone);
-      this.cEmployeeForm.controls.surname.setValue(this.employee.surname);
-      this.cEmployeeForm.controls.photo.setValue(this.employee.photo);
-      this.cEmployeeForm.controls.idNumber.setValue(this.employee.idNumber);
+      this.cEmployeeForm.controls.name.setValue(this.employee.Name);
+      this.cEmployeeForm.controls.contract.setValue(this.employee.Contract);
+      this.cEmployeeForm.controls.title.setValue(this.employee.TitleID);
+      this.cEmployeeForm.controls.email.setValue(this.employee.Email);
+      this.cEmployeeForm.controls.phone.setValue(this.employee.Phone);
+      this.cEmployeeForm.controls.surname.setValue(this.employee.Surname);
+      this.cEmployeeForm.controls.photo.setValue(this.employee.Photo);
+      this.cEmployeeForm.controls.idNumber.setValue(this.employee.IDNumber);
+      //title, qualification, qualification type, role and employee type drop down lists
       this.cEmployeeForm.controls.checkBoxTitles.setValue(this.titleList);
       this.cEmployeeForm.controls.checkBoxQualificationTypes.setValue(this.qualificationTypeList);
     }
