@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { Roles } from './models/roles.enum';
 import { AuthGaurdService } from './services/authentication/auth-gaurd.service';
 
-const AllRoles = [Roles.SuperUser, Roles.Admin, Roles.Client, Roles.Member, Roles.GeneralEmployee, Roles.Trainer];
+export const AllRoles = [Roles.SuperUser, Roles.Admin, Roles.Client, Roles.Member, Roles.GeneralEmployee, Roles.Trainer];
 
 export const routes: Routes = [
   // {
