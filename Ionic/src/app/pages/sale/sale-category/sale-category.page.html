@@ -17,7 +17,6 @@
       <ion-list *ngFor="let category of saleCategoryList | filter:filter, let i = index"> 
         <ion-item-sliding >
           <ion-item button (click)="saleService.viewCategoryInfoModal(category)" >
-            <ion-icon name="basket-outline" size="large" style="padding-left:5%"></ion-icon>
             <ion-label style="padding-left:2% ;">
               <h1>{{category.name}}</h1>
               <p style="font-size:large"> {{category.description}}</p>

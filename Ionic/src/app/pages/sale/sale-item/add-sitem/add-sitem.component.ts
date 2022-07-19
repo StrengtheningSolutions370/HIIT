@@ -122,7 +122,8 @@ export class AddSitemComponent implements ViewWillEnter {
        //if image was uploaded:
        //Confirm if this is optional, if so remove alert
        if (this.itemImageBase64String == null) {
-        this.global.showAlert("Image failed to upload, please try again.","Image Error");
+        let str = "Image failed to upload." + '\n'+ "please try again."
+        this.global.showAlert(str,"Image Error");
           return;       
        }
 

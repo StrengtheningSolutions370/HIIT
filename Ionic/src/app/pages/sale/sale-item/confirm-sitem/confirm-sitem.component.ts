@@ -24,21 +24,21 @@ export class ConfirmSitemComponent {
             if (this.choice === 1){
               this.saleService.matchingSaleItem(saleItem.name,saleItem.description).then(data => {
                 if (data != 0){
-                  this.global.showAlert("The sale item information entered already exists on the system","Sale item Already Exists");
+                  this.global.showAlert("The sale item information entered already exists on the system","Sale Item Already Exists");
                   return;
                 } else {
                   console.log('Add Sale Item from confirm:');
                   //CallRepoToCreate
                   this.saleService.createSaleItem(saleItem);
                   this.global.dismissModal();
-                  this.global.showToast("The Sale Item has been successfully added!");
+                  this.global.showToast("The sale item has been successfully added!");
                 }
               });
 
           } else if (this.choice === 2){
             this.saleService.matchingSaleItem(saleItem.name,saleItem.description).then(data => {
               if (data.result.length > 1){
-                this.global.showAlert("The sale item information entered already exists on the system","Sale item Already Exists");
+                this.global.showAlert("The sale item information entered already exists on the system","Sale Item Already Exists");
                 return;
               } else {
                 console.log('Update Sale Item from confirm:');
@@ -46,7 +46,7 @@ export class ConfirmSitemComponent {
             console.log(saleItem);
             this.saleService.updateSaleItem(saleItem);
             this.global.dismissModal();
-            this.global.showToast('The Sale Item has been successfully updated!'); 
+            this.global.showToast('The sale item has been successfully updated!'); 
               }
             });
    

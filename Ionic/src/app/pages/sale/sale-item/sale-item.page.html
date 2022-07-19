@@ -9,7 +9,6 @@
   <div class="ion-text-center">
     <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="saleService.addSaleItemInfoModal()">
       Add Sale Item 
-      <ion-icon name="add" size="medium"></ion-icon>
     </ion-button>
   </div>
   
@@ -22,18 +21,20 @@
 
       <ion-card >
           <ion-card-header (click)="saleService.viewSaleItemInfoModal(saleItem)">
-              <!--Sale Image
-              <div class="centerimg">
-                <img [src]="createImg(saleItem.photo)">
-              </div>-->
+
               <ion-card-title style="color:#e7e8ec;">
                {{saleItem.name}}
-              </ion-card-title>                          
-            <ion-row *ngIf="saleItem.Qoutable == false">
+              </ion-card-title>  
+                <!--Sale Image--> 
+                <ion-avatar item-start button>
+                  <!--Employee Image-->
+                  <!--<img [src]="this.global.createImg(saleItem.photo)" alt="sale item image">-->
+                </ion-avatar>                      
+            <ion-row *ngIf="saleItem.quotable == false">
               Price: <p class="ion-text-right">R{{saleItem.price}}</p>
             </ion-row>
-            <ion-row *ngIf="saleItem.Qoutable == false"> 
-              Quantity in Stock: <p class="ion-text-right">{{saleItem.quantity}}></p>
+            <ion-row *ngIf="saleItem.quotable == false"> 
+              Quantity in Stock: <p class="ion-text-right">{{saleItem.quantity}}</p>
             </ion-row>
             </ion-card-header>
           <ion-card-content style="color:#b1b2b6;">

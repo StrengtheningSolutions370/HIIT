@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { SalesService } from 'src/app/services/sales/sales.service';
 
@@ -21,7 +22,7 @@ saleItemSub: Subscription;
 
 isLoading = true;
 
-constructor(public saleService: SalesService, public repo: RepoService) {
+constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService) {
    this.fetchSaleItem();
 }
 

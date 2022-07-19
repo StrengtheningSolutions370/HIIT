@@ -42,13 +42,13 @@ export class ConfirmCategoryComponent{
             //CallRepoToCreate
             this.saleService.createSaleCategory(saleCategory);
             this.global.dismissModal();
-            this.global.showToast('The Sale Category has been successfully added!');
+            this.global.showToast('The sale category has been successfully added!');
         } else if (this.choice === 2){
             console.log('Update Sale Category from confirm:');
             //CallRepoToUpdate
             this.saleService.updateSaleCategory(saleCategory.saleCategoryID,saleCategory);
             this.global.dismissModal();
-            this.global.showToast('The Sale Category has been successfully updated!');
+            this.global.showToast('The sale category has been successfully updated!');
           }
         }
       }
