@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { FileUploadComponent } from './file-upload.component';
+import { AssociativeEmployeeComponent } from './associative-employee.component';
 
-describe('FileUploadComponent', () => {
-  let component: FileUploadComponent;
-  let fixture: ComponentFixture<FileUploadComponent>;
+describe('AssociativeEmployeeComponent', () => {
+  let component: AssociativeEmployeeComponent;
+  let fixture: ComponentFixture<AssociativeEmployeeComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FileUploadComponent ],
+      declarations: [ AssociativeEmployeeComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FileUploadComponent);
+    fixture = TestBed.createComponent(AssociativeEmployeeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
