@@ -109,7 +109,7 @@
       <ion-label position="floating">Qualification:</ion-label>
       <ion-select formControlName="qualificationId" type="text" required="" id="qualificationId" >
         <ng-container *ngFor="let qua of qualificationList">
-          <ion-select-option value="{{qua.qualificationID}},{{qua.name}}">{{ qua.name }}</ion-select-option>
+          <ion-select-option value="{{qua.qualificationID}},{{qua.description}}">{{ qua.description }}</ion-select-option>
         </ng-container>
       </ion-select>
       <br/>
@@ -129,7 +129,7 @@
       <ion-label position="floating">Role:</ion-label>
       <ion-select formControlName="role" type="text" required="" id="role" >
         <ng-container *ngFor="let role of roles">
-          <ion-select-option value="{{role}}">{{ role }}</ion-select-option>
+          <ion-select-option value="{{role.value}}">{{ role.role }}</ion-select-option>
         </ng-container>
       </ion-select>
       <br/>

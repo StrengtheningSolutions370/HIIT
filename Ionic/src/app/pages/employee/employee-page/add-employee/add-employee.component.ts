@@ -11,6 +11,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { Employee } from 'src/app/models/employee';
 import { EmployeeType } from 'src/app/models/employeeType';
 import { QualificationType } from 'src/app/models/qualification-type';
+import { Roles } from 'src/app/models/roles.enum';
 import { Venue } from 'src/app/models/venue';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { RepoService } from 'src/app/services/repo.service';
@@ -37,7 +38,8 @@ export class AddEmployeeComponent implements OnInit{
 
   progress=0;
   cEmployeeForm! : FormGroup;
-  roles! : any;
+
+  roles : any[] = [];
 
   photo! : File;
   photoFlag = false;
@@ -54,9 +56,32 @@ export class AddEmployeeComponent implements OnInit{
         this.repo.getUserRole(token).subscribe({
           next: (data : any) => {
             //check for who you can create - superuser can create admins:
-            console.log('data from create', data);
+            const currRole = data.role;
+            AllRoles.map((el : string) => {
+              if (el != Roles.SuperUser && el != Roles.Client && el != Roles.Member) {
+                //filter to remove super user if a super user
+                if (currRole == Roles.SuperUser && el != Roles.SuperUser) {
+                  this.pushBackRole(el);
+                } else {
+                  //the user is an admin
+                  if (el != Roles.SuperUser && el != Roles.Admin) {
+                    this.pushBackRole(el)
+                  }
+                }
+              }
+            })
           }
         })
+      })
+    }
+
+    pushBackRole(el : string) {
+      if (el == 'generalemployee') {
+        el = 'General Employee';
+      }
+      this.roles.push({
+        value: el,
+        role: el.substring(0, 1).toUpperCase() + el.substring(1, el.length)
       })
     }
 
@@ -75,16 +100,10 @@ export class AddEmployeeComponent implements OnInit{
       photo: ['', [this.validatePhoto]],
       idNumber: ['', [this.validateIDNumber]],
       phone: ['', [Validators.pattern(/[0-9]{10}/)]],
-      
       titleId: ['', [Validators.required]],
       qualificationId : ['', Validators.required],
       employeeTypeId: ['', Validators.required],
-
       role: ['', Validators.required]
-      // checkBoxTitles: this.formBuilder.array([], [Validators.required]),
-      // checkBoxQualificationTypes: this.formBuilder.array([], [Validators.required]),
-      // checkBoxEmployeeTypes: this.formBuilder.array([], [Validators.required])
-
     });
 
     //getting employee types for drop down
@@ -239,18 +258,16 @@ export class AddEmployeeComponent implements OnInit{
     const emp = new Employee();
 
     emp.Name = this.cEmployeeForm.value['name'];
-    emp.Surname = this.cEmployeeForm.value[''];
+    emp.Surname = this.cEmployeeForm.value['surname'];
     emp.Photo = this.photo;
     emp.Contract = this.contract;
-    emp.IDNumber = this.cEmployeeForm.value['id'];
+    emp.IDNumber = this.cEmployeeForm.value['idNumber'];
     emp.Phone = this.cEmployeeForm.value['phone'];
     emp.Email = this.cEmployeeForm.value['email'];
-
     emp.TitleID = this.cEmployeeForm.value['titleId'];
-    emp.EmployeeTypeID = this.cEmployeeForm.value[''];
-    emp.QualificationTypeID = this.cEmployeeForm.value[''];
-    emp.QualificationID = this.cEmployeeForm.value[''];
-
+    emp.EmployeeTypeID = this.cEmployeeForm.value['employeeTypeId'];
+    emp.QualificationID = this.cEmployeeForm.value['qualificationId'];
+    emp.role = this.cEmployeeForm.value['role'];
     console.log('emp', emp)
 
    }

@@ -9,6 +9,6 @@ export class Employee{
     TitleID : number;
     EmployeeTypeID : number;
     QualificationID: number;
-    QualificationTypeID: number;
     Contract : File;
+    role : string;
 }
