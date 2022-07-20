@@ -26,8 +26,8 @@ namespace Team7.Models
         [Required]
         public string IDNumber { get; set; }
 
-        /*[Required]
-        public string UserID { get; set; }*/
+        [Required]
+        public string UserID { get; set; }
 
         //public virtual EmployeeContract EmployeeContract { get; set; }
         public virtual EmployeeType EmployeeType { get; set; }

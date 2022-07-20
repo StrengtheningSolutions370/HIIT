@@ -10,8 +10,8 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220720120420_initial")]
-    partial class initial
+    [Migration("20220720231456_inital")]
+    partial class inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -399,6 +399,10 @@ namespace Team7.Migrations
 
                     b.Property<int?>("QualificationID")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EmployeeID");
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Team7.Migrations
 {
-    public partial class initial : Migration
+    public partial class inital : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -772,6 +772,7 @@ namespace Team7.Migrations
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Contract = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IDNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmployeeTypeID = table.Column<int>(type: "int", nullable: true),
                     QualificationID = table.Column<int>(type: "int", nullable: true),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
