@@ -27,9 +27,7 @@ export class ConfirmQtypeComponent {
       if (this.qualificationService.matchingQualificationType(qualificationType.name) != null)
       {
         console.log('Existing QualificationType: ' + qualificationType.name);
-        this.global.showAlert("The Qualification Type already exists, please choose a different name");
-        //display duplicate alert
-        //failure alert
+        this.global.showAlert('The Qualification Type already exists, please choose a different name');
         return;
       }
       else {
@@ -37,16 +35,16 @@ export class ConfirmQtypeComponent {
         //CallRepoToCreate
         await this.qualificationService.createQualificationType(qualificationType);
         this.global.dismissModal();
-        this.global.showToast("The Qualification Type has been successfully added!");
+        this.global.showToast('The Qualification Type has been successfully added!');
       }
     }
 
      else if (this.choice === 2){
       console.log('Update Qualification Type from confirm:');
       //CallRepoToUpdate
-      await this.qualificationService.updateQualificationType(qualificationType.qualificationTypeID,qualificationType);
+      await this.qualificationService.updateQualificationTypes(qualificationType.qualificationTypeID,qualificationType);
       this.global.dismissModal();
-      this.global.showToast("The Qualification Type has been successfully updated!");
+      this.global.showToast('The Qualification Type has been successfully updated!');
         }
   }
 
@@ -64,5 +62,4 @@ export class ConfirmQtypeComponent {
       this.qualificationService.updateQualificationTypeInfoModal(this.qualificationType);
     }
   }
-
 }

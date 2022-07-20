@@ -148,7 +148,7 @@ namespace Team7
             services.AddScoped<IPriceHistoryRepo, PriceHistoryRepo>();
             services.AddScoped<IQualificationRepo, QualificationRepo>();
             services.AddScoped<IQualificationTypeRepo, QualificationTypeRepo>();
-            services.AddScoped<IReceiptRepo, ReceiptRepo>();
+            services.AddScoped<IPaymentRepo, PaymentRepo>();
             services.AddScoped<IRefundReasonRepo, RefundReasonRepo>();
             services.AddScoped<IRefundRepo, RefundRepo>();
             services.AddScoped<ISaleCategoryRepo, SaleCategoryRepo>();

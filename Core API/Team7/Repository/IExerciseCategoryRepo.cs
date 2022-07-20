@@ -13,11 +13,17 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        //Task<ExerciseCategory[]> GetAllExerciseCategorysAsync();
+        Task<object> GetAllExerciseCategorysAsync();
 
-        //Task<ExerciseCategory[]> GetExerciseCategorysAsync(string input);
+        Task<object> GetExerciseCategorysAsync(string input);
 
-        //Task<ExerciseCategory> GetExerciseCategoryIdAsync(int id);
+        Task<object> GetExerciseCategoryIdAsync(int id);
+
+        Task<ExerciseCategory[]> _GetAllExerciseCategorysAsync();
+
+        Task<ExerciseCategory[]> _GetExerciseCategorysAsync(string input);
+
+        Task<ExerciseCategory> _GetExerciseCategoryIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }

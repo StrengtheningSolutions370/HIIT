@@ -63,8 +63,6 @@ ngOnInit() {
 
 }
 
-public createImg = (fileName: string) => { 
-  return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
-}
+public createImg = (fileName: string) => `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
 
 }

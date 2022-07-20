@@ -99,6 +99,13 @@ export class EmployeePagePage {
 
   constructor(private modalCtrl: ModalController, public employeeService: EmployeeService) { }
 
+  async addEmployeeInfoModal() {
+    const modal = await this.modalCtrl.create({
+      component : AddEmployeeComponent
+    });
+    await modal.present();
+
+  }
 
   async updateEmployeeInfoModal() {
     const modal = await this.modalCtrl.create({

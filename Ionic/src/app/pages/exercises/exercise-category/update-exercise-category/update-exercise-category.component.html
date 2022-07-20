@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Exercise Category Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="uExerciseCategoryForm" (ngSubmit)="submitForm()"> 
+    <br/><br/>
+    <ion-item>
+      <ion-label position="stacked">Name:</ion-label>
+      <ion-input formControlName="exerciseCategoryName"  type="text" required=""></ion-input>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.exerciseCategoryName.errors?.required">
+      Exercise Category Name is required.
+      <br/>
+    </span>
+
+    <ion-item>
+      <ion-label position="stacked">Description:</ion-label>
+      <ion-textarea formControlName="exerciseCategoryDescription"  type="text" required=""></ion-textarea>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.exerciseCategoryDescription.errors?.required">
+      Exercise Category Description is required.
+      <br/>
+    </span>
+
+    <br><br/>
+    <ion-button type="submit" color="secondary" [disabled]="!uExerciseCategoryForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Exercise Category</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Cancel</ion-button>
+  </form>
+</ion-content>
