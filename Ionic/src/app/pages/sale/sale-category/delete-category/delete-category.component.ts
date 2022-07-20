@@ -21,7 +21,7 @@ export class DeleteCategoryComponent{
   async delete(id: number){
     this.saleService.deleteSaleCategory(id);
     this.global.dismissModal();
-    this.global.showToast('The Sale Category has been successfully deleted!');
+    this.global.showToast('The sale category has been successfully deleted!');
   }
 
 }

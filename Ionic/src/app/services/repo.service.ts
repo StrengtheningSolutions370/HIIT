@@ -65,8 +65,8 @@ export class RepoService {
   login(userDetails: appUser): Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
   }
-  
-  
+
+
   //Venue:
   //------
   //Create
@@ -282,8 +282,8 @@ deleteSaleItemImage(id : string) : Observable<any> {
     return this.http.get(`${this.base + this.ExerciseCategoryController}getAll`, this.httpOptions);
   }
   //GetMatch
-  getMatchExerciseCategory(input: string): Observable<any> {
-    return this.http.get(`${this.base + this.ExerciseCategoryController}getMatch?input=${input}`, this.httpOptions);
+  getMatchExerciseCategory(name: string, description: string): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseCategoryController}getMatch?name=${name}&description=${description}`, this.httpOptions);
   }
   //Exists
   existsExerciseCategory(id: number): Observable<any> {

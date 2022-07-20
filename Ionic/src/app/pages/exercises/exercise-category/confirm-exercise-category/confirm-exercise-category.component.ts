@@ -1,61 +1,72 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, AlertController } from '@ionic/angular';
-import { ExerciseCategory } from 'src/app/models/exercise-category'; 
-import { ExerciseService } from 'src/app/services/exercise/exercise.service'; 
+import { ExerciseCategory } from 'src/app/models/exercise-category';
+import { ExerciseService } from 'src/app/services/exercise/exercise.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-confirm-exercise-category',
   templateUrl: './confirm-exercise-category.component.html',
   styleUrls: ['./confirm-exercise-category.component.scss'],
 })
-export class ConfirmExerciseCategoryComponent implements OnInit {
+export class ConfirmExerciseCategoryComponent {
 
   @Input() choice: number;
   @Input() exerciseCategory: ExerciseCategory;
-  alertCtrl: any;
 
-  constructor(private modalCtrl: ModalController, public exerciseService: ExerciseService,
-    public router: Router, public activated: ActivatedRoute, public toastCtrl: ToastController, alertCtrl: AlertController ) { 
+  constructor(private global: GlobalService, public exerciseService: ExerciseService ) {
   }
 
-  dismissModal() {
-    this.modalCtrl.dismiss();
-  };
+  async checkMatch(name:string, description:string): Promise<boolean>{
+    return this.exerciseService.matchingExerciseCategory(name,description).then(data => {
+      console.log("Check match result:");
+      console.log(data);
+       if (data != 0){
+        let match = data.result;
+        if (match.length > 1){
+          this.global.showAlert("The exercise category information entered already exists on the system","Exercise Category Already Exists");
+          return true;
+        } else if (match.length == 1 && this.choice == 2 && match[0].exerciseCategoryID == this.exerciseCategory.exerciseCategoryID){
+          alert("Matching itself in update");
+          return false;
+        } else {
+          console.log("Must be in ADD, with exactly 1 other match: ");
+          console.log("Choice: " + this.choice);
+          this.global.showAlert("The exercise category information entered already exists on the system","Exercise Category Already Exists");
+          return true;
+        }
+       } else {
+         return false;
+       }
+     });
+   }
+
 
   //1 = confirm ADD
   //2 = confirm UPDATE
 
   async confirmChanges(exerciseCategory: ExerciseCategory){
-    console.log(this.choice);
-    if (this.choice === 1){
-      //search duplicates
-      if (this.exerciseService.matchingExerciseCategory(exerciseCategory.name) != null &&
-      this.exerciseService.matchingExerciseCategory(exerciseCategory.description) != null)
-      {
-        console.log('Existing Exercise Category: ' + exerciseCategory.name +': '+ exerciseCategory.description);
-        this.duplicateAlert();
-        return;
+    //search duplicates
+    await this.checkMatch(exerciseCategory.name,exerciseCategory.description).then(result =>{
+      console.log(result);
+      if (result == true){
+         return;
+       } else {
+          if (this.choice === 1){
+            console.log('Add exercise Category from confirm:');
+            //CallRepoToCreate
+            this.exerciseService.createExerciseCategory(exerciseCategory);
+            this.global.dismissModal();
+            this.global.showToast('The exercise category has been successfully added!');
+        } else if (this.choice === 2){
+            console.log('Update exercise Category from confirm:');
+            //CallRepoToUpdate
+            this.exerciseService.updateExerciseCategory(exerciseCategory.exerciseCategoryID,exerciseCategory);
+            this.global.dismissModal();
+            this.global.showToast('The exercise category has been successfully updated!');
+          }
+        }
       }
-      else
-      {
-        console.log('Add Exercise Category from confirm:');
-        console.log(exerciseCategory.description);
-        //CallRepoToCreate
-        await this.exerciseService.createExersiceCategory(exerciseCategory);
-         this.dismissModal();
-        this.sucAdd();
-      }
-    }
-    else if (this.choice === 2)
-    {
-      console.log('Update Exercise Category from confirm:');
-      //CallRepoToUpdate
-      await this.exerciseService.updateExerciseCategory(exerciseCategory.exerciseCategoryID,exerciseCategory);
-      console.log(exerciseCategory.description)
-      this.dismissModal();
-      this.sucUpdate();
-    }
+    )
   }
 
   async returnFrom(){
@@ -63,40 +74,12 @@ export class ConfirmExerciseCategoryComponent implements OnInit {
     //2 = return to UPDATE
     if (this.choice === 1){
       console.log(this.exerciseCategory);
-      await this.dismissModal();
+      await this.global.dismissModal();
       this.exerciseService.addExerciseCategoryInfoModal(this.exerciseCategory);
     } else if (this.choice === 2){
       console.log(this.exerciseCategory);
-      await this.dismissModal();
+      await this.global.dismissModal();
       this.exerciseService.updateExerciseCategoryInfoModal(this.exerciseCategory);
     }
   }
-
-  async sucAdd() {
-    const toast = await this.toastCtrl.create({
-      message: 'The Exercise Category has been successfully added!',
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async sucUpdate() {
-    const toast = await this.toastCtrl.create({
-      message: 'The Exercise Category has been successfully updated!',
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async duplicateAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Exercise Category Already Exists',
-      message: 'The Exercise Category Information entered already exists on the system',
-      buttons: ['OK']
-    });
-   alert.present();
-  }
-
-  ngOnInit() {}
-
 }

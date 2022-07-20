@@ -15,13 +15,9 @@ namespace Team7.Models.Repository
 
         Task<object> GetAllExerciseCategorysAsync();
 
-        Task<object> GetExerciseCategorysAsync(string input);
+        Task<object> GetExerciseCategorysAsync(string name, string description);
 
         Task<object> GetExerciseCategoryIdAsync(int id);
-
-        Task<ExerciseCategory[]> _GetAllExerciseCategorysAsync();
-
-        Task<ExerciseCategory[]> _GetExerciseCategorysAsync(string input);
 
         Task<ExerciseCategory> _GetExerciseCategoryIdAsync(int id);
 

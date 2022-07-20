@@ -5,13 +5,13 @@
 /* eslint-disable @typescript-eslint/semi */
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { ExerciseCategory } from 'src/app/models/exercise-category'; 
-import { AddExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/add-exercise-category/add-exercise-category.component'; 
-import { DeleteExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/delete-exercise-category/delete-exercise-category.component'; 
-import { UpdateExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/update-exercise-category/update-exercise-category.component'; 
-import { ViewExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/view-exercise-category/view-exercise-category.component'; 
-import { ConfirmExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/confirm-exercise-category/confirm-exercise-category.component'; 
-import { AssociativeExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/associative-exercise-category/associative-exercise-category.component';  
+import { ExerciseCategory } from 'src/app/models/exercise-category';
+import { AddExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/add-exercise-category/add-exercise-category.component';
+import { DeleteExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/delete-exercise-category/delete-exercise-category.component';
+import { UpdateExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/update-exercise-category/update-exercise-category.component';
+import { ViewExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/view-exercise-category/view-exercise-category.component';
+import { ConfirmExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/confirm-exercise-category/confirm-exercise-category.component';
+import { AssociativeExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/associative-exercise-category/associative-exercise-category.component';
 import { RepoService } from '../repo.service';
 import { Observable } from 'rxjs';
 
@@ -34,13 +34,13 @@ export class ExerciseService {
 
   //Methods
   //Add a exercise category to the exercise category list within the exercise category service.
-   createExersiceCategory(exerciseCategory: any){
+   createExerciseCategory(exerciseCategory: any){
     this.repo.createExerciseCategory(exerciseCategory).subscribe(
       {
         next: () => {
           console.log('EXERCISE CATEGORY CREATED');
           this.fetchExerciseCategorysEvent.emit(exerciseCategory);
-        }, 
+        },
         error: () => {
         }
       }
@@ -65,18 +65,13 @@ export class ExerciseService {
       console.log('EXERCISE CATEGORY DELETED');
       this.fetchExerciseCategorysEvent.emit();
     });
-   }  
+   }
 
-   matchingExerciseCategory(input: string){
+   matchingExerciseCategory(name: string, description: string):Promise<any>{
     console.log('ExerciseService: Repo -> Matching ExerciseCategory');
-    this.repo.getMatchExerciseCategory(input);
+    return this.repo.getMatchExerciseCategory(name,description).toPromise();
    }
 
-   existingExerciseCategory(id: number){
-    console.log('exerciseCategoryService: Repo -> Existing Exercise category');
-    this.repo.existsExerciseCategory(id).subscribe(result =>
-     console.log(result));
-   }
 
   //Modals
   async addExerciseCategoryInfoModal(exerciseCategory?: ExerciseCategory) {
@@ -93,7 +88,7 @@ export class ExerciseService {
   //This method receives the selected exercise category object, from the exercise category page, in the modal through the componentProps.
   async updateExerciseCategoryInfoModal(exerciseCategory: ExerciseCategory) {
     console.log("ExerciseCategoryService: UpdateExerciseCategoryModalCall");
-    
+
     const modal = await this.modalCtrl.create({
       component: UpdateExerciseCategoryComponent,
       componentProps:{

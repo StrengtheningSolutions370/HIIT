@@ -3,10 +3,10 @@
 /* eslint-disable @typescript-eslint/quotes */
 import { Component,  Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ExerciseCategory } from 'src/app/models/exercise-category';  
-import { ExerciseService } from 'src/app/services/exercise/exercise.service'; 
-import { ModalController, ToastController, AlertController, ViewWillEnter} from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ExerciseCategory } from 'src/app/models/exercise-category';
+import { ExerciseService } from 'src/app/services/exercise/exercise.service';
+import { ViewWillEnter} from '@ionic/angular';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-add-exercise-category',
@@ -23,10 +23,9 @@ export class AddExerciseCategoryComponent implements ViewWillEnter {
     exerciseCategoryDescription: ['', [Validators.required]]
   });
 
-  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
-    public exerciseService: ExerciseService, private router: Router, private currentRoute: ActivatedRoute,
-    private  alertCtrl: AlertController ) { }
-  
+  constructor(private global: GlobalService,  public formBuilder: FormBuilder,
+    public exerciseService: ExerciseService ) { }
+
   //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
     return this.cExerciseCategoryForm.controls;
@@ -39,7 +38,7 @@ export class AddExerciseCategoryComponent implements ViewWillEnter {
       this.cExerciseCategoryForm.controls.exerciseCategoryName.setValue(this.exerciseCategory.name),
       this.cExerciseCategoryForm.controls.exerciseCategoryDescription.setValue(this.exerciseCategory.description);}
     }
-  
+
     submitForm() {
       if (!this.cExerciseCategoryForm.valid){
         console.log(this.cExerciseCategoryForm.value['exerciseCategoryName']);
@@ -52,47 +51,10 @@ export class AddExerciseCategoryComponent implements ViewWillEnter {
         const temp = {
           name: this.cExerciseCategoryForm.value['exerciseCategoryName'],
           description: this.cExerciseCategoryForm.value['exerciseCategoryDescription'],
-          items: []
+          exercises: []
         };
-        this.dismissModal();
+        this.global.dismissModal();
         this.exerciseService.confirmExerciseCategoryModal(1,temp);
-
-        // this.sucAdd();
-        // console.log("CurrentRoute:ADD");
-        // console.log(this.currentRoute.url);
       }
-      
      }
-
-     async sucAdd() {
-      const toast = await this.toastCtrl.create({
-        message: 'The Exercise Category has been successfully added!',
-        duration: 2000,
-        position : 'top'
-      });
-      toast.present();
-    }
-
-    //Once the modal has been dismissed.
-    dismissModal() {
-      this.modalCtrl.dismiss();
-    };
-
-    async duplicateAlert() {
-      const alert = await this.alertCtrl.create({
-        header: 'Exercise Category Already Exists',
-        message: 'The Exercise Category Information entered already exists on the system',
-        buttons: ['OK']
-      });
-      alert.present();
-    }
-
-    async failureAlert() {
-      const alert = await this.alertCtrl.create({
-        header: 'Could not create exercise category',
-        message: 'There was an error creating the exercise category. Please try again',
-        buttons: ['OK']
-      });
-      alert.present();
-    }
 }

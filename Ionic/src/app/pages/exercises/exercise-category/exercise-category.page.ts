@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { RepoService } from 'src/app/services/repo.service';
@@ -34,7 +33,7 @@ export class ExerciseCategoryPage implements OnInit {
     // this.populateTitles();
     this.fetchExerciseCategory();
    }
-  
+
    fetchExerciseCategory() {
     this.isLoading = true;
     this.exerciseService.getAllExerciseCategorys().subscribe(
