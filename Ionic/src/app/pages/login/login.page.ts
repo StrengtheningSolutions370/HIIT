@@ -53,12 +53,12 @@ export class LoginPage implements OnInit {
 
 
  async login(loginForm: NgForm){
-    var userLogin = new appUser();
+    let userLogin = new appUser();
     userLogin = {
       emailAddress : loginForm.value.emailAddress,
       //add password encryption here
-      password : loginForm.value.password 
-    }
+      password : loginForm.value.password
+    };
     await this.auth.login(userLogin);
   }
 }
