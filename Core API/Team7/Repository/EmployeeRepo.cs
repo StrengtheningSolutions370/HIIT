@@ -15,10 +15,12 @@ namespace Team7.Models.Repository
         readonly private AppDB DB;
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ITitleRepo _titleRepo;
 
-        public EmployeeRepo(AppDB appDatabaseContext, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
+        public EmployeeRepo(ITitleRepo titleRepo, AppDB appDatabaseContext, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
         {
             DB = appDatabaseContext;
+            this._titleRepo = titleRepo;
             this._roleManager = roleManager;
             this._userManager = userManager;
         }
@@ -67,7 +69,7 @@ namespace Team7.Models.Repository
             //IQueryable<object> query = DB.QualificationType;
             //return await query.ToArrayAsync();
 
-            /*return await DB
+            return await DB
                 .Employee
                 .Select(e => new Employee
                 {
@@ -76,24 +78,7 @@ namespace Team7.Models.Repository
                     Contract = e.Contract,
                     IDNumber = e.IDNumber,
                     AppUser = e.AppUser,
-                }).ToListAsync();*/
-
-            var o = new List<object>();
-
-            var employees = await DB.Employee.ToListAsync();
-
-            employees.ForEach(async e =>
-               {
-                   o.Add(
-                       new
-                       {
-                           Employee = e,
-                           Role = this._userManager.GetRolesAsync(await _userManager.FindByIdAsync(e.EmployeeID.ToString()))
-                       }
-                   );
-               });
-
-            return o;
+                }).ToListAsync();
 
         }
 

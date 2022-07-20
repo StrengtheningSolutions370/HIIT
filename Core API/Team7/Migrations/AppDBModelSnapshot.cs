@@ -398,6 +398,10 @@ namespace Team7.Migrations
                     b.Property<int?>("QualificationID")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("EmployeeID");
 
                     b.HasIndex("AppUserId");
