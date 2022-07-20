@@ -50,6 +50,7 @@ namespace Team7.Controllers
             try
             {
                 toUpdate.Name = exerciseCategory.Name;
+                toUpdate.Description = exerciseCategory.Description;
                 await ExerciseCategoryRepo.SaveChangesAsync();
                 return Ok();
             }
