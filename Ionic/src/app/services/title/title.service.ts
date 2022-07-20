@@ -40,7 +40,7 @@ export class TitleService {
         next: () => {
           console.log('TITLE CREATED');
           this.fetchTitlesEvent.emit(title);
-        }, 
+        },
         error: () => {
         }
       }
@@ -65,7 +65,7 @@ export class TitleService {
       console.log('TITLE DELETED');
       this.fetchTitlesEvent.emit();
     });
-   }  
+   }
 
    matchingTitle(input: string): Promise<any>{
     console.log('titleService: Repo -> Matching Title');
