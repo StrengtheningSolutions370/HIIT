@@ -49,7 +49,7 @@ namespace Team7.Controllers
             var tempVat = await VATRepo._GetVATIdAsync(id);
             if (tempVat == null)
             {
-                return NotFound("Could not find existing Venue with ID - " + id);
+                return NotFound("Could not find existing VAT with ID - " + id);
             }
             try
             {
