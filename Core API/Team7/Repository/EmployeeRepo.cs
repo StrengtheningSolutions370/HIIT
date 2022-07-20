@@ -45,7 +45,7 @@ namespace Team7.Models.Repository
 
         public async Task<object> GetAllEmployeesAsync()
         {
-            IQueryable<Employee> query = DB.Employee;
+            /*IQueryable<Employee> query = DB.Employee;
 
             if (!query.Any())
             {
@@ -65,7 +65,20 @@ namespace Team7.Models.Repository
                         e.EmployeeType,
                     }).ToListAsync()
                 };
-            }
+            }*/
+            //IQueryable<object> query = DB.QualificationType;
+            //return await query.ToArrayAsync();
+
+            return await DB
+                .Employee
+                .Select(e => new Employee
+                {
+                    EmployeeID = e.EmployeeID,
+                    Photo = e.Photo,
+                    Contract = e.Contract,
+                    IDNumber = e.IDNumber,
+                    AppUser = e.AppUser,
+                }).ToListAsync();
 
         }
 
