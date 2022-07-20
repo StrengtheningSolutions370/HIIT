@@ -1,7 +1,7 @@
 <ion-content>
   
   <br/>
-  <ion-searchbar expand="block" placeholder='I am looking for...' cancelButtonText="Close"></ion-searchbar>
+  <ion-searchbar #search (input)="searchEmployees(search)" expand="block" placeholder='I am looking for...' cancelButtonText="Close"></ion-searchbar>
 
   <br/>
   <br/>
@@ -51,7 +51,7 @@
   </ion-grid> -->
 
 
-    <ion-grid>
+    <ion-grid *ngIf="!loading && !noresults">
       <ion-list *ngFor="let emp of employees">
         <ion-item-sliding>
 
@@ -88,6 +88,12 @@
 
       </ion-list>
     </ion-grid>
+
+    <ion-text id="noRes" *ngIf="!loading && noresults">
+      <h1>No Results</h1>
+    </ion-text>
+
+    <ion-spinner *ngIf="loading" name="bubbles"></ion-spinner>  
 
   <pre>{{employees|json}}</pre>
 </ion-content>

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,14 @@ namespace Team7.Models.Repository
     public class EmployeeRepo : IEmployeeRepo
     {
         readonly private AppDB DB;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public EmployeeRepo(AppDB appDatabaseContext)
+        public EmployeeRepo(AppDB appDatabaseContext, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager)
         {
             DB = appDatabaseContext;
+            this._roleManager = roleManager;
+            this._userManager = userManager;
         }
 
         public void Add<T>(T Entity) where T : class
@@ -62,7 +67,7 @@ namespace Team7.Models.Repository
             //IQueryable<object> query = DB.QualificationType;
             //return await query.ToArrayAsync();
 
-            return  await DB
+            /*return await DB
                 .Employee
                 .Select(e => new Employee
                 {
@@ -71,7 +76,24 @@ namespace Team7.Models.Repository
                     Contract = e.Contract,
                     IDNumber = e.IDNumber,
                     AppUser = e.AppUser,
-                }).ToListAsync();
+                }).ToListAsync();*/
+
+            var o = new List<object>();
+
+            var employees = await DB.Employee.ToListAsync();
+
+            employees.ForEach(async e =>
+               {
+                   o.Add(
+                       new
+                       {
+                           Employee = e,
+                           Role = this._userManager.GetRolesAsync(await _userManager.FindByIdAsync(e.EmployeeID.ToString()))
+                       }
+                   );
+               });
+
+            return o;
 
         }
 

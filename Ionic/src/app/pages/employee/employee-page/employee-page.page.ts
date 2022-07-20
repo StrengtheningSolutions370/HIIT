@@ -6,7 +6,7 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
 import { UpdateEmployeeComponent } from './update-employee/update-employee.component';
 import { ViewEmployeeComponent } from './view-employee/view-employee.component';
-
+import Fuse from 'fuse.js'
 @Component({
   selector: 'app-employee-page',
   templateUrl: './employee-page.page.html',
@@ -98,6 +98,10 @@ export class EmployeePagePage implements OnInit {
   // ];
 
   employees : any[] = [];
+  employeesOriginal : any[] = [];
+
+  loading = true;
+  noresults = false;
 
   constructor(private modalCtrl: ModalController, public employeeService: EmployeeService) { }
   
@@ -106,7 +110,54 @@ export class EmployeePagePage implements OnInit {
     this.employeeService.getAllEmployees().subscribe({
       next: (data : any) => {
         this.employees = data;
+        this.employeesOriginal = data;
+        this.loading = false;
+        if (this.employees.length == 0) {
+          this.noresults = true;
+        }
       }
+    })
+
+  }
+
+  searchEmployees(event : any) {
+
+    const term = event.value;
+
+    this.employees = this.employeesOriginal;
+    this.noresults = false;
+
+    if (term == '') {
+      if (this.employees.length == 0) {
+        this.noresults = true;
+      }
+      return;
+    }
+
+    const hits = new Fuse(this.employees, {
+      keys: [
+        'appUser.firstName',
+        'appUser.lastName',
+        'idNumber',
+        'appUser.phoneNumber',
+        'appUser.email',
+        'appUser.title',
+        'employeeType',
+        'qualification'
+      ]
+    }).search(
+      term
+    );
+
+    if (hits.length == 0) {
+      //no res found
+      this.noresults = true;
+      return;
+    }
+
+    this.employees = [];
+    hits.map((el : any) => {
+      this.employees.push(el.item);
     })
 
   }
