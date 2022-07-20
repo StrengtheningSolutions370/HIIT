@@ -23,6 +23,7 @@ import { ViewEmployeeComponent } from 'src/app/pages/employee/employee-page/view
 
 import { RepoService } from '../repo.service';
 import { TitleService } from '../title/title.service';
+import { Roles } from 'src/app/models/roles.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -69,30 +70,64 @@ private tempE : Employee[];
   }
 
   //Add an employee to the employee list within the employee service 
-  createEmployee(employee: any){
-    const today = new Date();
-    const employeeTemp = {
-      //employee class/model 
-      Name : employee.Name,
-      Surname : employee.Surname,
-      Photo: employee.Photo,
-      IDNumber: employee.IDNumber,
-      Phone: employee.Phone,
-      Email: employee.Email,
-      TitleID: employee.TitleID,
-      EmployeeTypeID: employee.EmployeeTypeID,
-      QualificationID: employee.QualificationID,
-      QualificationTypeID: employee.QualificationTypeID,
-      Contract: employee.Contract
-    };
-    this.repo.createEmployee(employeeTemp).subscribe(
-      {
-        next: () => {
-          console.log('EMPLOYEE CREATED');
-          this.fetchEmployeesEvent.emit(employee);
+  createEmployee(e: Employee) {
+
+    const tempEmp : any = {
+      Name: e.Name,
+      Surname: e.Surname,
+      Photo: null,
+      IDNumber: e.IDNumber,
+      Phone: e.Phone,
+      Email: e.Email,
+      TitleID: e.TitleID.split(',')[0],
+      EmployeeTypeID: e.EmployeeTypeID.split(',')[0],
+      QualificationID: e.QualificationID.split(',')[0],
+      Contract: null,
+      role: e.role,
+      EmployeeID: -1
+    }
+
+    //create payload:
+    const payload = new FormData();
+    payload.append(JSON.stringify(tempEmp), tempEmp);
+    payload.append('contract', e.Contract);
+    payload.append('photo', e.Photo);
+
+    if (e.role == Roles.Admin) {
+      //create admin employee:
+
+      this.repo.createAdmin(payload).subscribe(
+        {
+          next: () => {
+            console.log('ADMIN CREATED');
+            this.fetchEmployeesEvent.emit();
+          }
         }
-      }
-    );
+      );
+
+    } else {
+      //create non-admin employee:
+
+      this.repo.createEmployee(payload).subscribe(
+        {
+          next: () => {
+            console.log('EMPLOYEE CREATED');
+            this.fetchEmployeesEvent.emit();
+          }
+        }
+      );
+
+    }
+
+    // this.repo.createEmployee(payload).subscribe(
+    //   {
+    //     next: () => {
+    //       console.log('EMPLOYEE CREATED');
+    //       this.fetchEmployeesEvent.emit();
+    //     }
+    //   }
+    // );
+
    }
 
    getAllEmployees(): Observable<any> {
@@ -344,7 +379,7 @@ private tempE : Employee[];
 
     //Display the confirm create/update modal
   //Receives the selected employee from the employee page
-  async confirmEmployeeModal(choice: number, employee: any, employeeTypeName: string, qualificationDescription: string, qTypeName: string, title: string, image: any) {
+  async confirmEmployeeModal(choice: number, employee: Employee) {
     console.log('EmployeeService: ConfirmEmployeeModalCall');
     console.log(choice);
     if(choice === 1){
@@ -352,13 +387,8 @@ private tempE : Employee[];
       const modal = await this.modalCtrl.create({
         component: ConfirmEmployeeComponent,
         componentProps: {
-          employee,
           choice,
-          employeeTypeName,
-          qualificationDescription,
-          qTypeName,
-          title,
-          image
+          employee
         }
       });
 
@@ -379,13 +409,7 @@ private tempE : Employee[];
       const modal = await this.modalCtrl.create({
         component: ConfirmEmployeeComponent,
         componentProps: {
-          employee,
-          choice,
-          employeeTypeName,
-          qualificationDescription,
-          qTypeName,
-          title,
-          image
+         employee
         }
       });
       modal.onDidDismiss().then(() => {

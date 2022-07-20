@@ -335,9 +335,19 @@ reuploadSaleItemImage(id: string): Observable<any> {
 
 //EMPLOYEE
 /// Create
-createEmployee(employee: any): Observable<any>{
-  return this.http.post<any>(`${this.base+this.EmployeeController}add`,employee,this.httpOptions);
+
+// createEmployee(employee: any): Observable<any>{
+//   return this.http.post<any>(`${this.base+this.EmployeeController}add`,employee,this.httpOptions);
+// }
+
+createAdmin(data : FormData) : Observable<any> {
+  return this.http.post<any>(`${this.base+this.EmployeeController}createAdmin`, data, this.httpOptions);
 }
+
+createEmployee(data : FormData) : Observable<any> {
+  return this.http.post<any>(`${this.base+this.EmployeeController}createEmployee`, data, this.httpOptions);
+}
+
 //Update
 updateEmployee(employee: Employee): Observable<any>{
   console.log('THE UPDATE OBJECT:');

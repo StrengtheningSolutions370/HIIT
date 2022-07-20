@@ -49,6 +49,8 @@ export class AddEmployeeComponent implements OnInit{
   showProfile = false;
   imgSrc = '';
 
+  pdfSrc = '';
+
   //Creating the form to add the new venue details, that will be displayed in the HTML component
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
@@ -96,17 +98,18 @@ export class AddEmployeeComponent implements OnInit{
   ngOnInit(): void {
 
     this.cEmployeeForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: ['Matthew', [Validators.required]],
       contract: ['', [this.validateContract]],
-      email: ['', [Validators.required, Validators.email]],
-      surname: ['', [Validators.required]],
-      photo: ['', [this.validatePhoto]],
-      idNumber: ['', [this.validateIDNumber]],
-      phone: ['', [Validators.pattern(/[0-9]{10}/)]],
+      email: ['m@gmail.com', [Validators.required, Validators.email]],
+      surname: ['Gotte', [Validators.required]],
+      photo: [''],
+      // photo: ['', [this.validatePhoto]],
+      idNumber: ['0106185223083', [this.validateIDNumber]],
+      phone: ['0000000000', [Validators.pattern(/[0-9]{10}/)]],
       titleId: ['', [Validators.required]],
       qualificationId : ['', Validators.required],
       employeeTypeId: ['', Validators.required],
-      role: ['', Validators.required]
+      role: ['admin', Validators.required]
     });
 
     //getting employee types for drop down
@@ -142,6 +145,11 @@ export class AddEmployeeComponent implements OnInit{
   addContract(event : any) {
     this.contractFlag = true;
     this.contract = event.target.files[0];
+    let reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.pdfSrc = e.target.result;
+    };
+    reader.readAsArrayBuffer(this.contract);
   }
 
   addPhoto(event : any) {
@@ -288,7 +296,10 @@ export class AddEmployeeComponent implements OnInit{
     emp.EmployeeTypeID = this.cEmployeeForm.value['employeeTypeId'];
     emp.QualificationID = this.cEmployeeForm.value['qualificationId'];
     emp.role = this.cEmployeeForm.value['role'];
-    console.log('emp', emp)
+
+
+    //create confirm modal here:
+    this.employeeService.confirmEmployeeModal(1, emp)
 
    }
 

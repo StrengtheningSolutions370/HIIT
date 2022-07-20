@@ -6,9 +6,9 @@ export class Employee{
     IDNumber: string;
     Phone : string;
     Email : string;
-    TitleID : number;
-    EmployeeTypeID : number;
-    QualificationID: number;
+    TitleID : string;
+    EmployeeTypeID : string;
+    QualificationID: string;
     Contract : File;
     role : string;
 }

@@ -1,13 +1,18 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using iTextSharp.text.html;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using Team7.Models;
 using Team7.Models.Repository;
 using Team7.ViewModels;
@@ -28,16 +33,66 @@ namespace Team7.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost]
-        [Route("addAdmin")]
+        [HttpPost, DisableRequestSizeLimit]
+        [Route("createAdmin")]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "superuser")]
-        public async Task<IActionResult> RegisterAdmin(UserViewModel userViewModel)
+        public async Task<IActionResult> createAdmin()
         {
+            var formCollection = await Request.ReadFormAsync();
 
+            //1. convert employee back to an object and pull values 
+            string s = formCollection.Keys.FirstOrDefault();
+            string decode = HttpUtility.UrlDecode(s);
+            var employee = JObject.Parse(decode);
+
+            var EmployeeID = Guid.NewGuid().ToString(); //use this for creation and file storage
+            var Name = employee["Name"];
+            var Surname = employee["Surname"];
+            var IDNumber = employee["IDNumber"];
+            var Phone = employee["Phone"];
+            var Email = employee["Email"];
+            var TitleId = employee["TitleID"];
+            var EmployeeTypeId = employee["EmployeeTypeId"];
+            var QualificationID = employee["QualificationID"];
+
+            //check if role exisit
             var role = "superuser";
 
             //check if role exists:
             var exists = await _roleManager.FindByNameAsync(userViewModel.role);
+            if (exists == null)
+            {
+                //role does not exists yet:
+                //create the role here:
+                IdentityRole newRole = new IdentityRole
+                {
+                    Name = role
+                };
+                IdentityResult result = await _roleManager.CreateAsync(newRole);
+
+            }
+
+            //Create the user
+
+            //take user ID and store contract
+            var contract = formCollection.Files.First();
+
+            //4. take user ID and store profile image
+            if (formCollection.Files.Count == 2)
+            {
+                var photo = formCollection.Files[1];
+            }
+
+            //store values from object:
+
+
+
+            
+
+            var role = "superuser";
+
+            //check if role exists:
+            /*var exists = await _roleManager.FindByNameAsync(userViewModel.role);
             if (exists == null)
             {
                 //role does not exists yet:
@@ -80,11 +135,11 @@ namespace Team7.Controllers
             else
             {
                 return Forbid("Account with provided email address already exists");
-            }
+            }*/
             return Ok("Account created successfully");
         }
 
-        [HttpGet]
+        [HttpGet, DisableRequestSizeLimit]
         [Route("token")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Token()
@@ -105,12 +160,12 @@ namespace Team7.Controllers
         }
 
         [HttpPost]
-        [Route("addEmployee")]
+        [Route("createEmployee")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, superuser")]
-        public async Task<IActionResult> RegisterEmployee(UserViewModel userViewModel)
+        public async Task<IActionResult> createEmployee()
         {
-
-            string[] supportedRole = { "trainer", "generalemployee" };
+            var formCollection = await Request.ReadFormAsync();
+            /*string[] supportedRole = { "trainer", "generalemployee" };
             bool flag = false;
             foreach (var role in supportedRole)
                 if (role == userViewModel.role)
@@ -165,7 +220,7 @@ namespace Team7.Controllers
             else
             {
                 return Forbid("Account with provided email address already exists");
-            }
+            }*/
             return Ok("Account created successfully");
         }
 

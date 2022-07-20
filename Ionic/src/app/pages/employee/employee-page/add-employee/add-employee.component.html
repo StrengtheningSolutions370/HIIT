@@ -156,6 +156,13 @@
       <br />
     </span>
 
+    <ion-item *ngIf="contractFlag">
+      <pdf-viewer [src]="pdfSrc"
+                [render-text]="true"
+                [original-size]="false"
+                ></pdf-viewer>
+    </ion-item>
+
 
     <ion-button (click)="submitForm()" expand="block" color="success" [disabled]="cEmployeeForm.invalid">Create Employee</ion-button>
 
