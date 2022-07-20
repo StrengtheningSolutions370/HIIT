@@ -168,7 +168,7 @@ export const routes: Routes = [
   },
   {
     path: 'exercises',
-    loadChildren: () => import('./pages/exercises/exercises.module').then( m => m.ExercisesPageModule),
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Trainer]
@@ -197,7 +197,10 @@ export const routes: Routes = [
     path: '**', //this route object must be last
     redirectTo: 'login',
   },
-];
+  {
+    path: 'booking',
+    loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule)
+  }]
 
 @NgModule({
   imports: [

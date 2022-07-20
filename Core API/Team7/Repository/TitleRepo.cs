@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;    
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
@@ -56,19 +54,6 @@ namespace Team7.Models.Repository
             }
         }
 
-        public async Task<Title[]> _GetAllTitlesAsync()
-        {
-            IQueryable<Title> query = DB.Title;
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return await query.ToArrayAsync();
-            }
-        }
-
         public async Task<object> GetTitlesAsync(string input)
         {
             IQueryable<Title> query = DB.Title.Where(t => t.Description == input);
@@ -84,22 +69,12 @@ namespace Team7.Models.Repository
                     {
                         t.TitleID,
                         t.Description,
+                        Users = t
+                        .User
+                        .Select(u => new {u.FirstName, u.LastName, u.UserName, u.Email})
                     }).ToListAsync()
                 };
             }
-        }
-        public async Task<Title[]> _GetTitlesAsync(string input)
-        {
-            IQueryable<Title> query = DB.Title.Where(t => t.Description == input);
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return await query.ToArrayAsync();
-            }
-
         }
         public async Task<object> GetTitleIdAsync(int id)
         {
@@ -116,6 +91,9 @@ namespace Team7.Models.Repository
                     {
                         t.TitleID,
                         t.Description,
+                        Users = t
+                        .User
+                        .Select(u => new { u.FirstName, u.LastName, u.UserName, u.Email })
                     }).ToListAsync()
                 };
             }

@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Team7.Models.Repository;
 using Team7.Models;
-using Microsoft.EntityFrameworkCore;
-using Team7.Context;
 
 namespace Team7.Controllers
 {
@@ -29,8 +25,13 @@ namespace Team7.Controllers
             try
             {
                 VATRepo.Add(vat);
-                await VATRepo.SaveChangesAsync();
-                return Ok();
+                if (await VATRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                } else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
+                }                
             }
             catch (Exception err)
             {
@@ -39,29 +40,6 @@ namespace Team7.Controllers
 
         }
 
-        // PUT api/Vat/update/5
-        [HttpPut]
-        [Route("update")]
-        public async Task<IActionResult> PutVat(int id, [FromBody] VAT vat)
-        {
-            var toUpdate = await VATRepo._GetVATIdAsync(id);
-            if (toUpdate == null)
-            {
-                return NotFound("Could not find existing VAT with id:" + id);
-            }
-            try
-            {
-                toUpdate.Percentage = vat.Percentage;
-                toUpdate.Date = vat.Date;
-                //VenueRepo.Update<Venue>(tempVenue);
-                await VATRepo.SaveChangesAsync();
-                return Ok("Successfully updated");
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
-        }
 
         // DELETE api/Vat/delete/5
         [HttpDelete]
@@ -71,13 +49,20 @@ namespace Team7.Controllers
             var tempVat = await VATRepo._GetVATIdAsync(id);
             if (tempVat == null)
             {
-                return NotFound("Could not find existing VAT with id:" + id);
+                return NotFound("Could not find existing VAT with ID - " + id);
             }
             try
             {
                 VATRepo.Delete<VAT>(tempVat);
-                await VATRepo.SaveChangesAsync();
-                return Ok();
+                if (await VATRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
+                }
+
             }
             catch (Exception err)
             {
@@ -109,11 +94,11 @@ namespace Team7.Controllers
         // GET: api/Vat/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingVATs(string input)
+        public async Task<IActionResult> GetMatchingVATs(decimal? percentage, DateTime? date)
         {
             try
             {
-                var vat = await VATRepo.GetVATsAsync(input);
+                var vat = await VATRepo.GetVATsAsync(percentage, date);
                 if (vat == null) return Ok(0);
                 return Ok(vat);
             }
@@ -122,22 +107,6 @@ namespace Team7.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
 
-        }
-
-        [HttpGet]
-        [Route("exists")]
-        public async Task<IActionResult> VATExists(int id)
-        {
-            try
-            {
-                var VAT = await VATRepo._GetVATIdAsync(id);
-                if (VAT == null) return Ok(0);
-                return Ok(VAT);
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
         }
     }
 }

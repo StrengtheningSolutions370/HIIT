@@ -46,7 +46,7 @@ export class AddTitleComponent implements ViewWillEnter {
       }else{
         const temp = {
           description: this.cTitleForm.value['titleDescription'],
-          users: []
+          users: null
         };
         this.titleService.confirmTitleModal(1,temp);
         this.global.dismissModal();

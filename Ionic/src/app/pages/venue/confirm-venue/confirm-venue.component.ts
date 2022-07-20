@@ -41,8 +41,8 @@ export class ConfirmVenueComponent {
     await this.checkMatch(venue.name,venue.address).then(result =>{
       console.log(result);
       if (result == true){
-        return;       
-      } else {
+         return;       
+       } else {
         if (this.choice === 1){
             console.log('Add Venue from confirm:');
             //CallRepoToCreate
