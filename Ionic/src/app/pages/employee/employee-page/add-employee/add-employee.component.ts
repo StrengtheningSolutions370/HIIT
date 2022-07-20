@@ -98,18 +98,18 @@ export class AddEmployeeComponent implements OnInit{
   ngOnInit(): void {
 
     this.cEmployeeForm = this.formBuilder.group({
-      name: ['Matthew', [Validators.required]],
+      name: ['Shannon', [Validators.required]],
       contract: ['', [this.validateContract]],
-      email: ['m@gmail.com', [Validators.required, Validators.email]],
-      surname: ['Gotte', [Validators.required]],
+      email: ['u20502746@tuks.co.za', [Validators.required, Validators.email]],
+      surname: ['Noel', [Validators.required]],
       photo: [''],
       // photo: ['', [this.validatePhoto]],
-      idNumber: ['0106185223083', [this.validateIDNumber]],
+      idNumber: ['0109030294085', [this.validateIDNumber]],
       phone: ['0000000000', [Validators.pattern(/[0-9]{10}/)]],
       titleId: ['', [Validators.required]],
       qualificationId : ['', Validators.required],
       employeeTypeId: ['', Validators.required],
-      role: ['admin', Validators.required]
+      role: ['', Validators.required]
     });
 
     //getting employee types for drop down

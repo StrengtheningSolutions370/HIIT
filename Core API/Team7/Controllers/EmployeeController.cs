@@ -16,6 +16,8 @@ using System.Web;
 using Team7.Models;
 using Team7.Models.Repository;
 using Team7.ViewModels;
+using Team7.Services;
+using System.Net.Http.Headers;
 
 namespace Team7.Controllers
 {
@@ -24,11 +26,13 @@ namespace Team7.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepo EmployeeRepo;
+        private readonly ITitleRepo TitleRepo;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<AppUser> _userManager;
-        public EmployeeController(UserManager<AppUser> userManager, IEmployeeRepo employeeRepo, RoleManager<IdentityRole> roleManager)
+        public EmployeeController(UserManager<AppUser> userManager, IEmployeeRepo employeeRepo, RoleManager<IdentityRole> roleManager, ITitleRepo TitleRepo)
         {
             this.EmployeeRepo = employeeRepo;
+            this.TitleRepo = TitleRepo;
             _roleManager = roleManager;
             _userManager = userManager;
         }
@@ -45,21 +49,21 @@ namespace Team7.Controllers
             string decode = HttpUtility.UrlDecode(s);
             var employee = JObject.Parse(decode);
 
-            var EmployeeID = Guid.NewGuid().ToString(); //use this for creation and file storage
-            var Name = employee["Name"];
-            var Surname = employee["Surname"];
-            var IDNumber = employee["IDNumber"];
-            var Phone = employee["Phone"];
-            var Email = employee["Email"];
-            var TitleId = employee["TitleID"];
-            var EmployeeTypeId = employee["EmployeeTypeId"];
-            var QualificationID = employee["QualificationID"];
+            string EmployeeID = Guid.NewGuid().ToString(); //use this for creation and file storage
+            string Name = employee["Name"].ToString();
+            string Surname = employee["Surname"].ToString();
+            string IDNumber = employee["IDNumber"].ToString();
+            string Phone = employee["Phone"].ToString();
+            string Email = employee["Email"].ToString();
+            string TitleId = employee["TitleID"].ToString();
+            string EmployeeTypeId = employee["EmployeeTypeID"].ToString();
+            string QualificationID = employee["QualificationID"].ToString();
 
             //check if role exisit
-            var role = "superuser";
+            var role = "admin";
 
             //check if role exists:
-            var exists = await _roleManager.FindByNameAsync(userViewModel.role);
+            var exists = await _roleManager.FindByNameAsync(role);
             if (exists == null)
             {
                 //role does not exists yet:
@@ -73,70 +77,149 @@ namespace Team7.Controllers
             }
 
             //Create the user
-
-            //take user ID and store contract
-            var contract = formCollection.Files.First();
-
-            //4. take user ID and store profile image
-            if (formCollection.Files.Count == 2)
-            {
-                var photo = formCollection.Files[1];
-            }
-
-            //store values from object:
-
-
-
-            
-
-            var role = "superuser";
-
-            //check if role exists:
-            /*var exists = await _roleManager.FindByNameAsync(userViewModel.role);
-            if (exists == null)
-            {
-                //role does not exists yet:
-                //create the role here:
-                IdentityRole newRole = new IdentityRole
-                {
-                    Name = role
-                };
-                IdentityResult result = await _roleManager.CreateAsync(newRole);
-
-            }
-
-            var user = await _userManager.FindByNameAsync(userViewModel.EmailAddress);
+            var user = await _userManager.FindByNameAsync(Email);
 
             if (user == null)
             {
+
+                var emptitle = await this.TitleRepo._GetTitleIdAsync(Convert.ToInt32(TitleId));
+
                 //Create new user - no existing account with matching email address
                 user = new AppUser
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    UserName = userViewModel.EmailAddress,
-                    Email = userViewModel.EmailAddress,
-                    PhoneNumber = userViewModel.phoneNumber,
-                    FirstName = userViewModel.firstName,
-                    LastName = userViewModel.lastName,
+                    Id = EmployeeID,
+                    UserName = Email,
+                    Email = Email,
+                    PhoneNumber = Phone,
+                    FirstName = Name,
+                    LastName = Surname,
+                    Title = emptitle
                 };
 
-                var result = await _userManager.CreateAsync(user, userViewModel.Password);
+                //assign a password from generator
+                string randomPassword = generatePassword();
+                var result = await _userManager.CreateAsync(user, randomPassword);
 
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, role);
+
+                    Email email = new Email();
+                    var body = "<h1>Strengthening Solutions</h1> <br /> <hr>" +
+                        "<p><strong>Email:</strong> " + Email + "</p>" +
+                        "<p><strong>Password:</strong> " + randomPassword + "</p>" +
+                        "<br /> <hr>";
+                    try
+                    {
+                        //email the password to the user:
+                        email.sendEmail(Email, "Strengthening Solutions", body);
+
+
+                        ///////////////////////////////////////////////////
+                        ///store files from FormData:
+                        
+                            //store contract:
+                            //config
+                            var contract = formCollection.Files.First();
+                            var contractFolder = Path.Combine("Resources", "Employees", "Contracts");
+                            var contractPath = Path.Combine(Directory.GetCurrentDirectory(), contractFolder);
+                            //storage
+                            var contractFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + ".pdf";
+                            var contractFullPath = Path.Combine(contractPath, contractFileName);
+                            using (var stream = new FileStream(contractFullPath, FileMode.Create))
+                            {
+                                contract.CopyTo(stream);
+                            }
+
+
+                            //check if photo to store:
+                            if (formCollection.Files.Count == 2)
+                            {
+                                //get file
+                                var photo = formCollection.Files[1];
+                                //config
+                                var photoFolder = Path.Combine("Resources", "Employees", "Images");
+                                var photoPath = Path.Combine(Directory.GetCurrentDirectory(), photoFolder);
+                                //storage
+                                var photoFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "." + photo.ContentType;
+                                var photoFullPath = Path.Combine(photoPath, photoFileName);
+                                using (var stream = new FileStream(photoFullPath, FileMode.Create))
+                                {
+                                    photo.CopyTo(stream);
+                                }
+                            }
+
+                        ///////////////////////////////////////////////////
+
+
+                        return Ok("Account created successfully");
+
+                    } catch (Exception ex)
+                    {
+                        StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
+                    }
+
                 }
 
                 if (result.Errors.Any())
                 {
                     StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
                 }
+
             }
             else
             {
                 return Forbid("Account with provided email address already exists");
-            }*/
+            }
+
             return Ok("Account created successfully");
+
+        }
+
+        static string generatePassword()
+        {
+            //ascii 33 - 122
+
+            string output = "";
+            for (int i = 0; i < 2; i++)
+            {
+                output += getCap();
+                output += getLow();
+                output += getSpecial();
+                output += getDigit();
+            }
+            return output;
+        }
+
+        static int randomRange(int min, int max)
+        {
+            Random random = new Random();
+            return random.Next(min, max);
+        }
+
+        static char getCap()
+        {
+            //65-90
+            return (char) randomRange(65, 90);
+        }
+
+        static char getLow()
+        {
+            //97-122
+            return (char) randomRange(97, 122);
+
+        }
+
+        static char getDigit()
+        {
+            //48-57
+            return (char) randomRange(48, 58);
+        }
+
+        static char getSpecial()
+        {
+            //58-64
+            return (char) randomRange(58, 64);
         }
 
         [HttpGet, DisableRequestSizeLimit]

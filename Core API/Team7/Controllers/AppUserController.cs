@@ -63,6 +63,7 @@ namespace Team7.Controllers
 
             if (user == null)
             {
+
                 //Create new user - no existing account with matching email address
                 user = new AppUser
                 {
