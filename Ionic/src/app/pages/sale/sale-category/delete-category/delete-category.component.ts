@@ -11,7 +11,7 @@ import { SalesService } from 'src/app/services/sales/sales.service';
   styleUrls: ['./delete-category.component.scss'],
 })
 export class DeleteCategoryComponent{
-  @Input() saleCategory: SaleCategory;
+  @Input() saleCategory: any;
 
 
   constructor(private global: GlobalService, public formBuilder: FormBuilder,

@@ -206,13 +206,9 @@ constructor(private global: GlobalService, public formBuilder: FormBuilder,
       } else {
         //image did not change
         this.global.dismissModal();
-        this.saleService.confirmSaleItemModal(2, obj, this.uSaleItemForm.value['itemSCategory'].split(',')[1], this.createImg(this.saleItem.photo));
+        this.saleService.confirmSaleItemModal(2, obj, this.uSaleItemForm.value['itemSCategory'].split(',')[1], this.global.createImg(this.saleItem.photo));
 
       }
 
     }
-
-   public createImg = (fileName: string) => { 
-    return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`; 
-  }
 }

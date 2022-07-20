@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SelectMultipleControlValueAccessor } from '@angular/forms';
-import { Roles } from '../models/roles.enum';
 import { AuthService } from '../services/authentication/auth.service';
 import { RepoService } from '../services/repo.service';
 import { StoreService } from '../services/storage/store.service';
@@ -30,7 +28,8 @@ export class SidemenuComponent implements OnInit {
       this.repo.getUserRole(token).subscribe({
       next: (data : any) => {
         const r = data.role;
-        this.role = r;
+        //OVERRIDE TESTING:
+        //this.superuser = true;
         if (r == 'client')
           this.client = true;
         if (r == 'member')
