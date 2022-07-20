@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { SaleItem } from 'src/app/models/sale-item';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { SalesService } from 'src/app/services/sales/sales.service';
 
@@ -23,15 +22,7 @@ saleItemSub: Subscription;
 
 isLoading = true;
 
-// categories = [
-//   {name : 'Shop',
-//    description : 'Buy now, get product later'},
-//   {name : 'Store',
-//    description : 'Buy now, get product now'}
-// ];
-
-constructor(public saleService: SalesService, public repo: RepoService) {
-  // this.populateTitles();
+constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService) {
    this.fetchSaleItem();
 }
 
@@ -44,7 +35,7 @@ fetchSaleItem() {
         console.log('Fetching items from DB');
         console.log(data);
         this.isLoading = false;
-        this.saleItemList = data;
+        this.saleItemList = data.result;
       }
     }
   );
@@ -62,7 +53,5 @@ ngOnInit() {
   );
 
 }
-
-public createImg = (fileName: string) => `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
 
 }

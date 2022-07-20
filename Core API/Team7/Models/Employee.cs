@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -31,8 +32,6 @@ namespace Team7.Models
         [Required]
         public int? EmployeeTypeID { get; set; }
         [Required]
-        public int UserID { get; set; }
-
         public virtual EmployeeContract EmployeeContract { get; set; }
         public virtual EmployeeType EmployeeType { get; set; }
         public virtual Qualification Qualification { get; set; }

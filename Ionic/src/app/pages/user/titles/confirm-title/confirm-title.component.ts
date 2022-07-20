@@ -31,7 +31,7 @@ export class ConfirmTitleComponent{
   async confirmChanges(title: Title){
     console.log(this.choice);
     await this.checkMatch(title.description).then(result =>{
-        if (result == true){
+        if (result != false){
           return;
         } else {
           if (this.choice === 1){

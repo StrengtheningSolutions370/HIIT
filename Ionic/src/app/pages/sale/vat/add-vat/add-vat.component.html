@@ -14,7 +14,7 @@
 <form [formGroup]="cVATForm" (ngSubmit)="submitForm()"> 
   <br/>
   <div class="ion-text-center">
-    <p style="font-size:large">Please fill in the VAT information below.</p>
+    <p style="font-size:large">Please fill in the VAT information below</p>
   </div>
   <ion-item>
     <ion-label position="floating">Percentage:</ion-label>
@@ -22,11 +22,10 @@
     <br/>
   </ion-item>
   <span class="error ion-padding" *ngIf="errorControl.percentage.errors?.required && cVATForm.get('percentage').touched">
-    VAT Percentage is required.<br/>
+    Percentage is required<br/>
   </span>
-  <br>
 <span class="error ion-padding" *ngIf="errorControl.percentage.errors?.min">
-  Please enter a percentage above 0.
+  Percentage must be greater than 0
   <br/>
 </span>
   <br/><br/>

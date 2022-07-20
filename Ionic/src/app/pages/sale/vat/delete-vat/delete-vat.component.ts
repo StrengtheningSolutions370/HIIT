@@ -1,7 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, ViewWillEnter, AlertController } from '@ionic/angular';
+import { Component, Input } from '@angular/core';
 import { Vat } from 'src/app/models/vat';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { VatService } from 'src/app/services/vat/vat.service';
@@ -11,18 +8,17 @@ import { VatService } from 'src/app/services/vat/vat.service';
   templateUrl: './delete-vat.component.html',
   styleUrls: ['./delete-vat.component.scss'],
 })
-export class DeleteVatComponent implements ViewWillEnter{
+export class DeleteVatComponent{
 
-  @Input() vat: Vat;
+  @Input() VAT: Vat;
   
-  constructor(public global: GlobalService, public formBuilder: FormBuilder,
+  constructor(public global: GlobalService,
     public vatService: VatService) { }
 
-    ionViewWillEnter() {
-      console.log("DeleteVat - ViewWillEnter");
-      console.log(this.vat);
+    dateFormatter(s : any) : string {
+      return s.split("T")[0];
     }
-
+    
   //Send through the id of the selected vat to be deleted in the vat service.
    delete(id: number){
     this.vatService.deleteVat(id);

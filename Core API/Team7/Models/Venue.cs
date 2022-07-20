@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Team7.Models
 {
@@ -12,7 +9,6 @@ namespace Team7.Models
         public Venue()
         {
             this.Schedules = new HashSet<Schedule>();
-            //this.Schedules = 
         }
 
         [Key]

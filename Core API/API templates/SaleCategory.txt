@@ -1,0 +1,8 @@
+{
+  "name": "SellThisPls",
+  "description": "Gym Stuff bro",
+  "saleItem": null
+}
+
+
+//null does not remove existing value for saleItem array

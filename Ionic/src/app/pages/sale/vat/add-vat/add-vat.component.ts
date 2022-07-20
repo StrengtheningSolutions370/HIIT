@@ -1,10 +1,9 @@
-import { Component,  Input, OnInit } from '@angular/core';
-import { ModalController, ToastController, AlertController, ViewWillEnter, IonDatetime} from '@ionic/angular';
-import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component,  Input} from '@angular/core';
+import { ViewWillEnter} from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
-import { ActivatedRoute, Router } from '@angular/router';
 import { Vat } from 'src/app/models/vat';
 import { VatService } from 'src/app/services/vat/vat.service';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -16,7 +15,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 })
 export class AddVatComponent implements ViewWillEnter{
 
-  @Input() vat: Vat;
+  @Input() VAT: Vat;
 
   //Creating the form to add the new vat details, that will be displayed in the HTML component
   cVATForm: FormGroup = this.formBuilder.group({
@@ -24,9 +23,8 @@ export class AddVatComponent implements ViewWillEnter{
   });
 
 
-  constructor(public global: GlobalService, private toastCtrl: ToastController, public formBuilder: FormBuilder,
-    public vatService: VatService, private router: Router, private currentRoute: ActivatedRoute,
-    private  alertCtrl: AlertController ) { }
+  constructor(public global: GlobalService, public formBuilder: FormBuilder,
+    public vatService: VatService) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
@@ -35,9 +33,9 @@ export class AddVatComponent implements ViewWillEnter{
 
   ionViewWillEnter(): void {
     console.log("AddVat-ViewWillEnter");
-    console.log(this.vat);
-    if (this.vat !=null){
-      this.cVATForm.controls.percentage.setValue(this.vat.percentage);}
+    console.log(this.VAT);
+    if (this.VAT !=null){
+      this.cVATForm.controls.percentage.setValue(this.VAT.percentage);}
     }
 
     submitForm() {
@@ -47,11 +45,10 @@ export class AddVatComponent implements ViewWillEnter{
       }else{
         var temp = {
           percentage: this.cVATForm.value['percentage'],
-          date: IonDatetime       
+          date: new Date().toISOString()       
         }; 
-        this.global.dismissModal();
-       
-        this.vatService.confirmVatModal(1,temp);
+        this.vatService.confirmVatModal(temp);
+        this.global.dismissModal();      
       }
      }
 }

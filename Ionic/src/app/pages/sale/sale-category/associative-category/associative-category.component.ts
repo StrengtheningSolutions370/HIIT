@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SaleCategory } from 'src/app/models/sale-category';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-associative-category',
@@ -6,8 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./associative-category.component.scss'],
 })
 export class AssociativeCategoryComponent implements OnInit {
-
-  constructor() { }
+  @Input() saleCategory: SaleCategory;
+  constructor(public global: GlobalService) { }
 
   ngOnInit() {}
 

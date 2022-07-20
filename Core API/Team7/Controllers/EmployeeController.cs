@@ -166,6 +166,7 @@ namespace Team7.Controllers
             {
                 return Forbid("Account with provided email address already exists");
             }
+            //This might cause our front end to percieve this as an error - if so just remove the inside of Ok()
             return Ok("Account created successfully");
         }
 

@@ -1,17 +1,17 @@
+import { Component,  Input } from '@angular/core';
+import { ViewWillEnter} from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/member-ordering */
-import { Component,  Input, OnInit } from '@angular/core';
-import { ModalController, ToastController, AlertController, ViewWillEnter} from '@ionic/angular';
-import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
-import { ActivatedRoute, Router } from '@angular/router';
 import { SaleItem } from 'src/app/models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { SalesService } from 'src/app/services/sales/sales.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { RepoService } from 'src/app/services/repo.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-add-sitem',
@@ -30,12 +30,12 @@ export class AddSitemComponent implements ViewWillEnter {
 
   //Creating the form to add the new sale category details, that will be displayed in the HTML component
   cSaleItemForm: FormGroup = this.formBuilder.group({
-   itemName : [, [Validators.required]],
-   itemDescription : [, [Validators.required]],
-   itemQuantity : [, [Validators.required, Validators.min(1)]],
+   itemName : ['', [Validators.required]],
+   itemDescription : ['', [Validators.required]],
+   itemQuantity : ['', [Validators.required, Validators.min(1)]],
    itemPhoto: [],
-   itemPrice: [, [Validators.required]],
-   itemSCategory: [],
+   itemPrice: ['', [Validators.required, Validators.min(1)]],
+   itemSCategory: ['',[Validators.required]],
    itemQuotable: []
  });
 
@@ -57,6 +57,7 @@ export class AddSitemComponent implements ViewWillEnter {
       this.itemImageBase64String = reader.result;
     };
     reader.onerror = (error) => {
+      console.log(error);
       this.itemImageBase64String = null;
     };
  }
@@ -66,20 +67,26 @@ export class AddSitemComponent implements ViewWillEnter {
    console.log(this.quotable);
    if (this.quotable) {
      //is quotable
-     this.cSaleItemForm.controls.itemPrice.setValue(1);
-     this.cSaleItemForm.controls.itemQuantity.setValue(1);
+     this.cSaleItemForm.controls.itemPrice.disable();
+     this.cSaleItemForm.controls.itemQuantity.disable();
      return;
    }
-   console.log('here');
-    this.cSaleItemForm.controls.itemPrice.setValue(null);
-    this.cSaleItemForm.controls.itemQuantity.setValue(null);
-
+   console.log('here')
+   this.cSaleItemForm.controls.itemPrice.enable();
+   this.cSaleItemForm.controls.itemQuantity.enable();
  }
 
- constructor(private http: HttpClient, private modalCtrl: ModalController, private toastCtrl: ToastController,
-   public formBuilder: FormBuilder,
-   public saleService: SalesService, private router: Router, private currentRoute: ActivatedRoute,
-   private  alertCtrl: AlertController, private repo: RepoService) { }
+ constructor(private global: GlobalService, public formBuilder: FormBuilder,
+   public saleService: SalesService, private repo : RepoService) { 
+    this.saleService.getAllSaleCategories().subscribe(
+      {
+        next: data => {
+          this.categoryDropDown = data.result;
+          console.log(data);
+        }
+      }
+    )
+   }
 
    //Used for validation within the form, if there are errors in the control, this method will return the errors.
    get errorControl() {
@@ -92,80 +99,65 @@ export class AddSitemComponent implements ViewWillEnter {
     this.saleService.getAllSaleCategories().subscribe(
       {
         next: data => {
-          this.categoryDropDown = data;
+          this.categoryDropDown = data.result;
           console.log(data);
         }
       }
     );
 
     console.log("AddSaleItem-ViewWillEnter");
-    console.log(this.saleItem);
-    if (this.saleItem !=null){
-      this.cSaleItemForm.controls.itemName.setValue(this.saleItem.Name);
-      this.cSaleItemForm.controls.itemDescription.setValue(this.saleItem.Description);
-      this.cSaleItemForm.controls.itemPhoto.setValue(this.itemImageBase64String);
-      this.cSaleItemForm.controls.itemPrice.setValue(this.saleItem.Price);
-      this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.Quotable);
-      this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.Quantity);
-      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.SaleCategoryID);
 
+    if (this.saleItem !=null){
+      console.log(this.saleItem);
+      this.cSaleItemForm.controls.itemName.setValue(this.saleItem.name);
+      this.cSaleItemForm.controls.itemDescription.setValue(this.saleItem.description);
+      this.cSaleItemForm.controls.itemPhoto.setValue(this.itemImageBase64String);
+      this.cSaleItemForm.controls.itemPrice.setValue(this.saleItem.price);
+      this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.quotable);
+      this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.quantity);
+      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.saleCategoryID);
     }
     }
 
      submitForm() {
 
-       if (!this.cSaleItemForm.valid){
-
-        //manual verification:
-        if (this.quotable) {
-          //price & quantity should be 0
-
-          if (this.cSaleItemForm.controls['itemName'].value == null) {
-            this.failureAlert();
-            return;
-          }
-          if (this.cSaleItemForm.controls['itemDescription'].value == null) {
-            this.failureAlert();
-            return;
-          }
-          if (this.cSaleItemForm.controls['itemPhoto'].value == null) {
-            this.failureAlert();
-            return;
-          }
-          if (this.cSaleItemForm.controls['itemSCategory'].value == null) {
-            this.failureAlert();
-            return;
-          }
-
-        }
-        else {
-          this.failureAlert();
-          return;
-        }
-
-       }
-
        //if image was uploaded:
        if (this.itemImageBase64String == null) {
-        this.failureAlert();
-        return;
+        let str = "Image failed to upload." + '\n'+ "please try again."
+        this.global.showAlert(str,"Image Error");
+          return;       
        }
 
-      const date = new Date();
 
-       const epoch = date.getTime();
+       if (this.cSaleItemForm.controls['itemSCategory'].value[0] == null) {
+        this.global.showAlert("No Sale Category provided","Error updating sale item");
+        return;
+      }
+
+      var date = new Date();
+      var epoch = date.getTime();
+
+      let qoutableTemp = this.quotable;
+      let priceTemp = Number(this.cSaleItemForm.controls['itemPrice'].value);
+      let qtyTemp = this.cSaleItemForm.controls['itemQuantity'].value;
+
+      if (qoutableTemp){
+        priceTemp = 0;
+        qtyTemp = 0;
+      }
 
        //form is valid for submission
-      const obj = {
-        Name: this.cSaleItemForm.controls['itemName'].value,
-        Photo: epoch + '_' + this.itemImage.name,
-        Description: this.cSaleItemForm.controls['itemDescription'].value,
-        Price: Number(this.cSaleItemForm.controls['itemPrice'].value),
-        Quotable: this.quotable,
-        Quantity: this.cSaleItemForm.controls['itemQuantity'].value,
-        SaleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
-        inventoryItem:[]
-      };
+      var obj = {
+        name: this.cSaleItemForm.controls['itemName'].value,
+        photo: epoch + '_' + this.itemImage.name,
+        description: this.cSaleItemForm.controls['itemDescription'].value,
+        quotable: this.quotable,
+        price: priceTemp,
+        quantity: qtyTemp,
+        saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
+        inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
+      }
+
 
       console.log('ob');
       console.log(obj);
@@ -178,46 +170,15 @@ export class AddSitemComponent implements ViewWillEnter {
 
         this.repo.uploadSaleItemImage(formData).subscribe({
           next: data => {
-            this.dismissModal();
+            this.global.dismissModal();
             this.saleService.confirmSaleItemModal(1, obj, this.cSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
           },
-          error: (err: HttpErrorResponse) => {
-            this.failureAlert();
+          error: (err : HttpErrorResponse) => {
+            this.global.showAlert(err.error,"ERROR uploading image");
+          return;  
           }
         });
 
       }
 
-
-     async sucAdd() {
-       const toast = await this.toastCtrl.create({
-         message: 'The Sale Item has been successfully added!',
-         duration: 2000,
-         position : 'top'
-       });
-       toast.present();
-     }
-
-     //Once the modal has been dismissed.
-     dismissModal() {
-       this.modalCtrl.dismiss();
-     };
-
-     async duplicateAlert() {
-       const alert = await this.alertCtrl.create({
-         header: 'Sale Item Already Exists',
-         message: 'The Sale Item Information entered already exists on the system',
-         buttons: ['OK']
-       });
-       alert.present();
-     }
-
-     async failureAlert() {
-       const alert = await this.alertCtrl.create({
-         header: 'Could not create sale item',
-         message: 'There was an error creating the sale item. Please try again',
-         buttons: ['OK']
-       });
-       alert.present();
-     }
 }

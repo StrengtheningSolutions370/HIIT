@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Title } from 'src/app/models/title';
 import { RepoService } from 'src/app/services/repo.service';
@@ -11,7 +11,7 @@ import { TitleService } from 'src/app/services/title/title.service';
   templateUrl: './titles.page.html',
   styleUrls: ['./titles.page.scss'],
 })
-export class TitlesPage implements OnInit{
+export class TitlesPage implements ViewWillEnter{
 
   //String used from the searchbar, used in the filter pipe to search titles.
   public filter: string;
@@ -25,35 +25,33 @@ export class TitlesPage implements OnInit{
   isLoading = true;
 
   constructor(public titleService: TitleService, public repo: RepoService) {
-    // this.populateTitles();
     this.fetchTitles();
   }
 
-  ngOnInit() {
-
+  ionViewWillEnter(): void {
     this.titleService.fetchTitlesEvent.subscribe(
       {
-        next: res => {
-          console.log('EMIT TO GO FETCH THE TITLES AGAIN')
+        next: (res) => {
+          console.log('EMIT TO GO FETCH THE TITLES AGAIN: ' + res);
           this.fetchTitles();
         }
       }
     );
-
   }
 
   fetchTitles() {
     this.isLoading = true;
     this.titleService.getAllTitles().subscribe(
       {
-        next: data => {
+        next: (data) => {
           //only if a 200OK comes back
-          console.log('FETCHING TITLES FROM DB');
+          console.log('FETCHING TITLES FROM DB' + data);
           console.log(data.result); //object that comes back
           this.isLoading = false;
           this.titleList = data.result;
         },
         error: err => {
+          
           console.log(err); //object that comes back
           ///////
           // Show the client UI that the API reaponded with !20OK
