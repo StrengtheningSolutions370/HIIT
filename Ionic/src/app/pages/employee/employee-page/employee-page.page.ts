@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
 
@@ -12,92 +12,104 @@ import { ViewEmployeeComponent } from './view-employee/view-employee.component';
   templateUrl: './employee-page.page.html',
   styleUrls: ['./employee-page.page.scss'],
 })
-export class EmployeePagePage {
+export class EmployeePagePage implements OnInit {
 
-  employees = [
-    {
-      name : 'Juan',
-      surname : 'Zonneveld',
-      type : 'Trainer',
-      cell : '078 569 5894',
-      email : 'zz.zonneveld@gmail.com',
-      title : 'Mr.'
-    },
-    {
-      name : 'Sonali',
-      surname : 'Marais',
-      type : 'Trainer',
-      cell : ' 079 584 4523',
-      email : 'sonalimarais001@icloud.com',
-      title : 'Mrs.'
-    },
-    {
-      name : 'Stacey',
-      surname : 'Scott',
-      type : 'Administrator',
-      cell : '178 963 4123',
-      email : 'staceyscot@icloud.com',
-      title : 'Prof.'
-    },
-    {
-      name : 'Luhan',
-      surname : 'Smith',
-      type : 'Trainer',
-      cell : '078 987 7412',
-      email : 'smith.luhan@gmail.com',
-      title : 'Mr.'
-    },
-    {
-      name : 'Ruben',
-      surname : 'Haddow',
-      type : 'Trainer',
-      cell : '089 546 4125',
-      email : 'ruben.haddow@gmail.com',
-      title : 'Mr.'
-    },
-    {
-      name : 'Chiante',
-      surname : 'Brits',
-      type : 'Administrator',
-      email : 'brits550chiante@gmail.com',
-      cell : '128 456 8952',
-      title : 'Miss.'
-    },
-    {
-      name : 'Juan',
-      surname : 'Zonneveld',
-      type : 'Trainer',
-      cell : '089 564 2563',
-      email : 'zz.zonneveld@gmail.com',
-      title : 'Mr.'
-    },
-    {
-      name : 'Sonali',
-      surname : 'Marais',
-      type : 'Trainer',
-      cell : '078 962 2658',
-      email : 'sonalimarais001@icloud.com',
-      title : 'Mrs.'
-    },
-    {
-      name : 'Stacey',
-      surname : 'Scott',
-      type : 'Administrator',
-      cell : '089 549 5123',
-      email : 'staceyscot@icloud.com',
-      title : 'Prof.'
-    },
-    {
-      name : 'Luhan',
-      surname : 'Smith',
-      type : 'Trainer',
-      cell : '078 965 1236',
-      email : 'smith.luhan@gmail.com',
-      title : 'Mr.'
-    }
-  ];
+  // employees = [
+  //   {
+  //     name : 'Juan',
+  //     surname : 'Zonneveld',
+  //     type : 'Trainer',
+  //     cell : '078 569 5894',
+  //     email : 'zz.zonneveld@gmail.com',
+  //     title : 'Mr.'
+  //   },
+  //   {
+  //     name : 'Sonali',
+  //     surname : 'Marais',
+  //     type : 'Trainer',
+  //     cell : ' 079 584 4523',
+  //     email : 'sonalimarais001@icloud.com',
+  //     title : 'Mrs.'
+  //   },
+  //   {
+  //     name : 'Stacey',
+  //     surname : 'Scott',
+  //     type : 'Administrator',
+  //     cell : '178 963 4123',
+  //     email : 'staceyscot@icloud.com',
+  //     title : 'Prof.'
+  //   },
+  //   {
+  //     name : 'Luhan',
+  //     surname : 'Smith',
+  //     type : 'Trainer',
+  //     cell : '078 987 7412',
+  //     email : 'smith.luhan@gmail.com',
+  //     title : 'Mr.'
+  //   },
+  //   {
+  //     name : 'Ruben',
+  //     surname : 'Haddow',
+  //     type : 'Trainer',
+  //     cell : '089 546 4125',
+  //     email : 'ruben.haddow@gmail.com',
+  //     title : 'Mr.'
+  //   },
+  //   {
+  //     name : 'Chiante',
+  //     surname : 'Brits',
+  //     type : 'Administrator',
+  //     email : 'brits550chiante@gmail.com',
+  //     cell : '128 456 8952',
+  //     title : 'Miss.'
+  //   },
+  //   {
+  //     name : 'Juan',
+  //     surname : 'Zonneveld',
+  //     type : 'Trainer',
+  //     cell : '089 564 2563',
+  //     email : 'zz.zonneveld@gmail.com',
+  //     title : 'Mr.'
+  //   },
+  //   {
+  //     name : 'Sonali',
+  //     surname : 'Marais',
+  //     type : 'Trainer',
+  //     cell : '078 962 2658',
+  //     email : 'sonalimarais001@icloud.com',
+  //     title : 'Mrs.'
+  //   },
+  //   {
+  //     name : 'Stacey',
+  //     surname : 'Scott',
+  //     type : 'Administrator',
+  //     cell : '089 549 5123',
+  //     email : 'staceyscot@icloud.com',
+  //     title : 'Prof.'
+  //   },
+  //   {
+  //     name : 'Luhan',
+  //     surname : 'Smith',
+  //     type : 'Trainer',
+  //     cell : '078 965 1236',
+  //     email : 'smith.luhan@gmail.com',
+  //     title : 'Mr.'
+  //   }
+  // ];
+
+  employees : any[] = [];
 
   constructor(private modalCtrl: ModalController, public employeeService: EmployeeService) { }
+  
+  ngOnInit() {
+    
+    this.employeeService.getAllEmployees().subscribe({
+      next: (data : any) => {
+        this.employees = data;
+      }
+    })
+
+  }
 
   async addEmployeeInfoModal() {
     const modal = await this.modalCtrl.create({
@@ -127,5 +139,7 @@ export class EmployeePagePage {
     });
     await modal.present();
   }
+
+  public createImg = (fileName: string) => `https://localhost:44383/Resources/Employees/Images/${fileName}`;
 
 }
