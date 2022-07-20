@@ -7,11 +7,11 @@ using Team7.Context;
 
 namespace Team7.Models.Repository
 {
-    public class ReceiptRepo : IReceiptRepo
+    public class PaymentRepo : IPaymentRepo
     {
         readonly private AppDB DB;
 
-        public ReceiptRepo(AppDB appDatabaseContext)
+        public PaymentRepo(AppDB appDatabaseContext)
         {
             DB = appDatabaseContext;
         }

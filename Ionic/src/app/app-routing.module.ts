@@ -168,7 +168,7 @@ export const routes: Routes = [
   },
   {
     path: 'exercises',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./pages/exercises/exercises.module').then( m => m.ExercisesPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Trainer]
