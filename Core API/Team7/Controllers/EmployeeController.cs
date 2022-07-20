@@ -26,15 +26,74 @@ namespace Team7.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepo EmployeeRepo;
+        private readonly IEmployeeTypeRepo EmployeeTypeRepo;
         private readonly ITitleRepo TitleRepo;
+        private readonly IQualificationRepo QualificationRepo;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<AppUser> _userManager;
-        public EmployeeController(UserManager<AppUser> userManager, IEmployeeRepo employeeRepo, RoleManager<IdentityRole> roleManager, ITitleRepo TitleRepo)
+        public EmployeeController(UserManager<AppUser> userManager, IEmployeeRepo employeeRepo, RoleManager<IdentityRole> roleManager, ITitleRepo TitleRepo, IEmployeeTypeRepo EmployeeTypeRepo, IQualificationRepo QualificationRepo)
         {
             this.EmployeeRepo = employeeRepo;
             this.TitleRepo = TitleRepo;
+            this.EmployeeTypeRepo = EmployeeTypeRepo;
+            this.QualificationRepo = QualificationRepo;
             _roleManager = roleManager;
             _userManager = userManager;
+        }
+
+        [HttpPost]
+        [Route("createSuperUser")]
+        public async Task<IActionResult> createSuperUser(UserViewModel userViewModel)
+        {
+
+            var role = "superuser";
+
+            //check if role exists:
+            var exists = await _roleManager.FindByNameAsync(role);
+            if (exists == null)
+            {
+                //role does not exists yet:
+                //create the role here:
+                IdentityRole newRole = new IdentityRole
+                {
+                    Name = role
+                };
+                IdentityResult result = await _roleManager.CreateAsync(newRole);
+
+            }
+
+            var user = await _userManager.FindByNameAsync(userViewModel.EmailAddress);
+
+            if (user == null)
+            {
+                //Create new user - no existing account with matching email address
+                user = new AppUser
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = userViewModel.EmailAddress,
+                    Email = userViewModel.EmailAddress,
+                    PhoneNumber = userViewModel.phoneNumber,
+                    FirstName = userViewModel.firstName,
+                    LastName = userViewModel.lastName,
+                };
+
+                var result = await _userManager.CreateAsync(user, userViewModel.Password);
+
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, role);
+                }
+
+                if (result.Errors.Any())
+                {
+                    StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
+                }
+            }
+            else
+            {
+                return Forbid("Account with provided email address already exists");
+            }
+            return Ok("Super User created Successfully");
         }
 
         [HttpPost, DisableRequestSizeLimit]
@@ -100,8 +159,23 @@ namespace Team7.Controllers
                 string randomPassword = generatePassword();
                 var result = await _userManager.CreateAsync(user, randomPassword);
 
+                
+
                 if (result.Succeeded)
                 {
+
+                    //create record to the Employee table:
+                    Employee employeeRecord = new Employee
+                    {
+                        Photo = null,
+                        Contract = null,
+                        IDNumber = IDNumber,
+                        AppUser = await _userManager.FindByNameAsync(Email),
+                        EmployeeType = await this.EmployeeTypeRepo._GetEmployeeTypeIdAsync(Convert.ToInt32(EmployeeTypeId)),
+                        Qualification = await this.QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID))
+                    };
+                    ///////////////////////////////////
+
                     await _userManager.AddToRoleAsync(user, role);
 
                     Email email = new Email();
@@ -114,17 +188,18 @@ namespace Team7.Controllers
                         //email the password to the user:
                         email.sendEmail(Email, "Strengthening Solutions", body);
 
-
                         ///////////////////////////////////////////////////
                         ///store files from FormData:
-                        
-                            //store contract:
-                            //config
-                            var contract = formCollection.Files.First();
+
+                        //store contract:
+                        //config
+                        var contract = formCollection.Files.First();
                             var contractFolder = Path.Combine("Resources", "Employees", "Contracts");
                             var contractPath = Path.Combine(Directory.GetCurrentDirectory(), contractFolder);
                             //storage
                             var contractFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + ".pdf";
+                            //attach contract name to emp table
+                            employeeRecord.Contract = contractFileName;
                             var contractFullPath = Path.Combine(contractPath, contractFileName);
                             using (var stream = new FileStream(contractFullPath, FileMode.Create))
                             {
@@ -141,7 +216,10 @@ namespace Team7.Controllers
                                 var photoFolder = Path.Combine("Resources", "Employees", "Images");
                                 var photoPath = Path.Combine(Directory.GetCurrentDirectory(), photoFolder);
                                 //storage
-                                var photoFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "." + photo.ContentType;
+                                var extension = photo.ContentType.Split('/')[1];
+                                var photoFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "." + extension;
+                                //attatch photo name to emp table
+                                employeeRecord.Photo = photoFileName;
                                 var photoFullPath = Path.Combine(photoPath, photoFileName);
                                 using (var stream = new FileStream(photoFullPath, FileMode.Create))
                                 {
@@ -149,12 +227,11 @@ namespace Team7.Controllers
                                 }
                             }
 
-                        ///////////////////////////////////////////////////
+                        //add employeeRecord to repo
+                        this.EmployeeRepo.Add(employeeRecord);
 
-
-                        return Ok("Account created successfully");
-
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
                     }
@@ -319,8 +396,6 @@ namespace Team7.Controllers
             }
             try
             {
-                toUpdate.Name = employee.Name;
-                toUpdate.Surname = employee.Surname;
                 toUpdate.Photo = employee.Photo;
                 toUpdate.IDNumber = employee.IDNumber;
                 await EmployeeRepo.SaveChangesAsync();

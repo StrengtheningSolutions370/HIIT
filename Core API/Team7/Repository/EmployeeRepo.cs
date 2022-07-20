@@ -21,15 +21,18 @@ namespace Team7.Models.Repository
         public void Add<T>(T Entity) where T : class
         {
             DB.Add(Entity);
+            DB.SaveChanges();
         }
 
         public void Delete<T>(T Entity) where T : class
         {
             DB.Remove(Entity);
+            DB.SaveChanges();
         }
         public void Update<T>(T Entity) where T : class
         {
             DB.Update(Entity);
+            DB.SaveChanges();
         }
 
 
@@ -48,30 +51,11 @@ namespace Team7.Models.Repository
                     result = await DB.Employee.Select(e => new
                     {
                         e.EmployeeID,
-                        e.Name,
-                        e.Surname,
                         e.Photo,
                         e.IDNumber,
-                        qualifications = new
-                        {
-                            e.QualificationID,
-                            e.Qualification
-                        },
-                        employeeContracts = new
-                        {
-                            e.EmployeeContractID,
-                            e.EmployeeContract
-                        },
-                        employeeTypes = new
-                        {
-                            e.EmployeeTypeID,
-                            e.EmployeeType
-                        },
-                        /*users = new
-                        {
-                            e.UserID,
-                            e.User
-                        }*/
+                        e.Qualification,
+                        e.Contract,
+                        e.EmployeeType,
                     }).ToListAsync()
                 };
             }
@@ -94,7 +78,7 @@ namespace Team7.Models.Repository
         }
         public async Task<object> GetEmployeesAsync(string input)
         {
-            IQueryable<Employee> query = DB.Employee.Where(e => e.Name == input);
+            /*IQueryable<Employee> query = DB.Employee.Where(e => e.Name == input);
             if (!query.Any())
             {
                 return null;
@@ -106,37 +90,19 @@ namespace Team7.Models.Repository
                     result = await DB.Employee.Select(e => new
                     {
                         e.EmployeeID,
-                        e.Name,
-                        e.Surname,
                         e.Photo,
                         e.IDNumber,
-                        qualifications = new
-                        {
-                            e.QualificationID,
-                            e.Qualification
-                        },
-                        employeeContracts = new
-                        {
-                            e.EmployeeContractID,
-                            e.EmployeeContract
-                        },
-                        employeeTypes = new
-                        {
-                            e.EmployeeTypeID,
-                            e.EmployeeType
-                        },
-                        /*users = new
-                        {
-                            e.UserID,
-                            e.User
-                        }*/
+                        e.Qualification,
+                        e.Contract,
+                        e.EmployeeType,
                     }).ToListAsync()
                 };
-            }
+            }*/
+            return null;
         }
         public async Task<Employee[]> _GetEmployeesAsync(string input)
         {
-            IQueryable<Employee> query = DB.Employee.Where(e => e.Name == input);
+            /*IQueryable<Employee> query = DB.Employee.Where(e => e.Name == input);
             if (!query.Any())
             {
                 return null;
@@ -144,8 +110,10 @@ namespace Team7.Models.Repository
             else
             {
                 return await query.ToArrayAsync();
-            }
+            }*/
+            return null;
         }
+
         public async Task<object> GetEmployeeIdAsync(int id)
         {
             IQueryable<Employee> query = DB.Employee.Where(e => e.EmployeeID == id);
@@ -160,30 +128,11 @@ namespace Team7.Models.Repository
                     result = await DB.Employee.Select(e => new
                     {
                         e.EmployeeID,
-                        e.Name,
-                        e.Surname,
                         e.Photo,
                         e.IDNumber,
-                        qualifications = new
-                        {
-                            e.QualificationID,
-                            e.Qualification
-                        },
-                        employeeContracts = new
-                        {
-                            e.EmployeeContractID,
-                            e.EmployeeContract
-                        },
-                        employeeTypes = new
-                        {
-                            e.EmployeeTypeID,
-                            e.EmployeeType
-                        },
-                        /*users = new
-                        {
-                            e.UserID,
-                            e.User
-                        }*/
+                        e.Qualification,
+                        e.Contract,
+                        e.EmployeeType,
                     }).ToListAsync()
                 };
             }

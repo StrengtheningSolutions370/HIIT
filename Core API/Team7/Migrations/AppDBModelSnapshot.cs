@@ -378,19 +378,17 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("EmployeeContractID")
-                        .IsRequired()
-                        .HasColumnType("int");
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("EmployeeTypeID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<string>("IDNumber")
+                    b.Property<string>("Contract")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<int?>("EmployeeTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IDNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -398,41 +396,17 @@ namespace Team7.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("QualificationID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("EmployeeID");
 
-                    b.HasIndex("EmployeeContractID");
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("EmployeeTypeID");
 
                     b.HasIndex("QualificationID");
 
                     b.ToTable("Employee");
-                });
-
-            modelBuilder.Entity("Team7.Models.EmployeeContract", b =>
-                {
-                    b.Property<int>("EmployeeContractID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("File")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EmployeeContractID");
-
-                    b.ToTable("EmployeeContract");
                 });
 
             modelBuilder.Entity("Team7.Models.EmployeeType", b =>
@@ -1391,25 +1365,19 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.Employee", b =>
                 {
-                    b.HasOne("Team7.Models.EmployeeContract", "EmployeeContract")
-                        .WithMany("Employee")
-                        .HasForeignKey("EmployeeContractID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Team7.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
 
                     b.HasOne("Team7.Models.EmployeeType", "EmployeeType")
                         .WithMany("Employee")
-                        .HasForeignKey("EmployeeTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeTypeID");
 
                     b.HasOne("Team7.Models.Qualification", "Qualification")
                         .WithMany("Employee")
-                        .HasForeignKey("QualificationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("QualificationID");
 
-                    b.Navigation("EmployeeContract");
+                    b.Navigation("AppUser");
 
                     b.Navigation("EmployeeType");
 
@@ -1771,11 +1739,6 @@ namespace Team7.Migrations
                     b.Navigation("Lesson");
 
                     b.Navigation("Schedule");
-                });
-
-            modelBuilder.Entity("Team7.Models.EmployeeContract", b =>
-                {
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Team7.Models.EmployeeType", b =>
