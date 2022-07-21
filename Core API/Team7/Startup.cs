@@ -190,7 +190,7 @@ namespace Team7
 
             }
 
-            app.UseHttpsRedirection();
+            /*app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
 
             app.UseStaticFiles();
@@ -198,24 +198,19 @@ namespace Team7
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
                 RequestPath = new PathString("/Resources")
-            });
+            });*/
 
-            /*app.UseStaticFiles(new StaticFileOptions
+            app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-                RequestPath = new PathString("/Resources")
+                RequestPath = new PathString("/Resources"),
                 ServeUnknownFileTypes = true,
-                OnPrepareResponse = (ctx) =>
-                {
-                    var policy = corsPolicyProvider.GetPolicyAsync(ctx.Context, "CorsPolicy")
-                        .ConfigureAwait(false)
-                        .GetAwaiter().GetResult();
-
-                    var corsResult = corsService.EvaluatePolicy(ctx.Context, policy);
-
-                    corsService.ApplyResult(corsResult, ctx.Context.Response);
-                }
-            });*/
+                OnPrepareResponse = ctx => {
+                    ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+                    ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers",
+                      "Origin, X-Requested-With, Content-Type, Accept");
+                },
+            });
 
             app.UseHttpsRedirection();
 

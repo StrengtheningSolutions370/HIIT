@@ -273,7 +273,11 @@ export class EmployeePagePage implements OnInit {
 
   }
 
-  public createImg = (fileName: string) => `https://localhost:44383/Resources/Employees/Images/${fileName}`;
+  createImg (fileName: string) {
+    if (fileName == null)
+      return `https://localhost:44383/Resources/Employees/Images/default.jpeg`;
+    return `https://localhost:44383/Resources/Employees/Images/${fileName}`;
+  };
 
 }
 function trigger(arg0: string, arg1: any[]): any {

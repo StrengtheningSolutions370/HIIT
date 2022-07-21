@@ -5,7 +5,6 @@ import { ModalController, ToastController, ViewWillEnter, AlertController } from
 import { Employee } from 'src/app/models/employee';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
 
-
 @Component({
   selector: 'app-delete-employee',
   templateUrl: './delete-employee.component.html',
@@ -18,10 +17,9 @@ export class DeleteEmployeeComponent implements OnInit {
   title! : string;
   employeeType! : string;
   qualification! : string;
-
+  contract! : any;
   imgSrc = '';
   pdfSrc = '';
-  showProfile = false;
 
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
@@ -33,10 +31,6 @@ export class DeleteEmployeeComponent implements OnInit {
     this.title = 'not working';
     this.employeeType = 'not working';
     this.qualification = 'not working';
-
-    if (this.employee.Photo != null) {
-      this.showProfile = true;
-    }
 
   }
 
@@ -68,20 +62,13 @@ export class DeleteEmployeeComponent implements OnInit {
       this.modalCtrl.dismiss();
     };
 
-    public createImg = (fileName: string) => `https://localhost:44383/Resources/Employees/Images/${fileName}`;
-    // public createContract = (fileName: string) => `https://localhost:44383/Resources/Employees/Contracts/${fileName}`;
-
-    createContract(fileName : string) {
-      const req = new Request(`https://localhost:44383/Resources/Employees/Contracts/${fileName}`, {
-        mode : 'no-cors',
-        headers: {
-          "Content-Type": "application/pdf"
-        }
-      })
-      const document = fetch(req).then(b => b.blob);
-      console.log(document);
-      return '';
+    createImg (fileName: string) {
+      if (fileName == null)
+        return `https://localhost:44383/Resources/Employees/Images/default.jpeg`;
+      return `https://localhost:44383/Resources/Employees/Images/${fileName}`;
     }
+
+    public createContract = (fileName: string) => `https://localhost:44383/Resources/Employees/Contracts/${fileName}`;
 
 }
 
