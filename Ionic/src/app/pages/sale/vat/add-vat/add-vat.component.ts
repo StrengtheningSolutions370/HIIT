@@ -48,7 +48,7 @@ export class AddVatComponent implements ViewWillEnter{
           date: new Date().toISOString()       
         }; 
         this.vatService.confirmVatModal(temp);
-        this.global.dismissModal();      
+        this.global.dismissModal();
       }
      }
 }

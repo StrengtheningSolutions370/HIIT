@@ -20,7 +20,7 @@ export class ConfirmCategoryComponent{
       console.log("Check match result:");
       console.log(result);
        if (result != 0){
-         this.global.showAlert("The sale category information entered already exists on the system","Sale Category Already Exists");
+         this.global.showAlert("The sale category information entered already exists on the system","Duplicate Entry");
          return true;
        } else {
          return false;
