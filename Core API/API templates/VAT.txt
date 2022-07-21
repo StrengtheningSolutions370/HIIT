@@ -1,0 +1,11 @@
+{
+  "percentage": 10,
+  "date": "2022-07-15T15:31:37.086Z"
+}
+
+//Also works for date: 
+
+{
+  "percentage": 10,
+  "date": "2022-07-15"
+}

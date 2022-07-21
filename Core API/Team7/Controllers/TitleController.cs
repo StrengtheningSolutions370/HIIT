@@ -1,16 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Team7.Models.Repository;
 using Team7.Models;
-using Microsoft.EntityFrameworkCore;
-using Team7.Context;
-
-
-
 
 
 namespace Team7.Controllers
@@ -33,8 +26,14 @@ namespace Team7.Controllers
             try
             {
                 TitleRepo.Add(title);
-                await TitleRepo.SaveChangesAsync();
-                return Ok();
+                if (await TitleRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                } else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
+                }
+                                
             }
             catch (Exception err)
             {
@@ -51,14 +50,19 @@ namespace Team7.Controllers
             var toUpdate = await TitleRepo._GetTitleIdAsync(id);
             if (toUpdate == null)
             {
-                return NotFound("Could not find existing Title with id:" + id);
+                return NotFound();
             }
             try
             {
                 toUpdate.Description = title.Description;
-                //VenueRepo.Update<Venue>(tempVenue);
-                await TitleRepo.SaveChangesAsync();
-                return Ok();
+                
+                if (await TitleRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                } else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to update value in the database. Contact support.");
+                }
             }
             catch (Exception err)
             {
@@ -75,13 +79,18 @@ namespace Team7.Controllers
             var tempTitle = await TitleRepo._GetTitleIdAsync(id);
             if (tempTitle == null)
             {
-                return NotFound("Could not find existing Title with id:" + id);
+                return NotFound();
             }
             try
             {
                 TitleRepo.Delete<Title>(tempTitle);
-                await TitleRepo.SaveChangesAsync();
-                return Ok();
+                if (await TitleRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                } else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
+                }
             }
             catch (Exception err)
             {
@@ -123,22 +132,6 @@ namespace Team7.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
 
-        }
-
-        [HttpGet]
-        [Route("exists")]
-        public async Task<IActionResult> TitleExists(int id)
-        {
-            try
-            {
-                var title = await TitleRepo._GetTitleIdAsync(id);
-                if (title == null) return Ok(0);
-                return Ok(title);
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
         }
     }
 }

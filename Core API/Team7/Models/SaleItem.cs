@@ -33,9 +33,9 @@ namespace Team7.Models
         [Required]
         public int? SaleCategoryID { get; set; }
 
+        public virtual SaleCategory SaleCategory { get; set; }
         public virtual ICollection<InventoryItem> InventoryItem { get; set; }
         public virtual ICollection<PriceHistory> PriceHistory { get; set; }
-        public virtual SaleCategory SaleCategory { get; set; }
         public virtual ICollection<SaleLine> SaleLine { get; set; }
         public virtual ICollection<StockTakeLine> StockTakeLine { get; set; }
     }

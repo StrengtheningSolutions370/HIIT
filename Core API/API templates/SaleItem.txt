@@ -1,0 +1,11 @@
+{
+  "name": "newSaleItem",
+  "photo": "x",
+  "description": "TestingNewSaleItem",
+  "price": 10,
+  "quotable": false,
+  "quantity": 10,
+  "saleCategoryID": 1
+}
+
+//Only these are required

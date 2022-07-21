@@ -85,12 +85,6 @@ export class QualificationService {
     this.repo.getMatchQualificationType(input);
   }
 
-  existingQualificationType(id: number) {
-    console.log('qualificationService: Repo -> Existing qualificationtype');
-    this.repo.existsQualificationType(id).subscribe(result =>
-      console.log(result));
-  }
-
   //Qualification Methods
   //Add a qualification the qualification list within the qualification service.
   getAllQualification(): Observable<any> {
@@ -142,11 +136,6 @@ export class QualificationService {
     return this.repo.getMatchQualification(input).toPromise();
    }
 
-   existingQualification(id: number){
-    console.log('Qualification Service: Repo -> Existing Qualification');
-    this.repo.existsQualification(id).subscribe(result =>
-     console.log(result));
-   }
   //Modals
   async addQualificationTypeInfoModal(qualificationType?: QualificationType) {
     const modal = await this.modalCtrl.create({

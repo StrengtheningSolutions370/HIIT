@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Team7.Models.Repository;
 using Team7.Models;
-using Microsoft.EntityFrameworkCore;
-using Team7.Context;
 
 namespace Team7.Controllers
 {

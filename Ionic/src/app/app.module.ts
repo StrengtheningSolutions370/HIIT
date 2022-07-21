@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ActivatedRouteSnapshot, RouteReuseStrategy } from '@angular/router';
+import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,13 +18,6 @@ import { DeleteVenueComponent } from './pages/venue/delete-venue/delete-venue.co
 import { ConfirmVenueComponent } from './pages/venue/confirm-venue/confirm-venue.component';
 import { AssociativeVenueComponent } from './pages/venue/associative-venue/associative-venue.component';
 
-//USER ROLE IMPORTS:
-import { AddRoleComponent } from './pages/user/user-roles/add-role/add-role.component';
-import { UpdateRoleComponent } from './pages/user/user-roles/update-role/update-role.component';
-import { DeleteRoleComponent } from './pages/user/user-roles/delete-role/delete-role.component';
-import { ViewRoleComponent } from './pages/user/user-roles/view-role/view-role.component';
-import { ConfirmRoleComponent } from './pages/user/user-roles/confirm-role/confirm-role.component';
-
 //TITLE IMPORTS:
 import { AddTitleComponent } from './pages/user/titles/add-title/add-title.component';
 import { UpdateTitleComponent } from './pages/user/titles/update-title/update-title.component';
@@ -39,6 +32,7 @@ import { UpdateCategoryComponent } from './pages/sale/sale-category/update-categ
 import { DeleteCategoryComponent } from './pages/sale/sale-category/delete-category/delete-category.component';
 import { ViewCategoryComponent } from './pages/sale/sale-category/view-category/view-category.component';
 import { ConfirmCategoryComponent } from './pages/sale/sale-category/confirm-category/confirm-category.component';
+import { AssociativeCategoryComponent } from './pages/sale/sale-category/associative-category/associative-category.component';
 
 //SALE ITEM IMPORTS:
 import { AddSitemComponent } from './pages/sale/sale-item/add-sitem/add-sitem.component';
@@ -76,7 +70,14 @@ import { AddVatComponent } from './pages/sale/vat/add-vat/add-vat.component';
 import { DeleteVatComponent } from './pages/sale/vat/delete-vat/delete-vat.component';
 import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
 import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
-import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
+
+//EXERCISE CATEGORY IMPORTS:
+import { AddExerciseCategoryComponent } from './pages/exercises/exercise-category/add-exercise-category/add-exercise-category.component'; 
+import { UpdateExerciseCategoryComponent } from './pages/exercises/exercise-category/update-exercise-category/update-exercise-category.component'; 
+import { DeleteExerciseCategoryComponent } from './pages/exercises/exercise-category/delete-exercise-category/delete-exercise-category.component'; 
+import { ViewExerciseCategoryComponent } from './pages/exercises/exercise-category/view-exercise-category/view-exercise-category.component'; 
+import { ConfirmExerciseCategoryComponent } from './pages/exercises/exercise-category/confirm-exercise-category/confirm-exercise-category.component'; 
+import { AssociativeExerciseCategoryComponent } from './pages/exercises/exercise-category/associative-exercise-category/associative-exercise-category.component'; 
 
 //EMPLOYEE IMPORTS:
 import { AddEmployeeComponent } from './pages/employee/employee-page/add-employee/add-employee.component';
@@ -92,23 +93,33 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   declarations: [AppComponent,
   //Venue
   AddVenueComponent, UpdateVenueComponent, ViewVenueInfoComponent, DeleteVenueComponent, ConfirmVenueComponent,AssociativeVenueComponent,
-  //UserRole
-  AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent, ConfirmRoleComponent,
   //Title
   AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent, AssociativeTitleComponent,
   //QualificationType
   AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent, AssociativeQtypeComponent,
+  //VAT 
+  AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
+  //EmployeeType
+  AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
+  //SalesCategory
+  AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent, AssociativeCategoryComponent,
+  //SalesItem
+  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+  //SideMenu
+  SidemenuComponent,
   //Qualification
   AddQualificationComponent, UpdateQualificationComponent,DeleteQualificationComponent, ViewQualificationComponent, ConfirmQualificationComponent,
   AssociativeQualificationComponent,
   //VAT
-  AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent, UpdateVatComponent,
+  AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
   //EmployeeType
-  AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,AssociativeEtypeComponent,
-  //Sale Category
-  ConfirmCategoryComponent, AddCategoryComponent, ConfirmCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent,
-  //Sale Item
-  ConfirmSitemComponent, AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+  AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
+  //SalesCategory
+  AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent,
+  //SalesItem
+  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+  //ExerciseCategory
+  AddExerciseCategoryComponent, UpdateExerciseCategoryComponent, DeleteExerciseCategoryComponent, ViewExerciseCategoryComponent, ConfirmExerciseCategoryComponent, AssociativeExerciseCategoryComponent,
   //Side Menu
   SidemenuComponent,
   //Employee

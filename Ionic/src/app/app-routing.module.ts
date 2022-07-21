@@ -197,7 +197,10 @@ export const routes: Routes = [
     path: '**', //this route object must be last
     redirectTo: 'login',
   },
-];
+  {
+    path: 'booking',
+    loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule)
+  }]
 
 @NgModule({
   imports: [

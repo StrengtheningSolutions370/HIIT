@@ -485,7 +485,6 @@ namespace Team7.Controllers
             {
                 return Forbid("Account with provided email address already exists");
             }
-
             return Ok("Account created successfully");
 
         }

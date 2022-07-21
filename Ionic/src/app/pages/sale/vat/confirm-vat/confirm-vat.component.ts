@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, AlertController } from '@ionic/angular';
+import { Component, Input } from '@angular/core';
 import { Vat } from 'src/app/models/vat';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { VatService } from 'src/app/services/vat/vat.service';
@@ -11,80 +9,42 @@ import { VatService } from 'src/app/services/vat/vat.service';
   styleUrls: ['./confirm-vat.component.scss'],
 })
 export class ConfirmVatComponent {
-  @Input() choice: number;
-  @Input() vat: Vat;
+  @Input() VAT: Vat;
 
-  constructor(private modalCtrl: ModalController, public vatService: VatService,
-    public router: Router, public activated: ActivatedRoute, public toastCtrl : ToastController) {
+  constructor(public global: GlobalService, public VatService: VatService) {}
+
+   async checkMatch(percentage: number, date:any): Promise<boolean>{
+    return this.VatService.matchingVat(percentage,date).then(result => {
+      console.log(result);
+       if (result != false){
+         this.global.showAlert("The VAT information entered already exists on the system","VAT Already Exists");
+         return true;
+       } else {
+         return false;
+       }
+     });
    }
 
-   dismissModal() {
-    this.modalCtrl.dismiss();
-    //this.router.navigate(['../titles'],{relativeTo:this.activated});
-  };
-  //1 = confirm ADD
-  //2 = confirm UPDATE
   async confirmChanges(vat: Vat){
-    console.log(this.choice);
-    if (this.choice === 1){
-      //search duplicates
-      //confirm to string here
-      if (this.vatService.matchingVat(vat.percentage.toString()) != null)
-      {
-        console.log('Existing Vat: ' + vat.percentage);
-        //display duplicate alert
-        //failure alert
-        return;
-      }
-      else {
-        console.log('Add Vat from confirm:');
-        //CallRepoToCreate
-        await this.vatService.createVat(vat);
-        await this.dismissModal();
-        this.sucAdd();
-      }
+    await this.checkMatch(vat.percentage,vat.date).then(result =>{
+        if (result == true){
+          return;
+        } else {
+            console.log('Add VAT from confirm:');
+            //CallRepoToCreate
+            this.VatService.createVat(vat);
+            this.global.showToast("The VAT has been successfully added!");
 
-    } else if (this.choice === 2){
-      console.log('Update Vat from confirm:');
-      //CallRepoToUpdate
-      await this.vatService.updateVat(vat.vatid,vat);
-      this.dismissModal();
-      this.sucUpdate();
-    }
+        }
+        this.global.dismissModal();
+    });
 
-    //dismiss modal
-    // await this.dismissModal();
-    //
   }
 
   async returnFrom(){
-      //1 = return to ADD
-      //2 = return to UPDATE
-    if (this.choice === 1){
-      console.log(this.vat);
-      await this.dismissModal();
-      this.vatService.addVatInfoModal(this.vat);
-    } else if (this.choice === 2){
-      console.log(this.vat);
-      await this.dismissModal();
-      this.vatService.updateVatInfoModal(this.vat);
-    }
-  }
-
-  async sucAdd() {
-    const toast = await this.toastCtrl.create({
-      message: 'The Vat has been successfully added!',
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async sucUpdate() {
-    const toast = await this.toastCtrl.create({
-      message: 'The Vat has been successfully updated!',
-      duration: 2000
-    });
-    toast.present();
+      console.log(this.VAT);
+      this.global.dismissModal();
+      this.VatService.addVatInfoModal(this.VAT);
   }
 
 }

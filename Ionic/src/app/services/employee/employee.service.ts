@@ -198,6 +198,7 @@ private tempE : Employee[];
   }
 
 
+
   matchingEmployeeType(name: string): Promise<any>{
     return this.repo.getMatchEmployeeType(name).toPromise();
    }
@@ -210,8 +211,8 @@ private tempE : Employee[];
 
   existingEmployeeType(id: number) {
     console.log('Employee Service: Repo -> Existing Employee Type');
-    this.repo.existsEmployeeType(id).subscribe(result =>
-      console.log(result));
+    //this.repo.existsEmployeeType(id).subscribe(result =>
+      //console.log(result));
   }
 
   //existing employee

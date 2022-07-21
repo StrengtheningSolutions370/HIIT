@@ -17,15 +17,7 @@ export class DeleteVenueComponent {
 
 
   //Send through the id of the selected venue to be deleted in the venue service.
-  async delete(id: number){
-    if (this.venue.schedules != null){
-      if (this.venue.schedules.length > 0){
-        //Not sure if an alert is necessary here as it already takes the user the association component
-        //this.global.showAlert("Cannot delete venue as it is associated to schedule/s","Delete venue association error");
-        this.venueService.associativeVenueModal(this.venue);
-        return;
-      }
-    }
+  delete(id: number){
     this.venueService.deleteVenue(id);
     this.global.dismissModal();
     this.global.showToast("The venue has been successfully deleted!")

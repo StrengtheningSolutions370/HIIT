@@ -2,12 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Team7.Context;
 using Team7.Models;
 using Team7.Models.Repository;
 
@@ -32,8 +28,15 @@ namespace Team7.Controllers
             try
             {
                 VenueRepo.Add(venue);
-                await VenueRepo.SaveChangesAsync();
-                return Ok();
+                if (await VenueRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
+                }
+
             }
             catch (Exception err)
             {
@@ -50,7 +53,7 @@ namespace Team7.Controllers
             var toUpdate = await VenueRepo._GetVenueIdAsync(id);
             if (toUpdate == null)
             {
-                return NotFound("Could not find existing Venue with id:" + id);
+                return NotFound("Could not find existing Venue with ID - " + id);
             }
             try
             {
@@ -59,8 +62,15 @@ namespace Team7.Controllers
                 toUpdate.PostalCode = venue.PostalCode;
                 toUpdate.Capacity = venue.Capacity;
                 VenueRepo.Update<Venue>(toUpdate);
-                await VenueRepo.SaveChangesAsync();
-                return Ok();
+
+                if (await VenueRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to update value in the database. Contact support.");
+                }
             }
             catch (Exception err)
             {
@@ -77,13 +87,19 @@ namespace Team7.Controllers
             var tempVenue = await VenueRepo._GetVenueIdAsync(id);
             if (tempVenue == null)
             {
-                return NotFound("Could not find existing Venue with id:" + id);
+                return NotFound("Could not find existing Venue with ID - " + id);
             }
             try
             {
                 VenueRepo.Delete<Venue>(tempVenue);
-                await VenueRepo.SaveChangesAsync();
-                return Ok();
+                if (await VenueRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
+                }
             }
             catch (Exception err)
             {
@@ -125,23 +141,6 @@ namespace Team7.Controllers
                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
             
-        }
-
-        [HttpGet]
-        [Route("exists")]
-        public async Task<IActionResult> VenueExists(int id)
-        {
-            try
-            {
-                var venue = await VenueRepo.GetVenueIdAsync(id);
-                if (venue == null) return Ok(0);
-                return Ok(venue);
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
-
         }
     }
 }

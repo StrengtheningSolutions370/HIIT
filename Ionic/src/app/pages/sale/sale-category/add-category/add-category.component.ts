@@ -1,12 +1,12 @@
-import { Component,  Input, OnInit } from '@angular/core';
-import { ModalController, ToastController, AlertController, ViewWillEnter} from '@ionic/angular';
-import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component,  Input } from '@angular/core';
+import { ViewWillEnter} from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
-import { ActivatedRoute, Router } from '@angular/router';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { SalesService } from 'src/app/services/sales/sales.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-add-category',
@@ -23,9 +23,8 @@ export class AddCategoryComponent implements ViewWillEnter {
     categoryDescription : ['', [Validators.required]]
   });
 
-  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
-    public saleService: SalesService, private router: Router, private currentRoute: ActivatedRoute,
-    private  alertCtrl: AlertController ) { }
+  constructor(private global: GlobalService, public formBuilder: FormBuilder,
+    public saleService: SalesService) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.
     get errorControl() {
@@ -48,47 +47,10 @@ export class AddCategoryComponent implements ViewWillEnter {
           const temp = {
             name: this.cSaleCategoryForm.value['categoryName'],
             description: this.cSaleCategoryForm.value['categoryDescription'],
-            items: []
+            items: null
           };
-          this.dismissModal();
+          this.global.dismissModal();
           this.saleService.confirmSaleCategoryModal(1,temp);
-
-          // this.sucAdd();
-          // console.log("CurrentRoute:ADD");
-          // console.log(this.currentRoute.url);
         }
        }
-
-      async sucAdd() {
-        const toast = await this.toastCtrl.create({
-          message: 'The Sale Category has been successfully added!',
-          duration: 2000,
-          position : 'top'
-        });
-        toast.present();
-      }
-
-      //Once the modal has been dismissed.
-      dismissModal() {
-        this.modalCtrl.dismiss();
-      };
-
-      async duplicateAlert() {
-        const alert = await this.alertCtrl.create({
-          header: 'Sale Category Already Exists',
-          message: 'The Sale Category Information entered already exists on the system',
-          buttons: ['OK']
-        });
-        alert.present();
-      }
-
-      async failureAlert() {
-        const alert = await this.alertCtrl.create({
-          header: 'Could not create sale category',
-          message: 'There was an error creating the sale category. Please try again',
-          buttons: ['OK']
-        });
-        alert.present();
-      }
-
 }
