@@ -215,36 +215,6 @@ export class AddEmployeeComponent implements OnInit{
     return null;
   }
 
-  // updateCheckControl(cal, o) {
-  //   if (o.checked) {
-  //     cal.push(new FormControl(o.value));
-  //   } else {
-  //     cal.controls.forEach((item: FormControl, index) => {
-  //       if (item.value === o.value) {
-  //         cal.removeAt(index);
-  //         return;
-  //       }
-  //     });
-  //   }
-  // }
-
-  //   onLoadCheckboxStatus() {
-  //   const checkboxArrayList: FormArray = this.cEmployeeForm.get('checkboxBoxTitles') as FormArray;
-  //   const checkboxArrayList1: FormArray = this.cEmployeeForm.get('checkboxBoxQualificationTypes') as FormArray;
-  //   this.titleList.forEach(o => {
-  //     this.updateCheckControl(checkboxArrayList, o);
-  //   });
-  //   this.qualificationTypeList.forEach(o => {
-  //     this.updateCheckControl(checkboxArrayList1, o);
-  //   });
-  // }
-
-  // onSelectionChange(e, i) {
-  //   const checkboxArrayList: FormArray = this.cEmployeeForm.get('checkboxBoxTitles') as FormArray;
-  //   this.updateCheckControl(checkboxArrayList, e.target);
-  // }
-
-
   ionViewWillEnter(): void {
     if (this.employee != null) {
       console.log('Add Employee - View Will Enter');
@@ -264,25 +234,6 @@ export class AddEmployeeComponent implements OnInit{
   }
 
   submitForm() {
-    // if (!this.cEmployeeForm.valid){
-    //   console.log('Please provide all required fields');
-    //   return false;
-    // }else{
-    //   const temp = {
-    //     name: this.cEmployeeForm.value['name'],
-    //     surname: this.cEmployeeForm.value['surname'],
-    //     photo: this.cEmployeeForm.value['photo'],
-    //     idNumber: this.cEmployeeForm.value['idNumber'],
-    //     title: this.cEmployeeForm.value['checkboxBoxTitles']
-    //   };
-    //   this.employeeService.confirmEmployeeTypeModal(1,temp);
-    //   this.dismissModal();
-    //   // this.sucAdd();
-    //   // console.log("CurrentRoute:ADD");
-    //   // console.log(this.currentRoute.url);
-    // }
-
-    // if (!this.cEmployeeForm.valid) return;
 
     const emp = new Employee();
 
@@ -298,9 +249,10 @@ export class AddEmployeeComponent implements OnInit{
     emp.QualificationID = this.cEmployeeForm.value['qualificationId'];
     emp.role = this.cEmployeeForm.value['role'];
 
-
     //create confirm modal here:
-    this.employeeService.confirmEmployeeModal(1, emp)
+    this.employeeService.confirmEmployeeModal(1, emp).then(() => {
+      this.dismissModal();
+    });
 
    }
 

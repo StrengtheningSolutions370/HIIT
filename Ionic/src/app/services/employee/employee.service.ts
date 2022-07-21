@@ -29,6 +29,7 @@ import { Roles } from 'src/app/models/roles.enum';
   providedIn: 'root'
 })
 export class EmployeeService {
+
   @Output() fetchEmployeesEvent = new EventEmitter<Employee>();
   @Output() fetchEmployeeTypesEvent = new EventEmitter<EmployeeType>();
 
@@ -70,7 +71,7 @@ private tempE : Employee[];
   }
 
   //Add an employee to the employee list within the employee service 
-  createEmployee(e: Employee) {
+  createEmployee(e: Employee) : Promise<any> {
 
     const tempEmp : any = {
       Name: e.Name,
@@ -96,26 +97,43 @@ private tempE : Employee[];
     if (e.role == Roles.Admin) {
       //create admin employee:
 
-      this.repo.createAdmin(payload).subscribe(
-        {
+      // return this.repo.createAdmin(payload)
+      return new Promise<any>((resolve, _) => {
+        this.repo.createAdmin(payload).subscribe({
           next: () => {
-            console.log('ADMIN CREATED');
             this.fetchEmployeesEvent.emit();
+            resolve(true);
           }
-        }
-      );
+        })
+      });
+      // .subscribe(
+      //   {
+      //     next: () => {
+      //       console.log('ADMIN CREATED');
+      //       this.fetchEmployeesEvent.emit();
+      //     }
+      //   }
+      // );
 
     } else {
       //create non-admin employee:
 
-      this.repo.createEmployee(payload).subscribe(
-        {
+      return new Promise<any>((resolve, _) => {
+        this.repo.createEmployee(payload).subscribe({
           next: () => {
-            console.log('EMPLOYEE CREATED');
             this.fetchEmployeesEvent.emit();
+            resolve(true);
           }
-        }
-      );
+        })
+      });
+      // .subscribe(
+      //   {
+      //     next: () => {
+      //       console.log('EMPLOYEE CREATED');
+      //       this.fetchEmployeesEvent.emit();
+      //     }
+      //   }
+      // );
 
     }
 
@@ -380,47 +398,53 @@ private tempE : Employee[];
 
     //Display the confirm create/update modal
   //Receives the selected employee from the employee page
-  async confirmEmployeeModal(choice: number, employee: Employee) {
-    console.log('EmployeeService: ConfirmEmployeeModalCall');
-    console.log(choice);
-    if(choice === 1){
-      console.log('Performing ADD');
-      const modal = await this.modalCtrl.create({
-        component: ConfirmEmployeeComponent,
-        componentProps: {
-          choice,
+  confirmEmployeeModal(choice: number, employee: Employee) : Promise<any> {
+
+    return new Promise<any>(async (resolve, _) => {
+      console.log('EmployeeService: ConfirmEmployeeModalCall');
+      console.log(choice);
+      if(choice === 1){
+        
+        console.log('Performing ADD');
+        const modal = await this.modalCtrl.create({
+          component: ConfirmEmployeeComponent,
+          componentProps: {
+            choice,
+            employee
+          }
+        });
+        //Update the current vat list with the vat list from the confirm modal.
+        modal.onDidDismiss().then(() => {
+
+          // this.repo.getEmployees();
+          this.fetchEmployeesEvent.emit();
+          resolve(true);
+
+        });
+        await modal.present();
+
+      } else if (choice === 2){
+
+        console.log('Performing UPDATE');
+        const modal = await this.modalCtrl.create({
+          component: ConfirmEmployeeComponent,
+          componentProps: {
           employee
-        }
-      });
+          }
+        });
+        modal.onDidDismiss().then(() => {
+          // this.repo.getSaleItems();
+          // this.updateSaleItemInfoModal(saleItem);
+          this.fetchEmployeesEvent.emit();
+          resolve(true);
 
-      //Update the current vat list with the vat list from the confirm modal.
-      modal.onDidDismiss().then(() => {
-
-        this.repo.getEmployees();
-
-      });
-
-      await modal.present();
-
-    } else if (choice === 2){
-
-      console.log('Performing UPDATE');
-
-
-      const modal = await this.modalCtrl.create({
-        component: ConfirmEmployeeComponent,
-        componentProps: {
-         employee
-        }
-      });
-      modal.onDidDismiss().then(() => {
-        // this.repo.getSaleItems();
-        // this.updateSaleItemInfoModal(saleItem);
-      });
-      await modal.present();
-    } else {
-      console.log('BadOption: ' + choice);
-    }
+        });
+        await modal.present();
+      } else {
+        console.log('BadOption: ' + choice);
+      }
+    })
+    
   }
 
   async associativeEmployeeTypeModal(employeeType: EmployeeType) {

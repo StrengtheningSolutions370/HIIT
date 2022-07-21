@@ -69,9 +69,10 @@ export class ConfirmEmployeeComponent implements OnInit {
 
         //CREATE
         console.log('Add Employee from confirm:');
-        await this.employeeService.createEmployee(employee);
-        await this.dismissModal();
-        this.sucAdd();
+        this.employeeService.createEmployee(employee).then(() => {
+            this.dismissModal();
+            this.sucAdd();
+        });
 
     } else if (this.choice === 2){
 

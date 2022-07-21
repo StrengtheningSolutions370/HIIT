@@ -14,89 +14,6 @@ import { Roles } from 'src/app/models/roles.enum';
 })
 export class EmployeePagePage implements OnInit {
 
-  // employees = [
-  //   {
-  //     name : 'Juan',
-  //     surname : 'Zonneveld',
-  //     type : 'Trainer',
-  //     cell : '078 569 5894',
-  //     email : 'zz.zonneveld@gmail.com',
-  //     title : 'Mr.'
-  //   },
-  //   {
-  //     name : 'Sonali',
-  //     surname : 'Marais',
-  //     type : 'Trainer',
-  //     cell : ' 079 584 4523',
-  //     email : 'sonalimarais001@icloud.com',
-  //     title : 'Mrs.'
-  //   },
-  //   {
-  //     name : 'Stacey',
-  //     surname : 'Scott',
-  //     type : 'Administrator',
-  //     cell : '178 963 4123',
-  //     email : 'staceyscot@icloud.com',
-  //     title : 'Prof.'
-  //   },
-  //   {
-  //     name : 'Luhan',
-  //     surname : 'Smith',
-  //     type : 'Trainer',
-  //     cell : '078 987 7412',
-  //     email : 'smith.luhan@gmail.com',
-  //     title : 'Mr.'
-  //   },
-  //   {
-  //     name : 'Ruben',
-  //     surname : 'Haddow',
-  //     type : 'Trainer',
-  //     cell : '089 546 4125',
-  //     email : 'ruben.haddow@gmail.com',
-  //     title : 'Mr.'
-  //   },
-  //   {
-  //     name : 'Chiante',
-  //     surname : 'Brits',
-  //     type : 'Administrator',
-  //     email : 'brits550chiante@gmail.com',
-  //     cell : '128 456 8952',
-  //     title : 'Miss.'
-  //   },
-  //   {
-  //     name : 'Juan',
-  //     surname : 'Zonneveld',
-  //     type : 'Trainer',
-  //     cell : '089 564 2563',
-  //     email : 'zz.zonneveld@gmail.com',
-  //     title : 'Mr.'
-  //   },
-  //   {
-  //     name : 'Sonali',
-  //     surname : 'Marais',
-  //     type : 'Trainer',
-  //     cell : '078 962 2658',
-  //     email : 'sonalimarais001@icloud.com',
-  //     title : 'Mrs.'
-  //   },
-  //   {
-  //     name : 'Stacey',
-  //     surname : 'Scott',
-  //     type : 'Administrator',
-  //     cell : '089 549 5123',
-  //     email : 'staceyscot@icloud.com',
-  //     title : 'Prof.'
-  //   },
-  //   {
-  //     name : 'Luhan',
-  //     surname : 'Smith',
-  //     type : 'Trainer',
-  //     cell : '078 965 1236',
-  //     email : 'smith.luhan@gmail.com',
-  //     title : 'Mr.'
-  //   }
-  // ];
-
   employees : any[] = [];
   employeesOriginal : any[] = [];
   rolefilter : any[] = [];
@@ -189,9 +106,13 @@ export class EmployeePagePage implements OnInit {
     await modal.present();
   }
 
-  async viewEmployeeInfoModal() {
+  async viewEmployeeInfoModal(employee: any) {
+   console.log('prop to pass', employee)
     const modal = await this.modalCtrl.create({
-      component : ViewEmployeeComponent
+      component : ViewEmployeeComponent,
+      componentProps: {
+        employee
+      }
     });
     await modal.present();
   }
@@ -256,6 +177,7 @@ export class EmployeePagePage implements OnInit {
         'data.appUser.title',
         'data.employeeType.name',
         'data.qualification.description',
+        'role'
       ]
     }).search(
       this.searchTerm

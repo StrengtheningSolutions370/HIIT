@@ -27,10 +27,6 @@ export class DeleteEmployeeComponent implements OnInit {
 
 
   ngOnInit() {
-    
-    this.title = 'not working';
-    this.employeeType = 'not working';
-    this.qualification = 'not working';
 
   }
 
