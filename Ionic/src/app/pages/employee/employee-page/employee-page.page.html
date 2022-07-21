@@ -1,10 +1,30 @@
-<ion-content>
+<ion-content *ngIf="!loading">
   
   <br/>
-  <ion-searchbar #search (input)="searchEmployees(search)" expand="block" placeholder='I am looking for...' cancelButtonText="Close"></ion-searchbar>
 
-  <br/>
-  <br/>
+  <ion-grid>
+    <ion-row>
+
+      <ion-col size="12">
+        <ion-searchbar #search (ionClear)="searchEmployees(search.value)" (ionInput)="searchEmployees(search.value)" expand="block" placeholder='I am looking for...' cancelButtonText="Close"></ion-searchbar>
+      </ion-col>
+
+      <ion-col size="4">
+        <ion-list>
+          <ion-item>
+
+            <ion-select (ionChange)="filter($event)" interface="popover" placeholder="Filter Role">
+              <ion-select-option value="all" selected>All</ion-select-option>
+              <ion-select-option *ngFor="let r of rolefilter" value="{{r.value}}">{{ r.role }}</ion-select-option>
+            </ion-select>
+
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
 
   <div class="ion-text-center">
     <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addEmployeeInfoModal()">
@@ -52,22 +72,26 @@
 
 
     <ion-grid *ngIf="!loading && !noresults">
-      <ion-list *ngFor="let emp of employees">
+
+
+
+      <ion-list class="cardFadeUp" *ngFor="let emp of employees">
         <ion-item-sliding>
 
           <ion-item>
                 
             <ion-grid class="nomargin">
               <ion-row>
-              <ion-col size="12" size-lg="2" class="ion-align-items-center"><img [src]="createImg(emp.photo)"></ion-col>
+              <ion-col size="12" size-lg="2" class="ion-align-items-center"><img [src]="createImg(emp.data.photo)"></ion-col>
 
               <ion-col size="5">
-                <ion-text><h3>{{emp.appUser.firstName}} {{emp.appUser.lastName}}</h3></ion-text>
-                <ion-text><h6>{{emp.appUser.email}}</h6></ion-text>
+                <ion-text><h3>{{emp.data.appUser.firstName}} {{emp.data.appUser.lastName}}</h3></ion-text>
+                <ion-text><h6 class="lightone">{{emp.data.appUser.email}}</h6></ion-text>
+                <ion-text><h6 class="lighttwo">{{phoneFormat(emp.data.appUser.phoneNumber)}}</h6></ion-text>
               </ion-col>
 
               <ion-col>
-                <ion-text><h6>{{emp.appUser.phoneNumber}}</h6></ion-text>
+                <ion-text><h6>{{upperCase(emp.role)}}</h6></ion-text>
               </ion-col>
               
               <ion-col>
@@ -82,7 +106,7 @@
 
           <ion-item-options side="end" >
             <ion-item-option color="secondary">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
-            <ion-item-option color="danger" (click)="deleteEmployeeInfoModal()">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
+            <ion-item-option color="danger" (click)="deleteEmployeeInfoModal(emp)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
 
@@ -93,10 +117,10 @@
       <h1>No Results</h1>
     </ion-text>
 
-    <ion-spinner *ngIf="loading" name="bubbles"></ion-spinner>  
-
-  <pre>{{employees|json}}</pre>
-</ion-content>
+    
+    <!-- <pre>{{employees|json}}</pre> -->
+  </ion-content>
+  <ion-spinner *ngIf="loading" name="bubbles"></ion-spinner>  
 
 
 

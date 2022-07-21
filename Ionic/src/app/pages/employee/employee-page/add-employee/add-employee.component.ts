@@ -81,11 +81,12 @@ export class AddEmployeeComponent implements OnInit{
     }
 
     pushBackRole(el : string) {
+      const temp = el;
       if (el == 'generalemployee') {
         el = 'General Employee';
       }
       this.roles.push({
-        value: el,
+        value: temp,
         role: el.substring(0, 1).toUpperCase() + el.substring(1, el.length)
       })
     }
@@ -100,7 +101,7 @@ export class AddEmployeeComponent implements OnInit{
     this.cEmployeeForm = this.formBuilder.group({
       name: ['Shannon', [Validators.required]],
       contract: ['', [this.validateContract]],
-      email: ['u20502746@tuks.co.za', [Validators.required, Validators.email]],
+      email: ['shannonlnoel@icloud.com', [Validators.required, Validators.email]],
       surname: ['Noel', [Validators.required]],
       photo: [''],
       // photo: ['', [this.validatePhoto]],

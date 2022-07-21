@@ -45,41 +45,86 @@ namespace Team7.Models.Repository
 
         public async Task<object> GetAllEmployeesAsync()
         {
-            /*IQueryable<Employee> query = DB.Employee;
 
-            if (!query.Any())
+            /*var o = new List<object>();
+
+            var emps = await DB.Employee.Select(e => new
             {
-                return null;
+                Photo = e.Photo,
+                Contract = e.Contract,
+                IDNumber = e.IDNumber,
+                Qualification = e.Qualification,
+                EmployeeType = e.EmployeeType,
+                AppUser = e.AppUser,
+            }).ToListAsync();
+
+            foreach (var e in emps)
+            {
+                o.Add(new
+                {
+                    Data = e,
+                    Role = await _userManager.GetRolesAsync(e.AppUser)
+                });
             }
-            else
+
+            return o;*/
+
+            var o = new List<object>();
+
+            var emps = await DB.Employee.Select(e => new
             {
-                return new
+                Photo = e.Photo,
+                Contract = e.Contract,
+                IDNumber = e.IDNumber,
+                Qualification = e.Qualification,
+                EmployeeType = e.EmployeeType,
+                AppUser = e.AppUser,
+            }).ToListAsync();
+
+
+            var titles = await DB.Title.Select(s => new Title
+            {
+                Description = s.Description,
+                User = s.User
+            }).ToListAsync();
+
+            foreach (var e in emps)
+            {
+                e.AppUser.Title = getTitleFromId(titles, e.AppUser.Id);
+            }
+
+            foreach (var e in emps)
+            {
+                o.Add(new
                 {
-                    result = await DB.Employee.Select(e => new
+                    Data = e,
+                    Role = await _userManager.GetRolesAsync(e.AppUser),
+                });
+            }
+
+            return o;
+
+        }
+
+        static Title getTitleFromId(List<Title> titles, string id)
+        {
+            foreach (var title in titles)
+            {
+                foreach(var item in title.User)
+                {
+                    if (item.Id == id)
                     {
-                        e.EmployeeID,
-                        e.Photo,
-                        e.IDNumber,
-                        e.Qualification,
-                        e.Contract,
-                        e.EmployeeType,
-                    }).ToListAsync()
-                };
-            }*/
-            //IQueryable<object> query = DB.QualificationType;
-            //return await query.ToArrayAsync();
-
-            return await DB
-                .Employee
-                .Select(e => new Employee
-                {
-                    EmployeeID = e.EmployeeID,
-                    Photo = e.Photo,
-                    Contract = e.Contract,
-                    IDNumber = e.IDNumber,
-                    AppUser = e.AppUser,
-                }).ToListAsync();
-
+                        return new Title
+                        {
+                            /*titleID = title.TitleID,
+                            description = title.Description*/
+                            TitleID = title.TitleID,
+                            Description = title.Description,
+                        };
+                    }
+                }
+            }
+            return null;
         }
 
         public async Task<Employee[]> _GetAllEmployeesAsync()

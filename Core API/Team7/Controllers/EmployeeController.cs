@@ -173,7 +173,8 @@ namespace Team7.Controllers
                         IDNumber = IDNumber,
                         AppUser = await _userManager.FindByNameAsync(Email),
                         EmployeeType = await this.EmployeeTypeRepo._GetEmployeeTypeIdAsync(Convert.ToInt32(EmployeeTypeId)),
-                        Qualification = await this.QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID))
+                        Qualification = await this.QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID)),
+                        UserID = EmployeeID
                     };
                     ///////////////////////////////////
 
@@ -323,7 +324,7 @@ namespace Team7.Controllers
         //create a trainer or generalemployee
         [HttpPost]
         [Route("createEmployee")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, superuser")]
+        /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, superuser")]*/
         public async Task<IActionResult> createEmployee()
         {
             var formCollection = await Request.ReadFormAsync();
@@ -354,7 +355,7 @@ namespace Team7.Controllers
                     break;
                 }
             if (!flag)
-                return BadRequest();
+                return BadRequest(uvmRole + " is not supported");
 
             //check if role exists:
             var exists = await _roleManager.FindByNameAsync(uvmRole);
@@ -407,7 +408,8 @@ namespace Team7.Controllers
                         IDNumber = IDNumber,
                         AppUser = await _userManager.FindByNameAsync(Email),
                         EmployeeType = await this.EmployeeTypeRepo._GetEmployeeTypeIdAsync(Convert.ToInt32(EmployeeTypeId)),
-                        Qualification = await this.QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID))
+                        Qualification = await this.QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID)),
+                        UserID = EmployeeID
                     };
                     ///////////////////////////////////
 

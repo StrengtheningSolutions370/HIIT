@@ -36,8 +36,22 @@ h3, h6 {
     margin: 0px !important;
 }
 
-h6 {
+.lightone {
+    margin-top: 4px !important;
     opacity: 0.6;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+.lighttwo {
+    margin-top: 1px !important;
+    opacity: 0.6;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+#viewButton {
+    --background: var(pink);
 }
 
 ion-row {
@@ -61,3 +75,41 @@ ion-spinner {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+ion-item {
+    -webkit-animation: fadeIn 600ms; 
+    animation: fadeIn 600ms;
+}
+
+.cardFadeUp {
+    -webkit-animation: fadeIn 600ms; 
+    animation: fadeIn 600ms;
+    -webkit-animation: fadeInUp 400ms ease; 
+    animation: fadeInUp 400ms ease;
+}
+
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .fadeIn {
+    animation-name: fadeIn;
+  }

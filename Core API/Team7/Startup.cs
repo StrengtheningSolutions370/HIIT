@@ -22,6 +22,7 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Team7.Services;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace Team7
 {
@@ -172,7 +173,7 @@ namespace Team7
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICorsService corsService, ICorsPolicyProvider corsPolicyProvider)
         {
 
 
@@ -191,12 +192,30 @@ namespace Team7
 
             app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
+
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
                 RequestPath = new PathString("/Resources")
             });
+
+            /*app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources")
+                ServeUnknownFileTypes = true,
+                OnPrepareResponse = (ctx) =>
+                {
+                    var policy = corsPolicyProvider.GetPolicyAsync(ctx.Context, "CorsPolicy")
+                        .ConfigureAwait(false)
+                        .GetAwaiter().GetResult();
+
+                    var corsResult = corsService.EvaluatePolicy(ctx.Context, policy);
+
+                    corsService.ApplyResult(corsResult, ctx.Context.Response);
+                }
+            });*/
 
             app.UseHttpsRedirection();
 

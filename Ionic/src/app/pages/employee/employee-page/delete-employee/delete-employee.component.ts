@@ -13,7 +13,7 @@ import { EmployeeService } from 'src/app/services/employee/employee.service';
 })
 export class DeleteEmployeeComponent implements OnInit {
 
-  @Input() employee: Employee;
+  @Input() employee: any;
 
   title! : string;
   employeeType! : string;
@@ -29,30 +29,16 @@ export class DeleteEmployeeComponent implements OnInit {
 
 
   ngOnInit() {
+    
+    this.title = 'not working';
+    this.employeeType = 'not working';
+    this.qualification = 'not working';
 
-      this.title = this.employee.TitleID.split(',')[1];
-      this.employeeType = this.employee.EmployeeTypeID.split(',')[1];
-      this.qualification = this.employee.QualificationID.split(',')[1];
-
-      //decode the contract
-      let reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.pdfSrc = e.target.result;
-      };
-      reader.readAsArrayBuffer(this.employee.Contract);
-
-      //attempt to decode the image
-      if (this.employee.Photo != null) {
-        this.showProfile = true;
-        const reader = new FileReader();
-        reader.onload = (event : any) => {
-          this.imgSrc = event.target.result;
-          this.showProfile = true;
-        }
-        reader.readAsDataURL(this.employee.Photo);
-      }
-
+    if (this.employee.Photo != null) {
+      this.showProfile = true;
     }
+
+  }
 
      //Send through the id of the selected employee to be deleted in the employee service.
      async delete(id: number){
@@ -81,6 +67,21 @@ export class DeleteEmployeeComponent implements OnInit {
     dismissModal() {
       this.modalCtrl.dismiss();
     };
+
+    public createImg = (fileName: string) => `https://localhost:44383/Resources/Employees/Images/${fileName}`;
+    // public createContract = (fileName: string) => `https://localhost:44383/Resources/Employees/Contracts/${fileName}`;
+
+    createContract(fileName : string) {
+      const req = new Request(`https://localhost:44383/Resources/Employees/Contracts/${fileName}`, {
+        mode : 'no-cors',
+        headers: {
+          "Content-Type": "application/pdf"
+        }
+      })
+      const document = fetch(req).then(b => b.blob);
+      console.log(document);
+      return '';
+    }
 
 }
 
