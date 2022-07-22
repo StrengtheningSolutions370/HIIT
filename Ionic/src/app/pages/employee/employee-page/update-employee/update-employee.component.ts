@@ -41,6 +41,8 @@ export class UpdateEmployeeComponent implements OnInit {
 
   ddRole! : any;
 
+  done = false;
+
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public employeeService: EmployeeService, private router: Router,private currentRoute: ActivatedRoute,
     private  alertCtrl: AlertController, public titleService: TitleService, public repo: RepoService, private storage : StoreService) {
@@ -83,9 +85,13 @@ export class UpdateEmployeeComponent implements OnInit {
 
     console.log(this.employee);
 
+    var photo = fetch('https://localhost:44383/Resources/Employees/Images/' + this.employee.photo)
+
     if (this.employee.data.photo == null) {
       this.showProfile = false;
     }
+
+    console.log('employee = ', this.employee);
 
     this.cEmployeeForm = this.formBuilder.group({
       name: [this.employee.data.appUser.firstName, [Validators.required]],
@@ -95,45 +101,66 @@ export class UpdateEmployeeComponent implements OnInit {
       photo: ['', this.validatePhoto],
       idNumber: [this.employee.data.idNumber, [this.validateIDNumber]],
       phone: [this.employee.data.appUser.phoneNumber, [Validators.pattern(/[0-9]{10}/)]],
-      titleId: [this.employee.data.appUser.title.titleID, [Validators.required]],
+      titleId: ['', [Validators.required]],
       qualificationId : [this.employee.data.qualification.qualificationID, Validators.required],
       employeeTypeId: [this.employee.data.employeeType.employeeTypeID, Validators.required],
-      role: [this.employee.role[0], Validators.required]
+      role: ['', Validators.required]
     });
-
-    this.ddRole = {
-      id : 0,
-      name : this.employee.role[0]
-    }
 
     //getting employee types for drop down
-    this.repo.getEmployeeTypes().subscribe({
-      next: (data : any) => {
-        this.employeeTypeList = data.result;
-      }
-    });
+    setTimeout(() => {
+      this.repo.getEmployeeTypes().subscribe({
+        next: (data : any) => {
+          this.employeeTypeList = data.result;
+          this.setEmployeeType();
+        }
+      });
+  
+      //getting qualifications for drop down
+      this.repo.getQualifications().subscribe({
+        next: (data : any) => {
+          this.qualificationList = data.result;
+          this.setQualificationId();
+        }
+      });
+  
+      //getting titles for drop down
+      this.repo.getTitles().subscribe({
+        next: (data : any) => {
+          this.titleList = data.result;
+          this.setTitleId(this.titleList);
+        }
+      });
+  
+      this.setRole();
+    }, 500);
 
-    //getting qualifications for drop down
-    this.repo.getQualifications().subscribe({
-      next: (data : any) => {
-        this.qualificationList = data.result;
-      }
-    });
+  }
 
-    //getting qualifications for drop down
-    this.repo.getQualificationTypes().subscribe({
-      next: (data : any) => {
-        this.qualificationTypeList = data.result;
-      }
-    });
+  setRole() {
+    this.cEmployeeForm.get('role').setValue(this.employee.role[0]);
+  }
 
-    //getting titles for drop down
-    this.repo.getTitles().subscribe({
-      next: (data : any) => {
-        this.titleList = data.result;
-      }
-    });
+  setEmployeeType() {
+    const id = this.employee.data.employeeType.employeeTypeID;
+    const name = this.employee.data.employeeType.name;
+    this.cEmployeeForm.get('employeeTypeId').setValue(`${id},${name}`)
+  }
 
+  setQualificationId() {
+    const id = this.employee.data.qualification.qualificationID;
+    const description = this.employee.data.qualification.description;
+    this.cEmployeeForm.get('qualificationId').setValue(`${id},${description}`);
+  }
+
+  setTitleId(titles : any) {
+    const description = this.employee.data.appUser.title.description;
+    titles.map((el : any) => {
+      if (el.description == description) {
+        this.cEmployeeForm.get('titleId').setValue(`${el.titleID},${description}` );
+        return;
+      }
+    })
   }
 
   dismissModal() {
@@ -186,7 +213,7 @@ export class UpdateEmployeeComponent implements OnInit {
 
   submitForm() {
     console.log('quli');
-    console.log(this.cEmployeeForm.controls['qualificationId'].value);
+    console.log(this.cEmployeeForm.controls['titleId'].value);
   }
 
   addContract(event : any) {
@@ -228,5 +255,6 @@ export class UpdateEmployeeComponent implements OnInit {
 
   public createContract = () => `https://localhost:44383/Resources/Employees/Contracts/${this.employee.data.contract}`;
 
+  
 
 }

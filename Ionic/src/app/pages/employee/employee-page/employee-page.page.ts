@@ -7,6 +7,7 @@ import { UpdateEmployeeComponent } from './update-employee/update-employee.compo
 import { ViewEmployeeComponent } from './view-employee/view-employee.component';
 import Fuse from 'fuse.js'
 import { Roles } from 'src/app/models/roles.enum';
+import { GlobalService } from 'src/app/services/global/global.service';
 @Component({
   selector: 'app-employee-page',
   templateUrl: './employee-page.page.html',
@@ -24,7 +25,7 @@ export class EmployeePagePage implements OnInit {
   filtering = false;
   filterTerm = '';
 
-  constructor(private modalCtrl: ModalController, public employeeService: EmployeeService) {
+  constructor(private modalCtrl: ModalController, public employeeService: EmployeeService, private global : GlobalService) {
     
   }
   
@@ -40,25 +41,27 @@ export class EmployeePagePage implements OnInit {
   }
 
   fetchEmployees() {
+    this.global.nativeLoad("Loading...");
     this.loading = true;
     this.employees = [];
     this.employeesOriginal = [];
     this.employeeService.getAllEmployees().subscribe({
       next: (data : any) => {
 
+        this.loading = false;
         this.employees = data;
         this.employeesOriginal = data;
-        this.loading = false;
         if (this.employees.length == 0) {
           this.noresults = true;
         }
-
+        
         this.employees.map((el : any) => {
           this.pushBackRole(el.role[0]);
         });
-
+        
         this.removeduplicates();
-
+        this.global.endNativeLoad();
+        
       }
     });
   }

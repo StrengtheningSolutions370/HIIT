@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, AlertController } from '@ionic/angular';
+import { ModalController, ToastController, AlertController, LoadingController } from '@ionic/angular';
 import { throwIfEmpty } from 'rxjs/operators';
 import { Employee } from 'src/app/models/employee';
 import { Roles } from 'src/app/models/roles.enum';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-confirm-employee',
@@ -27,10 +28,12 @@ export class ConfirmEmployeeComponent implements OnInit {
 
   alertCtrl: any;
 
-  loading = false;
+  loading = true;
+
+  loader! : any;
 
    constructor(private modalCtrl: ModalController, public employeeService: EmployeeService,
-    public router: Router, public activated: ActivatedRoute, public toastCtrl: ToastController, alertCtrl: AlertController ) {
+    public router: Router, public activated: ActivatedRoute, public toastCtrl: ToastController, alertCtrl: AlertController, private loadingCtrl: LoadingController, private global : GlobalService) {
   }
 
   ngOnInit() {
@@ -68,6 +71,7 @@ export class ConfirmEmployeeComponent implements OnInit {
   async confirmChanges(employee: Employee){
     console.log(this.choice);
     this.loading = true;
+    this.global.nativeLoad("Creating...");
     if (this.choice === 1){
 
         //CREATE
@@ -78,6 +82,7 @@ export class ConfirmEmployeeComponent implements OnInit {
         }).catch(() => {
           this.duplicateAlert();
           this.loading = false;
+          this.global.endNativeLoad();
         });
 
     } else if (this.choice === 2){

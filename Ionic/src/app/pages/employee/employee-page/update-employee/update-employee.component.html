@@ -90,9 +90,7 @@
     <ion-item>
       <ion-label position="floating">Title:</ion-label>
       <ion-select formControlName="titleId" type="text" required="" id="titleId" >
-        <ng-container *ngFor="let title of titleList">
-          <ion-select-option value="{{title.titleID}},{{title.description}}">{{ title.description }}</ion-select-option>
-        </ng-container>
+          <ion-select-option *ngFor="let title of titleList" value="{{title.titleID}},{{title.description}}">{{ title.description }}</ion-select-option>
       </ion-select>
       <br/>
     </ion-item>
@@ -100,19 +98,15 @@
     <ion-item>
       <ion-label position="floating">Employee Type:</ion-label>
       <ion-select formControlName="employeeTypeId" type="text" required="" id="employeeTypeId" >
-        <ng-container *ngFor="let et of employeeTypeList">
-          <ion-select-option value="{{et.employeeTypeID}},{{et.name}}">{{ et.name }}</ion-select-option>
-        </ng-container>
+          <ion-select-option *ngFor="let et of employeeTypeList" value="{{et.employeeTypeID}},{{et.name}}">{{ et.name }}</ion-select-option>
       </ion-select>
       <br/>
     </ion-item> 
 
     <ion-item>
       <ion-label position="floating">Qualification:</ion-label>
-      <ion-select formControlName="qualificationId" type="text" required="" id="qualificationId" >
-        <ng-container *ngFor="let qua of qualificationList">
-          <ion-select-option value="{{qua.qualificationID}},{{qua.description}}">{{ qua.description }}</ion-select-option>
-        </ng-container>
+      <ion-select  formControlName="qualificationId" type="text" required="" id="qualificationId" >
+          <ion-select-option *ngFor="let qua of qualificationList" value="{{qua.qualificationID}},{{qua.description}}">{{ qua.description }}</ion-select-option>
       </ion-select>
       <br/>
     </ion-item>
@@ -130,9 +124,7 @@
     <ion-item>
       <ion-label position="floating">Role:</ion-label>
       <ion-select formControlName="role" type="text" required="" id="role" >
-        <ng-container *ngFor="let role of roles">
-          <ion-select-option value="{{role.value}}">{{ role.role }}</ion-select-option>
-        </ng-container>
+          <ion-select-option *ngFor="let role of roles" value="{{role.value}}">{{ role.role }}</ion-select-option>
       </ion-select>
       <br/>
     </ion-item>

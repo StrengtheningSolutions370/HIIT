@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/authentication/auth.service';
+import { GlobalService } from '../services/global/global.service';
 import { RepoService } from '../services/repo.service';
 import { StoreService } from '../services/storage/store.service';
 
@@ -17,31 +19,51 @@ export class SidemenuComponent implements OnInit {
   trainer = false;
   role! : string;
 
-  constructor(private storage : StoreService, private auth: AuthService, private repo : RepoService) { }
+  constructor(private router : Router, private storage : StoreService, private auth: AuthService, private repo : RepoService, private global : GlobalService) { }
 
   ngOnInit() {
 
     console.log('ngOn for side menu');
 
-    this.storage.getKey('token').then(token => {
-      // console.log('role from side menu', token)
-      this.repo.getUserRole(token).subscribe({
-      next: (data : any) => {
-        const r = data.role;
-        //OVERRIDE TESTING:
-        //this.superuser = true;
-        if (r == 'client')
-          this.client = true;
-        if (r == 'member')
-          this.member = true;
-        if (r == 'admin')
-          this.admin = true;
-        if (r == 'superuser')
-          this.superuser = true;
-        if (r == 'trainer')
-          this.trainer = true;
-        }
-      })
+    this.auth.isLoggedIn.subscribe(log => {
+      if (log) {
+        console.log('log', 'emmited to fetch', log)
+        this.storage.getKey('token').then(token => {
+          if (token == null) {
+            this.router.navigate(['login']);
+            this.auth.logout();
+            return;
+          } else {
+            const tokenObject = this.global.decodeToken(token);
+            const now = Math.trunc(new Date().getTime() / 1000);
+            if (tokenObject.exp <= now) {
+                //token is no longer valid:
+                console.log('token in storage is expired');
+                this.storage.deleteKey('token');
+                this.router.navigate(['login']);
+                this.auth.logout();
+                return;
+            }
+            this.repo.getUserRole(token).subscribe({
+            next: (data : any) => {
+              const r = data.role;
+              //OVERRIDE TESTING:
+              //this.superuser = true;
+              if (r == 'client')
+                this.client = true;
+              if (r == 'member')
+                this.member = true;
+              if (r == 'admin')
+                this.admin = true;
+              if (r == 'superuser')
+                this.superuser = true;
+              if (r == 'trainer')
+                this.trainer = true;
+              }
+            })
+          }
+        })
+      }
     })
 
   }
