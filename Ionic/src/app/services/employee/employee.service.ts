@@ -103,6 +103,9 @@ private tempE : Employee[];
           next: () => {
             this.fetchEmployeesEvent.emit();
             resolve(true);
+          },
+          error: () => {
+            _(false);
           }
         })
       });

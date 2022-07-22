@@ -24,10 +24,25 @@ export class EmployeePagePage implements OnInit {
   filtering = false;
   filterTerm = '';
 
-  constructor(private modalCtrl: ModalController, public employeeService: EmployeeService) { }
+  constructor(private modalCtrl: ModalController, public employeeService: EmployeeService) {
+    
+  }
   
   ngOnInit() {
     
+    this.fetchEmployees();
+    this.employeeService.fetchEmployeesEvent.subscribe({
+      next: () => {
+        this.fetchEmployees();
+      }
+    })
+
+  }
+
+  fetchEmployees() {
+    this.loading = true;
+    this.employees = [];
+    this.employeesOriginal = [];
     this.employeeService.getAllEmployees().subscribe({
       next: (data : any) => {
 
@@ -46,7 +61,6 @@ export class EmployeePagePage implements OnInit {
 
       }
     });
-
   }
 
   phoneFormat(number : string) : string {
@@ -88,9 +102,12 @@ export class EmployeePagePage implements OnInit {
 
   }
 
-  async updateEmployeeInfoModal() {
+  async updateEmployeeInfoModal(employee : any) {
     const modal = await this.modalCtrl.create({
-      component : UpdateEmployeeComponent
+      component : UpdateEmployeeComponent,
+      componentProps: {
+        employee
+      }
     });
     await modal.present();
   }

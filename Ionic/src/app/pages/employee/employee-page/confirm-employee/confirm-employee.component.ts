@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
+import { throwIfEmpty } from 'rxjs/operators';
 import { Employee } from 'src/app/models/employee';
 import { Roles } from 'src/app/models/roles.enum';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
@@ -25,6 +26,8 @@ export class ConfirmEmployeeComponent implements OnInit {
   showProfile = false;
 
   alertCtrl: any;
+
+  loading = false;
 
    constructor(private modalCtrl: ModalController, public employeeService: EmployeeService,
     public router: Router, public activated: ActivatedRoute, public toastCtrl: ToastController, alertCtrl: AlertController ) {
@@ -64,7 +67,7 @@ export class ConfirmEmployeeComponent implements OnInit {
   //2 = confirm UPDATE
   async confirmChanges(employee: Employee){
     console.log(this.choice);
-
+    this.loading = true;
     if (this.choice === 1){
 
         //CREATE
@@ -72,6 +75,9 @@ export class ConfirmEmployeeComponent implements OnInit {
         this.employeeService.createEmployee(employee).then(() => {
             this.dismissModal();
             this.sucAdd();
+        }).catch(() => {
+          this.duplicateAlert();
+          this.loading = false;
         });
 
     } else if (this.choice === 2){

@@ -103,7 +103,7 @@ export class AddEmployeeComponent implements OnInit{
       contract: ['', [this.validateContract]],
       email: ['shannonlnoel@icloud.com', [Validators.required, Validators.email]],
       surname: ['Noel', [Validators.required]],
-      photo: [''],
+      photo: ['', this.validatePhoto],
       // photo: ['', [this.validatePhoto]],
       idNumber: ['0109030294085', [this.validateIDNumber]],
       phone: ['0000000000', [Validators.pattern(/[0-9]{10}/)]],
@@ -235,6 +235,8 @@ export class AddEmployeeComponent implements OnInit{
 
   submitForm() {
 
+    
+
     const emp = new Employee();
 
     emp.Name = this.cEmployeeForm.value['name'];
@@ -258,7 +260,7 @@ export class AddEmployeeComponent implements OnInit{
 
   async sucAdd() {
     const toast = await this.toastCtrl.create({
-      message: 'The Venue has been successfully added!',
+      message: 'The Employee has been successfully added!',
       duration: 2000
     });
     toast.present();
@@ -271,8 +273,8 @@ export class AddEmployeeComponent implements OnInit{
 
   async duplicateAlert() {
     const alert = await this.alertCtrl.create({
-      header: 'Venue Already Exists',
-      message: 'The Venue Information entered already exists on the system',
+      header: 'Employee Already Exists',
+      message: 'The Employee Information entered already exists on the system',
       buttons: ['OK']
     });
     alert.present();
@@ -280,8 +282,8 @@ export class AddEmployeeComponent implements OnInit{
 
   async failureAlert() {
     const alert = await this.alertCtrl.create({
-      header: 'Could not create venue',
-      message: 'There was an error updating the venue. Please try again',
+      header: 'Could not create Employee',
+      message: 'There was an error updating the Employee. Please try again',
       buttons: ['OK']
     });
     alert.present();
