@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { UpdateCategoryComponent } from './update-category.component';
+import { ConfirmBtypeComponent } from './confirm-btype.component';
 
-describe('UpdateCategoryComponent', () => {
-  let component: UpdateCategoryComponent;
-  let fixture: ComponentFixture<UpdateCategoryComponent>;
+describe('ConfirmBtypeComponent', () => {
+  let component: ConfirmBtypeComponent;
+  let fixture: ComponentFixture<ConfirmBtypeComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UpdateCategoryComponent ],
+      declarations: [ ConfirmBtypeComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UpdateCategoryComponent);
+    fixture = TestBed.createComponent(ConfirmBtypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

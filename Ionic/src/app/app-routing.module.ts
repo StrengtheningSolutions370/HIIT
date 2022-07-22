@@ -122,11 +122,11 @@ export const routes: Routes = [
     //loadChildren component here for profile once generated
   },
   {
-    path: 'bookings',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    path: 'booking',
+    loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule),
     canActivate: [AuthGaurdService],
     data: {
-      roles: [Roles.Member, Roles.Client]
+      roles: [Roles.Member, Roles.Client, Roles.SuperUser]
     }
     //loadChildren component here for bookings once generated
   },
@@ -196,10 +196,6 @@ export const routes: Routes = [
   {
     path: '**', //this route object must be last
     redirectTo: 'login',
-  },
-  {
-    path: 'booking',
-    loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule)
   }]
 
 @NgModule({

@@ -71,12 +71,12 @@ import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
 import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
 
 //EXERCISE CATEGORY IMPORTS:
-import { AddExerciseCategoryComponent } from './pages/exercises/exercise-category/add-exercise-category/add-exercise-category.component'; 
-import { UpdateExerciseCategoryComponent } from './pages/exercises/exercise-category/update-exercise-category/update-exercise-category.component'; 
-import { DeleteExerciseCategoryComponent } from './pages/exercises/exercise-category/delete-exercise-category/delete-exercise-category.component'; 
-import { ViewExerciseCategoryComponent } from './pages/exercises/exercise-category/view-exercise-category/view-exercise-category.component'; 
-import { ConfirmExerciseCategoryComponent } from './pages/exercises/exercise-category/confirm-exercise-category/confirm-exercise-category.component'; 
-import { AssociativeExerciseCategoryComponent } from './pages/exercises/exercise-category/associative-exercise-category/associative-exercise-category.component'; 
+import { AddExerciseCategoryComponent } from './pages/exercises/exercise-category/add-exercise-category/add-exercise-category.component';
+import { UpdateExerciseCategoryComponent } from './pages/exercises/exercise-category/update-exercise-category/update-exercise-category.component';
+import { DeleteExerciseCategoryComponent } from './pages/exercises/exercise-category/delete-exercise-category/delete-exercise-category.component';
+import { ViewExerciseCategoryComponent } from './pages/exercises/exercise-category/view-exercise-category/view-exercise-category.component';
+import { ConfirmExerciseCategoryComponent } from './pages/exercises/exercise-category/confirm-exercise-category/confirm-exercise-category.component';
+import { AssociativeExerciseCategoryComponent } from './pages/exercises/exercise-category/associative-exercise-category/associative-exercise-category.component';
 
 //EMPLOYEE IMPORTS:
 import { AddEmployeeComponent } from './pages/employee/employee-page/add-employee/add-employee.component';
@@ -84,6 +84,14 @@ import { DeleteEmployeeComponent } from './pages/employee/employee-page/delete-e
 import { ViewEmployeeComponent } from './pages/employee/employee-page/view-employee/view-employee.component';
 import { ConfirmEmployeeComponent } from './pages/employee/employee-page/confirm-employee/confirm-employee.component';
 import { UpdateEmployeeComponent } from './pages/employee/employee-page/update-employee/update-employee.component';
+
+//BOOKING TYPE IMPORTS:
+import { AddBtypeComponent } from './pages/booking/add-btype/add-btype.component';
+import { AssociativeBtypeComponent } from './pages/booking/associative-btype/associative-btype.component';
+import { ConfirmBtypeComponent } from './pages/booking/confirm-btype/confirm-btype.component';
+import { DeleteBtypeComponent } from './pages/booking/delete-btype/delete-btype.component';
+import { UpdateBtypeComponent } from './pages/booking/update-btype/update-btype.component';
+import { ViewBtypeComponent } from './pages/booking/view-btype/view-btype.component';
 
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
@@ -96,7 +104,7 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent, AssociativeTitleComponent,
   //QualificationType
   AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent, AssociativeQtypeComponent,
-  //VAT 
+  //VAT
   AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
   //EmployeeType
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
@@ -122,7 +130,9 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   //Side Menu
   SidemenuComponent,
   //Employee
-  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent
+  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent, AssociativeEtypeComponent,
+  //BookingType
+  AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent
 
 ],
 

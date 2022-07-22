@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ViewCategoryComponent } from './view-category.component';
+import { AssociativeBtypeComponent } from './associative-btype.component';
 
-describe('ViewCategoryComponent', () => {
-  let component: ViewCategoryComponent;
-  let fixture: ComponentFixture<ViewCategoryComponent>;
+describe('AssociativeBtypeComponent', () => {
+  let component: AssociativeBtypeComponent;
+  let fixture: ComponentFixture<AssociativeBtypeComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewCategoryComponent ],
+      declarations: [ AssociativeBtypeComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ViewCategoryComponent);
+    fixture = TestBed.createComponent(AssociativeBtypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

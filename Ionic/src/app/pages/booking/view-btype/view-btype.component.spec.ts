@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DeleteCategoryComponent } from './delete-category.component';
+import { ViewBtypeComponent } from './view-btype.component';
 
-describe('DeleteCategoryComponent', () => {
-  let component: DeleteCategoryComponent;
-  let fixture: ComponentFixture<DeleteCategoryComponent>;
+describe('ViewBtypeComponent', () => {
+  let component: ViewBtypeComponent;
+  let fixture: ComponentFixture<ViewBtypeComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeleteCategoryComponent ],
+      declarations: [ ViewBtypeComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DeleteCategoryComponent);
+    fixture = TestBed.createComponent(ViewBtypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
