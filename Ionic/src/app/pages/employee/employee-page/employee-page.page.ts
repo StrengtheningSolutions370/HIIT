@@ -30,40 +30,36 @@ export class EmployeePagePage implements OnInit {
   }
   
   ngOnInit() {
-    
+    this.global.nativeLoad("Loading...");
     this.fetchEmployees();
     this.employeeService.fetchEmployeesEvent.subscribe({
       next: () => {
-        this.fetchEmployees();
+        this.fetchEmployees().then(() => this.global.endNativeLoad());
       }
-    })
-
+    });
   }
 
   fetchEmployees() {
-    this.global.nativeLoad("Loading...");
-    this.loading = true;
-    this.employees = [];
-    this.employeesOriginal = [];
-    this.employeeService.getAllEmployees().subscribe({
-      next: (data : any) => {
-
-        this.loading = false;
-        this.employees = data;
-        this.employeesOriginal = data;
-        if (this.employees.length == 0) {
-          this.noresults = true;
+    return new Promise<any>((resolve, _) => {
+      this.loading = true;
+      this.employees = [];
+      this.employeesOriginal = [];
+      this.employeeService.getAllEmployees().subscribe({
+        next: (data : any) => {
+          this.loading = false;
+          this.employees = data;
+          this.employeesOriginal = data;
+          if (this.employees.length == 0) {
+            this.noresults = true;
+          }
+          this.employees.map((el : any) => {
+            this.pushBackRole(el.role[0]);
+          });
+          this.removeduplicates();
+          resolve(true);
         }
-        
-        this.employees.map((el : any) => {
-          this.pushBackRole(el.role[0]);
-        });
-        
-        this.removeduplicates();
-        this.global.endNativeLoad();
-        
-      }
-    });
+      });
+    })
   }
 
   phoneFormat(number : string) : string {
@@ -94,8 +90,6 @@ export class EmployeePagePage implements OnInit {
     }
     return "General Employee";
   }
-
-  
 
   async addEmployeeInfoModal() {
     const modal = await this.modalCtrl.create({
@@ -222,23 +216,3 @@ export class EmployeePagePage implements OnInit {
   };
 
 }
-function trigger(arg0: string, arg1: any[]): any {
-  throw new Error('Function not implemented.');
-}
-
-function transition(arg0: string, arg1: any[]): any {
-  throw new Error('Function not implemented.');
-}
-
-function animate(arg0: number, arg1: any): any {
-  throw new Error('Function not implemented.');
-}
-
-function keyframes(arg0: any[]): any {
-  throw new Error('Function not implemented.');
-}
-
-function style(arg0: { opacity: string; }): any {
-  throw new Error('Function not implemented.');
-}
-

@@ -84,7 +84,7 @@
               <ion-col size="12" size-lg="2" class="ion-align-items-center"><img [src]="createImg(emp.data.photo)"></ion-col>
 
               <ion-col size="5">
-                <ion-text><h3>{{emp.data.appUser.firstName}} {{emp.data.appUser.lastName}}</h3></ion-text>
+                <ion-text><h3>{{emp.data.appUser.title.description}}, {{emp.data.appUser.firstName}} {{emp.data.appUser.lastName}}</h3></ion-text>
                 <ion-text><h6 class="lightone">{{emp.data.appUser.email}}</h6></ion-text>
                 <ion-text><h6 class="lighttwo">{{phoneFormat(emp.data.appUser.phoneNumber)}}</h6></ion-text>
               </ion-col>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
@@ -9,7 +9,6 @@ import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { StoreService } from 'src/app/services/storage/store.service';
 import { TitleService } from 'src/app/services/title/title.service';
-
 @Component({
   selector: 'app-update-employee',
   templateUrl: './update-employee.component.html',
@@ -20,15 +19,17 @@ export class UpdateEmployeeComponent implements OnInit {
   @Input() employee : any;
 
   roles : any[] = [];
-
   titleList: any[] = [];
   employeeTypeList: any[] = [];
   qualificationList: any[] = [];
   qualificationTypeList: any[] = [];
-
   cEmployeeForm! : FormGroup;
+  showRole = false;
 
   showProfile = false;
+  noProfile = false;
+  removedImage = false;
+  validPhoto = true;
 
   photoFlag = false;
   contractFlag = true;
@@ -37,11 +38,11 @@ export class UpdateEmployeeComponent implements OnInit {
   pdfSrc = '';
 
   photo! : File;
+  photoName! : string;
+  newPhoto = false;
+  deletePhoto = false;
+
   contract! : File;
-
-  ddRole! : any;
-
-  done = false;
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public employeeService: EmployeeService, private router: Router,private currentRoute: ActivatedRoute,
@@ -85,30 +86,21 @@ export class UpdateEmployeeComponent implements OnInit {
 
     console.log(this.employee);
 
-    var photo = fetch('https://localhost:44383/Resources/Employees/Images/' + this.employee.photo)
-
-    if (this.employee.data.photo == null) {
-      this.showProfile = false;
-    }
-
-    console.log('employee = ', this.employee);
-
     this.cEmployeeForm = this.formBuilder.group({
-      name: [this.employee.data.appUser.firstName, [Validators.required]],
-      contract: ['', [this.validateContract]],
+      name: [this.employee.data.appUser.lastName, [Validators.required]],
+      contract: [this.employee.data.contract, [this.validateContract]],
       email: [this.employee.data.appUser.email, [Validators.required, Validators.email]],
       surname: [this.employee.data.appUser.lastName, [Validators.required]],
       photo: ['', this.validatePhoto],
       idNumber: [this.employee.data.idNumber, [this.validateIDNumber]],
       phone: [this.employee.data.appUser.phoneNumber, [Validators.pattern(/[0-9]{10}/)]],
       titleId: ['', [Validators.required]],
-      qualificationId : [this.employee.data.qualification.qualificationID, Validators.required],
-      employeeTypeId: [this.employee.data.employeeType.employeeTypeID, Validators.required],
+      qualificationId : ['', Validators.required],
+      employeeTypeId: ['', Validators.required],
       role: ['', Validators.required]
     });
-
+    
     //getting employee types for drop down
-    setTimeout(() => {
       this.repo.getEmployeeTypes().subscribe({
         next: (data : any) => {
           this.employeeTypeList = data.result;
@@ -131,14 +123,42 @@ export class UpdateEmployeeComponent implements OnInit {
           this.setTitleId(this.titleList);
         }
       });
-  
-      this.setRole();
-    }, 500);
 
+      setTimeout(() => {
+        this.cEmployeeForm.get('role').setValue(this.employee.role[0]);
+      }, 1000);
+
+      //check if photo:
+      if (this.employee.data.photo) {
+        this.imgSrc = this.createImg();
+        this.showProfile = true;
+      } else {
+        this.noProfile = true;
+      }
+
+
+  
   }
 
-  setRole() {
-    this.cEmployeeForm.get('role').setValue(this.employee.role[0]);
+  restoreImage() {
+    this.photo = null;
+    this.imgSrc = this.createImg();
+    this.validPhoto = true;
+    this.newPhoto = false;
+    this.deletePhoto = false;
+    this.removedImage = false;
+    this.cEmployeeForm.get('photo').setValue(null);
+    this.cEmployeeForm.get('photo').markAsUntouched();
+  }
+
+  removeImage() {
+    this.removedImage = true;
+    this.newPhoto = false;
+    this.deletePhoto = true;
+    this.photo = null;
+    this.imgSrc = '';
+    this.cEmployeeForm.get('photo').setValue(null);
+    this.cEmployeeForm.get('photo').markAsUntouched();
   }
 
   setEmployeeType() {
@@ -228,9 +248,17 @@ export class UpdateEmployeeComponent implements OnInit {
 
   addPhoto(event : any) {
 
+    this.validPhoto = true;
     this.imgSrc = '';
     this.photo = null;
-    this.showProfile = false;
+    this.photoFlag = true;
+    if (!this.cEmployeeForm.get('photo').valid) {
+      this.validPhoto = false;
+      return;
+    }
+
+    this.newPhoto = true;
+    this.removedImage = false;
 
     if (event.target.files.length == 0)
       return;

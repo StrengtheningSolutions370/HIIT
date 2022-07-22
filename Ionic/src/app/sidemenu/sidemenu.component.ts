@@ -23,11 +23,9 @@ export class SidemenuComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log('ngOn for side menu');
 
     this.auth.isLoggedIn.subscribe(log => {
       if (log) {
-        console.log('log', 'emmited to fetch', log)
         this.storage.getKey('token').then(token => {
           if (token == null) {
             this.router.navigate(['login']);
