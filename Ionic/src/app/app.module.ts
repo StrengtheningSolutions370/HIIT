@@ -85,6 +85,14 @@ import { ViewEmployeeComponent } from './pages/employee/employee-page/view-emplo
 import { ConfirmEmployeeComponent } from './pages/employee/employee-page/confirm-employee/confirm-employee.component';
 import { UpdateEmployeeComponent } from './pages/employee/employee-page/update-employee/update-employee.component';
 
+//REFUND REASON IMPORTS:
+import { AddRefundReasonComponent } from 'src/app/pages/sale/refund-reason/add-refund-reason/add-refund-reason.component';
+import { DeleteRefundReasonComponent } from 'src/app/pages/sale/refund-reason/delete-refund-reason/delete-refund-reason.component';
+import { UpdateRefundReasonComponent } from 'src/app/pages/sale/refund-reason/update-refund-reason/update-refund-reason.component';
+import { ViewRefundReasonComponent } from 'src/app/pages/sale/refund-reason/view-refund-reason/view-refund-reason.component';
+import { ConfirmRefundReasonComponent } from 'src/app/pages/sale/refund-reason/confirm-refund-reason/confirm-refund-reason.component';
+import { AssociativeRefundReasonComponent } from 'src/app/pages/sale/refund-reason/associative-refund-reason/associative-refund-reason.component';
+
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
@@ -122,7 +130,9 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   //Side Menu
   SidemenuComponent,
   //Employee
-  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent
+  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent,
+  //RefundReason
+  ConfirmRefundReasonComponent, AddRefundReasonComponent, UpdateRefundReasonComponent, ViewRefundReasonComponent, DeleteRefundReasonComponent, AssociativeRefundReasonComponent
 
 ],
 

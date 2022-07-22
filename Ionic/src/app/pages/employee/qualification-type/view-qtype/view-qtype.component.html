@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>View "{{qualificationType.name}}"</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="this.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -16,6 +16,15 @@
       <ion-label class="ion-text-left">Name:</ion-label>
       <ion-label class="ion-text-right">{{qualificationType.name}}</ion-label>
   </ion-item>
+
+  <!-- <p *ngIf="qualificationType.qualifications.length > 0" style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">Associated Records</p>
+    <div *ngFor="let qualification of qualificationType.qualifications">
+      <ion-item >
+        <ion-label class="ion-text-left">Qualification:</ion-label>
+        <ion-label class="ion-text-right">{{qualification['description']}}</ion-label>
+      </ion-item>
+      <br/>
+    </div> -->
   
   </div>
   <br>

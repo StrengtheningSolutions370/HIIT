@@ -7,14 +7,17 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 
 import { ModalController, ToastController } from '@ionic/angular';
+
 import { SaleItem } from 'src/app/models/sale-item';
 import { AddSitemComponent } from 'src/app/pages/sale/sale-item/add-sitem/add-sitem.component';
 import { DeleteSitemComponent } from 'src/app/pages/sale/sale-item/delete-sitem/delete-sitem.component';
 import { UpdateSitemComponent } from 'src/app/pages/sale/sale-item/update-sitem/update-sitem.component';
 import { ViewSitemComponent } from 'src/app/pages/sale/sale-item/view-sitem/view-sitem.component';
 import { ConfirmSitemComponent } from 'src/app/pages/sale/sale-item/confirm-sitem/confirm-sitem.component';
+
 import { RepoService } from '../repo.service';
 import { Observable } from 'rxjs';
+
 import { SaleCategory } from 'src/app/models/sale-category';
 import { AddCategoryComponent } from 'src/app/pages/sale/sale-category/add-category/add-category.component';
 import { DeleteCategoryComponent } from 'src/app/pages/sale/sale-category/delete-category/delete-category.component';
@@ -23,6 +26,14 @@ import { ViewCategoryComponent } from 'src/app/pages/sale/sale-category/view-cat
 import { ConfirmCategoryComponent } from 'src/app/pages/sale/sale-category/confirm-category/confirm-category.component';
 import { AssociativeCategoryComponent } from 'src/app/pages/sale/sale-category/associative-category/associative-category.component';
 
+import { RefundReason } from 'src/app/models/refund-reason';
+import { AddRefundReasonComponent } from 'src/app/pages/sale/refund-reason/add-refund-reason/add-refund-reason.component';
+import { DeleteRefundReasonComponent } from 'src/app/pages/sale/refund-reason/delete-refund-reason/delete-refund-reason.component';
+import { UpdateRefundReasonComponent } from 'src/app/pages/sale/refund-reason/update-refund-reason/update-refund-reason.component';
+import { ViewRefundReasonComponent } from 'src/app/pages/sale/refund-reason/view-refund-reason/view-refund-reason.component';
+import { ConfirmRefundReasonComponent } from 'src/app/pages/sale/refund-reason/confirm-refund-reason/confirm-refund-reason.component';
+import { AssociativeRefundReasonComponent } from 'src/app/pages/sale/refund-reason/associative-refund-reason/associative-refund-reason.component';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,10 +41,12 @@ export class SalesService {
 
   @Output() fetchSaleItemsEvent = new EventEmitter<SaleItem>();
   @Output() fetchSaleCategoriesEvent = new EventEmitter<SaleCategory>();
+  @Output() fetchRefundReasonsEvent = new EventEmitter<RefundReason>();
 
 constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
   this.getAllSaleCategories();
   this.getAllSaleItems();
+  this.getAllRefundReasons();
 }
 
 //READS:
@@ -47,6 +60,10 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     return this.repo.getSaleCategory();
   }
 
+  getAllRefundReasons() : Observable<any> {
+    return this.repo.getRefundReasons();
+  }
+
   matchingSaleItem(name: string, description: string):Promise<any>{
     console.log('saleService: Repo -> Matching saleItem');
     return this.repo.getMatchSaleItem(name, description).toPromise();
@@ -55,6 +72,11 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
    matchingSaleCategory(name: string, description: string):Promise<any>{
     console.log('saleService: Repo -> Matching saleCategory');
     return this.repo.getMatchSaleCategory(name, description).toPromise();
+   }
+
+   matchingRefundReason(description: string):Promise<any>{
+    console.log('saleService: Repo -> Matching refundReason');
+    return this.repo.getMatchRefundReason(description).toPromise();
    }
 
 
@@ -82,6 +104,18 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     );
    }
 
+   createRefundReason(refundReason: any){
+    this.repo.createRefundReason(refundReason).subscribe(
+      {
+        next: () => {
+          console.log('REFUND REASON CREATED');
+          this.fetchRefundReasonsEvent.emit(refundReason);
+        }
+      }
+    );
+   }
+
+
 
   //Receives a sale item to update in the service sale  list.
    async updateSaleItem(saleItem: any) {
@@ -106,6 +140,19 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
         console.log(res);
          console.log('SALE CATEGORY UPDATED');
          this.fetchSaleCategoriesEvent.emit(saleCategory);
+       }
+      }
+    );
+  }
+
+   //Receives a refund reason to update in the service sale  list.
+   async updateRefundReason(id: number,refundReason: any) {
+    return this.repo.updateRefundReason(id,refundReason).subscribe(
+      {
+       next: (res) => {
+        console.log(res);
+         console.log('REFUND REASON UPDATED');
+         this.fetchRefundReasonsEvent.emit(refundReason);
        }
       }
     );
@@ -146,6 +193,23 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
       );
      }
 
+     //Receives a refund reason to delete in the service vat list.
+    deleteRefundReason(id: number){
+      this.repo.deleteRefundReason(id).subscribe(
+        {
+          next: res => {
+            console.log(res);
+            console.log('REFUND REASON DELETED');
+            this.fetchRefundReasonsEvent.emit();
+          },
+          error: err => {
+            console.log('ÉRROR HERE');
+            console.log(err);
+          }
+        }
+      );
+     }
+
 
 
   //Modals:
@@ -166,6 +230,16 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
       component: AddCategoryComponent,
       componentProps:{
         saleCategory
+      }
+    });
+    await modal.present();
+  }
+  //CREATE Refund Reason
+  async addRefundReasonInfoModal(refundReason?: RefundReason) {
+    const modal = await this.modalCtrl.create({
+      component: AddRefundReasonComponent,
+      componentProps:{
+        refundReason,
       }
     });
     await modal.present();
@@ -193,6 +267,17 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
       component: UpdateCategoryComponent,
       componentProps:{
         saleCategory
+      }
+    });
+    await modal.present();
+  }
+  //UPDATE Refund Reason
+  async updateRefundReasonInfoModal(refundReason: RefundReason) {
+    console.log('SalesService: UpdateRefundReasonModalCall');
+    const modal = await this.modalCtrl.create({
+      component: UpdateRefundReasonComponent,
+      componentProps:{
+        refundReason
       }
     });
     await modal.present();
@@ -236,6 +321,31 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     }
   }
 
+  //DELETE Refund Reason
+  async deleteRefundReasonInfoModal(refundReason: any) {
+    console.log("SalesService: DeleteRefundReasonModalCall");
+    if (refundReason.refund!= null && refundReason.refund.length > 0){
+      console.log("SalesService: Found associative in delete");
+      console.log(refundReason);
+      const modal = await this.modalCtrl.create({
+        component: AssociativeRefundReasonComponent,
+          componentProps: {
+            refundReason
+        }
+      });
+
+      await modal.present();
+    } else {
+      const modal = await this.modalCtrl.create({
+        component: DeleteRefundReasonComponent,
+          componentProps: {
+            refundReason
+        }
+      });
+      await modal.present();
+    }
+  }
+
 
   //VIEW Sale Item
   async viewSaleItemInfoModal(saleItem: SaleItem) {
@@ -261,6 +371,18 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
       component: ViewCategoryComponent,
       componentProps: {
         saleCategory
+      }
+    });
+    await modal.present();
+  }
+
+  //VIEW Refund Reason
+  async viewRefundReasonInfoModal(refundReason: RefundReason) {
+    console.log("SalesService: ViewRefundReasonModalCall");
+    const modal = await this.modalCtrl.create({
+      component: ViewRefundReasonComponent,
+      componentProps: {
+        refundReason
       }
     });
     await modal.present();
@@ -372,6 +494,38 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
 
       // });
 
+      await modal.present();
+
+    } else {
+
+      console.log('BadOption: ' + choice);
+
+    }
+  }
+//CONFIRM Refund Reason
+  async confirmRefundReasonModal(choice: number, refundReason: any) {
+    console.log('SaleService: ConfirmRefundReasonModalCall');
+    console.log(choice);
+    if(choice === 1){
+      console.log('Performing ADD');
+      const modal = await this.modalCtrl.create({
+        component: ConfirmRefundReasonComponent,
+        componentProps: {
+          refundReason,
+          choice
+        }
+      });
+      await modal.present();
+
+    } else if (choice === 2){
+      console.log('Performing UPDATE');
+      const modal = await this.modalCtrl.create({
+        component: ConfirmRefundReasonComponent,
+        componentProps: {
+          refundReason,
+          choice
+        }
+      });
       await modal.present();
 
     } else {
