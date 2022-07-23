@@ -20,14 +20,12 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClientID { get; set; }
+
         [Required]
-        public int UserID { get; set; }
-        [Required]
-        public string Name { get; set; }
+        public string UserID { get; set; }
+
         public string Photo { get; set; }
-        [Required]
         public bool Idemnity { get; set; }
-        [Required]
         public string QrCode { get; set; }
         
         public virtual ICollection<Booking> Booking { get; set; }

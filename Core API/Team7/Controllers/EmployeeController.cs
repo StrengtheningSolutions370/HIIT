@@ -42,7 +42,7 @@ namespace Team7.Controllers
         }
 
         //this endpoint can be uncommented and used to make a super user after re-migrations
-        /*[HttpPost]
+        [HttpPost]
         [Route("createSuperUser")]
         public async Task<IActionResult> createSuperUser(UserViewModel userViewModel)
         {
@@ -95,13 +95,15 @@ namespace Team7.Controllers
                 return Forbid("Account with provided email address already exists");
             }
             return Ok("Super User created Successfully");
-        }*/
+        }
 
         [HttpPost, DisableRequestSizeLimit]
         [Route("createAdmin")]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "superuser")]
         public async Task<IActionResult> createAdmin()
         {
+            var unix = timeStamp();
+
             var formCollection = await Request.ReadFormAsync();
 
             //1. convert employee back to an object and pull values 
@@ -160,8 +162,6 @@ namespace Team7.Controllers
                 string randomPassword = generatePassword();
                 var result = await _userManager.CreateAsync(user, randomPassword);
 
-                
-
                 if (result.Succeeded)
                 {
 
@@ -195,11 +195,11 @@ namespace Team7.Controllers
 
                         //store contract:
                         //config
-                        var contract = formCollection.Files.First();
+                            var contract = formCollection.Files.First();
                             var contractFolder = Path.Combine("Resources", "Employees", "Contracts");
                             var contractPath = Path.Combine(Directory.GetCurrentDirectory(), contractFolder);
                             //storage
-                            var contractFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + ".pdf";
+                            var contractFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "_" + unix + ".pdf";
                             //attach contract name to emp table
                             employeeRecord.Contract = contractFileName;
                             var contractFullPath = Path.Combine(contractPath, contractFileName);
@@ -207,7 +207,6 @@ namespace Team7.Controllers
                             {
                                 contract.CopyTo(stream);
                             }
-
 
                             //check if photo to store:
                             if (formCollection.Files.Count == 2)
@@ -219,7 +218,7 @@ namespace Team7.Controllers
                                 var photoPath = Path.Combine(Directory.GetCurrentDirectory(), photoFolder);
                                 //storage
                                 var extension = photo.ContentType.Split('/')[1];
-                                var photoFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "." + extension;
+                                var photoFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "_" + unix + "." + extension;
                                 //attatch photo name to emp table
                                 employeeRecord.Photo = photoFileName;
                                 var photoFullPath = Path.Combine(photoPath, photoFileName);
@@ -327,6 +326,8 @@ namespace Team7.Controllers
         /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, superuser")]*/
         public async Task<IActionResult> createEmployee()
         {
+            string unix = timeStamp(); //to stamp file creation
+
             var formCollection = await Request.ReadFormAsync();
 
             //1. convert employee back to an object and pull values 
@@ -344,7 +345,6 @@ namespace Team7.Controllers
             string EmployeeTypeId = employee["EmployeeTypeID"].ToString();
             string QualificationID = employee["QualificationID"].ToString();
             string uvmRole = employee["role"].ToString();
-
 
             string[] supportedRole = { "trainer", "generalemployee" };
             bool flag = false;
@@ -368,7 +368,6 @@ namespace Team7.Controllers
                     Name = uvmRole
                 };
                 IdentityResult result = await _roleManager.CreateAsync(newRole);
-
             }
 
             //Create the user
@@ -394,8 +393,6 @@ namespace Team7.Controllers
                 //assign a password from generator
                 string randomPassword = generatePassword();
                 var result = await _userManager.CreateAsync(user, randomPassword);
-
-
 
                 if (result.Succeeded)
                 {
@@ -434,7 +431,7 @@ namespace Team7.Controllers
                         var contractFolder = Path.Combine("Resources", "Employees", "Contracts");
                         var contractPath = Path.Combine(Directory.GetCurrentDirectory(), contractFolder);
                         //storage
-                        var contractFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + ".pdf";
+                        var contractFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "_" + unix + ".pdf";
                         //attach contract name to emp table
                         employeeRecord.Contract = contractFileName;
                         var contractFullPath = Path.Combine(contractPath, contractFileName);
@@ -442,7 +439,6 @@ namespace Team7.Controllers
                         {
                             contract.CopyTo(stream);
                         }
-
 
                         //check if photo to store:
                         if (formCollection.Files.Count == 2)
@@ -454,7 +450,7 @@ namespace Team7.Controllers
                             var photoPath = Path.Combine(Directory.GetCurrentDirectory(), photoFolder);
                             //storage
                             var extension = photo.ContentType.Split('/')[1];
-                            var photoFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "." + extension;
+                            var photoFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "_" + unix + "." + extension;
                             //attatch photo name to emp table
                             employeeRecord.Photo = photoFileName;
                             var photoFullPath = Path.Combine(photoPath, photoFileName);
@@ -494,6 +490,9 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutEmployee()
         {
+
+            string unix = timeStamp(); //to stamp file creation
+
             var formCollection = await Request.ReadFormAsync();
 
             //1. convert employee back to an object and pull values 
@@ -510,79 +509,137 @@ namespace Team7.Controllers
             string QualificationID = employee["QualificationID"].ToString();
             string uvmRole = employee["role"].ToString();
             string AspId = employee["EmployeeID"].ToString();
+
+            bool SwapPhoto = Convert.ToBoolean(employee["SwapPhoto"]);
+            bool SwapContract = Convert.ToBoolean(employee["SwapContract"]);
+
+            //fetch records to edit
+            var editEmployee = await this.EmployeeRepo.GetByUserIdAsync(AspId);
+            var editAspUser = await _userManager.FindByIdAsync(AspId);
+
+            //update the employee table:
+            editEmployee.IDNumber = IDNumber;
+            editEmployee.Qualification = await QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID));
+            editEmployee.EmployeeType = await EmployeeTypeRepo._GetEmployeeTypeIdAsync(Convert.ToInt32(EmployeeTypeId));
+
+            //update the AspUser table:
+            editAspUser.FirstName = Name;
+            editAspUser.LastName = Surname;
+            editAspUser.PhoneNumber = Phone;
+            editAspUser.Email = Email;
+            editAspUser.Title = await TitleRepo._GetTitleIdAsync(Convert.ToInt32(TitleId));
+
             bool RemovePhoto = Convert.ToBoolean(employee["RemovePhoto"]);
 
-            //get user ID from AspUserTable:
-            //var AspId = await _userManager.findB
-
-            if (formCollection.Files.Count != 0)
+            //check for remove photo
+            if (RemovePhoto)
             {
-                //fetch old file names:
-                var oldEmpRecord = this.EmployeeRepo.GetByUserIdAsync(AspId);
-                var oldPhoto = oldEmpRecord.Result.Photo;
-                var oldContract = oldEmpRecord.Result.Contract;
+                //delete photo and set string in table to null:
+                deletePhoto(editEmployee.Photo);
+                editEmployee.Photo = null;
 
-                //file swapping needs to occour here:
-                //check for length 0:
-                if (formCollection.Files.Count == 1)
+            } else
+            {
+
+                //photo is not being removed:
+                if (SwapPhoto) //check if photo is being swapped or left alone
                 {
-
-                    //either photo or contract to swap
-                    var file = formCollection.Files[0];
-                    if (file.ContentType == "application/pdf")
+                    try
                     {
-                        //single file to swap is pdf
-
-                    } else
+                        deletePhoto(editEmployee.Photo);
+                    } catch (Exception ex)
                     {
-                        //single file to swap is photo
+                        StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                    }
+
+                    //assume photo is in index 0:
+                    var photo = formCollection.Files.FirstOrDefault();
+
+                    //try determine which file is the photo:
+                    if (SwapContract)
+                    {
+                        //photo would be in index 1:
+                        photo = formCollection.Files[1];
 
                     }
 
-                } else
-                {
+                    //store new photo:
+                    //get file
+                    //config
+                    var photoFolder = Path.Combine("Resources", "Employees", "Images");
+                    var photoPath = Path.Combine(Directory.GetCurrentDirectory(), photoFolder);
+                    //storage
+                    var extension = photo.ContentType.Split('/')[1];
+                    var photoFileName = ContentDispositionHeaderValue.Parse(editEmployee.UserID).ToString() + "_" + unix + "." + extension;
+                    editEmployee.Photo = photoFileName; //update for the extension
 
-                    //two files exist
-
+                    var photoFullPath = Path.Combine(photoPath, photoFileName);
+                    using (var stream = new FileStream(photoFullPath, FileMode.Create))
+                    {
+                        photo.CopyTo(stream);
+                    }
 
                 }
 
             }
 
-            
+            if (SwapContract)
+            {
+                //delete old contract
+                try
+                {
+                    deletePhoto(editEmployee.Contract);
+                }
+                catch (Exception ex)
+                {
+                    StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                }
 
-            //var toUpdate = await EmployeeRepo._GetEmployeeIdAsync(id);
-            //if (toUpdate == null)
-            //{
-            //    return NotFound("Could not find existing employee with id:" + id);
-            //}
-            //try
-            //{
-            //    toUpdate.Photo = employee.Photo;
-            //    toUpdate.IDNumber = employee.IDNumber;
-            //    await EmployeeRepo.SaveChangesAsync();
-            //    return Ok();
-            //}
-            //catch (Exception err)
-            //{
-            //    return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            //}
+                //contract would be in index 0:
+                var contract = formCollection.Files.First();
+                var contractFolder = Path.Combine("Resources", "Employees", "Contracts");
+                var contractPath = Path.Combine(Directory.GetCurrentDirectory(), contractFolder);
+                //storage
+                var contractFileName = ContentDispositionHeaderValue.Parse(editEmployee.UserID).ToString() + "_" + unix + ".pdf";
+                editEmployee.Contract = contractFileName;
+                var contractFullPath = Path.Combine(contractPath, contractFileName);
+                using (var stream = new FileStream(contractFullPath, FileMode.Create))
+                {
+                    contract.CopyTo(stream);
+                }
+            }
+
+            await EmployeeRepo.SaveChangesAsync();
+            await _userManager.UpdateAsync(editAspUser);
+
             return Ok();
         }
 
-        static void deleteFile()
+        static string timeStamp()
         {
-
+            return DateTimeOffset.Now.ToUnixTimeSeconds().ToString();
         }
 
-        static void contractSwap()
+        static void deletePhoto(string fname)
         {
-
+            var imageFolder = Path.Combine("Resources", "Employees", "Images");
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), imageFolder, fname);
+            System.IO.File.Delete(imagePath);
         }
 
-        static void photoSwap()
+        static void deleteContract(string fname)
         {
-
+            try
+            {
+                var contractFolder = Path.Combine("Resources", "Employees", "Contracts");
+                var contractPath = Path.Combine(Directory.GetCurrentDirectory(), contractFolder, fname);
+                System.IO.File.Delete(contractPath);
+            }
+            catch (Exception ex)
+            {
+                //file deletion failed
+                Console.WriteLine(ex.Message);
+            }
         }
 
         // DELETE api/Employee/delete/5

@@ -38,6 +38,9 @@ export class ConfirmEmployeeComponent implements OnInit {
 
   ngOnInit() {
 
+    if (this.employee.Photo == null && this.employee.srcPhoto == '')
+        this.showProfile = false;
+
     this.title = this.employee.TitleID.split(',')[1];
     this.employeeType = this.employee.EmployeeTypeID.split(',')[1];
     this.qualification = this.employee.QualificationID.split(',')[1];
@@ -98,6 +101,8 @@ export class ConfirmEmployeeComponent implements OnInit {
     } else if (this.choice === 2){
       // console.log('confirm e to send', employee);
       //UPDATE
+      this.showProfile = true;
+      
       await this.employeeService.updateEmployee(employee).then(() => {
         this.dismissModal();
         this.sucUpdate();
@@ -105,7 +110,6 @@ export class ConfirmEmployeeComponent implements OnInit {
         // this.duplicateAlert();
         // this.loading = false;
         // this.global.endNativeLoad();
-        console.log('Update just failed...')
       });
       
 

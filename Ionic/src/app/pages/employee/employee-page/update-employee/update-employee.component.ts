@@ -88,7 +88,7 @@ export class UpdateEmployeeComponent implements OnInit {
     console.log(this.employee);
 
     this.cEmployeeForm = this.formBuilder.group({
-      name: [this.employee.data.appUser.lastName, [Validators.required]],
+      name: [this.employee.data.appUser.firstName, [Validators.required]],
       contract: [this.employee.data.contract, [this.validateContract]],
       email: [this.employee.data.appUser.email, [Validators.required, Validators.email]],
       surname: [this.employee.data.appUser.lastName, [Validators.required]],

@@ -184,10 +184,18 @@ private tempE : Employee[];
     //    }
     //   }
     // );
-    console.log('img src to send', e.srcPhoto)
+
     let deletePhoto = false;
     if (e.Photo == null && e.srcPhoto == '')
       deletePhoto = true;
+
+    let swapContract = false;
+    if (e.Contract != null)
+      swapContract = true;
+
+    let swapPhoto = false;
+    if (e.Photo != null)
+      swapPhoto = true;
 
     const tempEmp : any = {
       Name: e.Name,
@@ -202,16 +210,18 @@ private tempE : Employee[];
       Contract: null,
       role: e.role,
       EmployeeID: e.EmployeeID,
-      RemovePhoto: deletePhoto
+      RemovePhoto: deletePhoto,
+      SwapPhoto: swapPhoto,
+      SwapContract: swapContract
     }
+
     console.log('e to api', tempEmp)
     //create payload:
     const payload = new FormData();
     payload.append(JSON.stringify(tempEmp), tempEmp);
-    if (e.Contract != null)
-      payload.append('contract', e.Contract);
-    if (e.Photo)
-      payload.append('photo', e.Photo);
+    
+    payload.append('contract', e.Contract);
+    payload.append('photo', e.Photo);
 
     return new Promise<any>((resolve, _) => {
       this.repo.updateEmployee(payload).subscribe({
