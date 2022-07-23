@@ -17,8 +17,6 @@
       <p style="font-size:large">Please fill in the Employee information below.</p>
     </div>
 
-   
-
     <ion-item>
       <ion-label position="stacked">Profile Photo:</ion-label>
       <!-- <app-file-upload formControlName="photo"></app-file-upload> -->
@@ -44,14 +42,14 @@
           <ion-row>
             <ng-container *ngIf="!removedImage && employee.data.photo">
               <ion-col size="6">
-                <ion-button id="restore" (click)="restoreImage()" color="primary">Restore Image</ion-button>
+                <ion-button id="restore" [disabled]="!newPhoto || deletePhoto" (click)="restoreImage()" color="primary">Restore</ion-button>
               </ion-col>
               <ion-col size="6">
-                <ion-button id="remove" (click)="removeImage()" color="danger">Remove Image</ion-button>
+                <ion-button id="remove" (click)="removeImage()" color="danger">Remove</ion-button>
               </ion-col>
             </ng-container>
             <ion-col size="12" *ngIf="removedImage || employee.data.photo === null">
-              <ion-button id="restore" (click)="restoreImage()" color="primary">Restore Image</ion-button>
+              <ion-button id="restore" (click)="restoreImage()" color="primary">Restore</ion-button>
             </ion-col>
           </ion-row>
       </ion-item>
@@ -158,16 +156,6 @@
       <br/>
     </ion-item>
 
-    <!-- <ion-item>
-      <ion-label position="floating">Qualification Type:</ion-label>
-      <ion-select formControlName="qualificationTypeId" type="text" required="" id="qualificationTypeId" >
-        <ng-container *ngFor="let quat of qualificationTypeList">
-          <ion-select-option value="{{quat.qualificationTypeID}},{{quat.name}}">{{ quat.name }}</ion-select-option>
-        </ng-container>
-      </ion-select>
-      <br/>
-    </ion-item> -->
-    
     <ion-item>
       <ion-label position="floating">Role:</ion-label>
       <ion-select formControlName="role" id="role" >
@@ -176,13 +164,6 @@
       <br/>
     </ion-item>
     
-    <!-- <ion-item>
-      <ion-label>Employee Type</ion-label>
-      <ion-select formArrayName="checkBoxEmployeeTypes" placeholder="Select Employee Type">
-        <ion-select-option *ngFor="let employeeType of employeeTypeList">{{employeeType.name}}</ion-select-option>
-      </ion-select>
-    </ion-item> -->
-
     <!-- employee contract file input here: -->
     <ion-item>
       <ion-label position="stacked">Contract:</ion-label>
@@ -201,6 +182,13 @@
                 [original-size]="false"
                 ></pdf-viewer>
     </ion-item>
+    <ion-item>
+          <ion-row>
+              <ion-col size="12">
+                <ion-button id="restore" [disabled]="!newContract" (click)="restoreContract()" color="primary">Restore Original</ion-button>
+              </ion-col>
+          </ion-row>
+      </ion-item>
 
     <!-- <ion-button (click)="submitForm()" expand="block" color="success" [disabled]="cEmployeeForm.invalid">Update Employee</ion-button> -->
     <ion-button (click)="submitForm()" expand="block" color="success">Update Employee</ion-button>

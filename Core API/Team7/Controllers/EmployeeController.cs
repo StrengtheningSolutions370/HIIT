@@ -322,7 +322,7 @@ namespace Team7.Controllers
         }
 
         //create a trainer or generalemployee
-        [HttpPost]
+        [HttpPost, DisableRequestSizeLimit]
         [Route("createEmployee")]
         /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin, superuser")]*/
         public async Task<IActionResult> createEmployee()
@@ -490,28 +490,100 @@ namespace Team7.Controllers
         }
 
         // PUT api/employees/update/5
-        [HttpPut]
+        [HttpPost, DisableRequestSizeLimit]
         [Route("update")]
-        public async Task<IActionResult> PutEmployee(int id, [FromBody] Employee employee)
+        public async Task<IActionResult> PutEmployee()
         {
-            var toUpdate = await EmployeeRepo._GetEmployeeIdAsync(id);
-            if (toUpdate == null)
+            var formCollection = await Request.ReadFormAsync();
+
+            //1. convert employee back to an object and pull values 
+            string s = formCollection.Keys.FirstOrDefault();
+            string decode = HttpUtility.UrlDecode(s);
+            var employee = JObject.Parse(decode);
+            string Name = employee["Name"].ToString();
+            string Surname = employee["Surname"].ToString();
+            string IDNumber = employee["IDNumber"].ToString();
+            string Phone = employee["Phone"].ToString();
+            string Email = employee["Email"].ToString();
+            string TitleId = employee["TitleID"].ToString();
+            string EmployeeTypeId = employee["EmployeeTypeID"].ToString();
+            string QualificationID = employee["QualificationID"].ToString();
+            string uvmRole = employee["role"].ToString();
+            string AspId = employee["EmployeeID"].ToString();
+            bool RemovePhoto = Convert.ToBoolean(employee["RemovePhoto"]);
+
+            //get user ID from AspUserTable:
+            //var AspId = await _userManager.findB
+
+            if (formCollection.Files.Count != 0)
             {
-                return NotFound("Could not find existing employee with id:" + id);
+                //fetch old file names:
+                var oldEmpRecord = this.EmployeeRepo.GetByUserIdAsync(AspId);
+                var oldPhoto = oldEmpRecord.Result.Photo;
+                var oldContract = oldEmpRecord.Result.Contract;
+
+                //file swapping needs to occour here:
+                //check for length 0:
+                if (formCollection.Files.Count == 1)
+                {
+
+                    //either photo or contract to swap
+                    var file = formCollection.Files[0];
+                    if (file.ContentType == "application/pdf")
+                    {
+                        //single file to swap is pdf
+
+                    } else
+                    {
+                        //single file to swap is photo
+
+                    }
+
+                } else
+                {
+
+                    //two files exist
+
+
+                }
+
             }
-            try
-            {
-                toUpdate.Photo = employee.Photo;
-                toUpdate.IDNumber = employee.IDNumber;
-                await EmployeeRepo.SaveChangesAsync();
-                return Ok();
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
+
+            
+
+            //var toUpdate = await EmployeeRepo._GetEmployeeIdAsync(id);
+            //if (toUpdate == null)
+            //{
+            //    return NotFound("Could not find existing employee with id:" + id);
+            //}
+            //try
+            //{
+            //    toUpdate.Photo = employee.Photo;
+            //    toUpdate.IDNumber = employee.IDNumber;
+            //    await EmployeeRepo.SaveChangesAsync();
+            //    return Ok();
+            //}
+            //catch (Exception err)
+            //{
+            //    return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            //}
+            return Ok();
         }
 
+        static void deleteFile()
+        {
+
+        }
+
+        static void contractSwap()
+        {
+
+        }
+
+        static void photoSwap()
+        {
+
+        }
 
         // DELETE api/Employee/delete/5
         [HttpDelete]

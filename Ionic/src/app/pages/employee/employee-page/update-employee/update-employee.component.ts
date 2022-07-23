@@ -43,6 +43,7 @@ export class UpdateEmployeeComponent implements OnInit {
   deletePhoto = false;
 
   contract! : File;
+  newContract = false;
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public employeeService: EmployeeService, private router: Router,private currentRoute: ActivatedRoute,
@@ -136,7 +137,7 @@ export class UpdateEmployeeComponent implements OnInit {
         this.noProfile = true;
       }
 
-
+      this.pdfSrc = this.createContract();
   
   }
 
@@ -159,6 +160,14 @@ export class UpdateEmployeeComponent implements OnInit {
     this.imgSrc = '';
     this.cEmployeeForm.get('photo').setValue(null);
     this.cEmployeeForm.get('photo').markAsUntouched();
+  }
+
+  restoreContract() {
+    this.newContract = false;
+    this.contract = null;
+    this.pdfSrc = this.createContract();
+    this.cEmployeeForm.get('contract').setValue(null);
+    this.cEmployeeForm.get('contract').markAsUntouched();
   }
 
   setEmployeeType() {
@@ -232,12 +241,37 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   submitForm() {
-    console.log('quli');
-    console.log(this.cEmployeeForm.controls['titleId'].value);
+    
+    if (!this.newContract) {
+      //remove validator from contract and continue
+      this.cEmployeeForm.get('contract').clearValidators();
+    }
+    const emp = new Employee();
+    emp.EmployeeID = this.employee.data.appUser.id;
+    emp.Name = this.cEmployeeForm.value['name'];
+    emp.Surname = this.cEmployeeForm.value['surname'];
+    emp.Photo = this.photo; //may be null
+    emp.srcPhoto = this.imgSrc;
+    emp.Contract = this.contract; //may be null
+    emp.srcContract = this.pdfSrc;
+    emp.IDNumber = this.cEmployeeForm.value['idNumber'];
+    emp.Phone = this.cEmployeeForm.value['phone'];
+    emp.Email = this.cEmployeeForm.value['email'];
+    emp.TitleID = this.cEmployeeForm.value['titleId'];
+    emp.EmployeeTypeID = this.cEmployeeForm.value['employeeTypeId'];
+    emp.QualificationID = this.cEmployeeForm.value['qualificationId'];
+    emp.role = this.cEmployeeForm.value['role'];
+
+    //create confirm modal here:
+    this.employeeService.confirmEmployeeModal(2, emp).then(() => {
+      this.dismissModal();
+    })
+
   }
 
   addContract(event : any) {
     this.contractFlag = true;
+    this.newContract = true;
     this.contract = event.target.files[0];
     let reader = new FileReader();
     reader.onload = (e: any) => {

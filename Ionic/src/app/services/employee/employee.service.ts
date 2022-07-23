@@ -172,18 +172,59 @@ private tempE : Employee[];
   }
 
   //Receives an employee to update in the service employee list
-  async updateEmployee(employee: any) {
-    return this.repo.updateEmployee(employee).subscribe(
-      {
-       next: () => {
-         console.log('EMPLOYEE UPDATED');
-         this.fetchEmployeesEvent.emit(employee);
-       },
-       error: err => {
-         console.log('EMPLOYEE UPDATED FAILED');
-       }
-      }
-    );
+  async updateEmployee(e: Employee) : Promise<any> {
+    // return this.repo.updateEmployee(employee).subscribe(
+    //   {
+    //    next: () => {
+    //      console.log('EMPLOYEE UPDATED');
+    //      this.fetchEmployeesEvent.emit(employee);
+    //    },
+    //    error: err => {
+    //      console.log('EMPLOYEE UPDATED FAILED');
+    //    }
+    //   }
+    // );
+    console.log('img src to send', e.srcPhoto)
+    let deletePhoto = false;
+    if (e.Photo == null && e.srcPhoto == '')
+      deletePhoto = true;
+
+    const tempEmp : any = {
+      Name: e.Name,
+      Surname: e.Surname,
+      Photo: null,
+      IDNumber: e.IDNumber,
+      Phone: e.Phone,
+      Email: e.Email,
+      TitleID: e.TitleID.split(',')[0],
+      EmployeeTypeID: e.EmployeeTypeID.split(',')[0],
+      QualificationID: e.QualificationID.split(',')[0],
+      Contract: null,
+      role: e.role,
+      EmployeeID: e.EmployeeID,
+      RemovePhoto: deletePhoto
+    }
+    console.log('e to api', tempEmp)
+    //create payload:
+    const payload = new FormData();
+    payload.append(JSON.stringify(tempEmp), tempEmp);
+    if (e.Contract != null)
+      payload.append('contract', e.Contract);
+    if (e.Photo)
+      payload.append('photo', e.Photo);
+
+    return new Promise<any>((resolve, _) => {
+      this.repo.updateEmployee(payload).subscribe({
+        next: () => {
+          this.fetchEmployeesEvent.emit();
+          resolve(true);
+        },
+        error: () => {
+          _(false);
+        }
+      })
+    });
+
   }
 
 
@@ -406,6 +447,7 @@ private tempE : Employee[];
     return new Promise<any>(async (resolve, _) => {
       console.log('EmployeeService: ConfirmEmployeeModalCall');
       console.log(choice);
+
       if(choice === 1){
         
         console.log('Performing ADD');
@@ -432,7 +474,8 @@ private tempE : Employee[];
         const modal = await this.modalCtrl.create({
           component: ConfirmEmployeeComponent,
           componentProps: {
-          employee
+            choice,
+            employee
           }
         });
         modal.onDidDismiss().then(() => {

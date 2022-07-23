@@ -3,6 +3,7 @@ export class Employee{
     Name: string;
     Surname: string;
     Photo: File;
+    srcPhoto : any;
     IDNumber: string;
     Phone : string;
     Email : string;
@@ -10,5 +11,6 @@ export class Employee{
     EmployeeTypeID : string;
     QualificationID: string;
     Contract : File;
+    srcContract : any;
     role : string;
 }

@@ -177,6 +177,11 @@ namespace Team7.Models.Repository
             return null;
         }
 
+        public async Task<Employee> GetByUserIdAsync(string AspId)
+        {
+            return DB.Employee.Where(e => e.UserID == AspId).FirstOrDefault();
+        }
+
         public async Task<object> GetEmployeeIdAsync(int id)
         {
             IQueryable<Employee> query = DB.Employee.Where(e => e.EmployeeID == id);

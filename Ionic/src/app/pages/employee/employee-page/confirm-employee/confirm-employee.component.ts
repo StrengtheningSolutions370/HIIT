@@ -43,11 +43,15 @@ export class ConfirmEmployeeComponent implements OnInit {
     this.qualification = this.employee.QualificationID.split(',')[1];
 
     //decode the contract
-    let reader = new FileReader();
-    reader.onload = (e: any) => {
-      this.pdfSrc = e.target.result;
-    };
-    reader.readAsArrayBuffer(this.employee.Contract);
+    if (this.employee.Contract != null) {
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.pdfSrc = e.target.result;
+      };
+      reader.readAsArrayBuffer(this.employee.Contract);
+    } else {
+      this.pdfSrc = this.employee.srcContract;
+    }
 
     //attempt to decode the image
     if (this.employee.Photo != null) {
@@ -58,6 +62,11 @@ export class ConfirmEmployeeComponent implements OnInit {
         this.showProfile = true;
       }
       reader.readAsDataURL(this.employee.Photo);
+    } else {
+      if (this.employee.srcPhoto != null) {
+        this.imgSrc = this.employee.srcPhoto;
+        this.showProfile = true;
+      }
     }
 
   }
@@ -72,25 +81,33 @@ export class ConfirmEmployeeComponent implements OnInit {
     console.log(this.choice);
     this.loading = true;
     this.global.nativeLoad("Creating...");
+
     if (this.choice === 1){
 
-        //CREATE
-        console.log('Add Employee from confirm:');
-        this.employeeService.createEmployee(employee).then(() => {
-            this.dismissModal();
-            this.sucAdd();
-        }).catch(() => {
-          this.duplicateAlert();
-          this.loading = false;
-          this.global.endNativeLoad();
-        });
+      //CREATE
+      console.log('Add Employee from confirm:');
+      this.employeeService.createEmployee(employee).then(() => {
+          this.dismissModal();
+          this.sucAdd();
+      }).catch(() => {
+        this.duplicateAlert();
+        this.loading = false;
+        this.global.endNativeLoad();
+      });
 
     } else if (this.choice === 2){
-
+      // console.log('confirm e to send', employee);
       //UPDATE
-      await this.employeeService.updateEmployee(employee);
-      this.dismissModal();
-      this.sucUpdate();
+      await this.employeeService.updateEmployee(employee).then(() => {
+        this.dismissModal();
+        this.sucUpdate();
+      }).catch(() => {
+        // this.duplicateAlert();
+        // this.loading = false;
+        // this.global.endNativeLoad();
+        console.log('Update just failed...')
+      });
+      
 
     }
   }
