@@ -10,7 +10,7 @@ import { SalesService } from 'src/app/services/sales/sales.service';
   styleUrls: ['./refund-reason.page.scss'],
 })
 export class RefundReasonPage implements OnInit {
-  
+
   //String used from the searchbar, used in the filter pipe to search titles.
   public filter: string;
 

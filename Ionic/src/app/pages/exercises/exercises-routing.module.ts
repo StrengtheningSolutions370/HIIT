@@ -5,12 +5,19 @@ import { ExercisesPage } from './exercises.page';
 
 const routes: Routes = [
   {
-    path: '',
-    component: ExercisesPage
+    path: 'tabs',
+    component: ExercisesPage,
+    children:[
+      {
+        path: 'exercise-category',
+        loadChildren: () => import('./exercise-category/exercise-category.module').then( m => m.ExerciseCategoryPageModule)
+      },
+    ]
   },
   {
-    path: 'exercise-category',
-    loadChildren: () => import('./exercise-category/exercise-category.module').then( m => m.ExerciseCategoryPageModule)
+    path: '',
+    redirectTo: 'tabs/exercise-category',
+    pathMatch: 'full'
   }
 ];
 

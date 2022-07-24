@@ -90,8 +90,8 @@ export class ConfirmExerciseCategoryComponent implements OnInit {
 
   async duplicateAlert() {
     const alert = await this.alertCtrl.create({
-      header: 'Exercise Category Already Exists',
-      message: 'The Exercise Category Information entered already exists on the system',
+      header: 'Duplicate Entry',
+      message: 'The exercise category Information entered already exists on the system',
       buttons: ['OK']
     });
    alert.present();

@@ -1,4 +1,3 @@
-
 /* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -145,7 +144,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     );
   }
 
-   //Receives a refund reason to update in the service sale  list.
+   //update REFUND REASON.
    async updateRefundReason(id: number,refundReason: any) {
     return this.repo.updateRefundReason(id,refundReason).subscribe(
       {
@@ -193,7 +192,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
       );
      }
 
-     //Receives a refund reason to delete in the service vat list.
+     //Receives a refund reason to delete in the service sale list.
     deleteRefundReason(id: number){
       this.repo.deleteRefundReason(id).subscribe(
         {
@@ -208,7 +207,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
           }
         }
       );
-     }
+     }  
 
 
 
@@ -322,9 +321,9 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
   }
 
   //DELETE Refund Reason
-  async deleteRefundReasonInfoModal(refundReason: any) {
+  async deleteRefundReasonInfoModal(refundReason: RefundReason) {
     console.log("SalesService: DeleteRefundReasonModalCall");
-    if (refundReason.refund!= null && refundReason.refund.length > 0){
+    if (refundReason.refunds!= null && refundReason.refunds.length > 0){
       console.log("SalesService: Found associative in delete");
       console.log(refundReason);
       const modal = await this.modalCtrl.create({
@@ -345,7 +344,6 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
       await modal.present();
     }
   }
-
 
   //VIEW Sale Item
   async viewSaleItemInfoModal(saleItem: SaleItem) {
