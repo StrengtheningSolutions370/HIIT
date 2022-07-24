@@ -310,7 +310,7 @@ updateEmployee(data: FormData): Observable<any> {
   return this.http.post<any>(`${this.base+this.EmployeeController}update`, data, this.httpOptions);
 }
 //Delete
-deleteEmployee(EmployeeId: number): Observable<any>{
+deleteEmployee(EmployeeId: string): Observable<any>{
   return this.http.delete(`${this.base+this.EmployeeController}delete?id=${EmployeeId}`,this.httpOptions);
 }
 //GetAll

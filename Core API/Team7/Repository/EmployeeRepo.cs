@@ -36,6 +36,7 @@ namespace Team7.Models.Repository
             DB.Remove(Entity);
             DB.SaveChanges();
         }
+
         public void Update<T>(T Entity) where T : class
         {
             DB.Update(Entity);
@@ -73,12 +74,15 @@ namespace Team7.Models.Repository
 
             var emps = await DB.Employee.Select(e => new
             {
+                EmployeeID = e.EmployeeID,
                 Photo = e.Photo,
                 Contract = e.Contract,
                 IDNumber = e.IDNumber,
                 Qualification = e.Qualification,
                 EmployeeType = e.EmployeeType,
                 AppUser = e.AppUser,
+                Lesson = e.Lesson,
+                Schedule = e.Schedule,
             }).ToListAsync();
 
 
@@ -179,7 +183,20 @@ namespace Team7.Models.Repository
 
         public async Task<Employee> GetByUserIdAsync(string AspId)
         {
-            return DB.Employee.Where(e => e.UserID == AspId).FirstOrDefault();
+            /*return DB.Employee.Select().Where(e => e.UserID == AspId).FirstOrDefault();*/
+            var all = await DB.Employee.Select(e => new Employee
+            {
+                EmployeeID = e.EmployeeID,
+                Photo = e.Photo,
+                Contract = e.Contract,
+                IDNumber = e.IDNumber,
+                Qualification = e.Qualification,
+                EmployeeType = e.EmployeeType,
+                AppUser = e.AppUser,
+                Lesson = e.Lesson,
+                Schedule = e.Schedule,
+            }).ToListAsync();
+            return all.Where(e => e.AppUser.Id == AspId).First();
         }
 
         public async Task<object> GetEmployeeIdAsync(int id)

@@ -30,41 +30,52 @@ export class DeleteEmployeeComponent implements OnInit {
 
   }
 
-     //Send through the id of the selected employee to be deleted in the employee service.
-     async delete(id: number){
-      this.employeeService.deleteEmployee(id);
-      await this.dismissModal();
-      this.sucDelete();
-    }
-  
-    async sucDelete() {
-      const toast = await this.toastCtrl.create({
-        message: 'The Employee has been successfully deleted!',
-        duration: 2000
-      });
-      toast.present();
-    }
-  
-    async failureAlert() {
-      const alert = await this.alertCtrl.create({
-        header: 'Could not delete Employee',
-        message: 'There was an error deleting the employee, please try again.',
-        buttons: ['OK']
-      });
-      alert.present();
-    }
-  
-    dismissModal() {
-      this.modalCtrl.dismiss();
-    };
+  //Send through the id of the selected employee to be deleted in the employee service.
+  async delete(employee : any) {
+    this.employeeService.deleteEmployee(employee.data.appUser.id).then(resp => {
+      if (resp) {
+        //deleted
+        this.sucDelete();
+        this.dismissModal();
+      } else {
+        //failed to delete due to links
+        //call associative component here:
+        this.employeeService.AssociativeEmployeeComponent(employee);
+      }
+    });
 
-    createImg (fileName: string) {
-      if (fileName == null)
-        return `https://localhost:44383/Resources/Employees/Images/default.jpeg`;
-      return `https://localhost:44383/Resources/Employees/Images/${fileName}`;
-    }
+    // this.sucDelete();
 
-    public createContract = (fileName: string) => `https://localhost:44383/Resources/Employees/Contracts/${fileName}`;
+  }
+  
+  async sucDelete() {
+    const toast = await this.toastCtrl.create({
+      message: 'The Employee has been successfully deleted!',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async failureAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Could not delete Employee',
+      message: 'There was an error deleting the employee, please try again.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  };
+
+  createImg (fileName: string) {
+    if (fileName == null)
+      return `https://localhost:44383/Resources/Employees/Images/default.jpeg`;
+    return `https://localhost:44383/Resources/Employees/Images/${fileName}`;
+  }
+
+  public createContract = (fileName: string) => `https://localhost:44383/Resources/Employees/Contracts/${fileName}`;
 
 }
 

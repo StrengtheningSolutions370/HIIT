@@ -110,7 +110,6 @@ export class EmployeePagePage implements OnInit {
   }
 
   async deleteEmployeeInfoModal(employee : any) {
-    console.log('emp to be passed', employee);
     const modal = await this.modalCtrl.create({
       component : DeleteEmployeeComponent,
       componentProps: {

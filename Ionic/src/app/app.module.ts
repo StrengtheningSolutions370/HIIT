@@ -85,6 +85,7 @@ import { DeleteEmployeeComponent } from './pages/employee/employee-page/delete-e
 import { ViewEmployeeComponent } from './pages/employee/employee-page/view-employee/view-employee.component';
 import { ConfirmEmployeeComponent } from './pages/employee/employee-page/confirm-employee/confirm-employee.component';
 import { UpdateEmployeeComponent } from './pages/employee/employee-page/update-employee/update-employee.component';
+import { AssociativeEmployeeComponent } from './pages/employee/employee-page/associative-employee/associative-employee.component'
 
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
@@ -123,7 +124,7 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   //Side Menu
   SidemenuComponent,
   //Employee
-  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent
+  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent, AssociativeEmployeeComponent
 
 ],
 

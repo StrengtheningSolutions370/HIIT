@@ -29,10 +29,14 @@ namespace Team7.Controllers
         private readonly IEmployeeTypeRepo EmployeeTypeRepo;
         private readonly ITitleRepo TitleRepo;
         private readonly IQualificationRepo QualificationRepo;
+        private readonly IScheduleRepo ScheduleRepo;
+        private readonly ILessonRepo LessonRepo;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<AppUser> _userManager;
-        public EmployeeController(UserManager<AppUser> userManager, IEmployeeRepo employeeRepo, RoleManager<IdentityRole> roleManager, ITitleRepo TitleRepo, IEmployeeTypeRepo EmployeeTypeRepo, IQualificationRepo QualificationRepo)
+        public EmployeeController(IScheduleRepo ScheduleRepo, ILessonRepo LessonRepo, UserManager<AppUser> userManager, IEmployeeRepo employeeRepo, RoleManager<IdentityRole> roleManager, ITitleRepo TitleRepo, IEmployeeTypeRepo EmployeeTypeRepo, IQualificationRepo QualificationRepo)
         {
+            this.ScheduleRepo = ScheduleRepo;
+            this.LessonRepo = LessonRepo;
             this.EmployeeRepo = employeeRepo;
             this.TitleRepo = TitleRepo;
             this.EmployeeTypeRepo = EmployeeTypeRepo;
@@ -645,23 +649,38 @@ namespace Team7.Controllers
         // DELETE api/Employee/delete/5
         [HttpDelete]
         [Route("delete")]
-        public async Task<IActionResult> DeleteEmployeeType(int id)
+        public async Task<IActionResult> DeleteEmployeeType(string id)
         {
-            var tempEmployee = await EmployeeRepo._GetEmployeeIdAsync(id);
-            if (tempEmployee == null)
+            //Load employee:
+            var employeeRecord = await EmployeeRepo.GetByUserIdAsync(id);
+            var lessons = employeeRecord.Lesson;
+            var schedule = employeeRecord.Schedule;
+
+            if (lessons.Count != 0 || schedule.Count != 0)
             {
-                return NotFound("Could not find existing Qualification Type with id:" + id);
+                StatusCode(StatusCodes.Status409Conflict, new
+                {
+                    employee = employeeRecord
+                });
             }
+
+            //employee can be deleted as they have no links:
+            //delete from employee table first
+            employeeRecord.EmployeeID = employeeRecord.EmployeeID;
             try
             {
-                EmployeeRepo.Delete<Employee>(tempEmployee);
-                await EmployeeRepo.SaveChangesAsync();
-                return Ok();
-            }
-            catch (Exception err)
+                EmployeeRepo.Delete(employeeRecord);
+            } catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+                return Forbid(ex.Message);
             }
+
+            await EmployeeRepo.SaveChangesAsync();
+            //delete from ASP table
+
+            _userManager.DeleteAsync(employeeRecord.AppUser);
+
+            return Ok("Employee deleted successfully");
         }
 
 

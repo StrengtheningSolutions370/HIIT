@@ -247,29 +247,25 @@ private tempE : Employee[];
     });
   }
 
-    //Receives an employee to delete in the service employee list.
-    deleteEmployee(id: number){
-      console.log('HERE = ' + id);
-    this.repo.deleteEmployee(id).subscribe(
-      {
-        next: res => {
-          console.log(res);
-          console.log('EMPLOYEE DELETED');
-          this.fetchEmployeesEvent.emit();
-        },
-        error: err => {
-          console.log('ÉRROR HERE');
-          console.log(err);
+  deleteEmployee(id: string) : Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.repo.deleteEmployee(id).subscribe(
+        {
+          next: res => {
+            this.fetchEmployeesEvent.emit();
+            resolve(true);
+          },
+          error: err => {
+            resolve(false);
+          }
         }
-      }
-    );
-    }
+      );
+    });
+  }
 
   getAllEmployeeTypes(): Observable<any> {
     return this.repo.getEmployeeTypes();
   }
-
-
 
   matchingEmployeeType(name: string): Promise<any>{
     return this.repo.getMatchEmployeeType(name).toPromise();
@@ -513,5 +509,17 @@ private tempE : Employee[];
     });
     await modal.present();
   }
+
+  async AssociativeEmployeeComponent(employee: any) {
+    console.log("EmployeeTypeService: AssociativeModalCall");
+    const modal = await this.modalCtrl.create({
+      component: AssociativeEmployeeComponent,
+      componentProps: {
+        employee
+      }
+    });
+    await modal.present();
+  }
+
 }
 
