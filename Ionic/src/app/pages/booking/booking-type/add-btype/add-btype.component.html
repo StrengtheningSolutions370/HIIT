@@ -15,23 +15,24 @@
     </div>
     <ion-item>
       <ion-label position="floating">Name:</ion-label>
-      <ion-input formControlName="typeName" type="text" required="" id="typeName" ></ion-input>
+      <ion-input formControlName="bookingTypeName" type="text" required="" id="bookingTypeName"></ion-input>
       <br/>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.typeName.errors?.required && cBookingTypeForm.get('categoryName').touched">
+    <span class="error ion-padding" *ngIf="errorControl.bookingTypeName.errors?.required && cBookingTypeForm.get('bookingTypeName').touched">
       Name is required<br/>
     </span>
     <ion-item>
       <ion-label position="floating">Description:</ion-label>
-      <ion-textarea class="ion-text-wrap" formControlName="typeDescription" type="text" required="" id="categoryDescription" ></ion-textarea>
+      <ion-textarea formControlName="bookingTypeDescription" type="text" required="" id="bookingTypeDescription" ></ion-textarea>
       <br/>
     </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.categoryDescription.errors?.required && cBookingTypeForm.get('categoryDescription').touched">
+    <span class="error ion-padding" *ngIf="errorControl.bookingTypeDescription.errors?.required && cBookingTypeForm.get('bookingTypeDescription').touched">
       Description is required<br/>
     </span>
     <br>
     <br>
     <ion-button type="submit" color="success" [disabled]="!cBookingTypeForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Booking Type</ion-button>
     <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
+
   </form>
 </ion-content>

@@ -65,7 +65,7 @@ export class UpdateVenueComponent implements ViewWillEnter {
         postalCode: this.uVenueForm.value['postalCode'],
         capacity: this.uVenueForm.value['capacity'],
         //passing null does not change the schedules array
-        schedules: null
+        schedule: null
       };
         console.log(temp);
        this.venueService.confirmVenueModal(choice,temp);

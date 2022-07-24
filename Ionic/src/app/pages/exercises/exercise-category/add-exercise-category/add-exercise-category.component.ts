@@ -17,7 +17,7 @@ export class AddExerciseCategoryComponent implements ViewWillEnter {
 
   @Input() exerciseCategory: ExerciseCategory;
 
-   //Creating the form to add the new venue details, that will be displayed in the HTML component
+   //Creating the form to add the new exercise category details, that will be displayed in the HTML component
    cExerciseCategoryForm: FormGroup = this.formBuilder.group({
     exerciseCategoryName: ['', [Validators.required]],
     exerciseCategoryDescription: ['', [Validators.required]]

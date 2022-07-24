@@ -1,6 +1,6 @@
 import { Component, Input} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
+import { ViewWillEnter } from '@ionic/angular';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { ExerciseService } from 'src/app/services/exercise/exercise.service';
 import { GlobalService } from 'src/app/services/global/global.service';

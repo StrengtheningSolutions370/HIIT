@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { ExerciseService } from 'src/app/services/exercise/exercise.service';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -69,16 +69,16 @@ export class ConfirmExerciseCategoryComponent {
     )
   }
 
-  async returnFrom(){
+  returnFrom(){
     //1 = return to ADD
     //2 = return to UPDATE
     if (this.choice === 1){
       console.log(this.exerciseCategory);
-      await this.global.dismissModal();
+      this.global.dismissModal();
       this.exerciseService.addExerciseCategoryInfoModal(this.exerciseCategory);
     } else if (this.choice === 2){
       console.log(this.exerciseCategory);
-      await this.global.dismissModal();
+      this.global.dismissModal();
       this.exerciseService.updateExerciseCategoryInfoModal(this.exerciseCategory);
     }
   }

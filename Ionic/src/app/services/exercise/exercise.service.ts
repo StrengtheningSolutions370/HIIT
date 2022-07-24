@@ -4,7 +4,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/semi */
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController} from '@ionic/angular';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { AddExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/add-exercise-category/add-exercise-category.component';
 import { DeleteExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/delete-exercise-category/delete-exercise-category.component';
@@ -23,7 +23,7 @@ export class ExerciseService {
 
   @Output() fetchExerciseCategorysEvent = new EventEmitter<ExerciseCategory>();
 
-  constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
+  constructor(public repo: RepoService, private modalCtrl: ModalController) {
     //Receive the exercise category from the repo (API).
     this.getAllExerciseCategorys();
   }

@@ -10,6 +10,6 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class ViewCategoryComponent {
   @Input() saleCategory: SaleCategory;
 
-  constructor(private global: GlobalService) {
+  constructor(public global: GlobalService) {
   }
 }

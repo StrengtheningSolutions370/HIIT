@@ -1,7 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, ViewWillEnter, AlertController } from '@ionic/angular';
+import { Component, Input } from '@angular/core';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { ExerciseService } from 'src/app/services/exercise/exercise.service';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -14,7 +11,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class DeleteExerciseCategoryComponent {
   @Input() exerciseCategory: ExerciseCategory;
 
-  constructor(private global: GlobalService, public formBuilder: FormBuilder,
+  constructor(private global: GlobalService,
   public exerciseService: ExerciseService) { }
 
 

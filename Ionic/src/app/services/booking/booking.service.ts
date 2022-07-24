@@ -1,12 +1,13 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { BookingType } from 'src/app/models/booking-type';
-import { AddBtypeComponent } from 'src/app/pages/booking/add-btype/add-btype.component';
-import { AssociativeBtypeComponent } from 'src/app/pages/booking/associative-btype/associative-btype.component';
-import { ConfirmBtypeComponent } from 'src/app/pages/booking/confirm-btype/confirm-btype.component';
-import { DeleteBtypeComponent } from 'src/app/pages/booking/delete-btype/delete-btype.component';
-import { UpdateBtypeComponent } from 'src/app/pages/booking/update-btype/update-btype.component';
-import { ViewBtypeComponent } from 'src/app/pages/booking/view-btype/view-btype.component';
+import { AddBtypeComponent } from 'src/app/pages/booking/booking-type/add-btype/add-btype.component';
+import { AssociativeBtypeComponent } from 'src/app/pages/booking/booking-type/associative-btype/associative-btype.component';
+import { ConfirmBtypeComponent } from 'src/app/pages/booking/booking-type/confirm-btype/confirm-btype.component';
+import { DeleteBtypeComponent } from 'src/app/pages/booking/booking-type/delete-btype/delete-btype.component';
+import { UpdateBtypeComponent } from 'src/app/pages/booking/booking-type/update-btype/update-btype.component';
+import { ViewBtypeComponent } from 'src/app/pages/booking/booking-type/view-btype/view-btype.component';
 import { RepoService } from '../repo.service';
 
 @Injectable({
@@ -16,9 +17,8 @@ export class BookingService {
 
   @Output() fetchBookingTypeEvent = new EventEmitter<BookingType>();
   @Output() fetchBookingEvent = new EventEmitter<any>();//update when booking model is made
-  modalCtrl: any;
 
-  constructor(public repo:RepoService) { }
+  constructor(public repo:RepoService, private modalCtrl: ModalController) { }
 
 
 //READS:
@@ -184,7 +184,7 @@ async updateBookingTypeModal(bookingType: BookingType) {
  //DELETE Booking Type
 async deleteBookingTypeModal(bookingType: BookingType) {
   console.log("BookingService: DeleteBookingTypeModalCall");
-  if (bookingType.bookings!= null && bookingType.bookings.length > 0){
+  if (bookingType.schedule!= null && bookingType.schedule.length > 0){
     console.log("BookingService: Found associative in delete BT");
     console.log(bookingType);
     const modal = await this.modalCtrl.create({

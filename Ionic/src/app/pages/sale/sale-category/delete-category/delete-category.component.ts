@@ -14,7 +14,7 @@ export class DeleteCategoryComponent{
   @Input() saleCategory: any;
 
 
-  constructor(private global: GlobalService, public formBuilder: FormBuilder,
+  constructor(public global: GlobalService, public formBuilder: FormBuilder,
   public saleService: SalesService) { }
 
   //Send through the id of the selected title to be deleted in the title service.

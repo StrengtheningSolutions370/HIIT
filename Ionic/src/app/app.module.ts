@@ -86,12 +86,12 @@ import { ConfirmEmployeeComponent } from './pages/employee/employee-page/confirm
 import { UpdateEmployeeComponent } from './pages/employee/employee-page/update-employee/update-employee.component';
 
 //BOOKING TYPE IMPORTS:
-import { AddBtypeComponent } from './pages/booking/add-btype/add-btype.component';
-import { AssociativeBtypeComponent } from './pages/booking/associative-btype/associative-btype.component';
-import { ConfirmBtypeComponent } from './pages/booking/confirm-btype/confirm-btype.component';
-import { DeleteBtypeComponent } from './pages/booking/delete-btype/delete-btype.component';
-import { UpdateBtypeComponent } from './pages/booking/update-btype/update-btype.component';
-import { ViewBtypeComponent } from './pages/booking/view-btype/view-btype.component';
+import { AddBtypeComponent } from './pages/booking/booking-type/add-btype/add-btype.component';
+import { AssociativeBtypeComponent } from './pages/booking/booking-type/associative-btype/associative-btype.component';
+import { ConfirmBtypeComponent } from './pages/booking/booking-type/confirm-btype/confirm-btype.component';
+import { DeleteBtypeComponent } from './pages/booking/booking-type/delete-btype/delete-btype.component';
+import { UpdateBtypeComponent } from './pages/booking/booking-type/update-btype/update-btype.component';
+import { ViewBtypeComponent } from './pages/booking/booking-type/view-btype/view-btype.component';
 
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
