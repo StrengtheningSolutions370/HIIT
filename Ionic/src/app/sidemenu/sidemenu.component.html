@@ -179,7 +179,10 @@
       </ion-menu-toggle>
 
 
-
+      <ion-item>
+        <ion-label slot="start">Dark Mode:</ion-label>
+        <ion-toggle slot="end" (ionChange)="toggleTheme($event)"></ion-toggle>
+      </ion-item>
       <ion-menu-toggle (click)="logout()">
         <ion-item>
           <ion-icon name="arrow-back" slot="start"></ion-icon>
