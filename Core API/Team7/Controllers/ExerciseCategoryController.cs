@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Team7.Models;
 using Team7.Models.Repository;
@@ -105,11 +103,11 @@ namespace Team7.Controllers
         // GET: api/ExerciseCategory/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingExerciseCategorys(string input)
+        public async Task<IActionResult> GetMatchingExerciseCategorys(string name, string description)
         {
             try
             {
-                var exerciseCategorys = await ExerciseCategoryRepo.GetExerciseCategorysAsync(input);
+                var exerciseCategorys = await ExerciseCategoryRepo.GetExerciseCategorysAsync(name, description);
                 if (exerciseCategorys == null) return Ok(0);
                 return Ok(exerciseCategorys);
             }
@@ -119,23 +117,6 @@ namespace Team7.Controllers
             }
 
         }
-
-        [HttpGet]
-        [Route("exists")]
-        public async Task<IActionResult> ExerciseCategoryExists(int id)
-        {
-            try
-            {
-                var exerciseCategorys = await ExerciseCategoryRepo._GetExerciseCategoryIdAsync(id);
-                if (exerciseCategorys == null) return Ok(0);
-                return Ok(exerciseCategorys);
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
-        }
-
-    
+            
     }
 }

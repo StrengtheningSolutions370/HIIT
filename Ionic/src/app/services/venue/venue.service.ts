@@ -22,7 +22,7 @@ import { Observable } from 'rxjs';
 export class VenueService {
 
   @Output() fetchVenuesEvent = new EventEmitter<Venue>();
-  
+
   constructor(public repo: RepoService, private modalCtrl: ModalController) {
     this.getAllVenues();
   }
@@ -102,7 +102,7 @@ export class VenueService {
   //DELETE
   async deleteVenueInfoModal(venue: Venue) {
     console.log("VenueService: DeleteVenueModalCall");
-    if (venue.schedules!= null && venue.schedules.length > 0){
+    if (venue.schedule!= null && venue.schedule.length > 0){
       const modal = await this.modalCtrl.create({
         component: AssociativeVenueComponent,
           componentProps: {

@@ -7,6 +7,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 
 import { ModalController, ToastController } from '@ionic/angular';
 
+import { ModalController } from '@ionic/angular';
 import { SaleItem } from 'src/app/models/sale-item';
 import { AddSitemComponent } from 'src/app/pages/sale/sale-item/add-sitem/add-sitem.component';
 import { DeleteSitemComponent } from 'src/app/pages/sale/sale-item/delete-sitem/delete-sitem.component';
@@ -42,15 +43,13 @@ export class SalesService {
   @Output() fetchSaleCategoriesEvent = new EventEmitter<SaleCategory>();
   @Output() fetchRefundReasonsEvent = new EventEmitter<RefundReason>();
 
-constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
-  this.getAllSaleCategories();
-  this.getAllSaleItems();
-  this.getAllRefundReasons();
+constructor(public repo: RepoService, private modalCtrl: ModalController) {
+  //this should improve request time by caching the request when first loaded
+  this.getAllSaleCategories().subscribe();
+  this.getAllSaleItems().subscribe();
 }
 
 //READS:
-
-
   getAllSaleItems() : Observable<any> {
     return this.repo.getSaleItems();
   }

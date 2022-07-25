@@ -12,7 +12,7 @@ export class ConfirmCategoryComponent{
   @Input() choice: number;
   @Input() saleCategory: SaleCategory;
 
-  constructor(private global: GlobalService, public saleService: SalesService) {
+  constructor(public global: GlobalService, public saleService: SalesService) {
   }
 
   async checkMatch(name: string, address: string): Promise<boolean>{

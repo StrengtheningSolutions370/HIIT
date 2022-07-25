@@ -17,6 +17,7 @@ import { appUser, appUserRegister } from '../models/appUser';
 import { ExerciseCategory } from '../models/exercise-category';
 import { Qualification } from '../models/qualification';
 import { Employee } from '../models/employee';
+import { BookingType } from '../models/booking-type';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class RepoService {
   PermissionController = 'Permission/';
   EmployeeController = 'Employee/';
   ExerciseCategoryController = 'ExerciseCategory/';
-
+  BookingTypeController = 'BookingType/'
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -67,8 +68,8 @@ export class RepoService {
   login(userDetails: appUser): Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
   }
-  
-  
+
+
   //Venue:
   //------
   //Create
@@ -284,8 +285,8 @@ deleteSaleItemImage(id : string) : Observable<any> {
     return this.http.get(`${this.base + this.ExerciseCategoryController}getAll`, this.httpOptions);
   }
   //GetMatch
-  getMatchExerciseCategory(input: string): Observable<any> {
-    return this.http.get(`${this.base + this.ExerciseCategoryController}getMatch?input=${input}`, this.httpOptions);
+  getMatchExerciseCategory(name: string, description: string): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseCategoryController}getMatch?name=${name}&description=${description}`, this.httpOptions);
   }
   //Exists
   existsExerciseCategory(id: number): Observable<any> {
@@ -315,10 +316,7 @@ getEmployees(): Observable<any>{
 getMatchEmployee(input: string): Observable<any>{
   return this.http.get(`${this.base+this.EmployeeController}getMatch?input=${input}`, this.httpOptions);
 }
-//Exists
-existsEmployee(id: number): Observable<any>{
-  return this.http.get(`${this.base+this.EmployeeController}exists?id=${id}`, this.httpOptions);
-}
+
 //Image Upload
 uploadEmployeeImage(data: FormData): Observable<any> {
   return this.http.post('https://localhost:44383/api/Employee/upload', data);
@@ -351,4 +349,28 @@ reuploadEmployeeImage(id: string): Observable<any> {
   getMatchRefundReason(input: string): Observable<any> {
     return this.http.get(`${this.base + this.RefundReasonController}getMatch?input=${input}`, this.httpOptions);
   }
+
+//BOOKING_TYPE
+//CREATE
+
+createBookingType(bookingType: BookingType): Observable<any>{
+  return this.http.post<any>(`${this.base+this.BookingTypeController}add`,bookingType,this.httpOptions);
+}
+//Update
+updateBookingType(bookingTypeID:number, bookingType: BookingType): Observable<any>{
+  return this.http.put(`${this.base+this.BookingTypeController}update?id=${bookingTypeID}`,bookingType, this.httpOptions);
+}
+//Delete
+deleteBookingType(BookingTypeID: number): Observable<any>{
+  return this.http.delete(`${this.base+this.BookingTypeController}delete?id=${BookingTypeID}`,this.httpOptions);
+}
+//GetAll
+getBookingType(): Observable<any>{
+  return this.http.get(`${this.base+this.BookingTypeController}getAll`, this.httpOptions);
+}
+//GetMatch
+getMatchBookingType(name: string, description: string): Observable<any>{
+  return this.http.get(`${this.base+this.BookingTypeController}getMatch?name=${name}&description=${description}`, this.httpOptions);
+}
+
 }

@@ -21,7 +21,14 @@ export class SidemenuComponent implements OnInit {
 
   ngOnInit() {
 
+    // Listen for the toggle check/uncheck to toggle the dark class on the <body>
+    // this.toggle.addEventListener('ionChange', (ev) => {
+    //   console.log(ev);
+    //   // document.body.classList.toggle('dark', ev.detail.checked);
+    // });
+
     console.log('ngOn for side menu');
+    //this.checkToggle(this.prefersDark.matches);
 
     this.storage.getKey('token').then(token => {
       // console.log('role from side menu', token)
@@ -42,8 +49,17 @@ export class SidemenuComponent implements OnInit {
           this.trainer = true;
         }
       })
-    })
+    });
+  }
 
+  toggleTheme(event:any){
+    if (event.detail.checked){
+      console.log("Dark Mode");
+      document.body.classList.toggle('dark',event.detail.checked);
+    } else {
+      console.log("Light Mode");
+      document.body.classList.toggle('dark',event.detail.checked);
+    }
   }
 
   logout() {
