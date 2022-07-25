@@ -12,7 +12,7 @@ export class ConfirmCategoryComponent{
   @Input() choice: number;
   @Input() saleCategory: SaleCategory;
 
-  constructor(private global: GlobalService, public saleService: SalesService) {
+  constructor(public global: GlobalService, public saleService: SalesService) {
   }
 
   async checkMatch(name:string, address:string): Promise<boolean>{
@@ -35,9 +35,9 @@ export class ConfirmCategoryComponent{
     await this.checkMatch(saleCategory.name,saleCategory.description).then(result =>{
       console.log(result);
       if (result == true){
-         return;       
+         return;
        } else {
-          if (this.choice === 1){      
+          if (this.choice === 1){
             console.log('Add Sale Category from confirm:');
             //CallRepoToCreate
             this.saleService.createSaleCategory(saleCategory);

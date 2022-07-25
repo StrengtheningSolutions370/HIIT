@@ -18,7 +18,7 @@ export class UpdateCategoryComponent implements ViewWillEnter {
     categoryName: new FormControl('', [Validators.required])
   });
 
-  constructor(private global: GlobalService, public fb: FormBuilder,
+  constructor(public global: GlobalService, public fb: FormBuilder,
   public saleService: SalesService) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.
@@ -30,11 +30,13 @@ export class UpdateCategoryComponent implements ViewWillEnter {
       console.log('UpdateSaleCategory-ViewWillEnter');
       console.log(this.saleCategory);
       if (this.saleCategory == null){
-        this.global.showAlert("Sale Category not passed to update","ERROR");
+        this.global.showAlert("Sale category not passed to update","ERROR");
         this.global.dismissModal();
+      } else {
+        this.uSaleCategoryForm.controls.categoryName.setValue(this.saleCategory.name);
+        this.uSaleCategoryForm.controls.categoryDescription.setValue(this.saleCategory.description);
       }
-      this.uSaleCategoryForm.controls.categoryName.setValue(this.saleCategory.name);
-      this.uSaleCategoryForm.controls.categoryDescription.setValue(this.saleCategory.description);
+
     }
 
     submitForm() {
