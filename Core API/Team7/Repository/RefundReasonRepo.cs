@@ -47,8 +47,7 @@ namespace Team7.Models.Repository
                     rr.Description,
                     Refund = rr
                 .Refund
-                //Help?
-                .Select(r => new { r.RefundID, r.Notes, r.Date, r.Payment, r.Total})
+                .Select(r => new { r.RefundID, r.Notes, r.Date, r.Payment, r.Total , r.PaymentID} )
                 }).ToListAsync()
             };
 
@@ -71,7 +70,7 @@ namespace Team7.Models.Repository
                         rr.Description,
                         Refund = rr
                             .Refund
-                            .Select(r => new { r.RefundID, r.Date, r.Notes, r.Payment})
+                            .Select(r => new { r.RefundID, r.Date, r.Notes, r.Payment, r.PaymentID })
                     }).ToListAsync()
                 };
             }
@@ -95,7 +94,7 @@ namespace Team7.Models.Repository
                         rr.Description,
                         Refund = rr
                             .Refund
-                            .Select(r => new { r.RefundID, r.Date, r.Notes, r.Payment })
+                            .Select(r => new { r.RefundID, r.Date, r.Notes, r.Payment, r.PaymentID })
                     }).ToListAsync()
                 };
             }

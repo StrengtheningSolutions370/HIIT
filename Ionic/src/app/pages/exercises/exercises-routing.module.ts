@@ -18,7 +18,11 @@ const routes: Routes = [
     path: '',
     redirectTo: 'tabs/exercise-category',
     pathMatch: 'full'
+  },  {
+    path: 'exercise-page',
+    loadChildren: () => import('./exercise-page/exercise-page.module').then( m => m.ExercisePagePageModule)
   }
+
 ];
 
 @NgModule({

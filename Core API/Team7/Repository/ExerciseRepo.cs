@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Team7.Models.Repository
@@ -31,44 +32,61 @@ namespace Team7.Models.Repository
         }
 
 
-        //public async Task<Exercise[]> GetAllExercisesAsync()
-        //{
-        //    IQueryable<Exercise> query = DB.Exercise;
-        //    return await query.ToArrayAsync();
-        //    return null;
+        public async Task<object> GetAllExercisesAsync()
+        {
+            IQueryable<Exercise> query = DB.Exercise;
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await DB.Exercise.Select(e => new
+                    {
+                        e.ExerciseID,
+                        e.Name,
+                        e.Description,
+                        ExerciseCategory = e
+                        .ExerciseCategory
+                        .Select(ec => new { ec.ExerciseCategoryID, ec.Description })
+                        }).ToListAsync()
+                };
+            }
 
-        //}
+        }
 
-        //public async Task<Exercise[]> GetExercisesAsync(string input)
-        //{
-        //    IQueryable<Exercise> query = DB.Exercise.Where(v => v.Name == input || v.Address == input);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.ToArrayAsync();
-        //    }
-        //    return null;
+            //public async Task<Exercise[]> GetExercisesAsync(string input)
+            //{
+            //    IQueryable<Exercise> query = DB.Exercise.Where(v => v.Name == input || v.Address == input);
+            //    if (!query.Any())
+            //    {
+            //        return null;
+            //    }
+            //    else
+            //    {
+            //        return await query.ToArrayAsync();
+            //    }
+            //    return null;
 
-        //}
+            //}
 
-        //public async Task<Exercise> GetExerciseIdAsync(int id)
-        //{
-        //    IQueryable<Exercise> query = DB.Exercise.Where(v => v.VenueID == id);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.SingleAsync();
-        //    }
-        //    return null;
-        //}
+            //public async Task<Exercise> GetExerciseIdAsync(int id)
+            //{
+            //    IQueryable<Exercise> query = DB.Exercise.Where(v => v.VenueID == id);
+            //    if (!query.Any())
+            //    {
+            //        return null;
+            //    }
+            //    else
+            //    {
+            //        return await query.SingleAsync();
+            //    }
+            //    return null;
+            //}
 
-        public async Task<bool> SaveChangesAsync()
+            public async Task<bool> SaveChangesAsync()
         {
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
