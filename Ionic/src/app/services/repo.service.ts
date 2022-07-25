@@ -67,6 +67,25 @@ export class RepoService {
     return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
   }
 
+  //password management
+  VerifyOtp(data : any) : Observable<any> {
+    return this.http.post(`${this.base + this.EmployeeController}verifyotp`, data, this.httpOptions);
+  }
+  
+  SendOtp(data : any) : Observable<any> {
+    return this.http.post(`${this.base + this.EmployeeController}sendotp`, data, this.httpOptions);
+
+  }
+
+  ChangePassword(data : any) : Observable<any> {
+    return this.http.post(`${this.base + this.EmployeeController}changepassword`, data, this.httpOptions);
+
+  }
+
+  SetNewPassword(data : any) : Observable<any> {
+    return this.http.post(`${this.base + this.EmployeeController}setnewpassword`, data, this.httpOptions);
+
+  }
 
   //Venue:
   //------

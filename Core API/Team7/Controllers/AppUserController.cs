@@ -38,13 +38,109 @@ namespace Team7.Controllers
             _titleRepo = titleRepo;
             _clientRepo = clientRepo;
         }
+        static string generateOTP()
+        {
+            Random random = new Random();
+            string oneTimePin = "";
+            for (int i = 0; i < 6; i++)
+            {
+                oneTimePin += random.Next(0, 10).ToString();
+            }
+            return oneTimePin;
+        }
 
         [HttpPost]
-        [Route("sms")]
-        public async Task<IActionResult> sms()
+        [Route("verifyotp")]
+        public async Task<IActionResult> VerifyOtp(UserViewModel otp)
         {
+            var user = await _userManager.FindByEmailAsync(otp.EmailAddress);
+            if (user == null)
+            {
+                return NotFound("The provided email does not exist.");
+            }
+
+            if (user.OTP == otp.OTP)
+            {
+                user.OTP = null;
+            } else
+            {
+                return Forbid("OTP provided is not valid.");
+            }
+
+            await _userManager.UpdateAsync(user);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("changepassword")]
+        public async Task<IActionResult> ChangePassword(UserViewModel uvm)
+        {
+
+            var user = await _userManager.FindByEmailAsync(uvm.EmailAddress);
+            if (user == null)
+            {
+                return NotFound("The provided email does not exist.");
+            }
+
+            var check = await _userManager.CheckPasswordAsync(user, uvm.Password);
+
+            if (!check)
+            {
+                return Forbid("Incorect old password provided.");
+            }
+
+            //old password valid and email exists, set new password:
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
+            await _userManager.UpdateAsync(user);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("setnewpassword")]
+        public async Task<IActionResult> SetNewPassword(UserViewModel uvm)
+        {
+
+            var user = await _userManager.FindByEmailAsync(uvm.EmailAddress);
+
+            if (user == null)
+            {
+                return NotFound("The provided email does not exist.");
+            }
+
+            //old password valid and email exists, set new password:
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
+            await _userManager.UpdateAsync(user);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("sendotp")]
+        public async Task<IActionResult> SendOTP(UserViewModel uvm)
+        {
+            //get user using the email:
+            var user = await _userManager.FindByEmailAsync(uvm.EmailAddress);
+            if (user == null)
+            {
+                return NotFound("The provided email does not exist.");
+            }
+
+            string phone = "+27" + user.PhoneNumber.TrimStart(new Char[] { '0' }); ;
             Sms s = new Sms();
-            s.sendSMS("+27737486187", "Hey Shan");
+            string otp = generateOTP();
+            user.OTP = otp;
+            string msg = "Hi, " + user.FirstName + ". Your otp is " + otp;
+
+            try
+            {
+                s.sendSMS(phone, msg);
+            } catch (Exception e)
+            {
+                return NotFound("The provided phone number is not valid.");
+            }
+
+            await _userManager.UpdateAsync(user);
             return Ok();
         }
 

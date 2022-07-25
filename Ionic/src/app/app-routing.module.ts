@@ -196,7 +196,11 @@ export const routes: Routes = [
   {
     path: '**', //this route object must be last
     redirectTo: 'login',
-  }]
+  },]  {
+    path: 'passwordmanager',
+    loadChildren: () => import('./pages/passwordmanager/passwordmanager.module').then( m => m.PasswordmanagerPageModule)
+  }
+
 
 @NgModule({
   imports: [

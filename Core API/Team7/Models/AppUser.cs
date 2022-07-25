@@ -16,5 +16,7 @@ namespace Team7.Models
 
         public string LastName { get; set; }
 
+        public string OTP { get; set; }
+
     }
 }
