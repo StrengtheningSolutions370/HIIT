@@ -14,14 +14,14 @@ export class DeleteCategoryComponent{
   @Input() saleCategory: any;
 
 
-  constructor(private global: GlobalService, public formBuilder: FormBuilder,
+  constructor(public global: GlobalService, public formBuilder: FormBuilder,
   public saleService: SalesService) { }
 
   //Send through the id of the selected title to be deleted in the title service.
   async delete(id: number){
     this.saleService.deleteSaleCategory(id);
     this.global.dismissModal();
-    this.global.showToast('The Sale Category has been successfully deleted!');
+    this.global.showToast('The sale category has been successfully deleted!');
   }
 
 }

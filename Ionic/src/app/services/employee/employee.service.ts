@@ -36,7 +36,7 @@ export class EmployeeService {
 //Creating an employee list for all the employees in the service
 private _employeeList = new BehaviorSubject<Employee[]>([]);
 
-//Return the employee list as an observable 
+//Return the employee list as an observable
 public get employeeList(){
   return this._employeeList.asObservable();
 }
@@ -284,11 +284,11 @@ private tempE : Employee[];
   }
 
   //existing employee
-  existingEmployee(id: number){
-    console.log('employeeService: Repo -> Existing Employee');
-    this.repo.existsEmployee(id).subscribe(result =>
-     console.log(result));
-   }
+  // existingEmployee(id: number){
+  //   console.log('employeeService: Repo -> Existing Employee');
+  //   this.repo.existsEmployee(id).subscribe(result =>
+  //    console.log(result));
+  //  }
 
   //Modals
   //Add employee info modal
@@ -302,7 +302,7 @@ private tempE : Employee[];
     await modal.present();
   }
 
-  //add employee type 
+  //add employee type
   async addEmployeeTypeInfoModal(employeeType?: EmployeeType) {
     const modal = await this.modalCtrl.create({
       component: AddEtypeComponent,
@@ -414,7 +414,7 @@ private tempE : Employee[];
       });
       await modal.present();
     }
-  
+
 
   //Display the confirm create/update modal
   //Receives the selected venue from the venue page

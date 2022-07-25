@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
-import { RepoService } from 'src/app/services/repo.service';
 import { ExerciseService } from 'src/app/services/exercise/exercise.service';
 
 @Component({
@@ -30,11 +28,11 @@ export class ExerciseCategoryPage implements OnInit {
   //    description : 'Buy now, get product now'}
   // ];
 
-  constructor(public exerciseService: ExerciseService, public repo: RepoService) {
+  constructor(public exerciseService: ExerciseService) {
     // this.populateTitles();
     this.fetchExerciseCategory();
    }
-  
+
    fetchExerciseCategory() {
     this.isLoading = true;
     this.exerciseService.getAllExerciseCategorys().subscribe(

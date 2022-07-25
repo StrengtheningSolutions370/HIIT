@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { RepoService } from 'src/app/services/repo.service';

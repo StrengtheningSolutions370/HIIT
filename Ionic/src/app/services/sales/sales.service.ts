@@ -5,8 +5,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/semi */
 import { Injectable, Output, EventEmitter } from '@angular/core';
-
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { SaleItem } from 'src/app/models/sale-item';
 import { AddSitemComponent } from 'src/app/pages/sale/sale-item/add-sitem/add-sitem.component';
 import { DeleteSitemComponent } from 'src/app/pages/sale/sale-item/delete-sitem/delete-sitem.component';
@@ -31,14 +30,13 @@ export class SalesService {
   @Output() fetchSaleItemsEvent = new EventEmitter<SaleItem>();
   @Output() fetchSaleCategoriesEvent = new EventEmitter<SaleCategory>();
 
-constructor(public repo: RepoService, private modalCtrl: ModalController, private alertCtrl: ToastController) {
-  this.getAllSaleCategories();
-  this.getAllSaleItems();
+constructor(public repo: RepoService, private modalCtrl: ModalController) {
+  //this should improve request time by caching the request when first loaded
+  this.getAllSaleCategories().subscribe();
+  this.getAllSaleItems().subscribe();
 }
 
 //READS:
-
-
   getAllSaleItems() : Observable<any> {
     return this.repo.getSaleItems();
   }
@@ -265,7 +263,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController, privat
     });
     await modal.present();
   }
-  
+
 
   //CONFIRM Sale item
   async confirmSaleItemModal(choice: number, saleItem: any, categoryName : string, image : any) {

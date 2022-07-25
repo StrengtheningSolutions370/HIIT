@@ -63,7 +63,16 @@ export class SidemenuComponent implements OnInit {
         })
       }
     })
+  }
 
+  toggleTheme(event:any){
+    if (event.detail.checked){
+      console.log("Dark Mode");
+      document.body.classList.toggle('dark',event.detail.checked);
+    } else {
+      console.log("Light Mode");
+      document.body.classList.toggle('dark',event.detail.checked);
+    }
   }
 
   logout() {

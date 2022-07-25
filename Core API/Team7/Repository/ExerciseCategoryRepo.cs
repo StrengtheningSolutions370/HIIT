@@ -59,22 +59,9 @@ namespace Team7.Models.Repository
             //return await query.ToArrayAsync();
         }
 
-        public async Task<ExerciseCategory[]> _GetAllExerciseCategorysAsync()
+        public async Task<object> GetExerciseCategorysAsync(string name, string description)
         {
-            IQueryable<ExerciseCategory> query = DB.ExerciseCategory;
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return await query.ToArrayAsync();
-            }
-        }
-
-        public async Task<object> GetExerciseCategorysAsync(string input)
-        {
-            IQueryable<ExerciseCategory> query = DB.ExerciseCategory.Where(ec => ec.Name == input);
+            IQueryable<ExerciseCategory> query = DB.ExerciseCategory.Where(ec => ec.Name == name || ec.Description == description);
             if (!query.Any())
             {
                 return null;
@@ -96,18 +83,6 @@ namespace Team7.Models.Repository
             }
         }
 
-        public async Task<ExerciseCategory[]> _GetExerciseCategorysAsync(string input)
-        {
-            IQueryable<ExerciseCategory> query = DB.ExerciseCategory.Where(ec => ec.Name == input);
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return await query.ToArrayAsync();
-            }
-        }
 
         public async Task<object> GetExerciseCategoryIdAsync(int id)
         {
