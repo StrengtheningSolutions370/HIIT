@@ -133,14 +133,8 @@ namespace Team7.Controllers
             try
             {
                 var refundReason = await RefundReasonRepo.GetRefundReasonsAsync(description);
-                if (refundReason == null)
-                {
-                    return Ok(0);
-                }
-                else
-                {
-                    return Ok(refundReason);
-                }
+                if (refundReason == null) return Ok(0);
+                return Ok(refundReason);
             }
             catch (Exception err)
             {

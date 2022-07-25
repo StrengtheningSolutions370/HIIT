@@ -13,21 +13,33 @@ export class ConfirmRefundReasonComponent{
   @Input() choice: number;
   @Input() refundReason: RefundReason;
 
-  constructor(private global: GlobalService, public saleService: SalesService) {
+  constructor(public global: GlobalService, public saleService: SalesService) {
   }
 
-  async checkMatch(description: string): Promise<boolean>{
-    return this.saleService.matchingRefundReason(description).then(result => {
-      console.log('Check match result:');
-      console.log(result);
-       if (result !== 0){
-         this.global.showAlert('The refund reason information entered already exists on the system','Duplicate Entry');
-         return true;
+  async checkMatch(description:string): Promise<boolean>{
+    return this.saleService.matchingRefundReason(description).then(data => {
+      console.log("Check match result:");
+      console.log(data);
+       if (data != 0){
+        let match = data.result;
+        if (match.length > 1){
+          this.global.showAlert("The exercise category information entered already exists on the system","Duplicate Entry");
+          return true;
+        } else if (match.length == 1 && this.choice == 2 && match[0].refundReasonID == this.refundReason.refundReasonID){
+          alert("Matching itself in update");
+          return false;
+        } else {
+          console.log("Must be in ADD, with exactly 1 other match: ");
+          console.log("Choice: " + this.choice);
+          this.global.showAlert("The exercise category information entered already exists on the system","Duplicate Entry");
+          return true;
+        }
        } else {
          return false;
        }
      });
    }
+
 
 
   //1 = confirm ADD

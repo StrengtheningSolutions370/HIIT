@@ -5,7 +5,7 @@
 /* eslint-disable @typescript-eslint/semi */
 import { Injectable, Output, EventEmitter } from '@angular/core';
 
-import { ModalController, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 import { ModalController } from '@ionic/angular';
 import { SaleItem } from 'src/app/models/sale-item';
