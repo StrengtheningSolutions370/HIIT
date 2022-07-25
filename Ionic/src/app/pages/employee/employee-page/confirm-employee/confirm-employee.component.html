@@ -8,38 +8,42 @@
 </ion-header>
 
 <ion-content>
+
   <br/>
-  <div class="ion-text-center">
-    <p style="font-size:large">Please confirm the following employee information?</p>
-  </div>
 
+    <div class="ion-text-center">
+      <p style="font-size:large">Please confirm the following employee information?</p>
+    </div>
   
-  <div class=imagecenter>
-    <img src="{{employeeImage}}">
-  </div>
 
-    <ion-item > 
+    <ion-item> 
+      <ion-label>
+        <h2>Profile Photo:</h2>
+        <ion-img *ngIf="showProfile" src="{{imgSrc}}"></ion-img>
+        <p *ngIf="!showProfile" class="ion-text-start">No Profile image</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item> 
       <ion-label>
         <h2>Name:</h2>
         <p class="ion-text-start">{{employee.Name}}</p>
       </ion-label>
     </ion-item>
-    <ion-item > 
+
+    <ion-item> 
       <ion-label>
         <h2>Surname:</h2>
         <p class="ion-text-start">{{employee.Surname}}</p>
       </ion-label>
     </ion-item>
-    <!-- <ion-item > 
-      <ion-label>
-        <h2>Photo</h2>
-        <p class="ion-text-start">{{employee.Photo}}</p>
-      </ion-label>
-    </ion-item> -->
 
-    <!-- <div class=imagecenter>
-      <img src="{{employeeImage}}">
-    </div> -->
+    <ion-item > 
+      <ion-label>
+        <h2>ID Number:</h2>
+        <p class="ion-text-start">{{employee.IDNumber}}</p>
+      </ion-label>
+    </ion-item>
 
     <ion-item > 
       <ion-label>
@@ -57,47 +61,44 @@
 
     <ion-item > 
       <ion-label>
-        <h2>ID Number:</h2>
-        <p class="ion-text-start">R{{employee.idNumber}}</p>
-      </ion-label>
-    </ion-item>
-
-    <ion-item > 
-      <ion-label>
         <h2>Title:</h2>
         <p class="ion-text-start">{{title}}</p>
       </ion-label>
     </ion-item>
-    <br/><br/>
 
     <ion-item > 
       <ion-label>
         <h2>Employee Type:</h2>
-        <p class="ion-text-start">{{employeeTypeName}}</p>
+        <p class="ion-text-start">{{employeeType}}</p>
       </ion-label>
     </ion-item>
-    <br/><br/>
 
     <ion-item > 
       <ion-label>
         <h2>Qualification:</h2>
-        <p class="ion-text-start">{{qualificationDescription}}</p>
+        <p class="ion-text-start">{{qualification}}</p>
       </ion-label>
     </ion-item>
-    <br/><br/>
 
     <ion-item > 
       <ion-label>
-        <h2>Qualification Type:</h2>
-        <p class="ion-text-start">{{qTypeName}}</p>
+        <h2>Contract:</h2>
+          <pdf-viewer [src]="pdfSrc"
+                    [render-text]="true"
+                    [original-size]="false"
+                    ></pdf-viewer>
       </ion-label>
     </ion-item>
-    <br/><br/>
+    
 
+    <br/>
    
     <ion-button color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;" (click)="confirmChanges(employee)">Confirm</ion-button>
     <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="returnFrom()">Return</ion-button>
 
+    <br />
 </ion-content>
 
-
+<!-- <ion-content><ion-item>
+  <ion-spinner *ngIf="loading" name="bubbles"></ion-spinner>  
+</ion-item></ion-content> -->

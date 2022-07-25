@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, ToastController, AlertController } from '@ionic/angular';
+import { ModalController, ToastController, AlertController, LoadingController } from '@ionic/angular';
+import { throwIfEmpty } from 'rxjs/operators';
 import { Employee } from 'src/app/models/employee';
+import { Roles } from 'src/app/models/roles.enum';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-confirm-employee',
@@ -10,19 +13,65 @@ import { EmployeeService } from 'src/app/services/employee/employee.service';
   styleUrls: ['./confirm-employee.component.scss'],
 })
 
-export class ConfirmEmployeeComponent {
+export class ConfirmEmployeeComponent implements OnInit {
+
   @Input() choice: number;
-  @Input() employee: any;
-  //employee type, qualification, qualification type and title
-  @Input() title: string;
-  @Input() employeeTypeName:string;
-  @Input() qualificationDescription: string;
-  @Input() qTypeName: string;
-  @Input() employeeImage : any;
+  @Input() employee: Employee;
+
+  title! : string;
+  employeeType! : string;
+  qualification! : string;
+
+  imgSrc = '';
+  pdfSrc = '';
+  showProfile = false;
+
   alertCtrl: any;
 
+  loading = true;
+
+  loader! : any;
+
    constructor(private modalCtrl: ModalController, public employeeService: EmployeeService,
-    public router: Router, public activated: ActivatedRoute, public toastCtrl: ToastController, alertCtrl: AlertController ) {
+    public router: Router, public activated: ActivatedRoute, public toastCtrl: ToastController, alertCtrl: AlertController, private loadingCtrl: LoadingController, private global : GlobalService) {
+  }
+
+  ngOnInit() {
+
+    if (this.employee.Photo == null && this.employee.srcPhoto == '')
+        this.showProfile = false;
+
+    this.title = this.employee.TitleID.split(',')[1];
+    this.employeeType = this.employee.EmployeeTypeID.split(',')[1];
+    this.qualification = this.employee.QualificationID.split(',')[1];
+
+    //decode the contract
+    if (this.employee.Contract != null) {
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.pdfSrc = e.target.result;
+      };
+      reader.readAsArrayBuffer(this.employee.Contract);
+    } else {
+      this.pdfSrc = this.employee.srcContract;
+    }
+
+    //attempt to decode the image
+    if (this.employee.Photo != null) {
+      this.showProfile = true;
+      const reader = new FileReader();
+      reader.onload = (event : any) => {
+        this.imgSrc = event.target.result;
+        this.showProfile = true;
+      }
+      reader.readAsDataURL(this.employee.Photo);
+    } else {
+      if (this.employee.srcPhoto != null) {
+        this.imgSrc = this.employee.srcPhoto;
+        this.showProfile = true;
+      }
+    }
+
   }
 
   dismissModal() {
@@ -33,27 +82,40 @@ export class ConfirmEmployeeComponent {
   //2 = confirm UPDATE
   async confirmChanges(employee: Employee){
     console.log(this.choice);
+    this.loading = true;
+    this.global.nativeLoad("Updating...");
+
     if (this.choice === 1){
 
-      //  if(true){
-        //do duplicate check here from API
-      //   console.log('Existing Employee: ' + saleItem.Name +': '+ saleItem.Description);
-      //   this.duplicateAlert();
-      //   return;
-      //  }
-      
-      
-        console.log('Add Employee from confirm:');
-        //CallRepoToCreate
-        await this.employeeService.createEmployee(employee);
-        await this.dismissModal();
-        this.sucAdd();
-      
+      //CREATE
+      console.log('Add Employee from confirm:');
+      this.employeeService.createEmployee(employee).then(() => {
+          this.dismissModal();
+          this.sucAdd();
+      }).catch(() => {
+        this.duplicateAlert();
+        this.loading = false;
+        this.global.endNativeLoad();
+      });
+
     } else if (this.choice === 2){
-      //CallRepoToUpdate
-      await this.employeeService.updateEmployee(employee);
-      this.dismissModal();
-      this.sucUpdate();
+      // console.log('confirm e to send', employee);
+      //UPDATE
+      this.showProfile = false;
+
+      if (employee.Photo != null) {
+        this.showProfile = true;
+      }
+      
+      await this.employeeService.updateEmployee(employee).then(() => {
+        this.dismissModal();
+        this.sucUpdate();
+      }).catch(() => {
+        // this.duplicateAlert();
+        // this.loading = false;
+        // this.global.endNativeLoad();
+      });
+      
 
     }
   }

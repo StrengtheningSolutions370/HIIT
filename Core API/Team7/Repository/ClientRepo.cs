@@ -20,19 +20,22 @@ namespace Team7.Models.Repository
             public void Add<T>(T Entity) where T : class
             {
                 DB.Add(Entity);
+                DB.SaveChanges();
             }
 
             public void Delete<T>(T Entity) where T : class
             {
                 DB.Remove(Entity);
+                DB.SaveChanges();
             }
             public void Update<T>(T Entity) where T : class
             {
                 DB.Update(Entity);
+                DB.SaveChanges();
             }
 
 
-            public async Task<Client[]> GetAllClientsAsync()
+        public async Task<Client[]> GetAllClientsAsync()
             {
                 //IQueryable<Client> query = DB.Client;
                 //return await query.ToArrayAsync();

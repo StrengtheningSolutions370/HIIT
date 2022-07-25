@@ -2,13 +2,15 @@ export class Employee{
     EmployeeID: number;
     Name: string;
     Surname: string;
-    Photo: any;
-    IDNumber: any;
+    Photo: File;
+    srcPhoto : any;
+    IDNumber: string;
     Phone : string;
     Email : string;
-    TitleID : number;
-    EmployeeTypeID : number;
-    QualificationID: number;
-    QualificationTypeID: number;
-    Contract : any;
+    TitleID : string;
+    EmployeeTypeID : string;
+    QualificationID: string;
+    Contract : File;
+    srcContract : any;
+    role : string;
 }

@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Team7.Models;
+using Team7.Models.Repository;
 using Team7.ViewModels;
 
 namespace Team7.Controllers
@@ -23,13 +24,18 @@ namespace Team7.Controllers
         //private readonly IUserClaimsPrincipalFactory<AppUser> _claimsPrincipalFactory;
         private readonly IConfiguration _configuration;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ITitleRepo _titleRepo;
+        private readonly IClientRepo _clientRepo;
 
-        public AppUserController(UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
+
+        public AppUserController(IClientRepo clientRepo, ITitleRepo titleRepo, UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             //_claimsPrincipalFactory = claimsPrincipalFactory;
             _configuration = configuration;
             _roleManager = roleManager;
+            _titleRepo = titleRepo;
+            _clientRepo = clientRepo;
         }
 
         [HttpPost]
@@ -58,15 +64,17 @@ namespace Team7.Controllers
 
             if (user == null)
             {
+                string AspId = Guid.NewGuid().ToString();
                 //Create new user - no existing account with matching email address
                 user = new AppUser
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = AspId,
                     UserName = userViewModel.EmailAddress,
                     Email = userViewModel.EmailAddress,
                     PhoneNumber = userViewModel.phoneNumber,
                     FirstName = userViewModel.firstName,
                     LastName = userViewModel.lastName,
+                    Title = await _titleRepo._GetTitleIdAsync(Convert.ToInt32(userViewModel.TitleId))
                 };
 
                 var result = await _userManager.CreateAsync(user, userViewModel.Password);
@@ -75,10 +83,16 @@ namespace Team7.Controllers
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, role); //role="client"
-                }
 
-                if (result.Errors.Any())
-                {
+                    //make entry in the client table:
+                    var clientRec = new Client
+                    {
+                        UserID = AspId
+                    };
+
+                    _clientRepo.Add(clientRec);
+
+                } else {
                     StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
                 }
 

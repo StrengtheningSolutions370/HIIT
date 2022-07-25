@@ -23,11 +23,13 @@ import { ViewEmployeeComponent } from 'src/app/pages/employee/employee-page/view
 
 import { RepoService } from '../repo.service';
 import { TitleService } from '../title/title.service';
+import { Roles } from 'src/app/models/roles.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
+
   @Output() fetchEmployeesEvent = new EventEmitter<Employee>();
   @Output() fetchEmployeeTypesEvent = new EventEmitter<EmployeeType>();
 
@@ -68,31 +70,85 @@ private tempE : Employee[];
     });
   }
 
-  //Add an employee to the employee list within the employee service
-  createEmployee(employee: any){
-    const today = new Date();
-    const employeeTemp = {
-      //employee class/model
-      Name : employee.Name,
-      Surname : employee.Surname,
-      Photo: employee.Photo,
-      IDNumber: employee.IDNumber,
-      Phone: employee.Phone,
-      Email: employee.Email,
-      TitleID: employee.TitleID,
-      EmployeeTypeID: employee.EmployeeTypeID,
-      QualificationID: employee.QualificationID,
-      QualificationTypeID: employee.QualificationTypeID,
-      Contract: employee.Contract
-    };
-    this.repo.createEmployee(employeeTemp).subscribe(
-      {
-        next: () => {
-          console.log('EMPLOYEE CREATED');
-          this.fetchEmployeesEvent.emit(employee);
-        }
-      }
-    );
+  //Add an employee to the employee list within the employee service 
+  createEmployee(e: Employee) : Promise<any> {
+
+    const tempEmp : any = {
+      Name: e.Name,
+      Surname: e.Surname,
+      Photo: null,
+      IDNumber: e.IDNumber,
+      Phone: e.Phone,
+      Email: e.Email,
+      TitleID: e.TitleID.split(',')[0],
+      EmployeeTypeID: e.EmployeeTypeID.split(',')[0],
+      QualificationID: e.QualificationID.split(',')[0],
+      Contract: null,
+      role: e.role,
+      EmployeeID: -1
+    }
+
+    //create payload:
+    const payload = new FormData();
+    payload.append(JSON.stringify(tempEmp), tempEmp);
+    payload.append('contract', e.Contract);
+    payload.append('photo', e.Photo);
+
+    if (e.role == Roles.Admin) {
+      //create admin employee:
+
+      // return this.repo.createAdmin(payload)
+      return new Promise<any>((resolve, _) => {
+        this.repo.createAdmin(payload).subscribe({
+          next: () => {
+            this.fetchEmployeesEvent.emit();
+            resolve(true);
+          },
+          error: () => {
+            _(false);
+          }
+        })
+      });
+      // .subscribe(
+      //   {
+      //     next: () => {
+      //       console.log('ADMIN CREATED');
+      //       this.fetchEmployeesEvent.emit();
+      //     }
+      //   }
+      // );
+
+    } else {
+      //create non-admin employee:
+
+      return new Promise<any>((resolve, _) => {
+        this.repo.createEmployee(payload).subscribe({
+          next: () => {
+            this.fetchEmployeesEvent.emit();
+            resolve(true);
+          }
+        })
+      });
+      // .subscribe(
+      //   {
+      //     next: () => {
+      //       console.log('EMPLOYEE CREATED');
+      //       this.fetchEmployeesEvent.emit();
+      //     }
+      //   }
+      // );
+
+    }
+
+    // this.repo.createEmployee(payload).subscribe(
+    //   {
+    //     next: () => {
+    //       console.log('EMPLOYEE CREATED');
+    //       this.fetchEmployeesEvent.emit();
+    //     }
+    //   }
+    // );
+
    }
 
    getAllEmployees(): Observable<any> {
@@ -116,18 +172,69 @@ private tempE : Employee[];
   }
 
   //Receives an employee to update in the service employee list
-  async updateEmployee(employee: any) {
-    return this.repo.updateEmployee(employee).subscribe(
-      {
-       next: () => {
-         console.log('EMPLOYEE UPDATED');
-         this.fetchEmployeesEvent.emit(employee);
-       },
-       error: err => {
-         console.log('EMPLOYEE UPDATED FAILED');
-       }
-      }
-    );
+  async updateEmployee(e: Employee) : Promise<any> {
+    // return this.repo.updateEmployee(employee).subscribe(
+    //   {
+    //    next: () => {
+    //      console.log('EMPLOYEE UPDATED');
+    //      this.fetchEmployeesEvent.emit(employee);
+    //    },
+    //    error: err => {
+    //      console.log('EMPLOYEE UPDATED FAILED');
+    //    }
+    //   }
+    // );
+
+    let deletePhoto = false;
+    if (e.Photo == null && e.srcPhoto == '')
+      deletePhoto = true;
+
+    let swapContract = false;
+    if (e.Contract != null)
+      swapContract = true;
+
+    let swapPhoto = false;
+    if (e.Photo != null)
+      swapPhoto = true;
+
+    const tempEmp : any = {
+      Name: e.Name,
+      Surname: e.Surname,
+      Photo: e.Photo,
+      IDNumber: e.IDNumber,
+      Phone: e.Phone,
+      Email: e.Email,
+      TitleID: e.TitleID.split(',')[0],
+      EmployeeTypeID: e.EmployeeTypeID.split(',')[0],
+      QualificationID: e.QualificationID.split(',')[0],
+      Contract: e.Contract,
+      role: e.role,
+      EmployeeID: e.EmployeeID,
+      RemovePhoto: deletePhoto,
+      SwapPhoto: swapPhoto,
+      SwapContract: swapContract
+    }
+
+    console.log('e to api', tempEmp)
+    //create payload:
+    const payload = new FormData();
+    payload.append(JSON.stringify(tempEmp), tempEmp);
+    
+    payload.append('contract', e.Contract);
+    payload.append('photo', e.Photo);
+
+    return new Promise<any>((resolve, _) => {
+      this.repo.updateEmployee(payload).subscribe({
+        next: () => {
+          this.fetchEmployeesEvent.emit();
+          resolve(true);
+        },
+        error: () => {
+          _(false);
+        }
+      })
+    });
+
   }
 
 
@@ -140,29 +247,25 @@ private tempE : Employee[];
     });
   }
 
-    //Receives an employee to delete in the service employee list.
-    deleteEmployee(id: number){
-      console.log('HERE = ' + id);
-    this.repo.deleteEmployee(id).subscribe(
-      {
-        next: res => {
-          console.log(res);
-          console.log('EMPLOYEE DELETED');
-          this.fetchEmployeesEvent.emit();
-        },
-        error: err => {
-          console.log('ÉRROR HERE');
-          console.log(err);
+  deleteEmployee(id: string) : Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.repo.deleteEmployee(id).subscribe(
+        {
+          next: res => {
+            this.fetchEmployeesEvent.emit();
+            resolve(true);
+          },
+          error: err => {
+            resolve(false);
+          }
         }
-      }
-    );
-    }
+      );
+    });
+  }
 
   getAllEmployeeTypes(): Observable<any> {
     return this.repo.getEmployeeTypes();
   }
-
-
 
   matchingEmployeeType(name: string): Promise<any>{
     return this.repo.getMatchEmployeeType(name).toPromise();
@@ -345,58 +448,55 @@ private tempE : Employee[];
 
     //Display the confirm create/update modal
   //Receives the selected employee from the employee page
-  async confirmEmployeeModal(choice: number, employee: any, employeeTypeName: string, qualificationDescription: string, qTypeName: string, title: string, image: any) {
-    console.log('EmployeeService: ConfirmEmployeeModalCall');
-    console.log(choice);
-    if(choice === 1){
-      console.log('Performing ADD');
-      const modal = await this.modalCtrl.create({
-        component: ConfirmEmployeeComponent,
-        componentProps: {
-          employee,
-          choice,
-          employeeTypeName,
-          qualificationDescription,
-          qTypeName,
-          title,
-          image
-        }
-      });
+  confirmEmployeeModal(choice: number, employee: Employee) : Promise<any> {
 
-      //Update the current vat list with the vat list from the confirm modal.
-      modal.onDidDismiss().then(() => {
+    return new Promise<any>(async (resolve, _) => {
+      console.log('EmployeeService: ConfirmEmployeeModalCall');
+      console.log(choice);
 
-        this.repo.getEmployees();
+      if(choice === 1){
+        
+        console.log('Performing ADD');
+        const modal = await this.modalCtrl.create({
+          component: ConfirmEmployeeComponent,
+          componentProps: {
+            choice,
+            employee
+          }
+        });
+        //Update the current vat list with the vat list from the confirm modal.
+        modal.onDidDismiss().then(() => {
 
-      });
+          // this.repo.getEmployees();
+          this.fetchEmployeesEvent.emit();
+          resolve(true);
 
-      await modal.present();
+        });
+        await modal.present();
 
-    } else if (choice === 2){
+      } else if (choice === 2){
 
-      console.log('Performing UPDATE');
+        console.log('Performing UPDATE');
+        const modal = await this.modalCtrl.create({
+          component: ConfirmEmployeeComponent,
+          componentProps: {
+            choice,
+            employee
+          }
+        });
+        modal.onDidDismiss().then(() => {
+          // this.repo.getSaleItems();
+          // this.updateSaleItemInfoModal(saleItem);
+          this.fetchEmployeesEvent.emit();
+          resolve(true);
 
-
-      const modal = await this.modalCtrl.create({
-        component: ConfirmEmployeeComponent,
-        componentProps: {
-          employee,
-          choice,
-          employeeTypeName,
-          qualificationDescription,
-          qTypeName,
-          title,
-          image
-        }
-      });
-      modal.onDidDismiss().then(() => {
-        // this.repo.getSaleItems();
-        // this.updateSaleItemInfoModal(saleItem);
-      });
-      await modal.present();
-    } else {
-      console.log('BadOption: ' + choice);
-    }
+        });
+        await modal.present();
+      } else {
+        console.log('BadOption: ' + choice);
+      }
+    })
+    
   }
 
   async associativeEmployeeTypeModal(employeeType: EmployeeType) {
@@ -409,5 +509,17 @@ private tempE : Employee[];
     });
     await modal.present();
   }
+
+  async AssociativeEmployeeComponent(employee: any) {
+    console.log("EmployeeTypeService: AssociativeModalCall");
+    const modal = await this.modalCtrl.create({
+      component: AssociativeEmployeeComponent,
+      componentProps: {
+        employee
+      }
+    });
+    await modal.present();
+  }
+
 }
 
