@@ -1,23 +1,20 @@
-﻿using iTextSharp.text.html;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using Team7.Models;
 using Team7.Models.Repository;
-using Team7.ViewModels;
 using Team7.Services;
-using System.Net.Http.Headers;
+using Team7.ViewModels;
 
 namespace Team7.Controllers
 {
@@ -525,6 +522,7 @@ namespace Team7.Controllers
             editEmployee.IDNumber = IDNumber;
             editEmployee.Qualification = await QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID));
             editEmployee.EmployeeType = await EmployeeTypeRepo._GetEmployeeTypeIdAsync(Convert.ToInt32(EmployeeTypeId));
+            editEmployee.UserID = editAspUser.Id;
 
             //update the AspUser table:
             editAspUser.FirstName = Name;
@@ -550,9 +548,11 @@ namespace Team7.Controllers
                 {
                     try
                     {
+                        if(editEmployee.Photo !=null)
                         deletePhoto(editEmployee.Photo);
                     } catch (Exception ex)
                     {
+                        
                         StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
                     }
 
@@ -574,7 +574,7 @@ namespace Team7.Controllers
                     var photoPath = Path.Combine(Directory.GetCurrentDirectory(), photoFolder);
                     //storage
                     var extension = photo.ContentType.Split('/')[1];
-                    var photoFileName = ContentDispositionHeaderValue.Parse(editEmployee.UserID).ToString() + "_" + unix + "." + extension;
+                    var photoFileName = ContentDispositionHeaderValue.Parse(editAspUser.Id).ToString() + "_" + unix + "." + extension;
                     editEmployee.Photo = photoFileName; //update for the extension
 
                     var photoFullPath = Path.Combine(photoPath, photoFileName);
@@ -612,8 +612,8 @@ namespace Team7.Controllers
                     contract.CopyTo(stream);
                 }
             }
-
-            await EmployeeRepo.SaveChangesAsync();
+            EmployeeRepo.Update(editEmployee);
+            EmployeeRepo.SaveChangesAsync();
             await _userManager.UpdateAsync(editAspUser);
 
             return Ok();
@@ -670,14 +670,25 @@ namespace Team7.Controllers
             try
             {
                 EmployeeRepo.Delete(employeeRecord);
+                try
+                {
+                    deleteContract(employeeRecord.Contract);
+                } catch (Exception e)
+                {
+
+                }
+                try
+                {
+                    deletePhoto(employeeRecord.Photo);
+                } catch(Exception e) {
+
+                }
             } catch (Exception ex)
             {
                 return Forbid(ex.Message);
             }
 
             await EmployeeRepo.SaveChangesAsync();
-            //delete from ASP table
-
             _userManager.DeleteAsync(employeeRecord.AppUser);
 
             return Ok("Employee deleted successfully");

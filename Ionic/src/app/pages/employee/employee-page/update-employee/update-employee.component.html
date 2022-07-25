@@ -3,7 +3,7 @@
     <ion-title>Update Employee</ion-title>
     <ion-buttons slot="end">
       <!--(click)="dismissModal()-->
-      <ion-button color="tertiary" (click)="dismissModal()">Close</ion-button>
+      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -14,7 +14,7 @@
     <br/>
 
     <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the Employee information below.</p>
+      <p style="font-size:large">Please update the Employee information below.</p>
     </div>
 
     <ion-item>
@@ -191,6 +191,16 @@
       </ion-item>
 
     <!-- <ion-button (click)="submitForm()" expand="block" color="success" [disabled]="cEmployeeForm.invalid">Update Employee</ion-button> -->
-    <ion-button (click)="submitForm()" expand="block" color="success">Update Employee</ion-button>
+      <div class="center">
+        <ion-row class="width-80">
+          <ion-col>
+            <ion-button class="btn-100" color="light" (click)="this.global.dismissModal()">Cancel</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button class="btn-100" (click)="submitForm()" color="secondary">Update Employee</ion-button>
+          </ion-col>
+        </ion-row>
+      </div>
+
   </form>
 </ion-content>

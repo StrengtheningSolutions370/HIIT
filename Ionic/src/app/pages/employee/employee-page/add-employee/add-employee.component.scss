@@ -3,7 +3,7 @@ ion-title {
     font-weight: 500;
 }
 
-ion-item, ion-button {
+ion-item {
     font-size: large;
     margin-left: 10%;
     margin-right: 10%;
@@ -12,6 +12,18 @@ ion-item, ion-button {
 ion-button {
     margin-bottom: 8%;
     margin-top: 2%;
+    width: 100% !important;
+}
+
+.center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.width-80 {
+    width: 80% !important;
+    justify-self: center;
 }
 
 span {

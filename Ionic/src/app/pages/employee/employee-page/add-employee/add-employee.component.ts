@@ -14,6 +14,7 @@ import { QualificationType } from 'src/app/models/qualification-type';
 import { Roles } from 'src/app/models/roles.enum';
 import { Venue } from 'src/app/models/venue';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { StoreService } from 'src/app/services/storage/store.service';
 import { TitleService } from 'src/app/services/title/title.service';
@@ -55,7 +56,8 @@ export class AddEmployeeComponent implements OnInit{
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public employeeService: EmployeeService, private router: Router,private currentRoute: ActivatedRoute,
-    private  alertCtrl: AlertController, public titleService: TitleService, public repo: RepoService, private storage : StoreService) {
+    private  alertCtrl: AlertController, public titleService: TitleService, public repo: RepoService, private storage : StoreService,
+    public global : GlobalService) {
       //this.roles = AllRoles;
       this.storage.getKey('token').then((token : any) => {
         this.repo.getUserRole(token).subscribe({
@@ -184,6 +186,8 @@ export class AddEmployeeComponent implements OnInit{
   }
 
   validatePhoto(contract : FormControl) : {[valtype : string] : string} | null {
+    if(contract.value == '')
+    return null;
     const pattern = /.((png)|(jpg)|(jpeg))$/
     if (!pattern.test(contract.value)) {
       return {'errormsg' : 'Please submit .png, .jpg or .jpeg'}

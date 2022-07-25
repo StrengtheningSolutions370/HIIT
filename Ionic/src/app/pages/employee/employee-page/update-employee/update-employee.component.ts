@@ -6,6 +6,7 @@ import { AllRoles } from 'src/app/app-routing.module';
 import { Employee } from 'src/app/models/employee';
 import { Roles } from 'src/app/models/roles.enum';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { StoreService } from 'src/app/services/storage/store.service';
 import { TitleService } from 'src/app/services/title/title.service';
@@ -47,7 +48,8 @@ export class UpdateEmployeeComponent implements OnInit {
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
     public employeeService: EmployeeService, private router: Router,private currentRoute: ActivatedRoute,
-    private  alertCtrl: AlertController, public titleService: TitleService, public repo: RepoService, private storage : StoreService) {
+    private alertCtrl: AlertController, public titleService: TitleService, public repo: RepoService, private storage : StoreService,
+    public global : GlobalService) {
       //this.roles = AllRoles;
       this.storage.getKey('token').then((token : any) => {
         this.repo.getUserRole(token).subscribe({
@@ -262,6 +264,8 @@ export class UpdateEmployeeComponent implements OnInit {
     emp.QualificationID = this.cEmployeeForm.value['qualificationId'];
     emp.role = this.cEmployeeForm.value['role'];
 
+    console.log('e sending to the confirm for UpdateEmployeeComponent', emp)
+
     //create confirm modal here:
     this.employeeService.confirmEmployeeModal(2, emp).then(() => {
       this.dismissModal();
@@ -286,6 +290,7 @@ export class UpdateEmployeeComponent implements OnInit {
     this.imgSrc = '';
     this.photo = null;
     this.photoFlag = true;
+
     if (!this.cEmployeeForm.get('photo').valid) {
       this.validPhoto = false;
       return;

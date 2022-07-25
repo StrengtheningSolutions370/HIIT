@@ -83,7 +83,7 @@ export class ConfirmEmployeeComponent implements OnInit {
   async confirmChanges(employee: Employee){
     console.log(this.choice);
     this.loading = true;
-    this.global.nativeLoad("Creating...");
+    this.global.nativeLoad("Updating...");
 
     if (this.choice === 1){
 
@@ -101,7 +101,11 @@ export class ConfirmEmployeeComponent implements OnInit {
     } else if (this.choice === 2){
       // console.log('confirm e to send', employee);
       //UPDATE
-      this.showProfile = true;
+      this.showProfile = false;
+
+      if (employee.Photo != null) {
+        this.showProfile = true;
+      }
       
       await this.employeeService.updateEmployee(employee).then(() => {
         this.dismissModal();

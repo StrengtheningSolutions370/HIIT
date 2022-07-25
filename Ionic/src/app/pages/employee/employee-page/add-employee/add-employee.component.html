@@ -163,6 +163,17 @@
                 ></pdf-viewer>
     </ion-item>
 
-    <ion-button (click)="submitForm()" expand="block" color="success" [disabled]="cEmployeeForm.invalid">Create Employee</ion-button>
+    
+    <div class="center">
+      <ion-row class="width-80">
+        <ion-col>
+          <ion-button color="light" (click)="this.global.dismissModal()">Cancel</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="submitForm()" color="success" [disabled]="cEmployeeForm.invalid">Create Employee</ion-button>
+        </ion-col>
+      </ion-row>
+    </div>
+
   </form>
 </ion-content>
