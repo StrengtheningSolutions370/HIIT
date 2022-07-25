@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Team7.Models;
 using Team7.Models.Repository;
+using Team7.Services;
 using Team7.ViewModels;
 
 namespace Team7.Controllers
@@ -36,6 +37,15 @@ namespace Team7.Controllers
             _roleManager = roleManager;
             _titleRepo = titleRepo;
             _clientRepo = clientRepo;
+        }
+
+        [HttpPost]
+        [Route("sms")]
+        public async Task<IActionResult> sms()
+        {
+            Sms s = new Sms();
+            s.sendSMS("+27737486187", "Hey Shan");
+            return Ok();
         }
 
         [HttpPost]
