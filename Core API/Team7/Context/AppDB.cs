@@ -26,7 +26,6 @@ namespace Team7.Context
         public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<DateSession> DateSession { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
-        public virtual DbSet<EmployeeContract> EmployeeContract { get; set; }
         public virtual DbSet<EmployeeType> EmployeeType { get; set; }
         public virtual DbSet<ExerciseCategory> ExerciseCategory { get; set; }
         public virtual DbSet<Exercise> Exercise { get; set; }

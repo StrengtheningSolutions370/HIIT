@@ -295,17 +295,25 @@ deleteSaleItemImage(id : string) : Observable<any> {
 
 //EMPLOYEE
 /// Create
-createEmployee(employee: any): Observable<any>{
-  return this.http.post<any>(`${this.base+this.EmployeeController}add`,employee,this.httpOptions);
+
+// createEmployee(employee: any): Observable<any>{
+//   return this.http.post<any>(`${this.base+this.EmployeeController}add`,employee,this.httpOptions);
+// }
+
+createAdmin(data : FormData) : Observable<any> {
+  return this.http.post<any>(`${this.base+this.EmployeeController}createAdmin`, data, this.httpOptions);
 }
+
+createEmployee(data : FormData) : Observable<any> {
+  return this.http.post<any>(`${this.base+this.EmployeeController}createEmployee`, data, this.httpOptions);
+}
+
 //Update
-updateEmployee(employee: Employee): Observable<any>{
-  console.log('THE UPDATE OBJECT:');
-  console.log(employee);
-  return this.http.put(`${this.base+this.EmployeeController}update`,employee, this.httpOptions);
+updateEmployee(data: FormData): Observable<any> {
+  return this.http.post<any>(`${this.base+this.EmployeeController}update`, data, this.httpOptions);
 }
 //Delete
-deleteEmployee(EmployeeId: number): Observable<any>{
+deleteEmployee(EmployeeId: string): Observable<any>{
   return this.http.delete(`${this.base+this.EmployeeController}delete?id=${EmployeeId}`,this.httpOptions);
 }
 //GetAll
@@ -316,15 +324,18 @@ getEmployees(): Observable<any>{
 getMatchEmployee(input: string): Observable<any>{
   return this.http.get(`${this.base+this.EmployeeController}getMatch?input=${input}`, this.httpOptions);
 }
-
-//Image Upload
-uploadEmployeeImage(data: FormData): Observable<any> {
-  return this.http.post('https://localhost:44383/api/Employee/upload', data);
+//Exists
+existsEmployee(id: number): Observable<any>{
+  return this.http.get(`${this.base+this.EmployeeController}exists?id=${id}`, this.httpOptions);
 }
-//reImage Upload
-reuploadEmployeeImage(id: string): Observable<any> {
-  return this.http.delete(`https://localhost:44383/api/Employee/deletephoto?name=${id}`);
-}
+// //Image Upload
+// uploadEmployeeImage(data: FormData): Observable<any> {
+//   return this.http.post('https://localhost:44383/api/Employee/upload', data);
+// }
+// //reImage Upload
+// reuploadEmployeeImage(id: string): Observable<any> {
+//   return this.http.delete(`https://localhost:44383/api/Employee/deletephoto?name=${id}`);
+// }
 //Document Upload
 
   // RefundReason:

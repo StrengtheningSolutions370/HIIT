@@ -21,12 +21,7 @@ export class AddQualificationComponent implements ViewWillEnter {
   @Input() qualification: Qualification;
   qualificationTypeDropDown!: QualificationType[];
 
-  //Creating the form to add the new sale category details, that will be displayed in the HTML component
-  cQualificationForm: FormGroup = this.formBuilder.group({
-    description: [, [Validators.required]],
-    qualificationType: [],
-  });
-
+  cQualificationForm! : FormGroup;
 
   constructor(private toastCtrl: ToastController,
     public formBuilder: FormBuilder,
@@ -71,5 +66,20 @@ export class AddQualificationComponent implements ViewWillEnter {
     }
   }
 
+  async sucAdd() {
+    const toast = await this.toastCtrl.create({
+      message: 'The Qualification has been successfully added!',
+      duration: 2000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  ngOnInit() {
+    this.cQualificationForm = this.formBuilder.group({
+      description: ['', [Validators.required]],
+      qualificationType: ['', [Validators.required]],
+    });
+  }
 
 }

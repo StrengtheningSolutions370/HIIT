@@ -45,9 +45,9 @@ export class AuthInterceptor implements HttpInterceptor {
                     err => {
                         console.log("ERROR CAUGHT IN AUTH INTERCEPTOR:");
                         console.log(err);
-                        this.global.showAlert(err.error);
+                        // this.global.showAlert(err.error);
                         if (err.status === 404){
-                            this.global.showAlert(err.error);
+                            // this.global.showAlert(err.error);
                         }
                         //USER NOT LOGGED IN FOR AUTHENTICATED REQUESTS
                         if (err.status === 401) {

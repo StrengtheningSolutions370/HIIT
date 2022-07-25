@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Employee } from 'src/app/models/employee';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-associative-employee',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssociativeEmployeeComponent implements OnInit {
 
-  constructor() { }
+  @Input() employee : any;
+
+  constructor(public global : GlobalService) { }
 
   ngOnInit() {}
 

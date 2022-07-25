@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './authentication/auth.interceptor';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 //VENUE IMPORTS:
 import { AddVenueComponent } from './pages/venue/add-venue/add-venue.component';
@@ -84,6 +85,7 @@ import { DeleteEmployeeComponent } from './pages/employee/employee-page/delete-e
 import { ViewEmployeeComponent } from './pages/employee/employee-page/view-employee/view-employee.component';
 import { ConfirmEmployeeComponent } from './pages/employee/employee-page/confirm-employee/confirm-employee.component';
 import { UpdateEmployeeComponent } from './pages/employee/employee-page/update-employee/update-employee.component';
+import { AssociativeEmployeeComponent } from './pages/employee/employee-page/associative-employee/associative-employee.component'
 
 //REFUND REASON IMPORTS:
 import { AddRefundReasonComponent } from 'src/app/pages/sale/refund-reason/add-refund-reason/add-refund-reason.component';
@@ -147,7 +149,7 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
 ],
 
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

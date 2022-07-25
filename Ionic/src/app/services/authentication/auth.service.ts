@@ -59,8 +59,8 @@ export class AuthService {
     private storage: StoreService,
     private router: Router) { }
 
-  async register(registerUser: appUserRegister) {
-    await this.storage.deleteKey('token').then(() => {
+  register(registerUser: appUserRegister) {
+    this.storage.deleteKey('token').then(() => {
       this.repo.register(registerUser).subscribe(result => {
         this.router.navigate(['login']);
       });

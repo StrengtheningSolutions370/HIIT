@@ -48,7 +48,7 @@ namespace Team7.Models.Repository
                         et.Description,
                         Employee = et
                   .Employee
-                  .Select(e => new { e.EmployeeID, e.Name, e.Surname, e.Photo, e.IDNumber })
+                  .Select(e => new { e.EmployeeID, e.Photo, e.IDNumber })
                     }).ToListAsync()
                 };
             }   
@@ -88,7 +88,7 @@ namespace Team7.Models.Repository
                         et.Description,
                         Employee = et
                   .Employee
-                  .Select(e => new { e.EmployeeID, e.Name, e.Surname, e.Photo, e.IDNumber })
+                  .Select(e => new { e.EmployeeID, e.Photo, e.IDNumber })
                     }).ToListAsync()
                 };
             }
@@ -125,7 +125,7 @@ namespace Team7.Models.Repository
                         et.Description,
                         Employee = et
                   .Employee
-                  .Select(e => new { e.EmployeeID, e.Name, e.Surname, e.Photo, e.IDNumber })
+                  .Select(e => new { e.EmployeeID, e.Photo, e.IDNumber })
                     }).ToListAsync()
                 };
             }

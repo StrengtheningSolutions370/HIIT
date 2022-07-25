@@ -76,7 +76,7 @@ export class AddSitemComponent implements ViewWillEnter {
    this.cSaleItemForm.controls.itemQuantity.enable();
  }
 
- constructor(private global: GlobalService, public formBuilder: FormBuilder,
+ constructor(public global: GlobalService, public formBuilder: FormBuilder,
    public saleService: SalesService, private repo : RepoService) { 
     this.saleService.getAllSaleCategories().subscribe(
       {

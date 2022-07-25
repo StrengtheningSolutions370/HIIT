@@ -1,5 +1,10 @@
-import { Component, OnInit, Type } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController, ToastController, ViewWillEnter, AlertController } from '@ionic/angular';
+import { Employee } from 'src/app/models/employee';
+import { EmployeeService } from 'src/app/services/employee/employee.service';
 
 @Component({
   selector: 'app-view-employee',
@@ -7,15 +12,38 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./view-employee.component.scss'],
 })
 export class ViewEmployeeComponent implements OnInit {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  static FileUpload: any[] | Type<any>;
+  @Input() employee: any;
 
-  constructor(private modalCtrl: ModalController) { }
+  title! : string;
+  employeeType! : string;
+  qualification! : string;
+  contract! : any;
+  imgSrc = '';
+  pdfSrc = '';
+
+
+  constructor(private Http : HttpClient, private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
+    public employeeService: EmployeeService, private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController) { }
+
+
+  ngOnInit() {
+    console.log('emp', this.employee)
+  }
 
   dismissModal() {
     this.modalCtrl.dismiss();
+  };
+
+  downloadPdf() {
+    window.open('https://localhost:44383/Resources/Employees/Contracts/' + this.employee.data.contract);
   }
 
-  ngOnInit() {}
+  createImg (fileName: string) {
+    if (fileName == null)
+      return `https://localhost:44383/Resources/Employees/Images/default.jpeg`;
+    return `https://localhost:44383/Resources/Employees/Images/${fileName}`;
+  }
+
+  public createContract = (fileName: string) => `https://localhost:44383/Resources/Employees/Contracts/${fileName}`;
 
 }

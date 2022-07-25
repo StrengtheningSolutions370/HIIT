@@ -21,5 +21,7 @@ namespace Team7.ViewModels
 
         public string phoneNumber { get; set; }
 
+        public string TitleId { get; set; }
+
     }
 }

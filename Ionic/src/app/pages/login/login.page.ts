@@ -61,4 +61,5 @@ export class LoginPage implements OnInit {
     };
     await this.auth.login(userLogin);
   }
+  
 }

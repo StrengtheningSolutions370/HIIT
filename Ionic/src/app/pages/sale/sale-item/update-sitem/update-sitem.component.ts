@@ -69,7 +69,7 @@ checkBoxToggle(check : any) {
   this.uSaleItemForm.controls.itemQuantity.enable();
 }
 
-constructor(private global: GlobalService, public formBuilder: FormBuilder,
+constructor(public global: GlobalService, public formBuilder: FormBuilder,
  public saleService: SalesService, private repo : RepoService) {
 }
 
