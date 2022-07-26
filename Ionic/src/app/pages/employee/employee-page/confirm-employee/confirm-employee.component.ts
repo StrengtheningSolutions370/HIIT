@@ -110,10 +110,10 @@ export class ConfirmEmployeeComponent implements OnInit {
       await this.employeeService.updateEmployee(employee).then(() => {
         this.dismissModal();
         this.sucUpdate();
+        this.global.endNativeLoad();
       }).catch(() => {
         // this.duplicateAlert();
         // this.loading = false;
-        // this.global.endNativeLoad();
       });
       
 

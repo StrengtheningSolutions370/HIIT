@@ -29,17 +29,25 @@ export class EmployeePagePage implements OnInit {
     
   }
   
-  ngOnInit() {
-    this.global.nativeLoad("Loading...");
-    this.fetchEmployees();
+    ngOnInit() {
+    // this.global.nativeLoad("Loading...");
+
+    // this.global.nativeLoad("Loading...").then(() => {
+    //   this.global.endNativeLoad();
+    // })
+
     this.employeeService.fetchEmployeesEvent.subscribe({
-      next: () => {
-        this.fetchEmployees().then(() => this.global.endNativeLoad());
-      }
+      next: async () => {
+        this.global.nativeLoad("Loading...");
+        this.fetchEmployees().then(() => { this.global.endNativeLoad(); });
+        // this.fetchEmployees();
+        // this.global.endNativeLoad();
+      },
     });
+    this.employeeService.fetchEmployeesEvent.emit();
   }
 
-  fetchEmployees() {
+  fetchEmployees() : Promise<any> {
     return new Promise<any>((resolve, _) => {
       this.loading = true;
       this.employees = [];
