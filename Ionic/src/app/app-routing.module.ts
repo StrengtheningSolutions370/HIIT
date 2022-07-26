@@ -201,10 +201,10 @@ export const routes: Routes = [
     //   roles: [AllRoles]
     // }
   },
-  // {
-  //   path: '**', //this route object must be last
-  //   redirectTo: 'login',
-  // },
+  {
+    path: '**', //this route object must be last
+    redirectTo: 'login',
+  },
 ]  
 
 

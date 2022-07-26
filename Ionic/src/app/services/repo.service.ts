@@ -52,6 +52,7 @@ export class RepoService {
   }
 
   getUserRole(token : string) : Observable<any>{
+    console.trace();
     return this.http.get(`${this.base + this.EmployeeController}token`, { headers : new HttpHeaders({'Authorization': 'Bearer ' + token}) });
   }
 
@@ -69,21 +70,20 @@ export class RepoService {
 
   //password management
   VerifyOtp(data : any) : Observable<any> {
-    return this.http.post(`${this.base + this.EmployeeController}verifyotp`, data, this.httpOptions);
+    return this.http.post(`${this.base + this.AppUserController}verifyotp`, data, this.httpOptions);
   }
   
   SendOtp(data : any) : Observable<any> {
-    return this.http.post(`${this.base + this.EmployeeController}sendotp`, data, this.httpOptions);
-
+    return this.http.post(`${this.base + this.AppUserController}sendotp`, data, this.httpOptions);
   }
 
   ChangePassword(data : any) : Observable<any> {
-    return this.http.post(`${this.base + this.EmployeeController}changepassword`, data, this.httpOptions);
+    return this.http.post(`${this.base + this.AppUserController}changepassword`, data, this.httpOptions);
 
   }
 
   SetNewPassword(data : any) : Observable<any> {
-    return this.http.post(`${this.base + this.EmployeeController}setnewpassword`, data, this.httpOptions);
+    return this.http.post(`${this.base + this.AppUserController}setnewpassword`, data, this.httpOptions);
 
   }
 

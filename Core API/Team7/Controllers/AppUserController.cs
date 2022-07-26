@@ -91,7 +91,13 @@ namespace Team7.Controllers
 
             //old password valid and email exists, set new password:
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
+            try
+            {
+                await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
+            } catch (Exception ex)
+            {
+                Forbid("Password does not meet the requirements.");
+            }
             await _userManager.UpdateAsync(user);
             return Ok();
         }
@@ -110,7 +116,13 @@ namespace Team7.Controllers
 
             //old password valid and email exists, set new password:
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
+            try
+            {
+                var flag = await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
+            } catch (Exception ex)
+            {
+                return Forbid("Password does not meet the requirements.");
+            }
             await _userManager.UpdateAsync(user);
             return Ok();
         }
@@ -121,6 +133,7 @@ namespace Team7.Controllers
         {
             //get user using the email:
             var user = await _userManager.FindByEmailAsync(uvm.EmailAddress);
+
             if (user == null)
             {
                 return NotFound("The provided email does not exist.");
@@ -137,9 +150,17 @@ namespace Team7.Controllers
                 s.sendSMS(phone, msg);
             } catch (Exception e)
             {
-                return NotFound("The provided phone number is not valid.");
-            }
 
+            }
+            try
+            {
+                Email e = new Email();
+                //TODO : this needs to be fixed to the actual email:
+                e.sendEmail("shannonlnoel@icloud.com", "Strengthening Solutions", otp);
+            } catch (Exception ex)
+            {
+
+            }
             await _userManager.UpdateAsync(user);
             return Ok();
         }
