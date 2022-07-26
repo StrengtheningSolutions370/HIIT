@@ -28,6 +28,10 @@
   Percentage must be greater than 0
   <br/>
 </span>
+<span class="error ion-padding" *ngIf="errorControl.percentage.errors?.max">
+  Percentage must be less than 100
+  <br/>
+</span>
   <br/><br/>
 
   <ion-button type="submit" color="success" [disabled]="!cVATForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create VAT</ion-button>

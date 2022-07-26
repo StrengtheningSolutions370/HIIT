@@ -19,7 +19,7 @@ export class AddVatComponent implements ViewWillEnter{
 
   //Creating the form to add the new vat details, that will be displayed in the HTML component
   cVATForm: FormGroup = this.formBuilder.group({
-    percentage: ['', [Validators.required, Validators.min(1)]]
+    percentage: ['', [Validators.required, Validators.min(1), Validators.max(99)]]
   });
 
 
