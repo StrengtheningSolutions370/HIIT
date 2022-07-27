@@ -263,6 +263,7 @@ private tempE : Employee[];
 
   deleteEmployee(id: string) : Promise<any> {
     return new Promise<any>((resolve, reject) => {
+      this.global.nativeLoad("Deleting...");
       this.repo.deleteEmployee(id).subscribe(
         {
           next: res => {
@@ -273,7 +274,9 @@ private tempE : Employee[];
             resolve(false);
           }
         }
-      );
+      ).add(() => {
+        this.global.endNativeLoad();
+      });
     });
   }
 

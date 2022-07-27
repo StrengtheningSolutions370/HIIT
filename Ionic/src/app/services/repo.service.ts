@@ -79,12 +79,14 @@ export class RepoService {
 
   ChangePassword(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}changepassword`, data, this.httpOptions);
-
   }
 
   SetNewPassword(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}setnewpassword`, data, this.httpOptions);
+  }
 
+  CheckPasswordHistory(data : any) : Observable<any> {
+    return this.http.post(`${this.base + this.AppUserController}checkpasswordhistory`, data, this.httpOptions);
   }
 
   //Venue:

@@ -89,7 +89,7 @@ namespace Team7.Controllers
             var check = await _userManager.CheckPasswordAsync(user, uvm.Password);
             if (!check)
             {
-                return Forbid("Incorect old password provided.");
+                return Forbid("Incorect old password.");
             }
 
             //password was valid:
@@ -97,15 +97,53 @@ namespace Team7.Controllers
         }
 
         [HttpPost]
+        [Route("checkpasswordhistory")]
+        public async Task<IActionResult> CheckPasswordHistory(UserViewModel uvm)
+        {
+
+            var chk = uvm.Password;
+            var email = uvm.EmailAddress;
+
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, "User not Found.");
+            }
+
+            var history = await _passwordHistoryRepo.GetByUserIdAsync(user.Id);
+
+            if (history == null)
+                return Ok(); //user has not history, therefore accept
+
+            foreach (var item in history)
+            {
+                var flag = _userManager.PasswordHasher.VerifyHashedPassword(user, item.Hashed, chk);
+
+                if (flag != 0) //if true = a password matched
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized, "New password cannot be old password.");
+                }
+            }
+
+            return Ok("Password is acceptable.");
+        }
+
+        [HttpPost]
         [Route("changepassword")]
         public async Task<IActionResult> ChangePassword(UserViewModel uvm)
         {
+
+            if (uvm.newPassword.Length < 8)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, "Password should be a minimum of 8 characters.");
+            }
 
             var user = await _userManager.FindByEmailAsync(uvm.EmailAddress);
 
             if (user == null)
             {
-                return NotFound("The provided email does not exist.");
+                return StatusCode(StatusCodes.Status401Unauthorized, "The provided email does not exist.");
             }
 
             user.PasswordHistory = await _passwordHistoryRepo.GetByUserIdAsync(user.Id);
@@ -115,7 +153,8 @@ namespace Team7.Controllers
 
             if (!check)
             {
-                return Forbid("Incorect old password provided.");
+                return StatusCode(StatusCodes.Status401Unauthorized, "Incorrect old password."); //CHECK HERE
+
             }
 
 
@@ -150,7 +189,7 @@ namespace Team7.Controllers
                 var flag = _userManager.PasswordHasher.VerifyHashedPassword(user, h.Hashed, uvm.newPassword);
                 if (flag != 0) //if true = a password matched
                 {
-                    return Forbid("New password may have been used previously.");
+                    return StatusCode(StatusCodes.Status401Unauthorized, "New password cannot be old password."); //CHECK HERE
                 }
             }
 
@@ -175,7 +214,7 @@ namespace Team7.Controllers
 
             } catch (Exception ex)
             {
-                Forbid("Password does not meet the requirements.");
+                    return StatusCode(StatusCodes.Status401Unauthorized, "Internal Server Error."); //this might fail because of pass req in the startup.cs
             }
             await _userManager.UpdateAsync(user);
             return Ok();
@@ -230,7 +269,7 @@ namespace Team7.Controllers
 
             if (user == null)
             {
-                return NotFound("The provided email does not exist.");
+                return StatusCode(StatusCodes.Status401Unauthorized, "The provided email does not exist.");
             }
 
             string phone = "+27" + user.PhoneNumber.TrimStart(new Char[] { '0' }); ;

@@ -23,6 +23,7 @@ export class PasswordmanagerPage implements OnInit {
   constructor(private global : GlobalService, private repo : RepoService, private storage : StoreService) { }
 
   ngOnInit() {
+
     //get current user email from token
     this.storage.getKey('token').then((token : string) => {
       if (token != null) {
@@ -54,11 +55,13 @@ export class PasswordmanagerPage implements OnInit {
     this.repo.ChangePassword(uvm).subscribe({
       next: () => {
         //old password was correct and changed
-        this.success = true;
+        this.global.showToast('Password changes successfully') //CHECKHERE
+        // this.success = true; //CHECKHERE
       },
-      error: (msg) => {
+      error: (msg : any) => {
         //old password was incorrect
-        this.fail = true;
+        this.global.showAlert(msg.error); //CHECKHERE
+        // this.fail = true;
       }
     }).add(() => { this.global.endNativeLoad(); });
 
