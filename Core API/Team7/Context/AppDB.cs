@@ -48,8 +48,7 @@ namespace Team7.Context
         public virtual DbSet<SaleCategory> SaleCategory { get; set; }
         public virtual DbSet<SaleItem> SaleItem { get; set; }
         public virtual DbSet<SaleLine> SaleLine { get; set; }
-        public virtual DbSet<Schedule> Schedule { get; set;}
-        public virtual DbSet<Session> Session { get; set; }
+        public virtual DbSet<Schedule> Schedule { get; set; }
         public virtual DbSet<StockTake> StockTake { get; set; }
         public virtual DbSet<StockTakeLine> StockTakeLine { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
