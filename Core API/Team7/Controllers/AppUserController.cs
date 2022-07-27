@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -27,12 +29,13 @@ namespace Team7.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ITitleRepo _titleRepo;
         private readonly IClientRepo _clientRepo;
+        private readonly IPasswordHistoryRepo _passwordHistoryRepo;
 
 
-        public AppUserController(IClientRepo clientRepo, ITitleRepo titleRepo, UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
+        public AppUserController(IPasswordHistoryRepo passwordHistory, IClientRepo clientRepo, ITitleRepo titleRepo, UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
-            //_claimsPrincipalFactory = claimsPrincipalFactory;
+            _passwordHistoryRepo = passwordHistory;
             _configuration = configuration;
             _roleManager = roleManager;
             _titleRepo = titleRepo;
@@ -72,16 +75,42 @@ namespace Team7.Controllers
         }
 
         [HttpPost]
-        [Route("changepassword")]
-        public async Task<IActionResult> ChangePassword(UserViewModel uvm)
+        [Route("validatepassword")]
+        public async Task<IActionResult> ValidatePassword(UserViewModel uvm)
         {
-
+            //check if the user exisits:
             var user = await _userManager.FindByEmailAsync(uvm.EmailAddress);
             if (user == null)
             {
                 return NotFound("The provided email does not exist.");
             }
 
+            //check the password:
+            var check = await _userManager.CheckPasswordAsync(user, uvm.Password);
+            if (!check)
+            {
+                return Forbid("Incorect old password provided.");
+            }
+
+            //password was valid:
+            return Ok("Password is correct.");
+        }
+
+        [HttpPost]
+        [Route("changepassword")]
+        public async Task<IActionResult> ChangePassword(UserViewModel uvm)
+        {
+
+            var user = await _userManager.FindByEmailAsync(uvm.EmailAddress);
+
+            if (user == null)
+            {
+                return NotFound("The provided email does not exist.");
+            }
+
+            user.PasswordHistory = await _passwordHistoryRepo.GetByUserIdAsync(user.Id);
+
+            //check the old password:
             var check = await _userManager.CheckPasswordAsync(user, uvm.Password);
 
             if (!check)
@@ -89,11 +118,61 @@ namespace Team7.Controllers
                 return Forbid("Incorect old password provided.");
             }
 
-            //old password valid and email exists, set new password:
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            //old password is correct, check new password if in history
+            var history = user.PasswordHistory;
+            if (history == null)
+            {
+                //user does not have a history:
+                PasswordHistory old = new PasswordHistory
+                {
+                    Date = DateTime.Now,
+                    UserID = user.Id,
+                    Hashed = user.PasswordHash,
+                };
+
+                //add old to history table:
+                _passwordHistoryRepo.Add(old);
+                await _passwordHistoryRepo.SaveChangesAsync();
+
+                //set new password for the user and history
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
+                await _userManager.UpdateAsync(user);
+                user.PasswordHistory = await _passwordHistoryRepo.GetByUserIdAsync(user.Id);
+                await _userManager.UpdateAsync(user);
+                return Ok();
+            }
+
+            //check through the history and try match a password:
+            foreach(var h in history)
+            {
+                var flag = _userManager.PasswordHasher.VerifyHashedPassword(user, h.Hashed, uvm.newPassword);
+                if (flag != 0) //if true = a password matched
+                {
+                    return Forbid("New password may have been used previously.");
+                }
+            }
+
+            //old password valid, new password not in history and email exists, set new password:
             try
             {
+                //create old password for history:
+                PasswordHistory old = new PasswordHistory
+                {
+                    Date = DateTime.Now,
+                    UserID = user.Id,
+                    Hashed = user.PasswordHash
+                };
+
+                //add old to history table:
+                _passwordHistoryRepo.Add(old);
+                await _passwordHistoryRepo.SaveChangesAsync();
+
+                //set new password for the user
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
+
             } catch (Exception ex)
             {
                 Forbid("Password does not meet the requirements.");
@@ -114,7 +193,22 @@ namespace Team7.Controllers
                 return NotFound("The provided email does not exist.");
             }
 
-            //old password valid and email exists, set new password:
+            user.PasswordHistory = await _passwordHistoryRepo.GetByUserIdAsync(user.Id);
+
+            if (user.PasswordHistory != null)
+            {
+                //user has a history of passwords
+                foreach(var p in user.PasswordHistory)
+                {
+                    var flag = _userManager.PasswordHasher.VerifyHashedPassword(user, p.Hashed, uvm.newPassword);
+                    if (flag != 0) //if true = a password matched
+                    {
+                        return Forbid("New password may have been used previously.");
+                    }
+                }
+            }
+
+            //old password valid and email exists and not previous password, set new password:
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             try
             {

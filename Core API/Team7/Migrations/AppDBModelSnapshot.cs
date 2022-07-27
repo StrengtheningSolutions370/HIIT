@@ -645,6 +645,9 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -652,10 +655,13 @@ namespace Team7.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PasswordID");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("PasswordHistory");
                 });
@@ -1467,6 +1473,13 @@ namespace Team7.Migrations
                     b.Navigation("MemberStatus");
                 });
 
+            modelBuilder.Entity("Team7.Models.PasswordHistory", b =>
+                {
+                    b.HasOne("Team7.Models.AppUser", null)
+                        .WithMany("PasswordHistory")
+                        .HasForeignKey("AppUserId");
+                });
+
             modelBuilder.Entity("Team7.Models.Payment", b =>
                 {
                     b.HasOne("Team7.Models.Booking", "Booking")
@@ -1705,6 +1718,11 @@ namespace Team7.Migrations
                     b.Navigation("WriteOff");
 
                     b.Navigation("WriteOffReason");
+                });
+
+            modelBuilder.Entity("Team7.Models.AppUser", b =>
+                {
+                    b.Navigation("PasswordHistory");
                 });
 
             modelBuilder.Entity("Team7.Models.Booking", b =>

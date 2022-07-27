@@ -106,21 +106,6 @@ namespace Team7.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PasswordHistory",
-                columns: table => new
-                {
-                    PasswordID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Hashed = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PasswordHistory", x => x.PasswordID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PaymentType",
                 columns: table => new
                 {
@@ -801,6 +786,28 @@ namespace Team7.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PasswordHistory",
+                columns: table => new
+                {
+                    PasswordID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Hashed = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PasswordHistory", x => x.PasswordID);
+                    table.ForeignKey(
+                        name: "FK_PasswordHistory_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Refund",
                 columns: table => new
                 {
@@ -1169,6 +1176,11 @@ namespace Team7.Migrations
                 name: "IX_Member_MemberStatusID",
                 table: "Member",
                 column: "MemberStatusID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PasswordHistory_AppUserId",
+                table: "PasswordHistory",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payment_BookingID",

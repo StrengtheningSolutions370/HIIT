@@ -30,22 +30,25 @@ export class EmployeePagePage implements OnInit {
   }
   
     ngOnInit() {
-    // this.global.nativeLoad("Loading...");
-
-    // this.global.nativeLoad("Loading...").then(() => {
-    //   this.global.endNativeLoad();
-    // })
-
-    this.employeeService.fetchEmployeesEvent.subscribe({
-      next: async () => {
-        this.global.nativeLoad("Loading...");
-        this.fetchEmployees().then(() => { this.global.endNativeLoad(); });
-        // this.fetchEmployees();
-        // this.global.endNativeLoad();
-      },
-    });
-    this.employeeService.fetchEmployeesEvent.emit();
-  }
+      this.employeeService.fetchEmployeesEvent.subscribe({
+        next: async () => {
+          this.global.nativeLoad("Loading...");
+          this.fetchEmployees().then((data : any) => {
+            this.loading = false;
+            this.employees = data;
+            this.employeesOriginal = data;
+            if (this.employees.length == 0) {
+              this.noresults = true;
+            }
+            this.employees.map((el : any) => {
+              this.pushBackRole(el.role[0]);
+            });
+            this.removeduplicates();
+          });
+        },
+      });
+      this.employeeService.fetchEmployeesEvent.emit();
+    }
 
   fetchEmployees() : Promise<any> {
     return new Promise<any>((resolve, _) => {
@@ -54,19 +57,9 @@ export class EmployeePagePage implements OnInit {
       this.employeesOriginal = [];
       this.employeeService.getAllEmployees().subscribe({
         next: (data : any) => {
-          this.loading = false;
-          this.employees = data;
-          this.employeesOriginal = data;
-          if (this.employees.length == 0) {
-            this.noresults = true;
-          }
-          this.employees.map((el : any) => {
-            this.pushBackRole(el.role[0]);
-          });
-          this.removeduplicates();
-          resolve(true);
+          resolve(data);
         }
-      });
+      }).add((() => { this.global.endNativeLoad(); }));;
     })
   }
 
