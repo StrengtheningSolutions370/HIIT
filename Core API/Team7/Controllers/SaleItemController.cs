@@ -107,7 +107,8 @@ namespace Team7.Controllers
                 toUpdate.Description = saleItem.Description;
                 toUpdate.Price = saleItem.Price;
                 toUpdate.Quotable = saleItem.Quotable;
-                toUpdate.QuantityOnHand = saleItem.QuantityOnHand;
+                toUpdate.Quantity = toUpdate.Quantity;
+                //toUpdate.QuantityOnHand = saleItem.QuantityOnHand;
 
                 SaleItemRepo.Update<SaleItem>(toUpdate);
                 if (await SaleItemRepo.SaveChangesAsync())

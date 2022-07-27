@@ -26,14 +26,17 @@ namespace Team7.Models
         public string Description { get; set; }
         [Required]
 
-        public decimal CostPrice { get; set; }
-        [Required]
+        //public decimal CostPrice { get; set; }
+        //[Required]
         public decimal Price { get; set; }
         [Required]
         public bool Quotable { get; set; }
         [Required]
-        public int QuantityOnHand { get; set; }
+        public int Quantity { get; set; }
         [Required]
+
+        //public int QuantityOnHand { get; set; }
+        //[Required]
 
         public int Stock { get; set; }
         [Required]
