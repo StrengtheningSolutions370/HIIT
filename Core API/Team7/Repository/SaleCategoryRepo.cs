@@ -46,7 +46,7 @@ namespace Team7.Models.Repository
                     sc.Description,
                     SaleItem = sc
                 .SaleItem
-                .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Price, si.Quotable, si.Quantity })
+                .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Price, si.Quotable, si.Quantity})
                 }).ToListAsync()
             };
         }
@@ -94,7 +94,7 @@ namespace Team7.Models.Repository
                         sc.Description,
                         SaleItem = sc
                             .SaleItem
-                            .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Price, si.Quotable, si.Quantity })
+                            .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Price, si.Quotable, si.Quantity})
                     }).ToListAsync()
                 };
             }

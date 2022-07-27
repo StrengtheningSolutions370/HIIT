@@ -188,7 +188,7 @@
 
       <ion-item>
         <ion-label slot="start">Dark Mode:</ion-label>
-        <ion-toggle slot="end" (ionChange)="toggleTheme($event)"></ion-toggle>
+        <ion-toggle slot="end" (ionChange)="toggleTheme($event)" id="darkToggle" checked={{this.prefersDark.matches}}></ion-toggle>
       </ion-item>
       <ion-menu-toggle (click)="logout()">
         <ion-item>

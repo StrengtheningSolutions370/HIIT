@@ -243,7 +243,7 @@ namespace Team7.Controllers
                     }
                     catch (Exception ex)
                     {
-                        StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
+                        StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support" + ex.Message);
                     }
 
                 }
