@@ -31,13 +31,12 @@ export class SetnewpasswordPage implements OnInit {
       this.repo.SetNewPassword(uvm).subscribe({
         next: () => {
           this.storage.deleteKey('email').then(() => {
-            this.global.showToast("Password changed successfully.")
+            this.global.showToast("Password changed successfully.") //CHECKHERE
             this.router.navigate(['/login']);
           });
         },
-        error: () => {
-          this.error = true;
-          this.errormsg = 'Failed to update, please try again.';
+        error: (err : any) => {
+          this.global.showAlert(err.error); //CHECKHERE
         }
       }).add(() => { this.global.endNativeLoad(); });
     });

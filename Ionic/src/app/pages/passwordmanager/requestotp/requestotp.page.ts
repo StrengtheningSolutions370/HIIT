@@ -27,18 +27,18 @@ export class RequestotpPage implements OnInit {
       EmailAddress: email
     }
 
-    this.global.nativeLoad("Sending...");
+    this.global.nativeLoad("Sending OTP...");
     
     this.repo.SendOtp(uvm).subscribe({
       next: () => {
         //set email provided as a storage item to pass to next form:
         this.storage.setKey('email', email).then(() => {
           this.router.navigate(['/password/verify']); //send to next paage after storage completes
+          this.global.showToast("OTP has been sent"); //check here
         })
       },
-      error: () => {
-        this.error = true;
-        this.errormsg = 'Account not found please ';
+      error: (err : any) => {
+        this.global.showAlert(err.error)
       }
     }).add(() => { this.global.endNativeLoad(); });
 

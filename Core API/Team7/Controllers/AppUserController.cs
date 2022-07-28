@@ -59,7 +59,7 @@ namespace Team7.Controllers
             var user = await _userManager.FindByEmailAsync(otp.EmailAddress);
             if (user == null)
             {
-                return NotFound("The provided email does not exist.");
+                return StatusCode(StatusCodes.Status404NotFound, "The provided email does not exist.");
             }
 
             if (user.OTP == otp.OTP)
@@ -67,7 +67,7 @@ namespace Team7.Controllers
                 user.OTP = null;
             } else
             {
-                return Forbid("OTP provided is not valid.");
+                return StatusCode(StatusCodes.Status403Forbidden, "Incorrect OTP pin provided."); //CHECKHERE
             }
 
             await _userManager.UpdateAsync(user);
@@ -82,14 +82,14 @@ namespace Team7.Controllers
             var user = await _userManager.FindByEmailAsync(uvm.EmailAddress);
             if (user == null)
             {
-                return NotFound("The provided email does not exist.");
+                return StatusCode(StatusCodes.Status404NotFound, "The provided email does not exist.");
             }
 
             //check the password:
             var check = await _userManager.CheckPasswordAsync(user, uvm.Password);
             if (!check)
             {
-                return Forbid("Incorect old password.");
+                return StatusCode(StatusCodes.Status403Forbidden, "Incorrect old password."); //CHECK HERE
             }
 
             //password was valid:
@@ -108,7 +108,7 @@ namespace Team7.Controllers
 
             if (user == null)
             {
-                return StatusCode(StatusCodes.Status404NotFound, "User not Found.");
+                return StatusCode(StatusCodes.Status404NotFound, "The provided email does not exist.");
             }
 
             var history = await _passwordHistoryRepo.GetByUserIdAsync(user.Id);
@@ -122,7 +122,7 @@ namespace Team7.Controllers
 
                 if (flag != 0) //if true = a password matched
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized, "New password cannot be old password.");
+                    return StatusCode(StatusCodes.Status406NotAcceptable, "New password cannot be old password.");
                 }
             }
 
@@ -136,14 +136,14 @@ namespace Team7.Controllers
 
             if (uvm.newPassword.Length < 8)
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, "Password should be a minimum of 8 characters.");
+                return StatusCode(StatusCodes.Status406NotAcceptable, "Password should be a minimum of 8 characters.");
             }
 
             var user = await _userManager.FindByEmailAsync(uvm.EmailAddress);
 
             if (user == null)
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, "The provided email does not exist.");
+                return StatusCode(StatusCodes.Status404NotFound, "The provided email does not exist.");
             }
 
             user.PasswordHistory = await _passwordHistoryRepo.GetByUserIdAsync(user.Id);
@@ -153,8 +153,15 @@ namespace Team7.Controllers
 
             if (!check)
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, "Incorrect old password."); //CHECK HERE
+                return StatusCode(StatusCodes.Status403Forbidden, "Incorrect old password."); //CHECK HERE
 
+            }
+
+            var cnew = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, uvm.newPassword);
+               
+            if (cnew != 0)
+            {
+                return StatusCode(StatusCodes.Status406NotAcceptable, "New password cannot be current password.");
             }
 
 
@@ -189,7 +196,7 @@ namespace Team7.Controllers
                 var flag = _userManager.PasswordHasher.VerifyHashedPassword(user, h.Hashed, uvm.newPassword);
                 if (flag != 0) //if true = a password matched
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized, "New password cannot be old password."); //CHECK HERE
+                    return StatusCode(StatusCodes.Status406NotAcceptable, "New password cannot be old password."); //CHECK HERE
                 }
             }
 
@@ -214,7 +221,7 @@ namespace Team7.Controllers
 
             } catch (Exception ex)
             {
-                    return StatusCode(StatusCodes.Status401Unauthorized, "Internal Server Error."); //this might fail because of pass req in the startup.cs
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error."); //this might fail because of pass req in the startup.cs
             }
             await _userManager.UpdateAsync(user);
             return Ok();
@@ -242,7 +249,7 @@ namespace Team7.Controllers
                     var flag = _userManager.PasswordHasher.VerifyHashedPassword(user, p.Hashed, uvm.newPassword);
                     if (flag != 0) //if true = a password matched
                     {
-                        return Forbid("New password may have been used previously.");
+                        return StatusCode(StatusCodes.Status403Forbidden, "New Password can not have been used before."); //CHECK HERE
                     }
                 }
             }
@@ -269,7 +276,7 @@ namespace Team7.Controllers
 
             if (user == null)
             {
-                return StatusCode(StatusCodes.Status401Unauthorized, "The provided email does not exist.");
+                return StatusCode(StatusCodes.Status404NotFound, "The provided email does not exist.");
             }
 
             string phone = "+27" + user.PhoneNumber.TrimStart(new Char[] { '0' }); ;
@@ -278,12 +285,14 @@ namespace Team7.Controllers
             user.OTP = otp;
             string msg = "Hi, " + user.FirstName + ". Your otp is " + otp;
 
+            bool smsFlag = false;
+            bool emailFlag = false;
             try
             {
                 s.sendSMS(phone, msg);
             } catch (Exception e)
             {
-
+                smsFlag = true;
             }
             try
             {
@@ -292,7 +301,11 @@ namespace Team7.Controllers
                 e.sendEmail("shannonlnoel@icloud.com", "Strengthening Solutions", otp);
             } catch (Exception ex)
             {
-
+                emailFlag = true;
+            }
+            if (smsFlag && emailFlag)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "OTP FAILED to send");
             }
             await _userManager.UpdateAsync(user);
             return Ok();

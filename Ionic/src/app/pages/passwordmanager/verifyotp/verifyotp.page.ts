@@ -32,11 +32,12 @@ export class VerifyotpPage implements OnInit {
       this.global.nativeLoad("Verifying...");
       this.repo.VerifyOtp(uvm).subscribe({
         next: () => {
-          this.router.navigate(['/password/create'])
+          this.router.navigate(['/password/create']);
+          this.global.showToast("Correct OTP. Please set new password.") //CHECKHERE
         },
-        error: () => {
-          this.error = true;
-          this.errormsg = 'Incorrect OTP provided.';
+        error: (err : any) => {
+          this.global.showAlert(err.error);
+          console.log(err);
         }
       }).add(() => { this.global.endNativeLoad(); });
     })

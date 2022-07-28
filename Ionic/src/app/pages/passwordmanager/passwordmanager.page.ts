@@ -51,17 +51,13 @@ export class PasswordmanagerPage implements OnInit {
       newPassword: newp
     }
 
-    this.global.nativeLoad("Updating...");
+    this.global.nativeLoad("Setting...");
     this.repo.ChangePassword(uvm).subscribe({
       next: () => {
-        //old password was correct and changed
-        this.global.showToast('Password changes successfully') //CHECKHERE
-        // this.success = true; //CHECKHERE
+        this.global.showToast('Password changed successfully') //CHECKHERE
       },
       error: (msg : any) => {
-        //old password was incorrect
         this.global.showAlert(msg.error); //CHECKHERE
-        // this.fail = true;
       }
     }).add(() => { this.global.endNativeLoad(); });
 
