@@ -12,15 +12,16 @@ const routes: Routes = [
         path: 'exercise-category',
         loadChildren: () => import('./exercise-category/exercise-category.module').then( m => m.ExerciseCategoryPageModule)
       },
+      {
+        path: 'exercise-page',
+        loadChildren: () => import('./exercise-page/exercise-page.module').then( m => m.ExercisePagePageModule)
+      }
     ]
   },
   {
     path: '',
-    redirectTo: 'tabs/exercise-category',
+    redirectTo: 'tabs/exercise-page',
     pathMatch: 'full'
-  },  {
-    path: 'exercise-page',
-    loadChildren: () => import('./exercise-page/exercise-page.module').then( m => m.ExercisePagePageModule)
   }
 
 ];

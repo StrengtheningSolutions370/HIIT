@@ -48,8 +48,12 @@ namespace Team7.Models.Repository
                         e.ExerciseID,
                         e.Name,
                         e.Description,
-                        ExerciseCategory = new { e.ExerciseCategoryID, e.Name, e.Description }
+                        ExerciseCategory = new { e.ExerciseCategoryID, e.Name, e.Description },
+                        LessonPlans = e
+                        .LessonPlan
+                        .Select(lp => new { lp.LessonPlanID, lp.LessonID })
                     }).ToListAsync()
+                    
                 };
             }
 
@@ -65,17 +69,21 @@ namespace Team7.Models.Repository
                 }
                 else
                 {
-                    return new
+                return new
+                {
+                    result = await query.Select(e => new
                     {
-                        result = await query.Select(e => new
-                        {
-                            e.ExerciseID,
-                            e.Description,
-                            e.ExerciseCategoryID,
-                            e.ExerciseCategory
-                        }).ToListAsync()
-                    };
-                }
+                        e.ExerciseID,
+                        e.Name,
+                        e.Description,
+                        ExerciseCategory = new { e.ExerciseCategoryID, e.Name, e.Description },
+                        LessonPlans = e
+                        .LessonPlan
+                        .Select(lp => new { lp.LessonPlanID, lp.LessonID })
+                    }).ToListAsync()
+
+                };
+            }
             }
 
         public async Task<object> GetExerciseIdAsync(int id)
@@ -91,14 +99,15 @@ namespace Team7.Models.Repository
                 {
                     result = await query.Select(e => new
                     {
-                        e.ExerciseCategoryID,
+                        e.ExerciseID,
+                        e.Name,
                         e.Description,
-                        ExerciseCategory = new
-                        {
-                            e.ExerciseCategoryID,
-                            e.ExerciseCategory
-                        }
+                        ExerciseCategory = new { e.ExerciseCategoryID, e.Name, e.Description },
+                        LessonPlans = e
+                        .LessonPlan
+                        .Select(lp => new { lp.LessonPlanID, lp.LessonID })
                     }).ToListAsync()
+
                 };
             }
         }

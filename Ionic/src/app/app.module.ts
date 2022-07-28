@@ -106,6 +106,14 @@ import { ViewBtypeComponent } from './pages/booking/booking-type/view-btype/view
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
+//EXERCISE IMPORTS:
+import { AddExerciseComponent } from './pages/exercises/exercise-page/add-exercise/add-exercise.component';
+import { UpdateExerciseComponent } from './pages/exercises/exercise-page/update-exercise/update-exercise.component';
+import { DeleteExerciseComponent } from './pages/exercises/exercise-page/delete-exercise/delete-exercise.component';
+import { ViewExerciseComponent } from './pages/exercises/exercise-page/view-exercise/view-exercise.component';
+import { ConfirmExerciseComponent } from './pages/exercises/exercise-page/confirm-exercise/confirm-exercise.component';
+import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/associative-exercise/associative-exercise.component';
+
 @NgModule({
   declarations: [AppComponent,
   //Venue
@@ -140,11 +148,14 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
   //Side Menu
   SidemenuComponent,
   //Employee
-  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent,
+  AssociativeEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent,
   //RefundReason
   ConfirmRefundReasonComponent, AddRefundReasonComponent, UpdateRefundReasonComponent, ViewRefundReasonComponent, DeleteRefundReasonComponent, AssociativeRefundReasonComponent,
   //BookingType
-  AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent
+  AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
+  //Exercise
+  AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
+  
 
 ],
 

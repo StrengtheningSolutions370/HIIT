@@ -18,6 +18,7 @@ import { ExerciseCategory } from '../models/exercise-category';
 import { Qualification } from '../models/qualification';
 import { Employee } from '../models/employee';
 import { BookingType } from '../models/booking-type';
+import { Exercise } from '../models/exercise';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,7 @@ export class RepoService {
   EmployeeController = 'Employee/';
   ExerciseCategoryController = 'ExerciseCategory/';
   BookingTypeController = 'BookingType/'
+  ExerciseController = 'Exercise/'
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -383,5 +385,33 @@ getBookingType(): Observable<any>{
 getMatchBookingType(name: string, description: string): Observable<any>{
   return this.http.get(`${this.base+this.BookingTypeController}getMatch?name=${name}&description=${description}`, this.httpOptions);
 }
+
+// Exercise:
+  // ------
+  // Create
+  createExercise(exercise: any): Observable<any> {
+    return this.http.post<any>(`${this.base + this.ExerciseController}add`, exercise, this.httpOptions);
+  }
+  //Update
+  updateExercise(exerciseId: number, exercise: Exercise): Observable<any> {
+    return this.http.put(`${this.base + this.ExerciseController}update?id=${exerciseId}`, exercise, this.httpOptions);
+  }
+  //Delete
+  deleteExercise(exerciseId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.ExerciseController}delete?id=${exerciseId}`, this.httpOptions);
+  }
+  //GetAll
+  getExercise(): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseController}getAll`, this.httpOptions);
+  }
+  //GetMatch
+  getMatchExercise(name: string, description: string): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseController}getMatch?name=${name}&description=${description}`, this.httpOptions);
+  }
+  //Exists
+  existsExercise(id: number): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseController}exists?id=${id}`, this.httpOptions);
+  }
+
 
 }
