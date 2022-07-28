@@ -1,3 +1,9 @@
+/* eslint-disable one-var */
+/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/prefer-for-of */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/dot-notation */
 
 /* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable no-var */
@@ -21,11 +27,13 @@ import { UpdateCategoryComponent } from 'src/app/pages/sale/sale-category/update
 import { ViewCategoryComponent } from 'src/app/pages/sale/sale-category/view-category/view-category.component';
 import { ConfirmCategoryComponent } from 'src/app/pages/sale/sale-category/confirm-category/confirm-category.component';
 import { AssociativeCategoryComponent } from 'src/app/pages/sale/sale-category/associative-category/associative-category.component';
+import { ViewShopItemComponent } from 'src/app/pages/shop/view-shop-item/view-shop-item.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SalesService {
+
 
   @Output() fetchSaleItemsEvent = new EventEmitter<SaleItem>();
   @Output() fetchSaleCategoriesEvent = new EventEmitter<SaleCategory>();
@@ -36,12 +44,15 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
   this.getAllSaleItems().subscribe();
 }
 
+
+
+
 //READS:
-  getAllSaleItems() : Observable<any> {
+  getAllSaleItems(): Observable<any> {
     return this.repo.getSaleItems();
   }
 
-  getAllSaleCategories() : Observable<any> {
+  getAllSaleCategories(): Observable<any> {
     return this.repo.getSaleCategory();
   }
 
@@ -143,7 +154,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
         }
       );
      }
-
+   //
 
 
   //Modals:
@@ -233,6 +244,19 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
       await modal.present();
     }
   }
+
+    //VIEW Shop Item
+    async viewShopItemInfoModal(saleItem: SaleItem) {
+      console.log("SalesService: ViewShopItemModalCall");
+      console.log(saleItem)
+      const modal = await this.modalCtrl.create({
+        component: ViewShopItemComponent,
+        componentProps: {
+          saleItem
+        }
+      });
+      await modal.present();
+    }
 
 
   //VIEW Sale Item

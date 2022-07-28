@@ -1,0 +1,46 @@
+ion-fab-button {
+    height: 70px;
+    width: 70px;
+}
+
+
+.cart-icon {
+    font-size: 50px;
+}
+
+.cart-length {
+    position: absolute;
+}
+
+ion-card {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+    margin: 0 !important;
+    max-height: 400px;
+    height: 300px;
+}
+
+.img-wrapper {
+    min-height: 100px;
+    min-width: 120px;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.pagination{
+    margin-left:15rem;
+    margin-right:15rem;
+}
+
+.xc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fullheight {
+    height: 100%;
+}

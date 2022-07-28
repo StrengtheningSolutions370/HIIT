@@ -130,7 +130,7 @@ export class EmployeePagePage implements OnInit {
     await modal.present();
   }
 
-  filter(input : any) {
+  filter(input: any) {
 
     this.filtering = true;
     this.filterTerm = input.detail.value;
