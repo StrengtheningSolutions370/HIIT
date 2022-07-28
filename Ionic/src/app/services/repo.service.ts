@@ -359,8 +359,9 @@ existsEmployee(id: number): Observable<any>{
     return this.http.get(`${this.base + this.RefundReasonController}getAll`, this.httpOptions);
   }
   //GetMatch
-  getMatchRefundReason(input: string): Observable<any> {
-    return this.http.get(`${this.base + this.RefundReasonController}getMatch?input=${input}`, this.httpOptions);
+  getMatchRefundReason(description: string): Observable<any> {
+    console.log()
+    return this.http.get(`${this.base+this.RefundReasonController}getMatch?description=${description}`, this.httpOptions);
   }
 
 //BOOKING_TYPE

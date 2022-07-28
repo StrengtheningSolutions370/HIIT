@@ -15,7 +15,7 @@ namespace Team7.Models.Repository
 
         Task<object> GetAllRefundReasonsAsync();
 
-        Task<object> GetRefundReasonsAsync(string input);
+        Task<object> GetRefundReasonsAsync(string description);
 
         Task<object> GetRefundReasonIdAsync(int id);
 

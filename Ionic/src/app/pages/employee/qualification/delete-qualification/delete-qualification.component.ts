@@ -24,7 +24,7 @@ export class DeleteQualificationComponent implements ViewWillEnter {
   delete(id: number){
     this.qualificationService.deleteQualification(id);
     this.global.dismissModal();
-    this.global.showToast('The Qualification has been successfully deleted!');
+    this.global.showToast('The qualification has been successfully deleted!');
   }
 
 }

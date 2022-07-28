@@ -53,9 +53,10 @@ namespace Team7.Models.Repository
 
         }
 
-        public async Task<object> GetRefundReasonsAsync(string input)
+        public async Task<object> GetRefundReasonsAsync(string description)
         {
-            IQueryable<RefundReason> query = DB.RefundReason.Where(rr => rr.Description == input);
+            IQueryable<RefundReason> query = DB.RefundReason.Where(rr => rr.Description == description);
+            query.Any();
             if (!query.Any())
             {
                 return null;

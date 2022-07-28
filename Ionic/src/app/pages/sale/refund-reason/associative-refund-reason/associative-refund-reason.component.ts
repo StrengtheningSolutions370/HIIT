@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { RefundReason } from 'src/app/models/refund-reason';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-associative-refund-reason',
@@ -7,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssociativeRefundReasonComponent implements OnInit {
 
-  constructor() { }
+  @Input() refundReason: RefundReason;
+  constructor(public global: GlobalService) { }
 
   ngOnInit() {}
 

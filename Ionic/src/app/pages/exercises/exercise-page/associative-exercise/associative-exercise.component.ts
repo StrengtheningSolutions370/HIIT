@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Exercise } from 'src/app/models/exercise';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-associative-exercise',
@@ -6,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./associative-exercise.component.scss'],
 })
 export class AssociativeExerciseComponent implements OnInit {
+  @Input() exercise: Exercise;
 
-  constructor() { }
+  constructor(public global: GlobalService) { }
 
   ngOnInit() {}
 

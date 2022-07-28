@@ -1,6 +1,7 @@
 export class Exercise {
-    exerciseID: number;
+    exerciseID?: number;
     name: string;
     description: string;
-    exerciseCategoryID: number;
+    exerciseCategoryID : number;
+    lessons?: [];
 }

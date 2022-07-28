@@ -1,3 +1,4 @@
+<!-- Qualification doesa not have an associtive, yes employee should actually be it.... but it's not like that on the ERD -->
 <ion-header>
   <ion-toolbar>
     <ion-title>Qualification Associated with Employee/s</ion-title>
@@ -10,7 +11,7 @@
 <ion-content>
   <br/>
   <div class="ion-text-center">
-    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;"> The {{qualification.name}} qualification cannot be deleted because the following employees/s are associated with it</p>
+    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;"> The qualification cannot be deleted because the following employees/s are associated with it</p>
   
     <ion-list> 
     <ion-item *ngFor="let qualification of qualification.qualificationTypes" > 

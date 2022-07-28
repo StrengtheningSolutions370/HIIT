@@ -6,7 +6,7 @@
   <br/><br/>
 
   <div class="ion-text-center">
-    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="saleService.addCategoryInfoModal()"> 
+    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="exerciseService.addExerciseInfoModal()"> 
       Add Exercise
     </ion-button>
   </div>
@@ -15,7 +15,7 @@
   <ion-grid *ngIf="!isLoading" >
     <ion-list *ngFor="let exercise of exerciseList | filter:filter, let i = index"> 
       <ion-item-sliding >
-        <ion-item button (click)="exerciseService.viewExcerciseInfoModal(exercise)" >
+        <ion-item button (click)="exerciseService.viewExerciseInfoModal(exercise)" >
           <ion-label style="padding-left:2% ;">
             <h1>{{exercise.name}}</h1>
             <p style="font-size:large"> {{exercise.description}}</p>

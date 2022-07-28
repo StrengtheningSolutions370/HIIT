@@ -105,8 +105,9 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
    createRefundReason(refundReason: any){
     this.repo.createRefundReason(refundReason).subscribe(
       {
-        next: () => {
+        next: (data) => {
           console.log('REFUND REASON CREATED');
+          console.log(data);
           this.fetchRefundReasonsEvent.emit(refundReason);
         }
       }

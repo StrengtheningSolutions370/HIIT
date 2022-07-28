@@ -63,16 +63,21 @@ export class ExerciseService {
 
    //Add a exercise to the exercise list within the exercise service.
    createExercise(exercise: any){
-    this.repo.createExercise(exercise).subscribe(
+    const ExerciseTemp:Exercise = {
+      name: exercise.name,
+      description: exercise.description,
+      exerciseCategoryID: exercise.exerciseCategoryID
+    };
+    console.log(ExerciseTemp);
+
+    this.repo.createExercise(ExerciseTemp).subscribe(
       {
         next: () => {
-          console.log('EXERCISE CREATED');
+          console.log('Exercise CREATED');
           this.fetchExercisesEvent.emit(exercise);
-        },
-        error: () => {
         }
       }
-    )
+    );
    }
 
   //Receives a exercise category to update in the service exercise category list.
@@ -201,7 +206,15 @@ export class ExerciseService {
   //Display the delete exercise modal.
   //This method receives the selected exercise object, from the exercise page, in the modal through the componentProps.
   async deleteExerciseInfoModal(exercise: Exercise) {
-    console.log("ExerciseCategory: DeleteExerciseModalCall");
+    if (exercise.lessons! = null && exercise.lessons.length > 0){
+      const modal = await this.modalCtrl.create({
+        component: AssociativeExerciseComponent,
+          componentProps: {
+            exercise
+        }
+      });
+      await modal.present();
+    } else {
       const modal = await this.modalCtrl.create({
         component: DeleteExerciseComponent,
           componentProps: {
@@ -209,6 +222,7 @@ export class ExerciseService {
         }
       });
       await modal.present();
+    }
     }
 
 
@@ -276,7 +290,7 @@ export class ExerciseService {
 
   //Display the confirm create/update modal
   //Receives the selected exercise from the exercise page
-  async confirmCategoryModal(choice: number, exercise: any) {
+  async confirmExerciseModal(choice: number, exercise: any, exerciseCategory: string) {
     console.log('ExerciseService: ConfirmExerciseModalCall');
     console.log(choice);
     if(choice === 1){
@@ -285,7 +299,8 @@ export class ExerciseService {
         component: ConfirmExerciseComponent,
         componentProps: {
           exercise,
-          choice
+          choice,
+          exerciseCategory
         }
       });
       await modal.present();
@@ -297,7 +312,8 @@ export class ExerciseService {
         component: ConfirmExerciseComponent,
         componentProps: {
           exercise,
-          choice
+          choice,
+          exerciseCategory
         }
       });
 
