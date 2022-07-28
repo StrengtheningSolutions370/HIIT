@@ -13,10 +13,6 @@ const routes: Routes = [
     loadChildren: () => import('./booking-type/booking-type.module').then( m => m.BookingTypePageModule)
   },
   {
-    path: 'timeslot',
-    loadChildren: () => import('./timeslot/timeslot.module').then( m => m.TimeslotPageModule)
-  },
-  {
     path: 'schedule',
     loadChildren: () => import('./schedule/schedule.module').then( m => m.SchedulePageModule)
   },

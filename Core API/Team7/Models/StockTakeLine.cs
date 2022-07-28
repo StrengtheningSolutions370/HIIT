@@ -11,12 +11,12 @@ namespace Team7.Models
         [Required]
         public int? StockTakeID { get; set; }
         [Required]
-        public int? InventoryItemID { get; set; }
         public int? SaleItemID { get; set; }
         [Required]
         public int Difference { get; set; }
 
-        public virtual InventoryItem InventoryItem { get; set; }
         public virtual StockTake StockTake { get; set; }
+
+        //public virtual saleItemLine Collection<>
     }
 }
