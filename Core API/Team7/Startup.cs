@@ -132,7 +132,6 @@ namespace Team7
             services.AddScoped<IEmployeeTypeRepo, EmployeeTypeRepo>();
             services.AddScoped<IExerciseCategoryRepo, ExerciseCategoryRepo>();
             services.AddScoped<IExerciseRepo, ExerciseRepo>();
-            services.AddScoped<IInventoryItemRepo, InventoryItemRepo>();
             services.AddScoped<ILessonPlanRepo, LessonPlanRepo>();
             services.AddScoped<ILessonRepo, LessonRepo>();
             services.AddScoped<IMeasurementRepo, MeasurementRepo>();
@@ -151,7 +150,6 @@ namespace Team7
             services.AddScoped<ISaleItemRepo, SaleItemRepo>();
             services.AddScoped<ISaleRepo, SaleRepo>();
             services.AddScoped<IScheduleRepo, ScheduleRepo>(); 
-            services.AddScoped<ISessionRepo, SessionRepo>();
             services.AddScoped<IStockTakeLineRepo, StockTakeLineRepo>();
             services.AddScoped<IStockTakeRepo, StockTakeRepo>();
             services.AddScoped<ISupplierOrderLineRepo, SupplierOrderLineRepo>();

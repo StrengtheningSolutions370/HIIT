@@ -22,14 +22,18 @@ export class AddBtypeComponent implements ViewWillEnter {
     bookingTypeDescription: ['', [Validators.required]]
   });
 
+  get errorControl() {
+    return this.cBookingTypeForm.controls;
+  }
+
 
   ionViewWillEnter(): void {
     console.log("AddBookingType-ViewWillEnter");
     console.log(this.bookingType);
     if (!!this.bookingType){
       console.log(this.bookingType);
-      //this.cBookingTypeForm.controls.bookingTypeName.setValue(this.bookingType.name),
-      //this.cBookingTypeForm.controls.bookingTypeDescription.setValue(this.bookingType.description);
+      this.cBookingTypeForm.controls.bookingTypeName.setValue(this.bookingType.name);
+      this.cBookingTypeForm.controls.bookingTypeDescription.setValue(this.bookingType.description);
     }
 
   }

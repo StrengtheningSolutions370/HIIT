@@ -18,11 +18,13 @@ namespace Team7.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int DateSessionID { get; set; }
         [Required]
-        public System.DateTime Date { get; set; }
+        
+        public System.DateTime StartDateTime { get; set; }
         [Required]
-        public int? SessionID { get; set; }
 
-        public virtual Session Session { get; set; }
+        public System.DateTime EndDateTime { get; set; }
+        [Required]
+
         public virtual ICollection<Schedule> Schedule { get; set; }
     }
 }
