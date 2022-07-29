@@ -19,6 +19,7 @@ import { Qualification } from '../models/qualification';
 import { Employee } from '../models/employee';
 import { BookingType } from '../models/booking-type';
 import { Exercise } from '../models/exercise';
+import { WriteOffReason } from '../models/write-off-reason';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,7 @@ export class RepoService {
   ExerciseCategoryController = 'ExerciseCategory/';
   BookingTypeController = 'BookingType/'
   ExerciseController = 'Exercise/'
+  WriteOffReasonController = 'WriteOffReason/'
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -414,5 +416,28 @@ getMatchBookingType(name: string, description: string): Observable<any>{
     return this.http.get(`${this.base + this.ExerciseController}exists?id=${id}`, this.httpOptions);
   }
 
+
+//WRITE-OFF-REASON
+
+//CREATE
+createWriteOffReason(writeOffReason: BookingType): Observable<any>{
+  return this.http.post<any>(`${this.base+this.WriteOffReasonController}add`,writeOffReason,this.httpOptions);
+}
+//Update
+updateWriteOffReason(writeOffReasonID:number, writeOffReason: BookingType): Observable<any>{
+  return this.http.put(`${this.base+this.WriteOffReasonController}update?id=${writeOffReasonID}`,writeOffReason, this.httpOptions);
+}
+//Delete
+deleteWriteOffReason(writeOffReasonID: number): Observable<any>{
+  return this.http.delete(`${this.base+this.WriteOffReasonController}delete?id=${writeOffReasonID}`,this.httpOptions);
+}
+//GetAll
+getWriteOffReason(): Observable<any>{
+  return this.http.get(`${this.base+this.WriteOffReasonController}getAll`, this.httpOptions);
+}
+//GetMatch
+getMatchWriteOffReason(description: string): Observable<any>{
+  return this.http.get(`${this.base+this.WriteOffReasonController}getMatch?description=${description}`, this.httpOptions);
+}
 
 }

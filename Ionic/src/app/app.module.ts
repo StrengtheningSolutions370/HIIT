@@ -103,6 +103,14 @@ import { DeleteBtypeComponent } from './pages/booking/booking-type/delete-btype/
 import { UpdateBtypeComponent } from './pages/booking/booking-type/update-btype/update-btype.component';
 import { ViewBtypeComponent } from './pages/booking/booking-type/view-btype/view-btype.component';
 
+//WRITE-OFF REASON IMPORTS:
+import { AddWriteOffReasonComponent } from './pages/inventory/write-off-reason/add-write-off-reason/add-write-off-reason.component';
+import { AssociativeWriteOffReasonComponent } from './pages/inventory/write-off-reason/associative-write-off-reason/associative-write-off-reason.component';
+import { ConfirmWriteOffReasonComponent } from './pages/inventory/write-off-reason/confirm-write-off-reason/confirm-write-off-reason.component';
+import { DeleteWriteOffReasonComponent } from './pages/inventory/write-off-reason/delete-write-off-reason/delete-write-off-reason.component';
+import { UpdateWriteOffReasonComponent } from './pages/inventory/write-off-reason/update-write-off-reason/update-write-off-reason.component';
+import { ViewWriteOffReasonComponent } from './pages/inventory/write-off-reason/view-write-off-reason/view-write-off-reason.component';
+
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
@@ -147,16 +155,17 @@ import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/as
   AddExerciseCategoryComponent, UpdateExerciseCategoryComponent, DeleteExerciseCategoryComponent, ViewExerciseCategoryComponent, ConfirmExerciseCategoryComponent, AssociativeExerciseCategoryComponent,
   //Side Menu
   SidemenuComponent,
-  //Employee
-  AssociativeEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent,
   //RefundReason
   ConfirmRefundReasonComponent, AddRefundReasonComponent, UpdateRefundReasonComponent, ViewRefundReasonComponent, DeleteRefundReasonComponent, AssociativeRefundReasonComponent,
+  //Employee
+  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent, AssociativeEtypeComponent,
+  //WriteOffReason
+  AddWriteOffReasonComponent, AssociativeWriteOffReasonComponent, ConfirmWriteOffReasonComponent, DeleteWriteOffReasonComponent, UpdateWriteOffReasonComponent, ViewWriteOffReasonComponent,
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
   //Exercise
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
   
-
 ],
 
   entryComponents: [],
