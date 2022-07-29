@@ -124,6 +124,9 @@ import { ViewExerciseComponent } from './pages/exercises/exercise-page/view-exer
 import { ConfirmExerciseComponent } from './pages/exercises/exercise-page/confirm-exercise/confirm-exercise.component';
 import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/associative-exercise/associative-exercise.component';
 
+//SCHEDULE IMPORTS:
+import { AddScheduleComponent } from './pages/booking/add-schedule/add-schedule.component';
+
 @NgModule({
   declarations: [AppComponent,
   //Venue
@@ -165,15 +168,15 @@ import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/as
   AddWriteOffReasonComponent, AssociativeWriteOffReasonComponent, ConfirmWriteOffReasonComponent, DeleteWriteOffReasonComponent, UpdateWriteOffReasonComponent, ViewWriteOffReasonComponent,
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
-  //Calendar
-  TimeRangeComponent,
+  //Schedule
+  TimeRangeComponent, AddScheduleComponent,
   //Exercise
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
 ],
 
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
