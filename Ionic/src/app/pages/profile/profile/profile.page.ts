@@ -1,4 +1,3 @@
-import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
@@ -38,7 +37,7 @@ export class ProfilePage implements OnInit {
       }
     });
 
-    
+
   }
 
   setTitleId(titles : any) {

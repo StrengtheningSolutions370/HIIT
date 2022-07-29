@@ -35,7 +35,8 @@ namespace Team7.Controllers
                 if (await SaleItemRepo.SaveChangesAsync())
                 {
                     return Ok();
-                } else
+                }
+                else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
                 }
@@ -115,7 +116,8 @@ namespace Team7.Controllers
                 if (await SaleItemRepo.SaveChangesAsync())
                 {
                     return Ok();
-                } else
+                }
+                else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to update value in the database. Contact support.");
                 }
@@ -189,7 +191,8 @@ namespace Team7.Controllers
                 if (saleItem == null)
                 {
                     return Ok(0);
-                } else
+                }
+                else
                 {
                     return Ok(saleItem);
                 }
@@ -202,3 +205,4 @@ namespace Team7.Controllers
         }
 
     }
+}
