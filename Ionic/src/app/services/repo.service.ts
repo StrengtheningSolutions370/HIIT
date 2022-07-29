@@ -12,11 +12,13 @@ import { QualificationType } from 'src/app/models/qualification-type';
 import { Vat } from '../models/vat';
 import { SaleItem } from '../models/sale-item';
 import { SaleCategory } from 'src/app/models/sale-category';
+import { RefundReason } from 'src/app/models/refund-reason';
 import { appUser, appUserRegister } from '../models/appUser';
 import { ExerciseCategory } from '../models/exercise-category';
 import { Qualification } from '../models/qualification';
 import { Employee } from '../models/employee';
 import { BookingType } from '../models/booking-type';
+import { Exercise } from '../models/exercise';
 import { WriteOffReason } from '../models/write-off-reason';
 
 @Injectable({
@@ -35,10 +37,12 @@ export class RepoService {
   VatController = 'Vat/';
   SaleItemController = 'SaleItem/';
   SaleCategoryController = 'SaleCategory/';
+  RefundReasonController = 'RefundReason/';
   PermissionController = 'Permission/';
   EmployeeController = 'Employee/';
   ExerciseCategoryController = 'ExerciseCategory/';
-  BookingTypeController = 'BookingType/';
+  BookingTypeController = 'BookingType/'
+  ExerciseController = 'Exercise/'
   WriteOffReasonController = 'WriteOffReason/'
 
   httpOptions = {
@@ -338,6 +342,29 @@ existsEmployee(id: number): Observable<any>{
 // }
 //Document Upload
 
+  // RefundReason:
+  // ------
+  // Create
+  createRefundReason(refundReason: any): Observable<any> {
+    return this.http.post<any>(`${this.base + this.RefundReasonController}add`, refundReason, this.httpOptions);
+  }
+  //Update
+  updateRefundReason(refundReasonId: number, refundReason: RefundReason): Observable<any> {
+    return this.http.put(`${this.base + this.RefundReasonController}update?id=${refundReasonId}`, refundReason, this.httpOptions);
+  }
+  //Delete
+  deleteRefundReason(refundReasonId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.RefundReasonController}delete?id=${refundReasonId}`, this.httpOptions);
+  }
+  //GetAll
+  getRefundReasons(): Observable<any> {
+    return this.http.get(`${this.base + this.RefundReasonController}getAll`, this.httpOptions);
+  }
+  //GetMatch
+  getMatchRefundReason(description: string): Observable<any> {
+    console.log()
+    return this.http.get(`${this.base+this.RefundReasonController}getMatch?description=${description}`, this.httpOptions);
+  }
 
 //BOOKING_TYPE
 //CREATE
@@ -361,6 +388,33 @@ getBookingType(): Observable<any>{
 getMatchBookingType(name: string, description: string): Observable<any>{
   return this.http.get(`${this.base+this.BookingTypeController}getMatch?name=${name}&description=${description}`, this.httpOptions);
 }
+
+// Exercise:
+  // ------
+  // Create
+  createExercise(exercise: Exercise): Observable<any> {
+    return this.http.post<any>(`${this.base + this.ExerciseController}add`, exercise, this.httpOptions);
+  }
+  //Update
+  updateExercise(exerciseId: number, exercise: Exercise): Observable<any> {
+    return this.http.put(`${this.base + this.ExerciseController}update?id=${exerciseId}`, exercise, this.httpOptions);
+  }
+  //Delete
+  deleteExercise(exerciseId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.ExerciseController}delete?id=${exerciseId}`, this.httpOptions);
+  }
+  //GetAll
+  getExercise(): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseController}getAll`, this.httpOptions);
+  }
+  //GetMatch
+  getMatchExercise(name: string, description: string): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseController}getMatch?name=${name}&description=${description}`, this.httpOptions);
+  }
+  //Exists
+  existsExercise(id: number): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseController}exists?id=${id}`, this.httpOptions);
+  }
 
 
 //WRITE-OFF-REASON
