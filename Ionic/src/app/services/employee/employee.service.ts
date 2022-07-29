@@ -42,7 +42,7 @@ public get employeeList(){
   return this._employeeList.asObservable();
 }
 
-private tempE : Employee[];
+private tempE: Employee[];
 
   constructor(public repo: RepoService, private modalCtrl: ModalController,
     public titleService: TitleService, private global : GlobalService, public  alertCtrl: AlertController) {
@@ -221,7 +221,7 @@ private tempE : Employee[];
     if (e.Photo != null)
       swapPhoto = true;
 
-    const tempEmp : any = {
+    const tempEmp: any = {
       Name: e.Name,
       Surname: e.Surname,
       Photo: e.Photo,
@@ -237,13 +237,12 @@ private tempE : Employee[];
       RemovePhoto: deletePhoto,
       SwapPhoto: swapPhoto,
       SwapContract: swapContract
-    }
+    };
 
-    console.log('e to api', tempEmp)
+    console.log('e to api', tempEmp);
     //create payload:
     const payload = new FormData();
     payload.append(JSON.stringify(tempEmp), tempEmp);
-    
     payload.append('contract', e.Contract);
     payload.append('photo', e.Photo);
 
@@ -470,7 +469,7 @@ private tempE : Employee[];
       });
       await modal.present();
     } else {
-      console.log("BadOption: " + choice)
+      console.log("BadOption: " + choice);
     }
   }
 
@@ -483,7 +482,6 @@ private tempE : Employee[];
       console.log(choice);
 
       if(choice === 1){
-        
         console.log('Performing ADD');
         const modal = await this.modalCtrl.create({
           component: ConfirmEmployeeComponent,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from 'src/app/services/storage/store.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ export class HomePage implements OnInit {
 
   username! : string;
 
-  constructor(private storage : StoreService) { }
+  constructor(private storage : StoreService, private cartService: CartService) { }
 
   ngOnInit() {
 

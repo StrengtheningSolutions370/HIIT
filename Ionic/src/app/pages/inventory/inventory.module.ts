@@ -8,6 +8,7 @@ import { InventoryPageRoutingModule } from './inventory-routing.module';
 
 import { InventoryPage } from './inventory.page';
 
+
 @NgModule({
   imports: [
     CommonModule,
