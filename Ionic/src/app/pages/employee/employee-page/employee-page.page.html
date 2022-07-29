@@ -34,7 +34,7 @@
   
     <ion-grid *ngIf="!loading && !noresults">
 
-      <ion-list class="cardFadeUp" *ngFor="let emp of employees">
+      <ion-list class="cardFadeUp" *ngFor="let emp of employees; trackBy:trackByIdentity">
         <ion-item-sliding>
 
           <ion-item>

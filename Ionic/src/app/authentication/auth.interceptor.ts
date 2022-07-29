@@ -51,11 +51,11 @@ export class AuthInterceptor implements HttpInterceptor {
                         }
                         //USER NOT LOGGED IN FOR AUTHENTICATED REQUESTS
                         if (err.status === 401) {
-                            this.global.showAlert("Please make sure you are logged in");
+                            // this.global.showAlert("Please make sure you are logged in");
                             localStorage.removeItem('token');
                             this.router.navigateByUrl('/login');
                         } else if (err.status === 403) {
-                            console.log("Forbidden");
+                            // console.log("Forbidden");
                             //still need to implement forbidden
                             //this.router.navigateByUrl('/forbidden');
                         } 

@@ -19,6 +19,7 @@ export class SidemenuComponent implements OnInit {
   trainer = false;
   role! : string;
   prefersDark : any;
+  username! : string;
 
   constructor(private router : Router, private storage : StoreService, private auth: AuthService, private repo : RepoService, private global : GlobalService) { }
 
@@ -26,44 +27,59 @@ export class SidemenuComponent implements OnInit {
     this.prefersDark  = window.matchMedia('(prefers-color-scheme: dark)');
     this.toggleTheme(this.prefersDark.matches);
 
-    this.auth.isLoggedIn.subscribe(log => {
-      if (log) {
-        this.storage.getKey('token').then(token => {
-          if (token == null) {
+    this.auth.isLoggedIn.subscribe(log => { //runs once logged in
+
+      if (log) { //check if logged in
+
+        this.storage.getKey('token').then(token => { //fetch token from storage
+
+          if (token == null) { //no token was found
+
             this.router.navigate(['login']);
             this.auth.logout();
             return;
+
           } else {
-            const tokenObject = this.global.decodeToken(token);
-            const now = Math.trunc(new Date().getTime() / 1000);
-            if (tokenObject.exp <= now) {
-                //token is no longer valid:
-                console.log('token in storage is expired');
+
+            this.repo.getUserRole(token).subscribe({
+
+              next: (data : any) => { //token was valid
+                const r = data.role;
+                //OVERRIDE TESTING:
+                //this.superuser = true;
+                if (r == 'client')
+                  this.client = true;
+                if (r == 'member')
+                  this.member = true;
+                if (r == 'admin')
+                  this.admin = true;
+                if (r == 'superuser')
+                  this.superuser = true;
+                if (r == 'trainer')
+                  this.trainer = true;
+
+                  //set name in side menu:
+                  this.storage.getKey('user').then((usr : any) => {
+                    const obj = JSON.parse(usr)
+                    this.username = `${obj.firstName} ${obj.lastName}`;
+                  })
+
+              },
+
+              error: (er) => { //token was not valid
+                console.log('token in storage is expired', er);
                 this.storage.deleteKey('token');
                 this.router.navigate(['login']);
                 this.auth.logout();
                 return;
-            }
-            this.repo.getUserRole(token).subscribe({
-            next: (data : any) => {
-              const r = data.role;
-              //OVERRIDE TESTING:
-              //this.superuser = true;
-              if (r == 'client')
-                this.client = true;
-              if (r == 'member')
-                this.member = true;
-              if (r == 'admin')
-                this.admin = true;
-              if (r == 'superuser')
-                this.superuser = true;
-              if (r == 'trainer')
-                this.trainer = true;
               }
-            })
+
+            });
+
           }
         })
       }
+
     })
   }
 

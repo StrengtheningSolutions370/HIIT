@@ -8,7 +8,7 @@
     <ion-item>
         <ion-item routerLink="/profile">
           <ion-icon name="person-outline" slot="start"></ion-icon>
-      <ion-label routerLink="/profile">Stacey Steward</ion-label>
+      <ion-label routerLink="/profile">{{username}}</ion-label>
         </ion-item>
       <br>
       {{ this.role }}
@@ -175,6 +175,13 @@
         <ion-item routerLink="reports">
           <ion-icon name="bar-chart-outline" slot="start"></ion-icon>
           <ion-label>Reports</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle>
+        <ion-item routerLink="password/change">
+          <ion-icon name="key" slot="start"></ion-icon>
+          <ion-label>Password</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
