@@ -86,11 +86,15 @@ export class ConfirmEmployeeComponent implements OnInit {
       //CREATE
       this.global.nativeLoad("Creating...");
       console.log('Add Employee from confirm:');
-      this.employeeService.createEmployee(employee).then(() => {
+      this.employeeService.createEmployee(employee).then((el : any) => {
+        if (el) {
           this.dismissModal();
-          this.sucAdd();
+          this.sucUpdate();
+        } else {
+          this.duplicateAlert();
+        }
+          // this.employeeService.fetchEmployeesEvent.emit();
       }).catch(() => {
-        this.duplicateAlert();
       });
     } else if (this.choice === 2){
       //UPDATE
@@ -99,11 +103,14 @@ export class ConfirmEmployeeComponent implements OnInit {
       if (employee.Photo != null) {
         this.showProfile = true;
       }
-      await this.employeeService.updateEmployee(employee).then(() => {
-          this.dismissModal();
-          this.sucUpdate();
+      await this.employeeService.updateEmployee(employee).then((el) => {
+          if (el) {
+            this.dismissModal();
+            this.sucUpdate();
+          } else {
+            this.duplicateAlert();
+          }
         }).catch(() => {
-        this.duplicateAlert();
       });
     }
   }

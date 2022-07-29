@@ -127,7 +127,7 @@ namespace Team7.Controllers
             var flag = await _userManager.FindByEmailAsync(Email);
             if (flag != null)
             {
-                StatusCode(StatusCodes.Status409Conflict, "User already exisit?"); //CHECKHERE
+                StatusCode(StatusCodes.Status403Forbidden, "User already exisit?"); //CHECKHERE
             }
 
             //check if role exisit

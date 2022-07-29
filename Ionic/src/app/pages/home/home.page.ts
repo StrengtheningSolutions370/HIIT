@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StoreService } from 'src/app/services/storage/store.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
 
-  constructor() { }
+  username! : string;
+
+  constructor(private storage : StoreService) { }
 
   ngOnInit() {
+
+    this.storage.getKey('user').then((usr : any) => {
+      const obj = JSON.parse(usr)
+      this.username = `${obj.firstName} ${obj.lastName}`;
+      console.log(this.username)
+    })
+
   }
 
 }

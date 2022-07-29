@@ -101,14 +101,14 @@ export class AddEmployeeComponent implements OnInit{
   ngOnInit(): void {
 
     this.cEmployeeForm = this.formBuilder.group({
-      name: ['Shannon', [Validators.required]],
+      name: ['', [Validators.required]],
       contract: ['', [this.validateContract]],
-      email: ['shannonlnoel@icloud.com', [Validators.required, Validators.email]],
-      surname: ['Noel', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      surname: ['', [Validators.required]],
       photo: ['', this.validatePhoto],
       // photo: ['', [this.validatePhoto]],
-      idNumber: ['0109030294085', [this.validateIDNumber]],
-      phone: ['0000000000', [Validators.pattern(/[0-9]{10}/)]],
+      idNumber: ['', [this.validateIDNumber]],
+      phone: ['', [Validators.pattern(/[0-9]{10}/)]],
       titleId: ['', [Validators.required]],
       qualificationId : ['', Validators.required],
       employeeTypeId: ['', Validators.required],

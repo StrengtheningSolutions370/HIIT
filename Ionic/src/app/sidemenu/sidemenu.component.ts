@@ -19,6 +19,7 @@ export class SidemenuComponent implements OnInit {
   trainer = false;
   role! : string;
   prefersDark : any;
+  username! : string;
 
   constructor(private router : Router, private storage : StoreService, private auth: AuthService, private repo : RepoService, private global : GlobalService) { }
 
@@ -56,6 +57,13 @@ export class SidemenuComponent implements OnInit {
                   this.superuser = true;
                 if (r == 'trainer')
                   this.trainer = true;
+
+                  //set name in side menu:
+                  this.storage.getKey('user').then((usr : any) => {
+                    const obj = JSON.parse(usr)
+                    this.username = `${obj.firstName} ${obj.lastName}`;
+                  })
+
               },
 
               error: (er) => { //token was not valid

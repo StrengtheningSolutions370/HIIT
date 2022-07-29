@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable no-underscore-dangle */
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { EmployeeType } from 'src/app/models/employeeType';
@@ -45,7 +45,7 @@ public get employeeList(){
 private tempE : Employee[];
 
   constructor(public repo: RepoService, private modalCtrl: ModalController,
-    public titleService: TitleService, private global : GlobalService) {
+    public titleService: TitleService, private global : GlobalService, public  alertCtrl: AlertController) {
     //Receive the employee types from the repo (API).
     this.getAllEmployeeTypes();
 
@@ -105,9 +105,10 @@ private tempE : Employee[];
             this.fetchEmployeesEvent.emit();
             resolve(true);
           },
-          error: () => {
-            this.fetchEmployeesEvent.emit();
+          error: (e:any) => {
+            // this.fetchEmployeesEvent.emit();
             _(false);
+            this.duplicateAlert();
           }
         })
         .add(() => { 
@@ -133,7 +134,7 @@ private tempE : Employee[];
             this.fetchEmployeesEvent.emit();
             resolve(true);
           },
-          error: () => {
+          error: (e:any) => {
             this.fetchEmployeesEvent.emit();
             _(false);
           }
@@ -163,6 +164,16 @@ private tempE : Employee[];
     // );
 
    }
+
+   async duplicateAlert() {
+    console.trace();
+    const alert = await this.alertCtrl.create({
+      header: 'Employee Already Exists',
+      message: 'The Employee Information entered already exists on the system',
+      buttons: ['OK']
+    });
+   alert.present();
+  }
 
    getAllEmployees(): Observable<any> {
     return this.repo.getEmployees();

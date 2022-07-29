@@ -70,8 +70,9 @@ export class AuthService {
   async login(appUser: appUser) {
     await this.storage.deleteKey('token');
     await this.global.nativeLoad('loading...');
-    return this.repo.login(appUser).subscribe((result : any) => {
+    return this.repo.login(appUser).subscribe(async (result : any) => {
       var token = result.value.token;
+      await this.storage.setKey('user', JSON.stringify(result.value.user));
       this.storage.setKey('token', token).then(() => {
         this.navLogin(); //change observable to show navbar after set for token
       });

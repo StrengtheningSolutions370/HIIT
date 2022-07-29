@@ -202,6 +202,14 @@ export const routes: Routes = [
     // }
   },
   {
+    path: 'payment',
+    loadChildren: () => import('./pages/payments/payments.module').then( m => m.PaymentsPageModule ),
+    // canActivate: [AuthGaurdService],
+    // data: {
+    //   roles: [AllRoles]
+    // }
+  },
+  {
     path: '**', //this route object must be last
     redirectTo: 'login',
   },
