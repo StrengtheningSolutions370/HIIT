@@ -17,14 +17,14 @@ namespace Team7.Models
         public int CapacityBooked { get; set; }
         [Required]
         public int? VenueID { get; set; }
-        [Required]
+        //[Required]
         public int? BookingTypeID { get; set; }
         public int? LessonPlanID { get; set; }
-        [Required]
+        //[Required]
         public int? DateSessionID { get; set; }
-        [Required]
+        //[Required]
         public int? EmployeeID { get; set; }
-
+        //[Required]
         public virtual Venue Venue { get; set; }
         public virtual BookingType BookingType { get; set; }
         public virtual ICollection<BookingAttendance> BookingAttendance { get; set; }

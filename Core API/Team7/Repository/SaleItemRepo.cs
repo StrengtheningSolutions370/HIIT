@@ -51,18 +51,21 @@ namespace Team7.Models.Repository
                         si.Name,
                         si.Photo,
                         si.Description,
+                        //si.CostPrice,
                         si.Price,
                         si.Quotable,
                         si.Quantity,
-                        SaleCategoryName = si.SaleCategory.Name,
-                        SaleCategoryDescription = si.SaleCategory.Description,
+                        //si.QuantityOnHand,
+                        si.SaleCategory,
+                        //SaleCategoryName = si.SaleCategory.Name,
+                        //SaleCategoryDescription = si.SaleCategory.Description,
                         InventoryItem = si
                         .InventoryItem
-                        .Select(i => new {i.InventoryItemID, i.Quantity}),
+                        .Select(i => new { i.InventoryItemID, i.Quantity }),
                         PriceHistory = si
                         .PriceHistory
-                        .Select(ph => new {ph.Date, ph.Amount}),
-                        StockTake = si.StockTakeLine.Select(stl => new { 
+                        .Select(ph => new { ph.Date, ph.Amount }),
+                        StockTake = si.StockTakeLine.Select(stl => new {
                             id = stl.StockTake.StockTakeID,
                             StockTakeDate = stl.StockTake.Date,
                             StockTakeNotes = stl.StockTake.Notes
@@ -97,11 +100,14 @@ namespace Team7.Models.Repository
                         si.Name,
                         si.Photo,
                         si.Description,
+                        //si.CostPrice,
                         si.Price,
                         si.Quotable,
                         si.Quantity,
-                        SaleCategoryName = si.SaleCategory.Name,
-                        SaleCategoryDescription = si.SaleCategory.Description,
+                        //si.QuantityOnHand,
+                        si.SaleCategory,
+                        //SaleCategoryName = si.SaleCategory.Name,
+                        //SaleCategoryDescription = si.SaleCategory.Description,
                         InventoryItem = si
                         .InventoryItem
                         .Select(i => new { i.InventoryItemID, i.Quantity }),
@@ -144,11 +150,14 @@ namespace Team7.Models.Repository
                         si.Name,
                         si.Photo,
                         si.Description,
+                        //si.CostPrice,
                         si.Price,
                         si.Quotable,
                         si.Quantity,
-                        SaleCategoryName = si.SaleCategory.Name,
-                        SaleCategoryDescription = si.SaleCategory.Description,
+                        //si.QuantityOnHand,
+                        si.SaleCategory,
+                       //SaleCategoryName = si.SaleCategory.Name,
+                        //SaleCategoryDescription = si.SaleCategory.Description,
                         InventoryItem = si
                         .InventoryItem
                         .Select(i => new { i.InventoryItemID, i.Quantity }),

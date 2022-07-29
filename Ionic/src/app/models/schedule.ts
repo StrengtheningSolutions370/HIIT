@@ -1,5 +1,5 @@
 export class Schedule {
-    scheduleID: number;
+    scheduleID?: number;
     capacityBooked: number;
     venueID: number;
     bookingTypeID: number;

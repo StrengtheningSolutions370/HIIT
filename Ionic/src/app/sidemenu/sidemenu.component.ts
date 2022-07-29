@@ -18,11 +18,13 @@ export class SidemenuComponent implements OnInit {
   superuser = false;
   trainer = false;
   role! : string;
+  prefersDark : any;
 
   constructor(private router : Router, private storage : StoreService, private auth: AuthService, private repo : RepoService, private global : GlobalService) { }
 
   ngOnInit() {
-
+    this.prefersDark  = window.matchMedia('(prefers-color-scheme: dark)');
+    this.toggleTheme(this.prefersDark.matches);
 
     this.auth.isLoggedIn.subscribe(log => {
       if (log) {
@@ -66,6 +68,18 @@ export class SidemenuComponent implements OnInit {
   }
 
   toggleTheme(event:any){
+
+    if (event == true){
+      document.body.classList.toggle('dark',event);
+      const tog = document.getElementById('darkToggle');
+      return;
+    } else if (event == false){
+      console.log("Light Mode");
+      document.body.classList.toggle('dark',event);
+      return;
+    }
+
+    console.log(event);
     if (event.detail.checked){
       console.log("Dark Mode");
       document.body.classList.toggle('dark',event.detail.checked);
