@@ -6,11 +6,198 @@
       </ion-buttons>
       <ion-title slot="">My Profile</ion-title>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
-      <!--Can we change this dynamically when switching between tabs?-->
-    <!-- </ion-item> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+<br/>
+  <ion-accordion-group>
+     <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label>Personal Information</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <ion-card>
+          <ion-card-content>
+            <div class="ion-text-center">
+              <h1 style="font-family: inherit; border:1px">Personal Information</h1>
+            </div>
+            <br/>
+
+            <form #personalForm="ngForm" (ngSubmit)="onPersonalSubmit(personalForm)">
+              <div padding>
+
+                <!-- <ion-img *ngIf="showProfile" src="{{imgSrc}}" (click)="photo.click()"></ion-img> -->
+
+                <ion-item>
+                  <ion-label position="stacked">Profile Photo:</ion-label>
+                  <!-- <app-file-upload formControlName="photo"></app-file-upload> -->
+                  <input 
+                  type="file"
+                  name="photo" 
+                  ngModel 
+                  #photo="ngModel"  
+                  required >
+                </ion-item>
+                  <!-- (change)="addPhoto($event)" --
+                
+
+                <!-- <ng-container *ngIf="!noProfile">
+
+                  <ion-item *ngIf="!removedImage && validPhoto">
+                    <ion-row>
+                      <ion-col size="12">
+                        <ion-img src="{{imgSrc}}" (click)="photo.click()"></ion-img>
+                      </ion-col>
+                    </ion-row>
+                  </ion-item>
+                  
+                  <ion-item>
+                      <ion-row>
+                        <ng-container *ngIf="!removedImage && employee.data.photo">
+                          <ion-col size="6">
+                            <ion-button id="restore" [disabled]="!newPhoto || deletePhoto" (click)="restoreImage()" color="primary">Restore</ion-button>
+                          </ion-col>
+                          <ion-col size="6">
+                            <ion-button id="remove" (click)="removeImage()" color="danger">Remove</ion-button>
+                          </ion-col>
+                        </ng-container>
+                        <ion-col size="12" *ngIf="removedImage || employee.data.photo === null">
+                          <ion-button id="restore" (click)="restoreImage()" color="primary">Restore</ion-button>
+                        </ion-col>
+                      </ion-row>
+                  </ion-item>
+                  
+                </ng-container> -->
+                <!-- user had no pf image -->
+                <!-- <ng-container *ngIf="noProfile && newPhoto">
+                  <ion-item *ngIf="!removedImage && validPhoto">
+                    <ion-row>
+                      <ion-col size="12">
+                        <ion-img src="{{imgSrc}}" (click)="photo.click()"></ion-img>
+                      </ion-col>
+                    </ion-row>
+                  </ion-item>
+                  
+                  <ion-item>
+                      <ion-row>
+                          <ion-col size="12">
+                            <ion-button id="remove" (click)="removeImage()" color="danger">Remove Image</ion-button>
+                          </ion-col>
+                      </ion-row>
+                  </ion-item>
+                </ng-container> -->
+                
+                <ion-item>
+                  <ion-icon name="person" slot="start" color="#282828"></ion-icon>
+                  <ion-input 
+                  type="text" 
+                  name="firstName" 
+                  ngModel 
+                  #firstName="ngModel" 
+                  placeholder="First Name" 
+                  required ></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-icon name="person" slot="start" color="#282828"></ion-icon>
+                  <ion-input 
+                  type="text" 
+                  name="lastName" 
+                  ngModel 
+                  #lastName="ngModel" 
+                  placeholder="Last Name" 
+                  required ></ion-input>
+                </ion-item>
+                
+                <ion-item>
+                  <ion-icon name="apps-outline" slot="start" color="#282828"></ion-icon>
+                  <ion-select ngModel #TitleId="ngModel" placeholder="Title" name="TitleId" type="text" id="TitleId" required>
+                      <ion-select-option *ngFor="let title of titleList" value="{{title.titleID}}">{{ title.description }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+              
+                <br/>
+                <ion-button *ngIf="!isLoading" expand="block" shape="round" type="submit">Save</ion-button>
+                <div class="ion-text-center" *ngIf="isLoading">
+                  <ion-button shape="round">
+                    <ion-spinner name="circles"></ion-spinner>
+                  </ion-button>   
+                </div> 
+              </div>  
+            </form>
+          </ion-card-content>
+        </ion-card>
+
+      </div> 
+    </ion-accordion>
+
+
+    <ion-accordion value="second">
+      <ion-item slot="header" color="light">
+        <ion-label>Contact Information</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-card class="centerLogin" >
+          <ion-card-content>
+            <div class="ion-text-center">
+              <h1 style="font-family: inherit; border:1px">Contact Information</h1>
+            </div>
+            <br/>
+
+            <form #contactForm="ngForm" (ngSubmit)="onContactSubmit(contactForm)">
+              <div padding>
+                <ion-item>
+                  <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
+                  <ion-input 
+                  type="text" 
+                  name="email" 
+                  ngModel 
+                  #email="ngModel" 
+                  placeholder="Email Address"  
+                  required></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-icon name="call" slot="start" color="#282828"></ion-icon>
+                  <ion-input 
+                  type="text" 
+                  name="number" 
+                  ngModel 
+                  #number="ngModel" 
+                  placeholder="Contact Number" 
+                  required ></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label  class="ion-text-right">Would you like to receive booking reminders?</ion-label>
+                  <ion-toggle></ion-toggle>
+                </ion-item>
+              
+                <br/>
+                <ion-button *ngIf="!isLoading" expand="block" shape="round" type="submit">Save</ion-button>
+                <div class="ion-text-center" *ngIf="isLoading">
+                  <ion-button shape="round">
+                    <ion-spinner name="circles"></ion-spinner>
+                  </ion-button>   
+                </div> 
+              </div>  
+            </form>
+
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="third">
+      <ion-item slot="header" color="light">
+        <ion-label>Password Management</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        Third Content
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
 
 </ion-content>
