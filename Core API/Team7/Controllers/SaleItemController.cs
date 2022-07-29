@@ -30,9 +30,9 @@ namespace Team7.Controllers
         {
             try
             {
-                
+
                 SaleItemRepo.Add(saleItem);
-                if(await SaleItemRepo.SaveChangesAsync())
+                if (await SaleItemRepo.SaveChangesAsync())
                 {
                     return Ok();
                 } else
@@ -190,7 +190,7 @@ namespace Team7.Controllers
                 } else
                 {
                     return Ok(saleItem);
-                }                
+                }
             }
             catch (Exception err)
             {
@@ -198,5 +198,5 @@ namespace Team7.Controllers
             }
 
         }
-    
-}
+
+    }

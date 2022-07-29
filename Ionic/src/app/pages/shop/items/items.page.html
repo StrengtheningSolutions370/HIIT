@@ -6,6 +6,7 @@
 
   <ion-fab horizontal="end" vertical="top" slot="fixed">
     <ion-fab-button (click)="cartService.openCart()" #cart>
+      <ion-badge color="danger">{{cartData?.quantity}}</ion-badge>
       <ion-icon name="cart" class="cart-icon"></ion-icon>
     </ion-fab-button>
   </ion-fab>

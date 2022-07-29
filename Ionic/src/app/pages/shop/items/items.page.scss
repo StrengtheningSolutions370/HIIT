@@ -44,3 +44,10 @@ ion-card {
 .fullheight {
     height: 100%;
 }
+
+ion-badge {
+    position: absolute; 
+    font-size: 8pt;
+    right: -16px;
+    top: -3px; 
+}
