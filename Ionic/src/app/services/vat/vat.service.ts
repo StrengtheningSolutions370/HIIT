@@ -7,56 +7,48 @@ import { ViewVatComponent } from 'src/app/pages/sale/vat/view-vat/view-vat.compo
 import { ConfirmVatComponent } from 'src/app/pages/sale/vat/confirm-vat/confirm-vat.component';
 import { RepoService } from '../repo.service';
 import { Observable } from 'rxjs';
-import { UpdateVatComponent } from 'src/app/pages/sale/vat/update-vat/update-vat.component';
+import { GlobalService } from '../global/global.service';
 
 @Injectable({
   providedIn: 'root'
-})
+  })
 export class VatService {
 
   @Output() fetchVatsEvent = new EventEmitter<Vat>();
 
-constructor(public repo: RepoService, private modalCtrl: ModalController) {
+constructor(public repo: RepoService, private modalCtrl: ModalController, public global: GlobalService) {
   //Receive the venues from the repo (API).
   this.getAllVats();
-}
+  }
 
-getAllVats() : Observable<any> {
-  return this.repo.getVats();
-}
+  //READS:
+  getAllVats(): Observable<any> {
+    return this.repo.getVats();
+  }
 
- //Methods
-  //Add a vat to the vat list within the vat service.
-  createVat(vat: any){
-    var today = new Date()
+  matchingVat(percentage: number, date: any): Promise<any> {
+    console.log('vatService: Repo -> Matching Vat');
+    return this.repo.getMatchVat(percentage, date).toPromise();
+  }
+
+  //CREATE
+  createVat(VAT: any){
+    var today = new Date();
     let vatTemp = {
-      percentage : vat.percentage,
+      percentage : VAT.percentage,
       date: today.toISOString()
     }
     this.repo.createVAT(vatTemp).subscribe(
       {
         next: () => {
           console.log('VAT CREATED');
-          this.fetchVatsEvent.emit(vat);
+          this.fetchVatsEvent.emit(VAT);
         }
       }
     )
    }
 
-
-  //Receives a vat to update in the service vat list.
-   async updateVat(id:number,vat: any) {
-     return this.repo.updateVAT(id,vat).subscribe(
-       {
-        next: () => {
-          console.log('VAT UPDATED');
-          this.fetchVatsEvent.emit(vat);
-        }
-       }
-     )
-   }
-
-  //Receives a vat to delete in the service vat list.
+  //DELETE:
    deleteVat(id: number){
     this.repo.deleteVat(id).subscribe(
       {
@@ -73,81 +65,55 @@ getAllVats() : Observable<any> {
     );
    }
 
-   matchingVat(input: string){
-    console.log('vatService: Repo -> Matching Vat');
-    this.repo.getMatchVat(input);
-   }
 
-   existingVat(id: number){
-    console.log('vatService: Repo -> Existing Vat');
-    this.repo.existsVat(id).subscribe(result =>
-     console.log(result));
-   }
 
-  //Modals
-  async addVatInfoModal(vat?: Vat) {
+
+  //MODALS:
+  //CREATE
+  async addVatInfoModal(VAT?: Vat) {
     const modal = await this.modalCtrl.create({
       component: AddVatComponent,
       componentProps:{
-        vat
+        VAT
       }
     });
     await modal.present();
   }
 
-  //Display the delete vat modal.
-  //This method receives the selected vat object, from the vat page, in the modal through the componentProps.
-  async deleteVatInfoModal(vat: Vat) {
+  //DELETE
+  async deleteVatInfoModal(VAT: Vat) {
     console.log("VatService: DeleteVatModalCall");
     
       const modal = await this.modalCtrl.create({
         component: DeleteVatComponent,
           componentProps: {
-            vat
+            VAT
         }
       });
       await modal.present();
     }
   
-
-    //Display the update vat modal.
-  //This method receives the selected vat object, from the vat page, in the modal through the componentProps.
-  async updateVatInfoModal(vat: Vat) {
-    console.log("VatService: UpdateVatModalCall");
-    const modal = await this.modalCtrl.create({
-      component: UpdateVatComponent,
-      componentProps:{
-        vat
-      }
-    });
-    await modal.present();
-  }
-
-  //Display the view vat modal.
-    //This method receives the selected vat object, from the vat page, in the modal through the componentProps.
-  async viewVatInfoModal(vat: Vat) {
+  //VIEW
+  async viewVatInfoModal(VAT: Vat) {
     console.log("VatService: ViewVatModalCall");
     const modal = await this.modalCtrl.create({
       component: ViewVatComponent,
       componentProps: {
-        vat
+        VAT
       }
     });
     await modal.present();
   }
 
-  //Display the confirm create/update modal
-  //Receives the selected vat from the vat page
-  async confirmVatModal(choice: number, vat: any) {
+  //CONFIRM
+  async confirmVatModal(VAT: any) {
     console.log('VatService: ConfirmVatModalCall');
-    console.log(choice);
-    if(choice === 1){
+
       console.log("Performing ADD");
       const modal = await this.modalCtrl.create({
         component: ConfirmVatComponent,
         componentProps: {
-          vat,
-          choice
+          VAT
         }
       });
 
@@ -159,32 +125,5 @@ getAllVats() : Observable<any> {
       });
 
       await modal.present();
-
-    } else if (choice === 2){
-
-      console.log("Performing UPDATE");
-
-
-      const modal = await this.modalCtrl.create({
-        component: ConfirmVatComponent,
-        componentProps: {
-          vat,
-          choice
-        }
-      });
-
-      modal.onDidDismiss().then(() => {
-
-        this.repo.getVats();
-
-      });
-
-      await modal.present();
-
-    } else {
-
-      console.log("BadOption: " + choice)
-
-    }
   }
 }

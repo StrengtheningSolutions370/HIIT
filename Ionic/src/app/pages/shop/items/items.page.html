@@ -1,0 +1,78 @@
+<ion-content>
+  <br>
+  <div class="ion-text-center " *ngIf="isLoading">
+    <ion-spinner name="circles"></ion-spinner>
+  </div>
+
+  <ion-fab horizontal="end" vertical="top" slot="fixed">
+    <ion-fab-button (click)="cartService.openCart()" #cart>
+      <ion-badge color="danger">{{cartData?.quantity}}</ion-badge>
+      <ion-icon name="cart" class="cart-icon"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-grid>
+    <ion-row>
+
+      <ion-select placeholder="filter" multiple="true">
+        <ng-container *ngFor="let c of this.categoryArray">
+          <ion-select-option value="{{c.saleCategoryID}},{{c.name}}">
+            {{c.name}}
+          </ion-select-option>
+        </ng-container>
+      </ion-select>
+
+    </ion-row>
+    <ion-row>
+      <ion-col class='ion-align-self-start' sizeLg="3" sizeMd="3" sizeXs="6"
+        *ngFor="let saleItem of saleItems  | paginate: { itemsPerPage: 8, currentPage: cp }" class="listMargin">
+
+
+        <ion-card >
+          <ion-card-header (click)="saleService.viewShopItemInfoModal(saleItem)">
+            <ion-card-title>{{saleItem.name}}</ion-card-title>
+          </ion-card-header>
+          <img class="img-wrapper" [src]="this.global.createImg(saleItem.photo)" alt="sale item image">
+
+          <ion-card-content>
+            <ion-row>
+              <ion-col size="5" *ngIf="saleItem.quotable !== true">
+                <ion-label class="xc fullheight">{{saleItem.price | currency:'ZAR'}}</ion-label>
+              </ion-col>
+              <ion-col size="5" *ngIf="saleItem.quotable === false">
+                <ion-button (click)="quantityPlus(saleItem)" class="btn-add-cart" color="success">ADD TO CART
+                </ion-button>
+              </ion-col>
+              <ion-col size="5" *ngIf="saleItem.quotable === true">
+                <ion-button (click)="quantityPlus(saleItem)" class="btn-request-quote" color="secondary">REQUEST QUOTE
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+<ion-footer>
+  <pagination-controls (pageChange)="cp = $event" class="pagination"></pagination-controls>
+</ion-footer>
+
+
+
+
+<!-- <ion-footer *ngIf="cartData?.totalItem > 0">
+  <ion-toolbar color="success">
+    <ion-label color="white">
+      <h4>{{cartData?.totalItem}} Item<span *ngIf="cartData?.totalItem > 1">s</span> | {{cartData?.totalPrice | currency: 'ZAR'}}</h4>
+      <ion-text color="light">
+        <p>Extra charges may apply</p>
+      </ion-text>
+    </ion-label>
+    <ion-button slot="end" fill="clear" color="white" (click)="viewCart()">
+      <ion-icon slot="end" name="basket-outline"></ion-icon>
+      VIEW CART
+    </ion-button>
+  </ion-toolbar>
+</ion-footer> -->

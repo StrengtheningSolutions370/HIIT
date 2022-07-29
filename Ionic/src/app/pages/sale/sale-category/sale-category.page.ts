@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonItemSliding, ViewWillEnter } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { RepoService } from 'src/app/services/repo.service';
@@ -22,16 +21,7 @@ export class SaleCategoryPage implements OnInit {
   saleCategorySub: Subscription;
 
   isLoading = true;
-
-  // categories = [
-  //   {name : 'Shop',
-  //    description : 'Buy now, get product later'},
-  //   {name : 'Store',
-  //    description : 'Buy now, get product now'}
-  // ];
-
   constructor(public saleService: SalesService, public repo: RepoService) {
-    // this.populateTitles();
      this.fetchSaleCategory();
   }
 
@@ -44,7 +34,7 @@ export class SaleCategoryPage implements OnInit {
           console.log('Fetching categories from DB');
           console.log(data);
           this.isLoading = false;
-          this.saleCategoryList = data;
+          this.saleCategoryList = data.result;
         }
       }
     );

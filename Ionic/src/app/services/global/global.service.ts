@@ -3,16 +3,28 @@
 import { Injectable } from '@angular/core';
 import { AlertController,LoadingController,ModalController,ToastController } from '@ionic/angular';
 
+declare const Buffer;
+
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
   loading: Boolean = false;
+  public items: any = [];
+
   constructor(private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
     private modalCtrl: ModalController) { }
 
+    //IMAGE manipulation
+    //--------
+
+    public createImg = (fileName: string) => `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
+
+    filterItems(searchTerm) {
+      return this.items.filter(item => item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+    }
 
     //LOADS
     //------
@@ -26,7 +38,7 @@ export class GlobalService {
         const res = await this.loadingCtrl.create({
           message: message,
           spinner: spinner ? spinner : 'bubbles',
-          duration: 3000
+          // duration: 3000 //prevents going away till end load is called
         });
         res.present().then(() => {
           if (!this.loading) {
@@ -39,7 +51,7 @@ export class GlobalService {
         console.log('show loading error: ', e);
       }
     }
-  
+
     async endNativeLoad() {
       if(this.loading) {this.toggleLoad();}
       try {
@@ -65,19 +77,43 @@ export class GlobalService {
     //TOASTS
     //------
 
-    async showToast(message:string, color?:string, position:any = "bottom", duration = 5000) {
+    async showToast(message:string, duration = 2000, position:any = "bottom",  color?:string) {
       const toast = await this.toastCtrl.create({
         message: message,
         duration: duration,
         color: color,
-        position: position
+        position: position,
+        keyboardClose: true,
+        cssClass: 'toastCenter'
       });
       toast.present();
     }
 
     //MODALS
     //------
-    dismissModal() {
-      this.modalCtrl.dismiss();
+    dismissModal(data?: any): any {
+      if (data){
+        return this.modalCtrl.dismiss(data);
+      } else {
+        this.modalCtrl.dismiss()
+      }
     };
+
+    //JWT DECODER
+    //------
+    decodeToken(token : string) : any {
+      const payload = token.split('.')[1];//takes the paylaod from the tokem
+      // const decodeJson = Buffer.from(payload, 'base64').toString();
+      // return JSON.parse(decodeJson);
+      return JSON.parse(atob(payload));
+    }
+
+    validateTokenData(token : any) : boolean {
+      const now = Math.trunc(new Date().getTime() / 1000);
+      if (token.exp <= now) {
+        return false;
+      }
+      return true;
+    }
+
 }

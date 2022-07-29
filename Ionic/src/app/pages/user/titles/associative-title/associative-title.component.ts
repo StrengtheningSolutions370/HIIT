@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-associative-title',
@@ -6,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./associative-title.component.scss'],
 })
 export class AssociativeTitleComponent implements OnInit {
-
-  constructor() { }
+  @Input() title: Title;
+  constructor(public global: GlobalService) { }
 
   ngOnInit() {}
 

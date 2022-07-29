@@ -1,10 +1,9 @@
-import { Component,  Input } from '@angular/core';
-import { ViewWillEnter} from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component,  Input } from '@angular/core';
+import { ViewWillEnter} from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from 'src/app/models/title';
 import { TitleService } from 'src/app/services/title/title.service';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -14,6 +13,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
   templateUrl: './add-title.component.html',
   styleUrls: ['./add-title.component.scss'],
 })
+
 export class AddTitleComponent implements ViewWillEnter {
 
   @Input() title: Title;
@@ -46,7 +46,7 @@ export class AddTitleComponent implements ViewWillEnter {
       }else{
         const temp = {
           description: this.cTitleForm.value['titleDescription'],
-          users: []
+          users: null
         };
         this.titleService.confirmTitleModal(1,temp);
         this.global.dismissModal();

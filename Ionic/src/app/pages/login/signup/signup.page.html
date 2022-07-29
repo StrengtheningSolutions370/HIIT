@@ -1,7 +1,4 @@
 <ion-content>
-  <ion-grid>
-    <ion-row justify-content-center>
-      <ion-col width="200px">
         <ion-card class="centerLogin" >
           <ion-card-content>
             <div class="ion-text-center">
@@ -65,6 +62,21 @@
                 <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
                   <p>Please enter a valid email address</p>
                 </ion-text>
+
+                <!-- <ion-item>
+                  <ion-icon name="apps-outline" color="#282828"></ion-icon>
+                  <ion-select name="titleId">
+                    <ion-select-option>Mr.</ion-select-option>
+                  </ion-select>
+                </ion-item> -->
+
+                <ion-item>
+                  <ion-icon name="apps-outline" slot="start" color="#282828"></ion-icon>
+                  <ion-select ngModel #TitleId="ngModel" placeholder="Title" name="TitleId" type="text" id="TitleId" required>
+                      <ion-select-option *ngFor="let title of titleList" value="{{title.titleID}}">{{ title.description }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
                 <ion-item>
                   <ion-icon name="key" slot="start" color="#282828"></ion-icon>
                   <ion-input 
@@ -83,7 +95,7 @@
                   <ion-item>
                     <ion-icon name="key" slot="start" color="#282828"></ion-icon>
                     <ion-input 
-                    type="text" 
+                    type="password" 
                     name="c_pass" 
                     ngModel 
                     #c_passCtrl="ngModel" 
@@ -113,7 +125,4 @@
             <b><a routerLink="/login"><p style="color:#717274">Cancel</p></a></b>
           </ion-card-content>
         </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 </ion-content>

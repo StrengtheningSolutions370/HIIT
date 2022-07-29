@@ -1,27 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, ViewWillEnter } from '@ionic/angular';
+import { Component, Input} from '@angular/core';
 import { Venue } from 'src/app/models/venue';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-view-venue-info',
   templateUrl: './view-venue-info.component.html',
   styleUrls: ['./view-venue-info.component.scss'],
 })
-export class ViewVenueInfoComponent implements ViewWillEnter {
+export class ViewVenueInfoComponent {
 
   @Input() venue: Venue;
   
-  constructor(private modalCtrl: ModalController, public fb:FormBuilder) { 
+  constructor(public global: GlobalService) { 
   }
 
-  ionViewWillEnter() {
-    console.log("viewSpecificVenue-ViewWillEnter");
-    console.log(this.venue);
-  }
-
-  dismissModal() {
-    this.modalCtrl.dismiss();
-  }
 }
 

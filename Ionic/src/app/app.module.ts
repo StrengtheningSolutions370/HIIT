@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+/* eslint-disable max-len */
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -7,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './authentication/auth.interceptor';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 //VENUE IMPORTS:
 import { AddVenueComponent } from './pages/venue/add-venue/add-venue.component';
@@ -16,19 +18,13 @@ import { DeleteVenueComponent } from './pages/venue/delete-venue/delete-venue.co
 import { ConfirmVenueComponent } from './pages/venue/confirm-venue/confirm-venue.component';
 import { AssociativeVenueComponent } from './pages/venue/associative-venue/associative-venue.component';
 
-//USER ROLE IMPORTS:
-import { AddRoleComponent } from './pages/user/user-roles/add-role/add-role.component';
-import { UpdateRoleComponent } from './pages/user/user-roles/update-role/update-role.component';
-import { DeleteRoleComponent } from './pages/user/user-roles/delete-role/delete-role.component';
-import { ViewRoleComponent } from './pages/user/user-roles/view-role/view-role.component';
-import { ConfirmRoleComponent } from './pages/user/user-roles/confirm-role/confirm-role.component';
-
 //TITLE IMPORTS:
 import { AddTitleComponent } from './pages/user/titles/add-title/add-title.component';
 import { UpdateTitleComponent } from './pages/user/titles/update-title/update-title.component';
 import { DeleteTitleComponent } from './pages/user/titles/delete-title/delete-title.component';
 import { ViewTitlesComponent } from './pages/user/titles/view-titles/view-titles.component';
 import { ConfirmTitleComponent } from './pages/user/titles/confirm-title/confirm-title.component';
+import { AssociativeTitleComponent } from './pages/user/titles/associative-title/associative-title.component';
 
 //SALE CATEGORY IMPORTS:
 import { AddCategoryComponent } from './pages/sale/sale-category/add-category/add-category.component';
@@ -36,6 +32,7 @@ import { UpdateCategoryComponent } from './pages/sale/sale-category/update-categ
 import { DeleteCategoryComponent } from './pages/sale/sale-category/delete-category/delete-category.component';
 import { ViewCategoryComponent } from './pages/sale/sale-category/view-category/view-category.component';
 import { ConfirmCategoryComponent } from './pages/sale/sale-category/confirm-category/confirm-category.component';
+import { AssociativeCategoryComponent } from './pages/sale/sale-category/associative-category/associative-category.component';
 
 //SALE ITEM IMPORTS:
 import { AddSitemComponent } from './pages/sale/sale-item/add-sitem/add-sitem.component';
@@ -52,47 +49,130 @@ import { ViewQtypeComponent } from './pages/employee/qualification-type/view-qty
 import { ConfirmQtypeComponent } from './pages/employee/qualification-type/confirm-qtype/confirm-qtype.component';
 import { AssociativeQtypeComponent } from './pages/employee/qualification-type/associative-qtype/associative-qtype.component';
 
+//EMPLOYEE_QUALIFICATION IMPORTS:
+import { AddQualificationComponent } from './pages/employee/qualification/add-qualification/add-qualification.component';
+import { UpdateQualificationComponent } from './pages/employee/qualification/update-qualification/update-qualification.component';
+import { DeleteQualificationComponent } from './pages/employee/qualification/delete-qualification/delete-qualification.component';
+import { ViewQualificationComponent } from './pages/employee/qualification/view-qualification/view-qualification.component';
+import { ConfirmQualificationComponent } from './pages/employee/qualification/confirm-qualification/confirm-qualification.component';
+import { AssociativeQualificationComponent } from './pages/employee/qualification/associative-qualification/associative-qualification.component';
+
 //EMPLOYEE_TYPE IMPORTS:
 import { AddEtypeComponent } from './pages/employee/employee-type/add-etype/add-etype.component';
 import { UpdateEtypeComponent } from './pages/employee/employee-type/update-etype/update-etype.component';
 import { DeleteEtypeComponent } from './pages/employee/employee-type/delete-etype/delete-etype.component';
 import { ViewEtypeComponent } from './pages/employee/employee-type/view-etype/view-etype.component';
 import { ConfirmEtypeComponent } from './pages/employee/employee-type/confirm-etype/confirm-etype.component';
+import { AssociativeEtypeComponent } from './pages/employee/employee-type/associative-etype/associative-etype.component';
 
 //VAT IMPORTS:
 import { AddVatComponent } from './pages/sale/vat/add-vat/add-vat.component';
 import { DeleteVatComponent } from './pages/sale/vat/delete-vat/delete-vat.component';
 import { ViewVatComponent } from './pages/sale/vat/view-vat/view-vat.component';
 import { ConfirmVatComponent } from './pages/sale/vat/confirm-vat/confirm-vat.component';
-import { UpdateVatComponent } from './pages/sale/vat/update-vat/update-vat.component';
 
+//EXERCISE CATEGORY IMPORTS:
+import { AddExerciseCategoryComponent } from './pages/exercises/exercise-category/add-exercise-category/add-exercise-category.component';
+import { UpdateExerciseCategoryComponent } from './pages/exercises/exercise-category/update-exercise-category/update-exercise-category.component';
+import { DeleteExerciseCategoryComponent } from './pages/exercises/exercise-category/delete-exercise-category/delete-exercise-category.component';
+import { ViewExerciseCategoryComponent } from './pages/exercises/exercise-category/view-exercise-category/view-exercise-category.component';
+import { ConfirmExerciseCategoryComponent } from './pages/exercises/exercise-category/confirm-exercise-category/confirm-exercise-category.component';
+import { AssociativeExerciseCategoryComponent } from './pages/exercises/exercise-category/associative-exercise-category/associative-exercise-category.component';
 
+//EMPLOYEE IMPORTS:
+import { AddEmployeeComponent } from './pages/employee/employee-page/add-employee/add-employee.component';
+import { DeleteEmployeeComponent } from './pages/employee/employee-page/delete-employee/delete-employee.component';
+import { ViewEmployeeComponent } from './pages/employee/employee-page/view-employee/view-employee.component';
+import { ConfirmEmployeeComponent } from './pages/employee/employee-page/confirm-employee/confirm-employee.component';
+import { UpdateEmployeeComponent } from './pages/employee/employee-page/update-employee/update-employee.component';
+import { AssociativeEmployeeComponent } from './pages/employee/employee-page/associative-employee/associative-employee.component'
 
+//REFUND REASON IMPORTS:
+import { AddRefundReasonComponent } from 'src/app/pages/sale/refund-reason/add-refund-reason/add-refund-reason.component';
+import { DeleteRefundReasonComponent } from 'src/app/pages/sale/refund-reason/delete-refund-reason/delete-refund-reason.component';
+import { UpdateRefundReasonComponent } from 'src/app/pages/sale/refund-reason/update-refund-reason/update-refund-reason.component';
+import { ViewRefundReasonComponent } from 'src/app/pages/sale/refund-reason/view-refund-reason/view-refund-reason.component';
+import { ConfirmRefundReasonComponent } from 'src/app/pages/sale/refund-reason/confirm-refund-reason/confirm-refund-reason.component';
+import { AssociativeRefundReasonComponent } from 'src/app/pages/sale/refund-reason/associative-refund-reason/associative-refund-reason.component';
 
+//BOOKING TYPE IMPORTS:
+import { AddBtypeComponent } from './pages/booking/booking-type/add-btype/add-btype.component';
+import { AssociativeBtypeComponent } from './pages/booking/booking-type/associative-btype/associative-btype.component';
+import { ConfirmBtypeComponent } from './pages/booking/booking-type/confirm-btype/confirm-btype.component';
+import { DeleteBtypeComponent } from './pages/booking/booking-type/delete-btype/delete-btype.component';
+import { UpdateBtypeComponent } from './pages/booking/booking-type/update-btype/update-btype.component';
+import { ViewBtypeComponent } from './pages/booking/booking-type/view-btype/view-btype.component';
 
+//WRITE-OFF REASON IMPORTS:
+import { AddWriteOffReasonComponent } from './pages/inventory/write-off-reason/add-write-off-reason/add-write-off-reason.component';
+import { AssociativeWriteOffReasonComponent } from './pages/inventory/write-off-reason/associative-write-off-reason/associative-write-off-reason.component';
+import { ConfirmWriteOffReasonComponent } from './pages/inventory/write-off-reason/confirm-write-off-reason/confirm-write-off-reason.component';
+import { DeleteWriteOffReasonComponent } from './pages/inventory/write-off-reason/delete-write-off-reason/delete-write-off-reason.component';
+import { UpdateWriteOffReasonComponent } from './pages/inventory/write-off-reason/update-write-off-reason/update-write-off-reason.component';
+import { ViewWriteOffReasonComponent } from './pages/inventory/write-off-reason/view-write-off-reason/view-write-off-reason.component';
 
+//SIDEMENU IMPORTS:
+import { SidemenuComponent } from './sidemenu/sidemenu.component';
+import { TimeRangeComponent } from './pages/booking/time-range/time-range.component';
+import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
+
+//EXERCISE IMPORTS:
+import { AddExerciseComponent } from './pages/exercises/exercise-page/add-exercise/add-exercise.component';
+import { UpdateExerciseComponent } from './pages/exercises/exercise-page/update-exercise/update-exercise.component';
+import { DeleteExerciseComponent } from './pages/exercises/exercise-page/delete-exercise/delete-exercise.component';
+import { ViewExerciseComponent } from './pages/exercises/exercise-page/view-exercise/view-exercise.component';
+import { ConfirmExerciseComponent } from './pages/exercises/exercise-page/confirm-exercise/confirm-exercise.component';
+import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/associative-exercise/associative-exercise.component';
 
 @NgModule({
   declarations: [AppComponent,
   //Venue
   AddVenueComponent, UpdateVenueComponent, ViewVenueInfoComponent, DeleteVenueComponent, ConfirmVenueComponent,AssociativeVenueComponent,
-  //UserRole
-  AddRoleComponent, UpdateRoleComponent, DeleteRoleComponent, ViewRoleComponent, ConfirmRoleComponent,
   //Title
-  AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent,
+  AddTitleComponent, UpdateTitleComponent, DeleteTitleComponent, ViewTitlesComponent, ConfirmTitleComponent, AssociativeTitleComponent,
   //QualificationType
   AddQtypeComponent, UpdateQtypeComponent, DeleteQtypeComponent, ViewQtypeComponent, ConfirmQtypeComponent, AssociativeQtypeComponent,
-  //VAT 
-  AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent, UpdateVatComponent,
+  //VAT
+  AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
   //EmployeeType
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
-  ConfirmRoleComponent, AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
-  ConfirmCategoryComponent, AddCategoryComponent, ConfirmCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent,
-  ConfirmSitemComponent, AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent
+  //SalesCategory
+  AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent, AssociativeCategoryComponent,
+  //SalesItem
+  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+  //SideMenu
+  SidemenuComponent,
+  //Qualification
+  AddQualificationComponent, UpdateQualificationComponent,DeleteQualificationComponent, ViewQualificationComponent, ConfirmQualificationComponent,
+  AssociativeQualificationComponent,
+  //VAT
+  AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
+  //EmployeeType
+  AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,AssociativeEtypeComponent,
+  //SalesCategory
+  AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent,
+  //SalesItem
+  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+  //ExerciseCategory
+  AddExerciseCategoryComponent, UpdateExerciseCategoryComponent, DeleteExerciseCategoryComponent, ViewExerciseCategoryComponent, ConfirmExerciseCategoryComponent, AssociativeExerciseCategoryComponent,
+  //Side Menu
+  SidemenuComponent,
+  //RefundReason
+  ConfirmRefundReasonComponent, AddRefundReasonComponent, UpdateRefundReasonComponent, ViewRefundReasonComponent, DeleteRefundReasonComponent, AssociativeRefundReasonComponent,
+  //Employee
+  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent, AssociativeEtypeComponent,
+  //WriteOffReason
+  AddWriteOffReasonComponent, AssociativeWriteOffReasonComponent, ConfirmWriteOffReasonComponent, DeleteWriteOffReasonComponent, UpdateWriteOffReasonComponent, ViewWriteOffReasonComponent,
+  //BookingType
+  AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
+  //Calendar
+  TimeRangeComponent,
+  //Exercise
+  AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
 ],
 
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

@@ -25,26 +25,31 @@ export class EmployeeTypePage implements OnInit {
     this.fetchEmployeeTypes();
   }
 
-  fetchEmployeeTypes() {
-    this.isLoading = true;
-    this.employeeService.getAllEmployeeTypes().subscribe({
-      next: data => {
-        console.log('FETCHING EMPLOYEE TYPES FROM DB');
-        console.log(data);
-        this.isLoading = false;
-        this.employeeTypeList = data;
+  ngOnInit() {
+    this.employeeService.fetchEmployeeTypesEvent.subscribe(
+      {
+        next: res => {
+          console.log('EMIT TO GO FETCH THE EMPLOYEE TYPES AGAIN');
+          this.fetchEmployeeTypes();
+        }
       }
-    });
+    );
   }
 
-  ngOnInit() {
-    this.employeeService.fetchEmployeeTypesEvent.subscribe({
-      next: res => {
-        console.log('EMIT TO FETCH EMPLOYEE TYPES AGAIN');
-        this.fetchEmployeeTypes();
+  fetchEmployeeTypes() {
+    this.isLoading = true;
+    this.employeeService.getAllEmployeeTypes().subscribe(
+      {
+        next: data => {
+          console.log('FETCHING EMPLOYEE TYPES FROM DB');
+          console.log(data.result);
+          this.isLoading = false;
+          this.employeeTypeList = data.result;
+        }
       }
-    });
+    );
   }
+
 
 
 }

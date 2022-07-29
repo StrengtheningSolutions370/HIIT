@@ -1,18 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Team7.Context;
 using Team7.Factory;
 using Team7.Models;
@@ -21,15 +16,19 @@ using System.Text;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Team7.Services;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace Team7
 {
     public class Startup
     {
         readonly string corsPolicy = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -37,13 +36,14 @@ namespace Team7
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             //Authentication configuration
             services.AddIdentity<AppUser, IdentityRole>(options =>
              {
                  options.Password.RequireDigit = true;
                  options.Password.RequireUppercase = false;
                  options.Password.RequireLowercase = false;
-                 options.Password.RequireNonAlphanumeric = false;                 
+                 options.Password.RequireNonAlphanumeric = false;
                  options.Password.RequiredLength = 8;
                  options.Password.RequiredUniqueChars = 1;
                  options.User.RequireUniqueEmail = true;
@@ -61,6 +61,8 @@ namespace Team7
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
                         };
                     });
+
+
 
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsPrincipalFactory>();
             services.Configure<DataProtectionTokenProviderOptions>(options =>
@@ -116,7 +118,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Shan")));
+            options.UseSqlServer(Configuration.GetConnectionString("AWS")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
@@ -130,7 +132,6 @@ namespace Team7
             services.AddScoped<IEmployeeTypeRepo, EmployeeTypeRepo>();
             services.AddScoped<IExerciseCategoryRepo, ExerciseCategoryRepo>();
             services.AddScoped<IExerciseRepo, ExerciseRepo>();
-            services.AddScoped<IInventoryItemRepo, InventoryItemRepo>();
             services.AddScoped<ILessonPlanRepo, LessonPlanRepo>();
             services.AddScoped<ILessonRepo, LessonRepo>();
             services.AddScoped<IMeasurementRepo, MeasurementRepo>();
@@ -139,26 +140,22 @@ namespace Team7
             services.AddScoped<IOrderStatusRepo, OrderStatusRepo>();
             services.AddScoped<IPasswordHistoryRepo, PasswordHistoryRepo>();
             services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();
-            services.AddScoped<IPermissionRepo, PermissionRepo>();
             services.AddScoped<IPriceHistoryRepo, PriceHistoryRepo>();
             services.AddScoped<IQualificationRepo, QualificationRepo>();
             services.AddScoped<IQualificationTypeRepo, QualificationTypeRepo>();
-            services.AddScoped<IReceiptRepo, ReceiptRepo>();
+            services.AddScoped<IPaymentRepo, PaymentRepo>();
             services.AddScoped<IRefundReasonRepo, RefundReasonRepo>();
             services.AddScoped<IRefundRepo, RefundRepo>();
             services.AddScoped<ISaleCategoryRepo, SaleCategoryRepo>();
             services.AddScoped<ISaleItemRepo, SaleItemRepo>();
             services.AddScoped<ISaleRepo, SaleRepo>();
             services.AddScoped<IScheduleRepo, ScheduleRepo>(); 
-            services.AddScoped<ISessionRepo, SessionRepo>();
             services.AddScoped<IStockTakeLineRepo, StockTakeLineRepo>();
             services.AddScoped<IStockTakeRepo, StockTakeRepo>();
             services.AddScoped<ISupplierOrderLineRepo, SupplierOrderLineRepo>();
             services.AddScoped<ISupplierOrderRepo, SupplierOrderRepo>();
             services.AddScoped<ISupplierRepo, SupplierRepo>();
             services.AddScoped<ITitleRepo, TitleRepo>();
-            services.AddScoped<IUserRepo, UserRepo>();
-            services.AddScoped<IUserRoleRepo, UserRoleRepo>();
             services.AddScoped<IVenueRepo, VenueRepo>();
             services.AddScoped<IVATRepo, VATRepo>();
             services.AddScoped<IWriteOffLineRepo, WriteOffLineRepo>();
@@ -169,7 +166,7 @@ namespace Team7
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICorsService corsService, ICorsPolicyProvider corsPolicyProvider)
         {
 
 
@@ -186,13 +183,26 @@ namespace Team7
 
             }
 
-            app.UseHttpsRedirection();
+            /*app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
+
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
                 RequestPath = new PathString("/Resources")
+            });*/
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources"),
+                ServeUnknownFileTypes = true,
+                OnPrepareResponse = ctx => {
+                    ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+                    ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers",
+                      "Origin, X-Requested-With, Content-Type, Accept");
+                },
             });
 
             app.UseHttpsRedirection();

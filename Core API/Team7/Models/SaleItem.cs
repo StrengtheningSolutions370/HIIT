@@ -25,17 +25,26 @@ namespace Team7.Models
         [Required]
         public string Description { get; set; }
         [Required]
+
+        //public decimal CostPrice { get; set; }
+        //[Required]
         public decimal Price { get; set; }
         [Required]
         public bool Quotable { get; set; }
         [Required]
         public int Quantity { get; set; }
         [Required]
+
+        //public int QuantityOnHand { get; set; }
+        //[Required]
+
+        public int Stock { get; set; }
+        [Required]
         public int? SaleCategoryID { get; set; }
 
+        public virtual SaleCategory SaleCategory { get; set; }
         public virtual ICollection<InventoryItem> InventoryItem { get; set; }
         public virtual ICollection<PriceHistory> PriceHistory { get; set; }
-        public virtual SaleCategory SaleCategory { get; set; }
         public virtual ICollection<SaleLine> SaleLine { get; set; }
         public virtual ICollection<StockTakeLine> StockTakeLine { get; set; }
     }

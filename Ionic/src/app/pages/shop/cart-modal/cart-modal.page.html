@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cart</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="this.global.dismissModal()">
+        <ion-icon name="close-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-cart-item *ngFor="let item of model?.items; let i = index" [item]="item" [index]="i" (add)="quantityPlus($event)"
+    (minus)="quantityMinus($event)">
+  </app-cart-item>
+
+  <ion-label *ngIf="this.model === null">Cart is empty.</ion-label>
+
+  <ion-list class="borderBottom" *ngIf="this.model !== null">
+    <ion-item lines="none">
+      <ion-label color="dark">
+        <h1>
+          Item Total
+        </h1>
+      </ion-label>
+      <ion-text slot="end" color="dark">{{model?.totalPrice | currency: 'ZAR'}}</ion-text>
+    </ion-item>
+  </ion-list>
+</ion-content>

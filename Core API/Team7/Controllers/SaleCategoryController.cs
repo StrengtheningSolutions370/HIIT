@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Team7.Models.Repository;
 using Team7.Models;
-using Microsoft.EntityFrameworkCore;
-using Team7.Context;
 
 namespace Team7.Controllers
 {
@@ -29,8 +25,14 @@ namespace Team7.Controllers
             try
             {
                 SaleCategoryRepo.Add(saleCategory);
-                await SaleCategoryRepo.SaveChangesAsync();
-                return Ok(saleCategory);
+                if (await SaleCategoryRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                } else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
+                }
+               
             }
             catch (Exception err)
             {
@@ -44,18 +46,24 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutSaleCategory(int id, [FromBody] SaleCategory saleCategory)
         {
-            var toUpdate = await SaleCategoryRepo.GetSaleCategoryIdAsync(id);
+            var toUpdate = await SaleCategoryRepo._GetSaleCategoryIdAsync(id);
             if (toUpdate == null)
             {
-                return NotFound("Could not find existing Sale Category with id:" + id);
+                return NotFound("Could not find existing Sale Category with ID - " + id);
             }
             try
             {
                 toUpdate.Name = saleCategory.Name;
                 toUpdate.Description = saleCategory.Description;
 
-                await SaleCategoryRepo.SaveChangesAsync();
-                return Ok("Successfully updated");
+                if (await SaleCategoryRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                } else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to update value in the database. Contact support.");
+                }
+                
             }
             catch (Exception err)
             {
@@ -69,7 +77,7 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteSaleCategory(int id)
         {
-            var tempSaleCategory = await SaleCategoryRepo.GetSaleCategoryIdAsync(id);
+            var tempSaleCategory = await SaleCategoryRepo._GetSaleCategoryIdAsync(id);
             if (tempSaleCategory == null)
             {
                 return NotFound();
@@ -77,8 +85,15 @@ namespace Team7.Controllers
             try
             {
                 SaleCategoryRepo.Delete<SaleCategory>(tempSaleCategory);
-                await SaleCategoryRepo.SaveChangesAsync();
-                return Ok();
+                if (await SaleCategoryRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
+                }
+                
             }
             catch (Exception err)
             {
@@ -97,9 +112,12 @@ namespace Team7.Controllers
                 var saleCategoryList = await SaleCategoryRepo.GetAllSaleCategorysAsync();
                 if (saleCategoryList == null)
                 {
-                    return NotFound();
+                    return Ok(0);
+                } else
+                {
+                    return Ok(saleCategoryList);
                 }
-                return Ok(saleCategoryList);
+                
             }
             catch (Exception err)
             {
@@ -110,12 +128,19 @@ namespace Team7.Controllers
         // GET: api/salecategory/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingSaleCategories(string input)
+        public async Task<IActionResult> GetMatchingSaleCategories(string name, string description)
         {
             try
             {
-                var saleCategory = await SaleCategoryRepo.GetSaleCategorysAsync(input);
-                return Ok(saleCategory);
+                var saleCategory = await SaleCategoryRepo.GetSaleCategorysAsync(name, description);
+                if (saleCategory == null)
+                {
+                    return Ok(0);
+                }
+                else
+                {
+                    return Ok(saleCategory);
+                }
             }
             catch (Exception err)
             {
@@ -123,13 +148,6 @@ namespace Team7.Controllers
             }
 
         }
-
-        [HttpGet]
-        [Route("exists")]
-        public async Task<SaleCategory> SaleCategoryExists(int id)
-        {
-            return await SaleCategoryRepo.GetSaleCategoryIdAsync(id);
-        }
-
+   
     }
 }

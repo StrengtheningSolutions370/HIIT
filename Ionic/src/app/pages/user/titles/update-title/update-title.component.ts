@@ -29,25 +29,30 @@ export class UpdateTitleComponent implements ViewWillEnter {
   ionViewWillEnter() {
     console.log('UpdateTitle-ViewWillEnter');
     console.log(this.title);
-    this.uTitleForm.controls.titleDescription.setValue(this.title.description);
-    //Populate the update ttile form with the values received from the selected title object in the main page.
+    if (this.title != null){
+      this.uTitleForm.controls.titleDescription.setValue(this.title.description);
+    } else {
+      this.global.showAlert('No title selected for update','Update Title Error');
+      this.global.dismissModal();
+    }
   }
 
   submitForm() {
     if (!this.uTitleForm.valid) { //If the form has any validation errors, the form will not be submitted.
       console.log('Please provide all required fields');
-      this.global.showAlert("Please provide all required fields");
+      this.global.showAlert('Please provide all required fields');
       return false;
     }
     else
     {
       console.log('InsideUpdateSubmit:');
       let temp = new Title();
-      const choice = 2;
+      const choice = 2; //Update choice
       temp = {
         titleID: this.title.titleID,
-        description: this.uTitleForm.value['titleDescription'],
-        users: []
+        description: this.uTitleForm.value.titleDescription,
+        //passing null does not change the users array
+        users: null
       };
         console.log(temp);
        this.titleService.confirmTitleModal(choice,temp);

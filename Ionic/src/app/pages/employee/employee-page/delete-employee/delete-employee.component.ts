@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController, ToastController, ViewWillEnter, AlertController } from '@ionic/angular';
+import { Employee } from 'src/app/models/employee';
+import { EmployeeService } from 'src/app/services/employee/employee.service';
 
 @Component({
   selector: 'app-delete-employee',
@@ -8,12 +12,71 @@ import { ModalController } from '@ionic/angular';
 })
 export class DeleteEmployeeComponent implements OnInit {
 
-  constructor(private modalCtrl: ModalController) { }
+  @Input() employee: any;
 
-  ngOnInit() {}
+  title! : string;
+  employeeType! : string;
+  qualification! : string;
+  contract! : any;
+  imgSrc = '';
+  pdfSrc = '';
+
+
+  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
+    public employeeService: EmployeeService, private router: Router, private route: ActivatedRoute, private alertCtrl: AlertController) { }
+
+
+  ngOnInit() {
+
+  }
+
+  //Send through the id of the selected employee to be deleted in the employee service.
+  async delete(employee : any) {
+    this.employeeService.deleteEmployee(employee.data.appUser.id).then(resp => {
+      if (resp) {
+        //deleted
+        this.sucDelete();
+        this.dismissModal();
+      } else {
+        //failed to delete due to links
+        //call associative component here:
+        this.employeeService.AssociativeEmployeeComponent(employee);
+      }
+    });
+
+    // this.sucDelete();
+
+  }
+  
+  async sucDelete() {
+    const toast = await this.toastCtrl.create({
+      message: 'The Employee has been successfully deleted!',
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async failureAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Could not delete Employee',
+      message: 'There was an error deleting the employee, please try again.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
 
   dismissModal() {
     this.modalCtrl.dismiss();
+  };
+
+  createImg (fileName: string) {
+    if (fileName == null)
+      return `https://localhost:44383/Resources/Employees/Images/default.jpeg`;
+    return `https://localhost:44383/Resources/Employees/Images/${fileName}`;
   }
 
+  public createContract = (fileName: string) => `https://localhost:44383/Resources/Employees/Contracts/${fileName}`;
+
 }
+
+
