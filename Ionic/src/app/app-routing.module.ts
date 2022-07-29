@@ -198,10 +198,27 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule)
   },
   {
+    path: 'password',
+    loadChildren: () => import('./pages/passwordmanager/passwordmanager.module').then( m => m.PasswordmanagerPageModule),
+    // canActivate: [AuthGaurdService],
+    // data : {
+    //   roles: [AllRoles]
+    // }
+  },
+  {
+    path: 'payment',
+    loadChildren: () => import('./pages/payments/payments.module').then( m => m.PaymentsPageModule ),
+    // canActivate: [AuthGaurdService],
+    // data: {
+    //   roles: [AllRoles]
+    // }
+  },
+  {
     path: '**', //this route object must be last
     redirectTo: 'login',
-  }
- ];
+  },
+]  
+
 
 @NgModule({
   imports: [

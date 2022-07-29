@@ -9,15 +9,18 @@
         <ion-icon slot="end" name="cart"></ion-icon>
       </ion-button>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
-      <!--Can we change this dynamically when switching between tabs?-->
-    <!-- </ion-item> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  payment portal here
 
-<!-- </ion-content>
-<ion-footer style="margin-left:20px;margin-bottom: 10px;">
-  Bester Strength and Conditioning | info@besterstrengthandconditioning.co.za
-  <br>
-</ion-footer> -->
+  <form action="https://sandbox.payfast.co.za​/eng/process" method="post">
+    <input type="hidden" name="merchant_id" value="10000100">
+    <input type="hidden" name="merchant_key" value="46f0cd694581a">
+    <input type="hidden" name="amount" value="100.00">
+    <input type="hidden" name="item_name" value="Test Product">
+    <input type="submit">
+ </form> 
+ 
+</ion-content>

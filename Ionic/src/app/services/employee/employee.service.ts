@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable no-underscore-dangle */
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { EmployeeType } from 'src/app/models/employeeType';
@@ -24,6 +24,7 @@ import { ViewEmployeeComponent } from 'src/app/pages/employee/employee-page/view
 import { RepoService } from '../repo.service';
 import { TitleService } from '../title/title.service';
 import { Roles } from 'src/app/models/roles.enum';
+import { GlobalService } from '../global/global.service';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,7 @@ public get employeeList(){
 private tempE: Employee[];
 
   constructor(public repo: RepoService, private modalCtrl: ModalController,
-    public titleService: TitleService) {
+    public titleService: TitleService, private global : GlobalService, public  alertCtrl: AlertController) {
     //Receive the employee types from the repo (API).
     this.getAllEmployeeTypes();
 
@@ -104,10 +105,15 @@ private tempE: Employee[];
             this.fetchEmployeesEvent.emit();
             resolve(true);
           },
-          error: () => {
+          error: (e:any) => {
+            // this.fetchEmployeesEvent.emit();
             _(false);
+            this.duplicateAlert();
           }
         })
+        .add(() => { 
+          this.global.endNativeLoad(); 
+        });
       });
       // .subscribe(
       //   {
@@ -122,11 +128,19 @@ private tempE: Employee[];
       //create non-admin employee:
 
       return new Promise<any>((resolve, _) => {
-        this.repo.createEmployee(payload).subscribe({
+        this.repo.createEmployee(payload)
+        .subscribe({
           next: () => {
             this.fetchEmployeesEvent.emit();
             resolve(true);
+          },
+          error: (e:any) => {
+            this.fetchEmployeesEvent.emit();
+            _(false);
           }
+        })
+        .add(() => {
+          this.global.endNativeLoad();
         })
       });
       // .subscribe(
@@ -151,6 +165,16 @@ private tempE: Employee[];
 
    }
 
+   async duplicateAlert() {
+    console.trace();
+    const alert = await this.alertCtrl.create({
+      header: 'Employee Already Exists',
+      message: 'The Employee Information entered already exists on the system',
+      buttons: ['OK']
+    });
+   alert.present();
+  }
+
    getAllEmployees(): Observable<any> {
     return this.repo.getEmployees();
   }
@@ -165,7 +189,7 @@ private tempE: Employee[];
       {
         next: () => {
           console.log('VENUE UPDATED');
-          this.fetchEmployeeTypesEvent.emit(employeeType);
+          this.fetchEmployeeTypesEvent.emit();
         }
       }
     );
@@ -229,9 +253,10 @@ private tempE: Employee[];
           resolve(true);
         },
         error: () => {
+          this.fetchEmployeesEvent.emit();
           _(false);
         }
-      });
+      }).add(() => { this.global.endNativeLoad(); });
     });
 
   }
@@ -248,6 +273,7 @@ private tempE: Employee[];
 
   deleteEmployee(id: string) : Promise<any> {
     return new Promise<any>((resolve, reject) => {
+      this.global.nativeLoad("Deleting...");
       this.repo.deleteEmployee(id).subscribe(
         {
           next: res => {
@@ -258,7 +284,9 @@ private tempE: Employee[];
             resolve(false);
           }
         }
-      );
+      ).add(() => {
+        this.global.endNativeLoad();
+      });
     });
   }
 
@@ -464,11 +492,7 @@ private tempE: Employee[];
         });
         //Update the current vat list with the vat list from the confirm modal.
         modal.onDidDismiss().then(() => {
-
-          // this.repo.getEmployees();
-          this.fetchEmployeesEvent.emit();
           resolve(true);
-
         });
         await modal.present();
 
@@ -483,11 +507,7 @@ private tempE: Employee[];
           }
         });
         modal.onDidDismiss().then(() => {
-          // this.repo.getSaleItems();
-          // this.updateSaleItemInfoModal(saleItem);
-          this.fetchEmployeesEvent.emit();
           resolve(true);
-
         });
         await modal.present();
       } else {

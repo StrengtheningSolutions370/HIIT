@@ -82,41 +82,36 @@ export class ConfirmEmployeeComponent implements OnInit {
   //2 = confirm UPDATE
   async confirmChanges(employee: Employee){
     console.log(this.choice);
-    this.loading = true;
-    this.global.nativeLoad("Updating...");
-
     if (this.choice === 1){
-
       //CREATE
+      this.global.nativeLoad("Creating...");
       console.log('Add Employee from confirm:');
-      this.employeeService.createEmployee(employee).then(() => {
+      this.employeeService.createEmployee(employee).then((el : any) => {
+        if (el) {
           this.dismissModal();
-          this.sucAdd();
+          this.sucUpdate();
+        } else {
+          this.duplicateAlert();
+        }
+          // this.employeeService.fetchEmployeesEvent.emit();
       }).catch(() => {
-        this.duplicateAlert();
-        this.loading = false;
-        this.global.endNativeLoad();
       });
-
     } else if (this.choice === 2){
-      // console.log('confirm e to send', employee);
       //UPDATE
+      this.global.nativeLoad("Updating...");
       this.showProfile = false;
-
       if (employee.Photo != null) {
         this.showProfile = true;
       }
-      
-      await this.employeeService.updateEmployee(employee).then(() => {
-        this.dismissModal();
-        this.sucUpdate();
-      }).catch(() => {
-        // this.duplicateAlert();
-        // this.loading = false;
-        // this.global.endNativeLoad();
+      await this.employeeService.updateEmployee(employee).then((el) => {
+          if (el) {
+            this.dismissModal();
+            this.sucUpdate();
+          } else {
+            this.duplicateAlert();
+          }
+        }).catch(() => {
       });
-      
-
     }
   }
 
@@ -153,6 +148,7 @@ export class ConfirmEmployeeComponent implements OnInit {
   }
 
   async duplicateAlert() {
+    console.trace();
     const alert = await this.alertCtrl.create({
       header: 'Employee Already Exists',
       message: 'The Employee Information entered already exists on the system',
