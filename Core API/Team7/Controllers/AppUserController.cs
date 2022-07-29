@@ -511,24 +511,29 @@ namespace Team7.Controllers
             }
 
 
-            Email emailClient = new();
             var bodyClient = "<h1>BSC product quotation: "+saleQuoteName+" </h1> <br /> <hr>" +
                 "<p><strong>Thank you for your quotation request</strong></p>" +
                 "<p>A sales consultant will be in contact with you shortly</p>" +
                 "<br /> <hr>";
+            Email emailClient = new Email(clientAddress, saleQuoteName + " quotation request", bodyClient);
 
-            Email emailEmployee = new();
             var bodyEmployee = "<h1>BSC product quotation: " + saleQuoteName + " </h1> <br /> <hr>" +
                 "<p><strong>New client product request, respond to:</strong>" + clientAddress+"</strong></p>" +
                 "<p>Date of email creation from API: "+currentTime.ToString()+"</p>" +
                 "<p>Product ID: " + saleQuoteID + "</p>" +
                 "<p><strong> Client message: " + optDescription 
                 + "<br /> <hr>";
+            Email emailEmployee = new Email(employeeAddress, saleQuoteName + " quotation request", bodyEmployee);
+
+            Thread thread1 = new Thread(new ThreadStart(emailClient.sendEmail));
+            Thread thread2 = new Thread(new ThreadStart(emailEmployee.sendEmail));
             try
             {
                 //email the password to the user:
-                emailClient.sendEmail(clientAddress, saleQuoteName + " quotation request", bodyClient);
-                emailEmployee.sendEmail(employeeAddress, saleQuoteName + " quotation request", bodyEmployee);
+                /*emailClient.sendEmail(clientAddress, saleQuoteName + " quotation request", bodyClient);
+                emailEmployee.sendEmail(employeeAddress, saleQuoteName + " quotation request", bodyEmployee);*/
+                thread1.Start();
+                thread2.Start();
             }
             catch (Exception ex)
             {
