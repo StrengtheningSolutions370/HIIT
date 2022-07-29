@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="cSaleItemForm" (ngSubmit)="submitForm()"> 
+  <form [formGroup]="cSaleItemForm" (ngSubmit)="submitForm()">
     <br/>
     <div class="ion-text-center">
       <p style="font-size:large">Please fill in the sale item information below</p>
@@ -32,26 +32,39 @@
     </span>
 
    <!-- // Not sure if this is ideal for the return
-    <ion-item *ngIf="saleItem!=null"> 
+    <ion-item *ngIf="saleItem!=null">
       <ion-label>
         <img src="{{this.global.createImg(saleItem.photo)}}">
       </ion-label>
     </ion-item>
-   --> 
+   -->
 
     <ion-item>
         <ion-label>Photo:</ion-label>
         <input (change)="addImage($event)" type="file" id="file-input" accept="image/png, image/jpeg">
     </ion-item>
-   
-    <ion-item>      
+
+    <ion-item>
       <ion-label>
-       <p>Is this item quotable? 
+       <p>Is this item quotable?
         <ion-checkbox formControlName="itemQuotable" (ionChange)="checkBoxToggle($event)" color="secondary" ></ion-checkbox></p>
       </ion-label>
     </ion-item>
 
     <div *ngIf="!this.quotable">
+      <ion-item>
+        <ion-label position="floating">Sale Category:</ion-label>
+        <ion-select formControlName="itemSCategory" type="text" required="" id="itemSCategory" >
+          <ng-container *ngFor="let c of this.categoryDropDown">
+            <ion-select-option value="{{c.saleCategoryID}},{{c.name}}">{{ c.name }}</ion-select-option>
+          </ng-container>
+        </ion-select>
+        <br/>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="errorControl.itemSCategory.errors?.required && cSaleItemForm.get('itemSCategory').touched">
+        Category is required <br/>
+       </span>
+
       <ion-item>
         <ion-label position="floating">Price:</ion-label>
         <br/>
@@ -76,23 +89,12 @@
        Quantity must be greater than 0 <br/>
       </span>
     </div>
-    <ion-item>
-      <ion-label position="floating">Sale Category:</ion-label>
-      <ion-select formControlName="itemSCategory" type="text" required="" id="itemSCategory" >
-        <ng-container *ngFor="let c of this.categoryDropDown">
-          <ion-select-option value="{{c.saleCategoryID}},{{c.name}}">{{ c.name }}</ion-select-option>
-        </ng-container>
-      </ion-select>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.itemSCategory.errors?.required && cSaleItemForm.get('itemSCategory').touched">
-      Category is required <br/>
-     </span>
+
     <br>
     <br>
     <ion-button type="submit" color="success" [disabled]="!cSaleItemForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Sale Item</ion-button>
     <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
-    
+
   </form>
 </ion-content>
 

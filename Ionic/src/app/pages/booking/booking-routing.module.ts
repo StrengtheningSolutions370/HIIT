@@ -5,21 +5,33 @@ import { BookingPage } from './booking.page';
 
 const routes: Routes = [
   {
+    path: 'tabs',
+    component: BookingPage,
+    children: [
+      {
+        path: 'booking-type',
+        loadChildren: () => import('./booking-type/booking-type.module').then( m => m.BookingTypePageModule)
+      },
+      {
+        path: 'schedule',
+        loadChildren: () => import('./schedule/schedule.module').then( m => m.SchedulePageModule)
+      },
+      {
+        path: 'client-booking',
+        loadChildren: () => import('./client-booking/client-booking.module').then( m => m.ClientBookingPageModule)
+      }
+    ]
+  },
+  {
     path: '',
-    component: BookingPage
+    redirectTo:'tabs/schedule',
+    pathMatch: 'full'
   },
   {
-    path: 'booking-type',
-    loadChildren: () => import('./booking-type/booking-type.module').then( m => m.BookingTypePageModule)
-  },
-  {
-    path: 'schedule',
-    loadChildren: () => import('./schedule/schedule.module').then( m => m.SchedulePageModule)
-  },
-  {
-    path: 'client-booking',
-    loadChildren: () => import('./client-booking/client-booking.module').then( m => m.ClientBookingPageModule)
+    path: 'calendar-modal',
+    loadChildren: () => import('./calendar-modal/calendar-modal.module').then( m => m.CalendarModalPageModule)
   }
+
 ];
 
 @NgModule({

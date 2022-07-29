@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -97,6 +97,10 @@ import { ViewBtypeComponent } from './pages/booking/booking-type/view-btype/view
 
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
+import { TimeRangeComponent } from './pages/booking/time-range/time-range.component';
+
+
+
 
 @NgModule({
   declarations: [AppComponent,
@@ -135,7 +139,9 @@ import { SidemenuComponent } from './sidemenu/sidemenu.component';
 
   ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent, AssociativeEtypeComponent,
   //BookingType
-  AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent
+  AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
+  //Calendar
+  TimeRangeComponent
 
 ],
 

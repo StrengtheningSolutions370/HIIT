@@ -17,7 +17,7 @@ export class GlobalService {
 
     //IMAGE manipulation
     //--------
-    public createImg = (fileName: string) => { 
+    public createImg = (fileName: string) => {
       return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
     }
 
@@ -46,7 +46,7 @@ export class GlobalService {
         console.log('show loading error: ', e);
       }
     }
-  
+
     async endNativeLoad() {
       if(this.loading) {this.toggleLoad();}
       try {
@@ -86,8 +86,12 @@ export class GlobalService {
 
     //MODALS
     //------
-    dismissModal() {
-      this.modalCtrl.dismiss();
+    dismissModal(data?: any): any {
+      if (data){
+        return this.modalCtrl.dismiss(data);
+      } else {
+        this.modalCtrl.dismiss()
+      }
     };
 
     //JWT DECODER

@@ -37,3 +37,9 @@ $colors: (
 .toastCenter {
   text-align: center;
 }
+
+.calendar-modal {
+  --height: 80%;
+  --border-radius: 10px;
+  padding: 25px;
+}
