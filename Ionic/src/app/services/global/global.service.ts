@@ -10,6 +10,8 @@ declare const Buffer;
 })
 export class GlobalService {
   loading: Boolean = false;
+  public items: any = [];
+
   constructor(private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
@@ -17,8 +19,10 @@ export class GlobalService {
 
     //IMAGE manipulation
     //--------
-    public createImg = (fileName: string) => { 
-      return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
+    public createImg = (fileName: string) => `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
+
+    filterItems(searchTerm) {
+      return this.items.filter(item => item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
     }
 
     //LOADS

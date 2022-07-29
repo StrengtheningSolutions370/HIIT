@@ -13,7 +13,7 @@ export const routes: Routes = [
   // },
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
 
     canActivate: [AuthGaurdService],
     data: {
@@ -22,7 +22,7 @@ export const routes: Routes = [
   },
   {
     path: 'employees',
-    loadChildren: () => import('./pages/employee/employee.module').then( m => m.EmployeePageModule),
+    loadChildren: () => import('./pages/employee/employee.module').then(m => m.EmployeePageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.SuperUser, Roles.Admin]
@@ -30,7 +30,7 @@ export const routes: Routes = [
   },
   {
     path: 'trainers',
-    loadChildren: () => import('./pages/trainers/trainers.module').then( m => m.TrainersPageModule),
+    loadChildren: () => import('./pages/trainers/trainers.module').then(m => m.TrainersPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.SuperUser, Roles.Admin, Roles.Client, Roles.Member]
@@ -38,7 +38,7 @@ export const routes: Routes = [
   },
   {
     path: 'venues',
-    loadChildren: () => import('./pages/venue/venue.module').then( m => m.VenuePageModule),
+    loadChildren: () => import('./pages/venue/venue.module').then(m => m.VenuePageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.SuperUser, Roles.Admin]
@@ -54,7 +54,7 @@ export const routes: Routes = [
   // },
   {
     path: 'payments',
-    loadChildren: () => import('./pages/payments/payments.module').then( m => m.PaymentsPageModule),
+    loadChildren: () => import('./pages/payments/payments.module').then(m => m.PaymentsPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.SuperUser, Roles.Admin, Roles.Member, Roles.Client]
@@ -62,7 +62,7 @@ export const routes: Routes = [
   },
   {
     path: 'sales',
-    loadChildren: () => import('./pages/sale/sale.module').then( m => m.SalePageModule),
+    loadChildren: () => import('./pages/sale/sale.module').then(m => m.SalePageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.SuperUser, Roles.Admin]
@@ -70,7 +70,7 @@ export const routes: Routes = [
   },
   {
     path: 'inventory',
-    loadChildren: () => import('./pages/inventory/inventory.module').then( m => m.InventoryPageModule),
+    loadChildren: () => import('./pages/inventory/inventory.module').then(m => m.InventoryPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.SuperUser, Roles.Admin]
@@ -78,7 +78,7 @@ export const routes: Routes = [
   },
   {
     path: 'suppliers',
-    loadChildren: () => import('./pages/suppliers/suppliers.module').then( m => m.SuppliersPageModule),
+    loadChildren: () => import('./pages/suppliers/suppliers.module').then(m => m.SuppliersPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.SuperUser, Roles.Admin]
@@ -86,7 +86,7 @@ export const routes: Routes = [
   },
   {
     path: 'stock',
-    loadChildren: () => import('./pages/stock/stock.module').then( m => m.StockPageModule),
+    loadChildren: () => import('./pages/stock/stock.module').then(m => m.StockPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.SuperUser, Roles.Admin]
@@ -94,7 +94,7 @@ export const routes: Routes = [
   },
   {
     path: 'reports',
-    loadChildren: () => import('./pages/reports/reports.module').then( m => m.ReportsPageModule),
+    loadChildren: () => import('./pages/reports/reports.module').then(m => m.ReportsPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.SuperUser, Roles.Admin]
@@ -102,11 +102,11 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'user',
-    loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule),
+    loadChildren: () => import('./pages/user/user.module').then(m => m.UserPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.SuperUser, Roles.Admin]
@@ -123,25 +123,25 @@ export const routes: Routes = [
   },
   {
     path: 'booking',
-    loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule),
+    loadChildren: () => import('./pages/booking/booking.module').then(m => m.BookingPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Member, Roles.Client, Roles.SuperUser]
     }
     //loadChildren component here for bookings once generated
   },
+
   {
     path: 'shop',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./pages/shop/shop.module').then(m => m.ShopPageModule),
     canActivate: [AuthGaurdService],
     data: {
-      roles: [Roles.Member, Roles.Client]
+      roles: [Roles.Member, Roles.Client, Roles.SuperUser]
     }
-    //loadChildren component here for shop once generated
   },
   {
     path: 'cart',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Member, Roles.Client]
@@ -150,7 +150,7 @@ export const routes: Routes = [
   },
   {
     path: 'sessions',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Trainer]
@@ -159,7 +159,7 @@ export const routes: Routes = [
   },
   {
     path: 'schedule',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Trainer]
@@ -168,7 +168,7 @@ export const routes: Routes = [
   },
   {
     path: 'exercises',
-    loadChildren: () => import('./pages/exercises/exercises.module').then( m => m.ExercisesPageModule),
+    loadChildren: () => import('./pages/exercises/exercises.module').then(m => m.ExercisesPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Trainer, Roles.SuperUser]
@@ -177,7 +177,7 @@ export const routes: Routes = [
   },
   {
     path: 'lessonplans',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Trainer]
@@ -186,25 +186,26 @@ export const routes: Routes = [
   },
   {
     path: 'measurements',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Member]
     }
     //loadChildren component here for attendance once generated
   },
+   {
+    path: 'booking',
+    loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule)
+  },
   {
     path: '**', //this route object must be last
     redirectTo: 'login',
-  },
-  {
-    path: 'booking',
-    loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule)
-  }];
+  }
+ ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]
 })

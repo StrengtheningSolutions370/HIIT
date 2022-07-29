@@ -25,6 +25,8 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+// @import '~animate.css/animate.min.css';
+
 $colors: (
   primary:    #404040,
   secondary:  #7b91cb,
@@ -37,3 +39,10 @@ $colors: (
 .toastCenter {
   text-align: center;
 }
+
+.cart-modal{
+  --height: 50%;
+  --border-radius: 5%;
+  padding: 25px;
+}
+

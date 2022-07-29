@@ -77,7 +77,7 @@ export class AddSitemComponent implements ViewWillEnter {
  }
 
  constructor(public global: GlobalService, public formBuilder: FormBuilder,
-   public saleService: SalesService, private repo : RepoService) { 
+   public saleService: SalesService, private repo: RepoService) {
     this.saleService.getAllSaleCategories().subscribe(
       {
         next: data => {
@@ -85,7 +85,7 @@ export class AddSitemComponent implements ViewWillEnter {
           console.log(data);
         }
       }
-    )
+    );
    }
 
    //Used for validation within the form, if there are errors in the control, this method will return the errors.
@@ -114,7 +114,7 @@ export class AddSitemComponent implements ViewWillEnter {
       this.cSaleItemForm.controls.itemPhoto.setValue(this.itemImageBase64String);
       this.cSaleItemForm.controls.itemPrice.setValue(this.saleItem.price);
       this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.quotable);
-      this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.quantity);
+      this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.quantityOnHand);
       this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.saleCategoryID);
     }
     }

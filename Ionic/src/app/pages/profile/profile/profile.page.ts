@@ -1,3 +1,5 @@
+import { Component, OnInit } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
 import { appUserRegister } from 'src/app/models/appUser';
@@ -20,7 +22,7 @@ export class ProfilePage implements OnInit {
   isLoading = false;
   i = false;
 
-  constructor(private repo : RepoService, public global: GlobalService, public titleService: TitleService) { }
+  constructor(private repo : RepoService, public global: GlobalService, public titleService: TitleService, private cartService: CartService) { }
 
   ngOnInit() {
     this.repo.getTitles().subscribe({
