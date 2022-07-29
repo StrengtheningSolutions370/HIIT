@@ -37,7 +37,7 @@ export class ProfilePage implements OnInit {
       }
     });
 
-    
+
   }
 
   setTitleId(titles : any) {
