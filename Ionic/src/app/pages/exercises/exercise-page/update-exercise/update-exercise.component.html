@@ -24,7 +24,7 @@
     </span>
     <ion-item>
       <ion-label position="floating">Description:</ion-label>
-      <ion-input formControlName="description" type="text" required id="description" ></ion-input>
+      <ion-textarea formControlName="description" type="text" required id="description" ></ion-textarea>
       <br/>
     </ion-item>
     <span class="error ion-padding" *ngIf="errorControl.description.errors?.required && uExerciseForm.get('description').touched">
