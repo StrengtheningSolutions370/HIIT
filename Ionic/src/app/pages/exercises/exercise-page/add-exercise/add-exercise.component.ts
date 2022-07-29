@@ -54,7 +54,7 @@ export class AddExerciseComponent implements ViewWillEnter {
           const temp = {
             name: this.cExerciseForm.value['exerciseName'],
             description: this.cExerciseForm.value['exerciseDescription'],
-            exerciseCategory: this.cExerciseForm.controls['exerciseCategory'].value.split(',')[0],
+            exerciseCategoryID: this.cExerciseForm.controls['exerciseCategory'].value.split(',')[0],
             lessons: []
           };
           this.global.dismissModal();

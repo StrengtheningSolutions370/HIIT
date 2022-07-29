@@ -390,7 +390,7 @@ getMatchBookingType(name: string, description: string): Observable<any>{
 // Exercise:
   // ------
   // Create
-  createExercise(exercise: any): Observable<any> {
+  createExercise(exercise: Exercise): Observable<any> {
     return this.http.post<any>(`${this.base + this.ExerciseController}add`, exercise, this.httpOptions);
   }
   //Update

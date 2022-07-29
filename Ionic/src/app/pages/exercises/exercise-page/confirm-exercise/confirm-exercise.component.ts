@@ -16,6 +16,7 @@ export class ConfirmExerciseComponent {
   @Input() exerciseCategory: ExerciseCategory;
 
   constructor(public global: GlobalService, public exerciseService: ExerciseService) {
+
   }
 
   async checkMatch(name: string, description: string): Promise<boolean>{
@@ -45,6 +46,8 @@ export class ConfirmExerciseComponent {
    //1 = confirm ADD
   //2 = confirm UPDATE
   async confirmChanges(exercise: Exercise){
+    console.log(this.exercise);
+    console.log(this.exerciseCategory);
     //search duplicates
     this.checkMatch(exercise.name,exercise.description).then(result =>{
       console.log(result);
@@ -58,15 +61,9 @@ export class ConfirmExerciseComponent {
             this.global.dismissModal();
             this.global.showToast('The exercise has been successfully added!');
         } else if (this.choice === 2){
-          const temp = {
-            name: exercise.name,
-            description: exercise.description,
-            exerciseCategoryID: exercise.exerciseCategoryID,
-            lessons: null
-          };
             console.log('Update Exercise from confirm:');
             //CallRepoToUpdate
-            this.exerciseService.updateExercise(exercise.exerciseID,temp);
+            this.exerciseService.updateExercise(exercise.exerciseID,exercise);
             this.global.dismissModal();
             this.global.showToast('The exercise has been successfully updated!');
           }

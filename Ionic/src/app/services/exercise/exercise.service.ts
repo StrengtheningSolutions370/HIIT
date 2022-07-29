@@ -62,7 +62,8 @@ export class ExerciseService {
    }
 
    //Add a exercise to the exercise list within the exercise service.
-   createExercise(exercise: any){
+   createExercise(exercise: Exercise){
+    console.log("Exercise Service: CREATE EXERCISE");
     const ExerciseTemp:Exercise = {
       name: exercise.name,
       description: exercise.description,

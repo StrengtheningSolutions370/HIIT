@@ -60,7 +60,7 @@ export class UpdateExerciseComponent implements ViewWillEnter {
           exerciseID: this.exercise.exerciseID,
           name: this.uExerciseForm.controls['name'].value,
           description: this.uExerciseForm.controls['description'].value,
-          exerciseCategory: this.uExerciseForm.controls['exerciseCategory'].value.split(',')[0],
+          exerciseCategoryID: this.uExerciseForm.controls['exerciseCategory'].value.split(',')[0],
           lessons: null
         };
         console.log(temp);
