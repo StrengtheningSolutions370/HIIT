@@ -87,6 +87,14 @@ import { ConfirmEmployeeComponent } from './pages/employee/employee-page/confirm
 import { UpdateEmployeeComponent } from './pages/employee/employee-page/update-employee/update-employee.component';
 import { AssociativeEmployeeComponent } from './pages/employee/employee-page/associative-employee/associative-employee.component'
 
+//REFUND REASON IMPORTS:
+import { AddRefundReasonComponent } from 'src/app/pages/sale/refund-reason/add-refund-reason/add-refund-reason.component';
+import { DeleteRefundReasonComponent } from 'src/app/pages/sale/refund-reason/delete-refund-reason/delete-refund-reason.component';
+import { UpdateRefundReasonComponent } from 'src/app/pages/sale/refund-reason/update-refund-reason/update-refund-reason.component';
+import { ViewRefundReasonComponent } from 'src/app/pages/sale/refund-reason/view-refund-reason/view-refund-reason.component';
+import { ConfirmRefundReasonComponent } from 'src/app/pages/sale/refund-reason/confirm-refund-reason/confirm-refund-reason.component';
+import { AssociativeRefundReasonComponent } from 'src/app/pages/sale/refund-reason/associative-refund-reason/associative-refund-reason.component';
+
 //BOOKING TYPE IMPORTS:
 import { AddBtypeComponent } from './pages/booking/booking-type/add-btype/add-btype.component';
 import { AssociativeBtypeComponent } from './pages/booking/booking-type/associative-btype/associative-btype.component';
@@ -95,9 +103,25 @@ import { DeleteBtypeComponent } from './pages/booking/booking-type/delete-btype/
 import { UpdateBtypeComponent } from './pages/booking/booking-type/update-btype/update-btype.component';
 import { ViewBtypeComponent } from './pages/booking/booking-type/view-btype/view-btype.component';
 
+//WRITE-OFF REASON IMPORTS:
+import { AddWriteOffReasonComponent } from './pages/inventory/write-off-reason/add-write-off-reason/add-write-off-reason.component';
+import { AssociativeWriteOffReasonComponent } from './pages/inventory/write-off-reason/associative-write-off-reason/associative-write-off-reason.component';
+import { ConfirmWriteOffReasonComponent } from './pages/inventory/write-off-reason/confirm-write-off-reason/confirm-write-off-reason.component';
+import { DeleteWriteOffReasonComponent } from './pages/inventory/write-off-reason/delete-write-off-reason/delete-write-off-reason.component';
+import { UpdateWriteOffReasonComponent } from './pages/inventory/write-off-reason/update-write-off-reason/update-write-off-reason.component';
+import { ViewWriteOffReasonComponent } from './pages/inventory/write-off-reason/view-write-off-reason/view-write-off-reason.component';
+
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
+
+//EXERCISE IMPORTS:
+import { AddExerciseComponent } from './pages/exercises/exercise-page/add-exercise/add-exercise.component';
+import { UpdateExerciseComponent } from './pages/exercises/exercise-page/update-exercise/update-exercise.component';
+import { DeleteExerciseComponent } from './pages/exercises/exercise-page/delete-exercise/delete-exercise.component';
+import { ViewExerciseComponent } from './pages/exercises/exercise-page/view-exercise/view-exercise.component';
+import { ConfirmExerciseComponent } from './pages/exercises/exercise-page/confirm-exercise/confirm-exercise.component';
+import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/associative-exercise/associative-exercise.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -123,7 +147,7 @@ import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
   //VAT
   AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
   //EmployeeType
-  AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
+  AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,AssociativeEtypeComponent,
   //SalesCategory
   AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent,
   //SalesItem
@@ -132,11 +156,17 @@ import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
   AddExerciseCategoryComponent, UpdateExerciseCategoryComponent, DeleteExerciseCategoryComponent, ViewExerciseCategoryComponent, ConfirmExerciseCategoryComponent, AssociativeExerciseCategoryComponent,
   //Side Menu
   SidemenuComponent,
+  //RefundReason
+  ConfirmRefundReasonComponent, AddRefundReasonComponent, UpdateRefundReasonComponent, ViewRefundReasonComponent, DeleteRefundReasonComponent, AssociativeRefundReasonComponent,
   //Employee
-
   ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent, AssociativeEtypeComponent,
+  //WriteOffReason
+  AddWriteOffReasonComponent, AssociativeWriteOffReasonComponent, ConfirmWriteOffReasonComponent, DeleteWriteOffReasonComponent, UpdateWriteOffReasonComponent, ViewWriteOffReasonComponent,
   //BookingType
-  AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent
+  AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
+  //Exercise
+  AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
+ 
 ],
 
   entryComponents: [],

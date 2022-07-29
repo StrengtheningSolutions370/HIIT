@@ -114,7 +114,7 @@ export const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
+    loadChildren: () => import('./pages/profile/profile/profile.module').then( m => m.ProfilePageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: AllRoles
@@ -193,12 +193,15 @@ export const routes: Routes = [
     }
     //loadChildren component here for attendance once generated
   },
+   {
+    path: 'booking',
+    loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule)
+  },
   {
     path: '**', //this route object must be last
     redirectTo: 'login',
   }
-];
-
+ ];
 
 @NgModule({
   imports: [
