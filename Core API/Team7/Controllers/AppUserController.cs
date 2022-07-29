@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -10,8 +11,10 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Team7.Models;
 using Team7.Models.Repository;
+using Team7.Services;
 using Team7.ViewModels;
 
 namespace Team7.Controllers
@@ -92,11 +95,14 @@ namespace Team7.Controllers
 
                     _clientRepo.Add(clientRec);
 
-                } else {
+                }
+                else
+                {
                     StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
                 }
 
-            } else
+            }
+            else
             {
                 return Forbid("Account with provided email address already exists");
             }
@@ -121,7 +127,8 @@ namespace Team7.Controllers
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError, err + " Internal error. Please contact support");
                 }
-            } else
+            }
+            else
             {
                 return NotFound("The provided email or password is incorrect. Please check your password or register an account.");
             }
@@ -141,7 +148,7 @@ namespace Team7.Controllers
         }
 
         [HttpGet]
-        private async Task <object> GenerateJWTTokenAsync(AppUser appUser)
+        private async Task<object> GenerateJWTTokenAsync(AppUser appUser)
         {
             var roleArray = await _userManager.GetRolesAsync(appUser);
 
@@ -203,6 +210,56 @@ namespace Team7.Controllers
         ////    return Ok(loggedInUser);
         // }
 
+        [HttpPost]
+        [Route("quoteEmail")]
+        public async Task<IActionResult> quoteEmail()
+        {
+            var formCollection = await Request.ReadFormAsync();
 
+            //1. convert employee back to an object and pull values 
+            string s = formCollection.Keys.FirstOrDefault();
+            string decode = HttpUtility.UrlDecode(s);
+            var quoteObj = JObject.Parse(decode);
+            string optDescription = null;
+
+            string clientAddress = quoteObj["clientMail"].ToString();
+            //Look at replacing with a dedicated BSC quotations email
+            string employeeAddress = quoteObj["employeeMail"].ToString();
+            string saleQuoteName = quoteObj["saleQuoteName"].ToString();
+            int saleQuoteID = ((int)quoteObj["saleQuoteID"]);
+            DateTime currentTime = new();
+
+            if (quoteObj["optDescription"] != null)
+            {
+                optDescription = quoteObj["optDescription"].ToString();
+            }
+
+
+            Email emailClient = new();
+            var bodyClient = "<h1>BSC product quotation: "+saleQuoteName+" </h1> <br /> <hr>" +
+                "<p><strong>Thank you for your quotation request</strong></p>" +
+                "<p>A sales consultant will be in contact with you shortly</p>" +
+                "<br /> <hr>";
+
+            Email emailEmployee = new();
+            var bodyEmployee = "<h1>BSC product quotation: " + saleQuoteName + " </h1> <br /> <hr>" +
+                "<p><strong>New client product request, respond to:</strong>" + clientAddress+"</strong></p>" +
+                "<p>Date of email creation from API: "+currentTime.ToString()+"</p>" +
+                "<p>Product ID: " + saleQuoteID + "</p>" +
+                "<p><strong> Client message: " + optDescription 
+                + "<br /> <hr>";
+            try
+            {
+                //email the password to the user:
+                emailClient.sendEmail(clientAddress, saleQuoteName + " quotation request", bodyClient);
+                emailEmployee.sendEmail(employeeAddress, saleQuoteName + " quotation request", bodyEmployee);
+            }
+            catch (Exception ex)
+            {
+                StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support" + ex);
+            }
+
+            return Ok("Email successfully sent.");
+        }
     }
 }

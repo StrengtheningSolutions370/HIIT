@@ -413,7 +413,7 @@ namespace Team7.Controllers
 
                     await _userManager.AddToRoleAsync(user, uvmRole);
 
-                    Email email = new Email();
+                    Email email = new();
                     var body = "<h1>Strengthening Solutions</h1> <br /> <hr>" +
                         "<p><strong>Email:</strong> " + Email + "</p>" +
                         "<p><strong>Password:</strong> " + randomPassword + "</p>" +
