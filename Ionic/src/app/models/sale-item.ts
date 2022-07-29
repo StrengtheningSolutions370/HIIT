@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export class SaleItem {
-    saleItemID : number;
+    saleItemID?: number;
     name: string;
-    photo: number;
+    photo?: number;
     description: string;
+    costPrice?: number;
     price: number;
-    quotable: boolean;
-    quantity: number;
+    quotable?: boolean;
+    quantityOnHand: number;
     saleCategoryID: number;
 }

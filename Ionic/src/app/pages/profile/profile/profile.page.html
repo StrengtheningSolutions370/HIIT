@@ -5,6 +5,9 @@
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
       <ion-title slot="">My Profile</ion-title>
+      <ion-button slot="end" (click)="cartService.openCart()" fill="clear">
+        <ion-icon slot="end" name="cart"></ion-icon>
+      </ion-button>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
   </ion-toolbar>
 </ion-header>

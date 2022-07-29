@@ -25,6 +25,7 @@ import { UpdateCategoryComponent } from 'src/app/pages/sale/sale-category/update
 import { ViewCategoryComponent } from 'src/app/pages/sale/sale-category/view-category/view-category.component';
 import { ConfirmCategoryComponent } from 'src/app/pages/sale/sale-category/confirm-category/confirm-category.component';
 import { AssociativeCategoryComponent } from 'src/app/pages/sale/sale-category/associative-category/associative-category.component';
+import { ViewShopItemComponent } from 'src/app/pages/shop/view-shop-item/view-shop-item.component';
 
 import { RefundReason } from 'src/app/models/refund-reason';
 import { AddRefundReasonComponent } from 'src/app/pages/sale/refund-reason/add-refund-reason/add-refund-reason.component';
@@ -39,6 +40,7 @@ import { AssociativeRefundReasonComponent } from 'src/app/pages/sale/refund-reas
 })
 export class SalesService {
 
+
   @Output() fetchSaleItemsEvent = new EventEmitter<SaleItem>();
   @Output() fetchSaleCategoriesEvent = new EventEmitter<SaleCategory>();
   @Output() fetchRefundReasonsEvent = new EventEmitter<RefundReason>();
@@ -49,12 +51,15 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
   this.getAllSaleItems().subscribe();
 }
 
+
+
+
 //READS:
-  getAllSaleItems() : Observable<any> {
+  getAllSaleItems(): Observable<any> {
     return this.repo.getSaleItems();
   }
 
-  getAllSaleCategories() : Observable<any> {
+  getAllSaleCategories(): Observable<any> {
     return this.repo.getSaleCategory();
   }
 
@@ -211,6 +216,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
 
 
 
+
   //Modals:
   //CREATE Sale Item
   async addSaleItemInfoModal(saleItem?: SaleItem, image?: any) {
@@ -320,6 +326,18 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
     }
   }
 
+    //VIEW Shop Item
+    async viewShopItemInfoModal(saleItem: SaleItem) {
+      console.log("SalesService: ViewShopItemModalCall");
+      console.log(saleItem)
+      const modal = await this.modalCtrl.create({
+        component: ViewShopItemComponent,
+        componentProps: {
+          saleItem
+          }
+      });
+      await modal.present();
+    }
   //DELETE Refund Reason
   async deleteRefundReasonInfoModal(refundReason: RefundReason) {
     console.log("SalesService: DeleteRefundReasonModalCall");
@@ -343,6 +361,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
       });
       await modal.present();
     }
+
   }
 
   //VIEW Sale Item

@@ -114,9 +114,7 @@ import { ViewWriteOffReasonComponent } from './pages/inventory/write-off-reason/
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { TimeRangeComponent } from './pages/booking/time-range/time-range.component';
-
-
-
+import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
 
 //EXERCISE IMPORTS:
 import { AddExerciseComponent } from './pages/exercises/exercise-page/add-exercise/add-exercise.component';
@@ -171,11 +169,10 @@ import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/as
   TimeRangeComponent,
   //Exercise
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
-
 ],
 
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

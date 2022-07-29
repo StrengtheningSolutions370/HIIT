@@ -17,7 +17,6 @@ import { SaleItemPage } from './sale-item.page';
     IonicModule,
     SaleItemPageRoutingModule,
     Ng2SearchPipeModule
-    
   ],
   declarations: [SaleItemPage]
 })
