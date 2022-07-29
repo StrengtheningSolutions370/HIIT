@@ -11,6 +11,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Team7.Models;
 using Team7.Models.Repository;
@@ -296,9 +297,12 @@ namespace Team7.Controllers
             }
             try
             {
-                Email e = new Email();
+                //Email e = new Email();
                 //TODO : this needs to be fixed to the actual email:
-                e.sendEmail("shannonlnoel@icloud.com", "Strengthening Solutions", otp);
+                //e.sendEmail("shannonlnoel@icloud.com", "Strengthening Solutions", otp);
+                Email email = new Email(user.Email, "Strengthening Solutions", otp);
+                Thread thr = new Thread(new ThreadStart(email.sendEmail));
+                thr.Start();
             } catch (Exception ex)
             {
                 emailFlag = true;
