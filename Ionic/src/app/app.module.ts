@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -113,6 +113,7 @@ import { ViewWriteOffReasonComponent } from './pages/inventory/write-off-reason/
 
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
+import { TimeRangeComponent } from './pages/booking/time-range/time-range.component';
 import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
 
 //EXERCISE IMPORTS:
@@ -164,9 +165,10 @@ import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/as
   AddWriteOffReasonComponent, AssociativeWriteOffReasonComponent, ConfirmWriteOffReasonComponent, DeleteWriteOffReasonComponent, UpdateWriteOffReasonComponent, ViewWriteOffReasonComponent,
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
+  //Calendar
+  TimeRangeComponent,
   //Exercise
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
- 
 ],
 
   entryComponents: [],

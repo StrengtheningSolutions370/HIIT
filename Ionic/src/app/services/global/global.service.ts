@@ -19,6 +19,7 @@ export class GlobalService {
 
     //IMAGE manipulation
     //--------
+
     public createImg = (fileName: string) => `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
 
     filterItems(searchTerm) {
@@ -50,7 +51,7 @@ export class GlobalService {
         console.log('show loading error: ', e);
       }
     }
-  
+
     async endNativeLoad() {
       if(this.loading) {this.toggleLoad();}
       try {
@@ -90,8 +91,12 @@ export class GlobalService {
 
     //MODALS
     //------
-    dismissModal() {
-      this.modalCtrl.dismiss();
+    dismissModal(data?: any): any {
+      if (data){
+        return this.modalCtrl.dismiss(data);
+      } else {
+        this.modalCtrl.dismiss()
+      }
     };
 
     //JWT DECODER
