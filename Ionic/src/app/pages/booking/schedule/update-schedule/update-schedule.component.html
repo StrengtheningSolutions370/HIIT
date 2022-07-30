@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>New Schedule Event Details</ion-title>
+    <ion-title>Edit Schedule Event Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
@@ -11,7 +11,7 @@
 <form [formGroup]="cCalendarForm" (ngSubmit)="submitForm()" style="padding-left:10%; padding-right:10%">
   <br/>
   <div class="ion-text-center">
-    <p style="font-size:large">Please fill in the schedule information below</p>
+    <p style="font-size:large">Please update the schedule event information below</p>
   </div>
 
   <br>
@@ -19,18 +19,16 @@
       <ion-button
       id="datePick"
       class="ion-text-start">
-      <div *ngIf="cCalendarForm.get('dateSelector').untouched">{{defaultDate | date:'EEEE, MMMM d'}}</div>
-      <div *ngIf="cCalendarForm.get('dateSelector').touched">{{dateSelect | date:'EEEE, MMMM d'}} </div><ion-icon name="caret-down-circle-outline"></ion-icon>
+      {{dateSelect | date:'EEEE, MMMM d'}} <ion-icon name="caret-down-circle-outline"></ion-icon>
       </ion-button>
       <ion-button
       id="startTime"
-      class="ion-text-center"><div *ngIf="cCalendarForm.get('timeStartSelector').untouched">Starting time</div>
-      <div *ngIf="cCalendarForm.get('timeStartSelector').touched">{{timeStart | date:'h:mm a'}} </div> <ion-icon name="caret-down-circle-outline"></ion-icon>
+      class="ion-text-center">
+      {{timeStart | date:'h:mm a'}}<ion-icon name="caret-down-circle-outline"></ion-icon>
       </ion-button>
       <ion-button
       id="endTime"
-      class="ion-text-end"><div *ngIf="cCalendarForm.get('timeEndSelector').untouched">Ending time</div>
-      <div *ngIf="cCalendarForm.get('timeEndSelector').touched">{{timeEnd | date:'h:mm a'}} </div><ion-icon name="caret-down-circle-outline"></ion-icon>
+      class="ion-text-end">{{timeEnd | date:'h:mm a'}}<ion-icon name="caret-down-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
 
@@ -43,7 +41,7 @@
       presentation="date"
       formControlName="dateSelector"
       (ionChange)="dateSelected()">
-      <span slot="title">Select a day to create an event</span>
+      <span slot="title">Select day to update for event</span>
       </ion-datetime>
    </ng-template>
   </ion-popover>
@@ -79,7 +77,7 @@
     <ion-label position="floating">Venue:</ion-label>
      <ion-select formControlName="venueDrop" type="text" required="" id="venueDrop" >
        <ng-container *ngFor="let v of this.venueList">
-        <ion-select-option value="{{v.venueID}},{{v.name}}">{{ v.name }}</ion-select-option>
+        <ion-select-option value="{{v.venueID}},{{v.name}}" id="venuePre">{{ v.name }}</ion-select-option>
       </ng-container>
     </ion-select>
     <br/>
@@ -90,7 +88,7 @@
     <ion-label position="floating">Booking type:</ion-label>
      <ion-select formControlName="bookingTypeDrop" type="text" required="" id="bookingTypeDrop" >
        <ng-container *ngFor="let bt of this.bookingTypeList">
-        <ion-select-option value="{{bt.bookingTypeID}},{{bt.name}}">{{ bt.name }}</ion-select-option>
+        <ion-select-option value="{{bt.bookingTypeID}},{{bt.name}}" id="bookingTypePre">{{ bt.name }}</ion-select-option>
       </ng-container>
     </ion-select>
     <br/>
@@ -101,7 +99,7 @@
     <ion-label position="floating">Employee:</ion-label>
      <ion-select formControlName="employeeDrop" type="text" required="" id="employeeDrop" >
        <ng-container *ngFor="let e of this.employeeList">
-        <ion-select-option value="{{e.data.employeeID}},{{e.data.appUser.firstName}}">{{ e.data.appUser.firstName }}</ion-select-option>
+        <ion-select-option value="{{e.data.employeeID}},{{e.data.appUser.firstName}}" id="employeePre">{{ e.data.appUser.firstName }}</ion-select-option>
       </ng-container>
     </ion-select>
     <br/>
@@ -127,3 +125,4 @@
 </form>
 
 </ion-content>
+

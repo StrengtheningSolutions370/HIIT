@@ -20,6 +20,7 @@ import { Employee } from '../models/employee';
 import { BookingType } from '../models/booking-type';
 import { Exercise } from '../models/exercise';
 import { WriteOffReason } from '../models/write-off-reason';
+import { Schedule } from '../models/schedule';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,7 @@ export class RepoService {
   BookingTypeController = 'BookingType/'
   ExerciseController = 'Exercise/'
   WriteOffReasonController = 'WriteOffReason/'
+  ScheduleController = 'Schedule/'
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -78,7 +80,7 @@ export class RepoService {
   VerifyOtp(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}verifyotp`, data, this.httpOptions);
   }
-  
+
   SendOtp(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}sendotp`, data, this.httpOptions);
   }
@@ -459,6 +461,25 @@ getWriteOffReason(): Observable<any>{
 //GetMatch
 getMatchWriteOffReason(description: string): Observable<any>{
   return this.http.get(`${this.base+this.WriteOffReasonController}getMatch?description=${description}`, this.httpOptions);
+}
+
+
+//SCHEDULE
+
+createScheduleEvent(schedule: Schedule): Observable<any>{
+  return this.http.post<any>(`${this.base+this.ScheduleController}add`,schedule,this.httpOptions);
+}
+//Update
+updateScheduleEvent(scheduleID:number, schedule: Schedule): Observable<any>{
+  return this.http.put(`${this.base+this.ScheduleController}update?id=${scheduleID}`,schedule, this.httpOptions);
+}
+//Delete
+deleteScheduleEvent(scheduleID: number): Observable<any>{
+  return this.http.delete(`${this.base+this.ScheduleController}delete?id=${scheduleID}`,this.httpOptions);
+}
+//GetAll
+getScheduleEvent(): Observable<any>{
+  return this.http.get(`${this.base+this.ScheduleController}getAll`, this.httpOptions);
 }
 
 }

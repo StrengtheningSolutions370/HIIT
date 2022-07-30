@@ -125,7 +125,8 @@ import { ConfirmExerciseComponent } from './pages/exercises/exercise-page/confir
 import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/associative-exercise/associative-exercise.component';
 
 //SCHEDULE IMPORTS:
-import { AddScheduleComponent } from './pages/booking/add-schedule/add-schedule.component';
+import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-schedule.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent,
@@ -176,7 +177,7 @@ import { AddScheduleComponent } from './pages/booking/add-schedule/add-schedule.
 
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, ],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, DatePipe ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

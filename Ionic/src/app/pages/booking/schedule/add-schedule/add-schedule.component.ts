@@ -4,13 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BookingType } from 'src/app/models/booking-type';
 import { Employee } from 'src/app/models/employee';
 import { Venue } from 'src/app/models/venue';
-import { BookingService } from 'src/app/services/booking/booking.service';
-import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
-import { VenueService } from 'src/app/services/venue/venue.service';
-import { Platform } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
+import { Schedule } from 'src/app/models/schedule';
 
 @Component({
   selector: 'app-add-schedule',
@@ -18,7 +15,6 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./add-schedule.component.scss'],
 })
 export class AddScheduleComponent implements AfterViewInit {
-
 
   venueList!: Venue[];
   bookingTypeList!: BookingType[];
@@ -43,7 +39,6 @@ export class AddScheduleComponent implements AfterViewInit {
 
   minDate: string = Date.toString();
 
-
   calendar = {
     mode: 'month',
     currentDate: new Date()
@@ -52,24 +47,20 @@ export class AddScheduleComponent implements AfterViewInit {
   viewTitle: string;
 
   event = {
-    title: '',
-    description: '',
     startTime: null,
-    endTime: '',
-    allDay: true
+    endTime: null
   }
 
   modalReady = false;
 
-  constructor(public global:GlobalService, private venueService: VenueService, private bookingService: BookingService, private employeeService: EmployeeService,
-  public formBuilder: FormBuilder, public scheduleService: ScheduleService) { }
+  constructor(public global:GlobalService, public formBuilder: FormBuilder, public scheduleService: ScheduleService) { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.modalReady = true;
     }, 0);
 
-    this.venueService.getAllVenues().subscribe({
+    this.scheduleService.venueService.getAllVenues().subscribe({
       next: (data) => {
         this.venueList = data.result;
         console.log("Venues:");
@@ -77,7 +68,7 @@ export class AddScheduleComponent implements AfterViewInit {
       }
     });
 
-    this.bookingService.getAllBookingTypes().subscribe({
+    this.scheduleService.bookingService.getAllBookingTypes().subscribe({
       next: (data) => {
         this.bookingTypeList = data.result;
         console.log("Booking Types:");
@@ -85,7 +76,7 @@ export class AddScheduleComponent implements AfterViewInit {
       }
     });
 
-    this.employeeService.getAllEmployees().subscribe({
+    this.scheduleService.employeeService.getAllEmployees().subscribe({
       next: (data) => {
         this.employeeList = data;
         console.log("Employees:");
@@ -117,31 +108,34 @@ export class AddScheduleComponent implements AfterViewInit {
     }
     else
     {
-      var datePipe = new DatePipe('en');
-      let dateTemp:Date = this.cCalendarForm.value['dateSelector'];
-      let date = datePipe.transform(dateTemp,'DD/MM');
-      let timeStemp:Date = this.cCalendarForm.value['timeStartSelector'];
-      let timeS = timeStemp.toTimeString;
-      let timeEtemp:Date = this.cCalendarForm.value['timeEndSelector'];
-      let timeE = timeEtemp.toTimeString;
-      var temp: any = {
-        date,
-        timeS,
-        timeE,
-        Venue:this.cCalendarForm.value['venueDrop'],
-        BookingType:this.cCalendarForm.value['bookingTypeDrop'],
-        Employee:this.cCalendarForm.value['employeeDrop']
+      //var datePipe = new DatePipe('en');
+      var dateTemp = new Date(this.cCalendarForm.value['dateSelector']);
+      var timeS = new Date(this.cCalendarForm.value['timeStartSelector']);
+      var timeE = new Date(this.cCalendarForm.value['timeEndSelector']);
+
+      //var date = datePipe.transform(dateTemp,'dd/MM/yyyy');//formatted for display
+
+      timeS.setDate(dateTemp.getDate());
+      timeE.setDate(dateTemp.getDate());
+      timeS.setMonth(dateTemp.getMonth());
+      timeE.setMonth(dateTemp.getMonth());
+      timeS.setFullYear(dateTemp.getFullYear());
+      timeE.setFullYear(dateTemp.getFullYear());
+      var temp: Schedule = {
+        dateSession :{
+          startDateTime:timeS,
+          endDateTime: timeE
+        },
+        bookingAttendance: null,
+        venueID:this.cCalendarForm.value['venueDrop'].split(',')[0],
+        bookingTypeID:this.cCalendarForm.value['bookingTypeDrop'].split(',')[0],
+        employeeID:this.cCalendarForm.value['employeeDrop'].split(',')[0]
       };
       console.log(temp);
-      // this.global.dismissModal();
-      // this.bookingService.confirmBookingTypeModal(1,temp);
+      this.global.dismissModal();
+      this.scheduleService.confirmScheduleModal(1,temp,this.cCalendarForm.value['venueDrop'].split(',')[1],this.cCalendarForm.value['bookingTypeDrop'].split(',')[1],this.cCalendarForm.value['employeeDrop'].split(',')[1]);
     }
    }
-
-  save(){
-    let tempVal = this.global.dismissModal({event: this.event})
-    console.log(tempVal);
-  }
 
   dateSelected(){
     console.log(this.dateSelect);
