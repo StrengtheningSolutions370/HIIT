@@ -13,11 +13,11 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        //Task<Lesson[]> GetAllLessonsAsync();
+        Task<object> GetAllLessonsAsync();
 
         //Task<Lesson[]> GetLessonsAsync(string input);
 
-        //Task<Lesson> GetLessonIdAsync(int id);
+        Task<object> GetLessonIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }

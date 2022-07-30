@@ -356,16 +356,13 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("EndDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("SessionID")
-                        .IsRequired()
-                        .HasColumnType("int");
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("DateSessionID");
-
-                    b.HasIndex("SessionID");
 
                     b.ToTable("DateSession");
                 });
@@ -439,15 +436,18 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
+                    b.Property<int?>("ExerciseCategoryID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Focus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ExerciseCategoryID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -510,7 +510,6 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("EmployeeID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -532,11 +531,9 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ExerciseID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("LessonID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("LessonPlanID");
@@ -899,6 +896,9 @@ namespace Team7.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
                     b.HasKey("SaleItemID");
 
                     b.HasIndex("SaleCategoryID");
@@ -946,18 +946,15 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("BookingTypeID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("CapacityBooked")
                         .HasColumnType("int");
 
                     b.Property<int?>("DateSessionID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("EmployeeID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("LessonPlanID")
@@ -980,24 +977,6 @@ namespace Team7.Migrations
                     b.HasIndex("VenueID");
 
                     b.ToTable("Schedule");
-                });
-
-            modelBuilder.Entity("Team7.Models.Session", b =>
-                {
-                    b.Property<int>("SessionID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("SessionID");
-
-                    b.ToTable("Session");
                 });
 
             modelBuilder.Entity("Team7.Models.StockTake", b =>
@@ -1030,10 +1009,10 @@ namespace Team7.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("InventoryItemID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("SaleItemID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("StockTakeID")
@@ -1361,17 +1340,6 @@ namespace Team7.Migrations
                     b.Navigation("BookingType");
                 });
 
-            modelBuilder.Entity("Team7.Models.DateSession", b =>
-                {
-                    b.HasOne("Team7.Models.Session", "Session")
-                        .WithMany("DateSession")
-                        .HasForeignKey("SessionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Session");
-                });
-
             modelBuilder.Entity("Team7.Models.Employee", b =>
                 {
                     b.HasOne("Team7.Models.AppUser", "AppUser")
@@ -1397,9 +1365,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.ExerciseCategory", "ExerciseCategory")
                         .WithMany("Exercise")
-                        .HasForeignKey("ExerciseCategoryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ExerciseCategoryID");
 
                     b.Navigation("ExerciseCategory");
                 });
@@ -1419,9 +1385,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Employee", "Employee")
                         .WithMany("Lesson")
-                        .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeID");
 
                     b.Navigation("Employee");
                 });
@@ -1430,15 +1394,11 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Exercise", "Exercise")
                         .WithMany("LessonPlan")
-                        .HasForeignKey("ExerciseID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ExerciseID");
 
                     b.HasOne("Team7.Models.Lesson", "Lesson")
                         .WithMany("LessonPlan")
-                        .HasForeignKey("LessonID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LessonID");
 
                     b.Navigation("Exercise");
 
@@ -1595,21 +1555,15 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.BookingType", "BookingType")
                         .WithMany("Schedule")
-                        .HasForeignKey("BookingTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BookingTypeID");
 
                     b.HasOne("Team7.Models.DateSession", "DateSession")
                         .WithMany("Schedule")
-                        .HasForeignKey("DateSessionID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DateSessionID");
 
                     b.HasOne("Team7.Models.Employee", "Employee")
                         .WithMany("Schedule")
-                        .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeID");
 
                     b.HasOne("Team7.Models.LessonPlan", "LessonPlan")
                         .WithMany("Schedule")
@@ -1634,23 +1588,21 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.StockTakeLine", b =>
                 {
-                    b.HasOne("Team7.Models.InventoryItem", "InventoryItem")
+                    b.HasOne("Team7.Models.InventoryItem", null)
                         .WithMany("StockTakeLine")
-                        .HasForeignKey("InventoryItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InventoryItemID");
 
                     b.HasOne("Team7.Models.SaleItem", null)
                         .WithMany("StockTakeLine")
-                        .HasForeignKey("SaleItemID");
+                        .HasForeignKey("SaleItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Team7.Models.StockTake", "StockTake")
                         .WithMany("StockTakeLine")
                         .HasForeignKey("StockTakeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("InventoryItem");
 
                     b.Navigation("StockTake");
                 });
@@ -1862,11 +1814,6 @@ namespace Team7.Migrations
             modelBuilder.Entity("Team7.Models.Schedule", b =>
                 {
                     b.Navigation("BookingAttendance");
-                });
-
-            modelBuilder.Entity("Team7.Models.Session", b =>
-                {
-                    b.Navigation("DateSession");
                 });
 
             modelBuilder.Entity("Team7.Models.StockTake", b =>

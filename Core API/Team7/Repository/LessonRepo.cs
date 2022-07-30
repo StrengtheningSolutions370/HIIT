@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,17 +32,27 @@ namespace Team7.Models.Repository
         }
 
 
-        //public async Task<Lesson[]> GetAllLessonsAsync()
-        //{
-        //    IQueryable<Lesson> query = DB.Lesson;
-        //    return await query.ToArrayAsync();
-        //    return null;
+        public async Task<object> GetAllLessonsAsync()
+        {
+            IQueryable<Lesson> query = DB.Lesson;
 
-        //}
+            if (!query.Any())
+                return null;
+
+
+            return await query.Select(l =>
+                new
+                {
+                    l.LessonID,
+                    l.Name,
+                    l.Employee,
+                    l.LessonPlan
+                }).ToArrayAsync();
+        }
 
         //public async Task<Lesson[]> GetLessonsAsync(string input)
         //{
-        //    IQueryable<Lesson> query = DB.Lesson.Where(v => v.Name == input || v.Address == input);
+        //    IQueryable<Lesson> query = DB.Lesson.Where(v => v.Name == input);
         //    if (!query.Any())
         //    {
         //        return null;
@@ -54,23 +65,27 @@ namespace Team7.Models.Repository
 
         //}
 
-        //public async Task<Lesson> GetLessonIdAsync(int id)
-        //{
-        //    IQueryable<Lesson> query = DB.Lesson.Where(v => v.VenueID == id);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.SingleAsync();
-        //    }
-        //    return null;
-        //}
+        public async Task<object> GetLessonIdAsync(int id)
+        {
+
+            IQueryable<Lesson> query = DB.Lesson.Where(l => l.LessonID == id);
+
+            if (!query.Any())
+                return null;
+               
+            return await query.Select(l => 
+                new
+                {
+                    l.LessonID,
+                    l.Name,
+                    l.Employee,
+                    l.LessonPlan
+                }).SingleAsync();
+
+        }
 
         public async Task<bool> SaveChangesAsync()
         {
-            //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
         }
     }

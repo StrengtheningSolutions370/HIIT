@@ -52,6 +52,20 @@ namespace Team7.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DateSession",
+                columns: table => new
+                {
+                    DateSessionID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DateSession", x => x.DateSessionID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EmployeeType",
                 columns: table => new
                 {
@@ -156,20 +170,6 @@ namespace Team7.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SaleCategory", x => x.SaleCategoryID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Session",
-                columns: table => new
-                {
-                    SessionID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    End = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Session", x => x.SessionID);
                 });
 
             migrationBuilder.CreateTable(
@@ -362,8 +362,9 @@ namespace Team7.Migrations
                     ExerciseID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExerciseCategoryID = table.Column<int>(type: "int", nullable: false)
+                    Focus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExerciseCategoryID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -373,7 +374,7 @@ namespace Team7.Migrations
                         column: x => x.ExerciseCategoryID,
                         principalTable: "ExerciseCategory",
                         principalColumn: "ExerciseCategoryID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -434,6 +435,7 @@ namespace Team7.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Quotable = table.Column<bool>(type: "bit", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false),
                     SaleCategoryID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -444,26 +446,6 @@ namespace Team7.Migrations
                         column: x => x.SaleCategoryID,
                         principalTable: "SaleCategory",
                         principalColumn: "SaleCategoryID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DateSession",
-                columns: table => new
-                {
-                    DateSessionID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SessionID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DateSession", x => x.DateSessionID);
-                    table.ForeignKey(
-                        name: "FK_DateSession_Session_SessionID",
-                        column: x => x.SessionID,
-                        principalTable: "Session",
-                        principalColumn: "SessionID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -843,9 +825,9 @@ namespace Team7.Migrations
                     StockTakeLineID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StockTakeID = table.Column<int>(type: "int", nullable: false),
-                    InventoryItemID = table.Column<int>(type: "int", nullable: false),
-                    SaleItemID = table.Column<int>(type: "int", nullable: true),
-                    Difference = table.Column<int>(type: "int", nullable: false)
+                    SaleItemID = table.Column<int>(type: "int", nullable: false),
+                    Difference = table.Column<int>(type: "int", nullable: false),
+                    InventoryItemID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -855,13 +837,13 @@ namespace Team7.Migrations
                         column: x => x.InventoryItemID,
                         principalTable: "InventoryItem",
                         principalColumn: "InventoryItemID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StockTakeLine_SaleItem_SaleItemID",
                         column: x => x.SaleItemID,
                         principalTable: "SaleItem",
                         principalColumn: "SaleItemID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_StockTakeLine_StockTake_StockTakeID",
                         column: x => x.StockTakeID,
@@ -938,7 +920,7 @@ namespace Team7.Migrations
                     LessonID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmployeeID = table.Column<int>(type: "int", nullable: false)
+                    EmployeeID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -948,7 +930,7 @@ namespace Team7.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employee",
                         principalColumn: "EmployeeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -957,8 +939,8 @@ namespace Team7.Migrations
                 {
                     LessonPlanID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LessonID = table.Column<int>(type: "int", nullable: false),
-                    ExerciseID = table.Column<int>(type: "int", nullable: false)
+                    ExerciseID = table.Column<int>(type: "int", nullable: true),
+                    LessonID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -968,13 +950,13 @@ namespace Team7.Migrations
                         column: x => x.ExerciseID,
                         principalTable: "Exercise",
                         principalColumn: "ExerciseID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_LessonPlan_Lesson_LessonID",
                         column: x => x.LessonID,
                         principalTable: "Lesson",
                         principalColumn: "LessonID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -985,10 +967,10 @@ namespace Team7.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CapacityBooked = table.Column<int>(type: "int", nullable: false),
                     VenueID = table.Column<int>(type: "int", nullable: false),
-                    BookingTypeID = table.Column<int>(type: "int", nullable: false),
+                    BookingTypeID = table.Column<int>(type: "int", nullable: true),
                     LessonPlanID = table.Column<int>(type: "int", nullable: true),
-                    DateSessionID = table.Column<int>(type: "int", nullable: false),
-                    EmployeeID = table.Column<int>(type: "int", nullable: false)
+                    DateSessionID = table.Column<int>(type: "int", nullable: true),
+                    EmployeeID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -998,19 +980,19 @@ namespace Team7.Migrations
                         column: x => x.BookingTypeID,
                         principalTable: "BookingType",
                         principalColumn: "BookingTypeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Schedule_DateSession_DateSessionID",
                         column: x => x.DateSessionID,
                         principalTable: "DateSession",
                         principalColumn: "DateSessionID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Schedule_Employee_EmployeeID",
                         column: x => x.EmployeeID,
                         principalTable: "Employee",
                         principalColumn: "EmployeeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Schedule_LessonPlan_LessonPlanID",
                         column: x => x.LessonPlanID,
@@ -1116,11 +1098,6 @@ namespace Team7.Migrations
                 name: "IX_BookingPriceHistory_BookingTypeID",
                 table: "BookingPriceHistory",
                 column: "BookingTypeID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DateSession_SessionID",
-                table: "DateSession",
-                column: "SessionID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_AppUserId",
@@ -1430,9 +1407,6 @@ namespace Team7.Migrations
 
             migrationBuilder.DropTable(
                 name: "SaleItem");
-
-            migrationBuilder.DropTable(
-                name: "Session");
 
             migrationBuilder.DropTable(
                 name: "Exercise");
