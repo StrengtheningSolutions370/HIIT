@@ -31,7 +31,6 @@ export class ConfirmExerciseComponent implements OnInit {
 
       this.global.nativeLoad("Creating...");
       this.exerciseService.createExercise(exercise).then((el : any) => {
-        console.log('should dismiss create')
         this.dismissModal();
         this.sucAdd();
       });

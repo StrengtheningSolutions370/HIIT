@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ViewWillEnter } from '@ionic/angular';
+import { ModalController, ToastController, ViewWillEnter } from '@ionic/angular';
 import { Exercise } from 'src/app/models/exercise';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ExerciseService } from 'src/app/services/exercise/exercise.service';
@@ -18,7 +18,7 @@ export class DeleteExerciseComponent implements OnInit {
   showVideo = false;
   embed! : any;
 
-  constructor(public global: GlobalService,
+  constructor(public toastCtrl: ToastController, private modalCtrl: ModalController, public global: GlobalService,
     public exerciseService: ExerciseService, public sanitizer: DomSanitizer) { }
 
     ngOnInit() {
@@ -32,10 +32,30 @@ export class DeleteExerciseComponent implements OnInit {
       return this.sanitizer.bypassSecurityTrustResourceUrl(e);
     }
 
-    delete(id: number){
-      this.exerciseService.deleteExercise(id);
-      this.global.dismissModal();
-      this.global.showToast('The exercise has been successfully deleted!');
+    delete(ex: any){
+      // this.exerciseService.deleteExercise(id);
+      // this.global.dismissModal();
+      // this.global.showToast('The exercise has been successfully deleted!');
+      this.exerciseService.deleteExercise(ex.exerciseID).then(resp => {
+        if (resp) {
+          this.sucDelete();
+          this.dismissModal();
+        } else {
+          this.exerciseService.associativeExerciseModal(ex)
+        }
+      })
+    }
+
+    dismissModal() {
+      this.modalCtrl.dismiss();
+    };
+
+    async sucDelete() {
+      const toast = await this.toastCtrl.create({
+        message: 'The Employee has been successfully deleted!',
+        duration: 2000
+      });
+      toast.present();
     }
 
 }

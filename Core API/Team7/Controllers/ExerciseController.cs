@@ -64,7 +64,7 @@ namespace Team7.Controllers
                 toUpdate.Name = exercise.Name;
                 toUpdate.Focus = exercise.Focus;
                 toUpdate.Url = exercise.Url;
-                toUpdate.ExerciseCategory = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(exercise.ExerciseCategory.ExerciseCategoryID);
+                toUpdate.ExerciseCategory = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(exercise.ExerciseCategoryID);
 
                 if (await ExerciseRepo.SaveChangesAsync())
                 {

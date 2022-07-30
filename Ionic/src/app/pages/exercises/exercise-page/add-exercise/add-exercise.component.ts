@@ -45,7 +45,12 @@ export class AddExerciseComponent implements OnInit {
       }
 
     );
+    
+  }
 
+  getEmbed(exe : any) {
+    const e = this.global.YoutubeToEmbed(exe.url)
+    return this.sanitizer.bypassSecurityTrustResourceUrl(e);
   }
 
   embedImage() {

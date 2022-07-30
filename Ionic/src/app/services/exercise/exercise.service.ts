@@ -4,7 +4,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/semi */
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { AlertController, ModalController} from '@ionic/angular';
+import { AlertController, ModalController, ToastController} from '@ionic/angular';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { Exercise } from 'src/app/models/exercise';
 import { AddExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/add-exercise-category/add-exercise-category.component';
@@ -33,7 +33,7 @@ export class ExerciseService {
   @Output() fetchExerciseCategorysEvent = new EventEmitter<ExerciseCategory>();
   @Output() fetchExercisesEvent = new EventEmitter<Exercise>();
 
-  constructor(public repo: RepoService, private modalCtrl: ModalController, public alertCtrl: AlertController, public global : GlobalService) {
+  constructor(public toastCtrl: ToastController, public repo: RepoService, private modalCtrl: ModalController, public alertCtrl: AlertController, public global : GlobalService) {
     //Receive the exercise category from the repo (API).
     this.getAllExerciseCategorys();
     this.getAllExercises();
@@ -135,6 +135,8 @@ export class ExerciseService {
       this.repo.updateExercise(id, exercise).subscribe({
         next: () => {
           this.fetchExercisesEvent.emit();
+          this.dismissModal();
+          this.sucUpdate();
         },
         error: () => {
           _(false);
@@ -143,12 +145,40 @@ export class ExerciseService {
     });
   }
 
-  //Receives a exercise to delete in the service exercise list.
-   deleteExercise(id: number){
-    this.repo.deleteExercise(id).subscribe(result => {
-      console.log('EXERCISE DELETED');
-      this.fetchExercisesEvent.emit();
+  async sucUpdate() {
+    const toast = await this.toastCtrl.create({
+      message: 'The Exercise has been successfully updated!',
+      duration: 2000
     });
+    toast.present();
+  }
+
+  dismissModal() {
+    this.modalCtrl.dismiss();
+  };
+
+  //Receives a exercise to delete in the service exercise list.
+   deleteExercise(id: number) : Promise<any> {
+    // this.repo.deleteExercise(id).subscribe(result => {
+    //   console.log('EXERCISE DELETED');
+    //   this.fetchExercisesEvent.emit();
+    // });
+
+    return new Promise<any>((resolve, _) => {
+      this.global.nativeLoad("Deleting...");
+      this.repo.deleteExercise(id).subscribe({
+        next: () => {
+          this.fetchExercisesEvent.emit();
+          resolve(true);
+        },
+        error: () => {
+          resolve(false);
+        }
+      }).add(() => {
+        this.global.endNativeLoad();
+      })
+    });
+
    }
 
    matchingExercise(name: string, description: string):Promise<any>{

@@ -52,11 +52,11 @@ constructor(private modalCtrl: ModalController, public global : GlobalService, p
     this.exerciseService.viewExerciseInfoModal(exercise);
   }
 
-  async updateExerciseInfoModal(exe : any) {
+  async updateExerciseInfoModal(exercise : any) {
     const modal = await this.modalCtrl.create({
       component : UpdateExerciseComponent,
       componentProps: {
-        exe
+        exercise
       }
     });
     await modal.present();
