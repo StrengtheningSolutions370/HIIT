@@ -217,6 +217,15 @@ export const routes: Routes = [
     path: '**', //this route object must be last
     redirectTo: 'login',
   },
+  {
+    path: 'lessons',
+    loadChildren: () => import('./pages/lessons/lessons.module').then( m => m.LessonsPageModule),
+    canActivate: [AuthGaurdService],
+    data: {
+      roles: [Roles.Trainer, Roles.SuperUser]
+    }
+  },
+
 ]  
 
 
