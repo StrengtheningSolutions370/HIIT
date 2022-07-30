@@ -111,8 +111,7 @@ export class AddScheduleComponent implements AfterViewInit {
 
   submitForm() {
     if (!this.cCalendarForm.valid){
-      console.log(this.cCalendarForm.value['bookingTypeName']);
-      console.log(this.cCalendarForm.value['bookingTypeDescription']);
+      console.log(this.cCalendarForm.value);
       console.log('Please provide all required fields');
       return false;
     }
