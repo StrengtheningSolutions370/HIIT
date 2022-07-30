@@ -4,7 +4,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/semi */
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { ModalController} from '@ionic/angular';
+import { AlertController, ModalController} from '@ionic/angular';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { Exercise } from 'src/app/models/exercise';
 import { AddExerciseCategoryComponent } from 'src/app/pages/exercises/exercise-category/add-exercise-category/add-exercise-category.component';
@@ -21,6 +21,7 @@ import { UpdateExerciseComponent } from 'src/app/pages/exercises/exercise-page/u
 import { ViewExerciseComponent } from 'src/app/pages/exercises/exercise-page/view-exercise/view-exercise.component';
 import { ConfirmExerciseComponent } from 'src/app/pages/exercises/exercise-page/confirm-exercise/confirm-exercise.component';
 import { AssociativeExerciseComponent } from 'src/app/pages/exercises/exercise-page/associative-exercise/associative-exercise.component';
+import { GlobalService } from '../global/global.service';
 
 
 @Injectable({
@@ -32,7 +33,7 @@ export class ExerciseService {
   @Output() fetchExerciseCategorysEvent = new EventEmitter<ExerciseCategory>();
   @Output() fetchExercisesEvent = new EventEmitter<Exercise>();
 
-  constructor(public repo: RepoService, private modalCtrl: ModalController) {
+  constructor(public repo: RepoService, private modalCtrl: ModalController, public alertCtrl: AlertController, public global : GlobalService) {
     //Receive the exercise category from the repo (API).
     this.getAllExerciseCategorys();
     this.getAllExercises();
@@ -48,7 +49,8 @@ export class ExerciseService {
 
   //Methods
   //Add a exercise category to the exercise category list within the exercise category service.
-   createExerciseCategory(exerciseCategory: any){
+   createExerciseCategory(exerciseCategory: any) {
+
     this.repo.createExerciseCategory(exerciseCategory).subscribe(
       {
         next: () => {
@@ -62,24 +64,50 @@ export class ExerciseService {
    }
 
    //Add a exercise to the exercise list within the exercise service.
-   createExercise(exercise: Exercise){
+   createExercise(exercise: Exercise) : Promise<any> {
     console.log("Exercise Service: CREATE EXERCISE");
-    const ExerciseTemp:Exercise = {
-      name: exercise.name,
-      description: exercise.description,
-      exerciseCategoryID: exercise.exerciseCategoryID
-    };
-    console.log(ExerciseTemp);
+    // const ExerciseTemp:Exercise = {
+    //   name: exercise.name,
+    //   description: exercise.description,
+    //   exerciseCategoryID: exercise.exerciseCategoryID
+    // };
+    // console.log(ExerciseTemp);
 
-    this.repo.createExercise(ExerciseTemp).subscribe(
-      {
+    // this.repo.createExercise(ExerciseTemp).subscribe(
+    //   {
+    //     next: () => {
+    //       console.log('Exercise CREATED');
+    //       this.fetchExercisesEvent.emit(exercise);
+    //     }
+    //   }
+    // );
+
+    return new Promise<any>((resolve, _) => {
+      this.repo.createExercise(exercise).subscribe({
         next: () => {
-          console.log('Exercise CREATED');
-          this.fetchExercisesEvent.emit(exercise);
+          this.fetchExercisesEvent.emit();
+          resolve(true);
+        },
+        error: () => {
+          this.duplicateAlert();
+          _(false);
         }
-      }
-    );
+      }).add(() => { 
+        this.global.endNativeLoad() 
+      });
+    });
+
    }
+
+   async duplicateAlert() {
+    console.trace();
+    const alert = await this.alertCtrl.create({
+      header: 'EXercise Already Exists',
+      message: 'The Exercise Information entered already exists on the system',
+      buttons: ['OK']
+    });
+   alert.present();
+  }
 
   //Receives a exercise category to update in the service exercise category list.
    updateExerciseCategory(id: number,exerciseCategory: any) {
@@ -95,14 +123,24 @@ export class ExerciseService {
 
    //Receives a exercise to update in the service exercise list.
    updateExercise(id: number,exercise: any) {
-    return this.repo.updateExercise(id,exercise).subscribe(
-      {
-       next: () => {
-         console.log('EXERCISE UPDATED');
-         this.fetchExercisesEvent.emit(exercise);
-       }
-      }
-    )
+    // return this.repo.updateExercise(id,exercise).subscribe(
+    //   {
+    //    next: () => {
+    //      console.log('EXERCISE UPDATED');
+    //      this.fetchExercisesEvent.emit(exercise);
+    //    }
+    //   }
+    // )
+    return new Promise<any>((resolve, _) => {
+      this.repo.updateExercise(id, exercise).subscribe({
+        next: () => {
+          this.fetchExercisesEvent.emit();
+        },
+        error: () => {
+          _(false);
+        } 
+      }).add(() => { this.global.endNativeLoad() });
+    });
   }
 
   //Receives a exercise to delete in the service exercise list.
@@ -291,40 +329,54 @@ export class ExerciseService {
 
   //Display the confirm create/update modal
   //Receives the selected exercise from the exercise page
-  async confirmExerciseModal(choice: number, exercise: any, exerciseCategory: string) {
-    console.log('ExerciseService: ConfirmExerciseModalCall');
-    console.log(choice);
-    if(choice === 1){
-      console.log("Performing ADD");
-      const modal = await this.modalCtrl.create({
-        component: ConfirmExerciseComponent,
-        componentProps: {
-          exercise,
-          choice,
-          exerciseCategory
-        }
-      });
-      await modal.present();
+  confirmExerciseModal(choice: number, exercise: any) {
+    
+    return new Promise<any>(async (resolve, _) => {
 
-    } else if (choice === 2){
+      console.log('ExerciseService: ConfirmExerciseModalCall');
+      console.log(choice);
 
-      console.log("Performing UPDATE");
-      const modal = await this.modalCtrl.create({
-        component: ConfirmExerciseComponent,
-        componentProps: {
-          exercise,
-          choice,
-          exerciseCategory
-        }
-      });
+      if(choice === 1) {
 
-      await modal.present();
+        console.log("Performing ADD");
+        const modal = await this.modalCtrl.create({
+          component: ConfirmExerciseComponent,
+          componentProps: {
+            choice,
+            exercise
+          }
+        });
 
-    } else {
+        modal.onDidDismiss().then(() => {
+          resolve(true);
+        });
 
-      console.log("BadOption: " + choice)
+        await modal.present();
 
-    }
+      } else if (choice === 2) {
+
+        console.log("Performing UPDATE");
+        const modal = await this.modalCtrl.create({
+          component: ConfirmExerciseComponent,
+          componentProps: {
+            choice,
+            exercise
+          }
+        });
+
+        modal.onDidDismiss().then(() => {
+          resolve(true);
+        });
+
+        await modal.present();
+
+      } else {
+
+        console.log("BadOption: " + choice)
+
+      }
+    })
+
   }
 
   async associativeExerciseCategoryModal(exerciseCategory: ExerciseCategory) {

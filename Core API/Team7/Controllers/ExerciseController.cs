@@ -28,7 +28,7 @@ namespace Team7.Controllers
             try
             {
                 //var cat = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(exercise.ExerciseCategory.ExerciseCategoryID);
-                var catId = exercise.ExerciseCategory.ExerciseCategoryID;
+                var catId = exercise.ExerciseCategoryID;
                 exercise.ExerciseCategory = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(catId);
 
 

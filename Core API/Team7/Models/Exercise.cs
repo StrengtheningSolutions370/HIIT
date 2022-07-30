@@ -22,6 +22,8 @@ namespace Team7.Models
 
         public string Url { get; set; }
 
+        public int ExerciseCategoryID { get; set; }
+
         public virtual ExerciseCategory ExerciseCategory { get; set; }
         public virtual ICollection<LessonPlan> LessonPlan { get; set; }
     }

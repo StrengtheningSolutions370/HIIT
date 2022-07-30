@@ -43,7 +43,7 @@ export class UpdateExerciseComponent implements ViewWillEnter {
        console.log(this.exercise);
        if (this.exercise != null) {
          this.uExerciseForm.controls.name.setValue(this.exercise.name);
-         this.uExerciseForm.controls.description.setValue(this.exercise.description);
+         this.uExerciseForm.controls.description.setValue(this.exercise.focus);
         }
     }
 
@@ -64,7 +64,7 @@ export class UpdateExerciseComponent implements ViewWillEnter {
           lessons: null
         };
         console.log(temp);
-        this.exerciseService.confirmExerciseModal(2, temp, this.uExerciseForm.value['exerciseCategory'].split(',')[1]);
+        // this.exerciseService.confirmExerciseModal(2, temp, this.uExerciseForm.value['exerciseCategory'].split(',')[1]);
         this.global.dismissModal();
       }
   }

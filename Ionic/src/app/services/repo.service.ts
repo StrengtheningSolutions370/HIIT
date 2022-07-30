@@ -58,7 +58,7 @@ export class RepoService {
   }
 
   getUserRole(token : string) : Observable<any>{
-    console.trace();
+    // console.trace();
     return this.http.get(`${this.base + this.EmployeeController}token`, { headers : new HttpHeaders({'Authorization': 'Bearer ' + token}) });
   }
 
@@ -414,6 +414,7 @@ getMatchBookingType(name: string, description: string): Observable<any>{
   // ------
   // Create
   createExercise(exercise: Exercise): Observable<any> {
+    console.log(exercise);
     return this.http.post<any>(`${this.base + this.ExerciseController}add`, exercise, this.httpOptions);
   }
   //Update
