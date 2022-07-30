@@ -1,7 +1,7 @@
 <ion-content>
 
   <br/>
-  <ion-searchbar expand="block" placeholder='Search Exercise...' [(ngModel)]="filter"
+  <ion-searchbar #search (ionClear)="searchExercises(search.value)" (ionInput)="searchExercises(search.value)" expand="block" placeholder='Search Exercise...' [(ngModel)]="filter"
   animated="true" debounce="200"></ion-searchbar>
   <br/><br/>
 

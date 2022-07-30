@@ -7,6 +7,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 import { UpdateExerciseComponent } from './update-exercise/update-exercise.component';
 import { DeleteExerciseComponent } from './delete-exercise/delete-exercise.component';
 import { ModalController } from '@ionic/angular';
+import Fuse from 'fuse.js'
 
 @Component({
   selector: 'app-exercise-page',
@@ -18,10 +19,17 @@ export class ExercisePagePage implements OnInit {
 public filter: string;
 
 exerciseList: any[] = [];
+exerciseListOriginal: any[] = [];
 
 exerciseSub: Subscription;
 
 isLoading = true;
+
+//search flags
+searching = false;
+searchTerm = '';
+noresults = false;
+
 
 constructor(private modalCtrl: ModalController, public global : GlobalService, public exerciseService: ExerciseService, public repo: RepoService,  public sanitizer: DomSanitizer) { }
 
@@ -34,6 +42,7 @@ constructor(private modalCtrl: ModalController, public global : GlobalService, p
           console.log(data);
           this.isLoading = false;
           this.exerciseList = data;
+          this.exerciseListOriginal = data;
         }
       }
     );
@@ -83,4 +92,45 @@ constructor(private modalCtrl: ModalController, public global : GlobalService, p
     );
     this.exerciseService.fetchExercisesEvent.emit();
   }
+
+  searchExercises(event : string) {
+    console.log(event);
+    this.searching = true;
+
+    this.searchTerm = event;
+
+    if (this.searchTerm == '' || this.searchTerm == null) {
+      this.searching = false;
+
+      this.exerciseList = this.exerciseListOriginal;
+
+      if (this.exerciseList.length == 0) {
+        this.noresults = true;
+      }
+
+      return;
+    }
+
+    const hits = new Fuse(this.exerciseList, {
+      keys: [
+        'name',
+        'exerciseCategory.name',
+        'focus'
+      ]
+    }).search(
+      this.searchTerm
+    );
+
+    if (hits.length == 0) {
+      this.noresults = true;
+      return;
+    }
+
+    this.exerciseList = [];
+    hits.map((el : any) => {
+      this.exerciseList.push(el.item);
+    });
+
+  }
+
 }

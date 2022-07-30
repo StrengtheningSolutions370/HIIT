@@ -54,12 +54,15 @@ export class AddExerciseComponent implements OnInit {
   }
 
   embedImage() {
+
     this.showVideo = false;
     const url = this.cExerciseForm.get('exerciseUrl').value;
+
     if (url.length == 0) {
       this.showVideo = false;
       return;
     }
+
     if (!new RegExp(/(http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?)|(^$)/).test(url))
       return;
     const e = this.global.YoutubeToEmbed(url)
