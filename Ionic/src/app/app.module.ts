@@ -124,6 +124,14 @@ import { ViewExerciseComponent } from './pages/exercises/exercise-page/view-exer
 import { ConfirmExerciseComponent } from './pages/exercises/exercise-page/confirm-exercise/confirm-exercise.component';
 import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/associative-exercise/associative-exercise.component';
 
+//LESSON IMPORTS
+import { AddLessonComponent } from './pages/lessons/add-lesson/add-lesson.component';
+import { UpdateLessonComponent } from './pages/lessons/update-lesson/update-lesson.component';
+import { DeleteLessonComponent } from './pages/lessons/delete-lesson/delete-lesson.component';
+import { ViewLessonComponent } from './pages/lessons/view-lesson/view-lesson.component';
+import { ConfirmLessonComponent } from './pages/lessons/confirm-lesson/confirm-lesson.component';
+import { AssociativeLessonComponent } from './pages/lessons/associative-lesson/associative-lesson.component';
+
 @NgModule({
   declarations: [AppComponent,
   //Venue
@@ -169,6 +177,8 @@ import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/as
   TimeRangeComponent,
   //Exercise
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
+  //Lesson
+  AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
 ],
 
   entryComponents: [],
