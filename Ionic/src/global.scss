@@ -36,6 +36,10 @@ $colors: (
   dark:       #222
 );
 
+ion-popover {
+  --width: auto!important;
+}
+
 .toastCenter {
   text-align: center;
 }

@@ -1,5 +1,5 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -23,6 +23,6 @@ registerLocaleData(localeAf);
     NgCalendarModule
   ],
   declarations: [SchedulePage],
-  providers: [{provide: LOCALE_ID, useValue: 'af'}]
+  providers: [{provide: LOCALE_ID, useValue: 'en'}, DatePipe]
 })
 export class SchedulePageModule {}

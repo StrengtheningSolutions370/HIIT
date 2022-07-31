@@ -1,14 +1,12 @@
-import { AfterViewInit, Component, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, LOCALE_ID, ViewChild } from '@angular/core';
 import { CalendarComponent } from 'ionic2-calendar';
 import { Subscription } from 'rxjs';
 import { Schedule } from 'src/app/models/schedule';
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
-import { formatDate } from '@angular/common';
 import { AlertController, ModalController } from '@ionic/angular';
-import { CalendarModalPage } from '../calendar-modal/calendar-modal.page';
-import { Venue } from 'src/app/models/venue';
-import { Employee } from 'src/app/models/employee';
-import { AddScheduleComponent } from '../add-schedule/add-schedule.component';
+import { formatDate } from '@angular/common';
+import { GlobalService } from 'src/app/services/global/global.service';
+import { format, parseISO } from 'date-fns';
 
 
 @Component({
@@ -18,7 +16,7 @@ import { AddScheduleComponent } from '../add-schedule/add-schedule.component';
 })
 export class SchedulePage implements AfterViewInit  {
     //Calendar related:
-    eventSource = []; //events to display
+    eventSource:any[] = []; //events to display
     viewTitle: string; //Title(i.e Month, or day)
     modalReady = false;
 
@@ -27,56 +25,116 @@ export class SchedulePage implements AfterViewInit  {
       currentDate: new Date()
     }
 
-
+    //Object to add to schedule on create + populate calendar (time realted information here but rest in schedule entity)
   event = {
-    title: '',
-    description: '',
+    scheduleID: 0,
+    venue:{},
+    bookingType:{},
     startTime: null,
-    endTime: '',
-    allDay: true
+    endTime: null
   }
 
     //Pulling in linked SQL table data
     //Venue:
-    venueDrop!: Venue [];
+    //venueDrop!: Venue [];
 
     //Booking:
-    bookingDrop!: any []; //Need to update this to type Booking (when made as a model)
+    //bookingDrop!: any []; //Need to update this to type Booking (when made as a model)
 
     //Employee:
-    employee!: Employee [];
+    //employee!: Employee [];
 
-    //String used from the searchbar, used in the filter pipe to search exercise category.
-    public filter: string;
-
-    //Create local exercise category array to be populated onInit.
+    //Create local schedule array to be populated onInit.
     scheduleList: Schedule[] = [];
 
     //Subscription variable to track live updates.
-    scheduleType: Subscription;
+    scheduleSub: Subscription;
 
     isLoading = true;
 
     @ViewChild(CalendarComponent) scheduleCalendar: CalendarComponent;
 
-  constructor(public scheduleService: ScheduleService, public alertCtrl: AlertController, public modalCtrl: ModalController ) {
-    // this.scheduleService.venueService.getAllVenues().subscribe({
-    //   next: data => {
-    //     console.log(data);
-    //     this.venueDrop = data.result;
-    //   }
-    // })
-    // this.fetchSchedule();
+  constructor(public scheduleService: ScheduleService, public alertCtrl: AlertController, public modalCtrl: ModalController, public global: GlobalService ) {
+    this.fetchSchedule();
+    console.log(this.scheduleList);
    }
 
    ngAfterViewInit(): void {
     setTimeout(() => {
       this.modalReady = true;
     }, 0);
+    this.scheduleService.fetchScheduleEvent.subscribe(
+      {
+        next: res => {
+          console.log('Fetch schedule events again');
+          this.fetchSchedule();
+        }
+      }
+    );
    }
 
   fetchSchedule() {
     this.isLoading = true;
+    this.scheduleService.getAllScheduleEvents().subscribe(
+      {
+        next: (data) => {
+          console.log("Fetching Schedule Events from API");
+          this.scheduleList = data.result;
+          var events = [];
+          if (this.scheduleList!= undefined){
+            this.scheduleList.forEach((sItem) => {
+              var date = new Date(sItem.dateSession.startDateTime);
+              var startTime: Date;
+              startTime = new Date(
+                Date.UTC(
+                  date.getUTCFullYear(),
+                  date.getUTCMonth(),
+                  date.getUTCDate(),
+                  date.getHours()-2,
+                  date.getMinutes()
+                ));
+                console.log(startTime);
+
+                var date = new Date(sItem.dateSession.endDateTime);
+                var endTime: Date;
+                endTime = new Date(
+                  Date.UTC(
+                    date.getUTCFullYear(),
+                    date.getUTCMonth(),
+                    date.getUTCDate(),
+                    date.getHours()-2,
+                    date.getMinutes()
+                  ));
+                  console.log(endTime);
+
+                events.push({
+                  scheduleID: sItem.scheduleID,
+                  venueName: sItem.venue.name,
+                  venueID: sItem.venue.venueID,
+                  venueAddress: sItem.venue.address,
+                  startTime: startTime,
+                  endTime: endTime,
+                });
+              })
+              this.eventSource = events;
+              console.log(this.eventSource);
+              this.isLoading = false;
+          } else {
+            this.isLoading = false;
+          }
+
+        },
+        error: (err)=>{
+          console.log("Error fetching Schedule events from API");
+          console.log(err);
+          this.isLoading = true;
+          this.global.showAlert("Unable to fetch events from the database","ERROR fetching events", ['Ok']);
+        }
+      });
+
+
+
+
    //this.scheduleService
     // .getAllBookingTypes().subscribe(
     //   {
@@ -116,23 +174,41 @@ export class SchedulePage implements AfterViewInit  {
   onTimeSelected(ev) {
     console.log('ev: ', ev);
     this.event.startTime = new Date(ev.selectedTime);
-    this.openCalModal();
+    //this.scheduleService.addScheduleModal();
   }
 
-    // Calendar event was clicked
-    async onEventSelected(event) {
-      // Use Angular date pipe for conversion
-      let start = formatDate(event.startTime, 'medium', 'en-ZA');
-      let end = formatDate(event.endTime, 'medium', 'en-ZA');
+    //Modals:
+  // Calendar event was clicked
+  async onEventSelected(event) {
+    // Use Angular date pipe for conversion
+    console.log(event);
+    let start = formatDate(event.startTime, 'h:mm a', 'en-ZA');
+    let end = formatDate(event.endTime, 'h:mm a', 'en-ZA');
+    let date = formatDate(event.startTime,'EEEE, MMMM d','en-ZA');
 
-      const alert = await this.alertCtrl.create({
-        header: event.title,
-        subHeader: event.desc,
-        message: 'From: ' + start + '<br><br>To: ' + end,
-        buttons: ['OK'],
-      });
-      alert.present();
-    }
+    const alert = await this.alertCtrl.create({
+      header: date,
+      message: 'From:'+ start +
+      '<br><br>To: ' + end + '',
+      buttons: ['Ok',{
+        text: 'Update',
+        handler: () => {
+          console.log("Updating event: " + event);
+          this.scheduleService.updateSchedule(event.scheduleID);
+        }
+      },
+      {
+        text: 'Delete',
+        cssClass: 'color:red;',
+        handler: () => {
+          this.scheduleService.deleteScheduleEvent(event.scheduleID)
+        }
+      }],
+    });
+    alert.present();
+  }
+
+
 
     createRandomEvents() {
       var events = [];
@@ -198,40 +274,4 @@ export class SchedulePage implements AfterViewInit  {
     removeEvents() {
       this.eventSource = [];
     }
-
-
-async openCalModal() {
-  const modal = await this.modalCtrl.create({
-    component: AddScheduleComponent,
-    cssClass: 'calendar-modal',
-    backdropDismiss: true
-  });
-
-  await modal.present();
-
-  modal.onDidDismiss().then((result) => {
-    if (result.data && result.data.event) {
-      let event = result.data.event;
-      if (event.allDay) {
-        let start = event.startTime;
-        event.startTime = new Date(
-          Date.UTC(
-            start.getUTCFullYear(),
-            start.getUTCMonth(),
-            start.getUTCDate()
-          )
-        );
-        event.endTime = new Date(
-          Date.UTC(
-            start.getUTCFullYear(),
-            start.getUTCMonth(),
-            start.getUTCDate() + 1
-          )
-        );
-      }
-      this.eventSource.push(result.data.event);
-      this.scheduleCalendar.loadEvents();
-    }
-  });
-}
 }
