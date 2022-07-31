@@ -7,7 +7,11 @@ import { CartService } from 'src/app/services/cart.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { SalesService } from 'src/app/services/sales/sales.service';
+import { ShopService } from 'src/app/services/shop/shop.service';
 import { CartModalPage } from '../cart-modal/cart-modal.page';
+import { ItemFilterPage } from '../item-filter/item-filter.page';
+import { SearchPipe } from '../search.pipe';
+
 
 @Component({
   selector: 'app-items',
@@ -15,23 +19,34 @@ import { CartModalPage } from '../cart-modal/cart-modal.page';
   styleUrls: ['./items.page.scss'],
 })
 export class ItemsPage implements OnInit {
+descending: boolean = false;
+order: number;
+column: string = 'name';
+customSearch: SearchPipe;
+
 //String used from the searchbar, used in the filter pipe to search titles.
 // public filter: string;
 
 public searchControl: FormControl;
-
+selectedCategories: any = [];
+filterItems: any = [];
 
 //Create local title array to be populated onInit.
 items: any[] = [];
 saleItems: any[] = [];
 
 saleItemsOriginal: any[] = [];
+numTimesLeft = 4
 cartData: any = {};
 storedData: any = {};
 cartSub: Subscription;
 
 filtering = false;
 filterTerm = '';
+orderedSaleItems;
+
+selectedCategory = document.getElementById("selectedCategory");
+category: string[];
 
 categoryArray!: SaleCategory[];
 
@@ -40,10 +55,13 @@ saleItemSub: Subscription;
 
 isLoading = true;
 
+
 constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService,
-  private cartService: CartService, public modalCtrl: ModalController) {
+  private cartService: CartService, public modalCtrl: ModalController, public shopService: ShopService) {
     this.getItems();
     this.fetchSaleItem();
+    this.addMoreItems();  
+
     this.searchControl = new FormControl();
 
     this.saleService.getAllSaleCategories().subscribe(
@@ -56,6 +74,87 @@ constructor(public saleService: SalesService, public repo: RepoService, public g
     );
 }
 
+sortBy(field: string) {
+
+  this.saleItems.sort((a: any, b: any) => {
+      if (a[field] < b[field]) {
+          return -1;
+      } else if (a[field] > b[field]) {
+          return 1;
+      } else {
+          return 0;
+      }
+  });
+  this.orderedSaleItems = this.saleItems;
+}
+
+sortByDescending(field: string) {
+
+  this.saleItems.sort((a: any, b: any) => {
+      if (a[field] > b[field]) {
+          return -1;
+      } else if (a[field] < b[field]) {
+          return 1;
+      } else {
+          return 0;
+      }
+  });
+  this.orderedSaleItems = this.saleItems;
+}
+
+sort(){
+  this.descending = !this.descending;
+  this.order = this.descending ? 1 : -1;
+}
+
+setFilteredCategories(){
+  console.log(document.getElementById('categorySelectOpt').nodeValue)
+  this.filterItems = this.saleItems.filter((saleItem) => {
+    return saleItem.categoryName.name.toLowerCase().indexOf(this.selectedCategory) > -1;
+  });
+  this.filterItems = this.saleItems;
+  console.log(this.filterItems);
+}
+
+priceLow(){
+  this.orderedSaleItems = this.sortBy('price');
+}
+
+priceHigh(){
+  this.orderedSaleItems = this.sortByDescending('price');
+}
+
+async filterPage() {
+  const modal = await this.modalCtrl.create({
+    component: ItemFilterPage,
+    // //cssClass: ,
+    // presentingElement: this.routerOutlet.nativeEl
+  });
+
+  await modal.present();
+  
+  await modal.onWillDismiss().then((result) => {
+    console.log('result :>> ', result);
+  }).catch((err) => {
+    console.log('err :>> ', err);
+  });
+}
+ 
+
+loadData(event) {  
+  setTimeout(() => {  
+    console.log('Done');  
+    this.addMoreItems();   
+    this.numTimesLeft -= 1;  
+    event.target.complete();  
+  }, 400);  
+} 
+
+addMoreItems() {  
+  for (let i = 1; i < 12; i++) {  
+    this.items.push(i);   
+  }  
+} 
 
 fetchSaleItem() {
   this.isLoading = true;
@@ -66,6 +165,7 @@ fetchSaleItem() {
         console.log(data);
         this.isLoading = false;
         this.saleItems = data.result;
+        this.sortBy('name');
       }
     }
   );

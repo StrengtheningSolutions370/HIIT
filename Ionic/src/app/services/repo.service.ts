@@ -18,6 +18,7 @@ import { ExerciseCategory } from '../models/exercise-category';
 import { Qualification } from '../models/qualification';
 import { Employee } from '../models/employee';
 import { BookingType } from '../models/booking-type';
+import { Quote } from '../models/quote';
 import { Exercise } from '../models/exercise';
 import { WriteOffReason } from '../models/write-off-reason';
 import { Lesson } from '../models/lesson';
@@ -78,6 +79,10 @@ export class RepoService {
     return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
   }
 
+  quoteEmail(quote: any): Observable<any> {
+    return this.http.post(`${this.base + this.AppUserController}quoteEmail`,quote,this.httpOptions)
+  }
+
   //password management
   VerifyOtp(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}verifyotp`, data, this.httpOptions);
@@ -97,6 +102,10 @@ export class RepoService {
 
   CheckPasswordHistory(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}checkpasswordhistory`, data, this.httpOptions);
+  }
+
+  makePayment(payment): Observable<any>{
+    return this.http.post<any>(`https://sandbox.payfast.co.za/eng/process`,payment);
   }
 
   //Venue:

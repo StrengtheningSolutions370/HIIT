@@ -4,19 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ShopPageRoutingModule } from './shop-routing.module';
+import { ItemFilterPageRoutingModule } from './item-filter-routing.module';
 
-import { ShopPage } from './shop.page';
-import { SearchPipe } from './search.pipe';
-import { SortPipe } from './sort.pipe';
+import { ItemFilterPage } from './item-filter.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ShopPageRoutingModule
+    ItemFilterPageRoutingModule
   ],
-  declarations: [ShopPage]
+  declarations: [ItemFilterPage]
 })
-export class ShopPageModule {}
+export class ItemFilterPageModule {}
