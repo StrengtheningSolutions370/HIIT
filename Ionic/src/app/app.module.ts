@@ -1,4 +1,3 @@
-import { MbscModule } from '@mobiscroll/angular';
 /* eslint-disable max-len */
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,7 +10,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './authentication/auth.interceptor';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PayPal } from '@ionic-native/paypal/ngx';
-import { Stripe } from '@ionic-native/stripe/ngx';
+// import { Stripe } from '@ionic-native/stripe/ngx';
 
 //VENUE IMPORTS:
 import { AddVenueComponent } from './pages/venue/add-venue/add-venue.component';
@@ -191,8 +190,8 @@ import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedul
 ],
   entryComponents: [],
   imports: [ 
-    MbscModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
-  providers: [PayPal, Stripe, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+    BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
+  providers: [PayPal, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 
   bootstrap: [AppComponent]
 })
