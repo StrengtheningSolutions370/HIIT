@@ -8,6 +8,7 @@ import { cartLine } from '../models/cart-line';
 import { SaleItem } from '../models/sale-item';
 import { CartModalPage } from '../pages/shop/cart-modal/cart-modal.page';
 import { GlobalService } from './global/global.service';
+import { RepoService } from './repo.service';
 import { StoreService } from './storage/store.service';
 
 @Injectable({
@@ -25,7 +26,8 @@ export class CartService {
   constructor(
     private storage: StoreService,
     private global: GlobalService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    public repo: RepoService
   ) { }
 
   getCart() {
@@ -126,15 +128,25 @@ export class CartService {
     // this._cart.next(this.model);
   }
 
-  async openCart(cartData){
+  async openCart(cartData, saleItem){
     const modal = await this.modalCtrl.create({
       component: CartModalPage,
       componentProps:{
-        cartData
+        cartData, saleItem
       },
       cssClass: 'cart-modal'
     });
     modal.present();
   }
+
+  makePayment(payform: any){
+    this.repo.makePayment(payform).subscribe(
+      {
+        next: () => {
+          console.log(payform);
+        }
+      }
+    )
+   }
 
 }

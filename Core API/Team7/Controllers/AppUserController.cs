@@ -488,27 +488,25 @@ namespace Team7.Controllers
 
         [HttpPost]
         [Route("quoteEmail")]
-        public async Task<IActionResult> quoteEmail()
+        public async Task<IActionResult> quoteEmail([FromForm] Quote quoteObj )
         {
+            var body = Request.Body;
             var formCollection = await Request.ReadFormAsync();
 
             //1. convert employee back to an object and pull values 
-            string s = formCollection.Keys.FirstOrDefault();
-            string decode = HttpUtility.UrlDecode(s);
-            var quoteObj = JObject.Parse(decode);
+            //var s = formCollection.Keys.();
+            //string decode = HttpUtility.UrlDecode(formCollection);
+            //var quoteObj = JObject.Parse(decode);
             string optDescription = null;
 
-            string clientAddress = quoteObj["clientMail"].ToString();
+            string clientAddress = quoteObj.clientMail.ToString();
             //Look at replacing with a dedicated BSC quotations email
-            string employeeAddress = quoteObj["employeeMail"].ToString();
-            string saleQuoteName = quoteObj["saleQuoteName"].ToString();
-            int saleQuoteID = ((int)quoteObj["saleQuoteID"]);
+            string employeeAddress = quoteObj.employeeMail.ToString();
+            string saleQuoteName = quoteObj.saleQuoteName.ToString();
+            int saleQuoteID = ((int)quoteObj.saleQuoteID);
             DateTime currentTime = new();
-
-            if (quoteObj["optDescription"] != null)
-            {
-                optDescription = quoteObj["optDescription"].ToString();
-            }
+            optDescription = quoteObj.optDescription.ToString();
+     
 
 
             var bodyClient = "<h1>BSC product quotation: "+saleQuoteName+" </h1> <br /> <hr>" +

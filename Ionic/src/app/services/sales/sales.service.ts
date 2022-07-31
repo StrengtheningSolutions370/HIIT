@@ -34,6 +34,7 @@ import { UpdateRefundReasonComponent } from 'src/app/pages/sale/refund-reason/up
 import { ViewRefundReasonComponent } from 'src/app/pages/sale/refund-reason/view-refund-reason/view-refund-reason.component';
 import { ConfirmRefundReasonComponent } from 'src/app/pages/sale/refund-reason/confirm-refund-reason/confirm-refund-reason.component';
 import { AssociativeRefundReasonComponent } from 'src/app/pages/sale/refund-reason/associative-refund-reason/associative-refund-reason.component';
+import { QuoteRequestPage } from 'src/app/pages/shop/quote-request/quote-request.page';
 
 @Injectable({
   providedIn: 'root'
@@ -550,5 +551,16 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
       console.log('BadOption: ' + choice);
 
     }
+  }
+
+  async openQuote(saleItem){
+    const modal = await this.modalCtrl.create({
+      component: QuoteRequestPage,
+      componentProps:{
+        saleItem
+      },
+      cssClass: 'cart-modal'
+    });
+    modal.present();
   }
 }

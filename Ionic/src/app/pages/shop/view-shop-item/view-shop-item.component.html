@@ -7,15 +7,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <br/>
-  <div class="ion-text-center">
-
-      
-        <img [src]="this.global.createImg(saleItem.photo)" class="img-wrapper" alt="img">
-        <ion-label *ngIf="saleItem.quotable === false" class="ion-text-right">R{{saleItem.price}}</ion-label>
-        <ion-label class="ion-text-wrap ion-text-right">{{saleItem.description}}</ion-label>
-
+<ion-content container="flex-wrap">
+  <div class="ion-text-center">      
+        <img [src]="this.global.createImg(saleItem.photo)" alt="img">
+        <ion-label class="ion-text-wrap">{{saleItem.description}}</ion-label>
       <br/><br/>
   </div>
   <br>
