@@ -52,11 +52,11 @@ export class ScheduleService {
       return this.repo.updateScheduleEvent(schedule.scheduleID,schedule).subscribe(
         {
          next: () => {
-           console.log('SALE ITEM UPDATED');
+           console.log('SCHEDULE EVENT UPDATED');
            this.fetchScheduleEvent.emit();
          },
          error: (err) => {
-           console.log('SALE ITEM UPDATED FAILED');
+           console.log('SCHEDULE EVENT UPDATED FAILED');
            console.log(err);
          }
         }
@@ -70,7 +70,7 @@ export class ScheduleService {
      {
        next: res => {
          console.log(res);
-         console.log('SALE ITEM DELETED');
+         console.log('SCHEDULE EVENT DELETED');
          this.fetchScheduleEvent.emit();
        },
        error: err => {
@@ -117,6 +117,20 @@ export class ScheduleService {
     //   }
     // });
   }
+
+    //CREATE Schedule event
+    async updateScheduleModal(scheduleEvent: any) {
+      const modal = await this.modalCtrl.create({
+        component: UpdateScheduleComponent,
+        cssClass: 'calendar-modal',
+        componentProps: {
+          scheduleEvent
+        },
+        backdropDismiss: true
+      });
+
+      await modal.present();
+    }
 
   //Display the confirm create/update modal
   //Receives the selected qualificationtype from the qualificationtype page

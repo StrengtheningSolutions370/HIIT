@@ -19,16 +19,16 @@
       <ion-button
       id="datePick"
       class="ion-text-start">
-      {{dateSelect | date:'EEEE, MMMM d'}} <ion-icon name="caret-down-circle-outline"></ion-icon>
+      Date <ion-icon name="caret-down-circle-outline"></ion-icon>
       </ion-button>
       <ion-button
       id="startTime"
       class="ion-text-center">
-      {{timeStart | date:'h:mm a'}}<ion-icon name="caret-down-circle-outline"></ion-icon>
+      Starting time<ion-icon name="caret-down-circle-outline"></ion-icon>
       </ion-button>
       <ion-button
       id="endTime"
-      class="ion-text-end">{{timeEnd | date:'h:mm a'}}<ion-icon name="caret-down-circle-outline"></ion-icon>
+      class="ion-text-end">Ending time<ion-icon name="caret-down-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
 
@@ -119,7 +119,7 @@
 
 <br/><br/>
 
-<ion-button type="submit" color="success" [disabled]="!cCalendarForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Event</ion-button>
+<ion-button type="submit" color="success" [disabled]="!uCalendarForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Event</ion-button>
 <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
 
 </form>

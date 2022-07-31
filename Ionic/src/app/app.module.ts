@@ -137,6 +137,7 @@ import { AssociativeLessonComponent } from './pages/lessons/associative-lesson/a
 //SCHEDULE IMPORTS:
 import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-schedule.component';
 import { DatePipe } from '@angular/common';
+import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedule/update-schedule.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -180,16 +181,19 @@ import { DatePipe } from '@angular/common';
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
   //Schedule
-  TimeRangeComponent, AddScheduleComponent,
+  TimeRangeComponent, AddScheduleComponent, UpdateScheduleComponent,
   //Exercise
+
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
   //Lesson
   AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
+
 ],
   entryComponents: [],
-  imports: [
+  imports: [ 
     MbscModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
-  providers: [PayPal, Stripe, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, DatePipe ],
+  providers: [PayPal, Stripe, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+
   bootstrap: [AppComponent]
 })
 export class AppModule {}
