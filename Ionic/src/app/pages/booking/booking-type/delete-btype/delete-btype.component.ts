@@ -19,7 +19,7 @@ export class DeleteBtypeComponent  {
   async delete(){
     this.bookingService.deleteBookingType(this.bookingType.bookingTypeID);
     this.global.dismissModal();
-    this.global.showToast("The Exercise Category has been successfully deleted")
+    this.global.showToast("The Booking Type has been successfully deleted")
   }
 
 }

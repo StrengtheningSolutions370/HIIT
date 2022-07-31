@@ -84,5 +84,21 @@ namespace Team7.Models.Repository
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
         }
+
+        public async Task<LessonPlan[]> GetLessonsPlanByLessonIDAsync(int LessonID)
+        {
+            var query = DB.LessonPlan.Where(q => q.LessonID == LessonID).Select(q => new LessonPlan
+            {
+                LessonPlanID = q.LessonPlanID,
+                LessonID = q.LessonID,
+                Exercise = q.Exercise,
+                Lesson = q.Lesson
+            });
+
+            if (!query.Any())
+                return null;
+
+            return await query.ToArrayAsync();
+        }
     }
 }
