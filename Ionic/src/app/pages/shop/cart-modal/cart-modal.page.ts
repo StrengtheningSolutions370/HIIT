@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { IonContent, ModalController, ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Cart } from 'src/app/models/cart';
-import { Payment } from 'src/app/models/model';
 import { SaleItem } from 'src/app/models/sale-item';
 import { CartService } from 'src/app/services/cart.service';
 import { GlobalService } from 'src/app/services/global/global.service';

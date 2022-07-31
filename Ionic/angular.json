@@ -36,8 +36,6 @@
               "src/global.scss"
             ],
             "scripts": [
-              "src/assets/payfastengine.js",
-              "src/assets/squareengine.js"
             ],
             "aot": false,
             "vendorChunk": true,

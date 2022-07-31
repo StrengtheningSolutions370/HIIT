@@ -1,6 +1,5 @@
 <ion-content class="container">
   <ion-searchbar [(ngModel)]="terms"></ion-searchbar>
-  <button ion-button type="button" (click)="sort()">Sort</button>
 
   <div class="ion-text-center " *ngIf="isLoading">
     <ion-spinner name="circles"></ion-spinner>
@@ -12,23 +11,23 @@
       <ion-icon name="cart" class="cart-icon"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-<ion-button (click)="priceLow()">
-  
-  
-</ion-button>
-<ion-button (click)="priceHigh()"></ion-button>
-  <div>
-    <ion-col size="6" class="ion-text-right" (click)='filterPage()'>
-      <ion-icon name="filter-outline"></ion-icon>
-    </ion-col>
-    <ion-select placeholder="filter" multiple="true" slot="fixed" [(ngModel)]="category">
 
+  
+  <div class="div-buttons">
+    <ion-button (click)="priceLow()">Price Low to High</ion-button>
+    <ion-button (click)="priceHigh()">Price High to Low</ion-button>
+  </div>
+  <div>
+    <!-- <ion-col size="6" class="ion-text-right" (click)='filterPage()'>
+      <ion-icon name="filter-outline"></ion-icon>
+    </ion-col> -->
+<!-- <ion-select>
       <ng-container  id="category" *ngFor="let c of this.categoryArray">
         <ion-select-option id="categorySelectOpt" value="{{c.saleCategoryID}},{{c.name}}" (ionChange)="setFilteredCategories()">
           {{c.name}}
         </ion-select-option>
       </ng-container>
-    </ion-select>
+    </ion-select> -->
     <ion-grid>
       <ion-row class="flex-wrap">
         <ion-col class='ion-align-self-start ' sizeLg="3" sizeMd="3" sizeXs="6" *ngFor="let saleItem of saleItems | search : terms | sort: {property: column, order: order} "
