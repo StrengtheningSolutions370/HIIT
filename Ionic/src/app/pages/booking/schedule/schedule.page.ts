@@ -194,7 +194,7 @@ export class SchedulePage implements AfterViewInit  {
         text: 'Update',
         handler: () => {
           console.log("Updating event: " + event);
-          this.scheduleService.updateSchedule(event.scheduleID);
+          this.scheduleService.updateScheduleModal(event);
         }
       },
       {

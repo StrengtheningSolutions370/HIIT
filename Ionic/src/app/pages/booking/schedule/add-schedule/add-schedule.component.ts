@@ -37,7 +37,7 @@ export class AddScheduleComponent implements AfterViewInit {
   timeStart: Time;
   timeEnd: Time;
 
-  minDate: string = Date.toString();
+  //minDate: string = Date.toString();
 
   calendar = {
     mode: 'month',
