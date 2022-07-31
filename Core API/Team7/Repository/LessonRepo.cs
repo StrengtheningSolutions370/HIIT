@@ -92,7 +92,8 @@ namespace Team7.Models.Repository
                     Name = l.Name,
                     Employee = l.Employee,
                     LessonPlan = l.LessonPlan,
-                    Schedule = l.Schedule
+                    Schedule = l.Schedule,
+
                 }).SingleAsync();
 
         }
@@ -101,5 +102,7 @@ namespace Team7.Models.Repository
         {
             return await DB.SaveChangesAsync() > 0;
         }
+
+
     }
 }
