@@ -23,6 +23,15 @@ const routes: Routes = [
     path: 'cart-modal',
     loadChildren: () => import('./cart-modal/cart-modal.module').then( m => m.CartModalPageModule)
   },
+  {
+    path: 'quote-request',
+    loadChildren: () => import('./quote-request/quote-request.module').then( m => m.QuoteRequestPageModule)
+  },
+  {
+    path: 'item-filter',
+    loadChildren: () => import('./item-filter/item-filter.module').then( m => m.ItemFilterPageModule)
+  }
+
 ];
 
 

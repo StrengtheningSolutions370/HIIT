@@ -35,7 +35,10 @@
               "src/theme/variables.scss",
               "src/global.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/payfastengine.js",
+              "src/assets/squareengine.js"
+            ],
             "aot": false,
             "vendorChunk": true,
             "extractLicenses": false,
