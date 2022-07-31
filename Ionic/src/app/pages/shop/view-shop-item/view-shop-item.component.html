@@ -10,9 +10,13 @@
 <ion-content container="flex-wrap">
   <div class="ion-text-center">      
         <img [src]="this.global.createImg(saleItem.photo)" alt="img">
-        <ion-label class="ion-text-wrap">{{saleItem.description}}</ion-label>
-      <br/><br/>
   </div>
-  <br>
-  <ion-button class="ion-float-right" style="margin-right:10%;width:30% " (click)="quantityPlus(saleItem)">ADD TO CART</ion-button>
+  <div class="ion-text-left ion-text-wrap text">
+    <h5>Item Description:</h5>
+    <ion-label class="ion-text-wrap">{{saleItem.description}}</ion-label>
+    <br><br>
+    <ion-button class="ion-float-right" style="margin-bottom:3%;width:30% " (click)="quantityPlus(saleItem)">ADD TO CART</ion-button>
+    <br>
+  </div>
+
 </ion-content>

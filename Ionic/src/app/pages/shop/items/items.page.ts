@@ -68,6 +68,7 @@ constructor(public saleService: SalesService, public repo: RepoService, public g
       {
         next: data => {
           this.categoryArray = data.result;
+          this.isLoading = false;
           console.log(data);
         }
       }
@@ -205,7 +206,8 @@ ngOnInit() {
         });
         console.log('allitems: ', this.saleItems);
         this.cartData.items = this.saleItems.filter(x => x.quantity > 0);
-      } else {
+      } 
+      else {
         this.saleItems.forEach(element => {
             element.quantity = 0;
         });
