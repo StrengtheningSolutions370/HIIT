@@ -16,6 +16,7 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int LessonID { get; set; }
+
         [Required]
         public string Name { get; set; }
 
@@ -29,6 +30,6 @@ namespace Team7.Models
 
         public int ScheduleID { get; set; }
 
-        public Exercise[] exercises { get; set; }
+        public ICollection<Exercise> exercises { get; set; }
     }
 }

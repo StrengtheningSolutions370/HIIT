@@ -11,10 +11,12 @@ namespace Team7.Models.Repository
     public class LessonRepo : ILessonRepo
     {
         readonly private AppDB DB;
+        readonly private ILessonPlanRepo _lessonPlanRepo;
 
-        public LessonRepo(AppDB appDatabaseContext)
+        public LessonRepo(AppDB appDatabaseContext, ILessonPlanRepo lessonPlanRepo)
         {
             DB = appDatabaseContext;
+            _lessonPlanRepo = lessonPlanRepo;
         }
 
         public void Add<T>(T Entity) where T : class
@@ -34,37 +36,19 @@ namespace Team7.Models.Repository
 
         public async Task<Lesson[]> GetAllLessonsAsync()
         {
-            IQueryable<Lesson> query = DB.Lesson;
 
-            if (!query.Any())
-                return null;
+            IQueryable<Lesson> lessons = DB.Lesson.Select(l => new Lesson
+            {
+                LessonID = l.LessonID,
+                Name = l.Name,
+                EmployeeID = l.EmployeeID,
+                LessonPlan = l.LessonPlan,
+                Schedule = l.Schedule,
+            });
 
+            return await lessons.ToListAsync()
 
-            return await query.Select(l =>
-                new Lesson
-                {
-                    LessonID = l.LessonID,
-                    Name = l.Name,
-                    Employee = l.Employee,
-                    LessonPlan = l.LessonPlan,
-                    Schedule = l.Schedule
-                }).ToArrayAsync();
         }
-
-        //public async Task<Lesson[]> GetLessonsAsync(string input)
-        //{
-        //    IQueryable<Lesson> query = DB.Lesson.Where(v => v.Name == input);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.ToArrayAsync();
-        //    }
-        //    return null;
-
-        //}
 
         public async Task<Lesson> GetLessonIdAsync(int id)
         {
