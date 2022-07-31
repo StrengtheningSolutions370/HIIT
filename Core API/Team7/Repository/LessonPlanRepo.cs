@@ -33,7 +33,7 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<object> GetAllLessonPlansAsync()
+        public async Task<LessonPlan[]> GetAllLessonPlansAsync()
         {
             IQueryable<LessonPlan> query = DB.LessonPlan;
 
@@ -41,12 +41,12 @@ namespace Team7.Models.Repository
                 return null;
 
             return await query.Select(lp =>
-                new {
-                    lp.LessonPlanID,
-                    lp.Exercise,
-                    lp.Lesson,
-                    lp.Schedule,
-                }).ToListAsync();
+                new LessonPlan
+                {
+                    LessonPlanID = lp.LessonPlanID,
+                    Exercise = lp.Exercise,
+                    Lesson = lp.Lesson,
+                }).ToArrayAsync();
         }
 
         //public async Task<LessonPlan[]> GetLessonPlansAsync(string input)
@@ -64,7 +64,7 @@ namespace Team7.Models.Repository
 
         //}
 
-        public async Task<object> GetLessonPlanIdAsync(int id)
+        public async Task<LessonPlan> GetLessonPlanIdAsync(int id)
         {
             IQueryable<LessonPlan> query = DB.LessonPlan.Where(lp => lp.LessonPlanID == id);
 
@@ -72,11 +72,10 @@ namespace Team7.Models.Repository
                 return null;
             
             return await query.Select(lp => 
-                new {
-                    lp.LessonPlanID,
-                    lp.Exercise,
-                    lp.Lesson,
-                    lp.Schedule
+                new LessonPlan {
+                    LessonPlanID = lp.LessonPlanID,
+                    Exercise = lp.Exercise,
+                    Lesson = lp.Lesson,
                 }).SingleAsync();
         }
 

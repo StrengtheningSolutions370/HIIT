@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿    using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -225,13 +225,22 @@ namespace Team7.Models.Repository
         public async Task<Employee> _GetEmployeeIdAsync(int id)
         {
             IQueryable<Employee> query = DB.Employee.Where(e => e.EmployeeID == id);
+
             if (!query.Any())
             {
                 return null;
             }
             else
             {
-                return await query.SingleAsync();
+                return await query.Select(emp =>
+                new Employee {
+                    EmployeeID = emp.EmployeeID,
+                    Photo = emp.Photo,
+                    IDNumber = emp.IDNumber,
+                    Qualification = emp.Qualification,
+                    Contract = emp.Contract,
+                    EmployeeType = emp.EmployeeType,
+                }).SingleAsync();
             }
         }
 

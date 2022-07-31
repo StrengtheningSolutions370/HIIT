@@ -436,12 +436,15 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ExerciseCategoryID")
+                    b.Property<int>("ExerciseCategoryID")
                         .HasColumnType("int");
 
                     b.Property<string>("Focus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LessonID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -454,6 +457,8 @@ namespace Team7.Migrations
                     b.HasKey("ExerciseID");
 
                     b.HasIndex("ExerciseCategoryID");
+
+                    b.HasIndex("LessonID");
 
                     b.ToTable("Exercise");
                 });
@@ -509,12 +514,15 @@ namespace Team7.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("EmployeeID")
+                    b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ScheduleID")
+                        .HasColumnType("int");
 
                     b.HasKey("LessonID");
 
@@ -957,6 +965,9 @@ namespace Team7.Migrations
                     b.Property<int?>("EmployeeID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("LessonID")
+                        .HasColumnType("int");
+
                     b.Property<int?>("LessonPlanID")
                         .HasColumnType("int");
 
@@ -971,6 +982,8 @@ namespace Team7.Migrations
                     b.HasIndex("DateSessionID");
 
                     b.HasIndex("EmployeeID");
+
+                    b.HasIndex("LessonID");
 
                     b.HasIndex("LessonPlanID");
 
@@ -1365,7 +1378,13 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.ExerciseCategory", "ExerciseCategory")
                         .WithMany("Exercise")
-                        .HasForeignKey("ExerciseCategoryID");
+                        .HasForeignKey("ExerciseCategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Team7.Models.Lesson", null)
+                        .WithMany("exercises")
+                        .HasForeignKey("LessonID");
 
                     b.Navigation("ExerciseCategory");
                 });
@@ -1385,7 +1404,9 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Employee", "Employee")
                         .WithMany("Lesson")
-                        .HasForeignKey("EmployeeID");
+                        .HasForeignKey("EmployeeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Employee");
                 });
@@ -1565,8 +1586,12 @@ namespace Team7.Migrations
                         .WithMany("Schedule")
                         .HasForeignKey("EmployeeID");
 
-                    b.HasOne("Team7.Models.LessonPlan", "LessonPlan")
+                    b.HasOne("Team7.Models.Lesson", null)
                         .WithMany("Schedule")
+                        .HasForeignKey("LessonID");
+
+                    b.HasOne("Team7.Models.LessonPlan", "LessonPlan")
+                        .WithMany()
                         .HasForeignKey("LessonPlanID");
 
                     b.HasOne("Team7.Models.Venue", "Venue")
@@ -1740,11 +1765,10 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.Lesson", b =>
                 {
-                    b.Navigation("LessonPlan");
-                });
+                    b.Navigation("exercises");
 
-            modelBuilder.Entity("Team7.Models.LessonPlan", b =>
-                {
+                    b.Navigation("LessonPlan");
+
                     b.Navigation("Schedule");
                 });
 

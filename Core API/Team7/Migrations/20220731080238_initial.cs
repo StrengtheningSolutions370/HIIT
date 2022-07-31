@@ -356,28 +356,6 @@ namespace Team7.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Exercise",
-                columns: table => new
-                {
-                    ExerciseID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Focus = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExerciseCategoryID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Exercise", x => x.ExerciseID);
-                    table.ForeignKey(
-                        name: "FK_Exercise_ExerciseCategory_ExerciseCategoryID",
-                        column: x => x.ExerciseCategoryID,
-                        principalTable: "ExerciseCategory",
-                        principalColumn: "ExerciseCategoryID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Member",
                 columns: table => new
                 {
@@ -920,7 +898,8 @@ namespace Team7.Migrations
                     LessonID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmployeeID = table.Column<int>(type: "int", nullable: true)
+                    EmployeeID = table.Column<int>(type: "int", nullable: false),
+                    ScheduleID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -930,6 +909,35 @@ namespace Team7.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employee",
                         principalColumn: "EmployeeID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Exercise",
+                columns: table => new
+                {
+                    ExerciseID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Focus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExerciseCategoryID = table.Column<int>(type: "int", nullable: false),
+                    LessonID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exercise", x => x.ExerciseID);
+                    table.ForeignKey(
+                        name: "FK_Exercise_ExerciseCategory_ExerciseCategoryID",
+                        column: x => x.ExerciseCategoryID,
+                        principalTable: "ExerciseCategory",
+                        principalColumn: "ExerciseCategoryID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Exercise_Lesson_LessonID",
+                        column: x => x.LessonID,
+                        principalTable: "Lesson",
+                        principalColumn: "LessonID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -970,7 +978,8 @@ namespace Team7.Migrations
                     BookingTypeID = table.Column<int>(type: "int", nullable: true),
                     LessonPlanID = table.Column<int>(type: "int", nullable: true),
                     DateSessionID = table.Column<int>(type: "int", nullable: true),
-                    EmployeeID = table.Column<int>(type: "int", nullable: true)
+                    EmployeeID = table.Column<int>(type: "int", nullable: true),
+                    LessonID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -992,6 +1001,12 @@ namespace Team7.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employee",
                         principalColumn: "EmployeeID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Schedule_Lesson_LessonID",
+                        column: x => x.LessonID,
+                        principalTable: "Lesson",
+                        principalColumn: "LessonID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Schedule_LessonPlan_LessonPlanID",
@@ -1120,6 +1135,11 @@ namespace Team7.Migrations
                 column: "ExerciseCategoryID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Exercise_LessonID",
+                table: "Exercise",
+                column: "LessonID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InventoryItem_SaleItemID",
                 table: "InventoryItem",
                 column: "SaleItemID");
@@ -1233,6 +1253,11 @@ namespace Team7.Migrations
                 name: "IX_Schedule_EmployeeID",
                 table: "Schedule",
                 column: "EmployeeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedule_LessonID",
+                table: "Schedule",
+                column: "LessonID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedule_LessonPlanID",
@@ -1412,9 +1437,6 @@ namespace Team7.Migrations
                 name: "Exercise");
 
             migrationBuilder.DropTable(
-                name: "Lesson");
-
-            migrationBuilder.DropTable(
                 name: "Client");
 
             migrationBuilder.DropTable(
@@ -1422,6 +1444,9 @@ namespace Team7.Migrations
 
             migrationBuilder.DropTable(
                 name: "ExerciseCategory");
+
+            migrationBuilder.DropTable(
+                name: "Lesson");
 
             migrationBuilder.DropTable(
                 name: "Employee");

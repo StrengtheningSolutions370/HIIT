@@ -9,6 +9,7 @@ namespace Team7.Models
         public Lesson()
         {
             this.LessonPlan = new HashSet<LessonPlan>();
+            this.Schedule = new HashSet<Schedule>();
         }
 
 
@@ -19,6 +20,15 @@ namespace Team7.Models
         public string Name { get; set; }
 
         public virtual Employee Employee { get; set; }
+
+        public int EmployeeID { get; set; }
+
         public virtual ICollection<LessonPlan> LessonPlan { get; set; }
+
+        public virtual ICollection<Schedule> Schedule { get; set; }
+
+        public int ScheduleID { get; set; }
+
+        public Exercise[] exercises { get; set; }
     }
 }
