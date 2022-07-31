@@ -1,11 +1,10 @@
 <ion-content>
   <ion-row>
     <ion-col size="4">
-      <ion-button (click)="openCalModal()" expand="block" fill="outline">
+      <ion-button (click)="this.scheduleService.addScheduleModal()" expand="block" fill="outline">
         Add New Event
       </ion-button>
     </ion-col>
-
     <ion-col size="4">
       <ion-button (click)="createRandomEvents()" expand="block" fill="outline">
         Create random [testing]
@@ -48,7 +47,7 @@
     </ion-col>
   </ion-row>
   <calendar
-  *ngIf="modalReady"
+  *ngIf="!isLoading"
   [eventSource]="eventSource"
   [calendarMode]="calendar.mode"
   [currentDate]="calendar.currentDate"
@@ -58,16 +57,22 @@
   >
 </calendar>
 
+event-detail
 <!-- (onTimeSelected)="onTimeSelected($event)" -->
 
 <ng-template #calendarEventTemplate let-view="view" let-row="row" let-col="col">
   <div [class.with-event]="view.dates[row*7+col].events.length">
     {{view.dates[row*7+col].label}}
     <div class="indicator-container">
-      <div class="event-indicator" *ngFor="let ev of view.dates[row*7+col].events"></div>
+      <div class="event-indicator" *ngFor="let ev of view.dates[row*7+col].events">
+      </div>
     </div>
   </div>
 </ng-template>
+
+<div class="ion-text-center " *ngIf="isLoading">
+  <ion-spinner name="circles"></ion-spinner>
+</div>
 
 
 </ion-content>

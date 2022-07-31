@@ -10,6 +10,11 @@ import { ItemsPage } from './items.page';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import {NgxPaginationModule} from 'ngx-pagination';
+import { SearchPipe } from '../search.pipe';
+import { SortPipe } from '../sort.pipe';
+
+
+
 
 @NgModule({
   imports: [
@@ -18,8 +23,10 @@ import {NgxPaginationModule} from 'ngx-pagination';
     IonicModule,
     ItemsPageRoutingModule,
     Ng2SearchPipeModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+      
   ],
-  declarations: [ItemsPage]
+  declarations: [ItemsPage,  SearchPipe,
+    SortPipe]
 })
 export class ItemsPageModule {}

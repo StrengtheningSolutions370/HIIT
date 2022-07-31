@@ -169,6 +169,15 @@ namespace Team7
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICorsService corsService, ICorsPolicyProvider corsPolicyProvider)
         {
 
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Team7 v1");
+                //c.RoutePrefix = string.Empty;
+
+            });
+
 
             if (env.IsDevelopment())
             {

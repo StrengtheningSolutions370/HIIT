@@ -23,7 +23,7 @@
     </span>
     <ion-item>
       <ion-label position="floating">Description:</ion-label>
-      <ion-textarea formControlName="bookingTypeDescription" type="text" required="" id="bookingTypeDescription" ></ion-textarea>
+      <ion-textarea formControlName="bookingTypeDescription" type="text" required="" id="bookingTypeDescription"></ion-textarea>
       <br/>
     </ion-item>
     <span class="error ion-padding" *ngIf="errorControl.bookingTypeDescription.errors?.required && cBookingTypeForm.get('bookingTypeDescription').touched">
@@ -31,7 +31,7 @@
     </span>
     <br>
     <br>
-    <ion-button type="submit" color="success" [disabled]="!cBookingTypeForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Booking Type</ion-button>
+    <ion-button type="submit" color="success" [disabled]="!cBookingTypeForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;">Create Booking Type</ion-button>
     <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
 
   </form>

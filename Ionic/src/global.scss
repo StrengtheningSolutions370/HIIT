@@ -36,6 +36,10 @@ $colors: (
   dark:       #222
 );
 
+ion-popover {
+  --width: auto!important;
+}
+
 .toastCenter {
   text-align: center;
 }
@@ -50,4 +54,4 @@ $colors: (
   --height: 50%;
   --border-radius: 5%;
   padding: 25px;
-
+}

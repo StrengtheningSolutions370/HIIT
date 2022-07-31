@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Team7.Models;
@@ -189,15 +190,20 @@ namespace Team7.Controllers
 
                     await _userManager.AddToRoleAsync(user, role);
 
-                    Email email = new Email();
-                    var body = "<h1>Strengthening Solutions</h1> <br /> <hr>" +
+                    string body = "<h1>Strengthening Solutions</h1> <br /> <hr>" +
                         "<p><strong>Email:</strong> " + Email + "</p>" +
                         "<p><strong>Password:</strong> " + randomPassword + "</p>" +
                         "<br /> <hr>";
                     try
                     {
                         //email the password to the user:
-                        email.sendEmail(Email, "Strengthening Solutions", body);
+                        //email.sendEmail(Email, "Strengthening Solutions", body);
+
+                        //email threading service:
+
+                        Email email = new Email(Email, "Strengthening Solutions", body);
+                        Thread thr = new Thread(new ThreadStart(email.sendEmail));
+                        thr.Start();
 
                         ///////////////////////////////////////////////////
                         ///store files from FormData:
@@ -428,7 +434,7 @@ namespace Team7.Controllers
 
                     await _userManager.AddToRoleAsync(user, uvmRole);
 
-                    Email email = new Email();
+                    //Email email = new Email();
                     var body = "<h1>Strengthening Solutions</h1> <br /> <hr>" +
                         "<p><strong>Email:</strong> " + Email + "</p>" +
                         "<p><strong>Password:</strong> " + randomPassword + "</p>" +
@@ -436,7 +442,7 @@ namespace Team7.Controllers
                     try
                     {
                         //email the password to the user:
-                        email.sendEmail(Email, "Strengthening Solutions", body);
+                        //email.sendEmail(Email, "Strengthening Solutions", body);
 
                         ///////////////////////////////////////////////////
                         ///store files from FormData:

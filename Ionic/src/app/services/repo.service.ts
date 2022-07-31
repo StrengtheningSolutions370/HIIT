@@ -18,8 +18,11 @@ import { ExerciseCategory } from '../models/exercise-category';
 import { Qualification } from '../models/qualification';
 import { Employee } from '../models/employee';
 import { BookingType } from '../models/booking-type';
+import { Quote } from '../models/quote';
 import { Exercise } from '../models/exercise';
 import { WriteOffReason } from '../models/write-off-reason';
+import { Lesson } from '../models/lesson';
+import { Schedule } from '../models/schedule';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +47,8 @@ export class RepoService {
   BookingTypeController = 'BookingType/'
   ExerciseController = 'Exercise/'
   WriteOffReasonController = 'WriteOffReason/'
+  LessonController = 'Lesson/'
+  ScheduleController = 'Schedule/'
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -58,7 +63,7 @@ export class RepoService {
   }
 
   getUserRole(token : string) : Observable<any>{
-    console.trace();
+    // console.trace();
     return this.http.get(`${this.base + this.EmployeeController}token`, { headers : new HttpHeaders({'Authorization': 'Bearer ' + token}) });
   }
 
@@ -74,11 +79,15 @@ export class RepoService {
     return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
   }
 
+  quoteEmail(quote: any): Observable<any> {
+    return this.http.post(`${this.base + this.AppUserController}quoteEmail`,quote,this.httpOptions)
+  }
+
   //password management
   VerifyOtp(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}verifyotp`, data, this.httpOptions);
   }
-  
+
   SendOtp(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}sendotp`, data, this.httpOptions);
   }
@@ -93,6 +102,10 @@ export class RepoService {
 
   CheckPasswordHistory(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.AppUserController}checkpasswordhistory`, data, this.httpOptions);
+  }
+
+  makePayment(payment): Observable<any>{
+    return this.http.post<any>(`https://sandbox.payfast.co.za/eng/process`,payment);
   }
 
   //Venue:
@@ -414,6 +427,7 @@ getMatchBookingType(name: string, description: string): Observable<any>{
   // ------
   // Create
   createExercise(exercise: Exercise): Observable<any> {
+    console.log(exercise);
     return this.http.post<any>(`${this.base + this.ExerciseController}add`, exercise, this.httpOptions);
   }
   //Update
@@ -459,6 +473,51 @@ getWriteOffReason(): Observable<any>{
 //GetMatch
 getMatchWriteOffReason(description: string): Observable<any>{
   return this.http.get(`${this.base+this.WriteOffReasonController}getMatch?description=${description}`, this.httpOptions);
+}
+
+// LESSONS:
+  // ------
+  // Create
+  createLesson(lesson: Lesson): Observable<any> {
+    return this.http.post<any>(`${this.base + this.LessonController}add`, lesson, this.httpOptions);
+  }
+  //Update
+  updateLesson(lessonId: number, lesson: Lesson): Observable<any> {
+    return this.http.put(`${this.base + this.LessonController}update?id=${lessonId}`, lesson, this.httpOptions);
+  }
+  //Delete
+  deleteLesson(lessonId: string): Observable<any> {
+    return this.http.delete(`${this.base + this.LessonController}delete?id=${lessonId}`, this.httpOptions);
+  }
+  //GetAll
+  getLessons(): Observable<any> {
+    return this.http.get(`${this.base + this.LessonController}getAll`, this.httpOptions);
+  }
+  // //GetMatch
+  // getMatchLesson(name: string, description: string): Observable<any> {
+  //   return this.http.get(`${this.base + this.ExerciseController}getMatch?name=${name}&description=${description}`, this.httpOptions);
+  // }
+  // //Exists
+  // existsExercise(id: number): Observable<any> {
+  //   return this.http.get(`${this.base + this.ExerciseController}exists?id=${id}`, this.httpOptions);
+  // }
+
+//SCHEDULE
+
+createScheduleEvent(schedule: Schedule): Observable<any>{
+  return this.http.post<any>(`${this.base+this.ScheduleController}add`,schedule,this.httpOptions);
+}
+//Update
+updateScheduleEvent(scheduleID:number, schedule: Schedule): Observable<any>{
+  return this.http.put(`${this.base+this.ScheduleController}update?id=${scheduleID}`,schedule, this.httpOptions);
+}
+//Delete
+deleteScheduleEvent(scheduleID: number): Observable<any>{
+  return this.http.delete(`${this.base+this.ScheduleController}delete?id=${scheduleID}`,this.httpOptions);
+}
+//GetAll
+getScheduleEvent(): Observable<any>{
+  return this.http.get(`${this.base+this.ScheduleController}getAll`, this.httpOptions);
 }
 
 }

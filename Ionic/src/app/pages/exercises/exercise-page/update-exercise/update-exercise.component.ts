@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { ViewWillEnter } from '@ionic/angular';
+import { FormGroup, FormControl, Validators, FormBuilder, AnyForUntypedForms } from '@angular/forms';
+import { ModalController, ViewWillEnter } from '@ionic/angular';
 import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
 import { Exercise } from 'src/app/models/exercise';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ExerciseService } from 'src/app/services/exercise/exercise.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -13,60 +14,96 @@ import { ExerciseService } from 'src/app/services/exercise/exercise.service';
   templateUrl: './update-exercise.component.html',
   styleUrls: ['./update-exercise.component.scss'],
 })
-export class UpdateExerciseComponent implements ViewWillEnter {
+export class UpdateExerciseComponent implements OnInit {
+
   @Input() exercise: Exercise;
+
   exerciseCategoryDropDown!: ExerciseCategory[];
 
+  showVideo = false;
+  embed! : any;
+
   uExerciseForm: FormGroup = this.formBuilder.group({
-    name : ['', [Validators.required]],
-    description : ['', [Validators.required]],
-    exerciseCategory : ['', [Validators.required]],
+    exerciseName : ['', [Validators.required]],
+    exerciseFocus : ['', [Validators.required]],
+    exerciseUrl : ['', Validators.pattern(/(http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?)|(^$)/)],
+    exerciseCategory : ['', [Validators.required]]
   });
 
   get errorControl() {
     return this.uExerciseForm.controls;
   }
 
-  constructor(public global: GlobalService, public formBuilder: FormBuilder,
-    public exerciseService: ExerciseService) { }
+  constructor(private modalCtrl: ModalController, public global: GlobalService, public formBuilder: FormBuilder,
+    public exerciseService: ExerciseService, public sanitizer: DomSanitizer) { }
 
-    ionViewWillEnter() {
-       console.log(this.exercise);
-       this.exerciseService.getAllExerciseCategorys().subscribe(
-         {
-           next: data => {
-             this.exerciseCategoryDropDown = data.result;
-             console.log(data.result);
-           }
-         }
-       );
-       console.log(this.exercise);
-       if (this.exercise != null) {
-         this.uExerciseForm.controls.name.setValue(this.exercise.name);
-         this.uExerciseForm.controls.description.setValue(this.exercise.description);
+    ngOnInit() {
+
+      console.log('exe to update', this.exercise);
+
+      this.exerciseService.getAllExerciseCategorys().subscribe(
+        {
+          next: data => {
+            this.exerciseCategoryDropDown = data.result;
+            this.setForm();
+            // console.log(data.result);
+          }
+        }
+      );
+
+      this.showVideo = RegExp(/(http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?)|(^$)/).test(this.exercise.url);
+        if (this.showVideo) {
+          this.embedImage();
         }
     }
 
+    embedImage() {
+      this.showVideo = false;
+      const url = this.uExerciseForm.get('exerciseUrl').value;
+      if (url.length == 0) {
+        this.showVideo = false;
+        return;
+      }
+      if (!new RegExp(/(http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?)|(^$)/).test(url))
+        return;
+      const e = this.global.YoutubeToEmbed(url)
+      this.embed = this.sanitizer.bypassSecurityTrustResourceUrl(e);
+      this.showVideo = true;
+    }
+
+    setForm() {
+      const id = this.exercise.exerciseCategory.exerciseCategoryID;
+      const name = this.exercise.exerciseCategory.name;
+      this.uExerciseForm.get('exerciseCategory').setValue(`${id},${name}`);
+      this.uExerciseForm.get('exerciseName').setValue(this.exercise.name);
+      this.uExerciseForm.get('exerciseFocus').setValue(this.exercise.focus);
+      this.uExerciseForm.get('exerciseUrl').setValue(this.exercise.url);
+    }
+
     submitForm() {
-      if (!this.uExerciseForm.valid) { //If the form has any validation errors, the form will not be submitted.
-        console.log('Please provide all required fields');
-        this.global.showAlert('Please provide all required fields');
-        return false;
-      }
-      else
-      {
-        console.log('InsideUpdateSubmit:');
-        const temp = {
-          exerciseID: this.exercise.exerciseID,
-          name: this.uExerciseForm.controls['name'].value,
-          description: this.uExerciseForm.controls['description'].value,
-          exerciseCategoryID: this.uExerciseForm.controls['exerciseCategory'].value.split(',')[0],
-          lessons: null
-        };
-        console.log(temp);
-        this.exerciseService.confirmExerciseModal(2, temp, this.uExerciseForm.value['exerciseCategory'].split(',')[1]);
-        this.global.dismissModal();
-      }
-  }
+
+      if (!this.uExerciseForm.valid)
+        return;
+
+      console.log('InsideUpdateSubmit:');
+
+      const exercise = new Exercise();
+      exercise.name = this.uExerciseForm.value['exerciseName'];
+      exercise.focus = this.uExerciseForm.value['exerciseFocus'];
+      exercise.url = this.uExerciseForm.value['exerciseUrl'];
+      exercise.ExerciseCategoryID = this.uExerciseForm.value['exerciseCategory'];
+      exercise.exerciseID = this.exercise.exerciseID;
+
+      // this.global.dismissModal();
+      this.exerciseService.confirmExerciseModal(2, exercise).then(() => {
+        this.dismissModal();
+      })
+
+    }
+
+    dismissModal() {
+      this.modalCtrl.dismiss();
+    }
+  
 
 }

@@ -17,9 +17,12 @@ namespace Team7.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        public string Description { get; set; }
+        public string Focus { get; set; }
         [Required]
-        public int? ExerciseCategoryID { get; set; }
+
+        public string Url { get; set; }
+
+        public int ExerciseCategoryID { get; set; }
 
         public virtual ExerciseCategory ExerciseCategory { get; set; }
         public virtual ICollection<LessonPlan> LessonPlan { get; set; }

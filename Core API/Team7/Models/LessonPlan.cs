@@ -8,19 +8,15 @@ namespace Team7.Models
     {
         public LessonPlan()
         {
-            this.Schedule = new HashSet<Schedule>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int LessonPlanID { get; set; }
-        [Required]
-        public int? LessonID { get; set; }
-        [Required]
-        public int? ExerciseID { get; set; }
 
         public virtual Exercise Exercise { get; set; }
         public virtual Lesson Lesson { get; set; }
-        public virtual ICollection<Schedule> Schedule { get; set; }
+
+        public int LessonID { get; set; }
     }
 }

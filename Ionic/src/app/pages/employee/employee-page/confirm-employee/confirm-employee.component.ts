@@ -89,7 +89,7 @@ export class ConfirmEmployeeComponent implements OnInit {
       this.employeeService.createEmployee(employee).then((el : any) => {
         if (el) {
           this.dismissModal();
-          this.sucUpdate();
+          this.sucAdd();
         } else {
           this.duplicateAlert();
         }
@@ -103,7 +103,7 @@ export class ConfirmEmployeeComponent implements OnInit {
       if (employee.Photo != null) {
         this.showProfile = true;
       }
-      await this.employeeService.updateEmployee(employee).then((el) => {
+      this.employeeService.updateEmployee(employee).then((el) => {
           if (el) {
             this.dismissModal();
             this.sucUpdate();

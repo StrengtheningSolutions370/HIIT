@@ -15,6 +15,9 @@ namespace Team7.Models.Repository
         void Update<T>(T Entity) where T : class;
 
         Task<object> GetAllExercisesAsync();
+
+        Task<Exercise[]> _GetAllExercisesAsync();
+
         Task<object> GetExercisesAsync(string name, string description);
         Task<object> GetExerciseIdAsync(int id);
         Task<Exercise> _GetExerciseIdAsync(int id);

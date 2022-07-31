@@ -1,5 +1,7 @@
-<ion-content>
-  <br>
+<ion-content class="container">
+  <ion-searchbar [(ngModel)]="terms"></ion-searchbar>
+  <button ion-button type="button" (click)="sort()">Sort</button>
+
   <div class="ion-text-center " *ngIf="isLoading">
     <ion-spinner name="circles"></ion-spinner>
   </div>
@@ -10,59 +12,72 @@
       <ion-icon name="cart" class="cart-icon"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+<ion-button (click)="priceLow()">
+  
+  
+</ion-button>
+<ion-button (click)="priceHigh()"></ion-button>
+  <div>
+    <ion-col size="6" class="ion-text-right" (click)='filterPage()'>
+      <ion-icon name="filter-outline"></ion-icon>
+    </ion-col>
+    <ion-select placeholder="filter" multiple="true" slot="fixed" [(ngModel)]="category">
 
-  <ion-grid>
-    <ion-row>
+      <ng-container  id="category" *ngFor="let c of this.categoryArray">
+        <ion-select-option id="categorySelectOpt" value="{{c.saleCategoryID}},{{c.name}}" (ionChange)="setFilteredCategories()">
+          {{c.name}}
+        </ion-select-option>
+      </ng-container>
+    </ion-select>
+    <ion-grid>
+      <ion-row class="flex-wrap">
+        <ion-col class='ion-align-self-start ' sizeLg="3" sizeMd="3" sizeXs="6" *ngFor="let saleItem of saleItems | search : terms | sort: {property: column, order: order} "
+          class="listMargin">
+          <ion-card>
+            <h5 class="ion-align-self-center">{{saleItem.name}}</h5>
 
-      <ion-select placeholder="filter" multiple="true">
-        <ng-container *ngFor="let c of this.categoryArray">
-          <ion-select-option value="{{c.saleCategoryID}},{{c.name}}">
-            {{c.name}}
-          </ion-select-option>
-        </ng-container>
-      </ion-select>
-
-    </ion-row>
-    <ion-row>
-      <ion-col class='ion-align-self-start' sizeLg="3" sizeMd="3" sizeXs="6"
-        *ngFor="let saleItem of saleItems  | paginate: { itemsPerPage: 8, currentPage: cp }" class="listMargin">
-
-
-        <ion-card >
-          <ion-card-header (click)="saleService.viewShopItemInfoModal(saleItem)">
-            <ion-card-title>{{saleItem.name}}</ion-card-title>
-          </ion-card-header>
-          <img class="img-wrapper" [src]="this.global.createImg(saleItem.photo)" alt="sale item image">
-
-          <ion-card-content>
-            <ion-row>
-              <ion-col size="5" *ngIf="saleItem.quotable !== true">
-                <ion-label class="xc fullheight">{{saleItem.price | currency:'ZAR'}}</ion-label>
-              </ion-col>
-              <ion-col size="5" *ngIf="saleItem.quotable === false">
-                <ion-button (click)="quantityPlus(saleItem)" class="btn-add-cart" color="success">ADD TO CART
+            <div class="img-wrapper margin-bottom">
+              <img class="img-wrapper" (click)="saleService.viewShopItemInfoModal(saleItem)"
+                [src]="this.global.createImg(saleItem.photo)" alt="sale item image">
+            </div>
+            <ion-card-content class="card-body">
+              <ion-row class="row align-items-center no-gutters">
+                <ion-col *ngIf="saleItem.quotable !== true" class="align-items-center" postion="absolute">
+                  <ion-label class="xc fullheight ion-align-self-start">{{saleItem.price | currency:'ZAR'}}</ion-label>
+                </ion-col>
+                <ion-col *ngIf="saleItem.quotable === false">
+                  <ion-button (click)="quantityPlus(saleItem)" class="ion-align-items-center" color="success">ADD TO
+                    CART
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+              <div *ngIf="saleItem.quotable===true">
+                <ion-button (click)="saleService.openQuote(saleItem)" color="secondary" class="ion-float-right">
+                  REQUEST QUOTE
                 </ion-button>
-              </ion-col>
-              <ion-col size="5" *ngIf="saleItem.quotable === true">
-                <ion-button (click)="quantityPlus(saleItem)" class="btn-request-quote" color="secondary">REQUEST QUOTE
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+              </div>
 
-</ion-content>
+
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-infinite-scroll threshold="110px" (ionInfinite)="loadData($event)" [disabled]="numTimesLeft <= 0">
+      <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading Data.....">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+  <!-- </ion-content>
 <ion-footer>
   <pagination-controls (pageChange)="cp = $event" class="pagination"></pagination-controls>
-</ion-footer>
+</ion-footer> -->
 
 
 
 
-<!-- <ion-footer *ngIf="cartData?.totalItem > 0">
+  <!-- <ion-footer *ngIf="cartData?.totalItem > 0">
   <ion-toolbar color="success">
     <ion-label color="white">
       <h4>{{cartData?.totalItem}} Item<span *ngIf="cartData?.totalItem > 1">s</span> | {{cartData?.totalPrice | currency: 'ZAR'}}</h4>

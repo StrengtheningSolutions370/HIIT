@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { ShopPageRoutingModule } from './shop-routing.module';
 
 import { ShopPage } from './shop.page';
+import { SearchPipe } from './search.pipe';
+import { SortPipe } from './sort.pipe';
 
 @NgModule({
   imports: [
