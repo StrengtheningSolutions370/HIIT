@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿    using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -83,6 +83,7 @@ namespace Team7.Models.Repository
                 AppUser = e.AppUser,
                 Lesson = e.Lesson,
                 Schedule = e.Schedule,
+                UserID = e.UserID,
             }).ToListAsync();
 
 
@@ -195,6 +196,7 @@ namespace Team7.Models.Repository
                 AppUser = e.AppUser,
                 Lesson = e.Lesson,
                 Schedule = e.Schedule,
+                UserID = e.UserID,
             }).ToListAsync();
             return all.Where(e => e.AppUser.Id == AspId).First();
         }
@@ -225,13 +227,26 @@ namespace Team7.Models.Repository
         public async Task<Employee> _GetEmployeeIdAsync(int id)
         {
             IQueryable<Employee> query = DB.Employee.Where(e => e.EmployeeID == id);
+
             if (!query.Any())
             {
                 return null;
             }
             else
             {
-                return await query.SingleAsync();
+                return await query.Select(e =>
+                new Employee {
+                    EmployeeID = e.EmployeeID,
+                    Photo = e.Photo,
+                    Contract = e.Contract,
+                    IDNumber = e.IDNumber,
+                    Qualification = e.Qualification,
+                    EmployeeType = e.EmployeeType,
+                    AppUser = e.AppUser,
+                    Lesson = e.Lesson,
+                    Schedule = e.Schedule,
+                    UserID = e.UserID,
+                }).SingleAsync();
             }
         }
 

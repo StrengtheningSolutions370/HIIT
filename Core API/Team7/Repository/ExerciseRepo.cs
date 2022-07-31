@@ -12,12 +12,12 @@ namespace Team7.Models.Repository
     {
         readonly private AppDB DB;
 
-        public ExerciseRepo(AppDB appDatabaseContext)
+        public ExerciseRepo(AppDB appDatabaseContext, IExerciseCategoryRepo exerciseCategoryrepo)
         {
             DB = appDatabaseContext;
         }
 
-        public void Add<T>(T Entity) where T : class
+        public async void Add<T>(T Entity) where T : class
         {
             DB.Add(Entity);
         }
@@ -35,99 +35,93 @@ namespace Team7.Models.Repository
         public async Task<object> GetAllExercisesAsync()
         {
             IQueryable<Exercise> query = DB.Exercise;
+
             if (!query.Any())
-            {
                 return null;
-            }
-            else
-            {
-                return new
-                {
-                    result = await DB.Exercise.Select(e => new
-                    {
-                        e.ExerciseID,
-                        e.Name,
-                        e.Description,
-                        ExerciseCategory = new { e.ExerciseCategoryID, e.Name, e.Description },
-                        LessonPlans = e
-                        .LessonPlan
-                        .Select(lp => new { lp.LessonPlanID, lp.LessonID })
-                    }).ToListAsync()
-                    
-                };
-            }
+
+            return await query.Select(ex =>
+                new {
+                    ex.ExerciseID,
+                    ex.Name,
+                    ex.Focus,
+                    ex.Url,
+                    ex.ExerciseCategory,
+                    ex.LessonPlan
+                }).ToListAsync();
 
         }
 
-            public async Task<object> GetExercisesAsync(string description, string name)
-            {
-                IQueryable<Exercise> query = DB.Exercise.Where(e => e.Name == name || e.Description == description);
+        public async Task<Exercise[]> _GetAllExercisesAsync()
+        {
+            IQueryable<Exercise> query = DB.Exercise;
 
-                if (!query.Any())
-                {
-                    return null;
-                }
-                else
-                {
-                return new
-                {
-                    result = await query.Select(e => new
-                    {
-                        e.ExerciseID,
-                        e.Name,
-                        e.Description,
-                        ExerciseCategory = new { e.ExerciseCategoryID, e.Name, e.Description },
-                        LessonPlans = e
-                        .LessonPlan
-                        .Select(lp => new { lp.LessonPlanID, lp.LessonID })
-                    }).ToListAsync()
+            if (!query.Any())
+                return null;
 
-                };
-            }
-            }
+            return await query.Select(ex =>
+                new Exercise{
+                    ExerciseCategory = ex.ExerciseCategory,
+                    ExerciseID = ex.ExerciseID,
+                    LessonPlan = ex.LessonPlan,
+                    Url = ex.Url,
+                    Name = ex.Name,
+                    Focus = ex.Focus
+                }).ToArrayAsync();
+        }
+
+        public async Task<object> GetExercisesAsync(string focus, string name)
+        {
+            IQueryable<Exercise> query = DB.Exercise.Where(e => e.Name == name || e.Focus == focus);
+
+            if (!query.Any())
+                return null;
+
+            return await query.Select(e =>
+                new {
+                    e.ExerciseID,
+                    e.Name,
+                    e.Focus,
+                    e.Url,
+                    e.ExerciseCategory,
+                    e.LessonPlan
+                }).ToListAsync();
+
+        }
 
         public async Task<object> GetExerciseIdAsync(int id)
         {
-            IQueryable<Exercise> query = DB.Exercise.Where(e => e.ExerciseID == id);
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return new
-                {
-                    result = await query.Select(e => new
-                    {
-                        e.ExerciseID,
-                        e.Name,
-                        e.Description,
-                        ExerciseCategory = new { e.ExerciseCategoryID, e.Name, e.Description },
-                        LessonPlans = e
-                        .LessonPlan
-                        .Select(lp => new { lp.LessonPlanID, lp.LessonID })
-                    }).ToListAsync()
 
-                };
-            }
+            IQueryable<Exercise> query = DB.Exercise.Where(e => e.ExerciseID == id);
+
+            if (!query.Any())
+                return null;
+
+            return await query.Select(e =>
+                new {
+                    e.ExerciseID,
+                    e.Name,
+                    e.Focus,
+                    e.Url,
+                    e.ExerciseCategory,
+                    e.LessonPlan
+                }).ToListAsync();
+
         }
 
         public async Task<Exercise> _GetExerciseIdAsync(int id)
         {
+
             IQueryable<Exercise> query = DB.Exercise.Where(e => e.ExerciseID == id);
+
             if (!query.Any())
-            {
                 return null;
-            }
-            else
-            {
-                return await query.SingleAsync();
-            }
+
+            return await query.SingleAsync();
+
         }
 
         public async Task<bool> SaveChangesAsync()
         {
-            //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
         }
     }

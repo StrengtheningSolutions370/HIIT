@@ -52,7 +52,7 @@ export class ConfirmQtypeComponent {
             //CallRepoToCreate
             this.qualificationService.createQualificationType(this.qualificationType);
             this.global.dismissModal();
-            this.global.showToast('The booking type has been successfully added!');
+            this.global.showToast('The qualification type has been successfully added!');
         } else if (this.choice === 2){
             console.log('Update booking type from confirm:');
             //CallRepoToUpdate

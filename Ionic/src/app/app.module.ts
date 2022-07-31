@@ -127,6 +127,13 @@ import { ViewExerciseComponent } from './pages/exercises/exercise-page/view-exer
 import { ConfirmExerciseComponent } from './pages/exercises/exercise-page/confirm-exercise/confirm-exercise.component';
 import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/associative-exercise/associative-exercise.component';
 
+//LESSON IMPORTS
+import { AddLessonComponent } from './pages/lessons/add-lesson/add-lesson.component';
+import { UpdateLessonComponent } from './pages/lessons/update-lesson/update-lesson.component';
+import { DeleteLessonComponent } from './pages/lessons/delete-lesson/delete-lesson.component';
+import { ViewLessonComponent } from './pages/lessons/view-lesson/view-lesson.component';
+import { ConfirmLessonComponent } from './pages/lessons/confirm-lesson/confirm-lesson.component';
+import { AssociativeLessonComponent } from './pages/lessons/associative-lesson/associative-lesson.component';
 //SCHEDULE IMPORTS:
 import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-schedule.component';
 import { DatePipe } from '@angular/common';
@@ -176,14 +183,17 @@ import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedul
   //Schedule
   TimeRangeComponent, AddScheduleComponent, UpdateScheduleComponent,
   //Exercise
-  AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent
+
+  AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
+  //Lesson
+  AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
 
 ],
-
   entryComponents: [],
   imports: [ 
     MbscModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
   providers: [PayPal, Stripe, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+
   bootstrap: [AppComponent]
 })
 export class AppModule {}

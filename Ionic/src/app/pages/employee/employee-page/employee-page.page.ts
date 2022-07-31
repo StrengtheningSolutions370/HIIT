@@ -206,7 +206,7 @@ export class EmployeePagePage implements OnInit {
     this.employees = [];
     hits.map((el : any) => {
       this.employees.push(el.item);
-    })
+    });
 
   }
 

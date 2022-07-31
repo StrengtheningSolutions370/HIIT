@@ -1,10 +1,12 @@
 import { ExerciseCategory } from "./exercise-category";
+import { Lesson } from "./lesson";
 
 export class Exercise {
     exerciseID?: number;
     name: string;
-    description: string;
+    focus: string;
+    url: string;
+    ExerciseCategoryID: number;
     exerciseCategory?: ExerciseCategory;
-    exerciseCategoryID: number;
-    lessons?: [];
+    lessons: Lesson[];
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,10 +11,12 @@ namespace Team7.Models.Repository
     public class LessonRepo : ILessonRepo
     {
         readonly private AppDB DB;
+        readonly private ILessonPlanRepo _lessonPlanRepo;
 
-        public LessonRepo(AppDB appDatabaseContext)
+        public LessonRepo(AppDB appDatabaseContext, ILessonPlanRepo lessonPlanRepo)
         {
             DB = appDatabaseContext;
+            _lessonPlanRepo = lessonPlanRepo;
         }
 
         public void Add<T>(T Entity) where T : class
@@ -31,46 +34,71 @@ namespace Team7.Models.Repository
         }
 
 
-        //public async Task<Lesson[]> GetAllLessonsAsync()
-        //{
-        //    IQueryable<Lesson> query = DB.Lesson;
-        //    return await query.ToArrayAsync();
-        //    return null;
+        public async Task<Lesson[]> GetAllLessonsAsync()
+        {
 
-        //}
+            var query = await DB.Lesson.Select(l =>
+                new Lesson
+                {
+                    LessonID = l.LessonID,
+                    Name = l.Name,
+                    LessonPlan = l.LessonPlan,
+                    Schedule = l.Schedule,
+                    EmployeeID = l.EmployeeID
+                }).ToArrayAsync();
 
-        //public async Task<Lesson[]> GetLessonsAsync(string input)
-        //{
-        //    IQueryable<Lesson> query = DB.Lesson.Where(v => v.Name == input || v.Address == input);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.ToArrayAsync();
-        //    }
-        //    return null;
+            if (!query.Any())
+                return null;
 
-        //}
+            var emps = DB.Employee.Select(e => new Employee
+            {
+                EmployeeID = e.EmployeeID,
+                Photo = e.Photo,
+                Qualification = e.Qualification,
+                AppUser = e.AppUser,
+            }).ToList();
 
-        //public async Task<Lesson> GetLessonIdAsync(int id)
-        //{
-        //    IQueryable<Lesson> query = DB.Lesson.Where(v => v.VenueID == id);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.SingleAsync();
-        //    }
-        //    return null;
-        //}
+            foreach (var item in query)
+            {
+                item.Employee = GetEmployee(emps, item.EmployeeID);
+            }
+
+            return query.ToArray();
+
+        }
+
+        static Employee GetEmployee(List<Employee> emps, int id)
+        {
+            foreach(Employee emp in emps)
+            {
+                if (emp.EmployeeID == id)
+                    return emp;
+            }
+            return null;
+        }
+
+        public async Task<Lesson> GetLessonIdAsync(int id)
+        {
+
+            IQueryable<Lesson> query = DB.Lesson.Where(l => l.LessonID == id);
+
+            if (!query.Any())
+                return null;
+
+               
+            return await query.Select(l => 
+                new  Lesson {
+                    LessonID = l.LessonID,
+                    Name = l.Name,
+                    Employee = l.Employee,
+                    LessonPlan = l.LessonPlan,
+                    Schedule = l.Schedule
+                }).SingleAsync();
+
+        }
 
         public async Task<bool> SaveChangesAsync()
         {
-            //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
         }
     }

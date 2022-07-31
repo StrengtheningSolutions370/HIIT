@@ -21,6 +21,7 @@ import { BookingType } from '../models/booking-type';
 import { Quote } from '../models/quote';
 import { Exercise } from '../models/exercise';
 import { WriteOffReason } from '../models/write-off-reason';
+import { Lesson } from '../models/lesson';
 import { Schedule } from '../models/schedule';
 
 @Injectable({
@@ -46,6 +47,7 @@ export class RepoService {
   BookingTypeController = 'BookingType/'
   ExerciseController = 'Exercise/'
   WriteOffReasonController = 'WriteOffReason/'
+  LessonController = 'Lesson/'
   ScheduleController = 'Schedule/'
 
   httpOptions = {
@@ -61,7 +63,7 @@ export class RepoService {
   }
 
   getUserRole(token : string) : Observable<any>{
-    console.trace();
+    // console.trace();
     return this.http.get(`${this.base + this.EmployeeController}token`, { headers : new HttpHeaders({'Authorization': 'Bearer ' + token}) });
   }
 
@@ -425,6 +427,7 @@ getMatchBookingType(name: string, description: string): Observable<any>{
   // ------
   // Create
   createExercise(exercise: Exercise): Observable<any> {
+    console.log(exercise);
     return this.http.post<any>(`${this.base + this.ExerciseController}add`, exercise, this.httpOptions);
   }
   //Update
@@ -472,6 +475,32 @@ getMatchWriteOffReason(description: string): Observable<any>{
   return this.http.get(`${this.base+this.WriteOffReasonController}getMatch?description=${description}`, this.httpOptions);
 }
 
+// LESSONS:
+  // ------
+  // Create
+  createLesson(lesson: Lesson): Observable<any> {
+    return this.http.post<any>(`${this.base + this.LessonController}add`, lesson, this.httpOptions);
+  }
+  //Update
+  updateLesson(lessonId: number, lesson: Lesson): Observable<any> {
+    return this.http.put(`${this.base + this.LessonController}update?id=${lessonId}`, lesson, this.httpOptions);
+  }
+  //Delete
+  deleteLesson(lessonId: string): Observable<any> {
+    return this.http.delete(`${this.base + this.LessonController}delete?id=${lessonId}`, this.httpOptions);
+  }
+  //GetAll
+  getLessons(): Observable<any> {
+    return this.http.get(`${this.base + this.LessonController}getAll`, this.httpOptions);
+  }
+  // //GetMatch
+  // getMatchLesson(name: string, description: string): Observable<any> {
+  //   return this.http.get(`${this.base + this.ExerciseController}getMatch?name=${name}&description=${description}`, this.httpOptions);
+  // }
+  // //Exists
+  // existsExercise(id: number): Observable<any> {
+  //   return this.http.get(`${this.base + this.ExerciseController}exists?id=${id}`, this.httpOptions);
+  // }
 
 //SCHEDULE
 

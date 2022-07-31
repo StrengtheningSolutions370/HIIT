@@ -51,7 +51,7 @@ namespace Team7.Models.Repository
                         ec.Description,
                         Exercises = ec
                             .Exercise
-                            .Select(e => new { e.ExerciseID, e.Name, e.Description })
+                            .Select(e => new { e.ExerciseID, e.Name, e.Focus })
                     }).ToListAsync()
                 };
             }
@@ -77,7 +77,7 @@ namespace Team7.Models.Repository
                         ec.Description,
                         Exercises = ec
                             .Exercise
-                            .Select(e => new { e.ExerciseID, e.Name, e.Description })
+                            .Select(e => new { e.ExerciseID, e.Name, e.Focus })
                     }).ToListAsync()
                 };
             }
@@ -102,7 +102,7 @@ namespace Team7.Models.Repository
                         ec.Description,
                         Exercises = ec
                             .Exercise
-                            .Select(e => new { e.ExerciseID, e.Name, e.Description })
+                            .Select(e => new { e.ExerciseID, e.Name, e.Focus })
                     }).ToListAsync()
                 };
             }
