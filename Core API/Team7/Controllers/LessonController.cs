@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Team7.Models;
 using Team7.Models.Repository;
@@ -64,7 +65,7 @@ namespace Team7.Controllers
 
         //UPDATE
         [HttpPut]
-        [Route("")]
+        [Route("update")]
         public async Task<IActionResult> PutLesson(int id, [FromBody] Lesson lesson)
         {
 
@@ -128,12 +129,44 @@ namespace Team7.Controllers
         {
             try
             {
-                var lessons = await _lessonPlanRepo.GetAllLessonPlansAsync();
+                var lessons = await _lessonRepo.GetAllLessonsAsync();
+                Exercise[] exe = await _exerciseRepo._GetAllExercisesAsync();
+
+                //create lessonPlanId array:
+                foreach (var lesson in lessons)
+                {
+                    var i = new List<int>();
+                    foreach(var l in lesson.LessonPlan)
+                    {
+                        i.Add(l.LessonPlanID);
+                    }
+                    lesson.exercises = getExe(exe, i);
+                }
+
+
                 return Ok(lessons);
+
             } catch (Exception err)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
+        }
+
+        static Exercise[] getExe(Exercise[] exe, List<int> i)
+        {
+            var output = new List<Exercise>();
+            foreach (var l in i)
+            {
+                foreach(var e in exe)
+                {
+                    foreach (var q in e.LessonPlan)
+                    {
+                        if (q.LessonPlanID == l)
+                            output.Add(e);
+                    }
+                }
+            }
+            return output.ToArray();
         }
 
     }

@@ -34,21 +34,45 @@ namespace Team7.Models.Repository
 
         public async Task<Lesson[]> GetAllLessonsAsync()
         {
-            IQueryable<Lesson> query = DB.Lesson;
 
-            if (!query.Any())
-                return null;
-
-
-            return await query.Select(l =>
+            var query = await DB.Lesson.Select(l =>
                 new Lesson
                 {
                     LessonID = l.LessonID,
                     Name = l.Name,
-                    Employee = l.Employee,
                     LessonPlan = l.LessonPlan,
-                    Schedule = l.Schedule
+                    Schedule = l.Schedule,
+                    EmployeeID = l.EmployeeID
                 }).ToArrayAsync();
+
+            if (!query.Any())
+                return null;
+
+            var emps = DB.Employee.Select(e => new Employee
+            {
+                EmployeeID = e.EmployeeID,
+                Photo = e.Photo,
+                Qualification = e.Qualification,
+                AppUser = e.AppUser,
+            }).ToList();
+
+            foreach (var item in query)
+            {
+                item.Employee = GetEmployee(emps, item.EmployeeID);
+            }
+
+            return query.ToArray();
+
+        }
+
+        static Employee GetEmployee(List<Employee> emps, int id)
+        {
+            foreach(Employee emp in emps)
+            {
+                if (emp.EmployeeID == id)
+                    return emp;
+            }
+            return null;
         }
 
         //public async Task<Lesson[]> GetLessonsAsync(string input)

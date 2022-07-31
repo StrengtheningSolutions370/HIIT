@@ -51,6 +51,24 @@ namespace Team7.Models.Repository
 
         }
 
+        public async Task<Exercise[]> _GetAllExercisesAsync()
+        {
+            IQueryable<Exercise> query = DB.Exercise;
+
+            if (!query.Any())
+                return null;
+
+            return await query.Select(ex =>
+                new Exercise{
+                    ExerciseCategory = ex.ExerciseCategory,
+                    ExerciseID = ex.ExerciseID,
+                    LessonPlan = ex.LessonPlan,
+                    Url = ex.Url,
+                    Name = ex.Name,
+                    Focus = ex.Focus
+                }).ToArrayAsync();
+        }
+
         public async Task<object> GetExercisesAsync(string focus, string name)
         {
             IQueryable<Exercise> query = DB.Exercise.Where(e => e.Name == name || e.Focus == focus);
