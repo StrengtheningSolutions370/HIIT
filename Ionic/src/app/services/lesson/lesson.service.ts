@@ -33,7 +33,7 @@ export class LessonService {
 
 
   constructor(public repo: RepoService, private modalCtrl: ModalController,
-   private global : GlobalService, public  alertCtrl: AlertController) { 
+   private global : GlobalService, public  alertCtrl: AlertController, public toastCtrl: ToastController) { 
 
      //Receive the lessons from the repo (API)
      this.repo.getLessons().subscribe(result => {
