@@ -16,5 +16,7 @@ namespace Team7.Models
 
         public virtual Exercise Exercise { get; set; }
         public virtual Lesson Lesson { get; set; }
+
+        public int LessonID { get; set; }
     }
 }

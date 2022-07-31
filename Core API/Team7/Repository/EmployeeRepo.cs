@@ -83,6 +83,7 @@ namespace Team7.Models.Repository
                 AppUser = e.AppUser,
                 Lesson = e.Lesson,
                 Schedule = e.Schedule,
+                UserID = e.UserID,
             }).ToListAsync();
 
 
@@ -195,6 +196,7 @@ namespace Team7.Models.Repository
                 AppUser = e.AppUser,
                 Lesson = e.Lesson,
                 Schedule = e.Schedule,
+                UserID = e.UserID,
             }).ToListAsync();
             return all.Where(e => e.AppUser.Id == AspId).First();
         }
@@ -232,14 +234,18 @@ namespace Team7.Models.Repository
             }
             else
             {
-                return await query.Select(emp =>
+                return await query.Select(e =>
                 new Employee {
-                    EmployeeID = emp.EmployeeID,
-                    Photo = emp.Photo,
-                    IDNumber = emp.IDNumber,
-                    Qualification = emp.Qualification,
-                    Contract = emp.Contract,
-                    EmployeeType = emp.EmployeeType,
+                    EmployeeID = e.EmployeeID,
+                    Photo = e.Photo,
+                    Contract = e.Contract,
+                    IDNumber = e.IDNumber,
+                    Qualification = e.Qualification,
+                    EmployeeType = e.EmployeeType,
+                    AppUser = e.AppUser,
+                    Lesson = e.Lesson,
+                    Schedule = e.Schedule,
+                    UserID = e.UserID,
                 }).SingleAsync();
             }
         }

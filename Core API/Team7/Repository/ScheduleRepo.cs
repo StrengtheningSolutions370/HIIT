@@ -53,12 +53,14 @@ namespace Team7.Models.Repository
                     {
                         sc.ScheduleID,
                         sc.CapacityBooked,
+                        sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
+                        sc.Employee,
+                        sc.LessonPlan,
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
-                        sc.LessonPlan
                     }).ToListAsync()
                 };
             }
@@ -76,16 +78,18 @@ namespace Team7.Models.Repository
             {
                 return new
                 {
-                    result = await DB.Schedule.Select(sc => new
+                    result = await query.Select(sc => new
                     {
                         sc.ScheduleID,
                         sc.CapacityBooked,
+                        sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
+                        sc.Employee,
+                        sc.LessonPlan,
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
-                        sc.LessonPlan
                     }).ToListAsync()
                 };
             }
@@ -102,16 +106,18 @@ namespace Team7.Models.Repository
             {
                 return new
                 {
-                    result = await DB.Schedule.Select(sc => new
+                    result = await query.Select(sc => new
                     {
                         sc.ScheduleID,
                         sc.CapacityBooked,
+                        sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
+                        sc.Employee,
+                        sc.LessonPlan,
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
-                        sc.LessonPlan
                     }).ToListAsync()
                 };
             }

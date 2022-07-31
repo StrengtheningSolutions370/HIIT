@@ -948,7 +948,7 @@ namespace Team7.Migrations
                     LessonPlanID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ExerciseID = table.Column<int>(type: "int", nullable: true),
-                    LessonID = table.Column<int>(type: "int", nullable: true)
+                    LessonID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -964,7 +964,7 @@ namespace Team7.Migrations
                         column: x => x.LessonID,
                         principalTable: "Lesson",
                         principalColumn: "LessonID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

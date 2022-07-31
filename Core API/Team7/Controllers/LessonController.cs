@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Team7.Models;
 using Team7.Models.Repository;
+using Team7.ViewModels;
 
 namespace Team7.Controllers
 {
@@ -35,23 +36,27 @@ namespace Team7.Controllers
         //CREATE
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> PostLesson(Lesson lesson)
+        public async Task<IActionResult> PostLesson(LessonViewModel lvm)
         {
 
+            var lesson = lvm.Lesson;
+            var exercises = lvm.Exercises;
+
             //assign the employee to the lesson:
-            lesson.Employee = await _employeeRepo._GetEmployeeIdAsync(lesson.EmployeeID);
+            lesson.Name = lvm.Lesson.Name;
 
             _lessonRepo.Add(lesson);
             await _lessonRepo.SaveChangesAsync();
 
+            lesson.Employee = await _employeeRepo._GetEmployeeIdAsync(lesson.EmployeeID);
             int newLessonID = lesson.LessonID;
 
             //looping over the exercises to add:
-            foreach (Exercise l in lesson.exercises)
+            foreach (int l in exercises)
             {
                 LessonPlan temp = new LessonPlan();
-                temp.Exercise = await _exerciseRepo._GetExerciseIdAsync(l.ExerciseID);
-                temp.Lesson = await _lessonRepo.GetLessonIdAsync(newLessonID);
+                temp.Exercise = await _exerciseRepo._GetExerciseIdAsync(l);
+                temp.Lesson = lesson;
                 _lessonPlanRepo.Add(temp);
                 lesson.LessonPlan.Add(temp);
             }
@@ -66,8 +71,10 @@ namespace Team7.Controllers
         //UPDATE
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> PutLesson(int id, [FromBody] Lesson lesson)
+        public async Task<IActionResult> PutLesson(int id, [FromBody] LessonViewModel lvm)
         {
+            var lesson = lvm.Lesson;
+            var exercises = lvm.Exercises;
 
             //assign the employee to the lesson:
             lesson.Employee = await _employeeRepo._GetEmployeeIdAsync(lesson.EmployeeID);
@@ -75,10 +82,10 @@ namespace Team7.Controllers
             lesson.LessonPlan.Clear(); //removes all old exercises
 
             //looping over the exercises to add:
-            foreach (Exercise l in lesson.exercises)
+            foreach (int l in exercises)
             {
                 LessonPlan temp = new LessonPlan();
-                temp.Exercise = await _exerciseRepo._GetExerciseIdAsync(l.ExerciseID);
+                temp.Exercise = await _exerciseRepo._GetExerciseIdAsync(l);
                 temp.Lesson = await _lessonRepo.GetLessonIdAsync(lesson.LessonID);
                 _lessonPlanRepo.Add(temp);
                 lesson.LessonPlan.Add(temp);

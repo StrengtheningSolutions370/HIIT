@@ -541,7 +541,7 @@ namespace Team7.Migrations
                     b.Property<int?>("ExerciseID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LessonID")
+                    b.Property<int>("LessonID")
                         .HasColumnType("int");
 
                     b.HasKey("LessonPlanID");
@@ -1419,7 +1419,9 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.Lesson", "Lesson")
                         .WithMany("LessonPlan")
-                        .HasForeignKey("LessonID");
+                        .HasForeignKey("LessonID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Exercise");
 

@@ -20,7 +20,7 @@ namespace Team7.Controllers
         // POST api/schedule/add
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> PostSaleCategory(Schedule schedule)
+        public async Task<IActionResult> PostSchedule(Schedule schedule)
         {
             try
             {
@@ -56,8 +56,15 @@ namespace Team7.Controllers
             {
                 //toUpdate.Name = saleCategory.Name;
                 //toUpdate.Description = saleCategory.Description;
+                toUpdate.CapacityBooked = schedule.CapacityBooked;
+                toUpdate.BookingAttendance = schedule.BookingAttendance;
+                toUpdate.DateSession = schedule.DateSession;
+                toUpdate.VenueID = schedule.VenueID;
+                toUpdate.BookingTypeID = schedule.BookingTypeID;
+                toUpdate.LessonPlanID = schedule.LessonPlanID;
+                toUpdate.EmployeeID = schedule.EmployeeID;
 
-                ScheduleRepo.Update<Schedule>(schedule);
+                //ScheduleRepo.Update<Schedule>(schedule);
                 //Testing if this way works.. doubt it when we update stuff like venue, booking attendance etc. 
 
                 if (await ScheduleRepo.SaveChangesAsync())
