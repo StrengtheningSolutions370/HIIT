@@ -80,9 +80,9 @@ export class QualificationService {
 
   }
 
-  matchingQualificationType(input: string) {
+  matchingQualificationType(input: string): Promise<any> {
     console.log('qualificationService: Repo -> Matching qualificationtype');
-    return this.repo.getMatchQualificationType(input).toPromise;
+    return this.repo.getMatchQualificationType(input).toPromise();
   }
 
   //Qualification Methods
@@ -316,7 +316,7 @@ export class QualificationService {
         }
       });
       await modal.present();
-      
+
     } else if (choice === 2) {
 
       console.log('Performing UPDATE');
@@ -332,7 +332,7 @@ export class QualificationService {
     } else {
       console.log('BadOption: ' + choice);
     }
-    
+
   }
 
   async associativeVenueModal(qualification: Qualification) {

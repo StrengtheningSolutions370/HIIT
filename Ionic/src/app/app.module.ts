@@ -127,6 +127,10 @@ import { ViewExerciseComponent } from './pages/exercises/exercise-page/view-exer
 import { ConfirmExerciseComponent } from './pages/exercises/exercise-page/confirm-exercise/confirm-exercise.component';
 import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/associative-exercise/associative-exercise.component';
 
+//SCHEDULE IMPORTS:
+import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-schedule.component';
+import { DatePipe } from '@angular/common';
+import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedule/update-schedule.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -169,8 +173,8 @@ import { AssociativeExerciseComponent } from './pages/exercises/exercise-page/as
   AddWriteOffReasonComponent, AssociativeWriteOffReasonComponent, ConfirmWriteOffReasonComponent, DeleteWriteOffReasonComponent, UpdateWriteOffReasonComponent, ViewWriteOffReasonComponent,
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
-  //Calendar
-  TimeRangeComponent,
+  //Schedule
+  TimeRangeComponent, AddScheduleComponent, UpdateScheduleComponent,
   //Exercise
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent
 

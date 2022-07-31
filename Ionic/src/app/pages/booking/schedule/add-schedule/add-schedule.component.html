@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>New Schedule Event Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<form [formGroup]="cCalendarForm" (ngSubmit)="submitForm()" style="padding-left:10%; padding-right:10%">
+  <br/>
+  <div class="ion-text-center">
+    <p style="font-size:large">Please fill in the schedule event information below</p>
+  </div>
+
+  <br>
+    <ion-buttons>
+      <ion-button
+      id="datePick"
+      class="ion-text-start">
+      <div *ngIf="cCalendarForm.get('dateSelector').untouched">{{defaultDate | date:'EEEE, MMMM d'}}</div>
+      <div *ngIf="cCalendarForm.get('dateSelector').touched">{{dateSelect | date:'EEEE, MMMM d'}} </div><ion-icon name="caret-down-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button
+      id="startTime"
+      class="ion-text-center"><div *ngIf="cCalendarForm.get('timeStartSelector').untouched">Starting time</div>
+      <div *ngIf="cCalendarForm.get('timeStartSelector').touched">{{timeStart | date:'h:mm a'}} </div> <ion-icon name="caret-down-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button
+      id="endTime"
+      class="ion-text-end"><div *ngIf="cCalendarForm.get('timeEndSelector').untouched">Ending time</div>
+      <div *ngIf="cCalendarForm.get('timeEndSelector').touched">{{timeEnd | date:'h:mm a'}} </div><ion-icon name="caret-down-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  <ion-popover trigger="datePick" size="cover">
+    <ng-template>
+      <ion-datetime
+      [(ngModel)]="dateSelect"
+      show-default-buttons="true"
+      first-day-of-week="1"
+      presentation="date"
+      formControlName="dateSelector"
+      (ionChange)="dateSelected()">
+      <span slot="title">Select a day to create an event</span>
+      </ion-datetime>
+   </ng-template>
+  </ion-popover>
+
+  <ion-popover trigger="startTime" size="cover">
+    <ng-template>
+      <ion-datetime
+      [(ngModel)]="timeStart"
+      show-default-buttons="true"
+      presentation="time"
+      formControlName="timeStartSelector"
+      [(ngModel)]="timeStart"
+      (ionChange)="timeStartSelected()">
+      </ion-datetime>
+   </ng-template>
+  </ion-popover>
+
+  <ion-popover trigger="endTime" size="cover">
+    <ng-template>
+      <ion-datetime
+      [(ngModel)]="timeEnd"
+      show-default-buttons="true"
+      presentation="time"
+      formControlName="timeEndSelector"
+      [(ngModel)]="timeEnd"
+      (ionChange)="timeEndSelected()">
+      </ion-datetime>
+   </ng-template>
+  </ion-popover>
+
+  <br>
+<ion-item>
+    <ion-label position="floating">Venue:</ion-label>
+     <ion-select formControlName="venueDrop" type="text" required="" id="venueDrop" >
+       <ng-container *ngFor="let v of this.venueList">
+        <ion-select-option value="{{v.venueID}},{{v.name}}">{{ v.name }}</ion-select-option>
+      </ng-container>
+    </ion-select>
+    <br/>
+</ion-item>
+
+<br>
+<ion-item>
+    <ion-label position="floating">Booking type:</ion-label>
+     <ion-select formControlName="bookingTypeDrop" type="text" required="" id="bookingTypeDrop" >
+       <ng-container *ngFor="let bt of this.bookingTypeList">
+        <ion-select-option value="{{bt.bookingTypeID}},{{bt.name}}">{{ bt.name }}</ion-select-option>
+      </ng-container>
+    </ion-select>
+    <br/>
+</ion-item>
+
+<br>
+<ion-item>
+    <ion-label position="floating">Employee:</ion-label>
+     <ion-select formControlName="employeeDrop" type="text" required="" id="employeeDrop" >
+       <ng-container *ngFor="let e of this.employeeList">
+        <ion-select-option value="{{e.data.employeeID}},{{e.data.appUser.firstName}}">{{ e.data.appUser.firstName }}</ion-select-option>
+      </ng-container>
+    </ion-select>
+    <br/>
+</ion-item>
+
+<!--
+  <br>
+   <ion-item>
+    <ion-label position="floating">Lesson Plan:</ion-label>
+     <ion-select formControlName="lessonPlanDrop" type="text" required="" id="lessonPlanDrop" >
+       <ng-container *ngFor="let lp of this.lessonPlan">
+        <ion-select-option value="{{lp.(id)}},{{lp.(id)}}">{{ e.Name }}</ion-select-option>
+      </ng-container>
+    </ion-select>
+    <br/>
+</ion-item> -->
+
+<br/><br/>
+
+<ion-button type="submit" color="success" [disabled]="!cCalendarForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Event</ion-button>
+<ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
+
+</form>
+
+</ion-content>
