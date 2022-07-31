@@ -34,6 +34,7 @@
     "com.paypal.cordova.mobilesdk": "^3.5.0",
     "cordova-plugin-stripe": "^1.5.3",
     "cordova-res": "^0.15.4",
+    "date-fns": "^2.29.1",
     "es6-shim": "^0.35.6",
     "fuse.js": "^6.6.2",
     "ion2-calendar": "^3.0.0-rc.0",

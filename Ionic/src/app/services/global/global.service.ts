@@ -116,4 +116,8 @@ export class GlobalService {
       return true;
     }
 
+    YoutubeToEmbed(url : string) {
+      return `${url.substring(0, 24)}embed/${url.substring(32, url.length)}`;
+    }
+
 }

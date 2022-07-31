@@ -18,12 +18,19 @@
       <ion-label class="ion-text-right">{{exercise.name}}</ion-label>
     </ion-item>
     <ion-item >
-      <ion-label class="ion-text-left">Description:</ion-label>
-      <ion-label class="ion-text-wrap ion-text-right">{{exercise.description}}</ion-label>
+      <ion-label class="ion-text-left">Focus:</ion-label>
+      <ion-label class="ion-text-wrap ion-text-right">{{exercise.focus}}</ion-label>
     </ion-item>
+
+    <ion-item > 
+      <ion-label class="ion-text-left">Video:</ion-label>
+      <!-- <ion-label class="ion-text-right">{{exercise.url}}</ion-label> -->
+      <iframe [src]="embed" frameborder="0" allowfullscreen></iframe>
+    </ion-item>
+
     <ion-item > 
       <ion-label class="ion-text-left">Exercise Category:</ion-label>
-      <ion-label class="ion-text-right">{{exerciseCategory}}</ion-label>
+      <ion-label class="ion-text-right">{{exName}}</ion-label>
     </ion-item>
 
     <br/><br/>

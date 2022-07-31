@@ -12,9 +12,12 @@ namespace Team7.Controllers
     public class ExerciseController : ControllerBase
     {
         private readonly IExerciseRepo ExerciseRepo;
-        public ExerciseController(IExerciseRepo exerciseRepo)
+        readonly private IExerciseCategoryRepo _exerciseCategoryRepo;
+
+        public ExerciseController(IExerciseRepo exerciseRepo, IExerciseCategoryRepo exerciseCategoryrepo)
         {
             this.ExerciseRepo = exerciseRepo;
+            this._exerciseCategoryRepo = exerciseCategoryrepo;
         }
 
         // POST api/exercise/add
@@ -24,15 +27,17 @@ namespace Team7.Controllers
         {
             try
             {
+                //var cat = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(exercise.ExerciseCategory.ExerciseCategoryID);
+                var catId = exercise.ExerciseCategoryID;
+                exercise.ExerciseCategory = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(catId);
+
+
                 ExerciseRepo.Add(exercise);
+
                 if (await ExerciseRepo.SaveChangesAsync())
-                {
                     return Ok();
-                }
-                else
-                {
-                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
-                }
+
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
 
             }
             catch (Exception err)
@@ -48,14 +53,18 @@ namespace Team7.Controllers
         public async Task<IActionResult> PutExercise(int id, [FromBody] Exercise exercise)
         {
             var toUpdate = await ExerciseRepo._GetExerciseIdAsync(id);
+
             if (toUpdate == null)
             {
                 return NotFound("Could not find existing Exercise with ID - " + id);
             }
+
             try
             {
                 toUpdate.Name = exercise.Name;
-                toUpdate.Description = exercise.Description;
+                toUpdate.Focus = exercise.Focus;
+                toUpdate.Url = exercise.Url;
+                toUpdate.ExerciseCategory = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(exercise.ExerciseCategoryID);
 
                 if (await ExerciseRepo.SaveChangesAsync())
                 {
