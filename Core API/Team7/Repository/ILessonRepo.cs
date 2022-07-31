@@ -15,7 +15,7 @@ namespace Team7.Models.Repository
 
         Task<Lesson[]> GetAllLessonsAsync();
 
-        //Task<Lesson[]> GetLessonsAsync(string input);
+       
 
         Task<Lesson> GetLessonIdAsync(int id);
 
