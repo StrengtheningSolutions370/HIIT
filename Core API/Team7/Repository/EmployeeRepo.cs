@@ -212,14 +212,18 @@ namespace Team7.Models.Repository
             {
                 return new
                 {
-                    result = await DB.Employee.Select(e => new
+                    result = await DB.Employee.Select(e => new Employee
                     {
-                        e.EmployeeID,
-                        e.Photo,
-                        e.IDNumber,
-                        e.Qualification,
-                        e.Contract,
-                        e.EmployeeType,
+                        EmployeeID = e.EmployeeID,
+                        Photo = e.Photo,
+                        Contract = e.Contract,
+                        IDNumber = e.IDNumber,
+                        Qualification = e.Qualification,
+                        EmployeeType = e.EmployeeType,
+                        AppUser = e.AppUser,
+                        Lesson = e.Lesson,
+                        Schedule = e.Schedule,
+                        UserID = e.UserID,
                     }).ToListAsync()
                 };
             }

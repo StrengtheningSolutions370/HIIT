@@ -38,31 +38,83 @@ namespace Team7.Controllers
         [Route("add")]
         public async Task<IActionResult> PostLesson(LessonViewModel lvm)
         {
-            Lesson rec = new Lesson();
+            /*Lesson rec = new Lesson();
 
             var lesson = lvm.Lesson;
             var exercises = lvm.Exercises;
 
             rec.Employee = await _employeeRepo._GetEmployeeIdAsync(lesson.EmployeeID);
             rec.Name = lesson.Name;
+
+            _lessonRepo.Add(rec);
+            await _lessonRepo.SaveChangesAsync();
+
+            var lessonID = rec.LessonID;
+
             //looping over the exercises to add:
-            rec.LessonPlan.Clear();
+
+
             foreach (int l in exercises)
             {
                 LessonPlan temp = new LessonPlan();
                 temp.Exercise = await _exerciseRepo._GetExerciseIdAsync(l);
                 temp.Lesson = lesson;
+                temp.LessonID = lessonID;
                 _lessonPlanRepo.Add(temp);
                 rec.LessonPlan.Add(temp);
             }
 
+            _lessonRepo.Update(rec);
             await _lessonRepo.SaveChangesAsync();
 
-            _lessonRepo.Update(lesson);
+            return Ok();*/
 
+
+
+            //get the lesson and exercise array from the LessonViewModel
+            var lessonVM = lvm.Lesson;
+            var exerciseVM = lvm.Exercises;
+
+            Lesson lesson = new Lesson();
+
+            lesson.Name = lessonVM.Name;
+            //get the employee to add to the lesson:
+            var employee = await _employeeRepo._GetEmployeeIdAsync(lessonVM.EmployeeID);
+            //add employee to the lesson:
+            //lesson.Employee = employee;
+            //set employee ID
+            lesson.EmployeeID = lessonVM.EmployeeID;
+
+            //save the lesson to the db so that it gets an id:
+            _lessonRepo.Add(lesson);
             await _lessonRepo.SaveChangesAsync();
+
+            //this is the id of the object just created
+            var NewLessonID = lesson.LessonID; //this is for debug
+
+            //get all exercises
+            Exercise[] exe = await _exerciseRepo._GetAllExercisesAsync();
+
+            //loop through the exerciseVM and add the exercises:
+            foreach (int exerciseVMID in exerciseVM)
+            {
+                //make a LessonPlan for the association:
+                LessonPlan lp = new LessonPlan();
+                lp.Exercise = await _exerciseRepo._GetExerciseIdAsync(exerciseVMID);
+                lp.Lesson = lesson;
+                lp.LessonID = lesson.LessonID;
+                //add to the LessonPlan:
+                _lessonPlanRepo.Add(lp);
+                //add to the lesson:
+                lesson.LessonPlan.Add(lp);
+            }
+
+            //save changes to the LessonPlanRepo & Lesson:
+            await _lessonRepo.SaveChangesAsync();
+            await _lessonPlanRepo.SaveChangesAsync();
 
             return Ok();
+
         }
 
         //UPDATE
@@ -90,18 +142,19 @@ namespace Team7.Controllers
             //looping over the exercises to add:
             update.LessonPlan.Clear();
 
-            foreach (int l in exercises)
+            foreach (int exercise in exercises)
             {
-                LessonPlan temp = new LessonPlan();
-                temp.Exercise = await _exerciseRepo._GetExerciseIdAsync(l);
-                _lessonPlanRepo.Add(temp);
-                update.LessonPlan.Add(temp);
+                LessonPlan lp = new LessonPlan();
+                lp.Exercise = await _exerciseRepo._GetExerciseIdAsync(exercise);
+                lp.Lesson = update;
+                lp.LessonID = update.LessonID;
+                _lessonPlanRepo.Add(lp);
+                update.LessonPlan.Add(lp);
             }
 
             await _lessonRepo.SaveChangesAsync();
-
             _lessonRepo.Update(update);
-            await _lessonRepo.SaveChangesAsync();
+            await _lessonPlanRepo.SaveChangesAsync();
 
             return Ok();
         }
@@ -148,18 +201,18 @@ namespace Team7.Controllers
                 Exercise[] exe = await _exerciseRepo._GetAllExercisesAsync();
 
                 //create lessonPlanId array:
-                foreach (var lesson in lessons)
-                {
-                    var i = new List<int>();
-                    foreach(var l in lesson.LessonPlan)
+                if (lessons != null)
+                    foreach (var lesson in lessons)
                     {
-                        i.Add(l.LessonPlanID);
+                        var i = new List<int>();
+                        foreach (var l in lesson.LessonPlan)
+                        {
+                            i.Add(l.LessonPlanID);
+                        }
+                        lesson.exercises = getExe(exe, i);
                     }
-                    lesson.exercises = getExe(exe, i);
-                }
 
-
-                return Ok(lessons);
+                return Ok(lessons); //will return a 204 if null
 
             } catch (Exception err)
             {
