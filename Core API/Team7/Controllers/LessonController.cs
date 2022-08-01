@@ -38,83 +38,27 @@ namespace Team7.Controllers
         [Route("add")]
         public async Task<IActionResult> PostLesson(LessonViewModel lvm)
         {
-            /*Lesson rec = new Lesson();
-
-            var lesson = lvm.Lesson;
-            var exercises = lvm.Exercises;
-
-            rec.Employee = await _employeeRepo._GetEmployeeIdAsync(lesson.EmployeeID);
-            rec.Name = lesson.Name;
-
-            _lessonRepo.Add(rec);
-            await _lessonRepo.SaveChangesAsync();
-
-            var lessonID = rec.LessonID;
-
-            //looping over the exercises to add:
-
-
-            foreach (int l in exercises)
-            {
-                LessonPlan temp = new LessonPlan();
-                temp.Exercise = await _exerciseRepo._GetExerciseIdAsync(l);
-                temp.Lesson = lesson;
-                temp.LessonID = lessonID;
-                _lessonPlanRepo.Add(temp);
-                rec.LessonPlan.Add(temp);
-            }
-
-            _lessonRepo.Update(rec);
-            await _lessonRepo.SaveChangesAsync();
-
-            return Ok();*/
-
-
-
-            //get the lesson and exercise array from the LessonViewModel
             var lessonVM = lvm.Lesson;
             var exerciseVM = lvm.Exercises;
-
             Lesson lesson = new Lesson();
-
             lesson.Name = lessonVM.Name;
-            //get the employee to add to the lesson:
-            var employee = await _employeeRepo._GetEmployeeIdAsync(lessonVM.EmployeeID);
-            //add employee to the lesson:
-            //lesson.Employee = employee;
-            //set employee ID
+            //lesson.Employee = await _employeeRepo._GetEmployeeIdAsync(lessonVM.EmployeeID);
             lesson.EmployeeID = lessonVM.EmployeeID;
-
-            //save the lesson to the db so that it gets an id:
             _lessonRepo.Add(lesson);
             await _lessonRepo.SaveChangesAsync();
-
-            //this is the id of the object just created
             var NewLessonID = lesson.LessonID; //this is for debug
-
-            //get all exercises
-            Exercise[] exe = await _exerciseRepo._GetAllExercisesAsync();
-
-            //loop through the exerciseVM and add the exercises:
             foreach (int exerciseVMID in exerciseVM)
             {
-                //make a LessonPlan for the association:
                 LessonPlan lp = new LessonPlan();
                 lp.Exercise = await _exerciseRepo._GetExerciseIdAsync(exerciseVMID);
                 lp.Lesson = lesson;
-                lp.LessonID = lesson.LessonID;
-                //add to the LessonPlan:
+                lp.LessonID = lesson.LessonID;  
                 _lessonPlanRepo.Add(lp);
-                //add to the lesson:
                 lesson.LessonPlan.Add(lp);
             }
-
-            //save changes to the LessonPlanRepo & Lesson:
             await _lessonRepo.SaveChangesAsync();
             await _lessonPlanRepo.SaveChangesAsync();
-
             return Ok();
-
         }
 
         //UPDATE
@@ -122,25 +66,16 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutLesson(int id, [FromBody] LessonViewModel lvm)
         {
+           
+            await _lessonPlanRepo.RemoveRangeLessonIdAsync(id);
+
             var update = await _lessonRepo.GetLessonIdAsync(id);
 
             var lesson = lvm.Lesson;
             var exercises = lvm.Exercises;
 
-            //assign the employee to the lesson:
-            update.Employee = await _employeeRepo._GetEmployeeIdAsync(lesson.EmployeeID);
-
-            //delete all old exercises from the lessonPlan table:
-            var plans = await _lessonPlanRepo.GetLessonsPlanByLessonIDAsync(id);
-
-            /*if (plans != null)
-                foreach (var plan in plans)
-                {
-                    _lessonPlanRepo.Delete(plan);
-                }*/
-
-            //looping over the exercises to add:
-            update.LessonPlan.Clear();
+            update.Name = lesson.Name;
+            update.EmployeeID = lesson.EmployeeID;
 
             foreach (int exercise in exercises)
             {
@@ -151,11 +86,9 @@ namespace Team7.Controllers
                 _lessonPlanRepo.Add(lp);
                 update.LessonPlan.Add(lp);
             }
-
-            await _lessonRepo.SaveChangesAsync();
             _lessonRepo.Update(update);
+            await _lessonRepo.SaveChangesAsync();
             await _lessonPlanRepo.SaveChangesAsync();
-
             return Ok();
         }
 
