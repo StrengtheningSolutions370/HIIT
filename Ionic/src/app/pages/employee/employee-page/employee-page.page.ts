@@ -55,10 +55,12 @@ export class EmployeePagePage implements OnInit {
       this.employeesOriginal = [];
       this.employeeService.getAllEmployees().subscribe({
         next: (data : any) => {
-          console.log('this is the emitter', data)
+          // console.log('this is the emitter', data)
           resolve(data);
         }
-      }).add((() => { this.global.endNativeLoad(); }));;
+      }).add((() => { 
+        this.global.endNativeLoad(); 
+      }));;
     })
   }
 

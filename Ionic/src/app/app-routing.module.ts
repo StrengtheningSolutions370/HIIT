@@ -175,15 +175,15 @@ export const routes: Routes = [
     }
     //loadChildren component here for exercises once generated
   },
-  {
-    path: 'lessonplans',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
-    canActivate: [AuthGaurdService],
-    data: {
-      roles: [Roles.Trainer]
-    }
-    //loadChildren component here for lesson plans once generated
-  },
+  // {
+  //   path: 'lessonplans',
+  //   loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
+  //   canActivate: [AuthGaurdService],
+  //   data: {
+  //     roles: [Roles.Trainer]
+  //   }
+  //   //loadChildren component here for lesson plans once generated
+  // },
   {
     path: 'measurements',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
@@ -214,16 +214,18 @@ export const routes: Routes = [
     // }
   },
   {
-    path: '**', //this route object must be last
-    redirectTo: 'login',
-  },
-  {
     path: 'lessons',
     loadChildren: () => import('./pages/lessons/lessons.module').then( m => m.LessonsPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Trainer, Roles.SuperUser]
     }
+  },
+  
+  //this route object must be last
+  {
+    path: '**', 
+    redirectTo: 'login',
   },
 
 ]  

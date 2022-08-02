@@ -47,7 +47,7 @@ export class LessonService {
    }
 
    //Add a lesson to the lesson list within the lesson service 
-  createLesson(l: Lesson) : Promise<any> {
+  createLesson(l: any) : Promise<any> {
 
     return new Promise<any>((resolve, _) => {
       this.repo.createLesson(l)
@@ -65,6 +65,7 @@ export class LessonService {
         this.global.endNativeLoad();
       })
     });
+
   }
 
   async duplicateAlert() {
@@ -198,7 +199,7 @@ export class LessonService {
 
      //Display the confirm create/update modal
   //Receives the selected lesson from the lesson page
-  confirmLessonModal(choice: number, lesson: Lesson) : Promise<any> {
+  confirmLessonModal(choice: number, lesson: any) : Promise<any> {
 
     return new Promise<any>(async (resolve, _) => {
       console.log('LessonService: ConfirmLessonModalCall');
