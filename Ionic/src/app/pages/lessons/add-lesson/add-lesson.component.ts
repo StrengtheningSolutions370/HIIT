@@ -21,6 +21,8 @@ export class AddLessonComponent implements OnInit {
   //employees
   employees : any[] = [];
   employeesLoadFlag = false;
+  imgSrc = '';
+  showImage = false;
 
   //categories
   categories : any[] = [];
@@ -41,6 +43,10 @@ export class AddLessonComponent implements OnInit {
       lessonName: ['', Validators.required],
       lessonEmployee: ['', Validators.required],
       exercises : ['']
+    });
+
+    this.cLessonForm.valueChanges.subscribe(() => {
+      this.validateForm();
     });
 
     this.global.nativeLoad("Loading...");
@@ -131,6 +137,20 @@ export class AddLessonComponent implements OnInit {
     this.validExercises = true;
   }
 
+  setImage(emp : any) {
+    this.showImage = false;
+    const empID = emp.value.split(',')[0];
+    const employee = this.employees.find(e => e.data.employeeID == empID);
+    if (employee.data.photo != null) {
+      this.showImage = true;
+      this.imgSrc = this.createImg(employee.data.photo);
+    }
+  }
+
+  createImg (src : string) {
+    return `https://localhost:44383/Resources/Employees/Images/${src}`;
+  }
+
   submitForm() {
     
     //object form to pass to API:
@@ -150,22 +170,6 @@ export class AddLessonComponent implements OnInit {
     if (this.cLessonForm.invalid)
       return;
 
-    //Calculate exercise post array:
-    // const exercisePOST = [];
-    // this.exercises.forEach((el : any) => {
-    //   exercisePOST.push(el.exercisePostID);
-    // });
-    // exercisePOST.reverse(); //to preserve order in API of insertion #TODO
-
-    // const post = {
-    //   Lesson: {
-    //     lessonID: 0,
-    //     name: this.cLessonForm.value.lessonName,
-    //     EmployeeID: this.cLessonForm.value.lessonEmployee.split(',')[0]
-    //   },
-    //   Exercises: exercisePOST
-    // } #TODO
-
     console.log(this.exercises);
     const formattedExercises = [];
     let q = 0;
@@ -176,7 +180,7 @@ export class AddLessonComponent implements OnInit {
           formattedExercises.push({
             i: ++q,
             ExerciseId: el.exercisePostID,
-            ExerciseName : ex.name
+            ExerciseName : ex.name,
           });
         }
       });
@@ -186,7 +190,9 @@ export class AddLessonComponent implements OnInit {
     const confirmData = {
       name: this.cLessonForm.value.lessonName,
       employee: this.cLessonForm.value.lessonEmployee,
-      exercises: formattedExercises
+      exercises: formattedExercises,
+      imgSrc: this.imgSrc,
+      showImage: this.showImage
     }
 
     this.lessonService.confirmLessonModal(1, confirmData).then(() => {
@@ -200,7 +206,7 @@ export class AddLessonComponent implements OnInit {
   };
 
   getEmpName(employee : any) {
-    return `${employee.data.appUser.title.description} ${employee.data.appUser.firstName} ${employee.data.appUser.lastName}`;
+    return `${employee.data.appUser.firstName} ${employee.data.appUser.lastName}`;
   }
 
   getEmpValue(employee : any) {

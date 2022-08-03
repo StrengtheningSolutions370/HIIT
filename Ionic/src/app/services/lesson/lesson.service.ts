@@ -39,8 +39,8 @@ export class LessonService {
      this.repo.getLessons().subscribe(result => {
        console.log('Lesson List: Lesson Service -> Get Lessons');
        console.log(result);
-       const tempResult = Object.assign(result);
-       this._lessonList.next(tempResult);
+      //  const tempResult = Object.assign(result);
+       this._lessonList.next(result);
        console.log('Lesson List: Lesson Service -> Updated Lessons');
        console.log(this._lessonList);
      })

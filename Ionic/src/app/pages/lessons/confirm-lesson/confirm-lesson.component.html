@@ -24,10 +24,12 @@
 
     <ion-item> 
       <ion-label>
-        <h2>Surname:</h2>
+        <h2>Employee:</h2>
         <p class="ion-text-start">{{getEmp()}}</p>
       </ion-label>
     </ion-item>
+
+    <ion-img *ngIf="showImage" src="{{imgSrc}}"></ion-img>
 
     <ion-item> 
       <ion-label>

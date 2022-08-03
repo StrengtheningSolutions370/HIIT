@@ -106,15 +106,15 @@ namespace Team7.Controllers
             bool assFlag = false;
 
             //check if attatched to employee:
-            if (lesson.Employee != null)
-                assFlag = true;
-            if (lesson.Schedule.Count != 0)
-                assFlag = true;
-            if (lesson.LessonPlan.Count != 0)
-                assFlag = true;
+            //if (lesson.Employee != null)
+            //    assFlag = true;
+            //if (lesson.Schedule.Count != 0)
+            //    assFlag = true;
+            //if (lesson.LessonPlan.Count != 0)
+            //    assFlag = true;
 
-            if (assFlag)
-                return StatusCode(StatusCodes.Status409Conflict, new { message = "Lesson has assosciations to another table.", lesson });
+            //if (assFlag)
+            //    return StatusCode(StatusCodes.Status409Conflict, new { message = "Lesson has assosciations to another table.", lesson });
 
             //perform delete:
             _lessonRepo.Delete(lesson);

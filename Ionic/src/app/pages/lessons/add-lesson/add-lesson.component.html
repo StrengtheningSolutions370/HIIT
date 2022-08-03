@@ -24,11 +24,13 @@
     <!-- employee for the lesson -->
     <ion-item>
       <ion-label position="floating">Employee:</ion-label>
-      <ion-select formControlName="lessonEmployee" type="text" required="" id="lessonEmployee" >
+      <ion-select #emp (ionChange)="setImage(emp)" formControlName="lessonEmployee" type="text" required="" id="lessonEmployee" >
           <ion-select-option *ngFor="let employee of employees" value="{{getEmpValue(employee)}},{{getEmpName(employee)}}">{{ getEmpName(employee) }}</ion-select-option>
       </ion-select>
       <br/>
     </ion-item> 
+
+    <ion-img *ngIf="showImage" src="{{imgSrc}}"></ion-img>
 
     <!-- exercise choosing system -->
     <ion-item>

@@ -184,7 +184,7 @@ export class EmployeePagePage implements OnInit {
       return;
     }
 
-    const hits = new Fuse(this.employees, {
+    const hits = new Fuse(this.employeesOriginal, {
       keys: [
         'data.appUser.firstName',
         'data.appUser.lastName',

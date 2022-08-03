@@ -6,6 +6,7 @@ import { AddLessonComponent } from './add-lesson/add-lesson.component';
 import { DeleteLessonComponent } from './delete-lesson/delete-lesson.component';
 import { UpdateLessonComponent } from './update-lesson/update-lesson.component';
 import { ViewLessonComponent } from './view-lesson/view-lesson.component';
+import Fuse from 'fuse.js'
 
 @Component({
   selector: 'app-lessons',
@@ -15,7 +16,7 @@ import { ViewLessonComponent } from './view-lesson/view-lesson.component';
 export class LessonsPage implements OnInit {
 
   noresults = false;
-
+  q=0
   lessons : any[] = [];
   lessonsOriginal : any[] = [];
 
@@ -33,7 +34,7 @@ export class LessonsPage implements OnInit {
           console.log('lessons fetch', lessons);
           this.lessons = lessons;
           this.lessonsOriginal = lessons;
-          if (this.lessons.length)
+          if (this.lessons == null)
             this.noresults = true;
         });
         
@@ -43,6 +44,13 @@ export class LessonsPage implements OnInit {
     //trigger event for first fetch:
     this.lessonService.fetchLessonsEvent.emit();
 
+  }
+
+  createImg (src : string) {
+    if (src == null) {
+      return null;
+    }
+    return `https://localhost:44383/Resources/Employees/Images/${src}`;
   }
 
   fetchLessons() : Promise<any> {
@@ -76,7 +84,23 @@ export class LessonsPage implements OnInit {
     await modal.present();
   }
 
-  async deleteLesson(lesson : any) {
+  async deleteLesson(dellesson : any) {
+    const formattedExercises = [];
+    let q = 0;
+    dellesson.exercises.forEach((el : any) => {
+      formattedExercises.push({
+        i: ++q,
+        ExerciseName : el.name,
+      });
+    })
+    const lesson = {
+      name: dellesson.name,
+      employee: `${dellesson.employee.appUser.firstName} ${dellesson.employee.appUser.lastName}`,
+      exercises: formattedExercises,
+      imgSrc: this.createImg(dellesson.employee.photo),
+      showImage: dellesson.employee.image == null,
+      lessonID: dellesson.lessonID
+    }
     const modal = await this.modalCtrl.create({
       component : DeleteLessonComponent,
       componentProps: {
@@ -86,7 +110,23 @@ export class LessonsPage implements OnInit {
     await modal.present();
   }
 
-  async viewLesson(lesson : any) {
+  async viewLesson(viewlesson : any) {
+    const formattedExercises = [];
+    let q = 0;
+    viewlesson.exercises.forEach((el : any) => {
+      formattedExercises.push({
+        i: ++q,
+        ExerciseName : el.name,
+      });
+    })
+    const lesson = {
+      name: viewlesson.name,
+      employee: `${viewlesson.employee.appUser.firstName} ${viewlesson.employee.appUser.lastName}`,
+      exercises: formattedExercises,
+      imgSrc: this.createImg(viewlesson.employee.photo),
+      showImage: viewlesson.employee.image == null,
+      lessonID: viewlesson.lessonID
+    }
     const modal = await this.modalCtrl.create({
       component : ViewLessonComponent,
       componentProps: {
@@ -94,6 +134,38 @@ export class LessonsPage implements OnInit {
       }
     });
     await modal.present();
+  }
+
+  searchLesson(term : string) {
+
+    this.noresults = false;
+
+    if (term == '' || term == null) {
+      this.lessons = this.lessonsOriginal;
+      return;
+    }
+
+    const hits = new Fuse(this.lessonsOriginal, {
+      keys: [
+        'employee.appUser.firstName',
+        'employee.appUser.lastName',
+        'employee.qualificatoin.description',
+        'employee.appUser.email',
+        'exerciseses',
+        'name'
+      ]
+    }).search(
+      term
+    );
+
+    if (hits.length == 0)
+      this.noresults = true;
+
+    this.lessons = [];
+    hits.map((el : any) => {
+      this.lessons.push(el.item);
+    });
+
   }
 
 }

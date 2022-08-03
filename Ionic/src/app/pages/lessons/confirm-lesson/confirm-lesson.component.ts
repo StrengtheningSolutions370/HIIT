@@ -13,11 +13,16 @@ export class ConfirmLessonComponent implements OnInit {
   @Input() choice : any;
   @Input() lesson : any;
   i = 0;
+  
+  showImage = false;
+  imgSrc = '';
 
   constructor(private modalCtrl : ModalController, private global : GlobalService, private lessonService : LessonService, private toastCtrl : ToastController, private alertCtrl: AlertController) { }
 
   ngOnInit() {
     console.log(this.lesson);
+    this.showImage = this.lesson.showImage;
+    this.imgSrc = this.lesson.imgSrc;
   }
 
   dismissModal() {
@@ -41,7 +46,6 @@ export class ConfirmLessonComponent implements OnInit {
       this.lesson.exercises.forEach((el : any) => {
         exercisePOST.push(el.ExerciseId);
       });
-      exercisePOST.reverse(); //to preserve order in API of insertion #TODO
 
       const post = {
         Lesson: {
