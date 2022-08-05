@@ -24,11 +24,12 @@ namespace Team7
     public class Startup
     {
         readonly string corsPolicy = "_myAllowSpecificOrigins";
+        TimedEventService time_pba = new TimedEventService();
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
+            time_pba.start();
         }
 
         public IConfiguration Configuration { get; }

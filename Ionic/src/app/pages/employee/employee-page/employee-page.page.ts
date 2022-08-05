@@ -55,10 +55,12 @@ export class EmployeePagePage implements OnInit {
       this.employeesOriginal = [];
       this.employeeService.getAllEmployees().subscribe({
         next: (data : any) => {
-          console.log('this is the emitter', data)
+          // console.log('this is the emitter', data)
           resolve(data);
         }
-      }).add((() => { this.global.endNativeLoad(); }));;
+      }).add((() => { 
+        this.global.endNativeLoad(); 
+      }));;
     })
   }
 
@@ -182,7 +184,7 @@ export class EmployeePagePage implements OnInit {
       return;
     }
 
-    const hits = new Fuse(this.employees, {
+    const hits = new Fuse(this.employeesOriginal, {
       keys: [
         'data.appUser.firstName',
         'data.appUser.lastName',
