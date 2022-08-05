@@ -39,7 +39,7 @@
       <!-- <app-payfast-checkout></app-payfast-checkout> -->
 
 
-<ion-content>
+<!-- <ion-content>
   <div *ngIf="this.model === null" class="align-self-center">
     <ion-label  >Your cart is empty.</ion-label>
   </div>
@@ -48,8 +48,8 @@
     <app-cart-item *ngFor="let item of model?.items; let i = index" [item]="item" [index]="i" (add)="quantityPlus($event)"
       (minus)="quantityMinus($event)">
     </app-cart-item>
-  
-  
+
+
     <ion-list class="borderBottom" *ngIf="this.model !== null">
       <ion-item lines="none">
         <ion-label color="dark">
@@ -60,7 +60,7 @@
         <ion-text slot="end" color="dark">{{model?.totalPrice | currency: 'ZAR'}}</ion-text>
       </ion-item>
     </ion-list>
-  
+
     <ion-button class="ion-float-right" (click)="makePayment()">Proceed to checkout</ion-button>
     <form action="https://sandbox.payfast.co.za/eng/process" method="POST">
       <input type="hidden" name="merchant_id" value="10026801">
@@ -70,4 +70,4 @@
     </form>
   </div>
 
-</ion-content>
+</ion-content> -->
