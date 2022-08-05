@@ -128,7 +128,7 @@ export class SchedulePage implements AfterViewInit  {
           console.log("Error fetching Schedule events from API");
           console.log(err);
           this.isLoading = true;
-          this.global.showAlert("Unable to fetch events from the database","ERROR fetching events", ['Ok']);
+          this.global.showAlert("Unable to fetch events from the database","ERROR fetching events", ['Ok']).then(() => {this.isLoading = false;});
         }
       });
 

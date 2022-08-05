@@ -57,12 +57,12 @@
   >
 </calendar>
 
-event-detail
 <!-- (onTimeSelected)="onTimeSelected($event)" -->
 
 <ng-template #calendarEventTemplate let-view="view" let-row="row" let-col="col">
   <div [class.with-event]="view.dates[row*7+col].events.length">
     {{view.dates[row*7+col].label}}
+    {{view.dates[row*7+col].events.title}}
     <div class="indicator-container">
       <div class="event-indicator" *ngFor="let ev of view.dates[row*7+col].events">
       </div>
