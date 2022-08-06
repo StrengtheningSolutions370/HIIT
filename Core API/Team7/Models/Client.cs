@@ -13,27 +13,24 @@ namespace Team7.Models
         {
             this.Booking = new HashSet<Booking>();
             this.Member = new HashSet<Member>();
-            this.Sale = new HashSet<Sale>();
-            this.SaleLine = new HashSet<SaleLine>();
+            //this.Sale = new HashSet<Sale>();
+            //this.SaleLine = new HashSet<SaleLine>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClientID { get; set; }
-
         [Required]
         public string UserID { get; set; }
-
         public string Photo { get; set; }
         public bool Idemnity { get; set; }
         public string QrCode { get; set; }
-        
+        public virtual AppUser AppUser { get; set; }
         public virtual ICollection<Booking> Booking { get; set; }
-        
         public virtual ICollection<Member> Member { get; set; }
 
-        public virtual ICollection<Sale> Sale { get; set; }
+        //public virtual ICollection<Sale> Sale { get; set; }
         
-        public virtual ICollection<SaleLine> SaleLine { get; set; }
+        //public virtual ICollection<SaleLine> SaleLine { get; set; }
     }
 }

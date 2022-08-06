@@ -8,10 +8,11 @@ namespace Team7.Models
     {
         public SaleItem()
         {
-            this.InventoryItem = new HashSet<InventoryItem>();
+            //this.InventoryItem = new HashSet<InventoryItem>();
             this.PriceHistory = new HashSet<PriceHistory>();
             this.SaleLine = new HashSet<SaleLine>();
             this.StockTakeLine = new HashSet<StockTakeLine>();
+            this.WriteOffLine = new HashSet<WriteOffLine>();
         }
 
         [Key]
@@ -28,24 +29,25 @@ namespace Team7.Models
 
         //public decimal CostPrice { get; set; }
         //[Required]
-        public decimal Price { get; set; }
-        [Required]
+        //public decimal Price { get; set; }
+        //[Required]
         public bool Quotable { get; set; }
         [Required]
-        public int Quantity { get; set; }
-        [Required]
-
-        //public int QuantityOnHand { get; set; }
+        //public int Quantity { get; set; }
         //[Required]
+
+        public int QuantityOnHand { get; set; }
+        [Required]
 
         public int Stock { get; set; }
         [Required]
         public int? SaleCategoryID { get; set; }
 
         public virtual SaleCategory SaleCategory { get; set; }
-        public virtual ICollection<InventoryItem> InventoryItem { get; set; }
+        //public virtual ICollection<InventoryItem> InventoryItem { get; set; }
         public virtual ICollection<PriceHistory> PriceHistory { get; set; }
         public virtual ICollection<SaleLine> SaleLine { get; set; }
         public virtual ICollection<StockTakeLine> StockTakeLine { get; set; }
+        public virtual ICollection<WriteOffLine> WriteOffLine { get; set; }
     }
 }

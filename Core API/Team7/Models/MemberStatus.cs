@@ -16,7 +16,7 @@ namespace Team7.Models
         public int MemberStatusID { get; set; }
         [Required]
         public string Name { get; set; }
-
+        [Required]
         public virtual ICollection<Member> Member { get; set; }
     }
 }

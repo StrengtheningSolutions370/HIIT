@@ -15,7 +15,7 @@ namespace Team7.Models
         public int OrderStatusID { get; set; }
         [Required]
         public string Description { get; set; }
-
+        [Required]
         public virtual ICollection<SupplierOrder> SupplierOrder { get; set; }
     }
 }

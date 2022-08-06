@@ -20,6 +20,7 @@ namespace Team7.Models
         public int ClientID { get; set; }
         [Required]
         public int? MemberStatusID { get; set; }
+        [Required]
 
         public virtual Client Client { get; set; }
         public virtual ICollection<Measurement> Measurement { get; set; }

@@ -18,7 +18,9 @@ namespace Team7.Models
         public System.DateTime Date { get; set; }
         [Required]
         public int UserID { get; set; }
+        [Required]
 
+        public virtual AppUser AppUser { get; set; }
         public virtual ICollection<SaleLine> SaleLine { get; set; }
         public virtual ICollection<Payment> Payment { get; set; }
     }

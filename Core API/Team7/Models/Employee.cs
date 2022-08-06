@@ -34,6 +34,7 @@ namespace Team7.Models
         public virtual Qualification Qualification { get; set; }
         public virtual ICollection<Lesson> Lesson { get; set; }
         public virtual ICollection<Schedule> Schedule { get; set; }
+        public virtual ICollection<WriteOff> WriteOff { get; set; }
         public virtual AppUser AppUser { get; set; }
     }
 }
