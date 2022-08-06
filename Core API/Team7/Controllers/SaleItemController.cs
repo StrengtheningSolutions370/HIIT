@@ -106,10 +106,11 @@ namespace Team7.Controllers
                 toUpdate.Name = saleItem.Name;
                 toUpdate.Photo = saleItem.Photo;
                 toUpdate.Description = saleItem.Description;
-                toUpdate.Price = saleItem.Price;
+                //toUpdate.Price = saleItem.Price;
                 toUpdate.Quotable = saleItem.Quotable;
-                toUpdate.Quantity = toUpdate.Quantity;
-                //toUpdate.QuantityOnHand = saleItem.QuantityOnHand;
+                //toUpdate.Quantity = toUpdate.Quantity;
+                toUpdate.QuantityOnHand = saleItem.QuantityOnHand;
+                toUpdate.Stock = saleItem.Stock;
 
                 SaleItemRepo.Update<SaleItem>(toUpdate);
                 if (await SaleItemRepo.SaveChangesAsync())

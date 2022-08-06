@@ -29,7 +29,7 @@ namespace Team7.Models
 
         //public decimal CostPrice { get; set; }
         //[Required]
-        //public decimal Price { get; set; }
+        //public decimal SalePrice { get; set; }
         //[Required]
         public bool Quotable { get; set; }
         [Required]
