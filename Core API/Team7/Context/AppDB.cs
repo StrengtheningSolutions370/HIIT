@@ -29,7 +29,7 @@ namespace Team7.Context
         public virtual DbSet<EmployeeType> EmployeeType { get; set; }
         public virtual DbSet<ExerciseCategory> ExerciseCategory { get; set; }
         public virtual DbSet<Exercise> Exercise { get; set; }
-        public virtual DbSet<InventoryItem> InventoryItem { get; set; }
+        //public virtual DbSet<InventoryItem> InventoryItem { get; set; }
         public virtual DbSet<Lesson> Lesson { get; set; }
         public virtual DbSet<LessonPlan> LessonPlan { get; set; }
         public virtual DbSet<Measurement> Measurement { get; set; }
