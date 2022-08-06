@@ -23,7 +23,7 @@
 
     <!-- employee for the lesson -->
     <ion-item>
-      <ion-label position="floating">Employee:</ion-label>
+      <ion-label position="floating">Trainer:</ion-label>
       <ion-select #emp (ionChange)="setImage(emp)" formControlName="lessonEmployee" type="text" required="" id="lessonEmployee" >
           <ion-select-option *ngFor="let employee of employees" value="{{getEmpValue(employee)}},{{getEmpName(employee)}}">{{getEmpName(employee)}}</ion-select-option>
       </ion-select>
@@ -56,8 +56,8 @@
               </div>
   
               <div class="w-100"> <!-- select for exercise -->
-                <ion-select id="child{{exercise.id}}" placeholder="Exercise" type="text">
-                  <ion-select-option *ngFor="let exe of exercise.exe" value="{{exe.exerciseID}},{{exe.name}}">{{exe.name}}</ion-select-option>
+                <ion-select (ionChange)="setExercisePostID(exercise, $event)" id="child{{exercise.id}}" placeholder="Exercise" type="text">
+                  <ion-select-option *ngFor="let exe of exercise.exercise" value="{{exe.exerciseID}},{{exe.name}}">{{exe.name}}</ion-select-option>
                 </ion-select>
   
               </div>
@@ -86,8 +86,7 @@
           <ion-button color="light" (click)="dismissModal()">Cancel</ion-button>
         </ion-col>
         <ion-col>
-          <!-- <ion-button (click)="submitForm()" color="success" [disabled]="cLessonForm.invalid || !validExercises">Create Lesson</ion-button> -->
-          <ion-button (click)="submitForm()" color="success" >Create Lesson</ion-button>
+          <ion-button (click)="submitForm()" color="secondary" [disabled]="cLessonForm.invalid || !validExercises">Update Lesson</ion-button>
         </ion-col>
       </ion-row>
     </div>

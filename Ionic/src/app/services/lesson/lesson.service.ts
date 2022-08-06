@@ -83,7 +83,7 @@ export class LessonService {
   }
 
   //Receives a lesson to update in the service lesson list.
-  async updateLesson(id: number, l: Lesson) : Promise<any> {
+  async updateLesson(id: number, l: any) : Promise<any> {
     return new Promise<any>((resolve, _) => {
       this.repo.updateLesson(id,l).subscribe({
         next: () => {

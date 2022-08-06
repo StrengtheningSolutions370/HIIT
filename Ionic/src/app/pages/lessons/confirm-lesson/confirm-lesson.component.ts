@@ -70,9 +70,24 @@ export class ConfirmLessonComponent implements OnInit {
 
     } else if (this.choice === 2){
 
+      const exercisePOST = [];
+      this.lesson.exercises.forEach((el : any) => {
+        exercisePOST.push(el.ExerciseId);
+      });
+
+      const post = {
+        Lesson: {
+          lessonID: 0,
+          name: this.lesson.name,
+          EmployeeID: this.lesson.employee.split(',')[0]
+        },
+        Exercises: exercisePOST
+      }
+
       //UPDATE
       this.global.nativeLoad("Updating...");
-      this.lessonService.updateLesson(0, this.lesson).then((el) => { //#TODO: CHECK HOW TO GET THE ID FOR UPDATE
+      console.log('sending to API', this.lesson)
+      this.lessonService.updateLesson(this.lesson.lessonID, post).then((el) => { //#TODO: CHECK HOW TO GET THE ID FOR UPDATE
         if (el) {
           this.dismissModal();
           this.sucUpdate();

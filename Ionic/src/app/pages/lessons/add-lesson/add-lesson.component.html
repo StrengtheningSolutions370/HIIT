@@ -23,7 +23,7 @@
 
     <!-- employee for the lesson -->
     <ion-item>
-      <ion-label position="floating">Employee:</ion-label>
+      <ion-label position="floating">Trainer:</ion-label>
       <ion-select #emp (ionChange)="setImage(emp)" formControlName="lessonEmployee" type="text" required="" id="lessonEmployee" >
           <ion-select-option *ngFor="let employee of employees" value="{{getEmpValue(employee)}},{{getEmpName(employee)}}">{{ getEmpName(employee) }}</ion-select-option>
       </ion-select>

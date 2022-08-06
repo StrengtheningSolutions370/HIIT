@@ -13,13 +13,13 @@ export class UpdateLessonComponent implements OnInit {
 
   @Input() lesson : any;
   @ViewChild('emp') trainerSelect : any;
-  
 
   //form for creation
   cLessonForm! : FormGroup;
 
   //employees
   employees : any[] = [];
+  // @Input() employees : any;
   employeesLoadFlag = false;
   imgSrc = '';
   showImage = false;
@@ -32,6 +32,7 @@ export class UpdateLessonComponent implements OnInit {
   //to store the selected exercises
   id = 0;
   displaycount = 0;
+
   // exercises : any[] = [];
   @Input() exercises : any[];
   validExercises = false;
@@ -41,46 +42,46 @@ export class UpdateLessonComponent implements OnInit {
   ngAfterViewInit() {
     const ddName = `${this.lesson.employee.appUser.firstName} ${this.lesson.employee.appUser.lastName}`;
     this.trainerSelect.selectedText = ddName;
-    this.populateParents();
+    this.populateSelects();
 
     //merge the exercises into the this.exercise then populate the childen:
-    const temp = this.exercises;
-    //this.exercises = [];
+    // const temp = this.exercises;
+    // //this.exercises = [];
 
-    temp.forEach((el : any) => {
-      const category = this.categories.filter(e => e.exerciseCategoryID == el.category.exerciseCategoryID);
-      console.log('getting the exercises = ', category);
-    });
+    // temp.forEach((el : any) => {
+    //   const category = this.categories.filter(e => e.exerciseCategoryID == el.category.exerciseCategoryID);
+    //   //console.log('getting the exercises = ', category);
+    // });
 
   }
 
-  populateParents() {
+  populateSelects() {
+
+    this.id = this.exercises.length;
+
     this.exercises.forEach((el : any) => {
       const tag : any = document.getElementById(`parent${el.id}`);
       tag.value = `${el.category.exerciseCategoryID},${el.category.name}`;
     });
+
+    this.lesson.exercises.forEach((el : any, i : number) => {
+      const tag : any = document.getElementById(`child${i}`);
+      tag.value = `${el.exerciseID},${el.name}`;
+    });
+
+
   }
 
   ngOnInit() {
 
-    console.log('update this lesson', this.lesson);
+    //console.log('update this lesson', this.lesson);
+    //console.log('update lesson, exercises', this.exercises);
+    //console.log('update lesson, employee', this.employees);
 
-    //set the exe obj array:
-    let cnt = 0;
-    this.lesson.exercises.forEach((el : any) => {
-      let exe = new exerciseObjs(this.id++);
-      exe.exercisePostID = el.exerciseID;
-      exe.category = el.exerciseCategory;
-      this.exercises.push(exe);
-    });
-    this.updateDisplayCount();
-    console.log('exercises of objs: ', this.exercises);
-
-  // id : number;
-  // exercisePostID : number = -1;
-  // category : any;
-  // exercise : any;
-  // categoryset : boolean = false;
+    if (this.lesson.employee.photo != null || this.lesson.employee.photo != undefined || this.lesson.employee.photo != '') {
+      this.imgSrc = this.createImg(this.lesson.employee.photo);
+      this.showImage = true;
+    }
 
     //make the form
     this.cLessonForm = this.formBuilder.group({
@@ -89,32 +90,15 @@ export class UpdateLessonComponent implements OnInit {
       exercises : ['']
     });
 
-    this.cLessonForm.valueChanges.subscribe(() => {
-      this.validateForm();
-    });
-
-    this.global.nativeLoad("Loading...");
-
-    //fetch employees for the dropdown:
     this.repo.getEmployees().subscribe({
       next: (data : any) => {
         this.employees = data;
-        console.log('employees',this.employees)
+        // //console.log('employees',employees)
       }
-    }).add(() => { 
-      this.employeesLoadFlag = true;
-      this.checkEndLoad();
     });
 
-    //fetch all exercise categories that have the exercises:
-    this.repo.getExerciseCategory().subscribe({
-      next: (data : any) => {
-        console.log('categories', data.result)
-        this.categories = data.result.filter(e => e.exercises.length > 0);
-      }
-    }).add(() => { 
-      this.categoriesLoadFlag = true;
-      this.checkEndLoad();
+    this.cLessonForm.valueChanges.subscribe(() => {
+      this.validateForm();
     });
 
     const ddName = `${this.lesson.employee.appUser.firstName} ${this.lesson.employee.appUser.lastName}`;
@@ -125,9 +109,9 @@ export class UpdateLessonComponent implements OnInit {
   }
 
   getFromCategory(exe : any) {
-    console.log('exe = ', exe);
+    //console.log('exe = ', exe);
     const ret = this.categories.filter(e => e.exerciseCategoryID == exe.category.exerciseCategoryID);
-    console.log('ret', ret);
+    //console.log('ret', ret);
 
     if (ret.length == 0)
       return null;
@@ -157,6 +141,53 @@ export class UpdateLessonComponent implements OnInit {
 
   submitForm() {
 
+    //object form to pass to API:
+    /*
+
+      {
+          "Lesson": {
+              "lessonID": 0,
+              "name": "Lesson 1 new name",
+              "EmployeeID": 1
+          },
+          "Exercises" : [1]
+      }
+
+    */
+
+    if (this.cLessonForm.invalid)
+      return;
+
+    //console.log(this.exercises);
+    const formattedExercises = [];
+    let q = 0;
+    this.exercises.forEach((el : any) => {
+
+      el.exercise.forEach((ex : any) => {
+        if (ex.exerciseID == el.exercisePostID) {
+          formattedExercises.push({
+            i: ++q,
+            ExerciseId: el.exercisePostID,
+            ExerciseName : ex.name,
+          });
+        }
+      });
+
+  
+    })
+    const confirmData = {
+      lessonID : this.lesson.lessonID,
+      name: this.cLessonForm.value.lessonName,
+      employee: this.cLessonForm.value.lessonEmployee,
+      exercises: formattedExercises,
+      imgSrc: this.imgSrc,
+      showImage: this.showImage
+    }
+
+    this.lessonService.confirmLessonModal(2, confirmData).then(() => {
+      this.modalCtrl.dismiss();
+    });
+
   }
 
   checkEndLoad() {
@@ -166,7 +197,6 @@ export class UpdateLessonComponent implements OnInit {
   }
 
   validateForm() { 
-
     this.validExercises = false;
 
     if (this.cLessonForm.invalid || this.exercises.length == 0)
@@ -174,11 +204,17 @@ export class UpdateLessonComponent implements OnInit {
 
     const test = this.exercises.filter(e => e.exercisePostID == -1);
 
-    // console.log('tst', test);
+    // //console.log('tst', test);
     if (test.length != 0)
       return;
 
     this.validExercises = true;
+  }
+
+  addExerciseToForm() {
+    this.exercises.push(new exerciseObjs(this.id++));
+    this.updateDisplayCount();
+    this.validateForm();
   }
 
   setImage(emp : any) {
@@ -201,6 +237,31 @@ export class UpdateLessonComponent implements OnInit {
 
   get errorControl() {
     return this.cLessonForm.controls;
+  }
+
+  parentDropDownChange(exerciseObj : exerciseObjs, event : any) {
+    //console.log(exerciseObj);
+    const index = this.exercises.findIndex(e => e.id === exerciseObj.id);
+    const catToSet = event.detail.value.split(',')[0];
+    const exercisesIndex = this.categories.findIndex(e => e.exerciseCategoryID === parseInt(catToSet));
+    //confirm category selection
+    this.exercises[index].categoryset = true;
+    this.exercises[index].category = this.categories[exercisesIndex];
+    this.exercises[index].exercise = this.categories[exercisesIndex].exercises;
+    
+    const tag : any = document.getElementById(`child${exerciseObj.id}`);
+    tag.value = ``;
+
+    this.exercises[index].exercisePostID = -1;
+
+    this.validateForm();
+  }
+
+  setExercisePostID(exercise : exerciseObjs, event : any) {
+    //find exe obj:
+    const index = this.exercises.findIndex(e => e.id === exercise.id);
+    this.exercises[index].exercisePostID = parseInt(event.detail.value.split(',')[0]);
+    this.validateForm();
   }
 
 }

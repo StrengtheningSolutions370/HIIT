@@ -7,6 +7,7 @@ import { DeleteLessonComponent } from './delete-lesson/delete-lesson.component';
 import { UpdateLessonComponent } from './update-lesson/update-lesson.component';
 import { ViewLessonComponent } from './view-lesson/view-lesson.component';
 import Fuse from 'fuse.js'
+import { RepoService } from 'src/app/services/repo.service';
 
 @Component({
   selector: 'app-lessons',
@@ -16,11 +17,16 @@ import Fuse from 'fuse.js'
 export class LessonsPage implements OnInit {
 
   noresults = false;
-  q=0
+  q=0;
+  id = 0;
   lessons : any[] = [];
   lessonsOriginal : any[] = [];
+  categoriesLoadFlag = false;
+  employeesLoadFlag = false;
 
-  constructor(private lessonService : LessonService, private global : GlobalService, private modalCtrl : ModalController) { }
+  updateModalOpen = false;
+
+  constructor(private lessonService : LessonService, private global : GlobalService, private modalCtrl : ModalController, private repo : RepoService) { }
 
   ngOnInit() {
 
@@ -31,7 +37,7 @@ export class LessonsPage implements OnInit {
         this.global.nativeLoad("Loading...");
 
         this.fetchLessons().then((lessons : any) => {
-          console.log('lessons fetch', lessons);
+          //console.log('lessons fetch', lessons);
           this.lessons = lessons;
           this.lessonsOriginal = lessons;
           if (this.lessons == null)
@@ -75,13 +81,70 @@ export class LessonsPage implements OnInit {
   }
 
   async updateLesson(lesson : any) {
-    const modal = await this.modalCtrl.create({
-      component : UpdateLessonComponent,
-      componentProps: {
-        lesson
+
+    let employees : any;
+    let categories : any;
+    this.updateModalOpen = false;
+
+    this.global.nativeLoad("Loading...");
+
+    this.repo.getEmployees().subscribe({
+      next: (data : any) => {
+        employees = data;
+        //console.log('employees',employees)
       }
+    }).add(() => { 
+      this.employeesLoadFlag = true;
+      this.checkEndLoad(lesson, employees, categories);
     });
-    await modal.present();
+
+    this.repo.getExerciseCategory().subscribe({
+      next: (data : any) => {
+        //console.log('categories', data.result)
+        categories = data.result.filter(e => e.exercises.length > 0);
+      }
+    }).add(() => { 
+      this.categoriesLoadFlag = true;
+      this.checkEndLoad(lesson, employees, categories);
+    });
+
+    //console.log('lesson to update', lesson);
+
+  }
+
+  async checkEndLoad(lesson : any, employees : any, categories : any) {
+
+
+    if (this.employeesLoadFlag && this.categoriesLoadFlag && !this.updateModalOpen) {
+
+      this.updateModalOpen = true;
+      this.global.endNativeLoad();
+
+      let exercises : any = [];
+      lesson.exercises.forEach((el : any) => {
+        const cat = categories.filter(e => e.exerciseCategoryID == el.exerciseCategory.exerciseCategoryID);
+        var x = new exerciseObjs(this.id++);
+        x.category = cat[0];
+        x.exercise = cat[0].exercises;
+        x.exercisePostID = el.exerciseID;
+        exercises.push(x);
+      });
+
+      this.id = 0;
+
+      //create modal:
+      const modal = await this.modalCtrl.create({
+        component : UpdateLessonComponent,
+        componentProps: {
+          lesson,
+          employees,
+          exercises,
+          categories
+        }
+      });
+      await modal.present();
+
+    }
   }
 
   async deleteLesson(dellesson : any) {
@@ -167,5 +230,20 @@ export class LessonsPage implements OnInit {
     });
 
   }
+
+}
+
+
+export class exerciseObjs {
+
+  constructor(id : number) {
+    this.id = id;
+  }
+
+  id : number;
+  exercisePostID : number = -1;
+  category : any;
+  exercise : any;
+  categoryset : boolean = true;
 
 }

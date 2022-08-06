@@ -55,7 +55,7 @@ export class AddLessonComponent implements OnInit {
     this.repo.getEmployees().subscribe({
       next: (data : any) => {
         this.employees = data;
-        console.log('employees',this.employees)
+        //console.log('employees',this.employees)
       }
     }).add(() => { 
       this.employeesLoadFlag = true;
@@ -65,7 +65,7 @@ export class AddLessonComponent implements OnInit {
     //fetch all exercise categories that have the exercises:
     this.repo.getExerciseCategory().subscribe({
       next: (data : any) => {
-        console.log('categories', data.result)
+        //console.log('categories', data.result)
         this.categories = data.result.filter(e => e.exercises.length > 0);
       }
     }).add(() => { 
@@ -130,7 +130,7 @@ export class AddLessonComponent implements OnInit {
 
     const test = this.exercises.filter(e => e.exercisePostID == -1);
 
-    console.log('tst', test);
+    //console.log('tst', test);
     if (test.length != 0)
       return;
 
@@ -170,7 +170,7 @@ export class AddLessonComponent implements OnInit {
     if (this.cLessonForm.invalid)
       return;
 
-    console.log(this.exercises);
+    //console.log(this.exercises);
     const formattedExercises = [];
     let q = 0;
     this.exercises.forEach((el : any) => {
