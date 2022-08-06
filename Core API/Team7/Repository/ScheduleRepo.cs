@@ -52,12 +52,12 @@ namespace Team7.Models.Repository
                     result = await DB.Schedule.Select(sc => new
                     {
                         sc.ScheduleID,
-                        sc.CapacityBooked,
+                        //sc.CapacityBooked,
                         sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
                         sc.Employee,
-                        sc.LessonPlan,
+                        sc.Lesson,
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
@@ -81,12 +81,12 @@ namespace Team7.Models.Repository
                     result = await query.Select(sc => new
                     {
                         sc.ScheduleID,
-                        sc.CapacityBooked,
+                        //sc.CapacityBooked,
                         sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
                         sc.Employee,
-                        sc.LessonPlan,
+                        sc.Lesson,
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
@@ -109,12 +109,12 @@ namespace Team7.Models.Repository
                     result = await query.Select(sc => new
                     {
                         sc.ScheduleID,
-                        sc.CapacityBooked,
+                        //sc.CapacityBooked,
                         sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
                         sc.Employee,
-                        sc.LessonPlan,
+                        sc.Lesson,
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
@@ -157,12 +157,12 @@ namespace Team7.Models.Repository
                         .Select(sc  => new 
                         {
                             sc.ScheduleID,
-                            sc.CapacityBooked,
+                            //sc.CapacityBooked,
                             sc.DateSession,
                             sc.Venue,
                             sc.BookingType,
                             sc.Employee,
-                            sc.LessonPlan
+                            sc.Lesson
                         })
                     }).ToListAsync()
                 };
