@@ -22,5 +22,7 @@ namespace Team7.Models.Repository
         Task<LessonPlan[]> GetLessonsPlanByLessonIDAsync(int LessonID);
 
         Task<bool> SaveChangesAsync();
+
+        Task<bool> RemoveRangeLessonIdAsync(int LessonID);
     }
 }

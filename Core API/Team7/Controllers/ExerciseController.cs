@@ -31,7 +31,6 @@ namespace Team7.Controllers
                 var catId = exercise.ExerciseCategoryID;
                 exercise.ExerciseCategory = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(catId);
 
-
                 ExerciseRepo.Add(exercise);
 
                 if (await ExerciseRepo.SaveChangesAsync())
