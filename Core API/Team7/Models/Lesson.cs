@@ -30,6 +30,7 @@ namespace Team7.Models
 
         public int ScheduleID { get; set; }
 
+        //this is being used for retrieval of the exercises with the associative table
         public ICollection<Exercise> exercises { get; set; }
     }
 }
