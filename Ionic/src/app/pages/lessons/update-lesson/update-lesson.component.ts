@@ -1,10 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { LessonService } from 'src/app/services/lesson/lesson.service';
 import { RepoService } from 'src/app/services/repo.service';
-
 @Component({
   selector: 'app-update-lesson',
   templateUrl: './update-lesson.component.html',
@@ -13,6 +12,8 @@ import { RepoService } from 'src/app/services/repo.service';
 export class UpdateLessonComponent implements OnInit {
 
   @Input() lesson : any;
+  @ViewChild('emp') trainerSelect : any;
+  
 
   //form for creation
   cLessonForm! : FormGroup;
@@ -24,28 +25,58 @@ export class UpdateLessonComponent implements OnInit {
   showImage = false;
 
   //categories
-  categories : any[] = [];
+  // categories : any[] = [];
+  @Input() categories : any[];
   categoriesLoadFlag = false;
 
   //to store the selected exercises
   id = 0;
   displaycount = 0;
-  exercises : any[] = [];
+  // exercises : any[] = [];
+  @Input() exercises : any[];
   validExercises = false;
 
   constructor(private formBuilder : FormBuilder, private repo : RepoService, private modalCtrl : ModalController, private global : GlobalService, private lessonService : LessonService) { }
+
+  ngAfterViewInit() {
+    const ddName = `${this.lesson.employee.appUser.firstName} ${this.lesson.employee.appUser.lastName}`;
+    this.trainerSelect.selectedText = ddName;
+    this.populateParents();
+
+    //merge the exercises into the this.exercise then populate the childen:
+    const temp = this.exercises;
+    //this.exercises = [];
+
+    temp.forEach((el : any) => {
+      const category = this.categories.filter(e => e.exerciseCategoryID == el.category.exerciseCategoryID);
+      console.log('getting the exercises = ', category);
+    });
+
+  }
+
+  populateParents() {
+    this.exercises.forEach((el : any) => {
+      const tag : any = document.getElementById(`parent${el.id}`);
+      tag.value = `${el.category.exerciseCategoryID},${el.category.name}`;
+    });
+  }
 
   ngOnInit() {
 
     console.log('update this lesson', this.lesson);
 
     //set the exe obj array:
+    let cnt = 0;
     this.lesson.exercises.forEach((el : any) => {
       let exe = new exerciseObjs(this.id++);
       exe.exercisePostID = el.exerciseID;
       exe.category = el.exerciseCategory;
+      this.exercises.push(exe);
     });
-  //   id : number;
+    this.updateDisplayCount();
+    console.log('exercises of objs: ', this.exercises);
+
+  // id : number;
   // exercisePostID : number = -1;
   // category : any;
   // exercise : any;
@@ -85,15 +116,35 @@ export class UpdateLessonComponent implements OnInit {
       this.categoriesLoadFlag = true;
       this.checkEndLoad();
     });
-    
-    this.setForm();
+
+    const ddName = `${this.lesson.employee.appUser.firstName} ${this.lesson.employee.appUser.lastName}`;
+    const t = `${this.lesson.employee.employeeID},${ddName}`;
+    this.cLessonForm.get('lessonName').setValue(this.lesson.name);
+    this.cLessonForm.get('lessonEmployee').setValue(t);
 
   }
 
-  setForm() {
-    this.cLessonForm.get('lessonName').setValue(this.lesson.name);
-    const t = `${this.lesson.employee.employeeID},${this.lesson.employee.appUser.firstName} ${this.lesson.employee.appUser.lastName}`;
-    this.cLessonForm.get('lessonEmployee').setValue(t);
+  getFromCategory(exe : any) {
+    console.log('exe = ', exe);
+    const ret = this.categories.filter(e => e.exerciseCategoryID == exe.category.exerciseCategoryID);
+    console.log('ret', ret);
+
+    if (ret.length == 0)
+      return null;
+      
+    return ret[0].exercises;
+  }
+
+  removeExerciseToForm(exercise : any) {
+    this.exercises = this.exercises.filter(e => e.id !== exercise.id);
+    this.updateDisplayCount();
+    this.validateForm();
+  }
+
+  updateDisplayCount() {
+    this.exercises.forEach((el : any, i : number) => {
+      el.displaycount = i + 1;
+    })
   }
 
   getEmpName(employee : any) {
@@ -123,7 +174,7 @@ export class UpdateLessonComponent implements OnInit {
 
     const test = this.exercises.filter(e => e.exercisePostID == -1);
 
-    console.log('tst', test);
+    // console.log('tst', test);
     if (test.length != 0)
       return;
 
@@ -164,6 +215,6 @@ export class exerciseObjs {
   exercisePostID : number = -1;
   category : any;
   exercise : any;
-  categoryset : boolean = false;
+  categoryset : boolean = true;
 
 }

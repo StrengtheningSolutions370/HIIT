@@ -33,11 +33,10 @@
     <ion-img *ngIf="showImage" src="{{imgSrc}}"></ion-img>
 
     <!-- exercise choosing system -->
-    <ion-item>
-      <ion-label position="floating">Exercises:</ion-label>
+    <!-- <ion-item> -->
       <br />
-      <br />
-    </ion-item>
+      <ion-label id="exe" position="floating">Exercises:</ion-label>
+    <!-- </ion-item> -->
     
     <div *ngFor="let exercise of exercises">
       <br />
@@ -50,23 +49,22 @@
   
               <div class="w-100"> <!-- select for category -->
                 <!-- this is rendered from the oroginal, and on change pass the id of the obj and the category to set it to -->
-                <ion-select (ionChange)="setExerciseDropDown(exercise, $event)" placeholder="Category" type="text">
+                <ion-select id="parent{{exercise.id}}" (ionChange)="parentDropDownChange(exercise, $event)" placeholder="Category" type="text">
                   <ion-select-option *ngFor="let category of categories" value="{{category.exerciseCategoryID}},{{category.name}}">{{ category.name }}</ion-select-option>
                 </ion-select>
   
               </div>
   
               <div class="w-100"> <!-- select for exercise -->
-                
-                <ion-select placeholder="Exercise" (ionChange)="setExercisePostID(exercise, $event)" [disabled]="!exercise.categoryset" type="text" required="" id="lessonEmployee" >
-                  <ion-select-option *ngFor="let exe of exercise.exercise" value="{{exe.exerciseID}},{{exe.name}}">{{exe.name}}</ion-select-option>
+                <ion-select id="child{{exercise.id}}" placeholder="Exercise" type="text">
+                  <ion-select-option *ngFor="let exe of exercise.exe" value="{{exe.exerciseID}},{{exe.name}}">{{exe.name}}</ion-select-option>
                 </ion-select>
   
               </div>
   
             </div>
   
-            <div class="deletebutton"> <!-- foor button -->
+            <div class="deletebutton"> <!-- remove button -->
               <ion-button (click)="removeExerciseToForm(exercise)" color="danger">-</ion-button>
             </div>
   
@@ -88,7 +86,8 @@
           <ion-button color="light" (click)="dismissModal()">Cancel</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button (click)="submitForm()" color="success" [disabled]="cLessonForm.invalid || !validExercises">Create Lesson</ion-button>
+          <!-- <ion-button (click)="submitForm()" color="success" [disabled]="cLessonForm.invalid || !validExercises">Create Lesson</ion-button> -->
+          <ion-button (click)="submitForm()" color="success" >Create Lesson</ion-button>
         </ion-col>
       </ion-row>
     </div>
