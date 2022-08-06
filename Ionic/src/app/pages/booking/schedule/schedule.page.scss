@@ -4,7 +4,6 @@
 }
 
 .event-indicator {
-
   background: var(--ion-color-success) !important;
   width: 7px;
   height: 7px;
@@ -12,19 +11,22 @@
   display: table-cell;
 }
 
-monthview {
-  background-color: white!important;
-  color: black !important;
-}
+
 
 :host ::ng-deep {
 
+  .monthview-container {
+    background-color: black !important;
+    //color: white !important;
+    height:auto;
+  }
+
   .monthview-primary-with-event {
-    background-color: black!important;
+    background-color: #7B7B7C!important;
   }
 
     .monthview-eventdetail-timecolumn {
-
+      background-color: #7B7B7C!important;
     }
   // .monthview-primary-with-event {
   //   background-color: var(--ion-color-primary) !important;

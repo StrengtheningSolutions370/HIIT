@@ -7,6 +7,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { format, parseISO } from 'date-fns';
+import { IEvent, ITimeSelected } from 'ionic2-calendar/calendar';
 
 
 @Component({
@@ -24,6 +25,13 @@ export class SchedulePage implements AfterViewInit  {
       mode: 'month',
       currentDate: new Date()
     }
+
+    markDisabled = (date: Date) => {
+      var current = new Date();
+      return date < current;
+  };
+
+  selectDate: ITimeSelected;
 
     //Object to add to schedule on create + populate calendar (time realted information here but rest in schedule entity)
   event = {
@@ -109,9 +117,8 @@ export class SchedulePage implements AfterViewInit  {
 
                 events.push({
                   scheduleID: sItem.scheduleID,
-                  venueName: sItem.venue.name,
-                  venueID: sItem.venue.venueID,
-                  venueAddress: sItem.venue.address,
+                  venue: sItem.venue,
+                  bookingType: sItem.bookingType,
                   startTime: startTime,
                   endTime: endTime,
                 });
@@ -173,7 +180,8 @@ export class SchedulePage implements AfterViewInit  {
 
   onTimeSelected(ev) {
     console.log('ev: ', ev);
-    this.event.startTime = new Date(ev.selectedTime);
+    this.global.showAlert("Time selected");
+    //this.event.startTime = new Date(ev.selectedTime);
     //this.scheduleService.addScheduleModal();
   }
 
@@ -185,11 +193,12 @@ export class SchedulePage implements AfterViewInit  {
     let start = formatDate(event.startTime, 'h:mm a', 'en-ZA');
     let end = formatDate(event.endTime, 'h:mm a', 'en-ZA');
     let date = formatDate(event.startTime,'EEEE, MMMM d','en-ZA');
-
+    let venueName =  event.venue.name;
+    let bookingType = event.bookingType.name;
     const alert = await this.alertCtrl.create({
       header: date,
       message: 'From:'+ start +
-      '<br><br>To: ' + end + '',
+      '<br><br>To: ' + end + '<br><br>' +'Venue: ' + venueName + '<br><br>' +'Booking Type: ' + bookingType ,
       buttons: ['Ok',{
         text: 'Update',
         handler: () => {
