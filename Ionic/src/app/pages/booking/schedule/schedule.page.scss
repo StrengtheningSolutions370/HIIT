@@ -4,14 +4,30 @@
 }
 
 .event-indicator {
-  background: var(--ion-color-success);
+  background: var(--ion-color-success) !important;
   width: 7px;
   height: 7px;
   border-radius: 5px;
   display: table-cell;
 }
 
+
+
 :host ::ng-deep {
+
+  .monthview-container {
+    background-color: black !important;
+    //color: white !important;
+    height:auto;
+  }
+
+  .monthview-primary-with-event {
+    background-color: #7B7B7C!important;
+  }
+
+    .monthview-eventdetail-timecolumn {
+      background-color: #7B7B7C!important;
+    }
   // .monthview-primary-with-event {
   //   background-color: var(--ion-color-primary) !important;
   // }
@@ -21,13 +37,15 @@
   // }
 }
 
-.with-event {
-  // background-color: val(--ion-color-primary) !important;
-  border-radius: 15px !important;
-}
-.monthview-primary-with-event {
-  background-color: white !important;
-}
+// .with-event {
+//   background-color: white !important;
+//   // background-color: val(--ion-color-primary) !important;
+//   //border-radius: 15px !important;
+// }
+
+// .indicator-container{
+//   background-color: white !important;
+// }
 
 // .with-event {
 //   background-color: white !important;

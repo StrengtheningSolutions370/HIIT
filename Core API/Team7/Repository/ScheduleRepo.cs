@@ -135,5 +135,38 @@ namespace Team7.Models.Repository
                 return await query.SingleAsync();
             }
         }
+
+        public async Task<object> GetAllDateSessions()
+        {
+            IQueryable<DateSession> query = DB.DateSession;
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(ds => new
+                    {
+                        ds.DateSessionID,
+                        ds.StartDateTime,
+                        ds.EndDateTime,
+                        Schedule = ds
+                        .Schedule
+                        .Select(sc  => new 
+                        {
+                            sc.ScheduleID,
+                            sc.CapacityBooked,
+                            sc.DateSession,
+                            sc.Venue,
+                            sc.BookingType,
+                            sc.Employee,
+                            sc.LessonPlan
+                        })
+                    }).ToListAsync()
+                };
+            }
+        }
     }
 }
