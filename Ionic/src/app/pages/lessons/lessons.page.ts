@@ -52,6 +52,10 @@ export class LessonsPage implements OnInit {
 
   }
 
+  getExeCount(lesson : any) {
+    return lesson.exercises.length;
+  }
+
   createImg (src : string) {
     if (src == null) {
       return null;
