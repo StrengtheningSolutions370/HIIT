@@ -41,10 +41,6 @@ export class AddBtypeComponent implements ViewWillEnter {
       this.cBookingTypeForm.controls.bookingTypeColour.setValue(this.bookingType.colour);
     }
 
-    Document.bind('change', 'input[type=color]', function() {
-      this.parentNode.style.backgroundColor = this.value;
-    });
-
   }
 
 
@@ -63,10 +59,10 @@ export class AddBtypeComponent implements ViewWillEnter {
         capacity: this.cBookingTypeForm.value['bookingTypeCapacity'],
         colour: this.cBookingTypeForm.value['bookingTypeColour'],
         bookingPriceHistory: [{
-          Amount: this.cBookingTypeForm.value['bookingTypePrice']
+          amount: this.cBookingTypeForm.value['bookingTypePrice']
         }]
       };
-      //this.global.dismissModal();
+      this.global.dismissModal();
       this.bookingService.confirmBookingTypeModal(1,temp);
     }
    }

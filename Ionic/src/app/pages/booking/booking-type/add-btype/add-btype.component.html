@@ -44,20 +44,6 @@
     <ion-item>
       <ion-label slot="start" id="clrSelector">Colour: </ion-label>
       <input formControlName="bookingTypeColour" type="color" required="" id="bookingTypeColour" slot="end"/>
-      <!--<input
-      [style.background]="colorList[0].value"
-      [(colorPicker)]="colorList[0].value"
-      [cpOKButton] = "true"
-      [cpOKButtonText] = "'Select'"
-      [cpCancelButton] = "true"
-      [cpSaveClickOutside] = "'false'"
-      [cpDisableInput]="false"
-      [cpAlphaChannel]="'disabled'"
-      [cpOutputFormat]="'hex'"
-      [cpPresetColors]="presetValues"
-      [cpAddColorButton]="true"
-  />-->
-
 
       <br/>
     </ion-item>
@@ -66,7 +52,7 @@
     </span>
     <ion-item>
       <ion-label position="floating">Capacity:</ion-label>
-      <ion-textarea formControlName="bookingTypeCapacity" type="number" required="" id="bookingTypeCapacity"></ion-textarea>
+      <ion-input formControlName="bookingTypeCapacity" type="number" required="" id="bookingTypeCapacity"></ion-input>
       <br/>
     </ion-item>
     <span class="error ion-padding" *ngIf="errorControl.bookingTypeCapacity.errors?.required && cBookingTypeForm.get('bookingTypeCapacity').touched">
