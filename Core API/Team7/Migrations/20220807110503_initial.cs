@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Team7.Migrations
 {
-    public partial class azureupdated : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -77,19 +77,6 @@ namespace Team7.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ExerciseCategory", x => x.ExerciseCategoryID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MemberStatus",
-                columns: table => new
-                {
-                    MemberStatusID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MemberStatus", x => x.MemberStatusID);
                 });
 
             migrationBuilder.CreateTable(
@@ -679,29 +666,27 @@ namespace Team7.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Member",
+                name: "Measurement",
                 columns: table => new
                 {
-                    MemberID = table.Column<int>(type: "int", nullable: false)
+                    MeasurementID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClientID = table.Column<int>(type: "int", nullable: false),
-                    MemberStatusID = table.Column<int>(type: "int", nullable: false)
+                    ClientID = table.Column<int>(type: "int", nullable: true),
+                    BodyFate = table.Column<double>(type: "float", nullable: true),
+                    Waist = table.Column<double>(type: "float", nullable: true),
+                    Height = table.Column<double>(type: "float", nullable: true),
+                    Weight = table.Column<double>(type: "float", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Member", x => x.MemberID);
+                    table.PrimaryKey("PK_Measurement", x => x.MeasurementID);
                     table.ForeignKey(
-                        name: "FK_Member_Client_ClientID",
+                        name: "FK_Measurement_Client_ClientID",
                         column: x => x.ClientID,
                         principalTable: "Client",
                         principalColumn: "ClientID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Member_MemberStatus_MemberStatusID",
-                        column: x => x.MemberStatusID,
-                        principalTable: "MemberStatus",
-                        principalColumn: "MemberStatusID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -803,30 +788,6 @@ namespace Team7.Migrations
                         principalTable: "Sale",
                         principalColumn: "SaleID",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Measurement",
-                columns: table => new
-                {
-                    MeasurementID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    MemberID = table.Column<int>(type: "int", nullable: true),
-                    BodyFate = table.Column<double>(type: "float", nullable: true),
-                    Waist = table.Column<double>(type: "float", nullable: true),
-                    Height = table.Column<double>(type: "float", nullable: true),
-                    Weight = table.Column<double>(type: "float", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Measurement", x => x.MeasurementID);
-                    table.ForeignKey(
-                        name: "FK_Measurement_Member_MemberID",
-                        column: x => x.MemberID,
-                        principalTable: "Member",
-                        principalColumn: "MemberID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -1131,19 +1092,9 @@ namespace Team7.Migrations
                 column: "LessonID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Measurement_MemberID",
+                name: "IX_Measurement_ClientID",
                 table: "Measurement",
-                column: "MemberID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Member_ClientID",
-                table: "Member",
                 column: "ClientID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Member_MemberStatusID",
-                table: "Member",
-                column: "MemberStatusID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PasswordHistory_AppUserId",
@@ -1344,9 +1295,6 @@ namespace Team7.Migrations
                 name: "Exercise");
 
             migrationBuilder.DropTable(
-                name: "Member");
-
-            migrationBuilder.DropTable(
                 name: "Payment");
 
             migrationBuilder.DropTable(
@@ -1381,9 +1329,6 @@ namespace Team7.Migrations
 
             migrationBuilder.DropTable(
                 name: "Lesson");
-
-            migrationBuilder.DropTable(
-                name: "MemberStatus");
 
             migrationBuilder.DropTable(
                 name: "Booking");

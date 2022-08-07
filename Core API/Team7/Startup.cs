@@ -136,8 +136,8 @@ namespace Team7
             services.AddScoped<ILessonPlanRepo, LessonPlanRepo>();
             services.AddScoped<ILessonRepo, LessonRepo>();
             services.AddScoped<IMeasurementRepo, MeasurementRepo>();
-            services.AddScoped<IMemberRepo, MemberRepo>();
-            services.AddScoped<IMemberStatusRepo, MemberStatusRepo>();
+            //services.AddScoped<IMemberRepo, MemberRepo>();
+            //services.AddScoped<IMemberStatusRepo, MemberStatusRepo>();
             services.AddScoped<IOrderStatusRepo, OrderStatusRepo>();
             services.AddScoped<IPasswordHistoryRepo, PasswordHistoryRepo>();
             services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();

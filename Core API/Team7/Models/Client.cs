@@ -12,7 +12,7 @@ namespace Team7.Models
         public Client()
         {
             this.Booking = new HashSet<Booking>();
-            this.Member = new HashSet<Member>();
+            this.Measurement = new HashSet<Measurement>();
             //this.Sale = new HashSet<Sale>();
             //this.SaleLine = new HashSet<SaleLine>();
         }
@@ -27,7 +27,7 @@ namespace Team7.Models
         public string QrCode { get; set; }
         public virtual AppUser AppUser { get; set; }
         public virtual ICollection<Booking> Booking { get; set; }
-        public virtual ICollection<Member> Member { get; set; }
+        public virtual ICollection<Measurement> Measurement { get; set; }
 
         //public virtual ICollection<Sale> Sale { get; set; }
         

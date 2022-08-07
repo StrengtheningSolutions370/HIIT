@@ -548,14 +548,14 @@ namespace Team7.Migrations
                     b.Property<double?>("BodyFate")
                         .HasColumnType("float");
 
+                    b.Property<int?>("ClientID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<double?>("Height")
                         .HasColumnType("float");
-
-                    b.Property<int?>("MemberID")
-                        .HasColumnType("int");
 
                     b.Property<double?>("Waist")
                         .HasColumnType("float");
@@ -565,48 +565,9 @@ namespace Team7.Migrations
 
                     b.HasKey("MeasurementID");
 
-                    b.HasIndex("MemberID");
-
-                    b.ToTable("Measurement");
-                });
-
-            modelBuilder.Entity("Team7.Models.Member", b =>
-                {
-                    b.Property<int>("MemberID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ClientID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MemberStatusID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.HasKey("MemberID");
-
                     b.HasIndex("ClientID");
 
-                    b.HasIndex("MemberStatusID");
-
-                    b.ToTable("Member");
-                });
-
-            modelBuilder.Entity("Team7.Models.MemberStatus", b =>
-                {
-                    b.Property<int>("MemberStatusID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MemberStatusID");
-
-                    b.ToTable("MemberStatus");
+                    b.ToTable("Measurement");
                 });
 
             modelBuilder.Entity("Team7.Models.OrderStatus", b =>
@@ -1400,30 +1361,11 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.Measurement", b =>
                 {
-                    b.HasOne("Team7.Models.Member", "Member")
-                        .WithMany("Measurement")
-                        .HasForeignKey("MemberID");
-
-                    b.Navigation("Member");
-                });
-
-            modelBuilder.Entity("Team7.Models.Member", b =>
-                {
                     b.HasOne("Team7.Models.Client", "Client")
-                        .WithMany("Member")
-                        .HasForeignKey("ClientID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Team7.Models.MemberStatus", "MemberStatus")
-                        .WithMany("Member")
-                        .HasForeignKey("MemberStatusID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Measurement")
+                        .HasForeignKey("ClientID");
 
                     b.Navigation("Client");
-
-                    b.Navigation("MemberStatus");
                 });
 
             modelBuilder.Entity("Team7.Models.PasswordHistory", b =>
@@ -1695,7 +1637,7 @@ namespace Team7.Migrations
                 {
                     b.Navigation("Booking");
 
-                    b.Navigation("Member");
+                    b.Navigation("Measurement");
                 });
 
             modelBuilder.Entity("Team7.Models.DateSession", b =>
@@ -1734,16 +1676,6 @@ namespace Team7.Migrations
                     b.Navigation("LessonPlan");
 
                     b.Navigation("Schedule");
-                });
-
-            modelBuilder.Entity("Team7.Models.Member", b =>
-                {
-                    b.Navigation("Measurement");
-                });
-
-            modelBuilder.Entity("Team7.Models.MemberStatus", b =>
-                {
-                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Team7.Models.OrderStatus", b =>

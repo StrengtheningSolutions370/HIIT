@@ -33,8 +33,8 @@ namespace Team7.Context
         public virtual DbSet<Lesson> Lesson { get; set; }
         public virtual DbSet<LessonPlan> LessonPlan { get; set; }
         public virtual DbSet<Measurement> Measurement { get; set; }
-        public virtual DbSet<Member> Member { get; set; }
-        public virtual DbSet<MemberStatus> MemberStatus { get; set; }
+        //public virtual DbSet<Member> Member { get; set; }
+        //public virtual DbSet<MemberStatus> MemberStatus { get; set; }
         public virtual DbSet<OrderStatus> OrderStatus { get; set; }
         public virtual DbSet<PasswordHistory> PasswordHistory { get; set; }
         public virtual DbSet<PaymentType> PaymentType { get; set; }

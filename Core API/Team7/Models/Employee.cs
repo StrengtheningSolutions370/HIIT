@@ -13,6 +13,8 @@ namespace Team7.Models
         public Employee()
         {
             this.Lesson = new HashSet<Lesson>();
+            this.Schedule = new HashSet<Schedule>();
+            this.WriteOff = new HashSet<WriteOff>();
         }
 
         [Key]
