@@ -54,7 +54,9 @@ export class UpdateBtypeComponent implements ViewWillEnter {
       temp = {
         bookingTypeID: this.bookingType.bookingTypeID,
         name: this.uBookingTypeForm.value['bookingTypeName'],
-        description: this.uBookingTypeForm.value['bookingTypeDescription']
+        description: this.uBookingTypeForm.value['bookingTypeDescription'],
+        capacity: 0,
+        colour: null
       };
        console.log(temp);
        this.bookingService.confirmBookingTypeModal(choice,temp);
