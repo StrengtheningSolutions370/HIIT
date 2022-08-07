@@ -16,6 +16,8 @@ public filter: string;
 
 //Create local title array to be populated onInit.
 saleItemList: any[] = [];
+numTimesLeft = 4
+items: any[] = [];
 
 //Subscription variable to track live updates.
 saleItemSub: Subscription;
@@ -24,7 +26,8 @@ isLoading = true;
 
 constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService) {
    this.fetchSaleItem();
-}
+   this.addMoreItems();  
+  }
 
 
 fetchSaleItem() {
@@ -40,6 +43,21 @@ fetchSaleItem() {
     }
   );
 }
+
+loadData(event) {  
+  setTimeout(() => {  
+    console.log('Done');  
+    this.addMoreItems();   
+    this.numTimesLeft -= 1;  
+    event.target.complete();  
+  }, 400);  
+} 
+
+addMoreItems() {  
+  for (let i = 1; i < 12; i++) {  
+    this.items.push(i);   
+  }  
+} 
 
 ngOnInit() {
 

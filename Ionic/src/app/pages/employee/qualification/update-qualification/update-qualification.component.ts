@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, FormControl, Validators, UntypedFormBuilder } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
 import { Qualification } from 'src/app/models/qualification';
@@ -19,7 +19,7 @@ export class UpdateQualificationComponent implements ViewWillEnter {
   qualificationTypeDropDown!: QualificationType[];
 
 
-  uQualificationForm: FormGroup = this.formBuilder.group({
+  uQualificationForm: UntypedFormGroup = this.formBuilder.group({
     description: [, [Validators.required]],
     qualificationType: [, [Validators.required]],
   });
@@ -29,7 +29,7 @@ export class UpdateQualificationComponent implements ViewWillEnter {
     return this.uQualificationForm.controls;
   }
 
-  constructor(public global: GlobalService, public formBuilder: FormBuilder,
+  constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
     public qualificationService: QualificationService) { }
 
     ionViewWillEnter() {

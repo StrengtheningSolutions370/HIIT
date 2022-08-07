@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { BookingType } from 'src/app/models/booking-type';
 import { Employee } from 'src/app/models/employee';
@@ -20,7 +20,7 @@ import { DatePipe, Time } from '@angular/common';
 export class UpdateScheduleComponent implements OnInit {
   @Input() schedule: Schedule;
 
-  uCalendarForm: FormGroup = this.formBuilder.group({
+  uCalendarForm: UntypedFormGroup = this.formBuilder.group({
     dateSelector: [, [Validators.required]],
     timeStartSelector: [, [Validators.required]],
     timeEndSelector: [,[Validators.required]],
@@ -39,7 +39,7 @@ export class UpdateScheduleComponent implements OnInit {
   employeeList!: Employee[];
   lessonPlan!: any; // Update to lesson plan model
 
-  constructor(public formBuilder: FormBuilder, public scheduleService: ScheduleService, public modalCtrl:ModalController, public global: GlobalService) { }
+  constructor(public formBuilder: UntypedFormBuilder, public scheduleService: ScheduleService, public modalCtrl:ModalController, public global: GlobalService) { }
 
   ngOnInit() {
     this.scheduleService.venueService.getAllVenues().subscribe({

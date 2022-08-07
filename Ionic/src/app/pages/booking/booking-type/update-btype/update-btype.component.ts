@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { BookingType } from 'src/app/models/booking-type';
 import { BookingService } from 'src/app/services/booking/booking.service';
@@ -14,12 +14,12 @@ export class UpdateBtypeComponent implements ViewWillEnter {
 
   @Input() bookingType: BookingType;
 
-  uBookingTypeForm: FormGroup = new FormGroup({
-    bookingTypeDescription: new FormControl('', [Validators.required]),
-    bookingTypeName: new FormControl('', [Validators.required])
+  uBookingTypeForm: UntypedFormGroup = new UntypedFormGroup({
+    bookingTypeDescription: new UntypedFormControl('', [Validators.required]),
+    bookingTypeName: new UntypedFormControl('', [Validators.required])
   });
 
-  constructor(public global: GlobalService, public fb: FormBuilder,
+  constructor(public global: GlobalService, public fb: UntypedFormBuilder,
     public bookingService: BookingService) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.

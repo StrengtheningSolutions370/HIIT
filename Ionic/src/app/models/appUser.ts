@@ -12,6 +12,4 @@ export class appUserRegister {
     phoneNumber: string;
     TitleId : string;
 
-
-
 }
