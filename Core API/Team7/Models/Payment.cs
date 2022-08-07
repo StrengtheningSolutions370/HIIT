@@ -24,11 +24,11 @@ namespace Team7.Models
         public int? SaleID { get; set; }
         [Required]
         public int? BookingID { get; set; }
+        [Required]
 
         public virtual PaymentType PaymentType { get; set; }
         public virtual Sale Sale { get; set; }
         public virtual Booking Booking { get; set; }
-
         public virtual ICollection<Refund> Refund { get; set; }
     }
 }

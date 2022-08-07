@@ -18,6 +18,7 @@ namespace Team7.Models
         public System.DateTime Date { get; set; }
         [Required]
         public string Notes { get; set; }
+        [Required]
 
         public virtual ICollection<StockTakeLine> StockTakeLine { get; set; }
     }

@@ -10,12 +10,15 @@ namespace Team7.Models
 
         public int PriceHistoryID { get; set; }
         [Required]
-        public int? SaleItemID { get; set; }
-        public virtual SaleItem SaleItem { get; set; }
-        [Required]
         public System.DateTime Date { get; set; }
         [Required]
-        public decimal Amount { get; set; }
+        public decimal CostAmount { get; set; }
+        [Required]
+        public decimal SaleAmount { get; set; }
+        [Required]
+        public int? SaleItemID { get; set; }
+        [Required]
+        public virtual SaleItem SaleItem { get; set; }
 
     }
 }

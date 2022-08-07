@@ -71,7 +71,7 @@ namespace Team7.Controllers
                 toUpdate.DateSession = schedule.DateSession;
                 toUpdate.VenueID = schedule.VenueID;
                 toUpdate.BookingTypeID = schedule.BookingTypeID;
-                toUpdate.LessonPlanID = schedule.LessonPlanID;
+                toUpdate.LessonID = schedule.LessonID;
                 toUpdate.EmployeeID = schedule.EmployeeID;
 
                 //ScheduleRepo.Update<Schedule>(schedule);

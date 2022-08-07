@@ -22,6 +22,7 @@ namespace Team7.Models
         public string PostalCode { get; set; }
         [Required]
         public int Capacity { get; set; }
+        [Required]
         public virtual ICollection<Schedule> Schedules { get; set; }
     }
 }

@@ -13,6 +13,8 @@ namespace Team7.Models
         public Employee()
         {
             this.Lesson = new HashSet<Lesson>();
+            this.Schedule = new HashSet<Schedule>();
+            this.WriteOff = new HashSet<WriteOff>();
         }
 
         [Key]
@@ -34,6 +36,7 @@ namespace Team7.Models
         public virtual Qualification Qualification { get; set; }
         public virtual ICollection<Lesson> Lesson { get; set; }
         public virtual ICollection<Schedule> Schedule { get; set; }
+        public virtual ICollection<WriteOff> WriteOff { get; set; }
         public virtual AppUser AppUser { get; set; }
     }
 }

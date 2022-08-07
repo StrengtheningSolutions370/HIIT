@@ -18,7 +18,7 @@ namespace Team7.Models
         public decimal Amount { get; set; }
         [Required]
         public int? BookingTypeID { get; set; }
-
+        [Required]
         public virtual BookingType BookingType { get; set; }
     }
 }

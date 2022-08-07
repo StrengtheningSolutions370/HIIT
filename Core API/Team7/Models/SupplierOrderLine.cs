@@ -11,11 +11,14 @@ namespace Team7.Models
         [Required]
         public int? SupplierOrderID { get; set; }
         [Required]
+        public int? SaleItemID { get; set; }
+        [Required]
         public int Quantity { get; set; }
         [Required]
-        public int? InventoryItemID { get; set; }
+        //public int? InventoryItemID { get; set; }
 
-        public virtual InventoryItem InventoryItem { get; set; }
+        //public virtual InventoryItem InventoryItem { get; set; }
+        public virtual SaleItem SaleItem { get; set; }
         public virtual SupplierOrder SupplierOrder { get; set; }
     }
 }
