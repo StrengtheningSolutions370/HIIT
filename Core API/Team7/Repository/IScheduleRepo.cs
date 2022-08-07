@@ -12,6 +12,8 @@ namespace Team7.Models.Repository
 
         Task<object> GetAllSchedulesAsync();
 
+        Task<object> GetAllDateSessions();
+
         Task<object> GetSchedulesAsync(System.DateTime input);
 
         Task<object> GetScheduleIdAsync(int id);

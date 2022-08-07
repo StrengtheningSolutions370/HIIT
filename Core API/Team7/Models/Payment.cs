@@ -28,7 +28,6 @@ namespace Team7.Models
         public virtual PaymentType PaymentType { get; set; }
         public virtual Sale Sale { get; set; }
         public virtual Booking Booking { get; set; }
-
         public virtual ICollection<Refund> Refund { get; set; }
     }
 }

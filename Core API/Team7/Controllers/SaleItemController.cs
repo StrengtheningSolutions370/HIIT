@@ -29,8 +29,38 @@ namespace Team7.Controllers
         {
             try
             {
+                
 
-                SaleItemRepo.Add(saleItem);
+                
+
+                var siPriceHistory = saleItem.PriceHistory.FirstOrDefault();
+
+                PriceHistory salePrice = new PriceHistory
+                {
+                    Date = System.DateTime.Now,
+                    CostAmount = siPriceHistory.CostAmount,
+                    SaleAmount = siPriceHistory.SaleAmount,
+                    SaleItemID = saleItem.SaleItemID,
+                    SaleItem = saleItem
+                };
+
+
+                SaleItem toAdd = new SaleItem
+                {
+                    Name = saleItem.Name,
+                    Photo = saleItem.Photo,
+                    Description = saleItem.Description,
+                    //Price = saleItem.Price,
+                    Quotable = saleItem.Quotable,
+                    //Quantity = toUpdate.Quantity,
+                    QuantityOnHand = saleItem.QuantityOnHand,
+                    Stock = saleItem.Stock,
+                    SaleCategoryID = saleItem.SaleCategoryID
+                };
+
+                toAdd.PriceHistory.Add(salePrice);
+
+                SaleItemRepo.Add(toAdd);
                 if (await SaleItemRepo.SaveChangesAsync())
                 {
                     return Ok();
@@ -106,11 +136,26 @@ namespace Team7.Controllers
                 toUpdate.Name = saleItem.Name;
                 toUpdate.Photo = saleItem.Photo;
                 toUpdate.Description = saleItem.Description;
-                toUpdate.Price = saleItem.Price;
+                //toUpdate.Price = saleItem.Price;
                 toUpdate.Quotable = saleItem.Quotable;
-                toUpdate.Quantity = toUpdate.Quantity;
-                //toUpdate.QuantityOnHand = saleItem.QuantityOnHand;
+                //toUpdate.Quantity = toUpdate.Quantity;
+                toUpdate.QuantityOnHand = saleItem.QuantityOnHand;
+                toUpdate.Stock = saleItem.Stock;
 
+                if(saleItem.PriceHistory != null)
+                {
+                    var siPriceHistory = saleItem.PriceHistory.FirstOrDefault();
+
+                    PriceHistory salePrice = new PriceHistory
+                    {
+                        Date = System.DateTime.Now,
+                        CostAmount = siPriceHistory.CostAmount,
+                        SaleAmount = siPriceHistory.SaleAmount,
+                        SaleItemID = saleItem.SaleItemID,
+                        SaleItem = saleItem
+                    };
+                    toUpdate.PriceHistory.Add(salePrice);
+                }
                 SaleItemRepo.Update<SaleItem>(toUpdate);
                 if (await SaleItemRepo.SaveChangesAsync())
                 {

@@ -43,7 +43,6 @@
     "md5": "^2.3.0",
     "ng2-pdf-viewer": "9.1.0",
     "ng2-search-filter": "^0.5.1",
-    "ngx-cookie-service": "^14.0.1",
     "ngx-pagination": "^6.0.2",
     "rxjs": "~6.6.0",
     "ts-md5": "^1.2.11",

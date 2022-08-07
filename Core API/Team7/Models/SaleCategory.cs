@@ -19,7 +19,6 @@ namespace Team7.Models
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }
-
         public virtual ICollection<SaleItem> SaleItem { get; set; }
 
     }

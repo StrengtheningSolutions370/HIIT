@@ -24,11 +24,12 @@ namespace Team7
     public class Startup
     {
         readonly string corsPolicy = "_myAllowSpecificOrigins";
+        TimedEventService time_pba = new TimedEventService();
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
+            time_pba.start();
         }
 
         public IConfiguration Configuration { get; }
@@ -118,7 +119,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AWS")));
+            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
@@ -135,8 +136,8 @@ namespace Team7
             services.AddScoped<ILessonPlanRepo, LessonPlanRepo>();
             services.AddScoped<ILessonRepo, LessonRepo>();
             services.AddScoped<IMeasurementRepo, MeasurementRepo>();
-            services.AddScoped<IMemberRepo, MemberRepo>();
-            services.AddScoped<IMemberStatusRepo, MemberStatusRepo>();
+            //services.AddScoped<IMemberRepo, MemberRepo>();
+            //services.AddScoped<IMemberStatusRepo, MemberStatusRepo>();
             services.AddScoped<IOrderStatusRepo, OrderStatusRepo>();
             services.AddScoped<IPasswordHistoryRepo, PasswordHistoryRepo>();
             services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();

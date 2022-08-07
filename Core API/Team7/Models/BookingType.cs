@@ -19,6 +19,10 @@ namespace Team7.Models
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }
+        [Required]
+        public int Capacity { get; set; }
+        [Required]
+        public string Colour { get; set; }
 
         public virtual ICollection<BookingPriceHistory> BookingPriceHistory { get; set; }
         public virtual ICollection<Schedule> Schedule { get; set; }

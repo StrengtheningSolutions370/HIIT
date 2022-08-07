@@ -100,5 +100,17 @@ namespace Team7.Models.Repository
 
             return await query.ToArrayAsync();
         }
-    }
+
+        public async Task<bool> RemoveRangeLessonIdAsync(int LessonID)
+        {
+            var range = DB.LessonPlan.Where(lp => lp.LessonID == LessonID);
+            if (range.Any())
+            {
+                DB.LessonPlan.RemoveRange(range);
+                await this.SaveChangesAsync();
+            }
+            return true;
+        }
+
+}
 }

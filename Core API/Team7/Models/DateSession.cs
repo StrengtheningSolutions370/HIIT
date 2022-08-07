@@ -23,7 +23,6 @@ namespace Team7.Models
         [Required]
 
         public System.DateTime EndDateTime { get; set; }
-        [Required]
 
         public virtual ICollection<Schedule> Schedule { get; set; }
     }

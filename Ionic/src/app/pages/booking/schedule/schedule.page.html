@@ -1,21 +1,5 @@
 <ion-content>
-  <ion-row>
-    <ion-col size="4">
-      <ion-button (click)="this.scheduleService.addScheduleModal()" expand="block" fill="outline">
-        Add New Event
-      </ion-button>
-    </ion-col>
-    <ion-col size="4">
-      <ion-button (click)="createRandomEvents()" expand="block" fill="outline">
-        Create random [testing]
-      </ion-button>
-    </ion-col>
-    <ion-col size="4">
-      <ion-button (click)="removeEvents()" expand="block" fill="outline">
-        Remove all events
-      </ion-button>
-    </ion-col>
-  </ion-row>
+
 
   <ion-segment [(ngModel)]="calendar.mode">
     <ion-segment-button value="month">
@@ -53,14 +37,16 @@
   [currentDate]="calendar.currentDate"
   (onTitleChanged)="onViewTitleChanged($event)"
   (onEventSelected)="onEventSelected($event)"
-  [monthviewDisplayEventTemplate]="calendarEventTemplate"
+  [monthviewDisplayEventTemplate]="monthviewCal"
+  [monthviewEventDetailTemplate]="monthviewEventList"
+  [monthviewInactiveDisplayEventTemplate]="monthviewCalOut"
+  [markDisabled]="markDisabled"
   >
 </calendar>
 
-event-detail
 <!-- (onTimeSelected)="onTimeSelected($event)" -->
 
-<ng-template #calendarEventTemplate let-view="view" let-row="row" let-col="col">
+<ng-template #monthviewCal let-view="view" let-row="row" let-col="col">
   <div [class.with-event]="view.dates[row*7+col].events.length">
     {{view.dates[row*7+col].label}}
     <div class="indicator-container">
@@ -69,6 +55,61 @@ event-detail
     </div>
   </div>
 </ng-template>
+
+<ng-template #monthviewCalOut let-view="view" let-row="row" let-col="col">
+  <div [class.with-event]="view.dates[row*7+col].events.length">
+    {{view.dates[row*7+col].label}}
+    <div class="indicator-container">
+      <div class="event-indicator" *ngFor="let ev of view.dates[row*7+col].events">
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #monthviewEventList let-selectedDate="selectDate" let-noEventsLabel="noEventsLabel" >
+      <ion-segment>
+        <h1> Date: {{selectDate.selectedTime}}</h1>
+      </ion-segment>
+      <ion-button (click)="this.scheduleService.addScheduleModal()" slot="end" expand="block" fill="outline">
+        Add New Event
+      </ion-button>
+
+    <!-- <ion-col size="4">
+      <ion-button (click)="createRandomEvents()" expand="block" fill="outline">
+        Create random [testing]
+      </ion-button>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button (click)="removeEvents()" expand="block" fill="outline">
+        Remove all events
+      </ion-button>
+  </ion-row> -->
+  <ion-grid *ngIf="!isLoading" >
+    <ion-list *ngFor="let ev of selectedDate.events">
+      <ion-item-sliding >
+        <ion-item button (click)="onEventSelected(ev)" tappable>
+          <ion-label style="padding-left:2% ;">
+            <h1>{{ev.startTime | date : 'medium'}}</h1>
+            <p style="font-size:large">Venue:  {{ev.venue.name}}</p>
+            <p style="font-size:large">Booking type: {{ev.bookingType.name}}</p>
+          </ion-label >
+          <ion-icon name="chevron-back-outline" size="small"></ion-icon>
+        </ion-item>
+        <ion-item-options side="end" >
+          <ion-item-option color="secondary" (click)="bookingService.updateBookingTypeModal(bt)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
+          <ion-item-option color="danger" (click)="bookingService.deleteBookingTypeModal(bt)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-grid>
+
+  <div *ngIf="selectedDate.events.length == 0">
+    {{noEventsLabel}}
+  </div>
+
+</ng-template>
+
+
 
 <div class="ion-text-center " *ngIf="isLoading">
   <ion-spinner name="circles"></ion-spinner>

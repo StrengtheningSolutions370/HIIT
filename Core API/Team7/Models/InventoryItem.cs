@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Team7.Models
 {
-    public class InventoryItem
+    /*public class InventoryItem
     {
         public InventoryItem()
         {
@@ -27,5 +27,5 @@ namespace Team7.Models
         public virtual ICollection<StockTakeLine> StockTakeLine { get; set; }
         public virtual ICollection<SupplierOrderLine> SupplierOrderLine { get; set; }
         public virtual ICollection<WriteOffLine> WriteOffLine { get; set; }
-    }
+    }*/
 }

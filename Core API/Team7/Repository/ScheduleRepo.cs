@@ -52,12 +52,12 @@ namespace Team7.Models.Repository
                     result = await DB.Schedule.Select(sc => new
                     {
                         sc.ScheduleID,
-                        sc.CapacityBooked,
+                        //sc.CapacityBooked,
                         sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
                         sc.Employee,
-                        sc.LessonPlan,
+                        sc.Lesson,
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
@@ -81,12 +81,12 @@ namespace Team7.Models.Repository
                     result = await query.Select(sc => new
                     {
                         sc.ScheduleID,
-                        sc.CapacityBooked,
+                        //sc.CapacityBooked,
                         sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
                         sc.Employee,
-                        sc.LessonPlan,
+                        sc.Lesson,
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
@@ -109,12 +109,12 @@ namespace Team7.Models.Repository
                     result = await query.Select(sc => new
                     {
                         sc.ScheduleID,
-                        sc.CapacityBooked,
+                        //sc.CapacityBooked,
                         sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
                         sc.Employee,
-                        sc.LessonPlan,
+                        sc.Lesson,
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
@@ -133,6 +133,39 @@ namespace Team7.Models.Repository
             else
             {
                 return await query.SingleAsync();
+            }
+        }
+
+        public async Task<object> GetAllDateSessions()
+        {
+            IQueryable<DateSession> query = DB.DateSession;
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(ds => new
+                    {
+                        ds.DateSessionID,
+                        ds.StartDateTime,
+                        ds.EndDateTime,
+                        Schedule = ds
+                        .Schedule
+                        .Select(sc  => new 
+                        {
+                            sc.ScheduleID,
+                            //sc.CapacityBooked,
+                            sc.DateSession,
+                            sc.Venue,
+                            sc.BookingType,
+                            sc.Employee,
+                            sc.Lesson
+                        })
+                    }).ToListAsync()
+                };
             }
         }
     }

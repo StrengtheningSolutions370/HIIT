@@ -15,6 +15,6 @@ namespace Team7.Models
         [Required]
         public decimal Percentage { get; set; }
         [Required]
-        public  System.DateTime Date { get; set; }
+        public System.DateTime Date { get; set; }
     }
 }
