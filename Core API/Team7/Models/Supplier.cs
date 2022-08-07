@@ -24,7 +24,7 @@ namespace Team7.Models
         public string Cell { get; set; }
         [Required]
         public string Address { get; set; }
-        [Required]
+
         public virtual ICollection<SupplierOrder> SupplierOrder { get; set; }
     }
 }

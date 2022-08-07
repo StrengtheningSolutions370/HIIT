@@ -18,7 +18,6 @@ namespace Team7.Models
         public string Description { get; set; }
         [Required]
         public int? QualificationTypeID { get; set; }
-        [Required]
 
         public virtual ICollection<Employee> Employee { get; set; }
         public virtual QualificationType QualificationType { get; set; }

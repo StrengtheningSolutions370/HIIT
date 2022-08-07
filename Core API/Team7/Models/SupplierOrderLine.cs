@@ -14,7 +14,6 @@ namespace Team7.Models
         public int? SaleItemID { get; set; }
         [Required]
         public int Quantity { get; set; }
-        [Required]
         //public int? InventoryItemID { get; set; }
 
         //public virtual InventoryItem InventoryItem { get; set; }
