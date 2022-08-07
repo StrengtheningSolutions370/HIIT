@@ -15,7 +15,6 @@ namespace Team7.Models
         public decimal CostAmount { get; set; }
         [Required]
         public decimal SaleAmount { get; set; }
-        [Required]
         public int? SaleItemID { get; set; }
         public virtual SaleItem SaleItem { get; set; }
 

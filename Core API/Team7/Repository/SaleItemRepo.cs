@@ -65,7 +65,7 @@ namespace Team7.Models.Repository
                         //.Select(i => new { i.InventoryItemID, i.Quantity }),
                         PriceHistory = si
                         .PriceHistory
-                        .Select(ph => new { ph.Date/*, ph.Amount*/ }),
+                        .Select(ph => new { ph.Date, ph.SaleAmount, ph.CostAmount }),
                         StockTake = si.StockTakeLine.Select(stl => new {
                             id = stl.StockTake.StockTakeID,
                             StockTakeDate = stl.StockTake.Date,
@@ -115,7 +115,7 @@ namespace Team7.Models.Repository
                         //.Select(i => new { i.InventoryItemID, i.Quantity }),
                         PriceHistory = si
                         .PriceHistory
-                        .Select(ph => new { ph.Date/*, ph.Amount*/ }),
+                        .Select(ph => new { ph.Date, ph.SaleAmount, ph.CostAmount }),
                         StockTake = si.StockTakeLine.Select(stl => new {
                             id = stl.StockTake.StockTakeID,
                             StockTakeDate = stl.StockTake.Date,
@@ -166,7 +166,7 @@ namespace Team7.Models.Repository
                         //.Select(i => new { i.InventoryItemID, i.Quantity }),
                         PriceHistory = si
                         .PriceHistory
-                        .Select(ph => new { ph.Date/*, ph.Amount */}),
+                        .Select(ph => new { ph.Date, ph.SaleAmount, ph.CostAmount }),
                         StockTake = si.StockTakeLine.Select(stl => new {
                             id = stl.StockTake.StockTakeID,
                             StockTakeDate = stl.StockTake.Date,
