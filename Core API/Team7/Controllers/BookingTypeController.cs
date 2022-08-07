@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Team7.Models;
 using Team7.Models.Repository;
@@ -20,11 +21,33 @@ namespace Team7.Controllers
         // POST api/salecategory/add
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> PostBookingType(BookingType bookingType)
+        public async Task<IActionResult> PostBookingType([FromBody] BookingType bookingType)
         {
             try
             {
-                BookingTypeRepo.Add(bookingType);
+                BookingType toAdd = new BookingType
+                {
+                    Name = bookingType.Name,
+                    Description = bookingType.Description,
+                    Capacity = bookingType.Capacity,
+                    Colour = bookingType.Colour
+                };
+
+                if (bookingType.BookingPriceHistory != null)
+                {
+                        var btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
+
+                        BookingPriceHistory bookingPrice = new BookingPriceHistory
+                        {
+                            Amount = btPriceHistory.Amount,
+                            Date = System.DateTime.Now,
+                            BookingTypeID = bookingType.BookingTypeID,
+                            BookingType = bookingType
+                        };
+                        toAdd.BookingPriceHistory.Add(bookingPrice);
+                }
+
+                BookingTypeRepo.Add(toAdd);
                 if (await BookingTypeRepo.SaveChangesAsync())
                 {
                     return Ok();
@@ -45,7 +68,7 @@ namespace Team7.Controllers
         // PUT api/salecategory/update/5
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> PutSaleCategory(int id, [FromBody] BookingType bookingType)
+        public async Task<IActionResult> PutBookingType (int id, [FromBody] BookingType bookingType)
         {
             var toUpdate = await BookingTypeRepo._GetBookingTypeIdAsync(id);
             if (toUpdate == null)
@@ -56,6 +79,23 @@ namespace Team7.Controllers
             {
                 toUpdate.Name = bookingType.Name;
                 toUpdate.Description = bookingType.Description;
+                toUpdate.Capacity = bookingType.Capacity;
+                toUpdate.Colour = bookingType.Colour;
+
+
+                if(bookingType.BookingPriceHistory != null)
+                {
+                    var btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
+                    
+                    BookingPriceHistory bookingPrice = new BookingPriceHistory
+                    {
+                        Amount = btPriceHistory.Amount,
+                        Date = System.DateTime.Now,
+                        BookingTypeID = bookingType.BookingTypeID,
+                        BookingType = bookingType
+                     };
+                    toUpdate.BookingPriceHistory.Add(bookingPrice);
+                }
 
                 if (await BookingTypeRepo.SaveChangesAsync())
                 {
@@ -77,7 +117,7 @@ namespace Team7.Controllers
         // DELETE api/salecategory/delete/5
         [HttpDelete]
         [Route("delete")]
-        public async Task<IActionResult> DeleteSaleCategory(int id)
+        public async Task<IActionResult> DeleteBookingType (int id)
         {
             var tempBookingType = await BookingTypeRepo._GetBookingTypeIdAsync(id);
             if (tempBookingType == null)
@@ -128,10 +168,10 @@ namespace Team7.Controllers
             }
         }
 
-        // GET: api/salecategory/getMatch/{input}
+        // GET: api/bookingtype/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingSaleCategories(string name, string description)
+        public async Task<IActionResult> GetMatchingBookingType(string name, string description)
         {
             try
             {

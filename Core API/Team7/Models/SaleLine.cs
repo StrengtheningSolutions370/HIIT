@@ -15,7 +15,6 @@ namespace Team7.Models
         public int? SaleID { get; set; }
         [Required]
         public int? SaleItemID { get; set; }
-        [Required]
         //public virtual Client Client { get; set; }
         public virtual Sale Sale { get; set; }
         public virtual SaleItem SaleItem { get; set; }
