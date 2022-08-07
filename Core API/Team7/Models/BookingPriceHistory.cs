@@ -16,9 +16,7 @@ namespace Team7.Models
         public System.DateTime Date { get; set; }
         [Required]
         public decimal Amount { get; set; }
-        [Required]
         public int? BookingTypeID { get; set; }
-        [Required]
         public virtual BookingType BookingType { get; set; }
     }
 }

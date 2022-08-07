@@ -18,7 +18,6 @@ namespace Team7.Models
         public int? PaymentID { get; set; }
         [Required]
         public int? RefundReasonID { get; set; }
-        [Required]
 
         public virtual Payment Payment { get; set; }
         public virtual RefundReason RefundReason { get; set; }

@@ -14,7 +14,6 @@ namespace Team7.Models
         public int? StockTakeID { get; set; }
         [Required]
         public int? SaleItemID { get; set; }
-        [Required]
 
         public virtual StockTake StockTake { get; set; }
 

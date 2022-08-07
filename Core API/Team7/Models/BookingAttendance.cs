@@ -18,7 +18,6 @@ namespace Team7.Models
         public int? ScheduleID { get; set; }
         [Required]
         public bool Attended { get; set; }
-        [Required]
         //public int? ReceiptID { get; set; }
 
         public virtual Booking Booking { get; set; }

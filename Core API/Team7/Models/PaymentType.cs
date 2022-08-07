@@ -15,7 +15,6 @@ namespace Team7.Models
         public int PaymentTypeID { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
 
         public virtual ICollection<Payment> Payment { get; set; }
     }

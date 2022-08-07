@@ -14,7 +14,6 @@ namespace Team7.Models
         public int? WriteOffID { get; set; }
         [Required]
         public int Quantity { get; set; }
-        [Required]
         public int? WriteOffReasonID { get; set; }
         public int? SaleItemID { get; set; }
 
