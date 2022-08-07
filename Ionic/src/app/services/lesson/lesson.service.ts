@@ -58,7 +58,7 @@ export class LessonService {
         },
         error: (e:any) => {
           this.fetchLessonsEvent.emit();
-          _(false);
+          resolve(false);
         }
       })
       .add(() => {
@@ -94,7 +94,7 @@ export class LessonService {
         },
         error: () => {
           this.fetchLessonsEvent.emit();
-          _(false);
+          resolve(false);
         }
       }).add(() => { this.global.endNativeLoad(); });
     });
