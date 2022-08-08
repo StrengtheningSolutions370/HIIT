@@ -261,7 +261,7 @@ namespace Team7.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BookingTypeID = table.Column<int>(type: "int", nullable: false)
+                    BookingTypeID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -271,7 +271,7 @@ namespace Team7.Migrations
                         column: x => x.BookingTypeID,
                         principalTable: "BookingType",
                         principalColumn: "BookingTypeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -390,7 +390,7 @@ namespace Team7.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CostAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SaleAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SaleItemID = table.Column<int>(type: "int", nullable: false)
+                    SaleItemID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -400,7 +400,7 @@ namespace Team7.Migrations
                         column: x => x.SaleItemID,
                         principalTable: "SaleItem",
                         principalColumn: "SaleItemID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -632,7 +632,7 @@ namespace Team7.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserID = table.Column<int>(type: "int", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -642,7 +642,7 @@ namespace Team7.Migrations
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -874,7 +874,7 @@ namespace Team7.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WriteOffID = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    WriteOffReasonID = table.Column<int>(type: "int", nullable: false),
+                    WriteOffReasonID = table.Column<int>(type: "int", nullable: true),
                     SaleItemID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -897,7 +897,7 @@ namespace Team7.Migrations
                         column: x => x.WriteOffReasonID,
                         principalTable: "WriteOffReason",
                         principalColumn: "WriteOffReasonID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
