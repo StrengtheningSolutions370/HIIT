@@ -33,7 +33,9 @@ export class AddSitemComponent implements ViewWillEnter {
    itemName : ['', [Validators.required]],
    itemDescription : ['', [Validators.required]],
    itemQuantity : ['', [Validators.required, Validators.min(1)]],
+   itemStock : ['', [Validators.required, Validators.min(1)]],
    itemPhoto: [],
+   itemCost: ['', [Validators.required, Validators.min(1)]],
    itemPrice: ['', [Validators.required, Validators.min(1)]],
    itemSCategory: ['',[Validators.required]],
    itemQuotable: []
@@ -68,12 +70,17 @@ export class AddSitemComponent implements ViewWillEnter {
    if (this.quotable) {
      //is quotable
      this.cSaleItemForm.controls.itemPrice.disable();
+     this.cSaleItemForm.controls.itemCost.disable();
      this.cSaleItemForm.controls.itemQuantity.disable();
+     this.cSaleItemForm.controls.itemStock.disable();
      return;
    }
    console.log('here')
    this.cSaleItemForm.controls.itemPrice.enable();
+   this.cSaleItemForm.controls.itemCost.enable();
    this.cSaleItemForm.controls.itemQuantity.enable();
+   this.cSaleItemForm.controls.itemStock.enable();
+   
  }
 
  constructor(public global: GlobalService, public formBuilder: FormBuilder,
@@ -112,9 +119,9 @@ export class AddSitemComponent implements ViewWillEnter {
       this.cSaleItemForm.controls.itemName.setValue(this.saleItem.name);
       this.cSaleItemForm.controls.itemDescription.setValue(this.saleItem.description);
       this.cSaleItemForm.controls.itemPhoto.setValue(this.itemImageBase64String);
-      this.cSaleItemForm.controls.itemPrice.setValue(this.saleItem.price);
       this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.quotable);
       this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.quantityOnHand);
+      this.cSaleItemForm.controls.itemStock.setValue(this.saleItem.stock);
       this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.saleCategoryID);
     }
     }
@@ -139,23 +146,31 @@ export class AddSitemComponent implements ViewWillEnter {
 
       let qoutableTemp = this.quotable;
       let priceTemp = Number(this.cSaleItemForm.controls['itemPrice'].value);
+      let costTemp = Number(this.cSaleItemForm.controls['itemCost'].value);
       let qtyTemp = this.cSaleItemForm.controls['itemQuantity'].value;
+      let stockTemp = this.cSaleItemForm.controls['itemStock'].value;
 
       if (qoutableTemp){
         priceTemp = 0;
         qtyTemp = 0;
+        costTemp = 0;
+        stockTemp = 0;
       }
 
        //form is valid for submission
-      var obj = {
+      var obj: SaleItem = {
         name: this.cSaleItemForm.controls['itemName'].value,
         photo: epoch + '_' + this.itemImage.name,
         description: this.cSaleItemForm.controls['itemDescription'].value,
         quotable: this.quotable,
-        price: priceTemp,
-        quantity: qtyTemp,
+        priceHistory: [{
+          costAmount: this.cSaleItemForm.value['itemCost'],
+          saleAmount: this.cSaleItemForm.value['itemPrice'],
+        }],
+        quantityOnHand: qtyTemp,
+        stock: stockTemp,
         saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
-        inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
+        //inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
       }
 
 

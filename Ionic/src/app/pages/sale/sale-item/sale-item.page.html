@@ -30,9 +30,9 @@
             
             <ion-item>
               <ion-thumbnail slot="start">
-                <img src="this.global.createImg(saleItem.photo)">
+                <img [src]="this.global.createImg(saleItem.photo)">
               </ion-thumbnail>
-              <ion-label>{{saleItem.quotable}}</ion-label> <br/>
+              <ion-label>Price: R{{saleItem.priceHistory[0].saleAmount}}</ion-label> <br/>
               <ion-label>{{saleItem.saleCategoryName}}</ion-label>
             </ion-item>
          
