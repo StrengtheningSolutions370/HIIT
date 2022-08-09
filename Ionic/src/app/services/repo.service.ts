@@ -29,7 +29,8 @@ import { Schedule } from '../models/schedule';
 })
 
 export class RepoService {
-  base = 'https://localhost:44383/api/';
+  base = 'https://localhost:5001/api/';
+  externalServerUrl = 'http://192.168.8.184:3000/api/'
   AppUserController = 'AppUser/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
@@ -57,10 +58,14 @@ export class RepoService {
     }),
   };
 
+  
+
   constructor(public http: HttpClient) {
     //CRUDS in this repo file need to be used by subscribing to them in the relevant service.
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
+
+  
 
   getUserRole(token : string) : Observable<any>{
     // console.trace();
@@ -76,7 +81,7 @@ export class RepoService {
 
   //Login
   login(userDetails: appUser): Observable<any> {
-    return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
+    return this.http.post(`${this.externalServerUrl + this.AppUserController}login`,userDetails,this.httpOptions);
   }
 
   quoteEmail(quote: any): Observable<any> {

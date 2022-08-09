@@ -119,7 +119,8 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Josh")));
+
+            options.UseSqlServer(Configuration.GetConnectionString("AWS")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
