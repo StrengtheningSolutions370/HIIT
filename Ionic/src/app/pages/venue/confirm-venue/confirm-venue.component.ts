@@ -14,8 +14,9 @@ import { VenueService } from 'src/app/services/venue/venue.service';
   templateUrl: './confirm-venue.component.html',
   styleUrls: ['./confirm-venue.component.scss'],
 })
+
 export class ConfirmVenueComponent {
-  
+
   //1 = confirm ADD
   //2 = confirm UPDATE
   @Input() choice: number;
@@ -25,14 +26,28 @@ export class ConfirmVenueComponent {
 
 
   async checkMatch(name: string, address: string): Promise<boolean>{
-   return this.venueService.matchingVenue(name,address).then(result => {
-     console.log(result);
-      if (result != false){
-        this.global.showAlert("The venue information entered already exists on the system","Duplicate Entry");
+   return this.venueService.matchingVenue(name,address).then(data => {
+    console.log(this.choice);
+    console.log("Check match result:");
+    console.log(data);
+     if (data != 0){
+      let match = data.result;
+      if (match.length > 1){
+        this.global.showAlert("The venue information entered already exists on the system","Venue Already Exists");
         return true;
-      } else {
+      } else if (match.length == 1 && this.choice == 2 && match[0].venueID == this.venue.venueID){
+        console.log(this.choice);
+        alert("Matching itself in update");
         return false;
+      } else {
+        console.log("Must be in ADD, with exactly 1 other match: ");
+        console.log("Choice: " + this.choice);
+        this.global.showAlert("The venue information entered already exists on the system","Venue Already Exists");
+        return true;
       }
+     } else {
+       return false;
+     }
     });
   }
 
@@ -41,10 +56,11 @@ export class ConfirmVenueComponent {
     await this.checkMatch(venue.name,venue.address).then(result =>{
       console.log(result);
       if (result == true){
-         return;       
+         return;
        } else {
         if (this.choice === 1){
             console.log('Add Venue from confirm:');
+            console.log(venue);
             //CallRepoToCreate
             this.venueService.createVenue(venue);
             this.global.showToast("The venue has been successfully added!");
@@ -57,7 +73,7 @@ export class ConfirmVenueComponent {
       }
           //dismiss modal
           this.global.dismissModal();
-    }); 
+    });
 
   }
 
