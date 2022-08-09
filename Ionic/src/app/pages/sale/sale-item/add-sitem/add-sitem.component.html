@@ -78,29 +78,17 @@
        Price must be greater than 0 <br/>
       </span>
       <ion-item>
-        <ion-label position="floating">Quantity:</ion-label>
+        <ion-label position="floating">Quantity On Hande:</ion-label>
         <ion-input formControlName="itemQuantity" type="number" required="" id="itemQuantity" ></ion-input>
         <br/>
       </ion-item>
       <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.required && cSaleItemForm.get('itemQuantity').touched">
-       Quantity is required <br/>
+       Quantity on hand is required <br/>
       </span>
       <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.min">
-       Quantity must be greater than 0 <br/>
+       Quantity on hand must be greater than 0 <br/>
       </span>
     </div>
-    <ion-item>
-      <ion-label position="floating">Sale Category:</ion-label>
-      <ion-select formControlName="itemSCategory" type="text" required="" id="itemSCategory" >
-        <ng-container *ngFor="let c of this.categoryDropDown">
-          <ion-select-option value="{{c.saleCategoryID}},{{c.name}}">{{ c.name }}</ion-select-option>
-        </ng-container>
-      </ion-select>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.itemSCategory.errors?.required && cSaleItemForm.get('itemSCategory').touched">
-      Sale Category is required <br/>
-     </span>
     <br>
     <br>
     <ion-button type="submit" color="success" [disabled]="!cSaleItemForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Sale Item</ion-button>
