@@ -19,7 +19,10 @@ export class AddBtypeComponent implements ViewWillEnter {
   //Creating the form to add the new booking type details, that will be displayed in the HTML component
    cBookingTypeForm: FormGroup = this.formBuilder.group({
     bookingTypeName: ['', [Validators.required]],
-    bookingTypeDescription: ['', [Validators.required]]
+    bookingTypeDescription: ['', [Validators.required]],
+    bookingTypeCapacity: ['', [Validators.required, Validators.min(1)]],
+    bookingTypeColour:  ['', [Validators.required]],
+    bookingTypePrice: ['', [Validators.required, Validators.min(1)]]
   });
 
   get errorControl() {
@@ -34,6 +37,8 @@ export class AddBtypeComponent implements ViewWillEnter {
       console.log(this.bookingType);
       this.cBookingTypeForm.controls.bookingTypeName.setValue(this.bookingType.name);
       this.cBookingTypeForm.controls.bookingTypeDescription.setValue(this.bookingType.description);
+      this.cBookingTypeForm.controls.bookingTypeCapacity.setValue(this.bookingType.capacity);
+      this.cBookingTypeForm.controls.bookingTypeColour.setValue(this.bookingType.colour);
     }
 
   }
@@ -50,7 +55,12 @@ export class AddBtypeComponent implements ViewWillEnter {
     {
       var temp: BookingType = {
         name: this.cBookingTypeForm.value['bookingTypeName'],
-        description: this.cBookingTypeForm.value['bookingTypeDescription']
+        description: this.cBookingTypeForm.value['bookingTypeDescription'],
+        capacity: this.cBookingTypeForm.value['bookingTypeCapacity'],
+        colour: this.cBookingTypeForm.value['bookingTypeColour'],
+        bookingPriceHistory: [{
+          amount: this.cBookingTypeForm.value['bookingTypePrice']
+        }]
       };
       this.global.dismissModal();
       this.bookingService.confirmBookingTypeModal(1,temp);
