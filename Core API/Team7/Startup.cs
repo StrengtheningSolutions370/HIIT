@@ -119,14 +119,14 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
+            options.UseSqlServer(Configuration.GetConnectionString("AWS")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
             services.AddScoped<IBookingPriceHistoryRepo, BookingPriceHistoryRepo>();
             services.AddScoped<IBookingRepo, BookingRepo>();
             services.AddScoped<IBookingTypeRepo, BookingTypeRepo>();
-            services.AddScoped<IClientRepo, ClientRepo>();
+            //services.AddScoped<IClientRepo, ClientRepo>();
             services.AddScoped<IDateSessionRepo, DateSessionRepo>();
             services.AddScoped<IEmployeeContractRepo, EmployeeContractRepo>();
             services.AddScoped<IEmployeeRepo, EmployeeRepo>();

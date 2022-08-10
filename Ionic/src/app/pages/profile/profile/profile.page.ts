@@ -21,7 +21,7 @@ export class ProfilePage implements OnInit {
   isLoading = false;
   i = false;
 
-  constructor(private repo : RepoService, public global: GlobalService, public titleService: TitleService, private cartService: CartService) { }
+  constructor(private repo : RepoService, public global: GlobalService, public titleService: TitleService, public cartService: CartService) { }
 
   ngOnInit() {
     this.repo.getTitles().subscribe({
@@ -57,6 +57,8 @@ export class ProfilePage implements OnInit {
        {
           this.global.showAlert('hello')
        }
+
+       
     // var userRegister = new appUserRegister();
     // console.log(registerForm.value);
     // userRegister = {
