@@ -14,12 +14,15 @@ export class UpdateBtypeComponent implements ViewWillEnter {
 
   @Input() bookingType: BookingType;
 
-  uBookingTypeForm: UntypedFormGroup = new UntypedFormGroup({
-    bookingTypeDescription: new UntypedFormControl('', [Validators.required]),
-    bookingTypeName: new UntypedFormControl('', [Validators.required])
+  uBookingTypeForm: FormGroup = this.formBuilder.group({
+    bookingTypeName: ['', [Validators.required]],
+    bookingTypeDescription: ['', [Validators.required]],
+    bookingTypeCapacity: ['', [Validators.required, Validators.min(1)]],
+    bookingTypeColour:  ['', [Validators.required]],
+    bookingTypePrice: ['', [Validators.required, Validators.min(1)]]
   });
 
-  constructor(public global: GlobalService, public fb: UntypedFormBuilder,
+  constructor(public global: GlobalService, public formBuilder: FormBuilder,
     public bookingService: BookingService) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.
@@ -36,6 +39,9 @@ export class UpdateBtypeComponent implements ViewWillEnter {
     }  else {
       this.uBookingTypeForm.controls.bookingTypeName.setValue(this.bookingType.name);
       this.uBookingTypeForm.controls.bookingTypeDescription.setValue(this.bookingType.description);
+      this.uBookingTypeForm.controls.bookingTypeCapacity.setValue(this.bookingType.capacity);
+      this.uBookingTypeForm.controls.bookingTypeColour.setValue(this.bookingType.colour);
+      this.uBookingTypeForm.controls.bookingTypePrice.setValue(this.bookingType.bookingPriceHistory[0].amount);
     }
 
   }
@@ -49,12 +55,29 @@ export class UpdateBtypeComponent implements ViewWillEnter {
     else
     {
       console.log('InsideUpdateSubmit:');
-      var temp = new BookingType();
       const choice = 2;
-      temp = {
+      var priceChange;
+      if (this.uBookingTypeForm.value['bookingTypePrice'] == this.bookingType.bookingPriceHistory[0].amount){
+        //No change of amount, send Null to api
+        priceChange = null;
+      } else {
+        priceChange = [{
+          amount: this.uBookingTypeForm.value['bookingTypePrice']}];
+      }
+      console.log("Form price:");
+      console.log(this.uBookingTypeForm.value['bookingTypePrice']);
+      console.log("Old Price:");
+      console.log(this.bookingType.bookingPriceHistory[0].amount);
+      console.log("Price Change variable:");
+      console.log(priceChange);
+
+      var temp: BookingType = {
         bookingTypeID: this.bookingType.bookingTypeID,
         name: this.uBookingTypeForm.value['bookingTypeName'],
-        description: this.uBookingTypeForm.value['bookingTypeDescription']
+        description: this.uBookingTypeForm.value['bookingTypeDescription'],
+        capacity: this.uBookingTypeForm.value['bookingTypeCapacity'],
+        colour: this.uBookingTypeForm.value['bookingTypeColour'],
+        bookingPriceHistory: priceChange
       };
        console.log(temp);
        this.bookingService.confirmBookingTypeModal(choice,temp);

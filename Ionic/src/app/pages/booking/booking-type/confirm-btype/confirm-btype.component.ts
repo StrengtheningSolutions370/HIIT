@@ -22,17 +22,21 @@ export class ConfirmBtypeComponent {
         let match = data.result;
         if (match.length > 1){
           this.global.showAlert("The booking type information entered already exists on the system","Booking Type Already Exists");
+          this.global.dismissModal();
           return true;
         } else if (match.length == 1 && this.choice == 2 && match[0].bookingTypeID == this.bookingType.bookingTypeID){
-          alert("Matching itself in update");
+          this.global.dismissModal();
           return false;
         } else {
           console.log("Must be in ADD, with exactly 1 other match: ");
           console.log("Choice: " + this.choice);
           this.global.showAlert("The booking type information entered already exists on the system","Booking Type Already Exists");
+
+          this.global.dismissModal();
           return true;
         }
        } else {
+        this.global.dismissModal();
          return false;
        }
      });
@@ -50,6 +54,7 @@ export class ConfirmBtypeComponent {
        } else {
           if (this.choice === 1){
             console.log('Add booking type from confirm:');
+            console.log(this.bookingType);
             //CallRepoToCreate
             this.bookingService.createBookingType(this.bookingType);
             this.global.dismissModal();
@@ -58,6 +63,7 @@ export class ConfirmBtypeComponent {
             console.log('Update booking type from confirm:');
             //CallRepoToUpdate
             this.bookingService.updateBookingType(this.bookingType);
+            console.log(this.bookingType);
             this.global.dismissModal();
             this.global.showToast('The booking type has been successfully updated!');
           }

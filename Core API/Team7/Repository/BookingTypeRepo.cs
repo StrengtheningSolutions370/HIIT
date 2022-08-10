@@ -44,10 +44,12 @@ namespace Team7.Models.Repository
                     bt.BookingTypeID,
                     bt.Name,
                     bt.Description,
+                    bt.Colour,
+                    bt.Capacity,
                     BookingPriceHistory =
-                    bt
-                    .BookingPriceHistory
-                    .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                        bt
+                        .BookingPriceHistory
+                        .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
                 }).ToListAsync()
             };
         }
@@ -68,10 +70,12 @@ namespace Team7.Models.Repository
                         bt.BookingTypeID,
                         bt.Name,
                         bt.Description,
+                        bt.Colour,
+                        bt.Capacity,
                         BookingPriceHistory =
-                        bt
-                        .BookingPriceHistory
-                        .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                            bt
+                            .BookingPriceHistory
+                            .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
                     }).ToListAsync()
                 };
             }
@@ -94,10 +98,20 @@ namespace Team7.Models.Repository
                         bt.BookingTypeID,
                         bt.Name,
                         bt.Description,
+                        bt.Colour,
+                        bt.Capacity,
+                        Schedule =
+                            bt
+                            .Schedule
+                            .Select(sch => new { sch.ScheduleID, sch.BookingType, sch.DateSession, sch.Employee, BookingAttendance =
+                            sch
+                            .BookingAttendance
+                            .Select(ba => new { ba.BookingAttendanceID, ba.Attended}) }),
+
                         BookingPriceHistory =
-                        bt
-                        .BookingPriceHistory
-                        .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                            bt
+                            .BookingPriceHistory
+                            .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
                     }).ToListAsync()
                 };
             }
