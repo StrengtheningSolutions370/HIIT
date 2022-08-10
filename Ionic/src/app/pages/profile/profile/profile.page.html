@@ -17,14 +17,34 @@
   <ion-accordion-group>
      <ion-accordion value="first">
       <ion-item slot="header" color="light">
-        <ion-label>Personal Information</ion-label>
+        <ion-label>Important Documents</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
 
         <ion-card>
           <ion-card-content>
             <div class="ion-text-center">
-              <h1 style="font-family: inherit; border:1px">Personal Information</h1>
+              <h1 style="font-family: inherit; border:1px">Indemnity Form</h1>
+            </div>
+            <br/>
+
+            
+          </ion-card-content>
+        </ion-card>
+
+      </div> 
+    </ion-accordion>
+
+
+    <ion-accordion value="second">
+      <ion-item slot="header" color="light">
+        <ion-label>Personal Information</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-card class="centerLogin" >
+          <ion-card-content>
+            <div class="ion-text-center">
+              <h1 style="font-family: inherit; border:1px">Update Personal Information</h1>
             </div>
             <br/>
 
@@ -60,37 +80,6 @@
                   </ion-select>
                 </ion-item>
 
-              
-                <br/>
-                <ion-button *ngIf="!isLoading" expand="block" shape="round" type="submit">Save</ion-button>
-                <div class="ion-text-center" *ngIf="isLoading">
-                  <ion-button shape="round">
-                    <ion-spinner name="circles"></ion-spinner>
-                  </ion-button>   
-                </div> 
-              </div>  
-            </form>
-          </ion-card-content>
-        </ion-card>
-
-      </div> 
-    </ion-accordion>
-
-
-    <ion-accordion value="second">
-      <ion-item slot="header" color="light">
-        <ion-label>Contact Information</ion-label>
-      </ion-item>
-      <div class="ion-padding" slot="content">
-        <ion-card class="centerLogin" >
-          <ion-card-content>
-            <div class="ion-text-center">
-              <h1 style="font-family: inherit; border:1px">Contact Information</h1>
-            </div>
-            <br/>
-
-            <form #contactForm="ngForm" (ngSubmit)="onContactSubmit(contactForm)">
-              <div padding>
                 <ion-item>
                   <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
                   <ion-input 
@@ -113,6 +102,7 @@
                   required ></ion-input>
                 </ion-item>
 
+                <!--I Do not think this is needed, just thought it would be nice for the use case "send booking reminder notification"-->
                 <ion-item>
                   <ion-label  class="ion-text-right">Would you like to receive booking reminders?</ion-label>
                   <ion-toggle></ion-toggle>
@@ -134,10 +124,19 @@
     </ion-accordion>
     <ion-accordion value="third">
       <ion-item slot="header" color="light">
+        <ion-label>Measurements</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        Measurements Form, plus pfd option to download report
+      </div>
+    </ion-accordion>
+
+    <ion-accordion value="third">
+      <ion-item slot="header" color="light">
         <ion-label>Password Management</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        Third Content
+        Copy Password management here...
       </div>
     </ion-accordion>
   </ion-accordion-group>

@@ -17,7 +17,6 @@ export class ProfilePage implements OnInit {
 
   titleList : any[] = [];
   personalForm! : FormGroup;
-  contactForm! : FormGroup;
   isLoading = false;
   i = false;
 
@@ -50,33 +49,13 @@ export class ProfilePage implements OnInit {
     })
   }
 
-  onContactSubmit(registerForm: NgForm){
+ onPersonalSubmit(registerForm: NgForm){
     if(!registerForm.valid) {
        this.global.showAlert('Please enter all required fields', 'Required fields')}
        else
        {
-          this.global.showAlert('hello')
-       }
-
-       
-    // var userRegister = new appUserRegister();
-    // console.log(registerForm.value);
-    // userRegister = {
-    //   emailAddress : registerForm.value.emailAddress,
-    //   password : registerForm.value.password,
-    //   role: "client", //does not override role in api
-    //   firstName: registerForm.value.firstName,
-    //   lastName: registerForm.value.lastName,
-    //   phoneNumber: registerForm.value.phone,
-    //   TitleId: registerForm.value.TitleId
-  }
-
-  onPersonalSubmit(registerForm: NgForm){
-    if(!registerForm.valid) {
-       this.global.showAlert('Please enter all required fields', 'Required fields')}
-       else
-       {
-          this.global.showAlert('hello')
+          this.global.showAlert('Proceed')
+          //Add code to database here
        }
 }
 
