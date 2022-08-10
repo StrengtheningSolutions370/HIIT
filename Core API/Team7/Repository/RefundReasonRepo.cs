@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
@@ -47,7 +45,7 @@ namespace Team7.Models.Repository
                     rr.Description,
                     Refund = rr
                 .Refund
-                .Select(r => new { r.RefundID, r.Notes, r.Date, r.Payment, r.Total , r.PaymentID} )
+                .Select(r => new { r.RefundID, r.Notes, r.Date, r.Payment, r.Total, r.PaymentID })
                 }).ToListAsync()
             };
 

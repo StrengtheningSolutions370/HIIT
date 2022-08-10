@@ -8,7 +8,7 @@ namespace Team7.Models
     {
         public Title()
         {
-           this.User = new HashSet<AppUser>();
+            this.User = new HashSet<AppUser>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

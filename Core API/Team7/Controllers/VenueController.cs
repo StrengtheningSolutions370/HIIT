@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -118,7 +116,7 @@ namespace Team7.Controllers
                 var venueList = await VenueRepo.GetAllVenuesAsync();
                 if (venueList == null) return Ok(0);
                 return Ok(venueList);
-            } 
+            }
             catch (Exception err)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
@@ -138,9 +136,9 @@ namespace Team7.Controllers
             }
             catch (Exception err)
             {
-               return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
-            
+
         }
     }
 }

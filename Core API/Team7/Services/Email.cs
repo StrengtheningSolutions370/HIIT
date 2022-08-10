@@ -1,9 +1,6 @@
 ﻿using System.Net;
 using System.Net.Mail;
 
-using System;
-using System.Threading;
-
 namespace Team7.Services
 {
     public class Email
@@ -23,7 +20,7 @@ namespace Team7.Services
             this.subject = subject;
             this.body = body;
         }
-        
+
         public void sendEmail()
         {
             MailMessage email = new MailMessage();

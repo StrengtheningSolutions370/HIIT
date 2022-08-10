@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
@@ -56,7 +55,7 @@ namespace Team7.Models.Repository
 
         public async Task<object> GetVATsAsync(decimal? percentage, DateTime? date)
         {
-            IQueryable<VAT> query = DB.VAT.Where(v => v.Percentage == percentage || v.Date == date); 
+            IQueryable<VAT> query = DB.VAT.Where(v => v.Percentage == percentage || v.Date == date);
             if (!query.Any())
             {
                 return null;

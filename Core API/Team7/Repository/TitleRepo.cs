@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;    
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
@@ -47,7 +47,7 @@ namespace Team7.Models.Repository
                         t.Description,
                         Users = t
                         .User
-                        .Select(u => new { u.FirstName, u.LastName, u.UserName, u.Email})
+                        .Select(u => new { u.FirstName, u.LastName, u.UserName, u.Email })
                     }).ToListAsync()
                 };
 
@@ -71,7 +71,7 @@ namespace Team7.Models.Repository
                         t.Description,
                         Users = t
                         .User
-                        .Select(u => new {u.FirstName, u.LastName, u.UserName, u.Email})
+                        .Select(u => new { u.FirstName, u.LastName, u.UserName, u.Email })
                     }).ToListAsync()
                 };
             }
