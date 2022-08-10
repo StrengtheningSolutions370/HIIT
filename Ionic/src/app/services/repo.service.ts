@@ -29,8 +29,8 @@ import { Schedule } from '../models/schedule';
 })
 
 export class RepoService {
-  base = 'https://localhost:5001/api/';
-  externalServerUrl = 'http://192.168.8.184:3000/api/'
+  base = 'https://bsctest.azurewebsites.net/api/';
+  //externalServerUrl = 'http://192.168.8.184:3000/api/'
   AppUserController = 'AppUser/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
@@ -81,7 +81,8 @@ export class RepoService {
 
   //Login
   login(userDetails: appUser): Observable<any> {
-    return this.http.post(`${this.externalServerUrl + this.AppUserController}login`,userDetails,this.httpOptions);
+    console.log(`${this.base + this.AppUserController}login`);
+    return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
   }
 
   quoteEmail(quote: any): Observable<any> {
