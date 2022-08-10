@@ -18,15 +18,26 @@
     </ion-item>
     <ion-item >
       <ion-label class="ion-text-left">Description:</ion-label>
-      <ion-label class="ion-text-right ion-text-wrap">{{bookingType.description}}</ion-label>
+      <ion-label class="ion-text-wrap ion-text-right">{{bookingType.description}}</ion-label>
     </ion-item>
-    <p *ngIf="bookingType.schedule.length > 0" style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following schedule/s are associated with the selected booking type</p>
-    <div *ngFor="let item of bookingType.schedule">
+    <ion-item >
+      <ion-label class="ion-text-left">Colour:</ion-label>
+      <input disabled type="color" value="{{bookingType.colour}}" required="" id="bookingTypeColour" slot="end"/>
+    </ion-item>
+    <ion-item >
+      <ion-label class="ion-text-left">Capacity:</ion-label>
+      <ion-label class="ion-text-right">{{bookingType.capacity}}</ion-label>
+    </ion-item>
+    <p *ngIf="bookingType.bookingPriceHistory.length > 0" style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following prices have been recorded for the selected booking type</p>
+    <div *ngFor="let item of bookingType.bookingPriceHistory; let i=index">
       <ion-item >
-        <ion-label class="ion-text-left">ID:</ion-label>
-        <ion-label class="ion-text-right">{{item.scheduleID}}</ion-label>
+        <ion-label class="ion-text-left">Price:</ion-label>
+        <ion-label class="ion-text-right">{{bookingType.bookingPriceHistory[i].amount}}</ion-label>
       </ion-item>
-      <p>We should display something else and not the ID of the schedule, but currently that's all we have</p>
+      <ion-item >
+        <ion-label class="ion-text-left">Date:</ion-label>
+        <ion-label class="ion-text-right">{{bookingType.bookingPriceHistory[i].date | date:"medium"}}</ion-label>
+      </ion-item>
       <br/>
     </div>
   </div>

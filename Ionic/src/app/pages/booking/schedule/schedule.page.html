@@ -66,9 +66,9 @@
   </div>
 </ng-template>
 
-<ng-template #monthviewEventList let-selectedDate="selectDate" let-noEventsLabel="noEventsLabel" >
+<ng-template #monthviewEventList let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel" >
       <ion-segment>
-        <h1> Date: {{selectDate.selectedTime}}</h1>
+        <h1> Date: {{selectDate}}</h1>
       </ion-segment>
       <ion-button (click)="this.scheduleService.addScheduleModal()" slot="end" expand="block" fill="outline">
         Add New Event
