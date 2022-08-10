@@ -41,7 +41,8 @@
 
     <ion-item>
         <ion-label>Photo:</ion-label>
-        <input (change)="addImage($event)" type="file" id="file-input" accept="image/png, image/jpeg">
+        <ion-button expand="block" (click)="getPhoto()">Get Photo</ion-button>
+        <!-- <input (change)="addImage($event)" type="file" id="file-input" accept="image/png, image/jpeg"> -->
     </ion-item>
 
     <ion-item>

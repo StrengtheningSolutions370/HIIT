@@ -1,6 +1,8 @@
 import { Component,  Input } from '@angular/core';
 import { ViewWillEnter} from '@ionic/angular';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -39,6 +41,8 @@ export class AddSitemComponent implements ViewWillEnter {
    itemQuotable: []
  });
 
+ selectImage: any;
+
  addImage(event: any) {
    this.itemImage = event.target.files[0];
   console.log(this.itemImage);
@@ -48,6 +52,8 @@ export class AddSitemComponent implements ViewWillEnter {
     this.getBase64(this.itemImage);
    }
   }
+
+  
 
   getBase64(file: File) {
     const reader = new FileReader();
@@ -104,6 +110,7 @@ export class AddSitemComponent implements ViewWillEnter {
         }
       }
     );
+    
 
     console.log("AddSaleItem-ViewWillEnter");
 
@@ -178,7 +185,18 @@ export class AddSitemComponent implements ViewWillEnter {
           return;  
           }
         });
+        
 
       }
+      async getPhoto() {
+        const status = await Camera.requestPermissions();
+        const image = await Camera.getPhoto({
+          quality: 90,
+          // allowEditing: true,
+          source: CameraSource.Prompt,
+          width: 600,
+          resultType: CameraResultType.Uri
+        });
 
+}
 }
