@@ -45,7 +45,6 @@ namespace Team7
             {
                 Console.WriteLine(ex.Message + ex.StackTrace);
             }
->>>>>>> developer
         }
 
         public IConfiguration Configuration { get; }
@@ -114,9 +113,9 @@ namespace Team7
                                 Id = "Bearer"
                             }
                         },
-#pragma warning disable CA1825 // Avoid zero-length array allocations
+                    #pragma warning disable CA1825 // Avoid zero-length array allocations
                         new string []{}
-#pragma warning restore CA1825 // Avoid zero-length array allocations
+                    #pragma warning restore CA1825 // Avoid zero-length array allocations
                     }
                 });
             });
