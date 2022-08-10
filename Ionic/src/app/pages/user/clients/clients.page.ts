@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RepoService } from 'src/app/services/repo.service';
 import Fuse from 'fuse.js'
+import { DeleteClientComponent } from './delete-client/delete-client.component';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-clients',
@@ -15,7 +17,7 @@ export class ClientsPage implements OnInit {
   loading = true;
   noresults = false;
 
-  constructor(private repo : RepoService) { }
+  constructor(private repo : RepoService, private modalCtrl : ModalController) { }
 
   ngOnInit() {
 
@@ -72,6 +74,17 @@ export class ClientsPage implements OnInit {
 
   phoneFormat(number : string) : string {
     return `(${number.substring(0, 3)}) ${number.substring(3, 6)} ${number.substring(6, 10)}`;
+  }
+
+  async deleteClientInfoModal(client : any) {
+  
+    const modal = await this.modalCtrl.create({
+      component : DeleteClientComponent,
+      componentProps: {
+        client
+      }
+    });
+    await modal.present();
   }
 
 }

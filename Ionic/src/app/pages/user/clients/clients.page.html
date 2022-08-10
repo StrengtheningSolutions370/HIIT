@@ -26,18 +26,18 @@
               <!-- <ion-col size="12" size-lg="2" class="ion-align-items-center"><img [src]="createImg(emp.data.photo)"></ion-col> -->
               <ion-col size="12" size-lg="2" class="ion-align-items-center"></ion-col>
 
-              <ion-col size="3">
+              <ion-col size="6">
                 <ion-text><h3>{{usr.firstName}} {{usr.lastName}}</h3></ion-text>
                 <ion-text><h6 class="lightone">{{usr.email}}</h6></ion-text>
                 <ion-text><h6 class="lighttwo">{{phoneFormat(usr.phoneNumber)}}</h6></ion-text>
               </ion-col>
 
-              <ion-col>
+              <!-- <ion-col>
                 <ion-text><h6 class="lightone">put something here?</h6></ion-text>
-              </ion-col>
+              </ion-col> -->
               
               <ion-col>
-                <ion-button (click)="viewEmployeeInfoModal(emp)">View</ion-button>
+                <ion-button color="danger" (click)="deleteClientInfoModal(usr)">Delete</ion-button>
               </ion-col>
 
               <!-- <ion-icon name="chevron-back-outline" size="small"></ion-icon> -->

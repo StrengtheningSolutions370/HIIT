@@ -141,6 +141,10 @@ import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-
 import { DatePipe } from '@angular/common';
 import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedule/update-schedule.component';
 
+//CLIENT IMPORTS:
+import { DeleteClientComponent } from './pages/user/clients/delete-client/delete-client.component';
+
+
 @NgModule({
   declarations: [AppComponent,
   //Venue
@@ -189,6 +193,8 @@ import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedul
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
   //Lesson
   AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
+  //Client
+  DeleteClientComponent
 
 ],
   entryComponents: [],

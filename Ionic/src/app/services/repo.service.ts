@@ -74,6 +74,10 @@ export class RepoService {
     return this.http.get(`${this.base + this.AppUserController}getallclients`, this.httpOptions);
   }
 
+  deleteClient(id: string): Observable<any> {
+    return this.http.get(`${this.base + this.AppUserController}deleteclient`, this.httpOptions);
+  }
+
   //Register
   register(userDetails: appUserRegister) {
     return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);
