@@ -29,7 +29,7 @@ namespace Team7
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            time_pba.start();
+            //time_pba.start();
         }
 
         public IConfiguration Configuration { get; }
@@ -119,7 +119,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
+            options.UseSqlServer(Configuration.GetConnectionString("AWS")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
@@ -163,6 +163,7 @@ namespace Team7
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();
             services.AddScoped<IVATRepo, VATRepo>();
+            //services.AddSwaggerGen();
 
         }
 
@@ -170,28 +171,30 @@ namespace Team7
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICorsService corsService, ICorsPolicyProvider corsPolicyProvider)
         {
 
+           
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Team7 v1");
+                c.RoutePrefix = "";
                 //c.RoutePrefix = string.Empty;
 
             });
 
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Team7 v1");
-                    //c.RoutePrefix = string.Empty;
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI(c =>
+            //    {
+            //        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Team7 v1");
+            //        //c.RoutePrefix = string.Empty;
 
-                });
+            //    });
 
-            }
+            //}
 
             /*app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
