@@ -136,7 +136,7 @@ namespace Team7
             services.AddScoped<IBookingPriceHistoryRepo, BookingPriceHistoryRepo>();
             services.AddScoped<IBookingRepo, BookingRepo>();
             services.AddScoped<IBookingTypeRepo, BookingTypeRepo>();
-            services.AddScoped<IClientRepo, ClientRepo>();
+            //services.AddScoped<IClientRepo, ClientRepo>();
             services.AddScoped<IDateSessionRepo, DateSessionRepo>();
             services.AddScoped<IEmployeeContractRepo, EmployeeContractRepo>();
             services.AddScoped<IEmployeeRepo, EmployeeRepo>();
