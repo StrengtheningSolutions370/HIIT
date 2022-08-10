@@ -40,6 +40,14 @@ namespace Team7.Controllers
         {
             var lessonVM = lvm.Lesson;
             var exerciseVM = lvm.Exercises;
+
+            //check for duplicate:
+            var duplicate = await _lessonRepo.GetLessonByNameAsync(lessonVM.Name);
+            if (duplicate != null)
+            {
+                return StatusCode(StatusCodes.Status409Conflict, "Lesson with the same name already exists");
+            }
+
             Lesson lesson = new Lesson();
             lesson.Name = lessonVM.Name;
             //lesson.Employee = await _employeeRepo._GetEmployeeIdAsync(lessonVM.EmployeeID);

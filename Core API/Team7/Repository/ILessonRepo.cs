@@ -15,5 +15,8 @@ namespace Team7.Models.Repository
         Task<Lesson> GetLessonIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
+
+        Task<Lesson> GetLessonByNameAsync(string name)
+
     }
 }

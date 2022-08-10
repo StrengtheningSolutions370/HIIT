@@ -76,6 +76,12 @@ namespace Team7.Models.Repository
             return null;
         }
 
+        public async Task<Lesson> GetLessonByNameAsync(string name)
+        {
+            IQueryable<Lesson> query = DB.Lesson.Where(l => l.Name == name);
+            return query.FirstOrDefault();
+        }
+
         public async Task<Lesson> GetLessonIdAsync(int id)
         {
 
