@@ -41,11 +41,6 @@ namespace Team7
                 Console.WriteLine(ex.Message + ex.StackTrace);
             }
         }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + ex.StackTrace);
-            }
-        }
 
         public IConfiguration Configuration { get; }
 
@@ -201,18 +196,18 @@ namespace Team7
             });
 
 
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //    app.UseSwagger();
-            //    app.UseSwaggerUI(c =>
-            //    {
-            //        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Team7 v1");
-            //        //c.RoutePrefix = string.Empty;
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Team7 v1");
+                    //c.RoutePrefix = string.Empty;
 
-            //    });
+                });
 
-            //}
+            }
 
             /*app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
