@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { BookingType } from 'src/app/models/booking-type';
 import { BookingService } from 'src/app/services/booking/booking.service';
