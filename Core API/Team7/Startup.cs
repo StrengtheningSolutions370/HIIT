@@ -108,9 +108,9 @@ namespace Team7
                                 Id = "Bearer"
                             }
                         },
-#pragma warning disable CA1825 // Avoid zero-length array allocations
+                    #pragma warning disable CA1825 // Avoid zero-length array allocations
                         new string []{}
-#pragma warning restore CA1825 // Avoid zero-length array allocations
+                    #pragma warning restore CA1825 // Avoid zero-length array allocations
                     }
                 });
             });
@@ -174,6 +174,7 @@ namespace Team7
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();
             services.AddScoped<IVATRepo, VATRepo>();
+            //services.AddSwaggerGen();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
@@ -183,11 +184,13 @@ namespace Team7
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICorsService corsService, ICorsPolicyProvider corsPolicyProvider)
         {
 
+           
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Team7 v1");
+                c.RoutePrefix = "";
                 //c.RoutePrefix = string.Empty;
 
             });

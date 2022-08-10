@@ -410,18 +410,18 @@ namespace Team7.Controllers
             }
         }
 
-        static String sha256(string val)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            using (SHA256 hasher = SHA256Managed.Create())
-            {
-                Encoding encoder = Encoding.UTF8;
-                Byte[] result = hasher.ComputeHash(encoder.GetBytes(val));
-                foreach (Byte b in result)
-                    stringBuilder.Append(b.ToString("x2"));
-            }
-            return stringBuilder.ToString();
-        }
+        //static String sha256(string val)
+        //{
+        //    StringBuilder stringBuilder = new StringBuilder();
+        //    using (SHA256 hasher = SHA256Managed.Create())
+        //    {
+        //        Encoding encoder = Encoding.UTF8;
+        //        Byte[] result = hasher.ComputeHash(encoder.GetBytes(val));
+        //        foreach (Byte b in result)
+        //            stringBuilder.Append(b.ToString("x2"));
+        //    }
+        //    return stringBuilder.ToString();
+        //}
 
         [HttpGet]
         private async Task<object> GenerateJWTTokenAsync(AppUser appUser)
@@ -497,7 +497,7 @@ namespace Team7.Controllers
             //var s = formCollection.Keys.();
             //string decode = HttpUtility.UrlDecode(formCollection);
             //var quoteObj = JObject.Parse(decode);
-            string optDescription = null;
+            string? optDescription = null;
 
             string clientAddress = quoteObj.clientMail.ToString();
             //Look at replacing with a dedicated BSC quotations email

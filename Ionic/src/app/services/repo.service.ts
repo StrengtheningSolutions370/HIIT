@@ -30,7 +30,6 @@ import { Schedule } from '../models/schedule';
 
 export class RepoService {
   base = 'https://bsctest.azurewebsites.net/api/';
-  //externalServerUrl = 'http://192.168.8.184:3000/api/'
   AppUserController = 'AppUser/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
@@ -58,14 +57,14 @@ export class RepoService {
     }),
   };
 
-  
+
 
   constructor(public http: HttpClient) {
     //CRUDS in this repo file need to be used by subscribing to them in the relevant service.
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
 
-  
+
 
   getUserRole(token : string) : Observable<any>{
     // console.trace();
