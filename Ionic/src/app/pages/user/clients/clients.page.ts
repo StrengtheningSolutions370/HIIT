@@ -3,6 +3,7 @@ import { RepoService } from 'src/app/services/repo.service';
 import Fuse from 'fuse.js'
 import { DeleteClientComponent } from './delete-client/delete-client.component';
 import { ModalController } from '@ionic/angular';
+import { ClientService } from 'src/app/services/client/client.service';
 
 @Component({
   selector: 'app-clients',
@@ -17,12 +18,15 @@ export class ClientsPage implements OnInit {
   loading = true;
   noresults = false;
 
-  constructor(private repo : RepoService, private modalCtrl : ModalController) { }
+  constructor(private repo : RepoService, private modalCtrl : ModalController, private clientService : ClientService) { }
 
   ngOnInit() {
 
-    this.repo.getAllClients().subscribe(res => {
-      res.forEach((el : any) => {
+    this.clientService.fetchClientsEvent.subscribe(() => {
+      this.repo.getAllClients().subscribe(res => {
+        this.users = [];
+        this.usersOriginal = [];
+        res.forEach((el : any) => {
         const temp = {
           ...el.client,
           ...el.user,
@@ -35,10 +39,13 @@ export class ClientsPage implements OnInit {
       if (this.users.length == 0) {
         this.noresults = true;
       }
+      })
     }),
     err => {
       console.log(err);
     }
+
+    this.clientService.fetchClientsEvent.emit();
 
   }
 

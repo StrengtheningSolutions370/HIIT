@@ -24,8 +24,8 @@ export class DeleteClientComponent implements OnInit {
 
   deleteClient() {
     //#TODO delete the lesson here
-    console.log(this.client.clientID);
-    this.clientService.deleteClient(this.client.clientID).then(resp => {
+    console.log(this.client.id);
+    this.clientService.deleteClient(this.client.userID).then(resp => {
       if (resp) {
         this.sucDelete();
         this.dismissModal();

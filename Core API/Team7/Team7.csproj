@@ -10,6 +10,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath></OutputPath>
     <WarningLevel>4</WarningLevel>
+    <Optimize>False</Optimize>
   </PropertyGroup>
 
   <ItemGroup>

@@ -16,7 +16,7 @@ namespace Team7.Models.Repository
 
         Task<bool> SaveChangesAsync();
 
-        Task<Lesson> GetLessonByNameAsync(string name)
+        Task<Lesson> GetLessonByNameAsync(string name);
 
     }
 }

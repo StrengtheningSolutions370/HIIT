@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { identity, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Venue } from 'src/app/models/venue';
 
@@ -29,8 +29,8 @@ import { Schedule } from '../models/schedule';
 })
 
 export class RepoService {
-  base = 'https://bsctest.azurewebsites.net/api/';
-  //externalServerUrl = 'http://192.168.8.184:3000/api/'
+  // base = 'https://bsctest.azurewebsites.net/api/';
+  base = 'https://localhost:44383/api/';
   AppUserController = 'AppUser/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
@@ -79,8 +79,12 @@ export class RepoService {
     return this.http.get(`${this.base + this.AppUserController}getallclients`, this.httpOptions);
   }
 
+  getUser(id : string) : Observable<any> {
+    return this.http.get(`${this.base + this.AppUserController}getuser?id=${id}`, this.httpOptions);
+  }
+
   deleteClient(id: string): Observable<any> {
-    return this.http.get(`${this.base + this.AppUserController}deleteclient`, this.httpOptions);
+    return this.http.delete(`${this.base + this.AppUserController}deleteclient?id=${id}`, this.httpOptions);
   }
 
   //Register
