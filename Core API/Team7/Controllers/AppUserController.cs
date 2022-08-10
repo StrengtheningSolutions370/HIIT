@@ -34,7 +34,6 @@ namespace Team7.Controllers
         private readonly IClientRepo _clientRepo;
         private readonly IPasswordHistoryRepo _passwordHistoryRepo;
 
-
         public AppUserController(IPasswordHistoryRepo passwordHistory, IClientRepo clientRepo, ITitleRepo titleRepo, UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
@@ -44,6 +43,7 @@ namespace Team7.Controllers
             _titleRepo = titleRepo;
             _clientRepo = clientRepo;
         }
+
         static string generateOTP()
         {
             Random random = new Random();
@@ -53,6 +53,14 @@ namespace Team7.Controllers
                 oneTimePin += random.Next(0, 10).ToString();
             }
             return oneTimePin;
+        }
+
+        [HttpGet]
+        [Route("getallclients")]
+        public async Task<IActionResult> getAllClients()
+        {
+            var query = await _clientRepo.GetAllClientsAsync();
+            return Ok(query);
         }
 
         [HttpPost]

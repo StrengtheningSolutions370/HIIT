@@ -69,6 +69,11 @@ export class RepoService {
 
   //AppUser:
   //-------
+  //clients:
+  getAllClients(): Observable<any> {
+    return this.http.get(`${this.base + this.AppUserController}getallclients`, this.httpOptions);
+  }
+
   //Register
   register(userDetails: appUserRegister) {
     return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);

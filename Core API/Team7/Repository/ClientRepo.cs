@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,12 +10,15 @@ namespace Team7.Models.Repository
 {
     public class ClientRepo : IClientRepo
     {
-       
-            readonly private AppDB DB;
 
-            public ClientRepo(AppDB appDatabaseContext)
+        private readonly UserManager<AppUser> _userManager;
+
+        readonly private AppDB DB;
+
+            public ClientRepo(AppDB appDatabaseContext, UserManager<AppUser> userManager)
             {
                 DB = appDatabaseContext;
+                _userManager = userManager;
             }
 
             public void Add<T>(T Entity) where T : class
@@ -35,13 +39,37 @@ namespace Team7.Models.Repository
             }
 
 
-        public async Task<Client[]> GetAllClientsAsync()
-            {
-                //IQueryable<Client> query = DB.Client;
-                //return await query.ToArrayAsync();
-                return null;
+        public async Task<object[]> GetAllClientsAsync()
+         {
+            //IQueryable<Client> query = DB.Client;
+            //return await query.ToArrayAsync();
+            IQueryable<Client> query = DB.Client.Select(c =>
+            new Client {
+                ClientID = c.ClientID,
+                UserID = c.UserID,
+                Photo = c.Photo,
+            });
 
+            var data = query.ToArray();
+           
+            List<object> output = new List<object>();
+            foreach (var client in data)
+            {
+                output.Add(new
+                {
+                    client = client,
+                    user = await _userManager.FindByIdAsync(client.UserID),
+                });
             }
+
+            return output.ToArray();
+
+        }
+
+        public async Task<object> getUserAsync(string id)
+        {
+            return null;
+        }
 
             public async Task<Client[]> GetClientsAsync(string input)
             {

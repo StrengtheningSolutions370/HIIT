@@ -28,6 +28,9 @@ import { ViewTitlesComponent } from './pages/user/titles/view-titles/view-titles
 import { ConfirmTitleComponent } from './pages/user/titles/confirm-title/confirm-title.component';
 import { AssociativeTitleComponent } from './pages/user/titles/associative-title/associative-title.component';
 
+//CLIENT IMPORTS:
+import { ClientsPageModule } from './pages/clients/clients.module';
+
 //SALE CATEGORY IMPORTS:
 import { AddCategoryComponent } from './pages/sale/sale-category/add-category/add-category.component';
 import { UpdateCategoryComponent } from './pages/sale/sale-category/update-category/update-category.component';

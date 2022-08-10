@@ -43,7 +43,7 @@ export class UpdateLessonComponent implements OnInit {
     const ddName = `${this.lesson?.employee?.appUser.firstName} ${this.lesson?.employee?.appUser.lastName}`;
     this.trainerSelect.selectedText = ddName;
     this.populateSelects();
-
+    console.log(this.trainerSelect)
     //merge the exercises into the this.exercise then populate the childen:
     // const temp = this.exercises;
     // //this.exercises = [];
