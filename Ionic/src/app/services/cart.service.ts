@@ -34,6 +34,10 @@ export class CartService {
     return this.storage.getKey('cart');
   }
 
+  getCartOrder(): any {
+    return this.storage.getKey('order');
+  }
+
   async getCartData() {
     console.log('Cart Service: getCartData()');
     const data: any = await this.getCart();
@@ -128,6 +132,10 @@ export class CartService {
     // this._cart.next(this.model);
   }
 
+  saveCartOrder(model) {
+    this.storage.setKey('order', JSON.stringify(model));
+  }
+
   async openCart(cartData, saleItem){
     const modal = await this.modalCtrl.create({
       component: CartModalPage,
@@ -137,6 +145,10 @@ export class CartService {
       cssClass: 'cart-modal'
     });
     modal.present();
+  }
+
+  async clearCartOrder() {    
+    await this.storage.deleteKey('order');
   }
 
   makePayment(payform: any){

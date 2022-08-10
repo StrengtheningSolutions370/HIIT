@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Team7.Models.Repository;
-using Team7.Models;
 using System.IO;
+using System.Linq;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Team7.Models;
+using Team7.Models.Repository;
 
 namespace Team7.Controllers
 {
@@ -29,9 +29,9 @@ namespace Team7.Controllers
         {
             try
             {
-                
 
-                
+
+
 
                 var siPriceHistory = saleItem.PriceHistory.FirstOrDefault();
 
@@ -142,7 +142,7 @@ namespace Team7.Controllers
                 toUpdate.QuantityOnHand = saleItem.QuantityOnHand;
                 toUpdate.Stock = saleItem.Stock;
 
-                if(saleItem.PriceHistory != null)
+                if (saleItem.PriceHistory != null)
                 {
                     var siPriceHistory = saleItem.PriceHistory.FirstOrDefault();
 

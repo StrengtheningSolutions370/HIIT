@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Team7.ViewModels;
+﻿using System.Threading.Tasks;
 
 namespace Team7.Models.Repository
 {

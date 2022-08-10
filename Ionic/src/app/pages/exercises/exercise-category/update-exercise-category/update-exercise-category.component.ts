@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { ExerciseService } from 'src/app/services/exercise/exercise.service';
@@ -13,12 +13,12 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class UpdateExerciseCategoryComponent implements ViewWillEnter {
   @Input() exerciseCategory: ExerciseCategory;
 
-  uExerciseCategoryForm: FormGroup = new FormGroup({
-    exerciseCategoryDescription: new FormControl('', [Validators.required]),
-    exerciseCategoryName: new FormControl('', [Validators.required])
+  uExerciseCategoryForm: UntypedFormGroup = new UntypedFormGroup({
+    exerciseCategoryDescription: new UntypedFormControl('', [Validators.required]),
+    exerciseCategoryName: new UntypedFormControl('', [Validators.required])
   });
 
-  constructor(public global: GlobalService, public fb: FormBuilder,
+  constructor(public global: GlobalService, public fb: UntypedFormBuilder,
     public exerciseService: ExerciseService) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.

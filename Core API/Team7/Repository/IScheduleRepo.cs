@@ -18,7 +18,7 @@ namespace Team7.Models.Repository
 
         Task<object> GetScheduleIdAsync(int id);
 
-        Task<Schedule> _GetScheduleIdAsync(int id);        
+        Task<Schedule> _GetScheduleIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }

@@ -1,6 +1,6 @@
 import { CartService } from 'src/app/services/cart.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, NgForm } from '@angular/forms';
+import { UntypedFormGroup, NgForm } from '@angular/forms';
 import { appUserRegister } from 'src/app/models/appUser';
 import { AuthService } from 'src/app/services/authentication/auth.service';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -16,8 +16,8 @@ export class ProfilePage implements OnInit {
   @Input() appUserRegister : any;
 
   titleList : any[] = [];
-  personalForm! : FormGroup;
-  contactForm! : FormGroup;
+  personalForm! : UntypedFormGroup;
+  contactForm! : UntypedFormGroup;
   isLoading = false;
   i = false;
 

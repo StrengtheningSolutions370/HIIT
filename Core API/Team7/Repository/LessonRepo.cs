@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -69,7 +68,7 @@ namespace Team7.Models.Repository
 
         static Employee GetEmployee(List<Employee> emps, int id)
         {
-            foreach(Employee emp in emps)
+            foreach (Employee emp in emps)
             {
                 if (emp.EmployeeID == id)
                     return emp;
@@ -85,9 +84,10 @@ namespace Team7.Models.Repository
             if (!query.Any())
                 return null;
 
-               
-            return await query.Select(l => 
-                new  Lesson {
+
+            return await query.Select(l =>
+                new Lesson
+                {
                     LessonID = l.LessonID,
                     Name = l.Name,
                     Employee = l.Employee,

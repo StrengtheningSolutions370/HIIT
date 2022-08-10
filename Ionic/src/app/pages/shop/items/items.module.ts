@@ -12,6 +12,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { SearchPipe } from '../search.pipe';
 import { SortPipe } from '../sort.pipe';
+import { FilterPipe } from './filter-pipe.pipe';
 
 
 
@@ -27,6 +28,7 @@ import { SortPipe } from '../sort.pipe';
       
   ],
   declarations: [ItemsPage,  SearchPipe,
-    SortPipe]
+    SortPipe,
+    FilterPipe]
 })
 export class ItemsPageModule {}

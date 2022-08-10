@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
 import { Component,  Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { WriteOffReason } from 'src/app/models/write-off-reason'; 
 import { InventoryService } from 'src/app/services/inventory/inventory.service'; 
 import { ViewWillEnter} from '@ionic/angular';
@@ -18,11 +18,11 @@ export class AddWriteOffReasonComponent implements ViewWillEnter  {
   @Input() writeOffReason: WriteOffReason;
 
    //Creating the form to add the new write-off reason details, that will be displayed in the HTML component
-   cWriteOffReasonForm: FormGroup = this.formBuilder.group({
+   cWriteOffReasonForm: UntypedFormGroup = this.formBuilder.group({
     writeOffReasonDescription: ['', [Validators.required]]
   });
 
-  constructor(public global: GlobalService,  public formBuilder: FormBuilder,
+  constructor(public global: GlobalService,  public formBuilder: UntypedFormBuilder,
     public writeOffReasonService: InventoryService ) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.

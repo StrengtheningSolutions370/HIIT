@@ -32,7 +32,7 @@ namespace Team7.Controllers
             _exerciseRepo = exerciseRepo;
         }
 
-        
+
         //CREATE
         [HttpPost]
         [Route("add")]
@@ -52,7 +52,7 @@ namespace Team7.Controllers
                 LessonPlan lp = new LessonPlan();
                 lp.Exercise = await _exerciseRepo._GetExerciseIdAsync(exerciseVMID);
                 lp.Lesson = lesson;
-                lp.LessonID = lesson.LessonID;  
+                lp.LessonID = lesson.LessonID;
                 _lessonPlanRepo.Add(lp);
                 lesson.LessonPlan.Add(lp);
             }
@@ -66,7 +66,7 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutLesson(int id, [FromBody] LessonViewModel lvm)
         {
-           
+
             await _lessonPlanRepo.RemoveRangeLessonIdAsync(id);
 
             var update = await _lessonRepo.GetLessonIdAsync(id);
@@ -144,7 +144,8 @@ namespace Team7.Controllers
 
                 return Ok(lessons); //will return a 204 if null
 
-            } catch (Exception err)
+            }
+            catch (Exception err)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
@@ -155,7 +156,7 @@ namespace Team7.Controllers
             var output = new List<Exercise>();
             foreach (var l in i)
             {
-                foreach(var e in exe)
+                foreach (var e in exe)
                 {
                     foreach (var q in e.LessonPlan)
                     {

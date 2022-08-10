@@ -3,18 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using Team7.Models;
 using Team7.Models.Repository;
 using Team7.Services;
@@ -68,7 +63,8 @@ namespace Team7.Controllers
             if (user.OTP == otp.OTP)
             {
                 user.OTP = null;
-            } else
+            }
+            else
             {
                 return StatusCode(StatusCodes.Status403Forbidden, "Incorrect OTP pin provided."); //CHECKHERE
             }
@@ -161,7 +157,7 @@ namespace Team7.Controllers
             }
 
             var cnew = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, uvm.newPassword);
-               
+
             if (cnew != 0)
             {
                 return StatusCode(StatusCodes.Status406NotAcceptable, "New password cannot be current password.");
@@ -194,7 +190,7 @@ namespace Team7.Controllers
             }
 
             //check through the history and try match a password:
-            foreach(var h in history)
+            foreach (var h in history)
             {
                 var flag = _userManager.PasswordHasher.VerifyHashedPassword(user, h.Hashed, uvm.newPassword);
                 if (flag != 0) //if true = a password matched
@@ -222,9 +218,10 @@ namespace Team7.Controllers
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error."); //this might fail because of pass req in the startup.cs
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error."); //this might fail because of pass req in the startup.cs
             }
             await _userManager.UpdateAsync(user);
             return Ok();
@@ -247,7 +244,7 @@ namespace Team7.Controllers
             if (user.PasswordHistory != null)
             {
                 //user has a history of passwords
-                foreach(var p in user.PasswordHistory)
+                foreach (var p in user.PasswordHistory)
                 {
                     var flag = _userManager.PasswordHasher.VerifyHashedPassword(user, p.Hashed, uvm.newPassword);
                     if (flag != 0) //if true = a password matched
@@ -262,7 +259,8 @@ namespace Team7.Controllers
             try
             {
                 var flag = await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return Forbid("Password does not meet the requirements.");
             }
@@ -293,7 +291,8 @@ namespace Team7.Controllers
             try
             {
                 s.sendSMS(phone, msg);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 smsFlag = true;
             }
@@ -305,7 +304,8 @@ namespace Team7.Controllers
                 Email email = new Email(user.Email, "Strengthening Solutions", otp);
                 Thread thr = new Thread(new ThreadStart(email.sendEmail));
                 thr.Start();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 emailFlag = true;
             }
@@ -488,7 +488,7 @@ namespace Team7.Controllers
 
         [HttpPost]
         [Route("quoteEmail")]
-        public async Task<IActionResult> quoteEmail([FromForm] Quote quoteObj )
+        public async Task<IActionResult> quoteEmail([FromForm] Quote quoteObj)
         {
             var body = Request.Body;
             var formCollection = await Request.ReadFormAsync();
@@ -506,20 +506,20 @@ namespace Team7.Controllers
             int saleQuoteID = ((int)quoteObj.saleQuoteID);
             DateTime currentTime = new();
             optDescription = quoteObj.optDescription.ToString();
-     
 
 
-            var bodyClient = "<h1>BSC product quotation: "+saleQuoteName+" </h1> <br /> <hr>" +
+
+            var bodyClient = "<h1>BSC product quotation: " + saleQuoteName + " </h1> <br /> <hr>" +
                 "<p><strong>Thank you for your quotation request</strong></p>" +
                 "<p>A sales consultant will be in contact with you shortly</p>" +
                 "<br /> <hr>";
             Email emailClient = new Email(clientAddress, saleQuoteName + " quotation request", bodyClient);
 
             var bodyEmployee = "<h1>BSC product quotation: " + saleQuoteName + " </h1> <br /> <hr>" +
-                "<p><strong>New client product request, respond to:</strong>" + clientAddress+"</strong></p>" +
-                "<p>Date of email creation from API: "+currentTime.ToString()+"</p>" +
+                "<p><strong>New client product request, respond to:</strong>" + clientAddress + "</strong></p>" +
+                "<p>Date of email creation from API: " + currentTime.ToString() + "</p>" +
                 "<p>Product ID: " + saleQuoteID + "</p>" +
-                "<p><strong> Client message: " + optDescription 
+                "<p><strong> Client message: " + optDescription
                 + "<br /> <hr>";
             Email emailEmployee = new Email(employeeAddress, saleQuoteName + " quotation request", bodyEmployee);
 

@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Team7.Models
 {
-    public class AppUser: IdentityUser
+    public class AppUser : IdentityUser
     {
         //can add custom columns to ASPNET.Users in the db
 

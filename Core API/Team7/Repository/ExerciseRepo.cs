@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace Team7.Models.Repository
@@ -40,7 +38,8 @@ namespace Team7.Models.Repository
                 return null;
 
             return await query.Select(ex =>
-                new {
+                new
+                {
                     ex.ExerciseID,
                     ex.Name,
                     ex.Focus,
@@ -59,7 +58,8 @@ namespace Team7.Models.Repository
                 return null;
 
             return await query.Select(ex =>
-                new Exercise{
+                new Exercise
+                {
                     ExerciseCategory = ex.ExerciseCategory,
                     ExerciseID = ex.ExerciseID,
                     LessonPlan = ex.LessonPlan,
@@ -77,7 +77,8 @@ namespace Team7.Models.Repository
                 return null;
 
             return await query.Select(e =>
-                new {
+                new
+                {
                     e.ExerciseID,
                     e.Name,
                     e.Focus,
@@ -97,7 +98,8 @@ namespace Team7.Models.Repository
                 return null;
 
             return await query.Select(e =>
-                new {
+                new
+                {
                     e.ExerciseID,
                     e.Name,
                     e.Focus,

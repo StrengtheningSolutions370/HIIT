@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
 import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue/venue.service';
@@ -19,14 +19,14 @@ export class AddVenueComponent implements ViewWillEnter {
   @Input() venue: Venue;
 
   //Creating the form to add the new venue details, that will be displayed in the HTML component
-  cVenueForm: FormGroup = this.formBuilder.group({
+  cVenueForm: UntypedFormGroup = this.formBuilder.group({
     venueName: ['', [Validators.required]],
     location: ['', [Validators.required]],
     postalCode: ['', [Validators.required,Validators.pattern('[0-9]{4}')]],
     capacity: ['', [Validators.required, Validators.min(1)]]
   });
 
-  constructor(public global: GlobalService,public formBuilder: FormBuilder,
+  constructor(public global: GlobalService,public formBuilder: UntypedFormBuilder,
     public venueService: VenueService ) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.
