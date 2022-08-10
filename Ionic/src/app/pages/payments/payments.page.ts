@@ -7,6 +7,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RazorpayService } from 'src/app/services/razorpay/razorpay.service';
 import { StoreService } from 'src/app/services/storage/store.service';
+import { Axios } from 'axios';
 
 @Component({
   selector: 'app-payments',
@@ -14,6 +15,9 @@ import { StoreService } from 'src/app/services/storage/store.service';
   styleUrls: ['./payments.page.scss'],
 })
 export class PaymentsPage implements OnInit {
+  
+  chargeApi = 'https://online.yoco.com/v1/charges/';
+  refundApi = 'https://online.yoco.com/v1/refunds/';
 
   userMail!: string;
   userPhone!: string;
@@ -27,14 +31,14 @@ export class PaymentsPage implements OnInit {
     private razorpay: RazorpayService,
     private storage: StoreService) { }
 
-    ngOnInit(): void {
-      this.storage.getKey('user').then((usr : any) => {
-        const obj = JSON.parse(usr)
-        this.userMail = `${obj.email}`.toString();
-        this.userPhone = `${obj.phoneNumber}`.toString();
-        console.log(this.userMail, this.userPhone);
-      })
-    }
+  ngOnInit(): void {
+    this.storage.getKey('user').then((usr : any) => {
+      const obj = JSON.parse(usr)
+      this.userMail = `${obj.email}`.toString();
+      this.userPhone = `${obj.phoneNumber}`.toString();
+      console.log(this.userMail, this.userPhone);
+    })
+  }
 
   async getData() {
     try {
@@ -49,9 +53,8 @@ export class PaymentsPage implements OnInit {
   }
 
 
-    async ngOnDestroy() {
-      await this.cartService.clearCartOrder();
-    }
+  async ngOnDestroy() {
+    await this.cartService.clearCartOrder();
   }
 
-
+}

@@ -1,6 +1,5 @@
 ion-button{
-    margin-left:30%;
-    margin-right:30%
+    width: 120px !important
 }
 
 ion-searchbar{
@@ -55,12 +54,41 @@ h3, h6 {
     --background: var(pink);
 }
 
-ion-row {
-    width: 100% !important;
+// ion-row {
+//     width: 100% !important;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     height: 100%;
+// }
+
+.buttonalign {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.colmaker {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+}
+
+ion-col, ion-card {
+    width: 385px !important;
+}
+
+ion-row {
+    max-width: 1300px !important;
+}
+
+#cols {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 ion-spinner {

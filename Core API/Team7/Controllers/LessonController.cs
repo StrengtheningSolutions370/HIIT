@@ -40,6 +40,14 @@ namespace Team7.Controllers
         {
             var lessonVM = lvm.Lesson;
             var exerciseVM = lvm.Exercises;
+
+            //check for duplicate:
+            var duplicate = await _lessonRepo.GetLessonByNameAsync(lessonVM.Name);
+            if (duplicate != null)
+            {
+                return StatusCode(StatusCodes.Status409Conflict, "Lesson with the same name already exists");
+            }
+
             Lesson lesson = new Lesson();
             lesson.Name = lessonVM.Name;
             //lesson.Employee = await _employeeRepo._GetEmployeeIdAsync(lessonVM.EmployeeID);
@@ -67,15 +75,16 @@ namespace Team7.Controllers
         public async Task<IActionResult> PutLesson(int id, [FromBody] LessonViewModel lvm)
         {
 
-            await _lessonPlanRepo.RemoveRangeLessonIdAsync(id);
-
             var update = await _lessonRepo.GetLessonIdAsync(id);
 
             var lesson = lvm.Lesson;
             var exercises = lvm.Exercises;
 
+
             update.Name = lesson.Name;
             update.EmployeeID = lesson.EmployeeID;
+
+            await _lessonPlanRepo.RemoveRangeLessonIdAsync(id);
 
             foreach (int exercise in exercises)
             {
@@ -106,14 +115,14 @@ namespace Team7.Controllers
             bool assFlag = false;
 
             //check if attatched to employee:
-            if (lesson.Schedule.Count != 0)
-                assFlag = true;
+            //if (lesson.Schedule.Count != 0)
+            //    assFlag = true;
 
-            if (assFlag)
-                return StatusCode(StatusCodes.Status409Conflict, new { message = "Lesson has assosciations to another table.", lesson });
+            //if (assFlag)
+            //    return StatusCode(StatusCodes.Status409Conflict, new { message = "Lesson has assosciations to another table.", lesson });
 
             //perform delete:
-            await _lessonPlanRepo.RemoveRangeLessonIdAsync(id);
+            //await _lessonPlanRepo.RemoveRangeLessonIdAsync(id);
             _lessonRepo.Delete(lesson);
             await _lessonRepo.SaveChangesAsync();
 

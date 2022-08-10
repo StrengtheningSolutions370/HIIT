@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -27,10 +28,10 @@ namespace Team7.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ITitleRepo _titleRepo;
         private readonly IClientRepo _clientRepo;
+        private readonly IEmployeeRepo _employeeRepo;
         private readonly IPasswordHistoryRepo _passwordHistoryRepo;
 
-
-        public AppUserController(IPasswordHistoryRepo passwordHistory, IClientRepo clientRepo, ITitleRepo titleRepo, UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
+        public AppUserController(IEmployeeRepo employeeRepo, IPasswordHistoryRepo passwordHistory, IClientRepo clientRepo, ITitleRepo titleRepo, UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _passwordHistoryRepo = passwordHistory;
@@ -38,7 +39,9 @@ namespace Team7.Controllers
             _roleManager = roleManager;
             _titleRepo = titleRepo;
             _clientRepo = clientRepo;
+            _employeeRepo = employeeRepo;
         }
+
         static string generateOTP()
         {
             Random random = new Random();
@@ -48,6 +51,90 @@ namespace Team7.Controllers
                 oneTimePin += random.Next(0, 10).ToString();
             }
             return oneTimePin;
+        }
+
+        [HttpGet]
+        [Route("getuser")]
+        public async Task<IActionResult> getUser(string id)
+        {
+            //query for the user in employee table:
+            var emp = await _employeeRepo.GetByUserIdAsync(id);
+            //query for the user in client table:
+            var cli = await _clientRepo.GetClientIdAsync(id);
+
+            
+
+            if (emp != null)
+            {
+                //employee called the endpoint
+                IQueryable<AppUser> user = _userManager.Users.Where(usr => usr.Id == id).Select(usr => new AppUser
+                {
+                    FirstName = usr.FirstName,
+                    LastName = usr.LastName,
+                    Email = usr.Email,
+                    PhoneNumber = usr.PhoneNumber,
+                    //Title = usr.Title,
+                });
+                return Ok(new
+                {
+                    user, 
+                    emp
+                });
+            }
+
+            if (cli != null)
+            {
+                IQueryable<AppUser> user = _userManager.Users.Where(usr => usr.Id == id).Select(usr => new AppUser
+                {
+                    FirstName = usr.FirstName,
+                    LastName = usr.LastName,
+                    Email = usr.Email,
+                    PhoneNumber = usr.PhoneNumber,
+                    Title = usr.Title,
+                });
+                //client called the endpoint
+                return Ok(new
+                {
+                    user,
+                    cli
+                });
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("getallclients")]
+        public async Task<IActionResult> getAllClients()
+        {
+            var query = await _clientRepo.GetAllClientsAsync();
+            return Ok(query);
+        }
+
+        [HttpDelete]
+        [Route("deleteclient")]
+        public async Task<IActionResult> deleteClient(string id) //pass the AppUserId
+        {
+
+            var client = await _userManager.FindByIdAsync(id);
+            if (client == null) return BadRequest();
+
+            //delete from app user:
+            await _userManager.DeleteAsync(client);
+
+            //delete from client:
+            try
+            {
+                var clientrepo = await _clientRepo.GetClientIdAsync(id);
+                _clientRepo.Delete(clientrepo);
+                await _clientRepo.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);  
+            }
+
+            return Ok();
         }
 
         [HttpPost]
@@ -359,23 +446,18 @@ namespace Team7.Controllers
                 var result = await _userManager.CreateAsync(user, userViewModel.Password);
 
                 //adding role to the client
-                if (result.Succeeded)
+                await _userManager.AddToRoleAsync(user, role); //role="client"
+
+                //make entry in the client table:
+                var clientRec = new Client
                 {
-                    await _userManager.AddToRoleAsync(user, role); //role="client"
+                    UserID = AspId,
+                    Idemnity = "",
+                    AppUser = user,
+                };
 
-                    //make entry in the client table:
-                    var clientRec = new Client
-                    {
-                        UserID = AspId
-                    };
-
-                    _clientRepo.Add(clientRec);
-
-                }
-                else
-                {
-                    StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
-                }
+                _clientRepo.Add(clientRec);
+                await _clientRepo.SaveChangesAsync();
 
             }
             else

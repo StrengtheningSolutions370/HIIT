@@ -288,7 +288,6 @@ namespace Team7.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("BookingTypeID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -677,7 +676,6 @@ namespace Team7.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("SaleItemID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("PriceHistoryID");
@@ -783,7 +781,6 @@ namespace Team7.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AppUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Date")
@@ -1155,7 +1152,6 @@ namespace Team7.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("WriteOffReasonID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("WriteOffLineID");
@@ -1279,9 +1275,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.BookingType", "BookingType")
                         .WithMany("BookingPriceHistory")
-                        .HasForeignKey("BookingTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BookingTypeID");
 
                     b.Navigation("BookingType");
                 });
@@ -1406,9 +1400,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.SaleItem", "SaleItem")
                         .WithMany("PriceHistory")
-                        .HasForeignKey("SaleItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleItemID");
 
                     b.Navigation("SaleItem");
                 });
@@ -1447,9 +1439,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.AppUser", "AppUser")
                         .WithMany("Sale")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AppUserId");
 
                     b.Navigation("AppUser");
                 });
@@ -1601,9 +1591,7 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.WriteOffReason", "WriteOffReason")
                         .WithMany("WriteOffLine")
-                        .HasForeignKey("WriteOffReasonID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WriteOffReasonID");
 
                     b.Navigation("SaleItem");
 

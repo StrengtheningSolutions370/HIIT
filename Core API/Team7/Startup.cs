@@ -129,8 +129,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-
-            options.UseSqlServer(Configuration.GetConnectionString("Azure")));
+            options.UseSqlServer(Configuration.GetConnectionString("AWS")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
@@ -209,7 +208,7 @@ namespace Team7
 
             }
 
-            /*app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
 
             app.UseStaticFiles();
@@ -217,20 +216,20 @@ namespace Team7
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
                 RequestPath = new PathString("/Resources")
-            });*/
+            });
 
-            //app.UseStaticFiles(new StaticFileOptions
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-            //    RequestPath = new PathString("/Resources"),
-            //    ServeUnknownFileTypes = true,
-            //    OnPrepareResponse = ctx =>
-            //    {
-            //        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
-            //        ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers",
-            //          "Origin, X-Requested-With, Content-Type, Accept");
-            //    },
-            //});
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources"),
+                ServeUnknownFileTypes = true,
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+                    ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers",
+                      "Origin, X-Requested-With, Content-Type, Accept");
+                },
+            });
 
             app.UseHttpsRedirection();
 

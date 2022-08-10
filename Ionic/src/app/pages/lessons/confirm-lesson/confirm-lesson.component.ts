@@ -37,6 +37,20 @@ export class ConfirmLessonComponent implements OnInit {
     return ++this.i;
   }
 
+  async returnFrom(){
+    //1 = return to ADD
+    //2 = return to UPDATE
+    if (this.choice === 1){
+      // console.log(this.lesson);
+      await this.dismissModal();
+      this.lessonService.addLessonInfoModal(this.lesson);
+    } else if (this.choice === 2){
+      // console.log(this.lesson)
+      await this.dismissModal();
+      this.lessonService.updateLessonInfoModal(this.lesson);
+    }
+  }
+
   confirmChanges() {
     if (this.choice === 1){
       //CREATE
@@ -79,14 +93,14 @@ export class ConfirmLessonComponent implements OnInit {
         Lesson: {
           lessonID: 0,
           name: this.lesson.name,
-          EmployeeID: this.lesson.employee.split(',')[0]
+          EmployeeID: parseInt(this.lesson.employee.split(',')[0])
         },
         Exercises: exercisePOST
       }
 
       //UPDATE
       this.global.nativeLoad("Updating...");
-      console.log('sending to API', this.lesson)
+      console.log('sending to API', post)
       this.lessonService.updateLesson(this.lesson.lessonID, post).then((el) => { //#TODO: CHECK HOW TO GET THE ID FOR UPDATE
         if (el) {
           this.dismissModal();

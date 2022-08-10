@@ -1,20 +1,26 @@
 ion-button {
-    width:20%;
-    margin-left:80%; 
+    width : 100%;
+}
+
+.ion-padding {
+    display : flex;
+    justify-content: center;
 }
 
 ion-card {
-    margin-left: 15%;
-    margin-right: 15%;
+    
+
+    width: 380px;
 }
 
 ion-accordion {
-    margin-left: 10%;
-    margin-right: 10%;
-    width: 80%;
+    width: 100%;
 }
 
 ion-card-content {
-    margin-left: 25%;
-    margin-right: 25%;
+    // margin-left: 25%;
+    // margin-right: 25%;
+}
+
+.centerLogin {
 }

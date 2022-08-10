@@ -20,7 +20,7 @@ namespace Team7.Models
         [Required]
         public string UserID { get; set; }
         public string Photo { get; set; }
-        public bool Idemnity { get; set; }
+        public string Idemnity { get; set; }
         public string QrCode { get; set; }
         public virtual AppUser AppUser { get; set; }
         public virtual ICollection<Booking> Booking { get; set; }
