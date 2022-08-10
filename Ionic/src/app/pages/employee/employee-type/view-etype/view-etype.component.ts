@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ModalController, ViewWillEnter } from '@ionic/angular';
 import { EmployeeType } from 'src/app/models/employeeType';
 
@@ -11,7 +11,7 @@ import { EmployeeType } from 'src/app/models/employeeType';
 export class ViewEtypeComponent implements ViewWillEnter {
   @Input() employeeType: EmployeeType;
 
-  constructor(private modalCtrl: ModalController, public fb: FormBuilder) { }
+  constructor(private modalCtrl: ModalController, public fb: UntypedFormBuilder) { }
 
   ionViewWillEnter() {
     console.log('view Specific Employee Type -View Will Enter');

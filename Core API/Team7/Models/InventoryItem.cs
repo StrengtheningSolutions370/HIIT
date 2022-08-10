@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Team7.Models
+﻿namespace Team7.Models
 {
     /*public class InventoryItem
     {

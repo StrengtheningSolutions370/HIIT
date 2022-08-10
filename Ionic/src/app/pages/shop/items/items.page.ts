@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { SaleCategory } from 'src/app/models/sale-category';
@@ -27,7 +27,7 @@ customSearch: SearchPipe;
 //String used from the searchbar, used in the filter pipe to search titles.
 // public filter: string;
 
-public searchControl: FormControl;
+public searchControl: UntypedFormControl;
 selectedCategories: any = [];
 filterItems: any = [];
 
@@ -62,7 +62,7 @@ constructor(public saleService: SalesService, public repo: RepoService, public g
     this.fetchSaleItem();
     this.addMoreItems();  
 
-    this.searchControl = new FormControl();
+    this.searchControl = new UntypedFormControl();
 
     this.saleService.getAllSaleCategories().subscribe(
       {

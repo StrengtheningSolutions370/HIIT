@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Team7.Models.Repository;
 using Team7.Models;
+using Team7.Models.Repository;
 
 
 namespace Team7.Controllers
@@ -29,11 +29,12 @@ namespace Team7.Controllers
                 if (await TitleRepo.SaveChangesAsync())
                 {
                     return Ok();
-                } else
+                }
+                else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
                 }
-                                
+
             }
             catch (Exception err)
             {
@@ -55,11 +56,12 @@ namespace Team7.Controllers
             try
             {
                 toUpdate.Description = title.Description;
-                
+
                 if (await TitleRepo.SaveChangesAsync())
                 {
                     return Ok();
-                } else
+                }
+                else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to update value in the database. Contact support.");
                 }
@@ -87,7 +89,8 @@ namespace Team7.Controllers
                 if (await TitleRepo.SaveChangesAsync())
                 {
                     return Ok();
-                } else
+                }
+                else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
                 }
@@ -107,7 +110,7 @@ namespace Team7.Controllers
             try
             {
                 var titleList = await TitleRepo.GetAllTitlesAsync();
-                if (titleList == null)return Ok(0);
+                if (titleList == null) return Ok(0);
                 return Ok(titleList);
             }
             catch (Exception err)

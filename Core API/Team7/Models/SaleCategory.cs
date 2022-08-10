@@ -6,7 +6,7 @@ namespace Team7.Models
 {
     public class SaleCategory
     {
-        
+
         public SaleCategory()
         {
             this.SaleItem = new HashSet<SaleItem>();

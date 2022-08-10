@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { RefundReason } from 'src/app/models/refund-reason';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -14,11 +14,11 @@ import { SalesService } from 'src/app/services/sales/sales.service';
 export class UpdateRefundReasonComponent implements ViewWillEnter {
   @Input() refundReason: RefundReason;
 
-  uRefundReasonForm: FormGroup = new FormGroup({
-    refundReason: new FormControl('', [Validators.required]),
+  uRefundReasonForm: UntypedFormGroup = new UntypedFormGroup({
+    refundReason: new UntypedFormControl('', [Validators.required]),
   });
 
-  constructor(private global: GlobalService, public fb: FormBuilder,
+  constructor(private global: GlobalService, public fb: UntypedFormBuilder,
     public saleService: SalesService) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.

@@ -32,14 +32,14 @@ getAllBooking() : Observable<any> {
 }
 
 matchingBookingType(name: string, description: string):Promise<any>{
-  console.log('saleService: Repo -> Matching saleItem');
-  return this.repo.getMatchSaleItem(name, description).toPromise();
+  console.log('bookingService: Repo -> Matching bookingType');
+  return this.repo.getMatchBookingType(name, description).toPromise();
  }
 
- matchingBooking(name: string, description: string):Promise<any>{
-  console.log('saleService: Repo -> Matching saleCategory');
-  return this.repo.getMatchSaleCategory(name, description).toPromise();
- }
+//  matchingBooking(name: string, description: string):Promise<any>{
+//   console.log('saleService: Repo -> Matching saleCategory');
+//   return this.repo.getMatchSaleCategory(name, description).toPromise();
+//  }
 
 
 //Methods

@@ -43,7 +43,6 @@ export class BookingTypePage implements OnInit {
     this.bookingService.fetchBookingTypeEvent.subscribe({
       next: res => {
         console.log('Fetch booking type again');
-        console.log(res);
         this.fetchBookingType();
       }
     })

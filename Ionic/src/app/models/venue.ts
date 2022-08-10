@@ -6,5 +6,5 @@ import { Schedule } from "./schedule";
         address: string;
         postalCode: string;
         capacity: number;
-        schedule: Schedule[];
+        schedule?: Schedule[];
     }

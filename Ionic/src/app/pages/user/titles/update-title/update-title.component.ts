@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { Title } from 'src/app/models/title';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -14,11 +14,11 @@ import { TitleService } from 'src/app/services/title/title.service';
 export class UpdateTitleComponent implements ViewWillEnter {
   @Input() title: Title;
 
-  uTitleForm: FormGroup = new FormGroup({
-    titleDescription: new FormControl('', [Validators.required])
+  uTitleForm: UntypedFormGroup = new UntypedFormGroup({
+    titleDescription: new UntypedFormControl('', [Validators.required])
   });
 
-  constructor(public global: GlobalService, public fb: FormBuilder,
+  constructor(public global: GlobalService, public fb: UntypedFormBuilder,
     public titleService: TitleService ) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.

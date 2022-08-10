@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
@@ -154,7 +153,7 @@ namespace Team7.Models.Repository
                         ds.EndDateTime,
                         Schedule = ds
                         .Schedule
-                        .Select(sc  => new 
+                        .Select(sc => new
                         {
                             sc.ScheduleID,
                             //sc.CapacityBooked,

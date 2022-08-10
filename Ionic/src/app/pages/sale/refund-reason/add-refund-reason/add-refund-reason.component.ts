@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ViewWillEnter} from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
@@ -18,11 +18,11 @@ export class AddRefundReasonComponent implements ViewWillEnter {
   @Input() refundReason: RefundReason;
 
    //Creating the form to add the new refund reason details, that will be displayed in the HTML component
-   cRefundReasonForm: FormGroup = this.formBuilder.group({
+   cRefundReasonForm: UntypedFormGroup = this.formBuilder.group({
     refundReason : ['', [Validators.required]]
   });
 
-  constructor(private global: GlobalService, public formBuilder: FormBuilder,
+  constructor(private global: GlobalService, public formBuilder: UntypedFormBuilder,
     public saleService: SalesService) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.

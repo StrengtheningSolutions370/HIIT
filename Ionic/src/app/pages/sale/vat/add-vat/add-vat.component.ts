@@ -1,6 +1,6 @@
 import { Component,  Input} from '@angular/core';
 import { ViewWillEnter} from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
@@ -18,12 +18,12 @@ export class AddVatComponent implements ViewWillEnter{
   @Input() VAT: Vat;
 
   //Creating the form to add the new vat details, that will be displayed in the HTML component
-  cVATForm: FormGroup = this.formBuilder.group({
+  cVATForm: UntypedFormGroup = this.formBuilder.group({
     percentage: ['', [Validators.required, Validators.min(1), Validators.max(99)]]
   });
 
 
-  constructor(public global: GlobalService, public formBuilder: FormBuilder,
+  constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
     public vatService: VatService) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.

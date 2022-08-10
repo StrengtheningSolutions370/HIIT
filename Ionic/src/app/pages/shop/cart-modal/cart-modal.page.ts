@@ -1,16 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IonContent, ModalController, ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Cart } from 'src/app/models/cart';
 import { SaleItem } from 'src/app/models/sale-item';
 import { CartService } from 'src/app/services/cart.service';
 import { GlobalService } from 'src/app/services/global/global.service';
-
-
-
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-cart-modal',
@@ -24,11 +22,15 @@ export class CartModalPage implements ViewWillEnter {
   @Input() saleItem = {} as SaleItem;
   cartSub: Subscription;
 
-  payForm! : FormGroup;
+  payForm! : UntypedFormGroup;
 
   emptyCart = false;
 
-  constructor( private httpComms : HttpClient, private cartService: CartService, private global: GlobalService,public formBuilder: FormBuilder
+  constructor( private httpComms : HttpClient,
+     private cartService: CartService,
+      private global: GlobalService,
+      public formBuilder: UntypedFormBuilder,
+      private router: Router
     ) {
     this.getData();
 
@@ -62,6 +64,31 @@ export class CartModalPage implements ViewWillEnter {
     }
     console.log('Quantiy Minus: Null:', this.model.items);
 
+  }
+
+  async makePayment() {
+    try {
+      console.log('model: ', this.model);
+      const data = {
+        order: this.model.items, //JSON.stringify(this.model.items)
+        time: moment().format('lll'),
+        total: this.model.totalPrice,
+        grandTotal: this.model.grandTotal,
+        status: 'Created',
+        paid: 'COD'
+      };
+      console.log('order: ', data);
+      await this.cartService.saveCartOrder(data);
+      this.router.navigate([this.router.url, 'payments']);
+      // await this.orderService.placeOrder(data);
+      // // clear cart
+      // await this.cartService.clearCart();
+      // this.model = {} as Cart;
+      // this.global.successToast('Your Order is Placed Successfully');
+      // this.navCtrl.navigateRoot(['tabs/account']);
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   ionViewWillEnter() {

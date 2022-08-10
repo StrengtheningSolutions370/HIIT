@@ -1,6 +1,6 @@
 import { Time } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { BookingType } from 'src/app/models/booking-type';
 import { Employee } from 'src/app/models/employee';
 import { Venue } from 'src/app/models/venue';
@@ -23,7 +23,7 @@ export class AddScheduleComponent implements AfterViewInit {
 
   defaultDate = Date.now();//Need to recieve this as input from schedule
 
-  cCalendarForm: FormGroup = this.formBuilder.group({
+  cCalendarForm: UntypedFormGroup = this.formBuilder.group({
     dateSelector: [, [Validators.required]],
     timeStartSelector: [, [Validators.required]],
     timeEndSelector: [,[Validators.required]],
@@ -53,7 +53,7 @@ export class AddScheduleComponent implements AfterViewInit {
 
   modalReady = false;
 
-  constructor(public global:GlobalService, public formBuilder: FormBuilder, public scheduleService: ScheduleService) { }
+  constructor(public global:GlobalService, public formBuilder: UntypedFormBuilder, public scheduleService: ScheduleService) { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
