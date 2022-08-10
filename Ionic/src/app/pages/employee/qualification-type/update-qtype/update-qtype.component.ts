@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, AlertController, ViewWillEnter } from '@ionic/angular';
 import { QualificationType } from 'src/app/models/qualification-type';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -16,11 +16,11 @@ export class UpdateQtypeComponent implements ViewWillEnter {
 
   @Input() qualificationType: QualificationType;
 
-  uQTypeForm: FormGroup = new FormGroup({
-    qualificationTypeName: new FormControl('', [Validators.required])
+  uQTypeForm: UntypedFormGroup = new UntypedFormGroup({
+    qualificationTypeName: new UntypedFormControl('', [Validators.required])
   });
 
-  constructor(private modalCtrl: ModalController, public global: GlobalService, public fb: FormBuilder,
+  constructor(private modalCtrl: ModalController, public global: GlobalService, public fb: UntypedFormBuilder,
     public qualificationService: QualificationService) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.

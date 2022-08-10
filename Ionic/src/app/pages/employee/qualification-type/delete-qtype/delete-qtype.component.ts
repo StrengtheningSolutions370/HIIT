@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, ViewWillEnter, AlertController } from '@ionic/angular';
 import { QualificationType } from 'src/app/models/qualification-type';
@@ -15,7 +15,7 @@ import { QualificationService } from 'src/app/services/qualification/qualificati
 export class DeleteQtypeComponent implements ViewWillEnter {
   @Input() qualificationType: QualificationType;
 
-  constructor(private modalCtrl: ModalController, public formBuilder: FormBuilder,
+  constructor(private modalCtrl: ModalController, public formBuilder: UntypedFormBuilder,
     public qualificationService: QualificationService, public global: GlobalService) { }
 
   ionViewWillEnter() {

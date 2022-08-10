@@ -1,7 +1,7 @@
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, ModalController, ToastController, ViewWillEnter } from '@ionic/angular';
 import { EmployeeType } from 'src/app/models/employeeType';
@@ -18,13 +18,13 @@ export class AddEtypeComponent implements ViewWillEnter {
   @Input() employeeType: EmployeeType;
 
   //Creating the form to add the new venue details, that will be displayed in the HTML component
-  cEmployeeTypeForm: FormGroup = this.formBuilder.group({
+  cEmployeeTypeForm: UntypedFormGroup = this.formBuilder.group({
     name: ['', [Validators.required]],
     description: ['', [Validators.required]]
   });
 
 
-  constructor(private modalCtrl: ModalController,public formBuilder: FormBuilder,
+  constructor(private modalCtrl: ModalController,public formBuilder: UntypedFormBuilder,
     public employeeService: EmployeeService, private router: Router, public global: GlobalService) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.

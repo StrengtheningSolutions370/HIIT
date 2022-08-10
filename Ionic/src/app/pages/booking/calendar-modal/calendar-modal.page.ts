@@ -1,6 +1,6 @@
 import { Time } from '@angular/common';
 import { AfterViewInit, Component} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { BookingType } from 'src/app/models/booking-type';
 import { Employee } from 'src/app/models/employee';
@@ -21,7 +21,7 @@ export class CalendarModalPage implements AfterViewInit {
   employeeList!: Employee[];
   lessonPlan!: any; // Update to lesson plan model
 
-  cCalendarForm: FormGroup = this.formBuilder.group({
+  cCalendarForm: UntypedFormGroup = this.formBuilder.group({
     venueDrop : ['', [Validators.required]],
     bookingTypeDrop : ['', [Validators.required]],
     employeeDrop : ['', [Validators.required]]
@@ -49,7 +49,7 @@ export class CalendarModalPage implements AfterViewInit {
   modalReady = false;
 
   constructor(public global:GlobalService, public modalCtrl:ModalController, private venueService: VenueService,
-  public formBuilder: FormBuilder, public scheduleService: ScheduleService) { }
+  public formBuilder: UntypedFormBuilder, public scheduleService: ScheduleService) { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {

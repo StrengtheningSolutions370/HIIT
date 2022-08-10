@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { SalesService } from 'src/app/services/sales/sales.service';
 import { SaleCategory } from 'src/app/models/sale-category';
@@ -22,14 +22,14 @@ itemImage! : File;
 itemImageBase64String! : any;
 quotable! : boolean;
 
-uSaleItemForm: FormGroup = new FormGroup({
-  itemName: new FormControl('', [Validators.required]),
-  itemDescription: new FormControl('', [Validators.required]),
-  itemQuantity: new FormControl('', [Validators.required, Validators.min(1)]),
-  itemPhoto: new FormControl(''),
-  itemPrice: new FormControl('', [Validators.required, Validators.min(1)]),
-  itemSCategory: new FormControl(''),
-  itemQuotable: new FormControl('')
+uSaleItemForm: UntypedFormGroup = new UntypedFormGroup({
+  itemName: new UntypedFormControl('', [Validators.required]),
+  itemDescription: new UntypedFormControl('', [Validators.required]),
+  itemQuantity: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
+  itemPhoto: new UntypedFormControl(''),
+  itemPrice: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
+  itemSCategory: new UntypedFormControl(''),
+  itemQuotable: new UntypedFormControl('')
 });
 
 addImage(event : any) {
@@ -69,7 +69,7 @@ checkBoxToggle(check : any) {
   this.uSaleItemForm.controls.itemQuantity.enable();
 }
 
-constructor(public global: GlobalService, public formBuilder: FormBuilder,
+constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
  public saleService: SalesService, private repo : RepoService) {
 }
 

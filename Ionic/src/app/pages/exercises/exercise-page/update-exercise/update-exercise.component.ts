@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder, AnyForUntypedForms } from '@angular/forms';
+import { UntypedFormGroup, FormControl, Validators, UntypedFormBuilder } from '@angular/forms';
 import { ModalController, ViewWillEnter } from '@ionic/angular';
 import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
 import { Exercise } from 'src/app/models/exercise';
@@ -23,7 +23,7 @@ export class UpdateExerciseComponent implements OnInit {
   showVideo = false;
   embed! : any;
 
-  uExerciseForm: FormGroup = this.formBuilder.group({
+  uExerciseForm: UntypedFormGroup = this.formBuilder.group({
     exerciseName : ['', [Validators.required]],
     exerciseFocus : ['', [Validators.required]],
     exerciseUrl : ['', Validators.pattern(/(http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?)|(^$)/)],
@@ -34,7 +34,7 @@ export class UpdateExerciseComponent implements OnInit {
     return this.uExerciseForm.controls;
   }
 
-  constructor(private modalCtrl: ModalController, public global: GlobalService, public formBuilder: FormBuilder,
+  constructor(private modalCtrl: ModalController, public global: GlobalService, public formBuilder: UntypedFormBuilder,
     public exerciseService: ExerciseService, public sanitizer: DomSanitizer) { }
 
     ngOnInit() {

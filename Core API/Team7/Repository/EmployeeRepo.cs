@@ -1,11 +1,9 @@
-﻿    using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
-using Team7.Models.Repository;
 
 
 namespace Team7.Models.Repository
@@ -115,7 +113,7 @@ namespace Team7.Models.Repository
         {
             foreach (var title in titles)
             {
-                foreach(var item in title.User)
+                foreach (var item in title.User)
                 {
                     if (item.Id == id)
                     {
@@ -135,7 +133,7 @@ namespace Team7.Models.Repository
         public async Task<Employee[]> _GetAllEmployeesAsync()
         {
             IQueryable<Employee> query = DB.Employee;
-            if(!query.Any())
+            if (!query.Any())
             {
                 return null;
             }
@@ -239,7 +237,8 @@ namespace Team7.Models.Repository
             else
             {
                 return await query.Select(e =>
-                new Employee {
+                new Employee
+                {
                     EmployeeID = e.EmployeeID,
                     Photo = e.Photo,
                     Contract = e.Contract,

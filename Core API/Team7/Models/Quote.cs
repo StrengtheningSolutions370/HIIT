@@ -8,9 +8,9 @@
 
         public string saleQuoteName { get; set; }
 
-       public int saleQuoteID { get; set; }
+        public int saleQuoteID { get; set; }
 
 
-        public string optDescription => string.Empty; 
+        public string optDescription => string.Empty;
     }
 }

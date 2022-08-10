@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { WriteOffReason } from 'src/app/models/write-off-reason'; 
 import { InventoryService } from 'src/app/services/inventory/inventory.service'; 
 import { GlobalService } from 'src/app/services/global/global.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 
 @Component({
@@ -14,11 +14,11 @@ export class UpdateWriteOffReasonComponent implements ViewWillEnter {
 
   @Input() writeOffReason: WriteOffReason;
 
-  uWriteOffReasonForm: FormGroup = new FormGroup({
-    writeOffReasonDescription: new FormControl('', [Validators.required])
+  uWriteOffReasonForm: UntypedFormGroup = new UntypedFormGroup({
+    writeOffReasonDescription: new UntypedFormControl('', [Validators.required])
   });
 
-  constructor(public global: GlobalService, public fb: FormBuilder,
+  constructor(public global: GlobalService, public fb: UntypedFormBuilder,
     public writeOffReasonService: InventoryService) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.

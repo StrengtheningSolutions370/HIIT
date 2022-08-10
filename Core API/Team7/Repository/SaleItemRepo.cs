@@ -66,7 +66,8 @@ namespace Team7.Models.Repository
                         PriceHistory = si
                         .PriceHistory
                         .Select(ph => new { ph.Date, ph.SaleAmount, ph.CostAmount }),
-                        StockTake = si.StockTakeLine.Select(stl => new {
+                        StockTake = si.StockTakeLine.Select(stl => new
+                        {
                             id = stl.StockTake.StockTakeID,
                             StockTakeDate = stl.StockTake.Date,
                             StockTakeNotes = stl.StockTake.Notes
@@ -116,7 +117,8 @@ namespace Team7.Models.Repository
                         PriceHistory = si
                         .PriceHistory
                         .Select(ph => new { ph.Date, ph.SaleAmount, ph.CostAmount }),
-                        StockTake = si.StockTakeLine.Select(stl => new {
+                        StockTake = si.StockTakeLine.Select(stl => new
+                        {
                             id = stl.StockTake.StockTakeID,
                             StockTakeDate = stl.StockTake.Date,
                             StockTakeNotes = stl.StockTake.Notes
@@ -159,7 +161,7 @@ namespace Team7.Models.Repository
                         si.QuantityOnHand,
                         si.Stock,
                         si.SaleCategory,
-                       //SaleCategoryName = si.SaleCategory.Name,
+                        //SaleCategoryName = si.SaleCategory.Name,
                         //SaleCategoryDescription = si.SaleCategory.Description,
                         //InventoryItem = si
                         //.InventoryItem
@@ -167,7 +169,8 @@ namespace Team7.Models.Repository
                         PriceHistory = si
                         .PriceHistory
                         .Select(ph => new { ph.Date, ph.SaleAmount, ph.CostAmount }),
-                        StockTake = si.StockTakeLine.Select(stl => new {
+                        StockTake = si.StockTakeLine.Select(stl => new
+                        {
                             id = stl.StockTake.StockTakeID,
                             StockTakeDate = stl.StockTake.Date,
                             StockTakeNotes = stl.StockTake.Notes

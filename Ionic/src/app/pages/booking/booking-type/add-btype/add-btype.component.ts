@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule } from '@angular/forms';
 import { BookingType } from 'src/app/models/booking-type';
 import { BookingService } from 'src/app/services/booking/booking.service';
 import { ViewWillEnter} from '@ionic/angular';
@@ -13,11 +13,11 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class AddBtypeComponent implements ViewWillEnter {
 
   @Input() bookingType: BookingType;
-  constructor(private global: GlobalService,  public formBuilder: FormBuilder,
+  constructor(private global: GlobalService,  public formBuilder: UntypedFormBuilder,
     public bookingService: BookingService) { }
 
   //Creating the form to add the new booking type details, that will be displayed in the HTML component
-   cBookingTypeForm: FormGroup = this.formBuilder.group({
+   cBookingTypeForm: UntypedFormGroup = this.formBuilder.group({
     bookingTypeName: ['', [Validators.required]],
     bookingTypeDescription: ['', [Validators.required]],
     bookingTypeCapacity: ['', [Validators.required, Validators.min(1)]],

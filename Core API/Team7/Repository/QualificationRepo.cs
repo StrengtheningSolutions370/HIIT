@@ -1,11 +1,7 @@
-﻿using Azure;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
-using Team7.ViewModels;
 
 namespace Team7.Models.Repository
 {
@@ -49,7 +45,7 @@ namespace Team7.Models.Repository
                     {
                         q.QualificationID,
                         q.Description,
-                        qualificationType = new {q.QualificationTypeID, q.QualificationType.Name}
+                        qualificationType = new { q.QualificationTypeID, q.QualificationType.Name }
                     }).ToListAsync()
                 };
             }
@@ -72,7 +68,7 @@ namespace Team7.Models.Repository
         public async Task<object> GetQualificationsAsync(string description)
         {
             IQueryable<Qualification> query = DB.Qualification.Where(q => q.Description == description);
-            
+
             if (!query.Any())
             {
                 return null;

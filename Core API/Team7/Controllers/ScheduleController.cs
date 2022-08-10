@@ -57,7 +57,7 @@ namespace Team7.Controllers
                 //toUpdate.Name = saleCategory.Name;
                 //toUpdate.Description = saleCategory.Description;
                 //toUpdate.CapacityBooked = schedule.CapacityBooked;
-                if (schedule.BookingAttendance!= null)
+                if (schedule.BookingAttendance != null)
                 {
                     toUpdate.BookingAttendance = schedule.BookingAttendance;
                 }

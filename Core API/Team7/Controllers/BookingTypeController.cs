@@ -35,16 +35,16 @@ namespace Team7.Controllers
 
                 if (bookingType.BookingPriceHistory != null)
                 {
-                        var btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
+                    var btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
 
-                        BookingPriceHistory bookingPrice = new BookingPriceHistory
-                        {
-                            Amount = btPriceHistory.Amount,
-                            Date = System.DateTime.Now,
-                            BookingTypeID = bookingType.BookingTypeID,
-                            BookingType = bookingType
-                        };
-                        toAdd.BookingPriceHistory.Add(bookingPrice);
+                    BookingPriceHistory bookingPrice = new BookingPriceHistory
+                    {
+                        Amount = btPriceHistory.Amount,
+                        Date = System.DateTime.Now,
+                        BookingTypeID = bookingType.BookingTypeID,
+                        BookingType = bookingType
+                    };
+                    toAdd.BookingPriceHistory.Add(bookingPrice);
                 }
 
                 BookingTypeRepo.Add(toAdd);
@@ -68,7 +68,7 @@ namespace Team7.Controllers
         // PUT api/salecategory/update/5
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> PutBookingType (int id, [FromBody] BookingType bookingType)
+        public async Task<IActionResult> PutBookingType(int id, [FromBody] BookingType bookingType)
         {
             var toUpdate = await BookingTypeRepo._GetBookingTypeIdAsync(id);
             if (toUpdate == null)
@@ -83,17 +83,17 @@ namespace Team7.Controllers
                 toUpdate.Colour = bookingType.Colour;
 
 
-                if(bookingType.BookingPriceHistory != null)
+                if (bookingType.BookingPriceHistory != null)
                 {
                     var btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
-                    
+
                     BookingPriceHistory bookingPrice = new BookingPriceHistory
                     {
                         Amount = btPriceHistory.Amount,
                         Date = System.DateTime.Now,
                         BookingTypeID = bookingType.BookingTypeID,
                         BookingType = bookingType
-                     };
+                    };
                     toUpdate.BookingPriceHistory.Add(bookingPrice);
                 }
 
@@ -117,7 +117,7 @@ namespace Team7.Controllers
         // DELETE api/salecategory/delete/5
         [HttpDelete]
         [Route("delete")]
-        public async Task<IActionResult> DeleteBookingType (int id)
+        public async Task<IActionResult> DeleteBookingType(int id)
         {
             var tempBookingType = await BookingTypeRepo._GetBookingTypeIdAsync(id);
             if (tempBookingType == null)
