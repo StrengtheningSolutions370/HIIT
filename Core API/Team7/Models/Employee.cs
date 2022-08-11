@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Team7.Models
 {
@@ -31,7 +27,7 @@ namespace Team7.Models
 
         [Required]
         public string UserID { get; set; }
-        
+
         public virtual EmployeeType EmployeeType { get; set; }
         public virtual Qualification Qualification { get; set; }
         public virtual ICollection<Lesson> Lesson { get; set; }

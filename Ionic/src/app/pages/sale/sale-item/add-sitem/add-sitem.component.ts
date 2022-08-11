@@ -1,6 +1,6 @@
 import { Component,  Input } from '@angular/core';
 import { ViewWillEnter} from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -29,7 +29,7 @@ export class AddSitemComponent implements ViewWillEnter {
   itemImageBase64String!: any;
 
   //Creating the form to add the new sale category details, that will be displayed in the HTML component
-  cSaleItemForm: FormGroup = this.formBuilder.group({
+  cSaleItemForm: UntypedFormGroup = this.formBuilder.group({
    itemName : ['', [Validators.required]],
    itemDescription : ['', [Validators.required]],
    itemQuantity : ['', [Validators.required, Validators.min(1)]],
@@ -83,7 +83,7 @@ export class AddSitemComponent implements ViewWillEnter {
    
  }
 
- constructor(public global: GlobalService, public formBuilder: FormBuilder,
+ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
    public saleService: SalesService, private repo: RepoService) {
     this.saleService.getAllSaleCategories().subscribe(
       {

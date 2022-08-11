@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, ViewWillEnter} from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { Exercise } from 'src/app/models/exercise';
 import { ExerciseService } from 'src/app/services/exercise/exercise.service';
@@ -20,14 +20,14 @@ export class AddExerciseComponent implements OnInit {
   embed! : any;
   showVideo = false;
 
-  cExerciseForm: FormGroup = this.formBuilder.group({
+  cExerciseForm: UntypedFormGroup = this.formBuilder.group({
     exerciseName : ['', [Validators.required]],
     exerciseFocus : ['', [Validators.required]],
     exerciseUrl : ['', Validators.pattern(/(http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?)|(^$)/)],
     exerciseCategory : ['', [Validators.required]],
   });
 
-  constructor(public global: GlobalService, public formBuilder: FormBuilder,
+  constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
     public exerciseService: ExerciseService, private modalCtrl: ModalController, public sanitizer: DomSanitizer) { }
 
   get errorControl() {

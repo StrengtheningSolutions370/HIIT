@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Team7.Models.Repository;
 using Team7.Models;
+using Team7.Models.Repository;
 
 namespace Team7.Controllers
 {

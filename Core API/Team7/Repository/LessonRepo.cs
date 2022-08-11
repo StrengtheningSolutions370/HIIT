@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -69,12 +68,18 @@ namespace Team7.Models.Repository
 
         static Employee GetEmployee(List<Employee> emps, int id)
         {
-            foreach(Employee emp in emps)
+            foreach (Employee emp in emps)
             {
                 if (emp.EmployeeID == id)
                     return emp;
             }
             return null;
+        }
+
+        public async Task<Lesson> GetLessonByNameAsync(string name)
+        {
+            IQueryable<Lesson> query = DB.Lesson.Where(l => l.Name == name);
+            return query.FirstOrDefault();
         }
 
         public async Task<Lesson> GetLessonIdAsync(int id)
@@ -85,9 +90,10 @@ namespace Team7.Models.Repository
             if (!query.Any())
                 return null;
 
-               
-            return await query.Select(l => 
-                new  Lesson {
+
+            return await query.Select(l =>
+                new Lesson
+                {
                     LessonID = l.LessonID,
                     Name = l.Name,
                     Employee = l.Employee,

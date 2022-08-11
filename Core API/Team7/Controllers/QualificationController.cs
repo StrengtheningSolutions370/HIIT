@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Team7.Models;
 using Team7.Models.Repository;
@@ -44,7 +42,7 @@ namespace Team7.Controllers
         public async Task<IActionResult> PutQualification(int id, [FromBody] Qualification qualification)
         {
             var toUpdate = await qualificationRepo._GetQualificationIdAsync(id);
-                if (toUpdate == null)
+            if (toUpdate == null)
             {
                 return NotFound("Could not find existing Qualification with id:" + id);
             }
@@ -93,7 +91,7 @@ namespace Team7.Controllers
             try
             {
                 var qualificationList = await qualificationRepo.GetAllQualificationsAsync();
-                if (qualificationList == null)return Ok(0);
+                if (qualificationList == null) return Ok(0);
                 return Ok(qualificationList);
             }
             catch (Exception err)

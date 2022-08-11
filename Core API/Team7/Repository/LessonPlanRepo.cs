@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
-using Team7.Models;
 
 
 namespace Team7.Models.Repository
@@ -70,9 +67,10 @@ namespace Team7.Models.Repository
 
             if (!query.Any())
                 return null;
-            
-            return await query.Select(lp => 
-                new LessonPlan {
+
+            return await query.Select(lp =>
+                new LessonPlan
+                {
                     LessonPlanID = lp.LessonPlanID,
                     Exercise = lp.Exercise,
                     Lesson = lp.Lesson,
@@ -112,5 +110,5 @@ namespace Team7.Models.Repository
             return true;
         }
 
-}
+    }
 }

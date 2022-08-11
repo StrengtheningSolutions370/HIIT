@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { AlertController, ModalController, ToastController, ViewWillEnter } from '@ionic/angular';
 import { EmployeeType } from 'src/app/models/employeeType';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
@@ -17,12 +17,12 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class UpdateEtypeComponent implements ViewWillEnter {
   @Input() employeeType: EmployeeType;
 
-  uEmployeeTypeForm: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required])
+  uEmployeeTypeForm: UntypedFormGroup = new UntypedFormGroup({
+    name: new UntypedFormControl('', [Validators.required]),
+    description: new UntypedFormControl('', [Validators.required])
   });
 
-  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public fb: FormBuilder,
+  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public fb: UntypedFormBuilder,
     public employeeService: EmployeeService, private alertCtrl: AlertController, public global: GlobalService) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.

@@ -1,59 +1,50 @@
+<ion-searchbar expand="block" placeholder='Search Sale Item...' [(ngModel)]="filter"
+animated="true" debounce="200"></ion-searchbar>
+
+<div class="ion-text-center">
+  <ion-button class="ion-text-center"color="success" (click)="saleService.addSaleItemInfoModal()">
+    Add Sale Item
+  </ion-button>
+</div>
+
+<div class="ion-text-center " ngIf="isLoading">
+  <ion-spinner name="circles"></ion-spinner>
+</div>
+
 <ion-content>
-  <br/>
-  <ion-searchbar expand="block" placeholder='Search Sale Item...' [(ngModel)]="filter"
-  animated="true" debounce="200"></ion-searchbar>
-
-  <br/>
-  <br/>
-
-  <div class="ion-text-center">
-    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="saleService.addSaleItemInfoModal()">
-      Add Sale Item 
-    </ion-button>
-  </div>
-  
   <ion-grid>
-    <ion-row>
-    <!-- <div style="display: inline-block;width: 350px;height: 200px;margin-bottom: 5px;" > -->
+    <ion-row class="flex-wrap">
+      <ion-col class='ion-align-self-start ' sizeLg="3" sizeMd="3" sizeXs="6" ngFor="let saleItem of saleItemList"
+        class="listMargin">
+        <ion-card>
+          <h5 class="ion-align-self-center">{{saleItem.name}}</h5>
 
-      <ion-col size="4" *ngFor="let saleItem of saleItemList  | filter:filter"> 
-        <!-- loop goes in this tag -->
-
-      <ion-card >
-          <ion-card-header (click)="saleService.viewSaleItemInfoModal(saleItem)">
-            <ion-card-title style="color:#e7e8ec;">
-              {{saleItem.name}}
-            </ion-card-title>  
-            <p>{{saleItem.description}}</p>
-          </ion-card-header>
-          <ion-card-content style="color:#b1b2b6;">
-            
-            <ion-item>
-              <ion-thumbnail slot="start">
-                <img [src]="this.global.createImg(saleItem.photo)">
-              </ion-thumbnail>
-              <ion-label>Price: R{{saleItem.priceHistory[0].saleAmount}}</ion-label> <br/>
-              <ion-label>{{saleItem.saleCategoryName}}</ion-label>
-            </ion-item>
-         
-            <br/>
-            <ion-row>
-              <ion-col col-4>
-                <ion-button class="fifty" color="secondary" (click)="saleService.updateSaleItemInfoModal(saleItem)"><ion-icon name="refresh"></ion-icon>Update</ion-button>
+          <div class="img-wrapper">
+            <img class="img-wrapper" (click)="saleService.viewSaleItemInfoModal(saleItem)"
+              [src]="this.global.createImg(saleItem.photo)" alt="sale item image">
+          </div>
+          <ion-card-content class="card-body card-buttons">
+            <ion-row class="row align-items-center no-gutters">
+              <ion-col class="column-buttons">
+                <ion-button (click)="saleService.deleteSaleItemInfoModal(saleItem)"  color="danger"  expand="block" >Delete
+                </ion-button>
               </ion-col>
-              <ion-col col-4>
-                <ion-button class="fifty" color="tertiary" (click)="saleService.deleteSaleItemInfoModal(saleItem)"> <ion-icon name="trash" size="medium"></ion-icon>Delete</ion-button>
+              <ion-col >
+                <ion-button (click)="saleService.updateSaleItemInfoModal(saleItem)"  color="success"  expand="block">Update
+                </ion-button>
               </ion-col>
-              <!-- <ion-col col-4>
-                <ion-button class="hundred" color="primary" *ngIf="saleItem.Quotable" (click)="requestQuoteModal()"> <ion-icon name="document-outline" size="medium"></ion-icon>Request Quote</ion-button>
-              </ion-col> -->
             </ion-row>
           </ion-card-content>
-      </ion-card>
-  </ion-col>
-  </ion-row>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   </ion-grid>
+  <div>
+    <ion-infinite-scroll threshold="110px" (ionInfinite)="loadData($event)" [disabled]="numTimesLeft <= 0">
+      <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading Sale Items...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
 
 </ion-content>
-
-

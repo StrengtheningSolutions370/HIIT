@@ -8,10 +8,10 @@ const routes: Routes = [
     path: 'tabs',
     component: UserPage,
     children:[
-      // {
-      //   path: 'customer',
-      //   loadChildren: () => import().then( m => m.UserRolesPageModule)
-      // },
+      {
+        path: 'clients',
+        loadChildren: () => import('./clients/clients.module').then( m => m.ClientsPageModule)
+      },
       {
         path: 'titles',
         loadChildren: () => import('./titles/titles.module').then( m => m.TitlesPageModule)

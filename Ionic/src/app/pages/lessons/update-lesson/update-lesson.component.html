@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Edit Lesson Details</ion-title> <!--#TODO CHECK THE NAME HERE-->
+    <ion-title>Update Lesson</ion-title> <!--#TODO CHECK THE NAME HERE-->
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
@@ -10,6 +10,11 @@
 <ion-content>
   <br />
   <form [formGroup]="cLessonForm" (ngSubmit)="submitForm()">
+
+    <br/>
+    <div class="ion-text-center">
+      <p style="font-size:large">Please update the lesson information below.</p>
+    </div>
 
     <ion-item>
       <ion-label position="floating">Name:</ion-label>
@@ -35,7 +40,7 @@
     <!-- exercise choosing system -->
     <!-- <ion-item> -->
       <br />
-      <ion-label id="exe" position="floating">Exercises:</ion-label>
+      <ion-label id="exe" position="floating">Update Exercises:</ion-label>
     <!-- </ion-item> -->
     
     <div *ngFor="let exercise of exercises">

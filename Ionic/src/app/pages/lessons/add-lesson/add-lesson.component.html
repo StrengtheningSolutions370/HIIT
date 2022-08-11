@@ -11,6 +11,11 @@
   <br />
   <form [formGroup]="cLessonForm" (ngSubmit)="submitForm()">
 
+    <br/>
+    <div class="ion-text-center">
+      <p style="font-size:large">Please fill in the lesson information below.</p>
+    </div>
+
     <ion-item>
       <ion-label position="floating">Name:</ion-label>
       <ion-input formControlName="lessonName" type="text" id="lessonName"></ion-input>
@@ -33,11 +38,10 @@
     <ion-img *ngIf="showImage" src="{{imgSrc}}"></ion-img>
 
     <!-- exercise choosing system -->
-    <ion-item>
-      <ion-label position="floating">Exercises:</ion-label>
+    <!-- <ion-item> -->
       <br />
-      <br />
-    </ion-item>
+      <ion-label id="exe" position="floating">Add Exercises:</ion-label>
+    <!-- </ion-item> -->
     
     <div *ngFor="let exercise of exercises">
       <br />

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
 import { Component,  Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { ExerciseService } from 'src/app/services/exercise/exercise.service';
 import { ViewWillEnter} from '@ionic/angular';
@@ -18,12 +18,12 @@ export class AddExerciseCategoryComponent implements ViewWillEnter {
   @Input() exerciseCategory: ExerciseCategory;
 
    //Creating the form to add the new exercise category details, that will be displayed in the HTML component
-   cExerciseCategoryForm: FormGroup = this.formBuilder.group({
+   cExerciseCategoryForm: UntypedFormGroup = this.formBuilder.group({
     exerciseCategoryName: ['', [Validators.required]],
     exerciseCategoryDescription: ['', [Validators.required]]
   });
 
-  constructor(public global: GlobalService,  public formBuilder: FormBuilder,
+  constructor(public global: GlobalService,  public formBuilder: UntypedFormBuilder,
     public exerciseService: ExerciseService ) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.

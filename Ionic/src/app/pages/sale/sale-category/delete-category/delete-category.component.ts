@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { SalesService } from 'src/app/services/sales/sales.service';
@@ -14,7 +14,7 @@ export class DeleteCategoryComponent{
   @Input() saleCategory: any;
 
 
-  constructor(public global: GlobalService, public formBuilder: FormBuilder,
+  constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
   public saleService: SalesService) { }
 
   //Send through the id of the selected title to be deleted in the title service.

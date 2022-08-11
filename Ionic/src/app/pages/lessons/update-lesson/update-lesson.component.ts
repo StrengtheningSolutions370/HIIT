@@ -40,10 +40,10 @@ export class UpdateLessonComponent implements OnInit {
   constructor(private formBuilder : FormBuilder, private repo : RepoService, private modalCtrl : ModalController, private global : GlobalService, private lessonService : LessonService) { }
 
   ngAfterViewInit() {
-    const ddName = `${this.lesson.employee.appUser.firstName} ${this.lesson.employee.appUser.lastName}`;
+    const ddName = `${this.lesson?.employee?.appUser.firstName} ${this.lesson?.employee?.appUser.lastName}`;
     this.trainerSelect.selectedText = ddName;
     this.populateSelects();
-
+    console.log(this.trainerSelect)
     //merge the exercises into the this.exercise then populate the childen:
     // const temp = this.exercises;
     // //this.exercises = [];
@@ -76,8 +76,10 @@ export class UpdateLessonComponent implements OnInit {
 
     //console.log('update this lesson', this.lesson);
     //console.log('update lesson, exercises', this.exercises);
-    //console.log('update lesson, employee', this.employees);
+    console.log('update lesson, employee', this.employees);
 
+    this.imgSrc = '';
+    this.showImage = false;
     if (this.lesson.employee.photo != null || this.lesson.employee.photo != undefined || this.lesson.employee.photo != '') {
       this.imgSrc = this.createImg(this.lesson.employee.photo);
       this.showImage = true;
@@ -92,7 +94,7 @@ export class UpdateLessonComponent implements OnInit {
 
     this.repo.getEmployees().subscribe({
       next: (data : any) => {
-        this.employees = data;
+        this.employees = data.filter(el => el.role[0] == 'trainer');
         // //console.log('employees',employees)
       }
     });
@@ -225,9 +227,14 @@ export class UpdateLessonComponent implements OnInit {
       this.showImage = true;
       this.imgSrc = this.createImg(employee.data.photo);
     }
+    this.trainerSelect.selectedText = this.cLessonForm.get('lessonEmployee').value.split(',')[1];
+
   }
 
   createImg (src : string) {
+    if (src == null || src == undefined || src == '') {
+      return `https://localhost:44383/Resources/Employees/Images/default.jpeg`;
+    }
     return `https://localhost:44383/Resources/Employees/Images/${src}`;
   }
 

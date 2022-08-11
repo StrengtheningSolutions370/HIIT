@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Quote } from 'src/app/models/quote';
 import { SaleItem } from 'src/app/models/sale-item';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -16,9 +16,9 @@ export class QuoteRequestPage implements OnInit {
   userMail!: string;
   @Input() saleItem: SaleItem;
 
-  quoteEmailForm! : FormGroup;
+  quoteEmailForm! : UntypedFormGroup;
 
-  constructor(public repo: RepoService,  public formBuilder: FormBuilder, private storage : StoreService,
+  constructor(public repo: RepoService,  public formBuilder: UntypedFormBuilder, private storage : StoreService,
     public global: GlobalService) { }
 
       //Used for validation within the form, if there are errors in the control, this method will return the errors.
