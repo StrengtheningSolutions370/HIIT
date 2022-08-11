@@ -26,7 +26,7 @@ isLoading = true;
 
 constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService) {
    this.fetchSaleItem();
-   this.addMoreItems();  
+   this.addMoreItems();
   }
 
 
@@ -44,19 +44,19 @@ fetchSaleItem() {
   );
 }
 
-loadData(event) {  
-  setTimeout(() => {  
-    console.log('Done');  
-    this.addMoreItems();   
-    this.numTimesLeft -= 1;  
-    event.target.complete();  
-  }, 400);  
+loadData(event) {
+  setTimeout(() => {
+    console.log('Done');
+    this.addMoreItems();
+    this.numTimesLeft -= 1;
+    event.target.complete();
+  }, 400);
 } 
 
-addMoreItems() {  
-  for (let i = 1; i < 12; i++) {  
-    this.items.push(i);   
-  }  
+addMoreItems() {
+  for (let i = 1; i < 12; i++) {
+    this.items.push(i);
+  }
 } 
 
 ngOnInit() {

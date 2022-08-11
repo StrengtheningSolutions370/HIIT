@@ -6,6 +6,7 @@ import { SaleCategory } from 'src/app/models/sale-category';
 import { RepoService } from 'src/app/services/repo.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { SaleItem } from 'src/app/models/sale-item';
 
 
 
@@ -26,8 +27,10 @@ uSaleItemForm: UntypedFormGroup = new UntypedFormGroup({
   itemName: new UntypedFormControl('', [Validators.required]),
   itemDescription: new UntypedFormControl('', [Validators.required]),
   itemQuantity: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
+  itemStock: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
   itemPhoto: new UntypedFormControl(''),
   itemPrice: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
+  itemCost: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
   itemSCategory: new UntypedFormControl(''),
   itemQuotable: new UntypedFormControl('')
 });
@@ -62,11 +65,15 @@ checkBoxToggle(check : any) {
     //is quotable
     this.uSaleItemForm.controls.itemPrice.disable();
     this.uSaleItemForm.controls.itemQuantity.disable();
+    this.uSaleItemForm.controls.itemCost.disable();
+    this.uSaleItemForm.controls.itemStock.disable();
     return;
   }
   console.log('here')
   this.uSaleItemForm.controls.itemPrice.enable();
-  this.uSaleItemForm.controls.itemQuantity.enable();
+    this.uSaleItemForm.controls.itemQuantity.enable();
+    this.uSaleItemForm.controls.itemCost.enable();
+    this.uSaleItemForm.controls.itemStock.enable();
 }
 
 constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
@@ -96,10 +103,14 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
       this.quotable = this.saleItem.quotable;
       if (!this.quotable) {
         console.log("NOT quotable - reset price?");
-        console.log(this.saleItem.price);
-        console.log(this.saleItem.quantity);
-        this.uSaleItemForm.controls['itemPrice'].setValue(this.saleItem.price);
-        this.uSaleItemForm.controls['itemQuantity'].setValue(this.saleItem.quantity);
+        console.log(this.saleItem.costAmount);
+        console.log(this.saleItem.quantityOnHand);
+        console.log(this.saleItem.saleAmount);
+        console.log(this.saleItem.stock);
+        this.uSaleItemForm.controls['itemPrice'].setValue(this.saleItem.saleAmount);
+        this.uSaleItemForm.controls['itemQuantity'].setValue(this.saleItem.quantityOnHand);
+        this.uSaleItemForm.controls['itemCost'].setValue(this.saleItem.costAmount);
+        this.uSaleItemForm.controls['itemStock'].setValue(this.saleItem.stock);
       }
       this.uSaleItemForm.controls['itemName'].setValue(this.saleItem.name);
       this.uSaleItemForm.controls['itemDescription'].setValue(this.saleItem.description);
@@ -138,10 +149,14 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
 
     let priceTemp = Number(this.uSaleItemForm.controls['itemPrice'].value);
     let qtyTemp = this.uSaleItemForm.controls['itemQuantity'].value;
+    let costTemp = Number(this.uSaleItemForm.controls['itemCost'].value);
+    let stockTemp = this.uSaleItemForm.controls['itemStock'].value;
 
     if (this.quotable){
       priceTemp = 0;
       qtyTemp = 0;
+      costTemp = 0;
+      stockTemp = 0;
     }
 
     
@@ -153,16 +168,20 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
      }
 
      //form is valid for submission
-    var obj = {
+     var obj: SaleItem = {
       name: this.uSaleItemForm.controls['itemName'].value,
       saleItemID: this.saleItem.saleItemID,
       photo: fName,
       description: this.uSaleItemForm.controls['itemDescription'].value,
-      price: priceTemp,
+      priceHistory: [{
+        costAmount: costTemp,
+        saleAmount: priceTemp,
+      }],
       quotable: this.quotable,
-      quantity: qtyTemp,
+      quantityOnHand: qtyTemp,
+      stock: stockTemp,
       saleCategoryID: Number(this.uSaleItemForm.controls['itemSCategory'].value.split(',')[0]),
-      inventoryItem:null
+      //inventoryItem:null
     }
 
     console.log('ob');

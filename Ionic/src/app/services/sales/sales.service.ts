@@ -408,7 +408,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
   
 
   //CONFIRM Sale item
-  async confirmSaleItemModal(choice: number, saleItem: any, categoryName : string, image : any) {
+  async confirmSaleItemModal(choice: number, saleItem: SaleItem, categoryName : string, image : any) {
 
     console.log('SaleItemService: ConfirmSaleItemModalCall');
     console.log(choice);
