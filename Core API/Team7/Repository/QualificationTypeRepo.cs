@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
-using Team7.Models.Repository;
 
 namespace Team7.Models.Repository
 {
@@ -51,7 +48,7 @@ namespace Team7.Models.Repository
                         qt.Name,
                         Qualifications = qt
                             .Qualification
-                            .Select(q => new {q.QualificationID, q.Description})
+                            .Select(q => new { q.QualificationID, q.Description })
                     }).ToListAsync()
                 };
             }

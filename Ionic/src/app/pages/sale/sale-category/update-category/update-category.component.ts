@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { SaleCategory } from 'src/app/models/sale-category';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -13,12 +13,12 @@ import { SalesService } from 'src/app/services/sales/sales.service';
 export class UpdateCategoryComponent implements ViewWillEnter {
   @Input() saleCategory: SaleCategory;
 
-  uSaleCategoryForm: FormGroup = new FormGroup({
-    categoryDescription: new FormControl('', [Validators.required]),
-    categoryName: new FormControl('', [Validators.required])
+  uSaleCategoryForm: UntypedFormGroup = new UntypedFormGroup({
+    categoryDescription: new UntypedFormControl('', [Validators.required]),
+    categoryName: new UntypedFormControl('', [Validators.required])
   });
 
-  constructor(public global: GlobalService, public fb: FormBuilder,
+  constructor(public global: GlobalService, public fb: UntypedFormBuilder,
   public saleService: SalesService) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.

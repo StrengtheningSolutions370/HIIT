@@ -30,8 +30,8 @@ namespace Team7.Services
                 .WithIdentity("GenerateSalesReport", "G01") // name "myJob", group "group1"
                 .Build();
 
-            await scheduler.ScheduleJob(SalesReportJob, sec_10_trigger);
-            scheduler.Start();
+            //await scheduler.ScheduleJob(SalesReportJob, sec_10_trigger);
+            //scheduler.Start();
 
             Console.WriteLine("here");
         }

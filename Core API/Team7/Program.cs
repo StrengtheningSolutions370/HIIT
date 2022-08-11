@@ -1,11 +1,7 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Team7
 {
@@ -13,10 +9,15 @@ namespace Team7
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
 
-
-
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + ex.StackTrace);
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -25,6 +26,9 @@ namespace Team7
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        
+        
 
     }
 }

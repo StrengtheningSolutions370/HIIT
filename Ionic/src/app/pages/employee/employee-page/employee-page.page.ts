@@ -100,7 +100,6 @@ export class EmployeePagePage implements OnInit {
       component : AddEmployeeComponent
     });
     await modal.present();
-
   }
 
   async updateEmployeeInfoModal(employee : any) {

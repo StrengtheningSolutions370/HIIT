@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Component, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -16,14 +16,14 @@ import { VenueService } from 'src/app/services/venue/venue.service';
 export class UpdateVenueComponent implements ViewWillEnter {
   @Input() venue: Venue;
 
-  uVenueForm: FormGroup = new FormGroup({
-    venueName: new FormControl('', [Validators.required]),
-    location: new FormControl('', [Validators.required]),
-    postalCode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{4}')]),
-    capacity: new FormControl('', [Validators.required, Validators.min(1)])
+  uVenueForm: UntypedFormGroup = new UntypedFormGroup({
+    venueName: new UntypedFormControl('', [Validators.required]),
+    location: new UntypedFormControl('', [Validators.required]),
+    postalCode: new UntypedFormControl('', [Validators.required, Validators.pattern('[0-9]{4}')]),
+    capacity: new UntypedFormControl('', [Validators.required, Validators.min(1)])
   });
 
-  constructor(public global: GlobalService, public fb: FormBuilder,
+  constructor(public global: GlobalService, public fb: UntypedFormBuilder,
     public venueService: VenueService) { }
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.

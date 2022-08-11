@@ -210,38 +210,38 @@ namespace Team7.Controllers
 
                         //store contract:
                         //config
-                            var contract = formCollection.Files.First();
-                            var contractFolder = Path.Combine("Resources", "Employees", "Contracts");
-                            var contractPath = Path.Combine(Directory.GetCurrentDirectory(), contractFolder);
-                            //storage
-                            var contractFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "_" + unix + ".pdf";
-                            //attach contract name to emp table
-                            employeeRecord.Contract = contractFileName;
-                            var contractFullPath = Path.Combine(contractPath, contractFileName);
-                            using (var stream = new FileStream(contractFullPath, FileMode.Create))
-                            {
-                                contract.CopyTo(stream);
-                            }
+                        var contract = formCollection.Files.First();
+                        var contractFolder = Path.Combine("Resources", "Employees", "Contracts");
+                        var contractPath = Path.Combine(Directory.GetCurrentDirectory(), contractFolder);
+                        //storage
+                        var contractFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "_" + unix + ".pdf";
+                        //attach contract name to emp table
+                        employeeRecord.Contract = contractFileName;
+                        var contractFullPath = Path.Combine(contractPath, contractFileName);
+                        using (var stream = new FileStream(contractFullPath, FileMode.Create))
+                        {
+                            contract.CopyTo(stream);
+                        }
 
-                            //check if photo to store:
-                            if (formCollection.Files.Count == 2)
+                        //check if photo to store:
+                        if (formCollection.Files.Count == 2)
+                        {
+                            //get file
+                            var photo = formCollection.Files[1];
+                            //config
+                            var photoFolder = Path.Combine("Resources", "Employees", "Images");
+                            var photoPath = Path.Combine(Directory.GetCurrentDirectory(), photoFolder);
+                            //storage
+                            var extension = photo.ContentType.Split('/')[1];
+                            var photoFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "_" + unix + "." + extension;
+                            //attatch photo name to emp table
+                            employeeRecord.Photo = photoFileName;
+                            var photoFullPath = Path.Combine(photoPath, photoFileName);
+                            using (var stream = new FileStream(photoFullPath, FileMode.Create))
                             {
-                                //get file
-                                var photo = formCollection.Files[1];
-                                //config
-                                var photoFolder = Path.Combine("Resources", "Employees", "Images");
-                                var photoPath = Path.Combine(Directory.GetCurrentDirectory(), photoFolder);
-                                //storage
-                                var extension = photo.ContentType.Split('/')[1];
-                                var photoFileName = ContentDispositionHeaderValue.Parse(EmployeeID).ToString() + "_" + unix + "." + extension;
-                                //attatch photo name to emp table
-                                employeeRecord.Photo = photoFileName;
-                                var photoFullPath = Path.Combine(photoPath, photoFileName);
-                                using (var stream = new FileStream(photoFullPath, FileMode.Create))
-                                {
-                                    photo.CopyTo(stream);
-                                }
+                                photo.CopyTo(stream);
                             }
+                        }
 
                         //add employeeRecord to repo
                         this.EmployeeRepo.Add(employeeRecord);
@@ -293,26 +293,26 @@ namespace Team7.Controllers
         static char getCap()
         {
             //65-90
-            return (char) randomRange(65, 90);
+            return (char)randomRange(65, 90);
         }
 
         static char getLow()
         {
             //97-122
-            return (char) randomRange(97, 122);
+            return (char)randomRange(97, 122);
 
         }
 
         static char getDigit()
         {
             //48-57
-            return (char) randomRange(48, 58);
+            return (char)randomRange(48, 58);
         }
 
         static char getSpecial()
         {
             //58-64
-            return (char) randomRange(58, 64);
+            return (char)randomRange(58, 64);
         }
 
         [HttpGet, DisableRequestSizeLimit]
@@ -327,7 +327,7 @@ namespace Team7.Controllers
             string sub = jwt.Subject;
             //linking to query for the sub's role:
 
-            var userRole = await _userManager.GetRolesAsync(await _userManager.FindByNameAsync( sub ));
+            var userRole = await _userManager.GetRolesAsync(await _userManager.FindByNameAsync(sub));
 
             return Ok(new
             {
@@ -443,6 +443,9 @@ namespace Team7.Controllers
                     {
                         //email the password to the user:
                         //email.sendEmail(Email, "Strengthening Solutions", body);
+                        Email email = new Email(Email, "Strengthening Solutions", body);
+                        Thread thr = new Thread(new ThreadStart(email.sendEmail));
+                        thr.Start();
 
                         ///////////////////////////////////////////////////
                         ///store files from FormData:
@@ -561,7 +564,8 @@ namespace Team7.Controllers
                 deletePhoto(editEmployee.Photo);
                 editEmployee.Photo = null;
 
-            } else
+            }
+            else
             {
 
                 //photo is not being removed:
@@ -569,11 +573,12 @@ namespace Team7.Controllers
                 {
                     try
                     {
-                        if(editEmployee.Photo !=null)
-                        deletePhoto(editEmployee.Photo);
-                    } catch (Exception ex)
+                        if (editEmployee.Photo != null)
+                            deletePhoto(editEmployee.Photo);
+                    }
+                    catch (Exception ex)
                     {
-                        
+
                         StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
                     }
 
@@ -695,17 +700,21 @@ namespace Team7.Controllers
                 try
                 {
                     deleteContract(employeeRecord.Contract);
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
 
                 }
                 try
                 {
                     deletePhoto(employeeRecord.Photo);
-                } catch(Exception e) {
+                }
+                catch (Exception e)
+                {
 
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return Forbid(ex.Message);
             }

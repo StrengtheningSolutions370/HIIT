@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController, AlertController, ViewWillEnter } from '@ionic/angular';
 import { Qualification } from 'src/app/models/qualification';
@@ -21,10 +21,10 @@ export class AddQualificationComponent implements ViewWillEnter {
   @Input() qualification: Qualification;
   qualificationTypeDropDown!: QualificationType[];
 
-  cQualificationForm! : FormGroup;
+  cQualificationForm! : UntypedFormGroup;
 
   constructor(private toastCtrl: ToastController,
-    public formBuilder: FormBuilder,
+    public formBuilder: UntypedFormBuilder,
     public qualificationService: QualificationService,
     public global: GlobalService) { }
 

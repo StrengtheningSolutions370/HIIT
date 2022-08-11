@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { ViewWillEnter } from '@ionic/angular';
 import { EmployeeType } from 'src/app/models/employeeType';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
@@ -13,7 +13,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class DeleteEtypeComponent implements ViewWillEnter {
   @Input() employeeType: EmployeeType;
 
-  constructor(public global: GlobalService, public formBuilder: FormBuilder,
+  constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
     public employeeService: EmployeeService) { }
 
     ionViewWillEnter() {

@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Team7.Models.Repository;
 using Team7.Models;
+using Team7.Models.Repository;
 
 namespace Team7.Controllers
 {
@@ -28,10 +28,11 @@ namespace Team7.Controllers
                 if (await VATRepo.SaveChangesAsync())
                 {
                     return Ok();
-                } else
+                }
+                else
                 {
                     return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the database. Contact support.");
-                }                
+                }
             }
             catch (Exception err)
             {

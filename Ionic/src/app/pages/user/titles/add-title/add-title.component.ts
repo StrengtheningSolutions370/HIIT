@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/quotes */
 import { Component,  Input } from '@angular/core';
 import { ViewWillEnter} from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Title } from 'src/app/models/title';
 import { TitleService } from 'src/app/services/title/title.service';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -19,12 +19,12 @@ export class AddTitleComponent implements ViewWillEnter {
   @Input() title: Title;
 
    //Creating the form to add the new venue details, that will be displayed in the HTML component
-   cTitleForm: FormGroup = this.formBuilder.group({
+   cTitleForm: UntypedFormGroup = this.formBuilder.group({
     titleDescription: ['', [Validators.required]]
   });
 
 
-  constructor(public global: GlobalService, public formBuilder: FormBuilder,
+  constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
     public titleService: TitleService ) { }
 
     //Used for validation within the form, if there are errors in the control, this method will return the errors.
