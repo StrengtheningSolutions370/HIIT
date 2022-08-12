@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 using Team7.Context;
 
 
@@ -51,19 +53,18 @@ namespace Team7.Models.Repository
 
         //}
 
-        //public async Task<PaymentType> GetPaymentTypeIdAsync(int id)
-        //{
-        //    IQueryable<PaymentType> query = DB.PaymentType.Where(v => v.VenueID == id);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.SingleAsync();
-        //    }
-        //    return null;
-        //}
+        public async Task<PaymentType> _GetPaymentTypeIdAsync(int id)
+        {
+            IQueryable<PaymentType> query = DB.PaymentType.Where(pt => pt.PaymentTypeID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.SingleAsync();
+            }
+        }
 
         public async Task<bool> SaveChangesAsync()
         {
