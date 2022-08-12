@@ -16,7 +16,7 @@
 <br/>
 
 <!-- client -->
-<div *ngIf="client && !loading">
+<div *ngIf="client">
   <!-- update form -->
   <div class="ion-padding">
     <ion-card class="centerLogin" >
@@ -29,6 +29,20 @@
 
         <form #personalForm="ngForm"  (ngSubmit)="onPersonalSubmit(personalForm)">
           <div padding>
+
+              <ion-label>
+                <h2>Profile Photo:</h2>
+              </ion-label>
+              <ion-input 
+                type="file" 
+                name="photo" 
+                ngModel 
+                #photo="ngModel" 
+                (change)="addPhoto($event)"></ion-input>
+              <ion-img *ngIf="showImage" src="{{imgSrc}}"></ion-img>
+              <p *ngIf="!showImage" class="ion-text-start text-center">No Profile image</p>
+              
+              <ion-button *ngIf="showImage && uploadPhoto" color="danger" (click)="removePhoto()">Revert</ion-button>
 
             <ion-item>
               <ion-icon name="person" slot="start" color="#282828"></ion-icon>
@@ -71,6 +85,16 @@
             </ion-item>
 
             <ion-item>
+              <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
+              <ion-input 
+              type="date" 
+              name="dob" 
+              ngModel 
+              #dob="ngModel" 
+              required></ion-input>
+            </ion-item>
+
+            <ion-item>
               <ion-icon name="call" slot="start" color="#282828"></ion-icon>
               <ion-input 
               type="text" 
@@ -78,11 +102,13 @@
               ngModel 
               #number="ngModel" 
               placeholder="Contact Number" 
+              minlength="10"
+              maxlength="10"
               required></ion-input>
             </ion-item>
 
             <br/>
-            <ion-button *ngIf="!isLoading" expand="block" shape="round" type="submit">Save</ion-button>
+            <ion-button *ngIf="!isLoading" expand="block" shape="round" type="submit" [disabled]="!personalForm.valid">Save</ion-button>
             <div class="ion-text-center" *ngIf="isLoading">
               <ion-button shape="round">
                 <ion-spinner name="circles"></ion-spinner>

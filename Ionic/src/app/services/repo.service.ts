@@ -87,6 +87,10 @@ export class RepoService {
     return this.http.delete(`${this.base + this.AppUserController}deleteclient?id=${id}`, this.httpOptions);
   }
 
+  updateClientInformation(data: FormData): Observable<any> {
+    return this.http.post<any>(`${this.base+this.AppUserController}updateclient`, data, this.httpOptions);
+  }
+
   //Register
   register(userDetails: appUserRegister) {
     return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);

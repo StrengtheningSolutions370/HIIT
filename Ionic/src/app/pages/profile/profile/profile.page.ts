@@ -8,6 +8,7 @@ import { StoreService } from 'src/app/services/storage/store.service';
 import { empty } from 'rxjs';
 import { ModalController } from '@ionic/angular';
 import { ConfirmIndemnityComponent } from './confirm-indemnity/confirm-indemnity.component';
+import { appUserRegister } from 'src/app/models/appUser';
 
 @Component({
   selector: 'app-profile',
@@ -36,11 +37,14 @@ export class ProfilePage implements OnInit {
   phone! : any;
   title! : any;
   photo! : any;
+  uploadPhoto! : File;
   client = true;
   AspId! : any;
   loading = true;
   showImage = false;
   IDNumber! : any;
+  imgSrc = '';
+  originalImg = '';
 
   //passwords:
   old = true;
@@ -58,6 +62,11 @@ export class ProfilePage implements OnInit {
   }
 
   setup() {
+
+    this.showImage = false;
+    this.uploadPhoto = null;
+    this.imgSrc = '';
+
     this.repo.getTitles().subscribe({
       next: (data : any) => {
         this.titleList = data.result;
@@ -88,14 +97,16 @@ export class ProfilePage implements OnInit {
                     this.phone = usr.user[0].phoneNumber;
                     this.title = usr.user[0].title;
                     if (usr.cli.photo != null || usr.cli.photo != undefined) {
-                      this.photo = this.createClientImg(usr.cli.photo);
+                      this.imgSrc = this.createClientImg(usr.cli.photo);
+                      this.originalImg = this.imgSrc;
+                      this.showImage = true;
                     }
-                    this.client = true;
 
                     //populate the form:
                     this.personalForm.controls['firstName'].setValue(this.firstName);
                     this.personalForm.controls['lastName'].setValue(this.lastName);
                     this.personalForm.controls['email'].setValue(this.email);
+                    this.personalForm.controls['dob'].setValue(this.convertToDate(usr.cli.dob));
                     this.personalForm.controls['number'].setValue(this.phone);
                     this.personalForm.controls['TitleId'].setValue(`${this.title.titleID},${this.title.description}`);
 
@@ -105,6 +116,7 @@ export class ProfilePage implements OnInit {
 
                   }
                   else {
+                    this.client = false;
                     console.log(usr);
                     this.contractFlag = true;
                     this.IDNumber = usr.emp.data.idNumber
@@ -142,7 +154,55 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  
+  removePhoto() {
+    this.imgSrc = '';
+    this.uploadPhoto = null;
+    this.showImage = false;
+    this.personalForm.controls['photo'].setValue(``);
+    if (this.originalImg != '') {
+      this.imgSrc = this.originalImg;
+      this.showImage = true;
+    }
+  }
+
+  addPhoto(event : any) {
+
+    this.imgSrc = '';
+    this.uploadPhoto = null;
+    this.showImage = false;
+
+    if (event.target.files.length == 0)
+      return;
+
+    this.showImage = true;
+    this.uploadPhoto = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = (event : any) => {
+      this.imgSrc = event.target.result;
+      this.showImage = true;
+    }
+    reader.readAsDataURL(this.uploadPhoto);
+
+  }
+
+  convertToDate(date : any) {
+    const d = new Date(date * 1000);
+    const year = d.getFullYear();
+    var month = `${d.getMonth() + 1}`;
+    var m = d.getMonth() + 1;
+    if (m < 10) {
+      month = `0${month}`;
+    }
+    var day =`${d.getDate()}`;
+    var da = d.getDate();
+    if (da < 10) {
+      day = `0${da}`;
+    }
+    console.log(`${year}-${month}-${day}`);
+    return `${year}-${month}-${day}`;
+  }
+
   oldToggle(){
     this.old = !this.old;
   }
@@ -210,14 +270,38 @@ export class ProfilePage implements OnInit {
     return `https://localhost:44383/Resources/Employees/Contracts/${fileName}`
   };
 
-  onPersonalSubmit(registerForm: NgForm){
-    if(!registerForm.valid) {
-       this.global.showAlert('Please enter all required fields', 'Required fields')}
-       else
-       {
-          this.global.showAlert('Proceed')
-          //Add code to database here
-       }
+  onPersonalSubmit(personalForm: NgForm){
+
+    if(!personalForm.valid)
+      return;
+
+      const d = new Date(personalForm.value.dob);
+      const DOB_epoch = Math.trunc(d.getTime() / 1000);
+      console.log(DOB_epoch);
+      const c : any = {
+        AspId : this.AspId,
+        emailAddress : personalForm.value.email,
+        role: "client", //does not override role in api
+        firstName: personalForm.value.firstName,
+        lastName: personalForm.value.lastName,
+        phoneNumber: personalForm.value.number,
+        TitleId: personalForm.value.TitleId.split(',')[0],
+        dob: DOB_epoch
+      }
+
+      const payload = new FormData();
+      payload.append(JSON.stringify(c), c);
+      payload.append('photo', this.uploadPhoto);
+      this.global.nativeLoad("Saving...")
+      this.repo.updateClientInformation(payload).subscribe({
+        next: () => {
+          this.setup();
+        },
+        error: (err) => {
+          console.log('err', err)
+        }
+      }).add(() => { this.global.endNativeLoad(); });
+
   }
 
   ChangePassword(form : NgForm) {

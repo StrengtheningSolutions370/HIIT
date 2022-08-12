@@ -14,7 +14,11 @@ using System.Threading.Tasks;
 using Team7.Models;
 using Team7.Models.Repository;
 using Team7.Services;
+using System.Net.Http.Headers;
 using Team7.ViewModels;
+using Newtonsoft.Json.Linq;
+using System.Web;
+using System.IO;
 
 namespace Team7.Controllers
 {
@@ -30,8 +34,9 @@ namespace Team7.Controllers
         private readonly IClientRepo _clientRepo;
         private readonly IEmployeeRepo _employeeRepo;
         private readonly IPasswordHistoryRepo _passwordHistoryRepo;
+        private readonly ITitleRepo TitleRepo;
 
-        public AppUserController(IEmployeeRepo employeeRepo, IPasswordHistoryRepo passwordHistory, IClientRepo clientRepo, ITitleRepo titleRepo, UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
+        public AppUserController(ITitleRepo TitleRepo, IEmployeeRepo employeeRepo, IPasswordHistoryRepo passwordHistory, IClientRepo clientRepo, ITitleRepo titleRepo, UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _passwordHistoryRepo = passwordHistory;
@@ -40,6 +45,7 @@ namespace Team7.Controllers
             _titleRepo = titleRepo;
             _clientRepo = clientRepo;
             _employeeRepo = employeeRepo;
+            this.TitleRepo = TitleRepo;
         }
 
         static string generateOTP()
@@ -51,6 +57,78 @@ namespace Team7.Controllers
                 oneTimePin += random.Next(0, 10).ToString();
             }
             return oneTimePin;
+        }
+
+        static string timeStamp()
+        {
+            return DateTimeOffset.Now.ToUnixTimeSeconds().ToString();
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        [Route("updateclient")]
+        public async Task<IActionResult> updateClientInformation()
+        {
+            string unix = timeStamp(); //to stamp file creation
+
+            var formCollection = await Request.ReadFormAsync();
+
+            string s = formCollection.Keys.FirstOrDefault();
+            string decode = HttpUtility.UrlDecode(s);
+            var client = JObject.Parse(decode);
+
+            string email = client["emailAddress"].ToString();
+            string Name = client["firstName"].ToString();
+            string Surname = client["lastName"].ToString();
+            string Number = client["phoneNumber"].ToString();
+            int titleId = Convert.ToInt32(client["TitleId"].ToString());
+            int dob = Convert.ToInt32(client["dob"].ToString());
+            string AspId = client["AspId"].ToString();
+
+            var user = await _userManager.FindByIdAsync(AspId);
+            Client update = await _clientRepo.GetClientIdAsync(AspId);
+
+            var photo = formCollection.Files.FirstOrDefault();
+
+            if (photo != null)
+            {
+                if (update.Photo != null)
+                    deletePhoto(update.Photo);
+                var photoFolder = Path.Combine("Resources", "Clients", "Images");
+                var photoPath = Path.Combine(Directory.GetCurrentDirectory(), photoFolder);
+                //storage
+                var extension = photo.ContentType.Split('/')[1];
+                var photoFileName = ContentDispositionHeaderValue.Parse(user.Id).ToString() + "_" + unix + "." + extension;
+                update.Photo = photoFileName; //update for the extension
+
+                var photoFullPath = Path.Combine(photoPath, photoFileName);
+                using (var stream = new FileStream(photoFullPath, FileMode.Create))
+                {
+                    photo.CopyTo(stream);
+                }
+
+            }
+
+            update.DOB = dob;
+            _clientRepo.Update(update);
+            await _clientRepo.SaveChangesAsync();
+
+            //set new values for ASP:
+            user.FirstName = Name;
+            user.LastName = Surname;
+            user.Email = email;
+            user.PhoneNumber = Number;
+            user.Title = await TitleRepo._GetTitleIdAsync(Convert.ToInt32(titleId));
+
+            await _userManager.UpdateAsync(user);
+
+            return Ok();
+        }
+
+        static void deletePhoto(string fname)
+        {
+            var imageFolder = Path.Combine("Resources", "Clients", "Images");
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), imageFolder, fname);
+            System.IO.File.Delete(imagePath);
         }
 
         [HttpGet]
