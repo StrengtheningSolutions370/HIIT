@@ -198,5 +198,7 @@ export class AddSitemComponent implements ViewWillEnter {
           resultType: CameraResultType.Uri
         });
 
+        this.itemImage = image.webPath;
+
 }
 }

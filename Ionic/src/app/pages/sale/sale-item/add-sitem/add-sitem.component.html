@@ -42,6 +42,7 @@
     <ion-item>
         <ion-label>Photo:</ion-label>
         <ion-button expand="block" (click)="getPhoto()">Get Photo</ion-button>
+        <ion-img *ngIf="myImage" [src]="myImage"></ion-img>
         <!-- <input (change)="addImage($event)" type="file" id="file-input" accept="image/png, image/jpeg"> -->
     </ion-item>
 
