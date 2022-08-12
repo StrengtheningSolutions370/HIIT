@@ -7,6 +7,7 @@ import { Cart } from '../models/cart';
 import { cartLine } from '../models/cart-line';
 import { SaleItem } from '../models/sale-item';
 import { CartModalPage } from '../pages/shop/cart-modal/cart-modal.page';
+import { PaymentPage } from '../pages/shop/payment/payment.page';
 import { GlobalService } from './global/global.service';
 import { RepoService } from './repo.service';
 import { StoreService } from './storage/store.service';
@@ -140,11 +141,12 @@ export class CartService {
     const modal = await this.modalCtrl.create({
       component: CartModalPage,
       componentProps:{
-        cartData, saleItem
+        cartData, saleItem,
+        rootPage: PaymentPage
       },
       cssClass: 'cart-modal'
     });
-    modal.present();
+    await modal.present();
   }
 
   async clearCartOrder() {    
