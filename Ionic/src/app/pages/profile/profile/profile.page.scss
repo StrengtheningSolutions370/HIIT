@@ -13,6 +13,12 @@ ion-card {
     width: 380px;
 }
 
+.pdf {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 ion-accordion {
     width: 100%;
 }
@@ -22,5 +28,20 @@ ion-card-content {
     // margin-right: 25%;
 }
 
+#ind {
+    height: 0px;
+    width: 0px;
+    opacity: 0;
+}
+
 .centerLogin {
+}
+
+pdf-viewer {
+    width: 100%;
+    max-width: 600px;
+    min-width: 380px;
+    height: 300px;
+    margin-top: 4%;
+    margin-bottom: 4%;
 }

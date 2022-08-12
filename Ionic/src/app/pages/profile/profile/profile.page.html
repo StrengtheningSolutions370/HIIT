@@ -15,224 +15,284 @@
 <ion-content>
 <br/>
 
-  <!-- -------------------------------------------------------------- -->
-  <!-- DOCUMENTS -->
-  <ion-accordion-group>
-     <ion-accordion value="first">
-      <ion-item slot="header" color="light">
-        <ion-label>Important Documents</ion-label>
-      </ion-item>
-      <div class="ion-padding" slot="content">
+<!-- client -->
+<div *ngIf="client && !loading">
+  <!-- update form -->
+  <div class="ion-padding">
+    <ion-card class="centerLogin" >
+      <ion-card-content>
 
-        <ion-card>
-          <ion-card-content>
-            <div class="ion-text-center">
-              <h1 style="font-family: inherit; border:1px">Indemnity Form</h1>
-            </div>
+        <div class="ion-text-center">
+          <h1 style="font-family: inherit; border:1px">Update Information</h1>
+        </div>
+        <br/>
+
+        <form #personalForm="ngForm"  (ngSubmit)="onPersonalSubmit(personalForm)">
+          <div padding>
+
+            <ion-item>
+              <ion-icon name="person" slot="start" color="#282828"></ion-icon>
+              <ion-input 
+              type="text" 
+              name="firstName" 
+              ngModel 
+              #firstName="ngModel" 
+              placeholder="First Name" 
+              required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon name="person" slot="start" color="#282828"></ion-icon>
+              <ion-input 
+              type="text" 
+              name="lastName" 
+              ngModel 
+              #lastName="ngModel" 
+              placeholder="Last Name" 
+              required></ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-icon name="apps-outline" slot="start" color="#282828"></ion-icon>
+              <ion-select ngModel #TitleId="ngModel" placeholder="Title" name="TitleId" type="text" id="TitleId" required>
+                  <ion-select-option *ngFor="let title of titleList" value="{{title.titleID}},{{title.description}}">{{ title.description }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
+              <ion-input 
+              type="text" 
+              name="email" 
+              ngModel 
+              #email="ngModel" 
+              placeholder="Email Address"  
+              required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-icon name="call" slot="start" color="#282828"></ion-icon>
+              <ion-input 
+              type="text" 
+              name="number" 
+              ngModel 
+              #number="ngModel" 
+              placeholder="Contact Number" 
+              required></ion-input>
+            </ion-item>
+
             <br/>
+            <ion-button *ngIf="!isLoading" expand="block" shape="round" type="submit">Save</ion-button>
+            <div class="ion-text-center" *ngIf="isLoading">
+              <ion-button shape="round">
+                <ion-spinner name="circles"></ion-spinner>
+              </ion-button>   
+            </div> 
+          </div>  
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-            <!-- come back to this -->
+  <div class="ion-padding" slot="content">
+    <ion-card>
+      <ion-card-content>
+        <div class="ion-text-center">
+          <h1 style="font-family: inherit; border:1px">Indemnity Form</h1>
+        </div>
+        <br/>
+        <div class="pdf">
             <ion-item *ngIf="indemnityFlag">
               <pdf-viewer [src]="indemnitySrc"
                         [render-text]="true"
                         [original-size]="false"
                         ></pdf-viewer>
             </ion-item>
-
-          </ion-card-content>
-        </ion-card>
-
-      </div> 
-    </ion-accordion>
-  <!-- -------------------------------------------------------------- -->
-
-  <!-- -------------------------------------------------------------- -->
-  <!-- PROFILE MANAGEMENT -->
-  <ion-accordion value="second">
-    
-    <ion-item slot="header" color="light">
-      <ion-label>Personal Information</ion-label>
-    </ion-item>
-    
-    <div class="ion-padding" slot="content">
-      <ion-card class="centerLogin" >
-        <ion-card-content>
-          <div class="ion-text-center">
-            <h1 style="font-family: inherit; border:1px">Update Information</h1>
-          </div>
-          <br/>
-
-          <form #personalForm="ngForm"  (ngSubmit)="onPersonalSubmit(personalForm)">
-            <div padding>
-
-              <ion-item>
-                <ion-icon name="person" slot="start" color="#282828"></ion-icon>
-                <ion-input 
-                type="text" 
-                name="firstName" 
-                ngModel 
-                #firstName="ngModel" 
-                placeholder="First Name" 
-                required></ion-input>
-              </ion-item>
-
-              <ion-item>
-                <ion-icon name="person" slot="start" color="#282828"></ion-icon>
-                <ion-input 
-                type="text" 
-                name="lastName" 
-                ngModel 
-                #lastName="ngModel" 
-                placeholder="Last Name" 
-                required></ion-input>
-              </ion-item>
-              
-              <ion-item>
-                <ion-icon name="apps-outline" slot="start" color="#282828"></ion-icon>
-                <ion-select ngModel #TitleId="ngModel" placeholder="Title" name="TitleId" type="text" id="TitleId" required>
-                    <ion-select-option *ngFor="let title of titleList" value="{{title.titleID}},{{title.description}}">{{ title.description }}</ion-select-option>
-                </ion-select>
-              </ion-item>
-
-              <ion-item>
-                <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
-                <ion-input 
-                type="text" 
-                name="email" 
-                ngModel 
-                #email="ngModel" 
-                placeholder="Email Address"  
-                required></ion-input>
-              </ion-item>
-
-              <ion-item>
-                <ion-icon name="call" slot="start" color="#282828"></ion-icon>
-                <ion-input 
-                type="text" 
-                name="number" 
-                ngModel 
-                #number="ngModel" 
-                placeholder="Contact Number" 
-                required></ion-input>
-              </ion-item>
-
-              <!--I Do not think this is needed, just thought it would be nice for the use case "send booking reminder notification"-->
-              <!-- <ion-item>
-                <ion-label  class="ion-text-right">Would you like to receive booking reminders?</ion-label>
-                <ion-toggle></ion-toggle>
-              </ion-item> -->
-            
-              <br/>
-              <ion-button *ngIf="!isLoading" expand="block" shape="round" type="submit">Save</ion-button>
-              <div class="ion-text-center" *ngIf="isLoading">
-                <ion-button shape="round">
-                  <ion-spinner name="circles"></ion-spinner>
-                </ion-button>   
-              </div> 
-            </div>  
-          </form>
-
-        </ion-card-content>
-      </ion-card>
-    </div>
-  </ion-accordion>
-  <!-- -------------------------------------------------------------- -->
-
-  <!-- -------------------------------------------------------------- -->
-  <!-- MEASUREMENTS -->
-  <ion-accordion value="third">
-    <ion-item slot="header" color="light">
-      <ion-label>Measurements</ion-label>
-    </ion-item>
-    <div class="ion-padding" slot="content">
-      Measurements Form, plus pfd option to download report
-    </div>
-  </ion-accordion>
-  <!-- -------------------------------------------------------------- -->
-
-  <!-- -------------------------------------------------------------- -->
-  <!-- PASSWORD MANAGER -->
-  <ion-accordion value="fourth">
-    <ion-item slot="header" color="light">
-      <ion-label>Password Management</ion-label>
-    </ion-item>
-    <div class="ion-padding" slot="content">
-      
-      <ion-card>
-        <ion-card-content>
-          <div class="ion-text-center">
-            <h1 style="font-family: inherit; border:1px">CHANGE PASSWORD</h1>
-            <br />
-          </div>
-          <form #logForm="ngForm" (ngSubmit)="ChangePassword(logForm)">
-    
-            <div padding>
-    
-              <ion-item>
-                <ion-icon name="key" slot="start" color="#282828"></ion-icon>
-                <ion-icon [name]="n1 ? 'eye-outline':'eye-off-outline'" slot="end" color="#282828" (click)="n1Toggle()"></ion-icon>
-                <ion-input 
-                [type]="n1 ? 'password' : 'text'"
-                name="newpassword" 
-                ngModel 
-                #passCtrl="ngModel" 
-                placeholder="New Password" 
-                required 
-                minlength="8"></ion-input>
-              </ion-item>
-              <ion-text color="danger" *ngIf="!passCtrl.valid && passCtrl.touched">
-                <p>New password should be minimum of 8 characters</p>
-              </ion-text>
-    
-              <div>
-                <ion-item>
-                  <ion-icon name="key" slot="start" color="#282828"></ion-icon>
-                  <ion-icon [name]="n2 ? 'eye-outline':'eye-off-outline'" slot="end" color="#282828" (click)="n2Toggle()"></ion-icon>
-                  <ion-input 
-                  [type]="n2 ? 'password' : 'text'"
-                  name="cnewpassword" 
-                  ngModel 
-                  #c_passCtrl="ngModel" 
-                  placeholder="Confirm Password" 
-                  required 
-                  minlength="8"></ion-input>
-                </ion-item>
-                <ion-text color="danger" *ngIf="!c_passCtrl.valid && c_passCtrl.touched">
-                  <p>Confirm Password should be minimum of 8 characters</p>
-                </ion-text>
-                <ion-text color="danger" *ngIf="c_passCtrl.valid && c_passCtrl.value !== passCtrl.value">
-                  <p>Password entered do not match.</p>
-                </ion-text>
-              
-              </div>
-    
-              
+            <div *ngIf="!indemnityFlag && client && !loading">
+              <input id="ind" #ind type="file" (change)="uploadIndemnity($event)" accept="application/pdf" />
+              <ion-button>Download Indemnity Form</ion-button>
+              <ion-button (click)="ind.click()">Upload Signed Indemnity Form</ion-button>
+              <br />
             </div>
+          </div>
+      </ion-card-content>
+    </ion-card>
     
-            <div>
-    
-              <br/>
-              
-              <ion-button [disabled]="!logForm.valid" *ngIf="!isLoggedin" expand="block" shape="round" type="submit">Create</ion-button>
-              
-              <br/>
-    
-              <ion-text color="danger" align="center" *ngIf="error">
-                <p>{{errormsg}}</p>
-                <br />
-              </ion-text>
-    
-            </div>  
-    
-          </form>
-    
-        </ion-card-content>
-      </ion-card>
+  </div> 
+</div>
 
-    </div>
-  </ion-accordion>
-  <!-- -------------------------------------------------------------- -->
 
-  </ion-accordion-group>
+<!-- employee -->
+<div *ngIf="!client && !loading" class="ion-padding">
+  <ion-card>
+    <ion-item> 
+      <ion-label>
+        <h2>Profile Photo:</h2>
+        <ion-img *ngIf="showImage" src="{{photo}}"></ion-img>
+        <p *ngIf="!showImage" class="ion-text-start">No Profile image</p>
+      </ion-label>
+    </ion-item>
+  
+    <ion-item> 
+      <ion-label>
+        <h2>Name:</h2>
+        <p class="ion-text-start">{{firstName}}</p>
+      </ion-label>
+    </ion-item>
+  
+    <ion-item> 
+      <ion-label>
+        <h2>Surname:</h2>
+        <p class="ion-text-start">{{lastName}}</p>
+      </ion-label>
+    </ion-item>
+  
+    <ion-item > 
+      <ion-label>
+        <h2>ID Number:</h2>
+        <p class="ion-text-start">{{IDNumber}}</p>
+      </ion-label>
+    </ion-item>
+  
+    <ion-item > 
+      <ion-label>
+        <h2>Email:</h2>
+        <p class="ion-text-start">{{email}}</p>
+      </ion-label>
+    </ion-item>
+  
+    <ion-item > 
+      <ion-label>
+        <h2>Phone Number:</h2>
+        <p class="ion-text-start">{{phone}}</p>
+      </ion-label>
+    </ion-item>
+  
+    <ion-item > 
+      <ion-label>
+        <h2>Title:</h2>
+        <p class="ion-text-start">{{title.description}}</p>
+      </ion-label>
+    </ion-item>
+  
+    <ion-item > 
+      <ion-label>
+        <h2>Contract:</h2>
+          <pdf-viewer [src]="contractSrc"
+                    [render-text]="true"
+                    [original-size]="false"
+                    ></pdf-viewer>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+</div>
+
+<div class="ion-padding" *ngIf="!loading">
+  <ion-card>
+    <ion-card-content>
+      <div class="ion-text-center">
+        <h1 style="font-family: inherit; border:1px">Change Password</h1>
+      </div>
+      <BR/>
+      <form #logForm="ngForm" (ngSubmit)="changePassword(logForm)">
+
+        <div padding>
+
+          <ion-item>
+            <ion-icon name="key" slot="start" color="#282828"></ion-icon>
+            <ion-icon [name]="old ? 'eye-outline':'eye-off-outline'" slot="end" color="#282828" (click)="oldToggle()"></ion-icon>
+            <ion-input [type]="old ? 'password' : 'text'" name="oldpassword" ngModel #oldpassControl="ngModel" placeholder="Current Password" required minlength="8"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="!oldpassControl.valid && oldpassControl.touched">
+            <p>Old should be minimum of 8 characters</p>
+          </ion-text>
+
+          <ion-item>
+            <ion-icon name="key" slot="start" color="#282828"></ion-icon>
+            <ion-icon [name]="n1 ? 'eye-outline':'eye-off-outline'" slot="end" color="#282828" (click)="n1Toggle()"></ion-icon>
+            <ion-input 
+            [type]="n1 ? 'password' : 'text'"
+            name="newpassword" 
+            ngModel 
+            #passCtrl="ngModel" 
+            placeholder="Password" 
+            required 
+            minlength="8"></ion-input>
+          </ion-item>
+          <ion-text color="danger" *ngIf="!passCtrl.valid && passCtrl.touched">
+            <p>New password should be minimum of 8 characters</p>
+          </ion-text>
+
+          <div>
+            <ion-item>
+              <ion-icon name="key" slot="start" color="#282828"></ion-icon>
+              <ion-icon [name]="n2 ? 'eye-outline':'eye-off-outline'" slot="end" color="#282828" (click)="n2Toggle()"></ion-icon>
+              <ion-input 
+              [type]="n2 ? 'password' : 'text'"
+              name="cnewpassword" 
+              ngModel 
+              #c_passCtrl="ngModel" 
+              placeholder="Confirm Password" 
+              required 
+              minlength="8"></ion-input>
+            </ion-item>
+            <ion-text color="danger" *ngIf="!c_passCtrl.valid && c_passCtrl.touched">
+              <p>Confirm Password should be minimum of 8 characters</p>
+            </ion-text>
+            <ion-text color="danger" *ngIf="c_passCtrl.valid && c_passCtrl.value !== passCtrl.value">
+              <p>Password entered do not match.</p>
+            </ion-text>
+          
+          </div>
+
+          
+        </div>
+
+        <div>
+
+          <br/>
+          
+          <ion-button [disabled]="!logForm.valid" *ngIf="!isLoggedin" expand="block" shape="round" type="submit">Change Password</ion-button>
+          
+          <br/>
+          <ion-text color="danger" align="center" *ngIf="fail">
+            <p>Incorrect old password.</p>
+            <br />
+          </ion-text>
+          <ion-text color="success" align="center" *ngIf="success">
+            <p>Password updated successfully.</p>
+            <br />
+          </ion-text>
+
+        </div>  
+
+      </form>
+
+    </ion-card-content>
+  </ion-card>
+</div>
+  
+
+<!-- <div class="pdf">
+  <ion-item *ngIf="indemnityFlag">
+    <pdf-viewer [src]="indemnitySrc"
+              [render-text]="true"
+              [original-size]="false"
+              ></pdf-viewer>
+  </ion-item>
+
+  <div *ngIf="!indemnityFlag && client && !loading">
+    <input id="ind" #ind type="file" (change)="uploadIndemnity($event)" accept="application/pdf" />
+    <ion-button (click)="ind.click()">+ Add Indemnity</ion-button>
+    <br />
+  </div>
+
+  <ion-item *ngIf="contractFlag">
+    <pdf-viewer [src]="contractSrc"
+              [render-text]="true"
+              [original-size]="false"
+              ></pdf-viewer>
+  </ion-item>
+</div> -->
 
 </ion-content>

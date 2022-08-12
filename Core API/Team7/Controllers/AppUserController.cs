@@ -58,11 +58,9 @@ namespace Team7.Controllers
         public async Task<IActionResult> getUser(string id)
         {
             //query for the user in employee table:
-            var emp = await _employeeRepo.GetByUserIdAsync(id);
+            var emp = await _employeeRepo.GetFullEmployeeByIDAsync(id);
             //query for the user in client table:
             var cli = await _clientRepo.GetClientIdAsync(id);
-
-            
 
             if (emp != null)
             {
@@ -73,7 +71,11 @@ namespace Team7.Controllers
                     LastName = usr.LastName,
                     Email = usr.Email,
                     PhoneNumber = usr.PhoneNumber,
-                    //Title = usr.Title,
+                    Title = new Title
+                    {
+                        TitleID = usr.Title.TitleID,
+                        Description = usr.Title.Description
+                    }
                 });
                 return Ok(new
                 {
@@ -90,7 +92,11 @@ namespace Team7.Controllers
                     LastName = usr.LastName,
                     Email = usr.Email,
                     PhoneNumber = usr.PhoneNumber,
-                    Title = usr.Title,
+                    Title = new Title
+                    {
+                        TitleID = usr.Title.TitleID,
+                        Description = usr.Title.Description
+                    }
                 });
                 //client called the endpoint
                 return Ok(new
@@ -99,6 +105,33 @@ namespace Team7.Controllers
                     cli
                 });
             }
+
+            //user is a superuser:
+            try
+            {
+                IQueryable<AppUser> user = _userManager.Users.Where(usr => usr.Id == id).Select(usr => new AppUser
+                {
+                    FirstName = usr.FirstName,
+                    LastName = usr.LastName,
+                    Email = usr.Email,
+                    PhoneNumber = usr.PhoneNumber,
+                    Title = new Title
+                    {
+                        TitleID = usr.Title.TitleID,
+                        Description = usr.Title.Description
+                    }
+                });
+                return Ok(user);
+            } catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
+            //does not exisit in either - must be a superuser:
+            //if (user != null)
+            //{
+            //    return Ok(user);
+            //}
 
             return BadRequest();
         }
@@ -119,9 +152,6 @@ namespace Team7.Controllers
             var client = await _userManager.FindByIdAsync(id);
             if (client == null) return BadRequest();
 
-            //delete from app user:
-            await _userManager.DeleteAsync(client);
-
             //delete from client:
             try
             {
@@ -133,6 +163,15 @@ namespace Team7.Controllers
             {
                 return BadRequest(ex.Message);  
             }
+            //delete from app user:
+            try
+            {
+                await _userManager.DeleteAsync(client);
+            } catch (Exception ex)
+            {
+
+            }
+
 
             return Ok();
         }
