@@ -454,6 +454,7 @@ namespace Team7.Controllers
                     UserID = AspId,
                     Idemnity = "",
                     AppUser = user,
+                    DOB = userViewModel.dob
                 };
 
                 _clientRepo.Add(clientRec);

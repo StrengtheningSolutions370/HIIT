@@ -60,9 +60,10 @@ export class AuthService {
 
   register(registerUser: appUserRegister) {
     this.storage.deleteKey('token').then(() => {
+      this.global.nativeLoad("Registering...");
       this.repo.register(registerUser).subscribe(result => {
         this.router.navigate(['login']);
-      });
+      }).add(() => { this.global.endNativeLoad(); });
     });
     
   }
