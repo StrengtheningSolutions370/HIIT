@@ -1,7 +1,6 @@
-import { Component,  Input } from '@angular/core';
-import { ViewWillEnter} from '@ionic/angular';
+import { Component, Input } from '@angular/core';
+import { ViewWillEnter } from '@ionic/angular';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -14,6 +13,9 @@ import { SalesService } from 'src/app/services/sales/sales.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RepoService } from 'src/app/services/repo.service';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { PhotoService } from 'src/app/services/photo/photo.service';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-add-sitem',
@@ -24,66 +26,53 @@ export class AddSitemComponent implements ViewWillEnter {
 
   @Input() saleItem: SaleItem;
   categoryDropDown!: SaleCategory[];
-
   quotable = false;
-
+  photo: any[] = [];
+  selectImage: any = {};
   itemImage!: File;
   itemImageBase64String!: any;
 
   //Creating the form to add the new sale category details, that will be displayed in the HTML component
   cSaleItemForm: UntypedFormGroup = this.formBuilder.group({
-   itemName : ['', [Validators.required]],
-   itemDescription : ['', [Validators.required]],
-   itemQuantity : ['', [Validators.required, Validators.min(1)]],
-   itemPhoto: [],
-   itemPrice: ['', [Validators.required, Validators.min(1)]],
-   itemSCategory: ['',[Validators.required]],
-   itemQuotable: []
- });
+    itemName: ['', [Validators.required]],
+    itemDescription: ['', [Validators.required]],
+    itemQuantity: ['', [Validators.required, Validators.min(1)]],
+    itemPhoto: [],
+    itemPrice: ['', [Validators.required, Validators.min(1)]],
+    itemSCategory: ['', [Validators.required]],
+    itemQuotable: []
+  });
 
- selectImage: any;
 
- addImage(event: any) {
-   this.itemImage = event.target.files[0];
-  console.log(this.itemImage);
-   const re = /^image*/;
-
-   if (this.itemImage.type.match(re)) {
-    this.getBase64(this.itemImage);
+    getBase64(file: File) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        // console.log(reader.result);
+        this.itemImageBase64String = reader.result;
+      };
+      reader.onerror = (error) => {
+        console.log(error);
+        this.itemImageBase64String = null;
+      };
    }
+
+  checkBoxToggle(check: any) {
+    this.quotable = check.target.checked;
+    console.log(this.quotable);
+    if (this.quotable) {
+      //is quotable
+      this.cSaleItemForm.controls.itemPrice.disable();
+      this.cSaleItemForm.controls.itemQuantity.disable();
+      return;
+    }
+    console.log('here')
+    this.cSaleItemForm.controls.itemPrice.enable();
+    this.cSaleItemForm.controls.itemQuantity.enable();
   }
 
-  
-
-  getBase64(file: File) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      // console.log(reader.result);
-      this.itemImageBase64String = reader.result;
-    };
-    reader.onerror = (error) => {
-      console.log(error);
-      this.itemImageBase64String = null;
-    };
- }
-
- checkBoxToggle(check: any) {
-   this.quotable = check.target.checked;
-   console.log(this.quotable);
-   if (this.quotable) {
-     //is quotable
-     this.cSaleItemForm.controls.itemPrice.disable();
-     this.cSaleItemForm.controls.itemQuantity.disable();
-     return;
-   }
-   console.log('here')
-   this.cSaleItemForm.controls.itemPrice.enable();
-   this.cSaleItemForm.controls.itemQuantity.enable();
- }
-
- constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
-   public saleService: SalesService, private repo: RepoService) {
+  constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
+    public saleService: SalesService, private repo: RepoService, public photoService: PhotoService) {
     this.saleService.getAllSaleCategories().subscribe(
       {
         next: data => {
@@ -92,14 +81,18 @@ export class AddSitemComponent implements ViewWillEnter {
         }
       }
     );
-   }
+  }
 
-   //Used for validation within the form, if there are errors in the control, this method will return the errors.
-   get errorControl() {
-     return this.cSaleItemForm.controls;
-   }
 
-   ionViewWillEnter(): void {
+
+  //Used for validation within the form, if there are errors in the control, this method will return the errors.
+  get errorControl() {
+    return this.cSaleItemForm.controls;
+  }
+
+  async ionViewWillEnter() {
+    await this.photoService.loadSaved();
+
 
     //populating the dropdown for saleCategory:
     this.saleService.getAllSaleCategories().subscribe(
@@ -110,11 +103,11 @@ export class AddSitemComponent implements ViewWillEnter {
         }
       }
     );
-    
+
 
     console.log("AddSaleItem-ViewWillEnter");
 
-    if (this.saleItem !=null){
+    if (this.saleItem != null) {
       console.log(this.saleItem);
       this.cSaleItemForm.controls.itemName.setValue(this.saleItem.name);
       this.cSaleItemForm.controls.itemDescription.setValue(this.saleItem.description);
@@ -124,81 +117,109 @@ export class AddSitemComponent implements ViewWillEnter {
       this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.quantityOnHand);
       this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.saleCategoryID);
     }
+  }
+
+  checkPlatformForWeb() {
+    if (Capacitor.getPlatform() == 'web') return true;
+    return false;
+  }
+
+  async getPhoto() {
+    const status = await Camera.requestPermissions();
+    const image = await Camera.getPhoto({
+      quality: 90,
+      // allowEditing: true,
+      source: CameraSource.Prompt,
+      width: 600,
+      resultType: this.checkPlatformForWeb() ? CameraResultType.DataUrl : CameraResultType.Uri
+    });
+
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+    console.log('image: ', image);
+    // this.selectImage = image.webPath;
+    this.selectImage = image;
+    // if(this.checkPlatformForWeb()) this.selectImage.webPath = this.selectImage.dataUrl;
+
+    this.selectImage.webPath = this.selectImage.dataUrl;
+    const imageFile = await this.srcToFile(this.selectImage.dataUrl, 'shareImage.png', 'image/png');
+
+
+    // Can be set to the src of an image now
+    // imageElement.src = imageUrl;
+  }
+
+  submitForm() {
+
+    //if image was uploaded:
+    if (this.itemImageBase64String == null) {
+      let str = "Image failed to upload." + '\n' + "please try again."
+      this.global.showAlert(str, "Image Error");
+      return;
     }
 
-     submitForm() {
 
-       //if image was uploaded:
-       if (this.itemImageBase64String == null) {
-        let str = "Image failed to upload." + '\n'+ "please try again."
-        this.global.showAlert(str,"Image Error");
-          return;       
-       }
+    if (this.cSaleItemForm.controls['itemSCategory'].value[0] == null) {
+      this.global.showAlert("No Sale Category provided", "Error updating sale item");
+      return;
+    }
+
+    var date = new Date();
+    var epoch = date.getTime();
+
+    let qoutableTemp = this.quotable;
+    let priceTemp = Number(this.cSaleItemForm.controls['itemPrice'].value);
+    let qtyTemp = this.cSaleItemForm.controls['itemQuantity'].value;
+
+    if (qoutableTemp) {
+      priceTemp = 0;
+      qtyTemp = 0;
+    }
+
+    //form is valid for submission
+    var obj = {
+      name: this.cSaleItemForm.controls['itemName'].value,
+      photo: epoch + '_' + this.itemImage.name,
+      description: this.cSaleItemForm.controls['itemDescription'].value,
+      quotable: this.quotable,
+      price: priceTemp,
+      quantity: qtyTemp,
+      saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
+      inventoryItem: [] // we need to auto populate this - either from the frontend or on the API
+    }
 
 
-       if (this.cSaleItemForm.controls['itemSCategory'].value[0] == null) {
-        this.global.showAlert("No Sale Category provided","Error updating sale item");
+    console.log('ob');
+    console.log(obj);
+
+
+    //wait for image to upload:
+    const formData = new FormData();
+    console.log(this.itemImage);
+    formData.append('file', this.itemImage, epoch + '_' + this.itemImage.name);
+
+    this.repo.uploadSaleItemImage(formData).subscribe({
+      next: data => {
+        this.global.dismissModal();
+        this.saleService.confirmSaleItemModal(1, obj, this.cSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.global.showAlert(err.error, "ERROR uploading image");
         return;
       }
-
-      var date = new Date();
-      var epoch = date.getTime();
-
-      let qoutableTemp = this.quotable;
-      let priceTemp = Number(this.cSaleItemForm.controls['itemPrice'].value);
-      let qtyTemp = this.cSaleItemForm.controls['itemQuantity'].value;
-
-      if (qoutableTemp){
-        priceTemp = 0;
-        qtyTemp = 0;
-      }
-
-       //form is valid for submission
-      var obj = {
-        name: this.cSaleItemForm.controls['itemName'].value,
-        photo: epoch + '_' + this.itemImage.name,
-        description: this.cSaleItemForm.controls['itemDescription'].value,
-        quotable: this.quotable,
-        price: priceTemp,
-        quantity: qtyTemp,
-        saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
-        inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
-      }
+    });
+  }
 
 
-      console.log('ob');
-      console.log(obj);
 
 
-      //wait for image to upload:
-      const formData = new FormData();
-        console.log(this.itemImage);
-        formData.append('file', this.itemImage, epoch + '_' + this.itemImage.name);
+  srcToFile(src, fileName, mimeType) {
+    return (fetch(src)
+      .then((res) => { return res.arrayBuffer(); })
+      .then((buf) => { return new File([buf], fileName, { type: mimeType }); })
+    );
+  }
 
-        this.repo.uploadSaleItemImage(formData).subscribe({
-          next: data => {
-            this.global.dismissModal();
-            this.saleService.confirmSaleItemModal(1, obj, this.cSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
-          },
-          error: (err : HttpErrorResponse) => {
-            this.global.showAlert(err.error,"ERROR uploading image");
-          return;  
-          }
-        });
-        
-
-      }
-      async getPhoto() {
-        const status = await Camera.requestPermissions();
-        const image = await Camera.getPhoto({
-          quality: 90,
-          // allowEditing: true,
-          source: CameraSource.Prompt,
-          width: 600,
-          resultType: CameraResultType.Uri
-        });
-
-        this.itemImage = image.webPath;
-
-}
 }
