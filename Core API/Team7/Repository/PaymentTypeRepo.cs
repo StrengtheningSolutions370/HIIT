@@ -52,6 +52,70 @@ namespace Team7.Models.Repository
         //    return null;
 
         //}
+        public async Task<object> GetAllPaymentTypesAsync()
+        {
+            IQueryable<PaymentType> query = DB.PaymentType;
+            if (!query.Any())
+            {
+                return null;
+            }
+            return new
+            {
+                result = await query.Select(pt => new
+                {
+                    pt.PaymentTypeID,
+                    pt.Name
+                }).ToListAsync()
+            };
+        }
+
+        public async Task<object> GetPaymentTypesAsync(string name)
+        {
+            IQueryable<PaymentType> query = DB.PaymentType.Where(pt => pt.Name == name);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(pt => new
+                    {
+                        pt.PaymentTypeID,
+                        pt.Name
+                    }).ToListAsync()
+                };
+            }
+
+        }
+
+        public async Task<object> GetPaymentTypeIdAsync(int id)
+        {
+            IQueryable<PaymentType> query = DB.PaymentType.Where(pt => pt.PaymentTypeID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(pt => new
+                    {
+                        pt.PaymentTypeID,
+                        pt.Name,
+                        Payment =
+                            pt
+                            .Payment
+                            .Select(p => new {
+                                p.PaymentID,
+                                p.Sale,
+                                p.Booking}),
+                    }).ToListAsync()
+                };
+            }
+        }
 
         public async Task<PaymentType> _GetPaymentTypeIdAsync(int id)
         {
@@ -65,6 +129,7 @@ namespace Team7.Models.Repository
                 return await query.SingleAsync();
             }
         }
+
 
         public async Task<bool> SaveChangesAsync()
         {
