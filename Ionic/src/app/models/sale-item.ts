@@ -8,7 +8,6 @@ export class SaleItem {
     //price: number;
     quotable?: boolean;
     quantityOnHand: number;
-    stock: number;
     saleCategoryID: number;
     priceHistory?: [{
         priceHistoryID?:number,

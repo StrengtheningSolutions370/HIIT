@@ -27,7 +27,6 @@ uSaleItemForm: UntypedFormGroup = new UntypedFormGroup({
   itemName: new UntypedFormControl('', [Validators.required]),
   itemDescription: new UntypedFormControl('', [Validators.required]),
   itemQuantity: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
-  itemStock: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
   itemPhoto: new UntypedFormControl(''),
   itemPrice: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
   itemCost: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
@@ -97,7 +96,7 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
     }
   )
 
-  console.log("UpdateSaleItem-ViewWillEnter");    
+  console.log("UpdateSaleItem-ViewWillEnter");
 
     if (this.saleItem != null){
       this.quotable = this.saleItem.quotable;
@@ -118,7 +117,7 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
       this.uSaleItemForm.controls['itemQuotable'].setValue(this.saleItem.quotable);
       this.uSaleItemForm.controls['itemSCategory'].setValue(this.saleItem.SaleCategoryID);
     } else {
-      this.global.showAlert("No venue selected for update","Update Venue Error");
+      this.global.showAlert("No sale item selected for update","Update Sale item Error");
       this.global.dismissModal();
     }
 
@@ -150,16 +149,14 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
     let priceTemp = Number(this.uSaleItemForm.controls['itemPrice'].value);
     let qtyTemp = this.uSaleItemForm.controls['itemQuantity'].value;
     let costTemp = Number(this.uSaleItemForm.controls['itemCost'].value);
-    let stockTemp = this.uSaleItemForm.controls['itemStock'].value;
 
     if (this.quotable){
       priceTemp = 0;
       qtyTemp = 0;
       costTemp = 0;
-      stockTemp = 0;
     }
 
-    
+
      var fName = this.saleItem.photo;
      if (this.itemImage != null) {
       var date = new Date();
@@ -179,7 +176,6 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
       }],
       quotable: this.quotable,
       quantityOnHand: qtyTemp,
-      stock: stockTemp,
       saleCategoryID: Number(this.uSaleItemForm.controls['itemSCategory'].value.split(',')[0]),
       //inventoryItem:null
     }
@@ -201,12 +197,12 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
             // upload the new image
             this.repo.uploadSaleItemImage(formData).subscribe({
               next: data => {
-  
+
                 //update the obj in db
                 // this.repo.updateSaleItem()
                 this.global.dismissModal();
                 this.saleService.confirmSaleItemModal(2, obj, this.uSaleItemForm.value['itemSCategory'].split(',')[1], this.itemImageBase64String);
-  
+
               },
               error: (err : HttpErrorResponse) => {
                 console.log(err);
