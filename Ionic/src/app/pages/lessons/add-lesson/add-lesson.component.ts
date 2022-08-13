@@ -54,8 +54,9 @@ export class AddLessonComponent implements OnInit {
     //fetch employees for the dropdown:
     this.repo.getEmployees().subscribe({
       next: (data : any) => {
-        this.employees = data;
-        //console.log('employees',this.employees)
+        console.log(data)
+        this.employees = data.filter(el => el.role[0] == 'trainer');
+        console.log('employees',this.employees)
       }
     }).add(() => { 
       this.employeesLoadFlag = true;
@@ -196,7 +197,7 @@ export class AddLessonComponent implements OnInit {
     }
 
     this.lessonService.confirmLessonModal(1, confirmData).then(() => {
-      this.modalCtrl.dismiss();
+      this.dismissModal();
     });
       
   }

@@ -329,7 +329,7 @@ namespace Team7.Controllers
 
             var userRole = await _userManager.GetRolesAsync(await _userManager.FindByNameAsync(sub));
 
-            return Ok(new
+        return Ok(new
             {
                 role = userRole[0]
             });
@@ -443,6 +443,9 @@ namespace Team7.Controllers
                     {
                         //email the password to the user:
                         //email.sendEmail(Email, "Strengthening Solutions", body);
+                        Email email = new Email(Email, "Strengthening Solutions", body);
+                        Thread thr = new Thread(new ThreadStart(email.sendEmail));
+                        thr.Start();
 
                         ///////////////////////////////////////////////////
                         ///store files from FormData:

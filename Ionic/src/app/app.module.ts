@@ -28,6 +28,9 @@ import { ViewTitlesComponent } from './pages/user/titles/view-titles/view-titles
 import { ConfirmTitleComponent } from './pages/user/titles/confirm-title/confirm-title.component';
 import { AssociativeTitleComponent } from './pages/user/titles/associative-title/associative-title.component';
 
+//CLIENT IMPORTS:
+import { ClientsPageModule } from './pages/clients/clients.module';
+
 //SALE CATEGORY IMPORTS:
 import { AddCategoryComponent } from './pages/sale/sale-category/add-category/add-category.component';
 import { UpdateCategoryComponent } from './pages/sale/sale-category/update-category/update-category.component';
@@ -138,6 +141,16 @@ import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-
 import { DatePipe } from '@angular/common';
 import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedule/update-schedule.component';
 
+//CLIENT IMPORTS:
+import { DeleteClientComponent } from './pages/user/clients/delete-client/delete-client.component';
+
+//indemnitymodal:
+import { ConfirmIndemnityComponent } from './pages/profile/profile/confirm-indemnity/confirm-indemnity.component';
+
+//Add Measurement
+import { AddComponent } from './pages/measurements/add/add.component';
+import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measurement/confirm-measurement.component';
+
 @NgModule({
   declarations: [AppComponent,
   //Venue
@@ -186,6 +199,10 @@ import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedul
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
   //Lesson
   AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
+  //Client
+  DeleteClientComponent,
+  //confirmindemnity
+  AddComponent, ConfirmMeasurementComponent
 
 ],
   entryComponents: [],

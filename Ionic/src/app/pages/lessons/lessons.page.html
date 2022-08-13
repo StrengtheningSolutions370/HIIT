@@ -14,60 +14,43 @@
 <ion-content>
 
   <ion-col size="12">
-    <ion-searchbar #search (ionClear)="searchLesson(search.value)" (ionInput)="searchLesson(search.value)" expand="block" placeholder='I am looking for...' cancelButtonText="Close"></ion-searchbar>
+    <ion-searchbar #search (ionClear)="searchLesson(search.value)" (ionInput)="searchLesson(search.value)" expand="block" placeholder='Search...' cancelButtonText="Close"></ion-searchbar>
   </ion-col>
   <div class="ion-text-center">
     <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addLesson()">
       Add Lesson 
     </ion-button>
   </div>
-  <ion-grid>
-    <ion-row>
 
 
-      <ion-grid>
+      <ion-grid id="cols">
+        <ion-row>
+  
+            <ion-col class="cardFadeUp" *ngFor="let lesson of lessons" id="cols">
 
-        <ion-list class="cardFadeUp" *ngFor="let lesson of lessons">
-          <ion-item-sliding>
-  
-            <ion-item>
-                  
-              <ion-grid class="nomargin">
-                <ion-row>
-                <ion-col size="12" size-lg="2" class="ion-align-items-center"><img [src]="createImg(lesson.employee.photo)"></ion-col>
-  
-                <ion-col size="5">
-                  <ion-text><h3>{{lesson.name}}</h3></ion-text>
-                  <ion-text><h6 class="lightone">{{lesson.employee.appUser.firstName}} {{lesson.employee.appUser.lastName}}</h6></ion-text>
-                  <ion-text><h6 class="lighttwo">{{lesson.employee.qualification.description}}</h6></ion-text>
-                  <ion-text><h6 class="lighttwo">{{lesson.employee.appUser.email}}</h6></ion-text>
-                </ion-col>
-  
-                <!-- <ion-col>
-                  <ion-text><h6>{{upperCase(lesson.role)}}</h6></ion-text>
-                </ion-col> -->
-                
-                <ion-col>
+              <ion-card class="buttonalign">
+                <div>
+                  <ion-card-header>
+                    <ion-card-subtitle>{{getExeCount(lesson)}} Exercises</ion-card-subtitle>
+                    <ion-card-title>{{lesson.name}}</ion-card-title>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <ion-text><h6 class="lightone">{{lesson.employee.appUser.firstName}} {{lesson.employee.appUser.lastName}}</h6></ion-text>
+                    <ion-text><h6 class="lighttwo">{{lesson.employee.appUser.email}}</h6></ion-text>
+                  </ion-card-content>
+                </div>
+                <div class="colmaker">
                   <ion-button (click)="viewLesson(lesson)">View</ion-button>
-                </ion-col>
-  
-                <ion-icon name="chevron-back-outline" size="small"></ion-icon>
-              </ion-row>
-              </ion-grid>
-  
-            </ion-item>
-  
-            <ion-item-options side="end" >
-              <ion-item-option color="secondary" (click)="updateLesson(lesson)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
-              <ion-item-option color="danger" (click)="deleteLesson(lesson)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-  
-        </ion-list>
+                  <ion-button color="secondary" (click)="updateLesson(lesson)">Update</ion-button>
+                  <ion-button color="danger" (click)="deleteLesson(lesson)">Delete</ion-button>
+                </div>
+              </ion-card>
+
+            </ion-col>
+    
+        </ion-row>
       </ion-grid>
 
-    </ion-row>
-  </ion-grid>
 
   <ion-text id="noRes" *ngIf="noresults">
     <h1>No Results</h1>

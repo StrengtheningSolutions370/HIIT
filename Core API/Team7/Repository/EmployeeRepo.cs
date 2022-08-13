@@ -109,6 +109,48 @@ namespace Team7.Models.Repository
 
         }
 
+        public async Task<object> GetFullEmployeeByIDAsync(string id)
+        {
+            var o = new List<object>();
+
+            var emps = await DB.Employee.Where(u => u.UserID == id).Select(e => new
+            {
+                EmployeeID = e.EmployeeID,
+                Photo = e.Photo,
+                Contract = e.Contract,
+                IDNumber = e.IDNumber,
+                Qualification = e.Qualification,
+                EmployeeType = e.EmployeeType,
+                AppUser = e.AppUser,
+                Lesson = e.Lesson,
+                Schedule = e.Schedule,
+                UserID = e.UserID,
+            }).ToListAsync();
+
+
+            var titles = await DB.Title.Select(s => new Title
+            {
+                Description = s.Description,
+                User = s.User
+            }).ToListAsync();
+
+            foreach (var e in emps)
+            {
+                e.AppUser.Title = getTitleFromId(titles, e.AppUser.Id);
+            }
+
+            foreach (var e in emps)
+            {
+                o.Add(new
+                {
+                    Data = e,
+                    Role = await _userManager.GetRolesAsync(e.AppUser),
+                });
+            }
+
+            return o.FirstOrDefault();
+        }
+
         static Title getTitleFromId(List<Title> titles, string id)
         {
             foreach (var title in titles)
@@ -183,7 +225,7 @@ namespace Team7.Models.Repository
         public async Task<Employee> GetByUserIdAsync(string AspId)
         {
             /*return DB.Employee.Select().Where(e => e.UserID == AspId).FirstOrDefault();*/
-            var all = await DB.Employee.Select(e => new Employee
+            var all = await DB.Employee.Where(e => e.AppUser.Id == AspId).Select(e => new Employee
             {
                 EmployeeID = e.EmployeeID,
                 Photo = e.Photo,
@@ -196,7 +238,7 @@ namespace Team7.Models.Repository
                 Schedule = e.Schedule,
                 UserID = e.UserID,
             }).ToListAsync();
-            return all.Where(e => e.AppUser.Id == AspId).First();
+            return all.FirstOrDefault();
         }
 
         public async Task<object> GetEmployeeIdAsync(int id)

@@ -14,7 +14,7 @@ namespace Team7.Models
         public Nullable<double> Waist { get; set; }
         public Nullable<double> Height { get; set; }
         public Nullable<double> Weight { get; set; }
-        public System.DateTime Date { get; set; }
+        public int Date { get; set; }
 
         public virtual Client Client { get; set; }
     }

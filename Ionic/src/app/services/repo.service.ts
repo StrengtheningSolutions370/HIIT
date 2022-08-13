@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { identity, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Venue } from 'src/app/models/venue';
 
@@ -29,8 +29,8 @@ import { Schedule } from '../models/schedule';
 })
 
 export class RepoService {
-  base = 'https://bsctest.azurewebsites.net/api/';
-  //externalServerUrl = 'https://bsctest.azurewebsites.net/api/'
+  // base = 'https://bsctest.azurewebsites.net/api/';
+  base = 'https://localhost:44383/api/';
   AppUserController = 'AppUser/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
@@ -49,7 +49,8 @@ export class RepoService {
   ExerciseController = 'Exercise/'
   WriteOffReasonController = 'WriteOffReason/'
   LessonController = 'Lesson/'
-  ScheduleController = 'Schedule/'
+  ScheduleController = 'Schedule/';
+  MeasurementController = 'Measurement/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -58,22 +59,52 @@ export class RepoService {
     }),
   };
 
-  
+
 
   constructor(public http: HttpClient) {
     //CRUDS in this repo file need to be used by subscribing to them in the relevant service.
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
 
-  
+
 
   getUserRole(token : string) : Observable<any>{
     // console.trace();
     return this.http.get(`${this.base + this.EmployeeController}token`, { headers : new HttpHeaders({'Authorization': 'Bearer ' + token}) });
   }
 
+  //MEASUREMENTS
+  addMeasurement(data: any): Observable<any> {
+    return this.http.post<any>(`${this.base+this.MeasurementController}add`, data, this.httpOptions);
+  }
+
+  getClientMeasurements(email : string) : Observable<any> {
+    return this.http.get(`${this.base + this.MeasurementController}getmeasurements?email=${email}`, this.httpOptions);
+  }
+
   //AppUser:
   //-------
+  //clients:
+  getAllClients(): Observable<any> {
+    return this.http.get(`${this.base + this.AppUserController}getallclients`, this.httpOptions);
+  }
+
+  getUser(id : string) : Observable<any> {
+    return this.http.get(`${this.base + this.AppUserController}getuser?id=${id}`, this.httpOptions);
+  }
+
+  deleteClient(id: string): Observable<any> {
+    return this.http.delete(`${this.base + this.AppUserController}deleteclient?id=${id}`, this.httpOptions);
+  }
+
+  updateClientInformation(data: FormData): Observable<any> {
+    return this.http.post<any>(`${this.base+this.AppUserController}updateclient`, data, this.httpOptions);
+  }
+
+  uploadIndemnity(data: FormData): Observable<any> {
+    return this.http.post<any>(`${this.base+this.AppUserController}uploadindemnity`, data, this.httpOptions);
+  }
+
   //Register
   register(userDetails: appUserRegister) {
     return this.http.post(`${this.base + this.AppUserController}register`,userDetails,this.httpOptions);

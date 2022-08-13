@@ -108,9 +108,9 @@ namespace Team7
                                 Id = "Bearer"
                             }
                         },
-#pragma warning disable CA1825 // Avoid zero-length array allocations
+                    #pragma warning disable CA1825 // Avoid zero-length array allocations
                         new string []{}
-#pragma warning restore CA1825 // Avoid zero-length array allocations
+                    #pragma warning restore CA1825 // Avoid zero-length array allocations
                     }
                 });
             });
@@ -129,8 +129,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-
-            options.UseSqlServer(Configuration.GetConnectionString("Azure")));
+            options.UseSqlServer(Configuration.GetConnectionString("AWS")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
@@ -174,6 +173,7 @@ namespace Team7
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();
             services.AddScoped<IVATRepo, VATRepo>();
+            //services.AddSwaggerGen();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
@@ -183,11 +183,13 @@ namespace Team7
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICorsService corsService, ICorsPolicyProvider corsPolicyProvider)
         {
 
+           
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Team7 v1");
+                c.RoutePrefix = "";
                 //c.RoutePrefix = string.Empty;
 
             });
@@ -206,28 +208,28 @@ namespace Team7
 
             }
 
-            /*app.UseHttpsRedirection();
-            app.UseCors("CorsPolicy");
+            //app.UseHttpsRedirection();
+            //app.UseCors("CorsPolicy");
 
-            app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-                RequestPath = new PathString("/Resources")
-            });*/
-
-            //app.UseStaticFiles(new StaticFileOptions
+            //app.UseStaticFiles();
+            //app.UseStaticFiles(new StaticFileOptions()
             //{
             //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-            //    RequestPath = new PathString("/Resources"),
-            //    ServeUnknownFileTypes = true,
-            //    OnPrepareResponse = ctx =>
-            //    {
-            //        ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
-            //        ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers",
-            //          "Origin, X-Requested-With, Content-Type, Accept");
-            //    },
+            //    RequestPath = new PathString("/Resources")
             //});
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources"),
+                ServeUnknownFileTypes = true,
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
+                    ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers",
+                      "Origin, X-Requested-With, Content-Type, Accept");
+                },
+            });
 
             app.UseHttpsRedirection();
 

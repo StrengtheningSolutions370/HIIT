@@ -1,4 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Team7.Context;
 
 
@@ -7,11 +12,14 @@ namespace Team7.Models.Repository
     public class ClientRepo : IClientRepo
     {
 
+        private readonly UserManager<AppUser> _userManager;
+
         readonly private AppDB DB;
 
-        public ClientRepo(AppDB appDatabaseContext)
+        public ClientRepo(AppDB appDatabaseContext, UserManager<AppUser> userManager)
         {
             DB = appDatabaseContext;
+            _userManager = userManager;
         }
 
         public void Add<T>(T Entity) where T : class
@@ -32,12 +40,37 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<Client[]> GetAllClientsAsync()
+        public async Task<object[]> GetAllClientsAsync()
         {
             //IQueryable<Client> query = DB.Client;
             //return await query.ToArrayAsync();
-            return null;
+            IQueryable<Client> query = DB.Client.Select(c =>
+            new Client
+            {
+                ClientID = c.ClientID,
+                UserID = c.UserID,
+                Photo = c.Photo,
+            });
 
+            var data = query.ToArray();
+
+            List<object> output = new List<object>();
+            foreach (var client in data)
+            {
+                output.Add(new
+                {
+                    client = client,
+                    user = await _userManager.FindByIdAsync(client.UserID),
+                });
+            }
+
+            return output.ToArray();
+
+        }
+
+        public async Task<object> getUserAsync(string id)
+        {
+            return null;
         }
 
         public async Task<Client[]> GetClientsAsync(string input)
@@ -55,17 +88,25 @@ namespace Team7.Models.Repository
 
         }
 
-        public async Task<Client> GetClientIdAsync(int id)
+        public async Task<Client> GetClientIdAsync(string id)
         {
-            //IQueryable<Client> query = DB.Client.Where(v => v.VenueID == id);
-            //if (!query.Any())
-            //{
-            //    return null;
-            //}
-            //else
-            //{
-            //    return await query.SingleAsync();
-            //}
+            IQueryable<Client> query = DB.Client.Where(c => c.UserID == id).Select(a => new Client
+            {
+                ClientID = a.ClientID,
+                UserID = a.UserID,
+                DOB = a.DOB,
+                Photo = a.Photo,
+                Idemnity = a.Idemnity,
+                Measurement = a.Measurement,
+            });
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return query.FirstOrDefault();
+            }
             return null;
         }
 

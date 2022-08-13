@@ -178,10 +178,10 @@ export const routes: Routes = [
   // },
   {
     path: 'measurements',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
+    loadChildren: () => import('./pages/measurements/measurements.module').then(m => m.MeasurementsPageModule), 
     canActivate: [AuthGaurdService],
     data: {
-      roles: [Roles.Member]
+      roles: [Roles.Client]
     }
     //loadChildren component here for attendance once generated
   },
@@ -195,7 +195,7 @@ export const routes: Routes = [
     // canActivate: [AuthGaurdService],
     // data : {
     //   roles: [AllRoles]
-    // }
+    // }  
   },
   {
     path: 'lessons',
@@ -205,12 +205,12 @@ export const routes: Routes = [
       roles: [Roles.Trainer, Roles.SuperUser]
     }
   },
-  
   //this route object must be last
-  {
-    path: '**', 
-    redirectTo: 'login',
-  },
+  // {
+  //   path: '**', 
+  //   redirectTo: 'login',
+  // },
+
 
 ]  
 
