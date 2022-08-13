@@ -27,7 +27,10 @@
     </ion-item>
   </ion-list>
 
-  <ion-button (click)="makePayment()">Proceed to checkout</ion-button>
+  <ion-button (click)="checkout()">Proceed to checkout</ion-button>
+
+
+  <!--makePayment()-->
   <form action="https://sandbox.payfast.co.za/eng/process" method="POST">
     <input type="hidden" name="merchant_id" value="10026801">
     <input type="hidden" name="amount" value="100.00">

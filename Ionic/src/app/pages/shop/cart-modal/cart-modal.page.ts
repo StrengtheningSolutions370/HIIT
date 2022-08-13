@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonContent, ModalController, ViewWillEnter } from '@ionic/angular';
+import { IonContent, ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Cart } from 'src/app/models/cart';
 import { SaleItem } from 'src/app/models/sale-item';
@@ -28,7 +28,7 @@ export class CartModalPage implements ViewWillEnter {
 
   constructor( private httpComms : HttpClient,
      private cartService: CartService,
-      private global: GlobalService,
+      public global: GlobalService,
       public formBuilder: UntypedFormBuilder,
       private router: Router
     ) {
@@ -45,6 +45,13 @@ export class CartModalPage implements ViewWillEnter {
 
    submit(){
     console.log('submitting payment')
+   }
+
+   checkout(){
+    console.log(this.model);
+
+    //console.log(this.saleItem);
+    this.cartService.checkout(this.model);
    }
 
   async getData() {

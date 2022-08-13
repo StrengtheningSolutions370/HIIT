@@ -119,7 +119,10 @@ import { ViewWriteOffReasonComponent } from './pages/inventory/write-off-reason/
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { TimeRangeComponent } from './pages/booking/time-range/time-range.component';
+
+//CART IMPORTS:
 import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
+import { CheckoutComponent } from './pages/shop/checkout/checkout.component';
 
 //EXERCISE IMPORTS:
 import { AddExerciseComponent } from './pages/exercises/exercise-page/add-exercise/add-exercise.component';
@@ -163,6 +166,8 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
   //EmployeeType
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
+  //Cart
+  CheckoutComponent,
   //SalesCategory
   AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent, AssociativeCategoryComponent,
   //SalesItem
@@ -206,7 +211,7 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
 
 ],
   entryComponents: [],
-  imports: [ 
+  imports: [
     BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 
