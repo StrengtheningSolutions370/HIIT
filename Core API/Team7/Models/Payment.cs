@@ -11,15 +11,28 @@ namespace Team7.Models
             this.Refund = new HashSet<Refund>();
         }
 
-        [Key]
+        //[Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentID { get; set; }
 
+
+
+
         [Required]
         public int? PaymentTypeID { get; set; }
+
+
+
+
+
         [Required]
         public int? SaleID { get; set; }
-        [Required]
+
+
+
+
+
+        //[Required]
         public int? BookingID { get; set; }
 
         public virtual PaymentType PaymentType { get; set; }
