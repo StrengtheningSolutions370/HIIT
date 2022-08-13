@@ -47,26 +47,27 @@
     <img *ngIf="selectImage" [src]="selectImage?.webPath ? selectImage.webPath : selectImage?.dataUrl" alt=img/>
 
     <ion-item>
+      <ion-label position="floating">Sale Category:</ion-label>
+      <ion-select formControlName="itemSCategory" type="text" required="" id="itemSCategory" >
+        <ng-container *ngFor="let c of this.categoryDropDown">
+          <ion-select-option value="{{c.saleCategoryID}},{{c.name}}">{{ c.name }}</ion-select-option>
+        </ng-container>
+      </ion-select>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.itemSCategory.errors?.required && cSaleItemForm.get('itemSCategory').touched">
+      Category is required <br/>
+     </span>
+
+     <ion-item>
       <ion-label>
        <p>Is this item quotable?
         <ion-checkbox formControlName="itemQuotable" (ionChange)="checkBoxToggle($event)" color="secondary" ></ion-checkbox></p>
       </ion-label>
     </ion-item>
 
-    <div *ngIf="!this.quotable">
-      <ion-item>
-        <ion-label position="floating">Sale Category:</ion-label>
-        <ion-select formControlName="itemSCategory" type="text" required="" id="itemSCategory" >
-          <ng-container *ngFor="let c of this.categoryDropDown">
-            <ion-select-option value="{{c.saleCategoryID}},{{c.name}}">{{ c.name }}</ion-select-option>
-          </ng-container>
-        </ion-select>
-        <br/>
-      </ion-item>
-      <span class="error ion-padding" *ngIf="errorControl.itemSCategory.errors?.required && cSaleItemForm.get('itemSCategory').touched">
-        Category is required <br/>
-       </span>
 
+    <div *ngIf="!this.quotable">
       <ion-item>
         <ion-label position="floating">Cost:</ion-label>
         <br/>
@@ -98,17 +99,6 @@
       </ion-item>
       <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.required && cSaleItemForm.get('itemQuantity').touched">
        Quantity on hand is required <br/>
-      </span>
-      <ion-item>
-        <ion-label position="floating">Quantity In Stock:</ion-label>
-        <ion-input formControlName="itemStock" type="number" required="" id="itemStock" ></ion-input>
-        <br/>
-      </ion-item>
-      <span class="error ion-padding" *ngIf="errorControl.itemStock.errors?.required && cSaleItemForm.get('itemStock').touched">
-       Quantity in stock is required <br/>
-      </span>
-      <span class="error ion-padding" *ngIf="errorControl.itemStock.errors?.min">
-       Quantity in stock must be greater than 0 <br/>
       </span>
     </div>
     <br>
