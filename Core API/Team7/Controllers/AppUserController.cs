@@ -278,13 +278,7 @@ namespace Team7.Controllers
                 return BadRequest(ex.Message);  
             }
             //delete from app user:
-            try
-            {
-                await _userManager.DeleteAsync(client);
-            } catch (Exception ex)
-            {
-
-            }
+            await _userManager.DeleteAsync(client);
 
 
             return Ok();
