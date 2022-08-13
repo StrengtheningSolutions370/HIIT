@@ -144,6 +144,12 @@ import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedul
 //CLIENT IMPORTS:
 import { DeleteClientComponent } from './pages/user/clients/delete-client/delete-client.component';
 
+//indemnitymodal:
+import { ConfirmIndemnityComponent } from './pages/profile/profile/confirm-indemnity/confirm-indemnity.component';
+
+//Add Measurement
+import { AddComponent } from './pages/measurements/add/add.component';
+import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measurement/confirm-measurement.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -194,7 +200,9 @@ import { DeleteClientComponent } from './pages/user/clients/delete-client/delete
   //Lesson
   AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
   //Client
-  DeleteClientComponent
+  DeleteClientComponent,
+  //confirmindemnity
+  AddComponent, ConfirmMeasurementComponent
 
 ],
   entryComponents: [],

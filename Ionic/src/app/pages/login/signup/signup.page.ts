@@ -31,7 +31,8 @@ export class SignupPage implements OnInit {
   onSubmit(registerForm: NgForm){
     if(!registerForm.valid) {return;}
     var userRegister = new appUserRegister();
-    console.log(registerForm.value);
+    const d = new Date(registerForm.value.dob);
+    const DOB_epoch = Math.trunc(d.getTime() / 1000);
     userRegister = {
       emailAddress : registerForm.value.emailAddress,
       password : registerForm.value.password,
@@ -39,8 +40,10 @@ export class SignupPage implements OnInit {
       firstName: registerForm.value.firstName,
       lastName: registerForm.value.lastName,
       phoneNumber: registerForm.value.phone,
-      TitleId: registerForm.value.TitleId
+      TitleId: registerForm.value.TitleId,
+      dob: DOB_epoch
     }
+    console.log(userRegister);
     this.authServ.register(userRegister);
   }
   

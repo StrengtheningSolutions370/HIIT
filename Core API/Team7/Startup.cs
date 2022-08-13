@@ -208,15 +208,15 @@ namespace Team7
 
             }
 
-            app.UseHttpsRedirection();
-            app.UseCors("CorsPolicy");
+            //app.UseHttpsRedirection();
+            //app.UseCors("CorsPolicy");
 
-            app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-                RequestPath = new PathString("/Resources")
-            });
+            //app.UseStaticFiles();
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+            //    RequestPath = new PathString("/Resources")
+            //});
 
             app.UseStaticFiles(new StaticFileOptions
             {
