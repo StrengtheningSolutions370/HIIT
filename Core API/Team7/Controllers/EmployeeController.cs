@@ -329,7 +329,7 @@ namespace Team7.Controllers
 
             var userRole = await _userManager.GetRolesAsync(await _userManager.FindByNameAsync(sub));
 
-            return Ok(new
+        return Ok(new
             {
                 role = userRole[0]
             });

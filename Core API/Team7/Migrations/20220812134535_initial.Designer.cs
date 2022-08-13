@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Team7.Context;
 
@@ -11,9 +12,10 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    partial class AppDBModelSnapshot : ModelSnapshot
+    [Migration("20220812134535_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -645,6 +647,7 @@ namespace Team7.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentID"), 1L, 1);
 
                     b.Property<int?>("BookingID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("PaymentTypeID")
@@ -816,9 +819,8 @@ namespace Team7.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
 
                     b.HasKey("SaleID");
 
@@ -900,9 +902,11 @@ namespace Team7.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("SaleID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("SaleItemID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("SaleLineID");
@@ -1417,7 +1421,9 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Booking", "Booking")
                         .WithMany("Payment")
-                        .HasForeignKey("BookingID");
+                        .HasForeignKey("BookingID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Team7.Models.PaymentType", "PaymentType")
                         .WithMany("Payment")
@@ -1501,11 +1507,15 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Sale", "Sale")
                         .WithMany("SaleLine")
-                        .HasForeignKey("SaleID");
+                        .HasForeignKey("SaleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Team7.Models.SaleItem", "SaleItem")
                         .WithMany("SaleLine")
-                        .HasForeignKey("SaleItemID");
+                        .HasForeignKey("SaleItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Sale");
 
