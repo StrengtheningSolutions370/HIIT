@@ -50,6 +50,17 @@
 
     <div *ngIf="!this.quotable">
       <ion-item>
+        <ion-label position="floating">Cost:</ion-label>
+        <ion-input type="number" formControlName="itemCost" type="number" required="" id="itemCost" ></ion-input>
+        <br/>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="errorControl.itemCost.errors?.required && uSaleItemForm.get('itemCost').touched">
+       Cost is required <br/>
+      </span>
+      <span class="error ion-padding" *ngIf="errorControl.itemCost.errors?.min && uSaleItemForm.get('itemCost').touched">
+       Cost must be greater than 0<br/>
+      </span>
+      <ion-item>
         <ion-label position="floating">Price:</ion-label>
         <ion-input type="number" formControlName="itemPrice" type="number" required="" id="itemPrice" ></ion-input>
         <br/>
@@ -70,6 +81,17 @@
       </span>
       <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.min && uSaleItemForm.get('itemQuantity').touched">
        Quantity must be greater than 0<br/>
+      </span>
+      <ion-item>
+        <ion-label position="floating">Stock:</ion-label>
+        <ion-input formControlName="itemStock" type="number" required="" id="itemStock" ></ion-input>
+        <br/>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="errorControl.itemStock.errors?.required && uSaleItemForm.get('itemStock').touched">
+        Stock is required <br/>
+      </span>
+      <span class="error ion-padding" *ngIf="errorControl.itemStock.errors?.min && uSaleItemForm.get('itemStock').touched">
+        Stock must be greater than 0<br/>
       </span>
     </div>
     <ion-item>

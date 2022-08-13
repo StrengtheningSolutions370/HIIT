@@ -10,10 +10,10 @@ namespace Team7.Models
         public int SaleLineID { get; set; }
         [Required]
         public int Quantity { get; set; }
-        [Required]
+        //[Required]
         //public int? ClientID { get; set; }
         public int? SaleID { get; set; }
-        [Required]
+        //[Required]
         public int? SaleItemID { get; set; }
         //public virtual Client Client { get; set; }
         public virtual Sale Sale { get; set; }
