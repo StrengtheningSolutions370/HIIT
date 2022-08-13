@@ -35,6 +35,7 @@
               </ion-label>
               <ion-input 
                 type="file" 
+                accept="image/png, image/jpeg"
                 name="photo" 
                 ngModel 
                 #photo="ngModel" 
@@ -42,7 +43,7 @@
               <ion-img *ngIf="showImage" src="{{imgSrc}}"></ion-img>
               <p *ngIf="!showImage" class="ion-text-start text-center">No Profile image</p>
               
-              <ion-button *ngIf="showImage && uploadPhoto" color="danger" (click)="removePhoto()">Revert</ion-button>
+              <ion-button *ngIf="showImage && uploadPhoto" color="danger" (click)="removePhoto()">Use Original</ion-button>
 
             <ion-item>
               <ion-icon name="person" slot="start" color="#282828"></ion-icon>

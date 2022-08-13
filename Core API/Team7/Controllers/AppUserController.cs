@@ -65,6 +65,42 @@ namespace Team7.Controllers
         }
 
         [HttpPost, DisableRequestSizeLimit]
+        [Route("uploadindemnity")]
+        public async Task<IActionResult> uploadIndemnity()
+        {
+            string unix = timeStamp(); //to stamp file creation
+
+            var formCollection = await Request.ReadFormAsync();
+
+            string s = formCollection.Keys.FirstOrDefault();
+            string decode = HttpUtility.UrlDecode(s);
+            var client = JObject.Parse(decode);
+
+            string AspId = client["AspId"].ToString();
+            Client cli = await _clientRepo.GetClientIdAsync(AspId);
+
+            var ind = formCollection.Files.FirstOrDefault();
+
+            var indemnityFolder = Path.Combine("Resources", "Clients", "Indemnity");
+            var indemnityPath = Path.Combine(Directory.GetCurrentDirectory(), indemnityFolder);
+            //storage
+            var extension = ind.ContentType.Split('/')[1];
+            var indemnityFileName = ContentDispositionHeaderValue.Parse(AspId).ToString() + "_" + unix + ".pdf";
+            cli.Idemnity = indemnityFileName; //update for the extension
+
+            var indemnityFullPath = Path.Combine(indemnityPath, indemnityFileName);
+            using (var stream = new FileStream(indemnityFullPath, FileMode.Create))
+            {
+                ind.CopyTo(stream);
+            }
+
+            _clientRepo.Update(cli);
+            await _clientRepo.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
         [Route("updateclient")]
         public async Task<IActionResult> updateClientInformation()
         {

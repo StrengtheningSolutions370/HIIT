@@ -9,6 +9,7 @@ import { empty } from 'rxjs';
 import { ModalController } from '@ionic/angular';
 import { ConfirmIndemnityComponent } from './confirm-indemnity/confirm-indemnity.component';
 import { appUserRegister } from 'src/app/models/appUser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -55,7 +56,7 @@ export class ProfilePage implements OnInit {
   fail = false;
   msg = '';
 
-  constructor(private modalCtrl : ModalController, private repo : RepoService, private builder : FormBuilder, public global: GlobalService, public titleService: TitleService, public cartService: CartService, private storage : StoreService) { }
+  constructor(private router : Router, private modalCtrl : ModalController, private repo : RepoService, private builder : FormBuilder, public global: GlobalService, public titleService: TitleService, public cartService: CartService, private storage : StoreService) { }
 
   ngOnInit() {
     this.setup();
@@ -101,7 +102,10 @@ export class ProfilePage implements OnInit {
                       this.originalImg = this.imgSrc;
                       this.showImage = true;
                     }
-
+                    if(usr.cli.idemnity != null || usr.cli.idemnity != undefined) {
+                      this.indemnitySrc = this.createIndemnity(usr.cli.idemnity);
+                      this.indemnityFlag = true;
+                    }
                     //populate the form:
                     this.personalForm.controls['firstName'].setValue(this.firstName);
                     this.personalForm.controls['lastName'].setValue(this.lastName);
@@ -244,6 +248,7 @@ export class ProfilePage implements OnInit {
   }
 
   async uploadIndemnity(event : any) {
+
     if (event == null)
       return;
     if (event.target.files.length < 0)
@@ -253,21 +258,35 @@ export class ProfilePage implements OnInit {
       file: file,
       id: this.AspId
     }
-    const modal = await this.modalCtrl.create({
-      component: ConfirmIndemnityComponent,
-      componentProps: {
-        indemnity
+
+    const c : any = {
+      AspId: this.AspId,
+    }
+
+    const payload = new FormData();
+    payload.append(JSON.stringify(c), c);
+    payload.append('indemnity', file);
+
+    this.global.nativeLoad("Uploading...");
+    this.repo.uploadIndemnity(payload).subscribe({
+      next: () => {
+        this.setup();
+      },
+      error: (err) => {
+        console.log('err', err)
       }
-    });
-    await modal.present();
-    modal.onDidDismiss().then(() => {
-      this.setup();
-    })
+    }).add(() => { this.global.endNativeLoad(); });
+
   }
 
   public createContract = (fileName: string) => {
     console.log(`https://localhost:44383/Resources/Employees/Contracts/${fileName}`)
     return `https://localhost:44383/Resources/Employees/Contracts/${fileName}`
+  };
+
+  public createIndemnity = (fileName: string) => {
+    console.log(`https://localhost:44383/Resources/Clients/Indemnity/${fileName}`)
+    return `https://localhost:44383/Resources/Clients/Indemnity/${fileName}`
   };
 
   onPersonalSubmit(personalForm: NgForm){
@@ -295,7 +314,9 @@ export class ProfilePage implements OnInit {
       this.global.nativeLoad("Saving...")
       this.repo.updateClientInformation(payload).subscribe({
         next: () => {
-          this.setup();
+          //this.setup();
+          this.global.showAlert('Please log in again to update changes', "Successfully saved");
+          this.router.navigate(['/login']);
         },
         error: (err) => {
           console.log('err', err)

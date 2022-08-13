@@ -147,6 +147,10 @@ import { DeleteClientComponent } from './pages/user/clients/delete-client/delete
 //indemnitymodal:
 import { ConfirmIndemnityComponent } from './pages/profile/profile/confirm-indemnity/confirm-indemnity.component';
 
+//Add Measurement
+import { AddComponent } from './pages/measurements/add/add.component';
+import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measurement/confirm-measurement.component';
+
 @NgModule({
   declarations: [AppComponent,
   //Venue
@@ -196,9 +200,9 @@ import { ConfirmIndemnityComponent } from './pages/profile/profile/confirm-indem
   //Lesson
   AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
   //Client
-  DeleteClientComponent
+  DeleteClientComponent,
   //confirmindemnity
-  
+  AddComponent, ConfirmMeasurementComponent
 
 ],
   entryComponents: [],
