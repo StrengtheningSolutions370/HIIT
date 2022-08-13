@@ -8,6 +8,6 @@ export class Cart {
         public quantityChange: number,
         public totalItem: number,
         public totalPrice: number,
-        public grandTotal: number,
+        public grandTotal: number
     ) {}
 }

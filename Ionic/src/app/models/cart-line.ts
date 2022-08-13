@@ -1,8 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export class cartLine {
-    cartLineID: number;
-    saleItemID: number;
-    price: number;
-    quantityChange: number;
+    saleItemID?: number;
+    name: string;
+    quantityOnHand: number;
+    priceHistory: [{
+      date: Date;
+      saleAmount: number;
+      costAmount: number;
+    }]
+    quantityChange?: number;
+    subTotal?:number;
 }
 
