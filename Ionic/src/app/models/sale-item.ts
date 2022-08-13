@@ -2,11 +2,18 @@
 export class SaleItem {
     saleItemID?: number;
     name: string;
-    photo?: number;
+    photo?: string;
     description: string;
-    costPrice?: number;
-    price: number;
+    //costPrice?: number;
+    //price: number;
     quotable?: boolean;
     quantityOnHand: number;
+    stock: number;
     saleCategoryID: number;
+    priceHistory?: [{
+        priceHistoryID?:number,
+        date?:Date,
+        costAmount:number,
+        saleAmount:number;
+      }];
 }
