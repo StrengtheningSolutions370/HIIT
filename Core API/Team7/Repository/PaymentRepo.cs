@@ -46,7 +46,10 @@ namespace Team7.Models.Repository
                 new 
                 {
                     p.PaymentID,
-                    p.PaymentType,
+                    PaymentType = new
+                    {
+                        p.PaymentType.PaymentTypeID, p.PaymentType.Name
+                    },
                     Sale = new {
                     p.Sale.SaleID, p.Sale.Date, p.Sale.AppUser,
                         SaleLine = p.Sale.SaleLine.Select(sl => new { sl.SaleLineID, sl.Quantity, sl.SaleItem})
