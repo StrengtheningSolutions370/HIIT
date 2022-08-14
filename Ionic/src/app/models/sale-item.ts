@@ -8,7 +8,12 @@ export class SaleItem {
     //price: number;
     quotable?: boolean;
     quantityOnHand: number;
-    saleCategoryID: number;
+    saleCategoryID?: number;
+    saleCategory?:{
+      saleCategoryID?: number;
+      name?:string;
+      description?:string;
+    }
     priceHistory?: [{
         priceHistoryID?:number,
         date?:Date,

@@ -17,9 +17,11 @@ namespace Team7.Controllers
         const string PATH = "./Assets/";
 
         private readonly ISaleItemRepo SaleItemRepo;
-        public SaleItemController(ISaleItemRepo saleItemRepo)
+        private readonly ISaleCategoryRepo saleCategoryRepo;    
+        public SaleItemController(ISaleItemRepo saleItemRepo, ISaleCategoryRepo saleCategoryRepo)
         {
             this.SaleItemRepo = saleItemRepo;
+            this.saleCategoryRepo = saleCategoryRepo;
         }
 
         // POST api/SaleItem/add
@@ -42,7 +44,6 @@ namespace Team7.Controllers
                     Quotable = saleItem.Quotable,
                     //Quantity = toUpdate.Quantity,
                     QuantityOnHand = saleItem.QuantityOnHand,
-                    Stock = saleItem.Stock,
                     SaleCategoryID = saleItem.SaleCategoryID
                 };
 
@@ -144,7 +145,8 @@ namespace Team7.Controllers
                 toUpdate.Quotable = saleItem.Quotable;
                 //toUpdate.Quantity = toUpdate.Quantity;
                 toUpdate.QuantityOnHand = saleItem.QuantityOnHand;
-                toUpdate.Stock = saleItem.Stock;
+                toUpdate.SaleCategoryID = saleItem.SaleCategoryID;
+                //toUpdate.SaleCategory =  await saleCategoryRepo._GetSaleCategoryIdAsync()
 
                 if (saleItem.PriceHistory != null)
                 {

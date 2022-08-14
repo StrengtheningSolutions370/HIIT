@@ -139,8 +139,8 @@ namespace Team7.Migrations
                 {
                     SaleCategoryID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -306,8 +306,7 @@ namespace Team7.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Quotable = table.Column<bool>(type: "bit", nullable: false),
                     QuantityOnHand = table.Column<int>(type: "int", nullable: false),
-                    Stock = table.Column<int>(type: "int", nullable: false),
-                    SaleCategoryID = table.Column<int>(type: "int", nullable: false)
+                    SaleCategoryID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -316,8 +315,7 @@ namespace Team7.Migrations
                         name: "FK_SaleItem_SaleCategory_SaleCategoryID",
                         column: x => x.SaleCategoryID,
                         principalTable: "SaleCategory",
-                        principalColumn: "SaleCategoryID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "SaleCategoryID");
                 });
 
             migrationBuilder.CreateTable(

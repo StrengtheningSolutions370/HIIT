@@ -3,6 +3,8 @@ import { ViewWillEnter } from '@ionic/angular';
 import Chart from 'chart.js/auto'
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ReportService } from 'src/app/services/report/report.service';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-sale-report',
@@ -11,34 +13,36 @@ import { ReportService } from 'src/app/services/report/report.service';
 })
 export class SaleReportPage implements ViewWillEnter {
 
+  colors = ['red','chartreuse','mediumblue','orange','cyan', 'gold','fuchsia','coral', 'teal', 'darkviolet'];
+
   @ViewChild('barCanvas') private saleBarCanvas: ElementRef;
   saleBarChart: Chart;
   rangeTitle: string = 'Year view';
-  chartHeight: any;
-  chartWidth: any;
-
-  barConfig: any;
-  barLabels: any;
-  barData: any;
-  selected: number;
+  barLabels: any; // Labels below - this object is placed inside barData along with tempCategoryDataset on submit
+  selected: number; // length of selected labels
   year: string[] = ["2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"];
   yearMonth: string[] = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   biMonth: string[] = ["January-February","March-April","May-June","July-August","September-October","November-December"];
   triMonth: string[] = ["January-March","April-June","July-September","October-December"];
   halfyear: string[] = ["January-June","July-December"];
-  saleCategoryReportData: any;
-  tempCategoryDataset: any[] = [];
 
 
-  @ViewChild('lineCanvas') private saleLineCanvas: ElementRef;
-  saleLineChart: Chart;
-  categorySelected: string = 'default';
-  lineConfig: any;
-  lineData_count: number;
-  lineLabels: any;
-  lineData: any;
+  barData: any;// Final barData object passed to Generate Bar Chart method
 
-  colors = ['red','chartreuse','mediumblue','orange','cyan', 'gold','fuchsia','coral', 'teal', 'darkviolet'];
+  saleCategoryReportData: any; //Initial copied array from data.result in fetch sale category method
+  tempCategoryDataset: any[] = []; //Collection of number values aggregated in the fetch sale category method - this object is placed inside barData along with BarLabels on submit
+
+
+  // @ViewChild('lineCanvas') private saleLineCanvas: ElementRef;
+  // saleLineChart: Chart;
+  // categorySelected: string = 'default';
+  // lineConfig: any;
+  // lineLabels: string[] = [];
+  // lineReportData: any;
+  // tempLineData: any;
+  // tempLineDataset: number[] = [];
+
+
 
 
   constructor(public report: ReportService, public global: GlobalService) {
@@ -52,15 +56,42 @@ export class SaleReportPage implements ViewWillEnter {
     this.barLabels = this.yearMonth;
     this.fetchCategoryReport().then(() => {
       this.barChartMethod();
-      this.lineChartMethod();
       this.global.endNativeLoad();
+    });
+    // this.fetchLineReport().then(() => {
+    //   this.lineChartMethod();
+    //   this.global.endNativeLoad();
+    // })
+  }
+
+
+  download() {
+    let Data = document.getElementById('htmlData')!;
+    html2canvas(Data).then((canvas) => {
+      let fileWidth = 290;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+
+      const PDF = new jsPDF({
+        orientation: 'l',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      // PDF.setFontSize(30)
+      // PDF.text('Client Progress Report', 10, 10);
+
+      const topPosition = 20;
+      const leftPosition = 5;
+
+      PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, fileWidth, fileHeight);
+      PDF.save('Sales Report.pdf');
     });
   }
 
   updateView(ev: CustomEvent){
     this.global.nativeLoad();
-    this.chartHeight = this.saleBarChart.height;
-    this.chartWidth = this.saleBarChart.width;
     this.saleBarChart.destroy();
     //this.barData = null;
     //this.saleBarChart.clearRect();
@@ -105,6 +136,30 @@ export class SaleReportPage implements ViewWillEnter {
 
   }
 
+  // async fetchLineReport(): Promise<any>{
+  //   this.tempLineDataset = [];
+  //   return new Promise<any>((resolve) =>{
+  //     this.report.getAllSaleCategoryReport().subscribe(data => {
+  //       this.tempLineData = data.result;
+  //       console.log("Initial line data.result");
+  //       console.log(this.tempLineData);
+  //       if (this.tempLineData == undefined){
+  //         console.log("Empty")
+  //         resolve(true);
+  //         return;
+  //       }
+  //       this.tempLineDataset = [0,0,0,0]
+  //       for (let [index, element] of this.tempLineData.entries()){
+  //         console.log(element);
+  //         this.lineLabels.push(element.name);
+  //         this.tempLineDataset[index] += 1;
+  //       }
+  //       console.log(this.lineLabels);
+  //       resolve(true);
+  //     })
+  //   })
+  // }
+
   async fetchCategoryReport(): Promise<any>{
     this.tempCategoryDataset = [];
     return new Promise<any>((resolve) => {
@@ -112,7 +167,7 @@ export class SaleReportPage implements ViewWillEnter {
 
         //console.log(data.result);
         this.saleCategoryReportData = data.result;
-        console.log("Initial data.result");
+        console.log("Initial category data.result");
         console.log(this.saleCategoryReportData);
         if (this.saleCategoryReportData == undefined){
           console.log("Empty")
@@ -257,66 +312,70 @@ export class SaleReportPage implements ViewWillEnter {
     //this.saleBarChart.getChart().resize();
   }
 
-  lineChartMethod() {
-    this.saleLineChart = new Chart(this.saleLineCanvas.nativeElement, {
-      type: 'line',
-      data: this.lineData,
-      options: {
-        responsive: true,
-        interaction: {
-          mode: 'index',
-          intersect: false,
-        },
-        plugins: {
-          title: {
-            display: true,
-            text: 'Total number of sales per sale category'
-          }
-        },
-        scales: {
-          y: {
-            type: 'linear',
-            display: true,
-            position: 'left',
-          },
-          y1: {
-            type: 'linear',
-            display: true,
-            position: 'right',
+  // lineChartMethod() {
+  //   this.lineReportData = {
+  //     labels: this.lineLabels,
+  //     datasets: this.tempLineDataset
+  //   }
+  //   this.saleLineChart = new Chart(this.saleLineCanvas.nativeElement, {
+  //     type: 'line',
+  //     data: this.lineReportData,
+  //     options: {
+  //       responsive: true,
+  //       interaction: {
+  //         mode: 'index',
+  //         intersect: false,
+  //       },
+  //       plugins: {
+  //         title: {
+  //           display: true,
+  //           text: 'Total number of sales per sale category'
+  //         }
+  //       },
+  //       scales: {
+  //         y: {
+  //           type: 'linear',
+  //           display: true,
+  //           position: 'left',
+  //         },
+  //         y1: {
+  //           type: 'linear',
+  //           display: true,
+  //           position: 'right',
 
-            // grid line settings
-            grid: {
-              drawOnChartArea: false, // only want the grid lines for one axis to show up
-            },
-          },
-        }
-      },
-      // {
-      //   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December'],
-      //   datasets: [
-      //     {
-      //       label: 'Sell per week',
-      //       fill: false,
-      //       backgroundColor: 'rgba(75,192,192,0.4)',
-      //       borderColor: 'rgba(75,192,192,1)',
-      //       borderCapStyle: 'butt',
-      //       borderDash: [],
-      //       borderDashOffset: 0.0,
-      //       borderJoinStyle: 'miter',
-      //       pointBorderColor: 'rgba(75,192,192,1)',
-      //       pointBackgroundColor: '#fff',
-      //       pointBorderWidth: 1,
-      //       pointHoverRadius: 5,
-      //       pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-      //       pointHoverBorderColor: 'rgba(220,220,220,1)',
-      //       pointHoverBorderWidth: 2,
-      //       pointRadius: 1,
-      //       pointHitRadius: 10,
-      //       data: [65, 59, 80, 81, 56, 55, 40, 10, 5, 50, 10, 15],
-      //       spanGaps: false,
-      //     }
-      //   ]
-      // }
-    });
-  }
+  //           // grid line settings
+  //           grid: {
+  //             drawOnChartArea: false, // only want the grid lines for one axis to show up
+  //           },
+  //         },
+  //       }
+  //     },
+  //     // {
+  //     //   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December'],
+  //     //   datasets: [
+  //     //     {
+  //     //       label: 'Sell per week',
+  //     //       fill: false,
+  //     //       backgroundColor: 'rgba(75,192,192,0.4)',
+  //     //       borderColor: 'rgba(75,192,192,1)',
+  //     //       borderCapStyle: 'butt',
+  //     //       borderDash: [],
+  //     //       borderDashOffset: 0.0,
+  //     //       borderJoinStyle: 'miter',
+  //     //       pointBorderColor: 'rgba(75,192,192,1)',
+  //     //       pointBackgroundColor: '#fff',
+  //     //       pointBorderWidth: 1,
+  //     //       pointHoverRadius: 5,
+  //     //       pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+  //     //       pointHoverBorderColor: 'rgba(220,220,220,1)',
+  //     //       pointHoverBorderWidth: 2,
+  //     //       pointRadius: 1,
+  //     //       pointHitRadius: 10,
+  //     //       data: [65, 59, 80, 81, 56, 55, 40, 10, 5, 50, 10, 15],
+  //     //       spanGaps: false,
+  //     //     }
+  //     //   ]
+  //     // }
+  //   });
+  // }
 }
