@@ -4,6 +4,7 @@ import { RepoService } from 'src/app/services/repo.service';
 import { Chart, ChartConfiguration, BarController, BarElement, PointElement, LinearScale, Title, CategoryScale  } from 'chart.js';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-member-report',
@@ -16,8 +17,9 @@ export class MemberReportPage implements AfterViewInit {
   @ViewChild('barCanvas') private barCanvas: any;
   barChart: any;
   switch = false;
+  loading = true;
 
-  constructor(private repo : RepoService) { }
+  constructor(private repo : RepoService, private global : GlobalService) { }
 
   ngAfterViewInit(): void {
     Chart.register(BarController, BarElement, PointElement, LinearScale, Title, CategoryScale);
@@ -25,6 +27,7 @@ export class MemberReportPage implements AfterViewInit {
   
   ngOnInit() {
 
+    this.global.nativeLoad("Loading...");
     this.repo.getAllClients().subscribe({
       next: (data) => {
         data.forEach((el : any) => {
@@ -35,7 +38,10 @@ export class MemberReportPage implements AfterViewInit {
         });
         console.log(this.clients);
         this.calculateAges();
+        this.loading = false;
       }
+    }).add(() => {
+      this.global.endNativeLoad();
     });
 
   }
@@ -192,7 +198,7 @@ export class MemberReportPage implements AfterViewInit {
       const topPosition = 25;
       const leftPosition = 5;
 
-      PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, fileWidth, fileHeight);
+      PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, fileWidth - 10, fileHeight);
       PDF.save('Client Report.pdf');
     });
   }
