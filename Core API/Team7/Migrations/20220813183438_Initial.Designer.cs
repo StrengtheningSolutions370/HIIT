@@ -12,8 +12,8 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220812134535_initial")]
-    partial class initial
+    [Migration("20220813183438_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -270,7 +270,6 @@ namespace Team7.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("BookingID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("ScheduleID")
@@ -647,7 +646,6 @@ namespace Team7.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentID"), 1L, 1);
 
                     b.Property<int?>("BookingID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("PaymentTypeID")
@@ -819,8 +817,9 @@ namespace Team7.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SaleID");
 
@@ -902,11 +901,9 @@ namespace Team7.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("SaleID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("SaleItemID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("SaleLineID");
@@ -1304,9 +1301,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Booking", "Booking")
                         .WithMany("BookingAttendance")
-                        .HasForeignKey("BookingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BookingID");
 
                     b.HasOne("Team7.Models.Schedule", "Schedule")
                         .WithMany("BookingAttendance")
@@ -1421,9 +1416,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Booking", "Booking")
                         .WithMany("Payment")
-                        .HasForeignKey("BookingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BookingID");
 
                     b.HasOne("Team7.Models.PaymentType", "PaymentType")
                         .WithMany("Payment")
@@ -1507,15 +1500,11 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Sale", "Sale")
                         .WithMany("SaleLine")
-                        .HasForeignKey("SaleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleID");
 
                     b.HasOne("Team7.Models.SaleItem", "SaleItem")
                         .WithMany("SaleLine")
-                        .HasForeignKey("SaleItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleItemID");
 
                     b.Navigation("Sale");
 

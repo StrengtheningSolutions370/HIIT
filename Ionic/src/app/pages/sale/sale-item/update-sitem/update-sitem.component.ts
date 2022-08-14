@@ -72,7 +72,6 @@ checkBoxToggle(check : any) {
   this.uSaleItemForm.controls.itemPrice.enable();
     this.uSaleItemForm.controls.itemQuantity.enable();
     this.uSaleItemForm.controls.itemCost.enable();
-    this.uSaleItemForm.controls.itemStock.enable();
 }
 
 constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder,
@@ -105,17 +104,15 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
         console.log(this.saleItem.costAmount);
         console.log(this.saleItem.quantityOnHand);
         console.log(this.saleItem.saleAmount);
-        console.log(this.saleItem.stock);
-        this.uSaleItemForm.controls['itemPrice'].setValue(this.saleItem.saleAmount);
+        this.uSaleItemForm.controls['itemPrice'].setValue(this.saleItem.priceHistory.saleAmount);
         this.uSaleItemForm.controls['itemQuantity'].setValue(this.saleItem.quantityOnHand);
-        this.uSaleItemForm.controls['itemCost'].setValue(this.saleItem.costAmount);
-        this.uSaleItemForm.controls['itemStock'].setValue(this.saleItem.stock);
+        this.uSaleItemForm.controls['itemCost'].setValue(this.saleItem.priceHistory.costAmount);
       }
       this.uSaleItemForm.controls['itemName'].setValue(this.saleItem.name);
       this.uSaleItemForm.controls['itemDescription'].setValue(this.saleItem.description);
       this.uSaleItemForm.controls['itemPhoto'].setValue(this.itemImageBase64String);
       this.uSaleItemForm.controls['itemQuotable'].setValue(this.saleItem.quotable);
-      this.uSaleItemForm.controls['itemSCategory'].setValue(this.saleItem.SaleCategoryID);
+      this.uSaleItemForm.controls['itemSCategory'].setValue(this.saleItem.saleCategory.name);
     } else {
       this.global.showAlert("No sale item selected for update","Update Sale item Error");
       this.global.dismissModal();

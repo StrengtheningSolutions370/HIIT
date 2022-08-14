@@ -53,14 +53,6 @@ export const routes: Routes = [
   //   loadChildren: () => import('./pages/clients/clients.module').then( m => m.ClientsPageModule)
   // },
   {
-    path: 'payments',
-    loadChildren: () => import('./pages/payments/payments.module').then(m => m.PaymentsPageModule),
-    canActivate: [AuthGaurdService],
-    data: {
-      roles: [Roles.SuperUser, Roles.Admin, Roles.Member, Roles.Client]
-    }
-  },
-  {
     path: 'sales',
     loadChildren: () => import('./pages/sale/sale.module').then(m => m.SalePageModule),
     canActivate: [AuthGaurdService],
@@ -204,14 +196,6 @@ export const routes: Routes = [
     // data : {
     //   roles: [AllRoles]
     // }  
-  },
-  {
-    path: 'payment',
-    loadChildren: () => import('./pages/payments/payments.module').then( m => m.PaymentsPageModule ),
-    // canActivate: [AuthGaurdService],
-    // data: {
-    //   roles: [AllRoles]
-    // }
   },
   {
     path: 'lessons',
