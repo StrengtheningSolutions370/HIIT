@@ -97,10 +97,6 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
-    path: 'signup',
-    loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule)
-  },
-  {
     path: 'user',
     loadChildren: () => import('./pages/user/user.module').then(m => m.UserPageModule),
     canActivate: [AuthGaurdService],
