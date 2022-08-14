@@ -124,4 +124,6 @@ export class GlobalService {
       return `${url.substring(0, 24)}embed/${url.substring(32, url.length)}`;
     }
 
+    
+
 }

@@ -1,6 +1,7 @@
-import { Component,  Input } from '@angular/core';
-import { ViewWillEnter} from '@ionic/angular';
+import { Component, Input } from '@angular/core';
+import { ViewWillEnter } from '@ionic/angular';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -12,6 +13,9 @@ import { SalesService } from 'src/app/services/sales/sales.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RepoService } from 'src/app/services/repo.service';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { PhotoService } from 'src/app/services/photo/photo.service';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-add-sitem',
@@ -22,9 +26,9 @@ export class AddSitemComponent implements ViewWillEnter {
 
   @Input() saleItem: SaleItem;
   categoryDropDown!: SaleCategory[];
-
   quotable = false;
-
+  photo: any[] = [];
+  selectImage: any = {};
   itemImage!: File;
   itemImageBase64String!: any;
 
@@ -50,18 +54,18 @@ export class AddSitemComponent implements ViewWillEnter {
    }
   }
 
-  getBase64(file: File) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      // console.log(reader.result);
-      this.itemImageBase64String = reader.result;
-    };
-    reader.onerror = (error) => {
-      console.log(error);
-      this.itemImageBase64String = null;
-    };
- }
+    getBase64(file: File) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        // console.log(reader.result);
+        this.itemImageBase64String = reader.result;
+      };
+      reader.onerror = (error) => {
+        console.log(error);
+        this.itemImageBase64String = null;
+      };
+   }
 
  checkBoxToggle(check: any) {
    this.quotable = check.target.checked;
@@ -89,12 +93,14 @@ export class AddSitemComponent implements ViewWillEnter {
         }
       }
     );
-   }
+  }
 
-   //Used for validation within the form, if there are errors in the control, this method will return the errors.
-   get errorControl() {
-     return this.cSaleItemForm.controls;
-   }
+
+
+  //Used for validation within the form, if there are errors in the control, this method will return the errors.
+  get errorControl() {
+    return this.cSaleItemForm.controls;
+  }
 
    ionViewWillEnter(): void {
 
@@ -108,6 +114,7 @@ export class AddSitemComponent implements ViewWillEnter {
       }
     );
 
+
     console.log("AddSaleItem-ViewWillEnter");
 
     if (this.saleItem !=null){
@@ -117,7 +124,7 @@ export class AddSitemComponent implements ViewWillEnter {
       this.cSaleItemForm.controls.itemPhoto.setValue(this.itemImageBase64String);
       this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.quotable);
       this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.quantityOnHand);
-      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.saleCategoryID);
+      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.saleCategory.name);
     }
     }
 
@@ -166,19 +173,19 @@ export class AddSitemComponent implements ViewWillEnter {
         quotable: this.quotable,
         priceHistory: phTemp,
         quantityOnHand: qtyTemp,
-        saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
+        saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0]
         //inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
       }
 
 
-      console.log('ob');
-      console.log(obj);
+    console.log('ob');
+    console.log(obj);
 
 
-      //wait for image to upload:
-      const formData = new FormData();
-        console.log(this.itemImage);
-        formData.append('file', this.itemImage, epoch + '_' + this.itemImage.name);
+    //wait for image to upload:
+    const formData = new FormData();
+    console.log(this.itemImage);
+    formData.append('file', this.itemImage, epoch + '_' + this.itemImage.name);
 
         this.repo.uploadSaleItemImage(formData).subscribe({
           next: data => {

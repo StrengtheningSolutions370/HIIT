@@ -16,13 +16,27 @@ export class ConfirmCategoryComponent{
   }
 
   async checkMatch(name: string, address: string): Promise<boolean>{
-    return this.saleService.matchingSaleCategory(name,address).then(result => {
+    return this.saleService.matchingSaleCategory(name,address).then(data => {
       console.log('Check match result:');
-      console.log(result);
-       if (result != 0){
-         this.global.showAlert('The sale category information entered already exists on the system','Duplicate Entry');
-         return true;
+      console.log(data);
+      if (data != 0){
+        let match = data.result;
+        if (match.length > 1){
+          console.log("matching more than 1");
+          this.global.showAlert("The sale category information entered already exists on the system","Sale Category Already Exists");
+          return true;
+        } else if (match.length == 1 && this.choice == 2 && match[0].saleCategoryID == this.saleCategory.saleCategoryID){
+          this.global.dismissModal();
+          return false;
+        } else {
+          console.log("Must be in ADD, with exactly 1 other match: ");
+          console.log("Choice: " + this.choice);
+          this.global.showAlert("The sale category information entered already exists on the system","Sale Category Already Exists");
+
+          return true;
+        }
        } else {
+        this.global.dismissModal();
          return false;
        }
      });

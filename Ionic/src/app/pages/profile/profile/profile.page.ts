@@ -1,15 +1,12 @@
 import { CartService } from 'src/app/services/cart.service';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { NgForm, FormGroup, FormBuilder } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { TitleService } from 'src/app/services/title/title.service';
 import { StoreService } from 'src/app/services/storage/store.service';
-import { empty } from 'rxjs';
 import { ModalController } from '@ionic/angular';
-import { ConfirmIndemnityComponent } from './confirm-indemnity/confirm-indemnity.component';
-import { appUserRegister } from 'src/app/models/appUser';
 import { Router } from '@angular/router';
+import { FormGroup, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -17,18 +14,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-
-  user! : any;
-
-  indemnitySrc! : any;
-  indemnityFlag = false;
+  @Input() appUserRegister : any;
 
   contractSrc! : any;
   contractFlag = false;
 
   titleList : any[] = [];
-  // personalForm! : FormGroup;
-  @ViewChild('personalForm') personalForm!: NgForm;
+  personalForm! : FormGroup;
   isLoading = false;
   i = false;
 
@@ -55,11 +47,17 @@ export class ProfilePage implements OnInit {
   success = false;
   fail = false;
   msg = '';
+  indemnitySrc = '';;
+  indemnityFlag = false;
 
-  constructor(private router : Router, private modalCtrl : ModalController, private repo : RepoService, private builder : FormBuilder, public global: GlobalService, public titleService: TitleService, public cartService: CartService, private storage : StoreService) { }
+  constructor(private router : Router, private modalCtrl : ModalController, private repo : RepoService, public global: GlobalService, public titleService: TitleService, public cartService: CartService, private storage : StoreService) { }
 
   ngOnInit() {
     this.setup();
+  }
+
+  downloadPdf() {
+    window.open('https://localhost:44383/Resources/Clients/Indemnity/Indemnity.pdf');
   }
 
   setup() {

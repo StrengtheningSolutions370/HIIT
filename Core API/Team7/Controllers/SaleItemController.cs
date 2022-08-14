@@ -17,9 +17,11 @@ namespace Team7.Controllers
         const string PATH = "./Assets/";
 
         private readonly ISaleItemRepo SaleItemRepo;
-        public SaleItemController(ISaleItemRepo saleItemRepo)
+        private readonly ISaleCategoryRepo saleCategoryRepo;    
+        public SaleItemController(ISaleItemRepo saleItemRepo, ISaleCategoryRepo saleCategoryRepo)
         {
             this.SaleItemRepo = saleItemRepo;
+            this.saleCategoryRepo = saleCategoryRepo;
         }
 
         // POST api/SaleItem/add
@@ -33,18 +35,6 @@ namespace Team7.Controllers
 
 
 
-                var siPriceHistory = saleItem.PriceHistory.FirstOrDefault();
-
-                PriceHistory salePrice = new PriceHistory
-                {
-                    Date = System.DateTime.Now,
-                    CostAmount = siPriceHistory.CostAmount,
-                    SaleAmount = siPriceHistory.SaleAmount,
-                    SaleItemID = saleItem.SaleItemID,
-                    SaleItem = saleItem
-                };
-
-
                 SaleItem toAdd = new SaleItem
                 {
                     Name = saleItem.Name,
@@ -54,11 +44,26 @@ namespace Team7.Controllers
                     Quotable = saleItem.Quotable,
                     //Quantity = toUpdate.Quantity,
                     QuantityOnHand = saleItem.QuantityOnHand,
-                    Stock = saleItem.Stock,
                     SaleCategoryID = saleItem.SaleCategoryID
                 };
 
-                toAdd.PriceHistory.Add(salePrice);
+                if (!saleItem.Quotable)
+                {
+                    var siPriceHistory = saleItem.PriceHistory.First();
+
+                    PriceHistory salePrice = new PriceHistory
+                    {
+                        Date = DateTime.Now,
+                        CostAmount = siPriceHistory.CostAmount,
+                        SaleAmount = siPriceHistory.SaleAmount,
+                        SaleItemID = saleItem.SaleItemID,
+                        SaleItem = saleItem
+                    };
+
+                    toAdd.PriceHistory.Add(salePrice);
+                } 
+
+                
 
                 SaleItemRepo.Add(toAdd);
                 if (await SaleItemRepo.SaveChangesAsync())
@@ -140,7 +145,8 @@ namespace Team7.Controllers
                 toUpdate.Quotable = saleItem.Quotable;
                 //toUpdate.Quantity = toUpdate.Quantity;
                 toUpdate.QuantityOnHand = saleItem.QuantityOnHand;
-                toUpdate.Stock = saleItem.Stock;
+                toUpdate.SaleCategoryID = saleItem.SaleCategoryID;
+                //toUpdate.SaleCategory =  await saleCategoryRepo._GetSaleCategoryIdAsync()
 
                 if (saleItem.PriceHistory != null)
                 {

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { Roles } from 'src/app/models/roles.enum';
+import { AuthGaurdService } from 'src/app/services/authentication/auth-gaurd.service';
 
 import { ShopPage } from './shop.page';
 
@@ -30,6 +32,10 @@ const routes: Routes = [
   {
     path: 'item-filter',
     loadChildren: () => import('./item-filter/item-filter.module').then( m => m.ItemFilterPageModule)
+  },
+  {
+    path: 'payment',
+    loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule)
   }
 
 ];

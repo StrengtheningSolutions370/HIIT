@@ -8,6 +8,7 @@ import { cartLine } from '../models/cart-line';
 import { SaleItem } from '../models/sale-item';
 import { CartModalPage } from '../pages/shop/cart-modal/cart-modal.page';
 import { CheckoutComponent } from '../pages/shop/checkout/checkout.component';
+import { PaymentPage } from '../pages/shop/payment/payment.page';
 import { GlobalService } from './global/global.service';
 import { RepoService } from './repo.service';
 import { StoreService } from './storage/store.service';
@@ -39,7 +40,7 @@ export class CartService {
     return this.storage.getKey('order');
   }
 
-  async getCartData() {
+  async getCartData(): Promise<any> {
     console.log('Cart Service: getCartData()');
     const data: any = await this.getCart();
     console.log('cart data: ', data);
@@ -49,6 +50,10 @@ export class CartService {
       await this.calculate();
       this._cart.next(this.model);
     }
+    return new Promise((resolve) => {
+      resolve(this.model);
+    })
+
   }
 
   alertClearCart(index, items, data) {
@@ -144,11 +149,12 @@ export class CartService {
     const modal = await this.modalCtrl.create({
       component: CartModalPage,
       componentProps:{
-        cartData, saleItem
+        cartData, saleItem,
+        rootPage: PaymentPage
       },
       cssClass: 'cart-modal'
     });
-    modal.present();
+    await modal.present();
   }
 
   async clearCartOrder() {
@@ -168,8 +174,9 @@ export class CartService {
   makePayment(payform: any){
     this.repo.makePayment(payform).subscribe(
       {
-        next: () => {
+        next: (data) => {
           console.log(payform);
+          console.log(data);
         }
       }
     )

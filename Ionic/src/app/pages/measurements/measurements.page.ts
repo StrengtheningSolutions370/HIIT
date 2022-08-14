@@ -7,7 +7,8 @@ import { AddComponent } from './add/add.component';
 
 import { Chart, ChartConfiguration, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale  } from 'chart.js';
 import { isThisHour } from 'date-fns';
-
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 @Component({
   selector: 'app-measurements',
   templateUrl: './measurements.page.html',
@@ -41,7 +42,7 @@ export class MeasurementsPage implements AfterViewInit {
   results = false;
 
   constructor(private storage : StoreService, private modalCtrl : ModalController, private global : GlobalService, private repo : RepoService) { }
-  
+
   ngAfterViewInit(): void {
     Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
   }
@@ -54,8 +55,8 @@ export class MeasurementsPage implements AfterViewInit {
       this.fetchData(this.email).then(() => {});
     });
 
-    
-    
+
+
   }
 
   fetchData(email : string) : Promise<any> {
@@ -130,8 +131,32 @@ export class MeasurementsPage implements AfterViewInit {
     }
   }
 
+  download() {
+    let Data = document.getElementById('htmlData')!;
+    html2canvas(Data).then((canvas) => {
+      let fileWidth = 210;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+
+      const PDF = new jsPDF({
+        orientation: 'p',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      PDF.setFontSize(30)
+      PDF.text('Client Progress Report', 10, 10);
+
+      const topPosition = 25;
+      const leftPosition = 5;
+
+      PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, fileWidth, fileHeight);
+      PDF.save('Client Report.pdf');
+    });
+  }
+
   generate() {
-    this.selected = true;
     if (this.lower == null || this.upper == null) {
       this.global.showAlert("Date range is required.");
       return;
@@ -143,6 +168,7 @@ export class MeasurementsPage implements AfterViewInit {
       return;
     }
 
+    this.selected = true;
     // console.log(this.lower);
     // console.log(this.upper);
     //filter the mes.
@@ -167,7 +193,7 @@ export class MeasurementsPage implements AfterViewInit {
       if (d.getDate() < 10)
         date += '/0' + (d.getDate()).toString();
       else date += '/' + (d.getDate()).toString();
-      
+
       this.labels.push(date);
       this.data.push(mes.weight);
 
@@ -189,7 +215,7 @@ export class MeasurementsPage implements AfterViewInit {
         labels: this.labels,
         datasets: [
           {
-            label: 'Sell per week',
+            label: 'Weight',
             fill: false,
             backgroundColor: 'rgba(75,192,192,0.4)',
             borderColor: 'rgba(75,192,192,1)',

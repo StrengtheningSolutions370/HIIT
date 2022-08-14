@@ -268,7 +268,6 @@ namespace Team7.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("BookingID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("ScheduleID")
@@ -836,11 +835,9 @@ namespace Team7.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SaleCategoryID"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SaleCategoryID");
@@ -875,10 +872,6 @@ namespace Team7.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("SaleCategoryID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.HasKey("SaleItemID");
@@ -1300,9 +1293,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Booking", "Booking")
                         .WithMany("BookingAttendance")
-                        .HasForeignKey("BookingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BookingID");
 
                     b.HasOne("Team7.Models.Schedule", "Schedule")
                         .WithMany("BookingAttendance")
@@ -1490,9 +1481,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.SaleCategory", "SaleCategory")
                         .WithMany("SaleItem")
-                        .HasForeignKey("SaleCategoryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleCategoryID");
 
                     b.Navigation("SaleCategory");
                 });

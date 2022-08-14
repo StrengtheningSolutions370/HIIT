@@ -15,6 +15,7 @@
 <ion-content>
 <br/>
 
+
 <!-- client -->
 <div *ngIf="client">
   <!-- update form -->
@@ -137,7 +138,7 @@
             </ion-item>
             <div *ngIf="!indemnityFlag && client && !loading">
               <input id="ind" #ind type="file" (change)="uploadIndemnity($event)" accept="application/pdf" />
-              <ion-button>Download Indemnity Form</ion-button>
+              <ion-button (click)="downloadPdf()">Download Indemnity Form</ion-button>
               <ion-button (click)="ind.click()">Upload Signed Indemnity Form</ion-button>
               <br />
             </div>

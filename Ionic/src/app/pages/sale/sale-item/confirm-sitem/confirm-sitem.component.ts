@@ -17,41 +17,59 @@ export class ConfirmSitemComponent {
   constructor(public global: GlobalService, public saleService: SalesService) {
   }
 
+  async checkMatch(name:string, description:string): Promise<boolean>{
+    return this.saleService.matchingSaleItem(name,description).then(data => {
+      console.log("Check match result:");
+      console.log(data);
+       if (data != 0){
+        let match = data.result;
+        if (match.length > 1){
+          console.log("matching more than 1");
+          this.global.showAlert("The sale item information entered already exists on the system","Sale Item Already Exists");
+          this.global.dismissModal();
+          return true;
+        } else if (match.length == 1 && this.choice == 2 && match[0].saleItemID == this.saleItem.saleItemID){
+          this.global.dismissModal();
+          return false;
+        } else {
+          console.log("Must be in ADD, with exactly 1 other match: ");
+          console.log("Choice: " + this.choice);
+          this.global.showAlert("The sale item information entered already exists on the system","Sale Item Already Exists");
+
+          this.global.dismissModal();
+          return true;
+        }
+       } else {
+        this.global.dismissModal();
+         return false;
+       }
+     });
+   }
+
   //1 = confirm ADD
   //2 = confirm UPDATE
   async confirmChanges(saleItem: SaleItem){
-    console.log(this.choice);
-            if (this.choice === 1){
-              this.saleService.matchingSaleItem(saleItem.name,saleItem.description).then(data => {
-                if (data != 0){
-                  this.global.showAlert("The sale item information entered already exists on the system","Duplicate Entry");
-                  return;
-                } else {
-                  console.log('Add Sale Item from confirm:');
-                  //CallRepoToCreate
-                  this.saleService.createSaleItem(saleItem);
-                  this.global.dismissModal();
-                  this.global.showToast("The sale item has been successfully added!");
-                }
-              });
+    await this.checkMatch(saleItem.name,saleItem.description).then(result =>{
+      if (result == true){
+        return;
+      } else {
+         if (this.choice === 1){
+          console.log('Add Sale Item from confirm:');
+          //CallRepoToCreate
+          this.saleService.createSaleItem(saleItem);
+          this.global.dismissModal();
+          this.global.showToast("The sale item has been successfully added!");
+       } else if (this.choice === 2){
+        console.log('Update Sale Item from confirm:');
+        //CallRepoToUpdate
+        console.log(saleItem);
+        this.saleService.updateSaleItem(saleItem);
+        this.global.dismissModal();
+        this.global.showToast('The sale item has been successfully updated!');
+         }
+       }
 
-          } else if (this.choice === 2){
-            this.saleService.matchingSaleItem(saleItem.name,saleItem.description).then(data => {
-              if (data.result.length > 1){
-                this.global.showAlert("The sale item information entered already exists on the system","Duplicate Entry");
-                return;
-              } else {
-                console.log('Update Sale Item from confirm:');
-            //CallRepoToUpdate
-            console.log(saleItem);
-            this.saleService.updateSaleItem(saleItem);
-            this.global.dismissModal();
-            this.global.showToast('The sale item has been successfully updated!'); 
-              }
-            });
-   
-          }
-
+    })
   }
 
   async returnFrom(){
