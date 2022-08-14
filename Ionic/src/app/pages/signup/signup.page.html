@@ -7,7 +7,7 @@
             <br/>
 
             <form #regForm="ngForm" (ngSubmit)="onSubmit(regForm)">
-              <div padding>
+              <div>
                 <ion-item>
                   <ion-icon name="person" slot="start" color="#282828"></ion-icon>
                   <ion-input 
@@ -66,13 +66,14 @@
                 </ion-text>
 
                 <ion-item>
-                  <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
+                  <ion-icon name="calendar-outline" slot="start" color="#282828"></ion-icon>
                   <ion-input 
                   type="date" 
-                  name="dob" 
-                  ngModel dob 
-                  #dob="ngModel" 
-                  required ></ion-input>
+                  name="date" 
+                  ngModel 
+                  #date="ngModel" 
+                  required 
+                  ></ion-input>
                 </ion-item>
                 <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
                   <p>Please enter a date of birth</p>
@@ -96,11 +97,7 @@
                   <ion-icon name="key" slot="start" color="#282828"></ion-icon>
                   <ion-input 
                   type="password" 
-                  name="password" 
-                  ngModel 
-                  #passCtrl="ngModel" 
-                  placeholder="Password" 
-                  required 
+                  
                   minlength="8"></ion-input>
                 </ion-item>
                 <ion-text color="danger" *ngIf="!passCtrl.valid && passCtrl.touched">
