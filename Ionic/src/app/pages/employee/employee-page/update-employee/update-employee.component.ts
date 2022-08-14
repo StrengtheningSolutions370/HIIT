@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { AllRoles } from 'src/app/app-routing.module';
@@ -24,7 +24,7 @@ export class UpdateEmployeeComponent implements OnInit {
   employeeTypeList: any[] = [];
   qualificationList: any[] = [];
   qualificationTypeList: any[] = [];
-  cEmployeeForm! : FormGroup;
+  cEmployeeForm! : UntypedFormGroup;
   showRole = false;
 
   showProfile = false;
@@ -46,7 +46,7 @@ export class UpdateEmployeeComponent implements OnInit {
   contract! : File;
   newContract = false;
 
-  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
+  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: UntypedFormBuilder,
     public employeeService: EmployeeService, private router: Router,private currentRoute: ActivatedRoute,
     private alertCtrl: AlertController, public titleService: TitleService, public repo: RepoService, private storage : StoreService,
     public global : GlobalService) {
@@ -202,7 +202,7 @@ export class UpdateEmployeeComponent implements OnInit {
     return this.cEmployeeForm.controls;
   }
 
-  validateContract(contract : FormControl) : {[valtype : string] : string} | null {
+  validateContract(contract : UntypedFormControl) : {[valtype : string] : string} | null {
     const pattern = /.((pdf))$/
     if (!pattern.test(contract.value)) {
       return {'errormsg' : 'Please submit .png, .jpg or .jpeg'}
@@ -210,7 +210,7 @@ export class UpdateEmployeeComponent implements OnInit {
     return null;
   }
 
-  validatePhoto(contract : FormControl) : {[valtype : string] : string} | null {
+  validatePhoto(contract : UntypedFormControl) : {[valtype : string] : string} | null {
     const pattern = /.((png)|(jpg)|(jpeg))$/
     if (!pattern.test(contract.value)) {
       return {'errormsg' : 'Please submit .png, .jpg or .jpeg'}
@@ -218,7 +218,7 @@ export class UpdateEmployeeComponent implements OnInit {
     return null;
   }
 
-  validateIDNumber(id : FormControl) : {[valtype : string] : string} | null {
+  validateIDNumber(id : UntypedFormControl) : {[valtype : string] : string} | null {
     let IDNum = id.value;
 
     const pattern = /^[0-9]{13}/;

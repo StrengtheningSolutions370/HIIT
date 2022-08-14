@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Team7.Models
 {
-    public class AppUser: IdentityUser
+    public class AppUser : IdentityUser
     {
         //can add custom columns to ASPNET.Users in the db
 
@@ -19,6 +16,6 @@ namespace Team7.Models
         public string OTP { get; set; }
 
         public virtual ICollection<PasswordHistory> PasswordHistory { get; set; }
-
+        public virtual ICollection<Sale> Sale { get; set; }
     }
 }

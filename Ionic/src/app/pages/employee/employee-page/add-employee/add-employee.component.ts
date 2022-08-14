@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Component, Input, OnInit} from '@angular/core';
-import { FormArray, FormBuilder,FormControl,FormGroup, FormGroupName, Validators } from '@angular/forms';
+import { FormArray, UntypedFormBuilder,UntypedFormControl,UntypedFormGroup, FormGroupName, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
@@ -38,7 +38,7 @@ export class AddEmployeeComponent implements OnInit{
   employeeTypeSub: Subscription;
 
   progress=0;
-  cEmployeeForm! : FormGroup;
+  cEmployeeForm! : UntypedFormGroup;
 
   roles : any[] = [];
 
@@ -54,7 +54,7 @@ export class AddEmployeeComponent implements OnInit{
 
   //Creating the form to add the new venue details, that will be displayed in the HTML component
 
-  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: FormBuilder,
+  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, public formBuilder: UntypedFormBuilder,
     public employeeService: EmployeeService, private router: Router,private currentRoute: ActivatedRoute,
     private  alertCtrl: AlertController, public titleService: TitleService, public repo: RepoService, private storage : StoreService,
     public global : GlobalService) {
@@ -167,7 +167,6 @@ export class AddEmployeeComponent implements OnInit{
     this.photoFlag = true;
     this.photo = event.target.files[0];
 
-
     const reader = new FileReader();
     reader.onload = (event : any) => {
       this.imgSrc = event.target.result;
@@ -177,7 +176,7 @@ export class AddEmployeeComponent implements OnInit{
 
   }
 
-  validateContract(contract : FormControl) : {[valtype : string] : string} | null {
+  validateContract(contract : UntypedFormControl) : {[valtype : string] : string} | null {
     const pattern = /.((pdf))$/
     if (!pattern.test(contract.value)) {
       return {'errormsg' : 'Please submit .png, .jpg or .jpeg'}
@@ -185,7 +184,7 @@ export class AddEmployeeComponent implements OnInit{
     return null;
   }
 
-  validatePhoto(contract : FormControl) : {[valtype : string] : string} | null {
+  validatePhoto(contract : UntypedFormControl) : {[valtype : string] : string} | null {
     if(contract.value == '')
     return null;
     const pattern = /.((png)|(jpg)|(jpeg))$/
@@ -195,7 +194,7 @@ export class AddEmployeeComponent implements OnInit{
     return null;
   }
 
-  validateIDNumber(id : FormControl) : {[valtype : string] : string} | null {
+  validateIDNumber(id : UntypedFormControl) : {[valtype : string] : string} | null {
     let IDNum = id.value;
 
     const pattern = /^[0-9]{13}/;

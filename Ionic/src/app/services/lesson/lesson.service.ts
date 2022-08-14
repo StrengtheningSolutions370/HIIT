@@ -33,21 +33,21 @@ export class LessonService {
 
 
   constructor(public repo: RepoService, private modalCtrl: ModalController,
-   private global : GlobalService, public  alertCtrl: AlertController) { 
+   private global : GlobalService, public  alertCtrl: AlertController, public toastCtrl: ToastController) { 
 
      //Receive the lessons from the repo (API)
      this.repo.getLessons().subscribe(result => {
        console.log('Lesson List: Lesson Service -> Get Lessons');
        console.log(result);
-       const tempResult = Object.assign(result);
-       this._lessonList.next(tempResult);
+      //  const tempResult = Object.assign(result);
+       this._lessonList.next(result);
        console.log('Lesson List: Lesson Service -> Updated Lessons');
        console.log(this._lessonList);
      })
    }
 
    //Add a lesson to the lesson list within the lesson service 
-  createLesson(l: Lesson) : Promise<any> {
+  createLesson(l: any) : Promise<any> {
 
     return new Promise<any>((resolve, _) => {
       this.repo.createLesson(l)
@@ -58,13 +58,14 @@ export class LessonService {
         },
         error: (e:any) => {
           this.fetchLessonsEvent.emit();
-          _(false);
+          resolve(false);
         }
       })
       .add(() => {
         this.global.endNativeLoad();
       })
     });
+
   }
 
   async duplicateAlert() {
@@ -82,7 +83,7 @@ export class LessonService {
   }
 
   //Receives a lesson to update in the service lesson list.
-  async updateLesson(id: number, l: Lesson) : Promise<any> {
+  async updateLesson(id: number, l: any) : Promise<any> {
     return new Promise<any>((resolve, _) => {
       this.repo.updateLesson(id,l).subscribe({
         next: () => {
@@ -93,7 +94,7 @@ export class LessonService {
         },
         error: () => {
           this.fetchLessonsEvent.emit();
-          _(false);
+          resolve(false);
         }
       }).add(() => { this.global.endNativeLoad(); });
     });
@@ -198,7 +199,7 @@ export class LessonService {
 
      //Display the confirm create/update modal
   //Receives the selected lesson from the lesson page
-  confirmLessonModal(choice: number, lesson: Lesson) : Promise<any> {
+  confirmLessonModal(choice: number, lesson: any) : Promise<any> {
 
     return new Promise<any>(async (resolve, _) => {
       console.log('LessonService: ConfirmLessonModalCall');

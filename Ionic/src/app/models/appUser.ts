@@ -11,7 +11,5 @@ export class appUserRegister {
     lastName: string;
     phoneNumber: string;
     TitleId : string;
-
-
-
+    dob: number;
 }

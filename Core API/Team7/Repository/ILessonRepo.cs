@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Team7.Models.Repository
 {
@@ -15,10 +12,11 @@ namespace Team7.Models.Repository
 
         Task<Lesson[]> GetAllLessonsAsync();
 
-        //Task<Lesson[]> GetLessonsAsync(string input);
-
         Task<Lesson> GetLessonIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
+
+        Task<Lesson> GetLessonByNameAsync(string name);
+
     }
 }

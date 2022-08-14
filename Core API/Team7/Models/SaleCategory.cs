@@ -6,7 +6,7 @@ namespace Team7.Models
 {
     public class SaleCategory
     {
-        
+
         public SaleCategory()
         {
             this.SaleItem = new HashSet<SaleItem>();
@@ -19,7 +19,6 @@ namespace Team7.Models
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }
-
         public virtual ICollection<SaleItem> SaleItem { get; set; }
 
     }

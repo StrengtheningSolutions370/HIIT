@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './authentication/auth.interceptor';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { PayPal } from '@ionic-native/paypal/ngx';
+// import { PayPal } from '@ionic-native/paypal/ngx';
 // import { Stripe } from '@ionic-native/stripe/ngx';
 
 //VENUE IMPORTS:
@@ -27,6 +27,9 @@ import { DeleteTitleComponent } from './pages/user/titles/delete-title/delete-ti
 import { ViewTitlesComponent } from './pages/user/titles/view-titles/view-titles.component';
 import { ConfirmTitleComponent } from './pages/user/titles/confirm-title/confirm-title.component';
 import { AssociativeTitleComponent } from './pages/user/titles/associative-title/associative-title.component';
+
+//CLIENT IMPORTS:
+import { ClientsPageModule } from './pages/clients/clients.module';
 
 //SALE CATEGORY IMPORTS:
 import { AddCategoryComponent } from './pages/sale/sale-category/add-category/add-category.component';
@@ -116,7 +119,10 @@ import { ViewWriteOffReasonComponent } from './pages/inventory/write-off-reason/
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { TimeRangeComponent } from './pages/booking/time-range/time-range.component';
+
+//CART IMPORTS:
 import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
+import { CheckoutComponent } from './pages/shop/checkout/checkout.component';
 
 //EXERCISE IMPORTS:
 import { AddExerciseComponent } from './pages/exercises/exercise-page/add-exercise/add-exercise.component';
@@ -138,6 +144,16 @@ import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-
 import { DatePipe } from '@angular/common';
 import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedule/update-schedule.component';
 
+//CLIENT IMPORTS:
+import { DeleteClientComponent } from './pages/user/clients/delete-client/delete-client.component';
+
+//indemnitymodal:
+import { ConfirmIndemnityComponent } from './pages/profile/profile/confirm-indemnity/confirm-indemnity.component';
+
+//Add Measurement
+import { AddComponent } from './pages/measurements/add/add.component';
+import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measurement/confirm-measurement.component';
+
 @NgModule({
   declarations: [AppComponent,
   //Venue
@@ -150,6 +166,8 @@ import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedul
   AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
   //EmployeeType
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
+  //Cart
+  CheckoutComponent,
   //SalesCategory
   AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent, AssociativeCategoryComponent,
   //SalesItem
@@ -186,12 +204,16 @@ import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedul
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
   //Lesson
   AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
+  //Client
+  DeleteClientComponent,
+  //confirmindemnity
+  AddComponent, ConfirmMeasurementComponent
 
 ],
   entryComponents: [],
-  imports: [ 
+  imports: [
     BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
-  providers: [PayPal, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 
   bootstrap: [AppComponent]
 })

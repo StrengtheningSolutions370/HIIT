@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Team7.ViewModels
 {
@@ -26,6 +22,7 @@ namespace Team7.ViewModels
         public string newPassword { get; set; }
 
         public string OTP { get; set; }
+        public int dob { get; set; }
 
     }
 }

@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -14,11 +11,14 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using Team7.Models;
 using Team7.Models.Repository;
 using Team7.Services;
+using System.Net.Http.Headers;
 using Team7.ViewModels;
+using Newtonsoft.Json.Linq;
+using System.Web;
+using System.IO;
 
 namespace Team7.Controllers
 {
@@ -32,10 +32,11 @@ namespace Team7.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ITitleRepo _titleRepo;
         private readonly IClientRepo _clientRepo;
+        private readonly IEmployeeRepo _employeeRepo;
         private readonly IPasswordHistoryRepo _passwordHistoryRepo;
+        private readonly ITitleRepo TitleRepo;
 
-
-        public AppUserController(IPasswordHistoryRepo passwordHistory, IClientRepo clientRepo, ITitleRepo titleRepo, UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
+        public AppUserController(ITitleRepo TitleRepo, IEmployeeRepo employeeRepo, IPasswordHistoryRepo passwordHistory, IClientRepo clientRepo, ITitleRepo titleRepo, UserManager<AppUser> userManager, IUserClaimsPrincipalFactory<AppUser> claimsPrincipalFactory, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _passwordHistoryRepo = passwordHistory;
@@ -43,7 +44,10 @@ namespace Team7.Controllers
             _roleManager = roleManager;
             _titleRepo = titleRepo;
             _clientRepo = clientRepo;
+            _employeeRepo = employeeRepo;
+            this.TitleRepo = TitleRepo;
         }
+
         static string generateOTP()
         {
             Random random = new Random();
@@ -53,6 +57,231 @@ namespace Team7.Controllers
                 oneTimePin += random.Next(0, 10).ToString();
             }
             return oneTimePin;
+        }
+
+        static string timeStamp()
+        {
+            return DateTimeOffset.Now.ToUnixTimeSeconds().ToString();
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        [Route("uploadindemnity")]
+        public async Task<IActionResult> uploadIndemnity()
+        {
+            string unix = timeStamp(); //to stamp file creation
+
+            var formCollection = await Request.ReadFormAsync();
+
+            string s = formCollection.Keys.FirstOrDefault();
+            string decode = HttpUtility.UrlDecode(s);
+            var client = JObject.Parse(decode);
+
+            string AspId = client["AspId"].ToString();
+            Client cli = await _clientRepo.GetClientIdAsync(AspId);
+
+            var ind = formCollection.Files.FirstOrDefault();
+
+            var indemnityFolder = Path.Combine("Resources", "Clients", "Indemnity");
+            var indemnityPath = Path.Combine(Directory.GetCurrentDirectory(), indemnityFolder);
+            //storage
+            var extension = ind.ContentType.Split('/')[1];
+            var indemnityFileName = ContentDispositionHeaderValue.Parse(AspId).ToString() + "_" + unix + ".pdf";
+            cli.Idemnity = indemnityFileName; //update for the extension
+
+            var indemnityFullPath = Path.Combine(indemnityPath, indemnityFileName);
+            using (var stream = new FileStream(indemnityFullPath, FileMode.Create))
+            {
+                ind.CopyTo(stream);
+            }
+
+            _clientRepo.Update(cli);
+            await _clientRepo.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        [Route("updateclient")]
+        public async Task<IActionResult> updateClientInformation()
+        {
+            string unix = timeStamp(); //to stamp file creation
+
+            var formCollection = await Request.ReadFormAsync();
+
+            string s = formCollection.Keys.FirstOrDefault();
+            string decode = HttpUtility.UrlDecode(s);
+            var client = JObject.Parse(decode);
+
+            string email = client["emailAddress"].ToString();
+            string Name = client["firstName"].ToString();
+            string Surname = client["lastName"].ToString();
+            string Number = client["phoneNumber"].ToString();
+            int titleId = Convert.ToInt32(client["TitleId"].ToString());
+            int dob = Convert.ToInt32(client["dob"].ToString());
+            string AspId = client["AspId"].ToString();
+
+            var user = await _userManager.FindByIdAsync(AspId);
+            Client update = await _clientRepo.GetClientIdAsync(AspId);
+
+            var photo = formCollection.Files.FirstOrDefault();
+
+            if (photo != null)
+            {
+                if (update.Photo != null)
+                    deletePhoto(update.Photo);
+                var photoFolder = Path.Combine("Resources", "Clients", "Images");
+                var photoPath = Path.Combine(Directory.GetCurrentDirectory(), photoFolder);
+                //storage
+                var extension = photo.ContentType.Split('/')[1];
+                var photoFileName = ContentDispositionHeaderValue.Parse(user.Id).ToString() + "_" + unix + "." + extension;
+                update.Photo = photoFileName; //update for the extension
+
+                var photoFullPath = Path.Combine(photoPath, photoFileName);
+                using (var stream = new FileStream(photoFullPath, FileMode.Create))
+                {
+                    photo.CopyTo(stream);
+                }
+
+            }
+
+            update.DOB = dob;
+            _clientRepo.Update(update);
+            await _clientRepo.SaveChangesAsync();
+
+            //set new values for ASP:
+            user.FirstName = Name;
+            user.LastName = Surname;
+            user.Email = email;
+            user.PhoneNumber = Number;
+            user.Title = await TitleRepo._GetTitleIdAsync(Convert.ToInt32(titleId));
+
+            await _userManager.UpdateAsync(user);
+
+            return Ok();
+        }
+
+        static void deletePhoto(string fname)
+        {
+            var imageFolder = Path.Combine("Resources", "Clients", "Images");
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), imageFolder, fname);
+            System.IO.File.Delete(imagePath);
+        }
+
+        [HttpGet]
+        [Route("getuser")]
+        public async Task<IActionResult> getUser(string id)
+        {
+            //query for the user in employee table:
+            var emp = await _employeeRepo.GetFullEmployeeByIDAsync(id);
+            //query for the user in client table:
+            var cli = await _clientRepo.GetClientIdAsync(id);
+
+            if (emp != null)
+            {
+                //employee called the endpoint
+                IQueryable<AppUser> user = _userManager.Users.Where(usr => usr.Id == id).Select(usr => new AppUser
+                {
+                    FirstName = usr.FirstName,
+                    LastName = usr.LastName,
+                    Email = usr.Email,
+                    PhoneNumber = usr.PhoneNumber,
+                    Title = new Title
+                    {
+                        TitleID = usr.Title.TitleID,
+                        Description = usr.Title.Description
+                    }
+                });
+                return Ok(new
+                {
+                    user, 
+                    emp
+                });
+            }
+
+            if (cli != null)
+            {
+                IQueryable<AppUser> user = _userManager.Users.Where(usr => usr.Id == id).Select(usr => new AppUser
+                {
+                    FirstName = usr.FirstName,
+                    LastName = usr.LastName,
+                    Email = usr.Email,
+                    PhoneNumber = usr.PhoneNumber,
+                    Title = new Title
+                    {
+                        TitleID = usr.Title.TitleID,
+                        Description = usr.Title.Description
+                    }
+                });
+                //client called the endpoint
+                return Ok(new
+                {
+                    user,
+                    cli
+                });
+            }
+
+            //user is a superuser:
+            try
+            {
+                IQueryable<AppUser> user = _userManager.Users.Where(usr => usr.Id == id).Select(usr => new AppUser
+                {
+                    FirstName = usr.FirstName,
+                    LastName = usr.LastName,
+                    Email = usr.Email,
+                    PhoneNumber = usr.PhoneNumber,
+                    Title = new Title
+                    {
+                        TitleID = usr.Title.TitleID,
+                        Description = usr.Title.Description
+                    }
+                });
+                return Ok(user);
+            } catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
+            //does not exisit in either - must be a superuser:
+            //if (user != null)
+            //{
+            //    return Ok(user);
+            //}
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        [Route("getallclients")]
+        public async Task<IActionResult> getAllClients()
+        {
+            var query = await _clientRepo.GetAllClientsAsync();
+            return Ok(query);
+        }
+
+        [HttpDelete]
+        [Route("deleteclient")]
+        public async Task<IActionResult> deleteClient(string id) //pass the AppUserId
+        {
+
+            var client = await _userManager.FindByIdAsync(id);
+            if (client == null) return BadRequest();
+
+            //delete from client:
+            try
+            {
+                var clientrepo = await _clientRepo.GetClientIdAsync(id);
+                _clientRepo.Delete(clientrepo);
+                await _clientRepo.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);  
+            }
+            //delete from app user:
+            await _userManager.DeleteAsync(client);
+
+
+            return Ok();
         }
 
         [HttpPost]
@@ -68,7 +297,8 @@ namespace Team7.Controllers
             if (user.OTP == otp.OTP)
             {
                 user.OTP = null;
-            } else
+            }
+            else
             {
                 return StatusCode(StatusCodes.Status403Forbidden, "Incorrect OTP pin provided."); //CHECKHERE
             }
@@ -161,7 +391,7 @@ namespace Team7.Controllers
             }
 
             var cnew = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, uvm.newPassword);
-               
+
             if (cnew != 0)
             {
                 return StatusCode(StatusCodes.Status406NotAcceptable, "New password cannot be current password.");
@@ -194,7 +424,7 @@ namespace Team7.Controllers
             }
 
             //check through the history and try match a password:
-            foreach(var h in history)
+            foreach (var h in history)
             {
                 var flag = _userManager.PasswordHasher.VerifyHashedPassword(user, h.Hashed, uvm.newPassword);
                 if (flag != 0) //if true = a password matched
@@ -222,9 +452,10 @@ namespace Team7.Controllers
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error."); //this might fail because of pass req in the startup.cs
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error."); //this might fail because of pass req in the startup.cs
             }
             await _userManager.UpdateAsync(user);
             return Ok();
@@ -247,7 +478,7 @@ namespace Team7.Controllers
             if (user.PasswordHistory != null)
             {
                 //user has a history of passwords
-                foreach(var p in user.PasswordHistory)
+                foreach (var p in user.PasswordHistory)
                 {
                     var flag = _userManager.PasswordHasher.VerifyHashedPassword(user, p.Hashed, uvm.newPassword);
                     if (flag != 0) //if true = a password matched
@@ -262,7 +493,8 @@ namespace Team7.Controllers
             try
             {
                 var flag = await _userManager.ResetPasswordAsync(user, token, uvm.newPassword);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return Forbid("Password does not meet the requirements.");
             }
@@ -293,7 +525,8 @@ namespace Team7.Controllers
             try
             {
                 s.sendSMS(phone, msg);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 smsFlag = true;
             }
@@ -305,7 +538,8 @@ namespace Team7.Controllers
                 Email email = new Email(user.Email, "Strengthening Solutions", otp);
                 Thread thr = new Thread(new ThreadStart(email.sendEmail));
                 thr.Start();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 emailFlag = true;
             }
@@ -359,23 +593,19 @@ namespace Team7.Controllers
                 var result = await _userManager.CreateAsync(user, userViewModel.Password);
 
                 //adding role to the client
-                if (result.Succeeded)
+                await _userManager.AddToRoleAsync(user, role); //role="client"
+
+                //make entry in the client table:
+                var clientRec = new Client
                 {
-                    await _userManager.AddToRoleAsync(user, role); //role="client"
+                    UserID = AspId,
+                    Idemnity = "",
+                    AppUser = user,
+                    DOB = userViewModel.dob
+                };
 
-                    //make entry in the client table:
-                    var clientRec = new Client
-                    {
-                        UserID = AspId
-                    };
-
-                    _clientRepo.Add(clientRec);
-
-                }
-                else
-                {
-                    StatusCode(StatusCodes.Status500InternalServerError, "Internal error. Please contact support");
-                }
+                _clientRepo.Add(clientRec);
+                await _clientRepo.SaveChangesAsync();
 
             }
             else
@@ -410,18 +640,18 @@ namespace Team7.Controllers
             }
         }
 
-        static String sha256(string val)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            using (SHA256 hasher = SHA256Managed.Create())
-            {
-                Encoding encoder = Encoding.UTF8;
-                Byte[] result = hasher.ComputeHash(encoder.GetBytes(val));
-                foreach (Byte b in result)
-                    stringBuilder.Append(b.ToString("x2"));
-            }
-            return stringBuilder.ToString();
-        }
+        //static String sha256(string val)
+        //{
+        //    StringBuilder stringBuilder = new StringBuilder();
+        //    using (SHA256 hasher = SHA256Managed.Create())
+        //    {
+        //        Encoding encoder = Encoding.UTF8;
+        //        Byte[] result = hasher.ComputeHash(encoder.GetBytes(val));
+        //        foreach (Byte b in result)
+        //            stringBuilder.Append(b.ToString("x2"));
+        //    }
+        //    return stringBuilder.ToString();
+        //}
 
         [HttpGet]
         private async Task<object> GenerateJWTTokenAsync(AppUser appUser)
@@ -488,7 +718,7 @@ namespace Team7.Controllers
 
         [HttpPost]
         [Route("quoteEmail")]
-        public async Task<IActionResult> quoteEmail([FromForm] Quote quoteObj )
+        public async Task<IActionResult> quoteEmail([FromForm] Quote quoteObj)
         {
             var body = Request.Body;
             var formCollection = await Request.ReadFormAsync();
@@ -497,7 +727,7 @@ namespace Team7.Controllers
             //var s = formCollection.Keys.();
             //string decode = HttpUtility.UrlDecode(formCollection);
             //var quoteObj = JObject.Parse(decode);
-            string optDescription = null;
+            string? optDescription = null;
 
             string clientAddress = quoteObj.clientMail.ToString();
             //Look at replacing with a dedicated BSC quotations email
@@ -506,20 +736,20 @@ namespace Team7.Controllers
             int saleQuoteID = ((int)quoteObj.saleQuoteID);
             DateTime currentTime = new();
             optDescription = quoteObj.optDescription.ToString();
-     
 
 
-            var bodyClient = "<h1>BSC product quotation: "+saleQuoteName+" </h1> <br /> <hr>" +
+
+            var bodyClient = "<h1>BSC product quotation: " + saleQuoteName + " </h1> <br /> <hr>" +
                 "<p><strong>Thank you for your quotation request</strong></p>" +
                 "<p>A sales consultant will be in contact with you shortly</p>" +
                 "<br /> <hr>";
             Email emailClient = new Email(clientAddress, saleQuoteName + " quotation request", bodyClient);
 
             var bodyEmployee = "<h1>BSC product quotation: " + saleQuoteName + " </h1> <br /> <hr>" +
-                "<p><strong>New client product request, respond to:</strong>" + clientAddress+"</strong></p>" +
-                "<p>Date of email creation from API: "+currentTime.ToString()+"</p>" +
+                "<p><strong>New client product request, respond to:</strong>" + clientAddress + "</strong></p>" +
+                "<p>Date of email creation from API: " + currentTime.ToString() + "</p>" +
                 "<p>Product ID: " + saleQuoteID + "</p>" +
-                "<p><strong> Client message: " + optDescription 
+                "<p><strong> Client message: " + optDescription
                 + "<br /> <hr>";
             Email emailEmployee = new Email(employeeAddress, saleQuoteName + " quotation request", bodyEmployee);
 

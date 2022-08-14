@@ -7,6 +7,8 @@ import { Cart } from '../models/cart';
 import { cartLine } from '../models/cart-line';
 import { SaleItem } from '../models/sale-item';
 import { CartModalPage } from '../pages/shop/cart-modal/cart-modal.page';
+import { CheckoutComponent } from '../pages/shop/checkout/checkout.component';
+import { PaymentPage } from '../pages/shop/payment/payment.page';
 import { GlobalService } from './global/global.service';
 import { RepoService } from './repo.service';
 import { StoreService } from './storage/store.service';
@@ -25,13 +27,17 @@ export class CartService {
 
   constructor(
     private storage: StoreService,
-    private global: GlobalService,
+    public global: GlobalService,
     private modalCtrl: ModalController,
     public repo: RepoService
   ) { }
 
   getCart() {
     return this.storage.getKey('cart');
+  }
+
+  getCartOrder(): any {
+    return this.storage.getKey('order');
   }
 
   async getCartData() {
@@ -47,9 +53,9 @@ export class CartService {
   }
 
   alertClearCart(index, items, data) {
-    this.global.showAlert(
-      'Your cart contain items from a different restaurant. Would you like to reset your cart before browsing the restaurant?',
-      'Items already in Cart');
+    // this.global.showAlert(
+    //   'Your cart contain items from a different restaurant. Would you like to reset your cart before browsing the restaurant?',
+    //   'Items already in Cart');
   }
 
   async quantityPlus(index, items?) {
@@ -97,11 +103,14 @@ export class CartService {
     this.model.totalPrice = 0;
     this.model.totalItem = 0;
     this.model.grandTotal = 0;
-    item.forEach(element => {
+    this.model.items.forEach(element => {
       this.model.totalItem += element.quantityChange;
-      // this.model.totalPrice += (parseFloat(element.price) * parseFloat(element.quantity));
-      this.model.totalPrice += (element.price * element.quantityChange);
+      let subTotal = element.priceHistory[element.priceHistory.length-1].saleAmount;
+      element.subTotal = subTotal * element.quantityChange;
+      this.model.totalPrice += (subTotal * element.quantityChange);
     });
+    // console.log("Final price: ");
+    // console.log(this.model.totalPrice);
     // this.model.totalPrice = parseFloat(this.model.totalPrice).toFixed(2);
     // this.model.grandTotal = (parseFloat(this.model.totalPrice) + parseFloat(this.model.deliveryCharge)).toFixed(2);
     this.model.grandTotal = this.model.totalPrice;
@@ -128,13 +137,32 @@ export class CartService {
     // this._cart.next(this.model);
   }
 
+  saveCartOrder(model) {
+    this.storage.setKey('order', JSON.stringify(model));
+  }
+
   async openCart(cartData, saleItem){
     const modal = await this.modalCtrl.create({
       component: CartModalPage,
       componentProps:{
-        cartData, saleItem
+        cartData, saleItem,
+        rootPage: PaymentPage
       },
       cssClass: 'cart-modal'
+    });
+    await modal.present();
+  }
+
+  async clearCartOrder() {
+    await this.storage.deleteKey('order');
+  }
+
+  async checkout(cartData:any){
+    const modal = await this.modalCtrl.create({
+      component: CheckoutComponent,
+      componentProps:{
+        cartData
+      }
     });
     modal.present();
   }

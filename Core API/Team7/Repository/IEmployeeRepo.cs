@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Team7.Models.Repository
 {
@@ -20,6 +17,8 @@ namespace Team7.Models.Repository
 
         Task<object> GetEmployeesAsync(string input);
         Task<Employee[]> _GetEmployeesAsync(string input);
+
+        Task<object> GetFullEmployeeByIDAsync(string id);
 
         Task<object> GetEmployeeIdAsync(int id);
         Task<Employee> _GetEmployeeIdAsync(int id);

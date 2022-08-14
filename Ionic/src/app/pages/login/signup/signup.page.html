@@ -22,7 +22,7 @@
                   <p>Please enter your first name.</p>
                 </ion-text>
                 <ion-item>
-                  <ion-icon name="contact" slot="start" color="#282828"></ion-icon>
+                  <ion-icon name="person" slot="start" color="#282828"></ion-icon>
                   <ion-input 
                   type="text" 
                   name="lastName" 
@@ -34,6 +34,7 @@
                 <ion-text color="danger" *ngIf="!lastName.valid && lastName.touched">
                   <p>Please enter your last name.</p>
                 </ion-text>
+
                 <ion-item>
                   <ion-icon name="call" slot="start" color="#282828"></ion-icon>
                   <ion-input 
@@ -49,6 +50,7 @@
                 <ion-text color="danger" *ngIf="!phone.valid && phone.touched">
                   <p>Please enter a valid phone number.</p>
                 </ion-text>
+
                 <ion-item>
                   <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
                   <ion-input 
@@ -61,6 +63,19 @@
                 </ion-item>
                 <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
                   <p>Please enter a valid email address</p>
+                </ion-text>
+
+                <ion-item>
+                  <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
+                  <ion-input 
+                  type="date" 
+                  name="dob" 
+                  ngModel dob 
+                  #dob="ngModel" 
+                  required ></ion-input>
+                </ion-item>
+                <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
+                  <p>Please enter a date of birth</p>
                 </ion-text>
 
                 <!-- <ion-item>

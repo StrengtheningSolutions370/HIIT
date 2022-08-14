@@ -44,23 +44,25 @@ namespace Team7.Models.Repository
                     bt.BookingTypeID,
                     bt.Name,
                     bt.Description,
+                    bt.Colour,
+                    bt.Capacity,
                     BookingPriceHistory =
-                    bt
-                    .BookingPriceHistory
-                    .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                        bt
+                        .BookingPriceHistory
+                        .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
                 }).ToListAsync()
             };
         }
 
-    public async Task<object> GetBookingTypesAsync(string name, string description)
-    {
-        IQueryable<BookingType> query = DB.BookingType.Where(bt => bt.Name == name || bt.Description == description);
-        if (!query.Any())
+        public async Task<object> GetBookingTypesAsync(string name, string description)
         {
-            return null;
-        }
-        else
-        {
+            IQueryable<BookingType> query = DB.BookingType.Where(bt => bt.Name == name || bt.Description == description);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
                 return new
                 {
                     result = await query.Select(bt => new
@@ -68,15 +70,17 @@ namespace Team7.Models.Repository
                         bt.BookingTypeID,
                         bt.Name,
                         bt.Description,
+                        bt.Colour,
+                        bt.Capacity,
                         BookingPriceHistory =
-                        bt
-                        .BookingPriceHistory
-                        .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                            bt
+                            .BookingPriceHistory
+                            .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
                     }).ToListAsync()
                 };
-        }
+            }
 
-    }
+        }
 
         public async Task<object> GetBookingTypeIdAsync(int id)
         {
@@ -94,10 +98,20 @@ namespace Team7.Models.Repository
                         bt.BookingTypeID,
                         bt.Name,
                         bt.Description,
+                        bt.Colour,
+                        bt.Capacity,
+                        Schedule =
+                            bt
+                            .Schedule
+                            .Select(sch => new { sch.ScheduleID, sch.BookingType, sch.DateSession, sch.Employee, BookingAttendance =
+                            sch
+                            .BookingAttendance
+                            .Select(ba => new { ba.BookingAttendanceID, ba.Attended}) }),
+
                         BookingPriceHistory =
-                        bt
-                        .BookingPriceHistory
-                        .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                            bt
+                            .BookingPriceHistory
+                            .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
                     }).ToListAsync()
                 };
             }

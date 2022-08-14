@@ -1,34 +1,45 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
+using System.IO;
+using System.Text;
 using Team7.Context;
 using Team7.Factory;
 using Team7.Models;
 using Team7.Models.Repository;
-using System.Text;
-using Microsoft.Extensions.FileProviders;
-using System.IO;
-using Microsoft.AspNetCore.Http;
 using Team7.Services;
-using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Team7
 {
     public class Startup
     {
         readonly string corsPolicy = "_myAllowSpecificOrigins";
+        TimedEventService time_pba = new TimedEventService();
 
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-
+            try
+            {
+                Configuration = configuration;
+                time_pba.start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + ex.StackTrace);
+            }
         }
 
         public IConfiguration Configuration { get; }
@@ -97,9 +108,9 @@ namespace Team7
                                 Id = "Bearer"
                             }
                         },
-#pragma warning disable CA1825 // Avoid zero-length array allocations
+                    #pragma warning disable CA1825 // Avoid zero-length array allocations
                         new string []{}
-#pragma warning restore CA1825 // Avoid zero-length array allocations
+                    #pragma warning restore CA1825 // Avoid zero-length array allocations
                     }
                 });
             });
@@ -135,8 +146,8 @@ namespace Team7
             services.AddScoped<ILessonPlanRepo, LessonPlanRepo>();
             services.AddScoped<ILessonRepo, LessonRepo>();
             services.AddScoped<IMeasurementRepo, MeasurementRepo>();
-            services.AddScoped<IMemberRepo, MemberRepo>();
-            services.AddScoped<IMemberStatusRepo, MemberStatusRepo>();
+            //services.AddScoped<IMemberRepo, MemberRepo>();
+            //services.AddScoped<IMemberStatusRepo, MemberStatusRepo>();
             services.AddScoped<IOrderStatusRepo, OrderStatusRepo>();
             services.AddScoped<IPasswordHistoryRepo, PasswordHistoryRepo>();
             services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();
@@ -149,7 +160,7 @@ namespace Team7
             services.AddScoped<ISaleCategoryRepo, SaleCategoryRepo>();
             services.AddScoped<ISaleItemRepo, SaleItemRepo>();
             services.AddScoped<ISaleRepo, SaleRepo>();
-            services.AddScoped<IScheduleRepo, ScheduleRepo>(); 
+            services.AddScoped<IScheduleRepo, ScheduleRepo>();
             services.AddScoped<IStockTakeLineRepo, StockTakeLineRepo>();
             services.AddScoped<IStockTakeRepo, StockTakeRepo>();
             services.AddScoped<ISupplierOrderLineRepo, SupplierOrderLineRepo>();
@@ -162,6 +173,9 @@ namespace Team7
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();
             services.AddScoped<IVATRepo, VATRepo>();
+            //services.AddSwaggerGen();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
         }
 
@@ -169,11 +183,13 @@ namespace Team7
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICorsService corsService, ICorsPolicyProvider corsPolicyProvider)
         {
 
+           
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Team7 v1");
+                c.RoutePrefix = "";
                 //c.RoutePrefix = string.Empty;
 
             });
@@ -192,22 +208,23 @@ namespace Team7
 
             }
 
-            /*app.UseHttpsRedirection();
-            app.UseCors("CorsPolicy");
+            //app.UseHttpsRedirection();
+            //app.UseCors("CorsPolicy");
 
-            app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-                RequestPath = new PathString("/Resources")
-            });*/
+            //app.UseStaticFiles();
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+            //    RequestPath = new PathString("/Resources")
+            //});
 
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
                 RequestPath = new PathString("/Resources"),
                 ServeUnknownFileTypes = true,
-                OnPrepareResponse = ctx => {
+                OnPrepareResponse = ctx =>
+                {
                     ctx.Context.Response.Headers.Append("Access-Control-Allow-Origin", "*");
                     ctx.Context.Response.Headers.Append("Access-Control-Allow-Headers",
                       "Origin, X-Requested-With, Content-Type, Accept");
@@ -226,7 +243,7 @@ namespace Team7
 
             app.UseEndpoints(endpoints =>
             {
-               endpoints.MapControllers();
+                endpoints.MapControllers();
             });
         }
     }

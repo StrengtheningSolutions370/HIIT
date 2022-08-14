@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
 
 namespace Team7.Models
 {
@@ -15,7 +15,6 @@ namespace Team7.Models
         public int QualificationTypeID { get; set; }
         [Required]
         public string Name { get; set; }
-
         public virtual ICollection<Qualification> Qualification { get; set; }
     }
 }

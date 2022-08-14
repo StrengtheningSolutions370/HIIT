@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Team7.Models.Repository
 {
@@ -20,7 +17,7 @@ namespace Team7.Models.Repository
         Task<object> GetSaleCategoryIdAsync(int id);
 
         Task<SaleCategory> _GetSaleCategoryIdAsync(int id);
-        
+
 
         Task<bool> SaveChangesAsync();
     }

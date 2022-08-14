@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
-using Team7.Models;
 
 
 namespace Team7.Models.Repository
@@ -70,9 +67,10 @@ namespace Team7.Models.Repository
 
             if (!query.Any())
                 return null;
-            
-            return await query.Select(lp => 
-                new LessonPlan {
+
+            return await query.Select(lp =>
+                new LessonPlan
+                {
                     LessonPlanID = lp.LessonPlanID,
                     Exercise = lp.Exercise,
                     Lesson = lp.Lesson,
@@ -84,5 +82,33 @@ namespace Team7.Models.Repository
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
         }
+
+        public async Task<LessonPlan[]> GetLessonsPlanByLessonIDAsync(int LessonID)
+        {
+            var query = DB.LessonPlan.Where(q => q.LessonID == LessonID).Select(q => new LessonPlan
+            {
+                LessonPlanID = q.LessonPlanID,
+                LessonID = q.LessonID,
+                Exercise = q.Exercise,
+                Lesson = q.Lesson
+            });
+
+            if (!query.Any())
+                return null;
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<bool> RemoveRangeLessonIdAsync(int LessonID)
+        {
+            var range = DB.LessonPlan.Where(lp => lp.LessonID == LessonID);
+            if (range.Any())
+            {
+                DB.LessonPlan.RemoveRange(range);
+                await this.SaveChangesAsync();
+            }
+            return true;
+        }
+
     }
 }

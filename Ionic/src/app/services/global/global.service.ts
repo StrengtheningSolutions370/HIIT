@@ -1,6 +1,6 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable @typescript-eslint/ban-types */
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { AlertController,LoadingController,ModalController,ToastController } from '@ionic/angular';
 
 declare const Buffer;
@@ -11,6 +11,10 @@ declare const Buffer;
 export class GlobalService {
   loading: Boolean = false;
   public items: any = [];
+  
+  public fetchMeasurementFlag = false;
+  public closeMeasurementAddModal = new EventEmitter<any>();
+
 
   constructor(private alertCtrl: AlertController,
     private toastCtrl: ToastController,
@@ -119,5 +123,7 @@ export class GlobalService {
     YoutubeToEmbed(url : string) {
       return `${url.substring(0, 24)}embed/${url.substring(32, url.length)}`;
     }
+
+    
 
 }

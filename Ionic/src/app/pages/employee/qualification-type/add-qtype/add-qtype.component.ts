@@ -1,5 +1,5 @@
 import { Component, Input, OnInit  } from '@angular/core';
-import { FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder,FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/quotes */
@@ -17,13 +17,13 @@ export class AddQtypeComponent implements ViewWillEnter {
   @Input() qualificationType: QualificationType;
 
   //Creating the form to add the new venue details, that will be displayed in the HTML component
-  cQTypeForm: FormGroup = this.formBuilder.group({
+  cQTypeForm: UntypedFormGroup = this.formBuilder.group({
     qualificationTypeName: ['', [Validators.required]]
   });
 
   constructor(
     public global: GlobalService,
-    public formBuilder: FormBuilder,
+    public formBuilder: UntypedFormBuilder,
     public qualificationService: QualificationService,
     private  alertCtrl: AlertController ) { }
 

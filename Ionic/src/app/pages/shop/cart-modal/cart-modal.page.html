@@ -27,17 +27,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-button (click)="makePayment()">Proceed to checkout</ion-button>
-  <form action="https://sandbox.payfast.co.za/eng/process" method="POST">
-    <input type="hidden" name="merchant_id" value="10026801">
-    <input type="hidden" name="amount" value="100.00">
-    <input type="hidden" name="merchant_key" value="08fsf78tsgq70">
-    <input type="hidden" name="item_name" value="Pomodoro subscription">
-    <ion-button class="btn btn-light" type="submit">Pay</ion-button>
-  </form>
-
-      <app-payfast-checkout></app-payfast-checkout>
+  <ion-button (click)="checkout()">Proceed to checkout</ion-button>
 
 
 
-</ion-content>

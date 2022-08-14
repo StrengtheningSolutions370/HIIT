@@ -52,20 +52,22 @@ namespace Team7.Models.Repository
                         si.Photo,
                         si.Description,
                         //si.CostPrice,
-                        si.Price,
+                        //si.Price,
                         si.Quotable,
-                        si.Quantity,
-                        //si.QuantityOnHand,
+                        //si.Quantity,
+                        si.QuantityOnHand,
+                        si.Stock,
                         si.SaleCategory,
                         //SaleCategoryName = si.SaleCategory.Name,
                         //SaleCategoryDescription = si.SaleCategory.Description,
-                        InventoryItem = si
-                        .InventoryItem
-                        .Select(i => new { i.InventoryItemID, i.Quantity }),
+                        //InventoryItem = si
+                        //.InventoryItem
+                        //.Select(i => new { i.InventoryItemID, i.Quantity }),
                         PriceHistory = si
                         .PriceHistory
-                        .Select(ph => new { ph.Date, ph.Amount }),
-                        StockTake = si.StockTakeLine.Select(stl => new {
+                        .Select(ph => new { ph.Date, ph.SaleAmount, ph.CostAmount }),
+                        StockTake = si.StockTakeLine.Select(stl => new
+                        {
                             id = stl.StockTake.StockTakeID,
                             StockTakeDate = stl.StockTake.Date,
                             StockTakeNotes = stl.StockTake.Notes
@@ -101,20 +103,22 @@ namespace Team7.Models.Repository
                         si.Photo,
                         si.Description,
                         //si.CostPrice,
-                        si.Price,
+                        //si.Price,
                         si.Quotable,
-                        si.Quantity,
-                        //si.QuantityOnHand,
+                        //si.Quantity,
+                        si.QuantityOnHand,
+                        si.Stock,
                         si.SaleCategory,
                         //SaleCategoryName = si.SaleCategory.Name,
                         //SaleCategoryDescription = si.SaleCategory.Description,
-                        InventoryItem = si
-                        .InventoryItem
-                        .Select(i => new { i.InventoryItemID, i.Quantity }),
+                        //InventoryItem = si
+                        //.InventoryItem
+                        //.Select(i => new { i.InventoryItemID, i.Quantity }),
                         PriceHistory = si
                         .PriceHistory
-                        .Select(ph => new { ph.Date, ph.Amount }),
-                        StockTake = si.StockTakeLine.Select(stl => new {
+                        .Select(ph => new { ph.Date, ph.SaleAmount, ph.CostAmount }),
+                        StockTake = si.StockTakeLine.Select(stl => new
+                        {
                             id = stl.StockTake.StockTakeID,
                             StockTakeDate = stl.StockTake.Date,
                             StockTakeNotes = stl.StockTake.Notes
@@ -151,20 +155,22 @@ namespace Team7.Models.Repository
                         si.Photo,
                         si.Description,
                         //si.CostPrice,
-                        si.Price,
+                        //si.Price,
                         si.Quotable,
-                        si.Quantity,
-                        //si.QuantityOnHand,
+                        //si.Quantity,
+                        si.QuantityOnHand,
+                        si.Stock,
                         si.SaleCategory,
-                       //SaleCategoryName = si.SaleCategory.Name,
+                        //SaleCategoryName = si.SaleCategory.Name,
                         //SaleCategoryDescription = si.SaleCategory.Description,
-                        InventoryItem = si
-                        .InventoryItem
-                        .Select(i => new { i.InventoryItemID, i.Quantity }),
+                        //InventoryItem = si
+                        //.InventoryItem
+                        //.Select(i => new { i.InventoryItemID, i.Quantity }),
                         PriceHistory = si
                         .PriceHistory
-                        .Select(ph => new { ph.Date, ph.Amount }),
-                        StockTake = si.StockTakeLine.Select(stl => new {
+                        .Select(ph => new { ph.Date, ph.SaleAmount, ph.CostAmount }),
+                        StockTake = si.StockTakeLine.Select(stl => new
+                        {
                             id = stl.StockTake.StockTakeID,
                             StockTakeDate = stl.StockTake.Date,
                             StockTakeNotes = stl.StockTake.Notes

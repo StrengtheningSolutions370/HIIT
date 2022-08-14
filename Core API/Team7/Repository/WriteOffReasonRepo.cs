@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
@@ -46,10 +44,10 @@ namespace Team7.Models.Repository
                 {
                     wr.WriteOffReasonID,
                     wr.Description,
-                    WriteOffLine = 
+                    WriteOffLine =
                     wr
                      .WriteOffLine
-                     .Select(wl => new { wl.WriteOffLineID, wl.Quantity})
+                     .Select(wl => new { wl.WriteOffLineID, wl.Quantity })
                 }).ToListAsync()
             };
         }
