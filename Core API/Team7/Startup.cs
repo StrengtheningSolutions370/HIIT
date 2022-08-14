@@ -21,6 +21,7 @@ using Team7.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Identity.Web;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Team7.Repository;
 
 namespace Team7
 {
@@ -129,7 +130,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AWS")));
+            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
@@ -173,6 +174,7 @@ namespace Team7
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();
             services.AddScoped<IVATRepo, VATRepo>();
+            services.AddScoped<IReportRepo, ReportRepo>();
             //services.AddSwaggerGen();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);

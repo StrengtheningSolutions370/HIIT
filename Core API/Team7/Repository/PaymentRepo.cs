@@ -9,12 +9,10 @@ namespace Team7.Models.Repository
     public class PaymentRepo : IPaymentRepo
     {
         readonly private AppDB DB;
-        readonly private ISaleItemRepo _saleItemRepo;
 
-        public PaymentRepo(AppDB appDatabaseContext, ISaleItemRepo saleItemRepo)
+        public PaymentRepo(AppDB appDatabaseContext)
         {
             DB = appDatabaseContext;
-
         }
 
         public void Add<T>(T Entity) where T : class
@@ -38,6 +36,32 @@ namespace Team7.Models.Repository
             if(!query.Any())
             {
                 return null;
+            }
+            var tempBook = query.Select(p => p.Booking);
+            if (tempBook == null)
+            {
+                return new
+                {
+
+                    result = await query.Select(p =>
+                    new
+                    {
+                        p.PaymentID,
+                        PaymentType = new
+                        {
+                            p.PaymentType.PaymentTypeID,
+                            p.PaymentType.Name
+                        }
+                        //},
+                        //Sale = new
+                        //{
+                        //    p.Sale.SaleID,
+                        //    p.Sale.Date,
+                        //    p.Sale.AppUser,
+                        //    SaleLine = p.Sale.SaleLine.Select(sl => new { sl.SaleLineID, sl.Quantity, sl.SaleItem })
+                        //}
+                    }).ToListAsync()
+                };
             }
             return new
             {
