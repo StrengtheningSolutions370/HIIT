@@ -7,7 +7,8 @@ import { AddComponent } from './add/add.component';
 
 import { Chart, ChartConfiguration, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale  } from 'chart.js';
 import { isThisHour } from 'date-fns';
-
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 @Component({
   selector: 'app-measurements',
   templateUrl: './measurements.page.html',
@@ -130,19 +131,44 @@ export class MeasurementsPage implements AfterViewInit {
     }
   }
 
+  download() {
+    let Data = document.getElementById('htmlData')!;
+    html2canvas(Data).then((canvas) => {
+      let fileWidth = 210;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+
+      const PDF = new jsPDF({
+        orientation: 'p',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      PDF.setFontSize(30)
+      PDF.text('Client Progress Report', 10, 10);
+
+      const topPosition = 25;
+      const leftPosition = 5;
+
+      PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, fileWidth, fileHeight);
+      PDF.save('Client Report.pdf');
+    });
+  }
+
   generate() {
-    this.selected = true;
     if (this.lower == null || this.upper == null) {
       this.global.showAlert("Date range is required.");
       return;
     }
-
+    
     //check range placement:
     if (this.lower > this.upper) {
       this.global.showAlert("From date may not exceed To date.", "Invalid Dates!");
       return;
     }
-
+    
+    this.selected = true;
     // console.log(this.lower);
     // console.log(this.upper);
     //filter the mes.
@@ -189,7 +215,7 @@ export class MeasurementsPage implements AfterViewInit {
         labels: this.labels,
         datasets: [
           {
-            label: 'Sell per week',
+            label: 'Weight',
             fill: false,
             backgroundColor: 'rgba(75,192,192,0.4)',
             borderColor: 'rgba(75,192,192,1)',
