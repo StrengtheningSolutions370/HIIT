@@ -58,6 +58,7 @@ export class CartModalPage implements ViewWillEnter {
    }
 
    checkout(){
+    this.global.dismissModal();
     console.log(this.model);
 
     //console.log(this.saleItem);

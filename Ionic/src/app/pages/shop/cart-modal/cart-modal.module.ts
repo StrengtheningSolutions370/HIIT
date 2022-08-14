@@ -22,7 +22,7 @@ import { PaymentPage } from '../payment/payment.page';
     CartModalPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [CartModalPage],
+  declarations: [CartModalPage, CartItemComponent],
   bootstrap: [CartModalPage],
 
 })

@@ -332,11 +332,11 @@ getMatchSaleItem(name: string, description: string): Observable<any>{
 }
 //Image Upload
 uploadSaleItemImage(data: FormData): Observable<any> {
-  return this.http.post('https://bsctest.azurewebsites.net/api/SaleItem/upload', data);
+  return this.http.post('https://localhost:44383/api/SaleItem/upload', data);
 }
 //reImage Upload
 deleteSaleItemImage(id : string) : Observable<any> {
-  return this.http.delete(`https://bsctest.azurewebsites.net/api/SaleItem/deletephoto?name=${id}`)
+  return this.http.delete(`https://localhost:44383/api/SaleItem/deletephoto?name=${id}`)
 
 }
 
