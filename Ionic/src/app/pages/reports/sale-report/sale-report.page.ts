@@ -17,7 +17,7 @@ export class SaleReportPage implements ViewWillEnter {
 
   @ViewChild('barCanvas') private saleBarCanvas: ElementRef;
   saleBarChart: Chart;
-  rangeTitle: string = 'Year view';
+  rangeTitle: string = 'Month view';
   barLabels: any; // Labels below - this object is placed inside barData along with tempCategoryDataset on submit
   selected: number; // length of selected labels
   year: string[] = ["2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"];
@@ -304,9 +304,24 @@ export class SaleReportPage implements ViewWillEnter {
           title: {
             display: true,
             text: 'Quantity sold grouped by sale category'
-                }
+          }
+        },
+        scales: {
+          y: {
+            title: {
+              text: 'Quantity',
+              display: true
+            },
+            beginAtZero:true,
+          },
+          x: {
+            title : {
+              text: 'Date',
+              display: true
             }
+          }
         }
+      }
     });
     //this.saleBarChart.resize(this.chartWidth, this.chartHeight);
     //this.saleBarChart.getChart().resize();
