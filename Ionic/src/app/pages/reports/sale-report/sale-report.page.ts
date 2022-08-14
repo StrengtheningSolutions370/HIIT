@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ViewWillEnter } from '@ionic/angular';
 import Chart from 'chart.js/auto'
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ReportService } from 'src/app/services/report/report.service';
@@ -8,11 +9,13 @@ import { ReportService } from 'src/app/services/report/report.service';
   templateUrl: './sale-report.page.html',
   styleUrls: ['./sale-report.page.scss'],
 })
-export class SaleReportPage implements AfterViewInit {
+export class SaleReportPage implements ViewWillEnter {
 
   @ViewChild('barCanvas') private saleBarCanvas: ElementRef;
-  saleBarChart: any;
+  saleBarChart: Chart;
   rangeTitle: string = 'Year view';
+  chartHeight: any;
+  chartWidth: any;
 
   barConfig: any;
   barLabels: any;
@@ -28,7 +31,7 @@ export class SaleReportPage implements AfterViewInit {
 
 
   @ViewChild('lineCanvas') private saleLineCanvas: ElementRef;
-  saleLineChart: any;
+  saleLineChart: Chart;
   categorySelected: string = 'default';
   lineConfig: any;
   lineData_count: number;
@@ -38,30 +41,62 @@ export class SaleReportPage implements AfterViewInit {
   colors = ['red','chartreuse','mediumblue','orange','cyan', 'gold','fuchsia','coral', 'teal', 'darkviolet'];
 
 
-  constructor(public report: ReportService, public global: GlobalService) { }
+  constructor(public report: ReportService, public global: GlobalService) {
+    if (this.saleBarChart){
+      this.saleBarChart.destroy();
+    }
+    this.global.nativeLoad();
+    //Chart.register(LinearScale)
+    //Default view as year month
+    this.selected = 12;
+    this.barLabels = this.yearMonth;
+    this.fetchCategoryReport().then(() => {
+      this.barChartMethod();
+      this.lineChartMethod();
+      this.global.endNativeLoad();
+    });
+  }
 
   updateView(ev: CustomEvent){
     this.global.nativeLoad();
-    //this.barData = null;
+    this.chartHeight = this.saleBarChart.height;
+    this.chartWidth = this.saleBarChart.width;
     this.saleBarChart.destroy();
+    //this.barData = null;
+    //this.saleBarChart.clearRect();
+    //context.clearRect(0, 0, canvas.width, canvas.height);
+
     console.log(ev.detail.value);
     let view = ev.detail.value;
     if (view === 'yearly'){
       this.selected = this.year.length;
+      this.rangeTitle = 'Year view';
+      this.barLabels = this.year;
     } else if (view === 'monthly'){
       this.selected = this.yearMonth.length;
+      this.rangeTitle = 'Month view';
+      this.barLabels = this.yearMonth;
     } else if (view === 'bimonth'){
       this.selected = this.biMonth.length;
+      this.rangeTitle = 'Bimonth view';
+      this.barLabels = this.biMonth;
     } else if (view === 'quarterly'){
       this.selected = this.triMonth.length;
+      this.rangeTitle = 'Quarterly view';
+      this.barLabels = this.triMonth;
     } else if (view === 'halfyear'){
       this.selected = this.halfyear.length;
+      this.rangeTitle = 'Half year view';
+      this.barLabels = this.halfyear;
     } else {
       this.selected = this.yearMonth.length;
+      this.rangeTitle = 'Month view';
+      this.barLabels = this.yearMonth;
     }
     console.log("Starting update");
     this.fetchCategoryReport().then(() => {
       this.barChartMethod();
+      //this.saleBarChart.resize(this.saleBarChart.width,this.saleBarChart.height);
     this.global.endNativeLoad();
     console.log("Finishing update");
     });
@@ -77,68 +112,92 @@ export class SaleReportPage implements AfterViewInit {
 
         //console.log(data.result);
         this.saleCategoryReportData = data.result;
+        console.log("Initial data.result");
+        console.log(this.saleCategoryReportData);
+        if (this.saleCategoryReportData == undefined){
+          console.log("Empty")
+          resolve(true);
+          return;
+        }
         for (let [index, element] of this.saleCategoryReportData.entries()){
+          console.log("Entering reportData entries: ");
           console.log(element);
-          var tempData = [];
+          var tempData: number[];
+          if (this.selected == this.yearMonth.length){
+            tempData = [0,0,0,0,0,0,0,0,0,0,0,0];
+          } else if (this.selected == this.biMonth.length){
+            tempData = [0,0,0,0,0,0];
+          } else if (this.selected == this.triMonth.length){
+            tempData = [0,0,0,0];
+          } else if (this.selected == this.halfyear.length){
+            tempData = [0,0];
+          } else if (this.selected == this.year.length){
+            tempData = [0,0,0,0,0,0,0,0,0,0,0];
+          }
+
           element.saleItem.forEach(saleItem => {
+            console.log("Entering Sale Item: ");
             console.log(saleItem);
             var subQuantity = 0;
             saleItem.saleLine.forEach(saleLine => {
+              console.log("Entering Sale Line: ");
+              console.log(saleLine);
               let date = new Date(saleLine.date);
               if (this.selected == this.yearMonth.length){
-                console.log("year month view");
-                this.barLabels = this.yearMonth;
+                console.log("TempData: ");
+                console.log(tempData);
+                //Year month calculation
                 for (let index = 0; index < this.selected; index++) {
                   if (index == date.getMonth()){
                     subQuantity += saleLine.quantity;
                   } else {
                     subQuantity = 0;
                   }
-                  tempData.push(subQuantity);
+                  console.log(tempData[index]);
+                  console.log(subQuantity);
+                  tempData[index] += subQuantity;
+                  console.log("TempData: ");
+                  console.log(tempData);
                 }
               } else if (this.selected == this.biMonth.length){
-                console.log("bi-Month view");
-                this.barLabels = this.biMonth;
+
                 for (let index = 0; index < this.selected; index++) {
                   if (index == Math.round(date.getMonth()/2)-1){
                     subQuantity += saleLine.quantity;
                   } else {
                     subQuantity = 0;
                   }
-                  tempData.push(subQuantity);
+                  tempData[index] += subQuantity;
                 }
               } else if (this.selected == this.triMonth.length){
-                console.log("tri-Month view");
-                this.barLabels = this.triMonth;
+
                 for (let index = 0; index < this.selected; index++) {
                   if (index == Math.round(date.getMonth()/3)){
                     subQuantity += saleLine.quantity;
                   } else {
                     subQuantity = 0;
                   }
-                  tempData.push(subQuantity);
+                  tempData[index] += subQuantity;
                 }
               } else if (this.selected == this.halfyear.length){
-                console.log("half-year view");
-                this.barLabels = this.halfyear;
+
                 for (let index = 0; index < this.selected; index++) {
                   if (index == Math.round(date.getMonth()/6)){
                     subQuantity += saleLine.quantity;
                   } else {
                     subQuantity = 0;
                   }
-                  tempData.push(subQuantity);
+                  tempData[index] += subQuantity;
                 }
               } else if (this.selected == this.year.length){
-                console.log("year view");
-                this.barLabels = this.year;
+
                 for (let index = 0; index < this.selected; index++) {
                   if (2020+index == date.getFullYear()){
                     subQuantity += saleLine.quantity;
                   } else {
                     subQuantity = 0;
                   }
-                  tempData.push(subQuantity);
+                  tempData[index] += subQuantity;
                 }
               }
 
@@ -146,9 +205,7 @@ export class SaleReportPage implements AfterViewInit {
             })
 
           });
-          console.log(index);
           let color = this.colors[index];
-          console.log(color);
           var dataset = {
             label: element.name,
             data: tempData,
@@ -163,23 +220,22 @@ export class SaleReportPage implements AfterViewInit {
     })
   }
 
-  ngAfterViewInit() {
-    this.global.nativeLoad();
-    //Chart.register(LinearScale)
-    //Default view as year month
-    this.selected = 12;
-    this.barLabels = this.yearMonth;
-    this.fetchCategoryReport().then(() => {
-      this.barChartMethod();
-      this.lineChartMethod();
-      this.global.endNativeLoad();
-    });
- //X-axis labels so group by month or by year or by day
-
-
+  ionViewWillEnter(): void {
+    // this.global.nativeLoad();
+    // //Chart.register(LinearScale)
+    // //Default view as year month
+    // this.selected = 12;
+    // this.barLabels = this.yearMonth;
+    // this.fetchCategoryReport().then(() => {
+    //   this.barChartMethod();
+    //   this.lineChartMethod();
+    //   this.global.endNativeLoad();
+    // });
   }
 
+
   barChartMethod() {
+
     this.barData = {
       labels: this.barLabels,
       datasets: this.tempCategoryDataset
@@ -197,6 +253,8 @@ export class SaleReportPage implements AfterViewInit {
             }
         }
     });
+    //this.saleBarChart.resize(this.chartWidth, this.chartHeight);
+    //this.saleBarChart.getChart().resize();
   }
 
   lineChartMethod() {

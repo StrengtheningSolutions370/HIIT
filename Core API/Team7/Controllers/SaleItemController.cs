@@ -33,18 +33,6 @@ namespace Team7.Controllers
 
 
 
-                var siPriceHistory = saleItem.PriceHistory.FirstOrDefault();
-
-                PriceHistory salePrice = new PriceHistory
-                {
-                    Date = System.DateTime.Now,
-                    CostAmount = siPriceHistory.CostAmount,
-                    SaleAmount = siPriceHistory.SaleAmount,
-                    SaleItemID = saleItem.SaleItemID,
-                    SaleItem = saleItem
-                };
-
-
                 SaleItem toAdd = new SaleItem
                 {
                     Name = saleItem.Name,
@@ -58,7 +46,23 @@ namespace Team7.Controllers
                     SaleCategoryID = saleItem.SaleCategoryID
                 };
 
-                toAdd.PriceHistory.Add(salePrice);
+                if (!saleItem.Quotable)
+                {
+                    var siPriceHistory = saleItem.PriceHistory.First();
+
+                    PriceHistory salePrice = new PriceHistory
+                    {
+                        Date = DateTime.Now,
+                        CostAmount = siPriceHistory.CostAmount,
+                        SaleAmount = siPriceHistory.SaleAmount,
+                        SaleItemID = saleItem.SaleItemID,
+                        SaleItem = saleItem
+                    };
+
+                    toAdd.PriceHistory.Add(salePrice);
+                } 
+
+                
 
                 SaleItemRepo.Add(toAdd);
                 if (await SaleItemRepo.SaveChangesAsync())

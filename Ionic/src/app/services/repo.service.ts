@@ -51,7 +51,8 @@ export class RepoService {
   LessonController = 'Lesson/'
   ScheduleController = 'Schedule/';
   MeasurementController = 'Measurement/';
-  ReportController = 'Report/'
+  ReportController = 'Report/';
+  PaymentController= 'Payment/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -142,7 +143,7 @@ export class RepoService {
   }
 
   makePayment(payment): Observable<any>{
-    return this.http.post<any>(`https://sandbox.payfast.co.za/eng/process`,payment);
+    return this.http.post<any>(`${this.base + this.PaymentController}add`,payment);
   }
 
   //Venue:
@@ -556,6 +557,10 @@ deleteScheduleEvent(scheduleID: number): Observable<any>{
 getScheduleEvent(): Observable<any>{
   return this.http.get(`${this.base+this.ScheduleController}getAll`, this.httpOptions);
 }
+
+// recordPayment(): Observable<any>{
+//   return this.http.post()
+// }
 
 //Report
 
