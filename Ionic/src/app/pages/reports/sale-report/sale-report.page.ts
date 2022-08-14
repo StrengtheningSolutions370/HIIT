@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto'
+import { GlobalService } from 'src/app/services/global/global.service';
+import { ReportService } from 'src/app/services/report/report.service';
 
 @Component({
   selector: 'app-sale-report',
@@ -10,94 +12,190 @@ export class SaleReportPage implements AfterViewInit {
 
   @ViewChild('barCanvas') private saleBarCanvas: ElementRef;
   saleBarChart: any;
+  rangeTitle: string = 'Year view';
 
   barConfig: any;
-  barData_count: number;
   barLabels: any;
   barData: any;
+  selected: number;
+  year: string[] = ["2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"];
+  yearMonth: string[] = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  biMonth: string[] = ["January-February","March-April","May-June","July-August","September-October","November-December"];
+  triMonth: string[] = ["January-March","April-June","July-September","October-December"];
+  halfyear: string[] = ["January-June","July-December"];
+  saleCategoryReportData: any;
+  tempCategoryDataset: any[] = [];
 
 
   @ViewChild('lineCanvas') private saleLineCanvas: ElementRef;
   saleLineChart: any;
+  categorySelected: string = 'default';
   lineConfig: any;
   lineData_count: number;
   lineLabels: any;
   lineData: any;
 
-  constructor() { }
+  colors = ['red','chartreuse','mediumblue','orange','cyan', 'gold','fuchsia','coral', 'teal', 'darkviolet'];
+
+
+  constructor(public report: ReportService, public global: GlobalService) { }
+
+  updateView(ev: CustomEvent){
+    this.global.nativeLoad();
+    //this.barData = null;
+    this.saleBarChart.destroy();
+    console.log(ev.detail.value);
+    let view = ev.detail.value;
+    if (view === 'yearly'){
+      this.selected = this.year.length;
+    } else if (view === 'monthly'){
+      this.selected = this.yearMonth.length;
+    } else if (view === 'bimonth'){
+      this.selected = this.biMonth.length;
+    } else if (view === 'quarterly'){
+      this.selected = this.triMonth.length;
+    } else if (view === 'halfyear'){
+      this.selected = this.halfyear.length;
+    } else {
+      this.selected = this.yearMonth.length;
+    }
+    console.log("Starting update");
+    this.fetchCategoryReport().then(() => {
+      this.barChartMethod();
+    this.global.endNativeLoad();
+    console.log("Finishing update");
+    });
+
+
+
+  }
+
+  async fetchCategoryReport(): Promise<any>{
+    this.tempCategoryDataset = [];
+    return new Promise<any>((resolve) => {
+      this.report.getAllSaleCategoryReport().subscribe(data => {
+
+        //console.log(data.result);
+        this.saleCategoryReportData = data.result;
+        for (let [index, element] of this.saleCategoryReportData.entries()){
+          console.log(element);
+          var tempData = [];
+          element.saleItem.forEach(saleItem => {
+            console.log(saleItem);
+            var subQuantity = 0;
+            saleItem.saleLine.forEach(saleLine => {
+              let date = new Date(saleLine.date);
+              if (this.selected == this.yearMonth.length){
+                console.log("year month view");
+                this.barLabels = this.yearMonth;
+                for (let index = 0; index < this.selected; index++) {
+                  if (index == date.getMonth()){
+                    subQuantity += saleLine.quantity;
+                  } else {
+                    subQuantity = 0;
+                  }
+                  tempData.push(subQuantity);
+                }
+              } else if (this.selected == this.biMonth.length){
+                console.log("bi-Month view");
+                this.barLabels = this.biMonth;
+                for (let index = 0; index < this.selected; index++) {
+                  if (index == Math.round(date.getMonth()/2)-1){
+                    subQuantity += saleLine.quantity;
+                  } else {
+                    subQuantity = 0;
+                  }
+                  tempData.push(subQuantity);
+                }
+              } else if (this.selected == this.triMonth.length){
+                console.log("tri-Month view");
+                this.barLabels = this.triMonth;
+                for (let index = 0; index < this.selected; index++) {
+                  if (index == Math.round(date.getMonth()/3)){
+                    subQuantity += saleLine.quantity;
+                  } else {
+                    subQuantity = 0;
+                  }
+                  tempData.push(subQuantity);
+                }
+              } else if (this.selected == this.halfyear.length){
+                console.log("half-year view");
+                this.barLabels = this.halfyear;
+                for (let index = 0; index < this.selected; index++) {
+                  if (index == Math.round(date.getMonth()/6)){
+                    subQuantity += saleLine.quantity;
+                  } else {
+                    subQuantity = 0;
+                  }
+                  tempData.push(subQuantity);
+                }
+              } else if (this.selected == this.year.length){
+                console.log("year view");
+                this.barLabels = this.year;
+                for (let index = 0; index < this.selected; index++) {
+                  if (2020+index == date.getFullYear()){
+                    subQuantity += saleLine.quantity;
+                  } else {
+                    subQuantity = 0;
+                  }
+                  tempData.push(subQuantity);
+                }
+              }
+
+
+            })
+
+          });
+          console.log(index);
+          let color = this.colors[index];
+          console.log(color);
+          var dataset = {
+            label: element.name,
+            data: tempData,
+            backgroundColor: color
+            // yAxisID: 'y',
+
+          }
+          this.tempCategoryDataset.push(dataset);
+        }
+        resolve(true)
+      });
+    })
+  }
 
   ngAfterViewInit() {
+    this.global.nativeLoad();
     //Chart.register(LinearScale)
-    this.barData_count = 3;
-    this.barLabels = ["January","February","March","April","May","June","July","August","September","October","November","December"], //X-axis labels so group by month or by year or by day
-    this.barData = {
-      labels: this.barLabels,
-      //Need to for loop add a label of the category and input the data
-      datasets: [
-        {
-          label: 'Clothing',
-          data: [0,5,10,15,20,25,30,35,40,45],
-          borderColor: '#050000',
-          backgroundColor: '#858585',
-          yAxisID: 'y',
-        },
-        {
-          label: 'Protein',
-          data: [1,2,3,4,5,6,7,8,9,10,11,100],
-          borderColor: '#171466',
-          backgroundColor: '#54518f',
-          yAxisID: 'y',
-        },
-        {
-          label: 'Nutrition',
-          data: [45,40,35,30,25,20,15,10,5,0],
-          borderColor: '#f50505',
-          backgroundColor: '#c73636',
-          yAxisID: 'y',
-        }
-      ]
-    };
+    //Default view as year month
+    this.selected = 12;
+    this.barLabels = this.yearMonth;
+    this.fetchCategoryReport().then(() => {
+      this.barChartMethod();
+      this.lineChartMethod();
+      this.global.endNativeLoad();
+    });
+ //X-axis labels so group by month or by year or by day
 
-    this.barChartMethod();
-    this.lineChartMethod();
+
   }
 
   barChartMethod() {
+    this.barData = {
+      labels: this.barLabels,
+      datasets: this.tempCategoryDataset
+    };
+
     this.saleBarChart = new Chart(this.saleBarCanvas.nativeElement, {
       type: 'bar',
-      data: this.barData
-    //   {
-    //     //Set of sale category - grouping quantity of sales per category for value
-    //     labels: ['BJP', 'INC', 'AAP', 'CPI', 'CPI-M', 'NCP'],
-    //     datasets: [{
-    //       label: '# of Votes',
-    //       data: [200, 50, 30, 15, 20, 34],
-    //       backgroundColor: [
-    //         'rgba(255, 99, 132, 0.2)',
-    //         'rgba(54, 162, 235, 0.2)',
-    //         'rgba(255, 206, 86, 0.2)',
-    //         'rgba(75, 192, 192, 0.2)',
-    //         'rgba(153, 102, 255, 0.2)',
-    //         'rgba(255, 159, 64, 0.2)'
-    //       ],
-    //       borderColor: [
-    //         'rgba(255,99,132,1)',
-    //         'rgba(54, 162, 235, 1)',
-    //         'rgba(255, 206, 86, 1)',
-    //         'rgba(75, 192, 192, 1)',
-    //         'rgba(153, 102, 255, 1)',
-    //         'rgba(255, 159, 64, 1)'
-    //       ],
-    //       borderWidth: 1
-    //     }]
-    //   },
-    //   options: {
-    //     scales: {
-    //       y:{
-    //           beginAtZero: true
-    //         }
-    //     }
-    //   }
+      data: this.barData,
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Quantity sold grouped by sale category'
+                }
+            }
+        }
     });
   }
 
@@ -114,7 +212,7 @@ export class SaleReportPage implements AfterViewInit {
         plugins: {
           title: {
             display: true,
-            text: 'Quantity sold grouped by sale category'
+            text: 'Total number of sales per sale category'
           }
         },
         scales: {

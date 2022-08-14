@@ -626,7 +626,7 @@ namespace Team7.Migrations
                     SaleID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -730,8 +730,8 @@ namespace Team7.Migrations
                     SaleLineID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    SaleID = table.Column<int>(type: "int", nullable: false),
-                    SaleItemID = table.Column<int>(type: "int", nullable: false)
+                    SaleID = table.Column<int>(type: "int", nullable: true),
+                    SaleItemID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -740,14 +740,12 @@ namespace Team7.Migrations
                         name: "FK_SaleLine_Sale_SaleID",
                         column: x => x.SaleID,
                         principalTable: "Sale",
-                        principalColumn: "SaleID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "SaleID");
                     table.ForeignKey(
                         name: "FK_SaleLine_SaleItem_SaleItemID",
                         column: x => x.SaleItemID,
                         principalTable: "SaleItem",
-                        principalColumn: "SaleItemID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "SaleItemID");
                 });
 
             migrationBuilder.CreateTable(
@@ -758,7 +756,7 @@ namespace Team7.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PaymentTypeID = table.Column<int>(type: "int", nullable: false),
                     SaleID = table.Column<int>(type: "int", nullable: false),
-                    BookingID = table.Column<int>(type: "int", nullable: false)
+                    BookingID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -767,8 +765,7 @@ namespace Team7.Migrations
                         name: "FK_Payment_Booking_BookingID",
                         column: x => x.BookingID,
                         principalTable: "Booking",
-                        principalColumn: "BookingID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "BookingID");
                     table.ForeignKey(
                         name: "FK_Payment_PaymentType_PaymentTypeID",
                         column: x => x.PaymentTypeID,
@@ -946,7 +943,7 @@ namespace Team7.Migrations
                 {
                     BookingAttendanceID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BookingID = table.Column<int>(type: "int", nullable: false),
+                    BookingID = table.Column<int>(type: "int", nullable: true),
                     ScheduleID = table.Column<int>(type: "int", nullable: false),
                     Attended = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -957,8 +954,7 @@ namespace Team7.Migrations
                         name: "FK_BookingAttendance_Booking_BookingID",
                         column: x => x.BookingID,
                         principalTable: "Booking",
-                        principalColumn: "BookingID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "BookingID");
                     table.ForeignKey(
                         name: "FK_BookingAttendance_Schedule_ScheduleID",
                         column: x => x.ScheduleID,

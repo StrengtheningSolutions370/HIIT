@@ -51,6 +51,7 @@ export class RepoService {
   LessonController = 'Lesson/'
   ScheduleController = 'Schedule/';
   MeasurementController = 'Measurement/';
+  ReportController = 'Report/'
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -554,6 +555,13 @@ deleteScheduleEvent(scheduleID: number): Observable<any>{
 //GetAll
 getScheduleEvent(): Observable<any>{
   return this.http.get(`${this.base+this.ScheduleController}getAll`, this.httpOptions);
+}
+
+//Report
+
+//Get by sale category
+getSaleCategoryReport(): Observable<any>{
+  return this.http.get(`${this.base+this.ReportController}getBySaleCategory`, this.httpOptions)
 }
 
 }

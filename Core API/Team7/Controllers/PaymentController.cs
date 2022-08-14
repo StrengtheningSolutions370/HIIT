@@ -111,7 +111,7 @@ namespace Team7.Controllers
                     _bookingRepo.Add(bookTemp);
                     await _bookingRepo.SaveChangesAsync();
                     toAdd.Booking = bookTemp;
-                }
+                } 
 
                 _paymentRepo.Add(toAdd);
 

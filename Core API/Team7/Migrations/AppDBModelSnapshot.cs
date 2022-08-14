@@ -268,7 +268,6 @@ namespace Team7.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("BookingID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("ScheduleID")
@@ -1300,9 +1299,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Booking", "Booking")
                         .WithMany("BookingAttendance")
-                        .HasForeignKey("BookingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BookingID");
 
                     b.HasOne("Team7.Models.Schedule", "Schedule")
                         .WithMany("BookingAttendance")
