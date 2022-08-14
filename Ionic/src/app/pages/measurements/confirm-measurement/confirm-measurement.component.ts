@@ -13,9 +13,12 @@ export class ConfirmMeasurementComponent implements OnInit {
 
   @Input() mvm : any;
 
+
+  date! : any;
   constructor(private modalCtrl : ModalController, private repo : RepoService, private global : GlobalService) { }
 
   ngOnInit() {
+    this.date = this.mvm.measurement.Date;
     console.log(this.mvm);
   }
 

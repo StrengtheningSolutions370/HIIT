@@ -62,6 +62,10 @@ export class ProfilePage implements OnInit {
     this.setup();
   }
 
+  downloadPdf() {
+    window.open('https://localhost:44383/Resources/Clients/Indemnity/Indemnity.pdf');
+  }
+
   setup() {
 
     this.showImage = false;
