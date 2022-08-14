@@ -16,6 +16,9 @@ import * as moment from 'moment';
   styleUrls: ['./cart-modal.page.scss'],
 })
 export class CartModalPage implements ViewWillEnter {
+  rootPage: any;
+  level = 0;
+  nextPage = CartModalPage;
 
   @ViewChild(IonContent, {static: false}) content: IonContent;
   @Input() model = {} as Cart;
@@ -31,7 +34,7 @@ export class CartModalPage implements ViewWillEnter {
       public global: GlobalService,
       public formBuilder: UntypedFormBuilder,
       private router: Router
-    ) {
+          ) {
     this.getData();
 
     this.payForm = this.formBuilder.group({
@@ -42,12 +45,20 @@ export class CartModalPage implements ViewWillEnter {
     });
    }
 
+  //  goForward() {
+  //   this.nav.push(this.nextPage, { level: this.level + 1 });
+  // }
 
+  // goRoot() {
+  //   this.nav.popToRoot();
+  // }
+  
    submit(){
     console.log('submitting payment')
    }
 
    checkout(){
+    this.global.dismissModal();
     console.log(this.model);
 
     //console.log(this.saleItem);
@@ -74,29 +85,28 @@ export class CartModalPage implements ViewWillEnter {
   }
 
   async makePayment() {
-    try {
-      console.log('model: ', this.model);
-      const data = {
-        order: this.model.items, //JSON.stringify(this.model.items)
-        time: moment().format('lll'),
-        total: this.model.totalPrice,
-        grandTotal: this.model.grandTotal,
-        status: 'Created',
-        paid: 'COD'
-      };
-      console.log('order: ', data);
-      await this.cartService.saveCartOrder(data);
-      this.router.navigate([this.router.url, 'payments']);
-      // await this.orderService.placeOrder(data);
-      // // clear cart
-      // await this.cartService.clearCart();
-      // this.model = {} as Cart;
-      // this.global.successToast('Your Order is Placed Successfully');
-      // this.navCtrl.navigateRoot(['tabs/account']);
+    // try {
+    //   console.log('model: ', this.model);
+    //   const data = {
+    //     order: this.model.items,
+    //     time: moment().format('lll'),
+    //     total: this.model.totalPrice,
+    //     grandTotal: this.model.grandTotal,
+    //     status: 'Created',
+    //     paid: 'COD'
+    //   };
+    //   console.log('order: ', data);
+    //   await this.cartService.saveCartOrder(data);
+    try{
+      console.log('Leaving to payment page');
+      this.global.dismissModal();
+      this.router.navigate([this.router.url, 'payment']);
+
     } catch(e) {
       console.log(e);
     }
   }
+  
 
   ionViewWillEnter() {
     this.cartSub = this.cartService.cart.subscribe(cart => {
