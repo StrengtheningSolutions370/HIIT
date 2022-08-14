@@ -35,7 +35,7 @@ export class CartModalPage implements ViewWillEnter {
       public formBuilder: UntypedFormBuilder,
       private router: Router
           ) {
-    this.getData();
+
 
     this.payForm = this.formBuilder.group({
       merchant_id: ['10026801'],
@@ -52,7 +52,7 @@ export class CartModalPage implements ViewWillEnter {
   // goRoot() {
   //   this.nav.popToRoot();
   // }
-  
+
    submit(){
     console.log('submitting payment')
    }
@@ -65,8 +65,10 @@ export class CartModalPage implements ViewWillEnter {
     this.cartService.checkout(this.model);
    }
 
-  async getData() {
-    await this.cartService.getCartData();
+  async getData(): Promise<any> {
+    await this.cartService.getCartData().then((model)=>{
+      this.model = model;
+    });
   }
 
   quantityPlus(index) {
@@ -106,15 +108,16 @@ export class CartModalPage implements ViewWillEnter {
       console.log(e);
     }
   }
-  
 
-  ionViewWillEnter() {
+
+  async ionViewWillEnter() {
+    await this.getData();
     this.cartSub = this.cartService.cart.subscribe(cart => {
       console.log('cart page: ', cart);
       this.model = cart;
       console.log('cart page model: ', this.model);
     });
-    this.getData();
+
   }
 
   ionViewWillLeave() {

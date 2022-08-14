@@ -23,15 +23,15 @@ itemImage! : File;
 itemImageBase64String! : any;
 quotable! : boolean;
 
-uSaleItemForm: UntypedFormGroup = new UntypedFormGroup({
-  itemName: new UntypedFormControl('', [Validators.required]),
-  itemDescription: new UntypedFormControl('', [Validators.required]),
-  itemQuantity: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
-  itemPhoto: new UntypedFormControl(''),
-  itemPrice: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
-  itemCost: new UntypedFormControl('', [Validators.required, Validators.min(1)]),
-  itemSCategory: new UntypedFormControl(''),
-  itemQuotable: new UntypedFormControl('')
+uSaleItemForm: UntypedFormGroup = this.formBuilder.group({
+  itemName: ['', [Validators.required]],
+  itemDescription: ['', [Validators.required]],
+  itemQuantity: ['', [Validators.required, Validators.min(1)]],
+  itemPhoto: [],
+  itemPrice: ['', [Validators.required, Validators.min(1)]],
+  itemCost: ['', [Validators.required, Validators.min(1)]],
+  itemSCategory: ['',[Validators.required]],
+  itemQuotable: ['']
 });
 
 addImage(event : any) {
@@ -65,7 +65,6 @@ checkBoxToggle(check : any) {
     this.uSaleItemForm.controls.itemPrice.disable();
     this.uSaleItemForm.controls.itemQuantity.disable();
     this.uSaleItemForm.controls.itemCost.disable();
-    this.uSaleItemForm.controls.itemStock.disable();
     return;
   }
   console.log('here')
@@ -99,20 +98,22 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
 
     if (this.saleItem != null){
       this.quotable = this.saleItem.quotable;
+      console.log(this.saleItem);
       if (!this.quotable) {
         console.log("NOT quotable - reset price?");
         console.log(this.saleItem.costAmount);
         console.log(this.saleItem.quantityOnHand);
         console.log(this.saleItem.saleAmount);
-        this.uSaleItemForm.controls['itemPrice'].setValue(this.saleItem.priceHistory.saleAmount);
+        let phLength = this.saleItem.priceHistory.length;
+        this.uSaleItemForm.controls['itemPrice'].setValue(this.saleItem.priceHistory[phLength-1].saleAmount);
         this.uSaleItemForm.controls['itemQuantity'].setValue(this.saleItem.quantityOnHand);
-        this.uSaleItemForm.controls['itemCost'].setValue(this.saleItem.priceHistory.costAmount);
+        this.uSaleItemForm.controls['itemCost'].setValue(this.saleItem.priceHistory[phLength-1].costAmount);
       }
       this.uSaleItemForm.controls['itemName'].setValue(this.saleItem.name);
       this.uSaleItemForm.controls['itemDescription'].setValue(this.saleItem.description);
       this.uSaleItemForm.controls['itemPhoto'].setValue(this.itemImageBase64String);
       this.uSaleItemForm.controls['itemQuotable'].setValue(this.saleItem.quotable);
-      this.uSaleItemForm.controls['itemSCategory'].setValue(this.saleItem.saleCategory.name);
+      //this.uSaleItemForm.controls['itemSCategory'].setValue(this.saleItem.saleCategory.name);
     } else {
       this.global.showAlert("No sale item selected for update","Update Sale item Error");
       this.global.dismissModal();
@@ -137,8 +138,9 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
   }
 
    submitForm() {
+    console.log(this.uSaleItemForm.controls['itemSCategory'].value)
 
-     if (this.uSaleItemForm.controls['itemSCategory'].value[0] == null) {
+     if (this.uSaleItemForm.controls['itemSCategory'].value == null) {
       this.global.showAlert("No Sale Category provided","Error updating sale item");
       return;
     }
@@ -161,6 +163,8 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
       fName = epoch + '_' + this.itemImage.name;
      }
 
+     let catIDtemp = Number(this.uSaleItemForm.controls['itemSCategory'].value.split(',')[0])
+
      //form is valid for submission
      var obj: SaleItem = {
       name: this.uSaleItemForm.controls['itemName'].value,
@@ -173,7 +177,7 @@ constructor(public global: GlobalService, public formBuilder: UntypedFormBuilder
       }],
       quotable: this.quotable,
       quantityOnHand: qtyTemp,
-      saleCategoryID: Number(this.uSaleItemForm.controls['itemSCategory'].value.split(',')[0]),
+      saleCategoryID: this.uSaleItemForm.controls['itemSCategory'].value.split(',')[0],
       //inventoryItem:null
     }
 

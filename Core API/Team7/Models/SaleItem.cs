@@ -32,15 +32,10 @@ namespace Team7.Models
         //public decimal SalePrice { get; set; }
         //[Required]
         public bool Quotable { get; set; }
-        [Required]
         //public int Quantity { get; set; }
         //[Required]
 
         public int QuantityOnHand { get; set; }
-        [Required]
-
-        public int Stock { get; set; }
-        [Required]
         public int? SaleCategoryID { get; set; }
 
         public virtual SaleCategory SaleCategory { get; set; }

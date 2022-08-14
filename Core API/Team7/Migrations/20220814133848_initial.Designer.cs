@@ -12,8 +12,8 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220813183438_Initial")]
-    partial class Initial
+    [Migration("20220814133848_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -837,11 +837,9 @@ namespace Team7.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SaleCategoryID"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SaleCategoryID");
@@ -876,10 +874,6 @@ namespace Team7.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("SaleCategoryID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.HasKey("SaleItemID");
@@ -1489,9 +1483,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.SaleCategory", "SaleCategory")
                         .WithMany("SaleItem")
-                        .HasForeignKey("SaleCategoryID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleCategoryID");
 
                     b.Navigation("SaleCategory");
                 });
