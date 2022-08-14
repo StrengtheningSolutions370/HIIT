@@ -304,9 +304,24 @@ export class SaleReportPage implements ViewWillEnter {
           title: {
             display: true,
             text: 'Quantity sold grouped by sale category'
-                }
+          }
+        },
+        scales: {
+          y: {
+            title: {
+              text: 'Quantity',
+              display: true
+            },
+            beginAtZero:true,
+          },
+          x: {
+            title : {
+              text: 'Date',
+              display: true
             }
+          }
         }
+      }
     });
     //this.saleBarChart.resize(this.chartWidth, this.chartHeight);
     //this.saleBarChart.getChart().resize();
