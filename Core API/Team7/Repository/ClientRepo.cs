@@ -50,6 +50,7 @@ namespace Team7.Models.Repository
                 ClientID = c.ClientID,
                 UserID = c.UserID,
                 Photo = c.Photo,
+                DOB = c.DOB,
             });
 
             var data = query.ToArray();
@@ -94,6 +95,10 @@ namespace Team7.Models.Repository
             {
                 ClientID = a.ClientID,
                 UserID = a.UserID,
+                DOB = a.DOB,
+                Photo = a.Photo,
+                Idemnity = a.Idemnity,
+                Measurement = a.Measurement,
             });
             if (!query.Any())
             {

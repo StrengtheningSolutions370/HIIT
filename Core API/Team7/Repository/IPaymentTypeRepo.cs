@@ -13,8 +13,13 @@ namespace Team7.Models.Repository
         //Task<PaymentType[]> GetAllPaymentTypesAsync();
 
         //Task<PaymentType[]> GetPaymentTypesAsync(string input);
+        Task<object> GetAllPaymentTypesAsync();
 
-        //Task<PaymentType> GetPaymentTypeIdAsync(int id);
+        Task<object> GetPaymentTypesAsync(string name);
+
+        Task<object> GetPaymentTypeIdAsync(int id);
+
+        Task<PaymentType> _GetPaymentTypeIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }

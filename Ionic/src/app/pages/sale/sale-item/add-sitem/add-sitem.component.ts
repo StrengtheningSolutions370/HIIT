@@ -1,6 +1,7 @@
-import { Component,  Input } from '@angular/core';
-import { ViewWillEnter} from '@ionic/angular';
+import { Component, Input } from '@angular/core';
+import { ViewWillEnter } from '@ionic/angular';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -12,6 +13,9 @@ import { SalesService } from 'src/app/services/sales/sales.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RepoService } from 'src/app/services/repo.service';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { PhotoService } from 'src/app/services/photo/photo.service';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-add-sitem',
@@ -22,9 +26,9 @@ export class AddSitemComponent implements ViewWillEnter {
 
   @Input() saleItem: SaleItem;
   categoryDropDown!: SaleCategory[];
-
   quotable = false;
-
+  photo: any[] = [];
+  selectImage: any = {};
   itemImage!: File;
   itemImageBase64String!: any;
 
@@ -34,6 +38,7 @@ export class AddSitemComponent implements ViewWillEnter {
    itemDescription : ['', [Validators.required]],
    itemQuantity : ['', [Validators.required, Validators.min(1)]],
    itemPhoto: [],
+   itemCost: ['', [Validators.required, Validators.min(1)]],
    itemPrice: ['', [Validators.required, Validators.min(1)]],
    itemSCategory: ['',[Validators.required]],
    itemQuotable: []
@@ -49,18 +54,18 @@ export class AddSitemComponent implements ViewWillEnter {
    }
   }
 
-  getBase64(file: File) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      // console.log(reader.result);
-      this.itemImageBase64String = reader.result;
-    };
-    reader.onerror = (error) => {
-      console.log(error);
-      this.itemImageBase64String = null;
-    };
- }
+    getBase64(file: File) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        // console.log(reader.result);
+        this.itemImageBase64String = reader.result;
+      };
+      reader.onerror = (error) => {
+        console.log(error);
+        this.itemImageBase64String = null;
+      };
+   }
 
  checkBoxToggle(check: any) {
    this.quotable = check.target.checked;
@@ -68,11 +73,13 @@ export class AddSitemComponent implements ViewWillEnter {
    if (this.quotable) {
      //is quotable
      this.cSaleItemForm.controls.itemPrice.disable();
+     this.cSaleItemForm.controls.itemCost.disable();
      this.cSaleItemForm.controls.itemQuantity.disable();
      return;
    }
    console.log('here')
    this.cSaleItemForm.controls.itemPrice.enable();
+   this.cSaleItemForm.controls.itemCost.enable();
    this.cSaleItemForm.controls.itemQuantity.enable();
  }
 
@@ -86,12 +93,14 @@ export class AddSitemComponent implements ViewWillEnter {
         }
       }
     );
-   }
+  }
 
-   //Used for validation within the form, if there are errors in the control, this method will return the errors.
-   get errorControl() {
-     return this.cSaleItemForm.controls;
-   }
+
+
+  //Used for validation within the form, if there are errors in the control, this method will return the errors.
+  get errorControl() {
+    return this.cSaleItemForm.controls;
+  }
 
    ionViewWillEnter(): void {
 
@@ -105,6 +114,7 @@ export class AddSitemComponent implements ViewWillEnter {
       }
     );
 
+
     console.log("AddSaleItem-ViewWillEnter");
 
     if (this.saleItem !=null){
@@ -112,7 +122,6 @@ export class AddSitemComponent implements ViewWillEnter {
       this.cSaleItemForm.controls.itemName.setValue(this.saleItem.name);
       this.cSaleItemForm.controls.itemDescription.setValue(this.saleItem.description);
       this.cSaleItemForm.controls.itemPhoto.setValue(this.itemImageBase64String);
-      this.cSaleItemForm.controls.itemPrice.setValue(this.saleItem.price);
       this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.quotable);
       this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.quantityOnHand);
       this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.saleCategoryID);
@@ -122,11 +131,11 @@ export class AddSitemComponent implements ViewWillEnter {
      submitForm() {
 
        //if image was uploaded:
-       if (this.itemImageBase64String == null) {
-        let str = "Image failed to upload." + '\n'+ "please try again."
-        this.global.showAlert(str,"Image Error");
-          return;       
-       }
+      //  if (this.itemImageBase64String == null) {
+      //   let str = "Image failed to upload." + '\n'+ "please try again."
+      //   this.global.showAlert(str,"Image Error");
+      //     return;
+      //  }
 
 
        if (this.cSaleItemForm.controls['itemSCategory'].value[0] == null) {
@@ -136,37 +145,47 @@ export class AddSitemComponent implements ViewWillEnter {
 
       var date = new Date();
       var epoch = date.getTime();
+      var phTemp = null;
 
-      let qoutableTemp = this.quotable;
       let priceTemp = Number(this.cSaleItemForm.controls['itemPrice'].value);
+      let costTemp = Number(this.cSaleItemForm.controls['itemCost'].value);
       let qtyTemp = this.cSaleItemForm.controls['itemQuantity'].value;
 
-      if (qoutableTemp){
+      if (this.quotable){
         priceTemp = 0;
+        costTemp = 0;
         qtyTemp = 0;
+        //Price history temp already null
+      } else {
+        phTemp = [{
+          costAmount: costTemp,
+          saleAmount: priceTemp
+        }]
       }
 
+
+
        //form is valid for submission
-      var obj = {
+      var obj: SaleItem = {
         name: this.cSaleItemForm.controls['itemName'].value,
         photo: epoch + '_' + this.itemImage.name,
         description: this.cSaleItemForm.controls['itemDescription'].value,
         quotable: this.quotable,
-        price: priceTemp,
-        quantity: qtyTemp,
+        priceHistory: phTemp,
+        quantityOnHand: qtyTemp,
         saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
-        inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
+        //inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
       }
 
 
-      console.log('ob');
-      console.log(obj);
+    console.log('ob');
+    console.log(obj);
 
 
-      //wait for image to upload:
-      const formData = new FormData();
-        console.log(this.itemImage);
-        formData.append('file', this.itemImage, epoch + '_' + this.itemImage.name);
+    //wait for image to upload:
+    const formData = new FormData();
+    console.log(this.itemImage);
+    formData.append('file', this.itemImage, epoch + '_' + this.itemImage.name);
 
         this.repo.uploadSaleItemImage(formData).subscribe({
           next: data => {
@@ -175,7 +194,7 @@ export class AddSitemComponent implements ViewWillEnter {
           },
           error: (err : HttpErrorResponse) => {
             this.global.showAlert(err.error,"ERROR uploading image");
-          return;  
+          return;
           }
         });
 

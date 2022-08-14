@@ -119,7 +119,10 @@ import { ViewWriteOffReasonComponent } from './pages/inventory/write-off-reason/
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { TimeRangeComponent } from './pages/booking/time-range/time-range.component';
+
+//CART IMPORTS:
 import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
+import { CheckoutComponent } from './pages/shop/checkout/checkout.component';
 
 //EXERCISE IMPORTS:
 import { AddExerciseComponent } from './pages/exercises/exercise-page/add-exercise/add-exercise.component';
@@ -144,6 +147,12 @@ import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedul
 //CLIENT IMPORTS:
 import { DeleteClientComponent } from './pages/user/clients/delete-client/delete-client.component';
 
+//indemnitymodal:
+import { ConfirmIndemnityComponent } from './pages/profile/profile/confirm-indemnity/confirm-indemnity.component';
+
+//Add Measurement
+import { AddComponent } from './pages/measurements/add/add.component';
+import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measurement/confirm-measurement.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -157,6 +166,8 @@ import { DeleteClientComponent } from './pages/user/clients/delete-client/delete
   AddVatComponent, DeleteVatComponent, ViewVatComponent, ConfirmVatComponent,
   //EmployeeType
   AddEtypeComponent, ConfirmEtypeComponent, UpdateEtypeComponent, ViewEtypeComponent, DeleteEtypeComponent,
+  //Cart
+  CheckoutComponent,
   //SalesCategory
   AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent, AssociativeCategoryComponent,
   //SalesItem
@@ -194,11 +205,13 @@ import { DeleteClientComponent } from './pages/user/clients/delete-client/delete
   //Lesson
   AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
   //Client
-  DeleteClientComponent
+  DeleteClientComponent,
+  //confirmindemnity
+  AddComponent, ConfirmMeasurementComponent
 
 ],
   entryComponents: [],
-  imports: [ 
+  imports: [
     BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 

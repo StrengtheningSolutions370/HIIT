@@ -22,9 +22,12 @@ namespace Team7.Models
         public string Photo { get; set; }
         public string Idemnity { get; set; }
         public string QrCode { get; set; }
+
+        public int DOB { get; set; }
         public virtual AppUser AppUser { get; set; }
         public virtual ICollection<Booking> Booking { get; set; }
         public virtual ICollection<Measurement> Measurement { get; set; }
+
 
         //public virtual ICollection<Sale> Sale { get; set; }
 

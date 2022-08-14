@@ -53,14 +53,6 @@ export const routes: Routes = [
   //   loadChildren: () => import('./pages/clients/clients.module').then( m => m.ClientsPageModule)
   // },
   {
-    path: 'payments',
-    loadChildren: () => import('./pages/payments/payments.module').then(m => m.PaymentsPageModule),
-    canActivate: [AuthGaurdService],
-    data: {
-      roles: [Roles.SuperUser, Roles.Admin, Roles.Member, Roles.Client]
-    }
-  },
-  {
     path: 'sales',
     loadChildren: () => import('./pages/sale/sale.module').then(m => m.SalePageModule),
     canActivate: [AuthGaurdService],
@@ -186,10 +178,10 @@ export const routes: Routes = [
   // },
   {
     path: 'measurements',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
+    loadChildren: () => import('./pages/measurements/measurements.module').then(m => m.MeasurementsPageModule), 
     canActivate: [AuthGaurdService],
     data: {
-      roles: [Roles.Member]
+      roles: [Roles.Client]
     }
     //loadChildren component here for attendance once generated
   },
@@ -203,15 +195,7 @@ export const routes: Routes = [
     // canActivate: [AuthGaurdService],
     // data : {
     //   roles: [AllRoles]
-    // }
-  },
-  {
-    path: 'payment',
-    loadChildren: () => import('./pages/payments/payments.module').then( m => m.PaymentsPageModule ),
-    // canActivate: [AuthGaurdService],
-    // data: {
-    //   roles: [AllRoles]
-    // }
+    // }  
   },
   {
     path: 'lessons',
@@ -221,12 +205,12 @@ export const routes: Routes = [
       roles: [Roles.Trainer, Roles.SuperUser]
     }
   },
-  
   //this route object must be last
-  {
-    path: '**', 
-    redirectTo: 'login',
-  },
+  // {
+  //   path: '**', 
+  //   redirectTo: 'login',
+  // },
+
 
 ]  
 

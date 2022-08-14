@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace Team7.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -270,8 +272,7 @@ namespace Team7.Migrations
                         name: "FK_BookingPriceHistory_BookingType_BookingTypeID",
                         column: x => x.BookingTypeID,
                         principalTable: "BookingType",
-                        principalColumn: "BookingTypeID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "BookingTypeID");
                 });
 
             migrationBuilder.CreateTable(
@@ -377,8 +378,7 @@ namespace Team7.Migrations
                         name: "FK_AspNetUsers_Title_TitleID",
                         column: x => x.TitleID,
                         principalTable: "Title",
-                        principalColumn: "TitleID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "TitleID");
                 });
 
             migrationBuilder.CreateTable(
@@ -399,8 +399,7 @@ namespace Team7.Migrations
                         name: "FK_PriceHistory_SaleItem_SaleItemID",
                         column: x => x.SaleItemID,
                         principalTable: "SaleItem",
-                        principalColumn: "SaleItemID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "SaleItemID");
                 });
 
             migrationBuilder.CreateTable(
@@ -550,8 +549,9 @@ namespace Team7.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Idemnity = table.Column<bool>(type: "bit", nullable: false),
+                    Idemnity = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     QrCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DOB = table.Column<int>(type: "int", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -561,8 +561,7 @@ namespace Team7.Migrations
                         name: "FK_Client_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -586,20 +585,17 @@ namespace Team7.Migrations
                         name: "FK_Employee_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Employee_EmployeeType_EmployeeTypeID",
                         column: x => x.EmployeeTypeID,
                         principalTable: "EmployeeType",
-                        principalColumn: "EmployeeTypeID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "EmployeeTypeID");
                     table.ForeignKey(
                         name: "FK_Employee_Qualification_QualificationID",
                         column: x => x.QualificationID,
                         principalTable: "Qualification",
-                        principalColumn: "QualificationID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "QualificationID");
                 });
 
             migrationBuilder.CreateTable(
@@ -620,8 +616,7 @@ namespace Team7.Migrations
                         name: "FK_PasswordHistory_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -631,7 +626,7 @@ namespace Team7.Migrations
                     SaleID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -641,8 +636,7 @@ namespace Team7.Migrations
                         name: "FK_Sale_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -676,7 +670,7 @@ namespace Team7.Migrations
                     Waist = table.Column<double>(type: "float", nullable: true),
                     Height = table.Column<double>(type: "float", nullable: true),
                     Weight = table.Column<double>(type: "float", nullable: true),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Date = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -685,8 +679,7 @@ namespace Team7.Migrations
                         name: "FK_Measurement_Client_ClientID",
                         column: x => x.ClientID,
                         principalTable: "Client",
-                        principalColumn: "ClientID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "ClientID");
                 });
 
             migrationBuilder.CreateTable(
@@ -737,8 +730,8 @@ namespace Team7.Migrations
                     SaleLineID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    SaleID = table.Column<int>(type: "int", nullable: false),
-                    SaleItemID = table.Column<int>(type: "int", nullable: false)
+                    SaleID = table.Column<int>(type: "int", nullable: true),
+                    SaleItemID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -747,14 +740,12 @@ namespace Team7.Migrations
                         name: "FK_SaleLine_Sale_SaleID",
                         column: x => x.SaleID,
                         principalTable: "Sale",
-                        principalColumn: "SaleID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "SaleID");
                     table.ForeignKey(
                         name: "FK_SaleLine_SaleItem_SaleItemID",
                         column: x => x.SaleItemID,
                         principalTable: "SaleItem",
-                        principalColumn: "SaleItemID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "SaleItemID");
                 });
 
             migrationBuilder.CreateTable(
@@ -765,7 +756,7 @@ namespace Team7.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PaymentTypeID = table.Column<int>(type: "int", nullable: false),
                     SaleID = table.Column<int>(type: "int", nullable: false),
-                    BookingID = table.Column<int>(type: "int", nullable: false)
+                    BookingID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -774,8 +765,7 @@ namespace Team7.Migrations
                         name: "FK_Payment_Booking_BookingID",
                         column: x => x.BookingID,
                         principalTable: "Booking",
-                        principalColumn: "BookingID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "BookingID");
                     table.ForeignKey(
                         name: "FK_Payment_PaymentType_PaymentTypeID",
                         column: x => x.PaymentTypeID,
@@ -815,8 +805,7 @@ namespace Team7.Migrations
                         name: "FK_Exercise_Lesson_LessonID",
                         column: x => x.LessonID,
                         principalTable: "Lesson",
-                        principalColumn: "LessonID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "LessonID");
                 });
 
             migrationBuilder.CreateTable(
@@ -838,26 +827,22 @@ namespace Team7.Migrations
                         name: "FK_Schedule_BookingType_BookingTypeID",
                         column: x => x.BookingTypeID,
                         principalTable: "BookingType",
-                        principalColumn: "BookingTypeID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "BookingTypeID");
                     table.ForeignKey(
                         name: "FK_Schedule_DateSession_DateSessionID",
                         column: x => x.DateSessionID,
                         principalTable: "DateSession",
-                        principalColumn: "DateSessionID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "DateSessionID");
                     table.ForeignKey(
                         name: "FK_Schedule_Employee_EmployeeID",
                         column: x => x.EmployeeID,
                         principalTable: "Employee",
-                        principalColumn: "EmployeeID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "EmployeeID");
                     table.ForeignKey(
                         name: "FK_Schedule_Lesson_LessonID",
                         column: x => x.LessonID,
                         principalTable: "Lesson",
-                        principalColumn: "LessonID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "LessonID");
                     table.ForeignKey(
                         name: "FK_Schedule_Venue_VenueID",
                         column: x => x.VenueID,
@@ -884,8 +869,7 @@ namespace Team7.Migrations
                         name: "FK_WriteOffLine_SaleItem_SaleItemID",
                         column: x => x.SaleItemID,
                         principalTable: "SaleItem",
-                        principalColumn: "SaleItemID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "SaleItemID");
                     table.ForeignKey(
                         name: "FK_WriteOffLine_WriteOff_WriteOffID",
                         column: x => x.WriteOffID,
@@ -896,8 +880,7 @@ namespace Team7.Migrations
                         name: "FK_WriteOffLine_WriteOffReason_WriteOffReasonID",
                         column: x => x.WriteOffReasonID,
                         principalTable: "WriteOffReason",
-                        principalColumn: "WriteOffReasonID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "WriteOffReasonID");
                 });
 
             migrationBuilder.CreateTable(
@@ -945,8 +928,7 @@ namespace Team7.Migrations
                         name: "FK_LessonPlan_Exercise_ExerciseID",
                         column: x => x.ExerciseID,
                         principalTable: "Exercise",
-                        principalColumn: "ExerciseID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "ExerciseID");
                     table.ForeignKey(
                         name: "FK_LessonPlan_Lesson_LessonID",
                         column: x => x.LessonID,
@@ -961,7 +943,7 @@ namespace Team7.Migrations
                 {
                     BookingAttendanceID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BookingID = table.Column<int>(type: "int", nullable: false),
+                    BookingID = table.Column<int>(type: "int", nullable: true),
                     ScheduleID = table.Column<int>(type: "int", nullable: false),
                     Attended = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -972,8 +954,7 @@ namespace Team7.Migrations
                         name: "FK_BookingAttendance_Booking_BookingID",
                         column: x => x.BookingID,
                         principalTable: "Booking",
-                        principalColumn: "BookingID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "BookingID");
                     table.ForeignKey(
                         name: "FK_BookingAttendance_Schedule_ScheduleID",
                         column: x => x.ScheduleID,

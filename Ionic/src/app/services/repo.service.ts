@@ -49,7 +49,8 @@ export class RepoService {
   ExerciseController = 'Exercise/'
   WriteOffReasonController = 'WriteOffReason/'
   LessonController = 'Lesson/'
-  ScheduleController = 'Schedule/'
+  ScheduleController = 'Schedule/';
+  MeasurementController = 'Measurement/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -72,6 +73,15 @@ export class RepoService {
     return this.http.get(`${this.base + this.EmployeeController}token`, { headers : new HttpHeaders({'Authorization': 'Bearer ' + token}) });
   }
 
+  //MEASUREMENTS
+  addMeasurement(data: any): Observable<any> {
+    return this.http.post<any>(`${this.base+this.MeasurementController}add`, data, this.httpOptions);
+  }
+
+  getClientMeasurements(email : string) : Observable<any> {
+    return this.http.get(`${this.base + this.MeasurementController}getmeasurements?email=${email}`, this.httpOptions);
+  }
+
   //AppUser:
   //-------
   //clients:
@@ -85,6 +95,14 @@ export class RepoService {
 
   deleteClient(id: string): Observable<any> {
     return this.http.delete(`${this.base + this.AppUserController}deleteclient?id=${id}`, this.httpOptions);
+  }
+
+  updateClientInformation(data: FormData): Observable<any> {
+    return this.http.post<any>(`${this.base+this.AppUserController}updateclient`, data, this.httpOptions);
+  }
+
+  uploadIndemnity(data: FormData): Observable<any> {
+    return this.http.post<any>(`${this.base+this.AppUserController}uploadindemnity`, data, this.httpOptions);
   }
 
   //Register
