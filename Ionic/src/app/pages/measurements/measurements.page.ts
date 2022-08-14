@@ -42,7 +42,7 @@ export class MeasurementsPage implements AfterViewInit {
   results = false;
 
   constructor(private storage : StoreService, private modalCtrl : ModalController, private global : GlobalService, private repo : RepoService) { }
-  
+
   ngAfterViewInit(): void {
     Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
   }
@@ -55,8 +55,8 @@ export class MeasurementsPage implements AfterViewInit {
       this.fetchData(this.email).then(() => {});
     });
 
-    
-    
+
+
   }
 
   fetchData(email : string) : Promise<any> {
@@ -161,13 +161,13 @@ export class MeasurementsPage implements AfterViewInit {
       this.global.showAlert("Date range is required.");
       return;
     }
-    
+
     //check range placement:
     if (this.lower > this.upper) {
       this.global.showAlert("From date may not exceed To date.", "Invalid Dates!");
       return;
     }
-    
+
     this.selected = true;
     // console.log(this.lower);
     // console.log(this.upper);
@@ -193,7 +193,7 @@ export class MeasurementsPage implements AfterViewInit {
       if (d.getDate() < 10)
         date += '/0' + (d.getDate()).toString();
       else date += '/' + (d.getDate()).toString();
-      
+
       this.labels.push(date);
       this.data.push(mes.weight);
 
