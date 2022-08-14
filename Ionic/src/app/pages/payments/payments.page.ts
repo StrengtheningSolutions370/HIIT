@@ -7,7 +7,6 @@ import { CartService } from 'src/app/services/cart.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RazorpayService } from 'src/app/services/razorpay/razorpay.service';
 import { StoreService } from 'src/app/services/storage/store.service';
-import { Axios } from 'axios';
 
 @Component({
   selector: 'app-payments',

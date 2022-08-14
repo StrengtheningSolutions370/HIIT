@@ -129,7 +129,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AWS")));
+            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
@@ -208,15 +208,15 @@ namespace Team7
 
             }
 
-            app.UseHttpsRedirection();
-            app.UseCors("CorsPolicy");
+            //app.UseHttpsRedirection();
+            //app.UseCors("CorsPolicy");
 
-            app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-                RequestPath = new PathString("/Resources")
-            });
+            //app.UseStaticFiles();
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+            //    RequestPath = new PathString("/Resources")
+            //});
 
             app.UseStaticFiles(new StaticFileOptions
             {

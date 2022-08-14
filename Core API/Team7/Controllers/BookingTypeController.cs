@@ -35,7 +35,7 @@ namespace Team7.Controllers
 
                 if (bookingType.BookingPriceHistory != null)
                 {
-                    var btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
+                    BookingPriceHistory btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
 
                     BookingPriceHistory bookingPrice = new BookingPriceHistory
                     {

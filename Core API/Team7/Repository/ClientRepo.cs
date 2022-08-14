@@ -94,6 +94,10 @@ namespace Team7.Models.Repository
             {
                 ClientID = a.ClientID,
                 UserID = a.UserID,
+                DOB = a.DOB,
+                Photo = a.Photo,
+                Idemnity = a.Idemnity,
+                Measurement = a.Measurement,
             });
             if (!query.Any())
             {

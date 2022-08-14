@@ -34,6 +34,7 @@ export class AddSitemComponent implements ViewWillEnter {
    itemDescription : ['', [Validators.required]],
    itemQuantity : ['', [Validators.required, Validators.min(1)]],
    itemPhoto: [],
+   itemCost: ['', [Validators.required, Validators.min(1)]],
    itemPrice: ['', [Validators.required, Validators.min(1)]],
    itemSCategory: ['',[Validators.required]],
    itemQuotable: []
@@ -68,11 +69,13 @@ export class AddSitemComponent implements ViewWillEnter {
    if (this.quotable) {
      //is quotable
      this.cSaleItemForm.controls.itemPrice.disable();
+     this.cSaleItemForm.controls.itemCost.disable();
      this.cSaleItemForm.controls.itemQuantity.disable();
      return;
    }
    console.log('here')
    this.cSaleItemForm.controls.itemPrice.enable();
+   this.cSaleItemForm.controls.itemCost.enable();
    this.cSaleItemForm.controls.itemQuantity.enable();
  }
 
@@ -112,7 +115,6 @@ export class AddSitemComponent implements ViewWillEnter {
       this.cSaleItemForm.controls.itemName.setValue(this.saleItem.name);
       this.cSaleItemForm.controls.itemDescription.setValue(this.saleItem.description);
       this.cSaleItemForm.controls.itemPhoto.setValue(this.itemImageBase64String);
-      this.cSaleItemForm.controls.itemPrice.setValue(this.saleItem.price);
       this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.quotable);
       this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.quantityOnHand);
       this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.saleCategoryID);
@@ -122,11 +124,11 @@ export class AddSitemComponent implements ViewWillEnter {
      submitForm() {
 
        //if image was uploaded:
-       if (this.itemImageBase64String == null) {
-        let str = "Image failed to upload." + '\n'+ "please try again."
-        this.global.showAlert(str,"Image Error");
-          return;       
-       }
+      //  if (this.itemImageBase64String == null) {
+      //   let str = "Image failed to upload." + '\n'+ "please try again."
+      //   this.global.showAlert(str,"Image Error");
+      //     return;
+      //  }
 
 
        if (this.cSaleItemForm.controls['itemSCategory'].value[0] == null) {
@@ -136,26 +138,36 @@ export class AddSitemComponent implements ViewWillEnter {
 
       var date = new Date();
       var epoch = date.getTime();
+      var phTemp = null;
 
-      let qoutableTemp = this.quotable;
       let priceTemp = Number(this.cSaleItemForm.controls['itemPrice'].value);
+      let costTemp = Number(this.cSaleItemForm.controls['itemCost'].value);
       let qtyTemp = this.cSaleItemForm.controls['itemQuantity'].value;
 
-      if (qoutableTemp){
+      if (this.quotable){
         priceTemp = 0;
+        costTemp = 0;
         qtyTemp = 0;
+        //Price history temp already null
+      } else {
+        phTemp = [{
+          costAmount: costTemp,
+          saleAmount: priceTemp
+        }]
       }
 
+
+
        //form is valid for submission
-      var obj = {
+      var obj: SaleItem = {
         name: this.cSaleItemForm.controls['itemName'].value,
         photo: epoch + '_' + this.itemImage.name,
         description: this.cSaleItemForm.controls['itemDescription'].value,
         quotable: this.quotable,
-        price: priceTemp,
-        quantity: qtyTemp,
+        priceHistory: phTemp,
+        quantityOnHand: qtyTemp,
         saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
-        inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
+        //inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
       }
 
 
@@ -175,7 +187,7 @@ export class AddSitemComponent implements ViewWillEnter {
           },
           error: (err : HttpErrorResponse) => {
             this.global.showAlert(err.error,"ERROR uploading image");
-          return;  
+          return;
           }
         });
 
