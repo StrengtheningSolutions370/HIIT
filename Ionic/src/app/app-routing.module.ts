@@ -178,7 +178,7 @@ export const routes: Routes = [
   // },
   {
     path: 'measurements',
-    loadChildren: () => import('./pages/measurements/measurements.module').then(m => m.MeasurementsPageModule), 
+    loadChildren: () => import('./pages/measurements/measurements.module').then(m => m.MeasurementsPageModule),
     canActivate: [AuthGaurdService],
     data: {
       roles: [Roles.Client]
@@ -195,7 +195,7 @@ export const routes: Routes = [
     // canActivate: [AuthGaurdService],
     // data : {
     //   roles: [AllRoles]
-    // }  
+    // }
   },
   {
     path: 'lessons',
@@ -206,13 +206,13 @@ export const routes: Routes = [
     }
   },
   //this route object must be last
-  // {
-  //   path: '**', 
-  //   redirectTo: 'login',
-  // },
+  {
+    path: '**',
+    redirectTo: 'login',
+  }
 
 
-]  
+]
 
 
 @NgModule({

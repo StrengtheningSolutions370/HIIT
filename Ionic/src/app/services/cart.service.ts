@@ -40,7 +40,7 @@ export class CartService {
     return this.storage.getKey('order');
   }
 
-  async getCartData() {
+  async getCartData(): Promise<any> {
     console.log('Cart Service: getCartData()');
     const data: any = await this.getCart();
     console.log('cart data: ', data);
@@ -50,6 +50,10 @@ export class CartService {
       await this.calculate();
       this._cart.next(this.model);
     }
+    return new Promise((resolve) => {
+      resolve(this.model);
+    })
+
   }
 
   alertClearCart(index, items, data) {
@@ -170,8 +174,9 @@ export class CartService {
   makePayment(payform: any){
     this.repo.makePayment(payform).subscribe(
       {
-        next: () => {
+        next: (data) => {
           console.log(payform);
+          console.log(data);
         }
       }
     )

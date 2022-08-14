@@ -46,7 +46,7 @@ namespace Team7.Models.Repository
                     sc.Description,
                     SaleItem = sc
                 .SaleItem
-                .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Quotable, si.QuantityOnHand, si.Stock/*, si.Price, si.Quantity*/})
+                .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Quotable, si.QuantityOnHand/*, si.Price, si.Quantity*/})
                 }).ToListAsync()
             };
         }
@@ -69,7 +69,7 @@ namespace Team7.Models.Repository
                         sc.Description,
                         SaleItem = sc
                             .SaleItem
-                            .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Quotable, si.QuantityOnHand, si.Stock/*, si.Price, si.Quantity*/})
+                            .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Quotable, si.QuantityOnHand,/*, si.Price, si.Quantity*/})
                     }).ToListAsync()
                 };
             }
@@ -94,7 +94,7 @@ namespace Team7.Models.Repository
                         sc.Description,
                         SaleItem = sc
                             .SaleItem
-                            .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Quotable, si.QuantityOnHand, si.Stock/*, si.Price, si.Quantity*/})
+                            .Select(si => new { si.SaleItemID, si.Photo, si.Description, si.Name, si.Quotable, si.QuantityOnHand/*, si.Price, si.Quantity*/})
                     }).ToListAsync()
                 };
             }

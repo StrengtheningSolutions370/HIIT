@@ -124,7 +124,7 @@ export class AddSitemComponent implements ViewWillEnter {
       this.cSaleItemForm.controls.itemPhoto.setValue(this.itemImageBase64String);
       this.cSaleItemForm.controls.itemQuotable.setValue(this.saleItem.quotable);
       this.cSaleItemForm.controls.itemQuantity.setValue(this.saleItem.quantityOnHand);
-      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.saleCategoryID);
+      this.cSaleItemForm.controls.itemSCategory.setValue(this.saleItem.saleCategory.name);
     }
     }
 
@@ -173,7 +173,7 @@ export class AddSitemComponent implements ViewWillEnter {
         quotable: this.quotable,
         priceHistory: phTemp,
         quantityOnHand: qtyTemp,
-        saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0],
+        saleCategoryID: this.cSaleItemForm.controls['itemSCategory'].value.split(',')[0]
         //inventoryItem:[] // we need to auto populate this - either from the frontend or on the API
       }
 

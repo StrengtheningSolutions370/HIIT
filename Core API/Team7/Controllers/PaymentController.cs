@@ -81,6 +81,9 @@ namespace Team7.Controllers
                     _saleRepo.Add(saleTemp);
                     await _saleRepo.SaveChangesAsync();
                     toAdd.Sale = saleTemp;
+                } else
+                {
+                    toAdd.Sale = null;
                 }
                 
                 if (pvm.Bookings != null)
@@ -111,6 +114,9 @@ namespace Team7.Controllers
                     _bookingRepo.Add(bookTemp);
                     await _bookingRepo.SaveChangesAsync();
                     toAdd.Booking = bookTemp;
+                } else
+                {
+                    toAdd.Booking = null;
                 }
 
                 _paymentRepo.Add(toAdd);

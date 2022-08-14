@@ -64,12 +64,12 @@
   <button *ngIf="cashPay"></button> -->
 
     <ion-col size="2">
-      <ion-button *ngIf="currentMethod === 'cash'" color="success"  expand="block" 
+      <ion-button *ngIf="currentMethod === 'cash'" color="success"  expand="block"
       (click)="confirmChanges()">Confirm</ion-button>
     </ion-col>
     <ion-col size="2">
-      <ion-button *ngIf="currentMethod === 'card'" color="success"  expand="block" 
-      (click)="confirmChanges()">Proceed to Payment</ion-button>
+      <ion-button *ngIf="currentMethod === 'card'" color="success"  expand="block"
+      (click)="proceedToPayment()">Proceed to Payment</ion-button>
     </ion-col>
     <ion-col >
       <ion-button color="light"  expand="block" (click)="returnFrom()" >Return</ion-button>
