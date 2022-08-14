@@ -104,7 +104,6 @@ export class MemberReportPage implements AfterViewInit {
       data: {
         labels: labels,
         datasets: [{
-          label: '# of Votes',
           data: bars,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
@@ -139,13 +138,16 @@ export class MemberReportPage implements AfterViewInit {
       },
       options: {
         plugins: {
-          tooltip: {
-            enabled: true,
-            callbacks: {
-              footer: (item) => {
-                return 'test'
-              }
-            }
+          // tooltip: {
+          //   enabled: true,
+          //   callbacks: {
+          //     footer: (item) => {
+          //       return 'test'
+          //     }
+          //   }
+          // }
+          legend: {
+            display: false
           }
         },
         scales: {

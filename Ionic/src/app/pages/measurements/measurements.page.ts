@@ -215,7 +215,7 @@ export class MeasurementsPage implements AfterViewInit {
         labels: this.labels,
         datasets: [
           {
-            label: 'Sell per week',
+            label: 'Weight',
             fill: false,
             backgroundColor: 'rgba(75,192,192,0.4)',
             borderColor: 'rgba(75,192,192,1)',
