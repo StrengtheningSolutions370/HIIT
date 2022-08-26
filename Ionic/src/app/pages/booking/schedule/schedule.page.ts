@@ -26,10 +26,10 @@ export class SchedulePage implements AfterViewInit  {
       currentDate: new Date()
     }
 
-    markDisabled = (date: Date) => {
-      var current = new Date();
-      return date < current;
-  };
+  //   markDisabled = (date: Date) => {
+  //     var current = new Date();
+  //     return date < current;
+  // };
 
   selectDate: ITimeSelected;
 
@@ -201,86 +201,25 @@ export class SchedulePage implements AfterViewInit  {
       '<br><br>To: ' + end + '<br><br>' +'Venue: ' + venueName + '<br><br>' +'Booking Type: ' + bookingType ,
       buttons: ['Ok',{
         text: 'Update',
-        handler: () => {
-          console.log("Updating event: " + event);
-          this.scheduleService.updateScheduleModal(event);
-        }
+        handler: () =>{this.updateEvent(event);}
       },
       {
         text: 'Delete',
-        cssClass: 'color:red;',
-        handler: () => {
-          this.scheduleService.deleteScheduleEvent(event.scheduleID)
-        }
+        cssClass: 'redDelete',
+        handler: () => {this.deleteEvent(event);}
       }],
     });
     alert.present();
   }
 
+  updateEvent(event: any){
+    console.log("Updating event: " + event);
+    this.scheduleService.updateScheduleModal(event);
+  }
 
-
-    createRandomEvents() {
-      var events = [];
-      for (var i = 0; i < 50; i += 1) {
-        var date = new Date();
-        var eventType = Math.floor(Math.random() * 2);
-        var startDay = Math.floor(Math.random() * 90) - 45;
-        var endDay = Math.floor(Math.random() * 2) + startDay;
-        var startTime: Date;
-        var endTime: Date;
-        if (eventType === 0) {
-          startTime = new Date(
-            Date.UTC(
-              date.getUTCFullYear(),
-              date.getUTCMonth(),
-              date.getUTCDate() + startDay
-            )
-          );
-          if (endDay === startDay) {
-            endDay += 1;
-          }
-          endTime = new Date(
-            Date.UTC(
-              date.getUTCFullYear(),
-              date.getUTCMonth(),
-              date.getUTCDate() + endDay
-            )
-          );
-          events.push({
-            title: 'All Day - ' + i,
-            startTime: startTime,
-            endTime: endTime,
-            allDay: true,
-          });
-        } else {
-          var startMinute = Math.floor(Math.random() * 24 * 60);
-          var endMinute = Math.floor(Math.random() * 180) + startMinute;
-          startTime = new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate() + startDay,
-            0,
-            date.getMinutes() + startMinute
-          );
-          endTime = new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate() + endDay,
-            0,
-            date.getMinutes() + endMinute
-          );
-          events.push({
-            title: 'Event - ' + i,
-            startTime: startTime,
-            endTime: endTime,
-            allDay: false,
-          });
-        }
-      }
-      this.eventSource = events;
-    }
-
-    removeEvents() {
-      this.eventSource = [];
-    }
+  deleteEvent(event: any){
+    console.log("Deleting event: " + event);
+    this.scheduleService.deleteScheduleEvent(event.scheduleID);
+    this.fetchSchedule();
+  }
 }

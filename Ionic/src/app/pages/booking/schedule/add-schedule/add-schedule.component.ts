@@ -8,6 +8,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
 import { DatePipe } from '@angular/common';
 import { Schedule } from 'src/app/models/schedule';
+import { format, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-add-schedule',
@@ -15,13 +16,6 @@ import { Schedule } from 'src/app/models/schedule';
   styleUrls: ['./add-schedule.component.scss'],
 })
 export class AddScheduleComponent implements AfterViewInit {
-
-  venueList!: Venue[];
-  bookingTypeList!: BookingType[];
-  employeeList!: Employee[];
-  lessonPlan!: any; // Update to lesson plan model
-
-  defaultDate = Date.now();//Need to recieve this as input from schedule
 
   cCalendarForm: UntypedFormGroup = this.formBuilder.group({
     dateSelector: [, [Validators.required]],
@@ -32,8 +26,17 @@ export class AddScheduleComponent implements AfterViewInit {
     employeeDrop : ['', [Validators.required]]
   });
 
+  venueList!: Venue[];
+  bookingTypeList!: BookingType[];
+  employeeList!: Employee[];
+  lessonPlan!: any; // Update to lesson plan model
+
+  //Date selection variables
   datePipe: DatePipe;
+  //Variable used to determine selection from user when adding a new event
   dateSelect: any;
+  today: string = (new Date()).toISOString();
+  //today: Date = parseISO(this.tempToday);
   timeStart: Time;
   timeEnd: Time;
 
@@ -56,9 +59,11 @@ export class AddScheduleComponent implements AfterViewInit {
   constructor(public global:GlobalService, public formBuilder: UntypedFormBuilder, public scheduleService: ScheduleService) { }
 
   ngAfterViewInit(): void {
+    console.log(this.today);
     setTimeout(() => {
       this.modalReady = true;
     }, 0);
+
 
     this.scheduleService.venueService.getAllVenues().subscribe({
       next: (data) => {
@@ -140,6 +145,7 @@ export class AddScheduleComponent implements AfterViewInit {
   dateSelected(){
     console.log(this.dateSelect);
     console.log(this.cCalendarForm.get('dateSelector'));
+    //this.cCalendarForm.get('dateSelector').confirm(true);
   }
 
   timeStartSelected(){

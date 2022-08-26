@@ -118,7 +118,6 @@ import { ViewWriteOffReasonComponent } from './pages/inventory/write-off-reason/
 
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
-import { TimeRangeComponent } from './pages/booking/time-range/time-range.component';
 
 //CART IMPORTS:
 import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
@@ -198,7 +197,7 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
   //Schedule
-  TimeRangeComponent, AddScheduleComponent, UpdateScheduleComponent,
+  AddScheduleComponent, UpdateScheduleComponent,
   //Exercise
 
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,

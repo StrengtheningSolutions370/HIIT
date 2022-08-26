@@ -45,10 +45,17 @@
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="superuser || client || member">
+      <ion-menu-toggle *ngIf="superuser || admin || trainer">
         <ion-item routerLink="/booking">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          <ion-label>Booking Management</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="superuser || admin || trainer || client || member">
+        <ion-item routerLink="/class-booking">
           <ion-icon name="calendar-number-outline" slot="start"></ion-icon>
-          <ion-label>Bookings</ion-label>
+          <ion-label>Class Bookings</ion-label>
         </ion-item>
       </ion-menu-toggle>
 

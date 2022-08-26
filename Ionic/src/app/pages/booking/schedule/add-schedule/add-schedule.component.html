@@ -15,34 +15,44 @@
   </div>
 
   <br>
-    <ion-buttons>
-      <ion-button
-      id="datePick"
-      class="ion-text-start">
-      <div *ngIf="cCalendarForm.get('dateSelector').untouched">{{defaultDate | date:'EEEE, MMMM d'}}</div>
-      <div *ngIf="cCalendarForm.get('dateSelector').touched">{{dateSelect | date:'EEEE, MMMM d'}} </div><ion-icon name="caret-down-circle-outline"></ion-icon>
-      </ion-button>
-      <ion-button
-      id="startTime"
-      class="ion-text-center"><div *ngIf="cCalendarForm.get('timeStartSelector').untouched">Starting time</div>
-      <div *ngIf="cCalendarForm.get('timeStartSelector').touched">{{timeStart | date:'h:mm a'}} </div> <ion-icon name="caret-down-circle-outline"></ion-icon>
-      </ion-button>
-      <ion-button
-      id="endTime"
-      class="ion-text-end"><div *ngIf="cCalendarForm.get('timeEndSelector').untouched">Ending time</div>
-      <div *ngIf="cCalendarForm.get('timeEndSelector').touched">{{timeEnd | date:'h:mm a'}} </div><ion-icon name="caret-down-circle-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+      <ion-row style="height:h; size: 100%;">
+        <ion-col col-4>
+          <ion-button
+          expand="block"
+          id="datePick"
+          class="margin-0">
+          <div *ngIf="cCalendarForm.get('dateSelector').untouched">Date</div>
+          <div *ngIf="cCalendarForm.get('dateSelector').touched">{{dateSelect | date:'mediumDate'}} </div> <ion-icon name="caret-down-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col col-4>
+          <ion-button
+          expand="block"
+          id="startTime"
+          class="ion-text-center"><div *ngIf="cCalendarForm.get('timeStartSelector').untouched">Start time</div>
+          <div *ngIf="cCalendarForm.get('timeStartSelector').touched">{{timeStart | date:'h:mm a'}} </div> <ion-icon name="caret-down-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col col-4>
+          <ion-button
+          expand="block"
+          id="endTime"
+          class="ion-text-end"><div *ngIf="cCalendarForm.get('timeEndSelector').untouched">End time</div>
+          <div *ngIf="cCalendarForm.get('timeEndSelector').touched">{{timeEnd | date:'h:mm a'}} </div><ion-icon name="caret-down-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
 
   <ion-popover trigger="datePick" size="cover">
     <ng-template>
       <ion-datetime
+      #popoverDate
+      [min]="today"
       [(ngModel)]="dateSelect"
-      show-default-buttons="true"
       first-day-of-week="1"
       presentation="date"
       formControlName="dateSelector"
-      (ionChange)="dateSelected()">
+      (ionChange)="popoverDate.confirm(true);dateSelected()">
       <span slot="title">Select a day to create an event</span>
       </ion-datetime>
    </ng-template>
@@ -52,8 +62,8 @@
     <ng-template>
       <ion-datetime
       [(ngModel)]="timeStart"
-      show-default-buttons="true"
       presentation="time"
+      show-default-buttons="true"
       formControlName="timeStartSelector"
       [(ngModel)]="timeStart"
       (ionChange)="timeStartSelected()">
@@ -64,6 +74,7 @@
   <ion-popover trigger="endTime" size="cover">
     <ng-template>
       <ion-datetime
+      #popoverEnd
       [(ngModel)]="timeEnd"
       show-default-buttons="true"
       presentation="time"
