@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { StoreService } from 'src/app/services/storage/store.service';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -20,6 +19,12 @@ export class HomePage implements OnInit {
       this.username = `${obj.firstName} ${obj.lastName}`;
     })
 
+  }
+
+  pay() {
+    
+    
+    
   }
 
 }

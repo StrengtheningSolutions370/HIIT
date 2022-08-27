@@ -203,5 +203,27 @@ namespace Team7.Models.Repository
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
         }
+
+        public async Task<SaleItem[]> _GetAllSaleItemsArray()
+        {
+            IQueryable<SaleItem> query = DB.SaleItem.Select(si => new SaleItem
+            {
+                SaleItemID = si.SaleItemID,
+                Name = si.Name,
+                Photo = si.Photo,
+                Description = si.Description,
+                Quotable = si.Quotable,
+                QuantityOnHand = si.QuantityOnHand,
+                SaleCategory = si.SaleCategory,
+                PriceHistory = si.PriceHistory,
+                StockTakeLine = si.StockTakeLine,
+            });
+
+
+            if (!query.Any())
+                return null;
+
+            return await query.ToArrayAsync();
+        }
     }
 }

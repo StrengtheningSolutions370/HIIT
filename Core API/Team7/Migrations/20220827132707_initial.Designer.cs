@@ -12,7 +12,7 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220826150120_initial")]
+    [Migration("20220827132707_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -876,9 +876,14 @@ namespace Team7.Migrations
                     b.Property<int?>("SaleCategoryID")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SupplierOrderID")
+                        .HasColumnType("int");
+
                     b.HasKey("SaleItemID");
 
                     b.HasIndex("SaleCategoryID");
+
+                    b.HasIndex("SupplierOrderID");
 
                     b.ToTable("SaleItem");
                 });
@@ -1481,6 +1486,10 @@ namespace Team7.Migrations
                         .WithMany("SaleItem")
                         .HasForeignKey("SaleCategoryID");
 
+                    b.HasOne("Team7.Models.SupplierOrder", null)
+                        .WithMany("SaleItems")
+                        .HasForeignKey("SupplierOrderID");
+
                     b.Navigation("SaleCategory");
                 });
 
@@ -1761,6 +1770,8 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.SupplierOrder", b =>
                 {
+                    b.Navigation("SaleItems");
+
                     b.Navigation("SupplierOrderLine");
                 });
 

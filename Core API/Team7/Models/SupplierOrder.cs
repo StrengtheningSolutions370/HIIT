@@ -23,5 +23,8 @@ namespace Team7.Models
         public virtual OrderStatus OrderStatus { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<SupplierOrderLine> SupplierOrderLine { get; set; }
+
+        //for retrieval of the sale items from associative:
+        public ICollection<SaleItem> SaleItems { get; set; }
     }
 }
