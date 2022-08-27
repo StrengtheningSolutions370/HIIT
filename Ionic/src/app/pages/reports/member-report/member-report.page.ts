@@ -26,7 +26,6 @@ export class MemberReportPage implements AfterViewInit {
   }
   
   ngOnInit() {
-
     this.global.nativeLoad("Loading...");
     this.repo.getAllClients().subscribe({
       next: (data) => {
@@ -179,15 +178,15 @@ export class MemberReportPage implements AfterViewInit {
   }
   
   download() {
-    let Data = document.getElementById('htmlData')!;
+    let Data = document.getElementById('htmlData');
+    console.log(Data);
     html2canvas(Data).then((canvas) => {
-      let fileWidth = 210;
+      let fileWidth = 290;
       let fileHeight = (canvas.height * fileWidth) / canvas.width;
-
       const contentDataURL = canvas.toDataURL('image/png');
-
+      
       const PDF = new jsPDF({
-        orientation: 'p',
+        orientation: 'l',
         unit: 'mm',
         format: 'a4'
       });
@@ -197,8 +196,8 @@ export class MemberReportPage implements AfterViewInit {
       
       const topPosition = 25;
       const leftPosition = 5;
-
-      PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, fileWidth - 10, fileHeight);
+      console.log(contentDataURL);
+      PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, fileWidth, fileHeight);
       PDF.save('Client Report.pdf');
     });
   }
