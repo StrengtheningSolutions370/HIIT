@@ -26,6 +26,19 @@ namespace Team7.Controllers
         [Route("add")]
         public async Task<IActionResult> PostSupplier(SupplierViewModel lvm)
         {
+            var suppliers = await _supplierRepo.GetAllSuppliersAsync();
+
+            if (suppliers == null)
+                foreach (var s in suppliers)
+                {
+
+                    if (s.Cell == lvm.Cell)
+                        return StatusCode(StatusCodes.Status409Conflict, "Supplier with the same Name exisits.");
+
+                    if (s.Email == lvm.Email)
+                        return StatusCode(StatusCodes.Status409Conflict, "Supplier with the same Email exists.");
+
+                }
 
             Supplier supplier = new Supplier();
 
@@ -64,7 +77,7 @@ namespace Team7.Controllers
             return Ok();
         }
 
-            [HttpDelete]
+        [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeleteSupplier(int id)
         {
@@ -77,6 +90,9 @@ namespace Team7.Controllers
                     error = "Cannot delete Supplier.",
                     SupplierOrder = supplier.SupplierOrder
                 });
+
+            _saleItemRepo.Delete(supplier);
+            await _supplierRepo.SaveChangesAsync();
 
             return Ok();
         }
