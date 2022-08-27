@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Team7.Context;
 
 
@@ -27,6 +28,18 @@ namespace Team7.Models.Repository
             DB.Update(Entity);
         }
 
+        public async Task<bool> RemoveRangeSaleItemIdAsync(int SaleItemId)
+        {
+            var range = DB.PriceHistory.Where(ph => ph.SaleItemID == SaleItemId);
+            if (range.Any())
+            {
+                DB.PriceHistory.RemoveRange(range);
+                if (await this.SaveChangesAsync()) 
+                    return true;
+                return false;
+            }
+            return true;
+        }
 
 
         //public async Task<PriceHistory[]> GetAllPriceHistorysAsync()
@@ -70,5 +83,6 @@ namespace Team7.Models.Repository
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
         }
+
     }
 }

@@ -1018,10 +1018,6 @@ namespace Team7.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("SupplierID");
 
                     b.ToTable("Supplier");
