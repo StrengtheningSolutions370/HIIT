@@ -161,6 +161,7 @@ namespace Team7
             services.AddScoped<ISaleCategoryRepo, SaleCategoryRepo>();
             services.AddScoped<ISaleItemRepo, SaleItemRepo>();
             services.AddScoped<ISaleRepo, SaleRepo>();
+            services.AddScoped<ISaleLineRepo, SaleLineRepo>();
             services.AddScoped<IScheduleRepo, ScheduleRepo>();
             services.AddScoped<IStockTakeLineRepo, StockTakeLineRepo>();
             services.AddScoped<IStockTakeRepo, StockTakeRepo>();
