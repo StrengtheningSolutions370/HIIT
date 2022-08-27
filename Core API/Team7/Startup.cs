@@ -130,7 +130,8 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AWS")));
+            //Change to AWS to connect to the hosted DB
+            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
@@ -138,7 +139,6 @@ namespace Team7
             services.AddScoped<IBookingRepo, BookingRepo>();
             services.AddScoped<IBookingTypeRepo, BookingTypeRepo>();
             services.AddScoped<IClientRepo, ClientRepo>();
-            services.AddScoped<IDateSessionRepo, DateSessionRepo>();
             services.AddScoped<IEmployeeContractRepo, EmployeeContractRepo>();
             services.AddScoped<IEmployeeRepo, EmployeeRepo>();
             services.AddScoped<IEmployeeTypeRepo, EmployeeTypeRepo>();
@@ -147,8 +147,6 @@ namespace Team7
             services.AddScoped<ILessonPlanRepo, LessonPlanRepo>();
             services.AddScoped<ILessonRepo, LessonRepo>();
             services.AddScoped<IMeasurementRepo, MeasurementRepo>();
-            //services.AddScoped<IMemberRepo, MemberRepo>();
-            //services.AddScoped<IMemberStatusRepo, MemberStatusRepo>();
             services.AddScoped<IOrderStatusRepo, OrderStatusRepo>();
             services.AddScoped<IPasswordHistoryRepo, PasswordHistoryRepo>();
             services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();
@@ -176,7 +174,7 @@ namespace Team7
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();
             services.AddScoped<IVATRepo, VATRepo>();
             services.AddScoped<IReportRepo, ReportRepo>();
-            //services.AddSwaggerGen();
+
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
@@ -210,16 +208,6 @@ namespace Team7
                 });
 
             }
-
-            //app.UseHttpsRedirection();
-            //app.UseCors("CorsPolicy");
-
-            //app.UseStaticFiles();
-            //app.UseStaticFiles(new StaticFileOptions()
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-            //    RequestPath = new PathString("/Resources")
-            //});
 
             app.UseStaticFiles(new StaticFileOptions
             {

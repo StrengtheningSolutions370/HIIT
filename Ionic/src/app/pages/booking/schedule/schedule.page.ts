@@ -91,7 +91,8 @@ export class SchedulePage implements AfterViewInit  {
           var events = [];
           if (this.scheduleList!= undefined){
             this.scheduleList.forEach((sItem) => {
-              var date = new Date(sItem.dateSession.startDateTime);
+              console.log(sItem);
+              var date = new Date(sItem.startDateTime);
               var startTime: Date;
               startTime = new Date(
                 Date.UTC(
@@ -103,7 +104,7 @@ export class SchedulePage implements AfterViewInit  {
                 ));
                 console.log(startTime);
 
-                var date = new Date(sItem.dateSession.endDateTime);
+                var date = new Date(sItem.endDateTime);
                 var endTime: Date;
                 endTime = new Date(
                   Date.UTC(
@@ -121,6 +122,8 @@ export class SchedulePage implements AfterViewInit  {
                   bookingType: sItem.bookingType,
                   startTime: startTime,
                   endTime: endTime,
+                  lesson: sItem.lesson,
+                  employee: sItem.employee
                 });
               })
               this.eventSource = events;
@@ -139,31 +142,9 @@ export class SchedulePage implements AfterViewInit  {
         }
       });
 
-
-
-
-   //this.scheduleService
-    // .getAllBookingTypes().subscribe(
-    //   {
-    //     next: data => {
-    //       console.log('Fetching booking types from DB');
-    //       console.log(data);
-    //       this.isLoading = false;
-    //       this.bookingTypeList = data.result;
-    //     }
-    //   }
-    // );
   }
 
    ngOnInit() {
-
-  //   this.bookingService.fetchBookingTypeEvent.subscribe({
-  //     next: res => {
-  //       console.log('Fetch booking type again');
-  //       console.log(res);
-  //       this.fetchBookingType();
-  //     }
-  //   })
    }
 
    next() {
@@ -219,7 +200,6 @@ export class SchedulePage implements AfterViewInit  {
 
   deleteEvent(event: any){
     console.log("Deleting event: " + event);
-    this.scheduleService.deleteScheduleEvent(event.scheduleID);
-    this.fetchSchedule();
+    this.scheduleService.deleteScheduleModal(event);
   }
 }

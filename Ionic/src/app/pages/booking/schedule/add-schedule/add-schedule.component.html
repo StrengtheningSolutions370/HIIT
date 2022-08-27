@@ -118,17 +118,16 @@
     <br/>
 </ion-item>
 
-<!--
   <br>
    <ion-item>
-    <ion-label position="floating">Lesson Plan:</ion-label>
-     <ion-select formControlName="lessonPlanDrop" type="text" required="" id="lessonPlanDrop" >
-       <ng-container *ngFor="let lp of this.lessonPlan">
-        <ion-select-option value="{{lp.(id)}},{{lp.(id)}}">{{ e.Name }}</ion-select-option>
+    <ion-label position="floating">Lesson:</ion-label>
+     <ion-select formControlName="lessonDrop" type="text" required="" id="lessonDrop" >
+       <ng-container *ngFor="let lp of this.lessonList">
+        <ion-select-option value="{{lp.lessonID}},{{lp.name}}">{{ lp.name }}</ion-select-option>
       </ng-container>
     </ion-select>
     <br/>
-</ion-item> -->
+</ion-item>
 
 <br/><br/>
 

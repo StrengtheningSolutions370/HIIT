@@ -17,7 +17,7 @@ export class ConfirmScheduleComponent implements ViewWillEnter{
   @Input() venueName: string;
   @Input() bookingTypeName: string;
   @Input() employeeName: string;
-  //@Input() lessonPlanName: string;
+  @Input() lessonName: string;
   dateString: string;
   timeStart: string;
   timeEnd: string;
@@ -29,27 +29,27 @@ export class ConfirmScheduleComponent implements ViewWillEnter{
   constructor(public global:GlobalService, public scheduleService: ScheduleService) { }
 
   ionViewWillEnter(): void {
-    this.dateString = new Date(this.scheduleEvent.dateSession.startDateTime).toDateString();
-    this.timeStart = new Date(this.scheduleEvent.dateSession.startDateTime).toLocaleTimeString();
-    this.timeEnd = new Date(this.scheduleEvent.dateSession.endDateTime).toLocaleTimeString();
+    this.dateString = new Date(this.scheduleEvent.startDateTime).toDateString();
+    this.timeStart = new Date(this.scheduleEvent.startDateTime).toLocaleTimeString();
+    this.timeEnd = new Date(this.scheduleEvent.endDateTime).toLocaleTimeString();
     console.log(this.dateString);
     console.log(this.timeStart);
     console.log(this.timeEnd);
     //this.finalStart = new Date(this.scheduleEvent.dateSession.timeStart).toISOString();
     //this.finalEnd = new Date(this.scheduleEvent.dateSession.timeEnd).toISOString();
     this.finalStart = (new Date (
-      this.scheduleEvent.dateSession.startDateTime.getUTCFullYear(),
-      this.scheduleEvent.dateSession.startDateTime.getUTCMonth(),
-      this.scheduleEvent.dateSession.startDateTime.getUTCDate(),
-      this.scheduleEvent.dateSession.startDateTime.getUTCHours()+4,
-      this.scheduleEvent.dateSession.startDateTime.getUTCMinutes(),
+      this.scheduleEvent.startDateTime.getUTCFullYear(),
+      this.scheduleEvent.startDateTime.getUTCMonth(),
+      this.scheduleEvent.startDateTime.getUTCDate(),
+      this.scheduleEvent.startDateTime.getUTCHours()+4,
+      this.scheduleEvent.startDateTime.getUTCMinutes(),
     )).toISOString();
     this.finalEnd = (new Date (
-      this.scheduleEvent.dateSession.endDateTime.getUTCFullYear(),
-      this.scheduleEvent.dateSession.endDateTime.getUTCMonth(),
-      this.scheduleEvent.dateSession.endDateTime.getUTCDate(),
-      this.scheduleEvent.dateSession.endDateTime.getUTCHours()+4,
-      this.scheduleEvent.dateSession.endDateTime.getUTCMinutes(),
+      this.scheduleEvent.endDateTime.getUTCFullYear(),
+      this.scheduleEvent.endDateTime.getUTCMonth(),
+      this.scheduleEvent.endDateTime.getUTCDate(),
+      this.scheduleEvent.endDateTime.getUTCHours()+4,
+      this.scheduleEvent.endDateTime.getUTCMinutes(),
     )).toISOString();
     console.log(this.finalStart);
     console.log(this.finalEnd);
@@ -58,19 +58,16 @@ export class ConfirmScheduleComponent implements ViewWillEnter{
   //2 = confirm UPDATE
   async confirmChanges(){
     console.log(this.choice);
-    //need to update capacity booked and lessonPlan
+
     var final = {
-      capacityBooked: 0,
-      bookingAttendance : null,
+      bookingAttendance : null, //set to null at first and created on API side
       venueID: this.scheduleEvent.venueID,
       bookingTypeID: this.scheduleEvent.bookingTypeID,
-      lessonPlanID: null,
+      lessonID: this.scheduleEvent.lessonID,
       employeeID: this.scheduleEvent.employeeID,
-      dateSession: {
-        startDateTime: this.finalStart,
-        endDateTime: this.finalEnd
-        }
-    }
+      startDateTime: this.finalStart,
+      endDateTime: this.finalEnd
+      }
             if (this.choice === 1){
 
               console.log('Add schedule Item from confirm:');

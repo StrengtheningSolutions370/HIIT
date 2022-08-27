@@ -8,6 +8,7 @@ import { Venue } from 'src/app/models/venue';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
 import { DatePipe, Time } from '@angular/common';
+import { Lesson } from 'src/app/models/lesson';
 
 @Component({
   selector: 'app-update-schedule',
@@ -26,18 +27,21 @@ export class UpdateScheduleComponent implements OnInit {
     timeEndSelector: [,[Validators.required]],
     venueDrop : ['', [Validators.required]],
     bookingTypeDrop : ['', [Validators.required]],
-    employeeDrop : ['', [Validators.required]]
+    employeeDrop : ['', [Validators.required]],
+    lessonDrop: ['',[Validators.required]]
   });
 
-  defaultDate = Date.now();//Need to recieve this as input from schedule
-  dateSelect: any;
-  timeStart: Time;
-  timeEnd: Time;
-
+  //Dropdowns
   venueList!: Venue[];
   bookingTypeList!: BookingType[];
   employeeList!: Employee[];
-  lessonPlan!: any; // Update to lesson plan model
+  lessonList!: Lesson[];
+
+  //Variable used to determine selection from user when adding a new event
+  dateSelect: any;
+  today: string = (new Date()).toISOString();
+  timeStart: Time;
+  timeEnd: Time;
 
   constructor(public formBuilder: UntypedFormBuilder, public scheduleService: ScheduleService, public modalCtrl:ModalController, public global: GlobalService) { }
 
@@ -66,20 +70,13 @@ export class UpdateScheduleComponent implements OnInit {
       }
     });
 
-
-
-    // //Disable weekends script
-    // const datetime = document.querySelector('ion-datetime');
-    // datetime.isDateEnabled = (dateString) => {
-    //   const date = new Date(dateString);
-    //   const utcDay = date.getUTCDay();
-
-    //   /**
-    //    * Date will be enabled if it is not
-    //    * Sunday or Saturday
-    //    */
-    //   return utcDay !== 0 && utcDay !== 6;
-    //}
+    this.scheduleService.lessonService.getAllLessons().subscribe({
+      next: (data) => {
+        console.log("Lessons: ")
+        console.log(data);
+        this.lessonList = data;
+      },
+    })
   }
 
   submitForm() {
@@ -104,18 +101,21 @@ export class UpdateScheduleComponent implements OnInit {
       timeS.setFullYear(dateTemp.getFullYear());
       timeE.setFullYear(dateTemp.getFullYear());
       var temp: Schedule = {
-        dateSession :{
-          startDateTime:timeS,
-          endDateTime: timeE
-        },
+        startDateTime:timeS,
+        endDateTime: timeE,
         bookingAttendance: null,
         venueID:this.uCalendarForm.value['venueDrop'].split(',')[0],
         bookingTypeID:this.uCalendarForm.value['bookingTypeDrop'].split(',')[0],
-        employeeID:this.uCalendarForm.value['employeeDrop'].split(',')[0]
+        employeeID:this.uCalendarForm.value['employeeDrop'].split(',')[0],
+        lessonID: this.uCalendarForm.value['lessonDrop'].split(',')[0]
       };
       console.log(temp);
       this.global.dismissModal();
-      this.scheduleService.confirmScheduleModal(1,temp,this.uCalendarForm.value['venueDrop'].split(',')[1],this.uCalendarForm.value['bookingTypeDrop'].split(',')[1],this.uCalendarForm.value['employeeDrop'].split(',')[1]);
+      this.scheduleService.confirmScheduleModal(1,temp,
+      this.uCalendarForm.value['venueDrop'].split(',')[1],
+      this.uCalendarForm.value['bookingTypeDrop'].split(',')[1],
+      this.uCalendarForm.value['employeeDrop'].split(',')[1],
+      this.uCalendarForm.value['lessonDrop'].split(',')[1]);
     }
    }
 

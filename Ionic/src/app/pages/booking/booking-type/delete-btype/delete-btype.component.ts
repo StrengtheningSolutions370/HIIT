@@ -15,11 +15,11 @@ export class DeleteBtypeComponent  {
     public bookingService: BookingService) { }
 
 
-  //Send through the id of the selected exercise category to be deleted in the exercise category service.
+  //Send through the id of the selected Booking type to be deleted in the booking service.
   async delete(){
     this.bookingService.deleteBookingType(this.bookingType.bookingTypeID);
     this.global.dismissModal();
-    this.global.showToast("The Booking Type has been successfully deleted")
+    this.global.showToast("The Booking Type has been successfully deleted");
   }
 
 }

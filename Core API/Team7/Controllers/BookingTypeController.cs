@@ -33,19 +33,19 @@ namespace Team7.Controllers
                     Colour = bookingType.Colour
                 };
 
-                if (bookingType.BookingPriceHistory != null)
-                {
-                    BookingPriceHistory btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
+                //if (bookingType.BookingPriceHistory != null)
+                //{
+                //    BookingPriceHistory btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
 
-                    BookingPriceHistory bookingPrice = new BookingPriceHistory
-                    {
-                        Amount = btPriceHistory.Amount,
-                        Date = System.DateTime.Now,
-                        BookingTypeID = bookingType.BookingTypeID,
-                        BookingType = bookingType
-                    };
-                    toAdd.BookingPriceHistory.Add(bookingPrice);
-                }
+                //    BookingPriceHistory bookingPrice = new BookingPriceHistory
+                //    {
+                //        Amount = btPriceHistory.Amount,
+                //        Date = System.DateTime.Now,
+                //        ScheduleID = bookingType.BookingTypeID,
+                //        BookingType = bookingType
+                //    };
+                //    toAdd.BookingPriceHistory.Add(bookingPrice);
+                //}
 
                 BookingTypeRepo.Add(toAdd);
                 if (await BookingTypeRepo.SaveChangesAsync())
@@ -83,19 +83,19 @@ namespace Team7.Controllers
                 toUpdate.Colour = bookingType.Colour;
 
 
-                if (bookingType.BookingPriceHistory != null)
-                {
-                    var btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
+                //if (bookingType.BookingPriceHistory != null)
+                //{
+                //    var btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
 
-                    BookingPriceHistory bookingPrice = new BookingPriceHistory
-                    {
-                        Amount = btPriceHistory.Amount,
-                        Date = System.DateTime.Now,
-                        BookingTypeID = bookingType.BookingTypeID,
-                        BookingType = bookingType
-                    };
-                    toUpdate.BookingPriceHistory.Add(bookingPrice);
-                }
+                //    BookingPriceHistory bookingPrice = new BookingPriceHistory
+                //    {
+                //        Amount = btPriceHistory.Amount,
+                //        Date = System.DateTime.Now,
+                //        ScheduleID = bookingType.BookingTypeID,
+                //        BookingType = bookingType
+                //    };
+                //    toUpdate.BookingPriceHistory.Add(bookingPrice);
+                //}
 
                 if (await BookingTypeRepo.SaveChangesAsync())
                 {

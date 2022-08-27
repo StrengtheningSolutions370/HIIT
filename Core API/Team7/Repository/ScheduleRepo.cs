@@ -51,24 +51,28 @@ namespace Team7.Models.Repository
                     result = await DB.Schedule.Select(sc => new
                     {
                         sc.ScheduleID,
-                        //sc.CapacityBooked,
-                        sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
-                        sc.Employee,
-                        sc.Lesson,
+                        Lesson = new { sc.Lesson.LessonID, sc.Lesson.Name},
+                        sc.StartDateTime,
+                        sc.EndDateTime,
+                        //Employee = new { sc.Employee.EmployeeID, sc.Employee.UserID, sc.Employee.AppUser },
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
-                    }).ToListAsync()
+                        BookingPriceHistory = sc
+                            .BookingPriceHistory
+                            .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                }).ToListAsync()
                 };
             }
         }
 
+        //Get schedules for the entire day
         public async Task<object> GetSchedulesAsync(DateTime input)
         {
             //Can't be used for matching as it only checks the date component not the time
-            IQueryable<Schedule> query = DB.Schedule.Where(sc => sc.DateSession.StartDateTime.Date == input.Date);
+            IQueryable<Schedule> query = DB.Schedule.Where(sc => sc.StartDateTime.Date == input.Date);
             if (!query.Any())
             {
                 return null;
@@ -80,15 +84,18 @@ namespace Team7.Models.Repository
                     result = await query.Select(sc => new
                     {
                         sc.ScheduleID,
-                        //sc.CapacityBooked,
-                        sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
+                        Lesson = new { sc.Lesson.LessonID, sc.Lesson.Name },
+                        sc.StartDateTime,
+                        sc.EndDateTime,
                         sc.Employee,
-                        sc.Lesson,
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
+                        BookingPriceHistory = sc
+                            .BookingPriceHistory
+                            .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
                     }).ToListAsync()
                 };
             }
@@ -108,15 +115,18 @@ namespace Team7.Models.Repository
                     result = await query.Select(sc => new
                     {
                         sc.ScheduleID,
-                        //sc.CapacityBooked,
-                        sc.DateSession,
                         sc.Venue,
                         sc.BookingType,
+                        Lesson = new { sc.Lesson.LessonID, sc.Lesson.Name },
+                        sc.StartDateTime,
+                        sc.EndDateTime,
                         sc.Employee,
-                        sc.Lesson,
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
+                        BookingPriceHistory = sc
+                            .BookingPriceHistory
+                            .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
                     }).ToListAsync()
                 };
             }
@@ -132,39 +142,6 @@ namespace Team7.Models.Repository
             else
             {
                 return await query.SingleAsync();
-            }
-        }
-
-        public async Task<object> GetAllDateSessions()
-        {
-            IQueryable<DateSession> query = DB.DateSession;
-            if (!query.Any())
-            {
-                return null;
-            }
-            else
-            {
-                return new
-                {
-                    result = await query.Select(ds => new
-                    {
-                        ds.DateSessionID,
-                        ds.StartDateTime,
-                        ds.EndDateTime,
-                        Schedule = ds
-                        .Schedule
-                        .Select(sc => new
-                        {
-                            sc.ScheduleID,
-                            //sc.CapacityBooked,
-                            sc.DateSession,
-                            sc.Venue,
-                            sc.BookingType,
-                            sc.Employee,
-                            sc.Lesson
-                        })
-                    }).ToListAsync()
-                };
             }
         }
     }

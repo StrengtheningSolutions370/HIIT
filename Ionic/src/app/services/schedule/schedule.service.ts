@@ -8,9 +8,11 @@ import { Schedule } from 'src/app/models/schedule';
 import { Venue } from 'src/app/models/venue';
 import { AddScheduleComponent } from 'src/app/pages/booking/schedule/add-schedule/add-schedule.component';
 import { ConfirmScheduleComponent } from 'src/app/pages/booking/schedule/confirm-schedule/confirm-schedule.component';
+import { DeleteScheduleComponent } from 'src/app/pages/booking/schedule/delete-schedule/delete-schedule.component';
 import { UpdateScheduleComponent } from 'src/app/pages/booking/schedule/update-schedule/update-schedule.component';
 import { BookingService } from '../booking/booking.service';
 import { EmployeeService } from '../employee/employee.service';
+import { LessonService } from '../lesson/lesson.service';
 import { RepoService } from '../repo.service';
 import { VenueService } from '../venue/venue.service';
 
@@ -20,22 +22,16 @@ import { VenueService } from '../venue/venue.service';
 
 export class ScheduleService {
   @Output() fetchScheduleEvent = new EventEmitter<Schedule>();
-  //@Output() fetchBookingTypeEvent = new EventEmitter<BookingType>();
-  //@Output() fetchVenueEvent = new EventEmitter<Venue>();
-  //@Output() fetchEmployeeEvent = new EventEmitter<Employee>();
-  //@Output() fetchLessonPlanEvent = new EventEmitter<LessonPlan>();
 
-
-  //Need to add lesson plan, and possibly a date_session service - to manage all that
-  constructor(public repo: RepoService, public venueService: VenueService, public bookingService: BookingService,
+  constructor(public repo: RepoService, public venueService: VenueService, public bookingService: BookingService, public lessonService: LessonService,
      public employeeService: EmployeeService, public modalCtrl: ModalController, public alertCtrl: AlertController ) { }
 
   //READS:
-
   getAllScheduleEvents() : Observable<any> {
     return this.repo.getScheduleEvent();
   }
 
+  //Create:
   createSchedule(schedule: any){
     this.repo.createScheduleEvent(schedule).subscribe(
       {
@@ -47,7 +43,7 @@ export class ScheduleService {
     );
    }
 
-    //Receives a schedule to update in the API.
+    //Update:
     async updateSchedule(schedule: any) {
       return this.repo.updateScheduleEvent(schedule.scheduleID,schedule).subscribe(
         {
@@ -63,7 +59,8 @@ export class ScheduleService {
       );
     }
 
-      //Receives a schedule to delete in the API.
+
+  //Delete:
    deleteScheduleEvent(id: number){
     console.log('HERE = ' + id);
    this.repo.deleteScheduleEvent(id).subscribe(
@@ -91,34 +88,9 @@ export class ScheduleService {
     });
 
     await modal.present();
-
-    // modal.onDidDismiss().then((result) => {
-    //   if (result.data && result.data.event) {
-    //     let event = result.data.event;
-    //     if (event.allDay) {
-    //       let start = event.startTime;
-    //       event.startTime = new Date(
-    //         Date.UTC(
-    //           start.getUTCFullYear(),
-    //           start.getUTCMonth(),
-    //           start.getUTCDate()
-    //         )
-    //       );
-    //       event.endTime = new Date(
-    //         Date.UTC(
-    //           start.getUTCFullYear(),
-    //           start.getUTCMonth(),
-    //           start.getUTCDate() + 1
-    //         )
-    //       );
-    //     }
-    //     this.eventSource.push(result.data.event);
-    //     this.scheduleCalendar.loadEvents();
-    //   }
-    // });
   }
 
-    //CREATE Schedule event
+    //UPDATE Schedule event
     async updateScheduleModal(scheduleEvent: any) {
       const modal = await this.modalCtrl.create({
         component: UpdateScheduleComponent,
@@ -132,9 +104,23 @@ export class ScheduleService {
       await modal.present();
     }
 
+    //DELETE Schedule event
+    async deleteScheduleModal(scheduleEvent: any) {
+      const modal = await this.modalCtrl.create({
+        component: DeleteScheduleComponent,
+        cssClass: 'calendar-modal',
+        componentProps: {
+          scheduleEvent
+        },
+        backdropDismiss: true
+      });
+
+      await modal.present();
+    }
+
   //Display the confirm create/update modal
   //Receives the selected qualificationtype from the qualificationtype page
-  async confirmScheduleModal(choice: number, scheduleEvent: any, venueName: string, bookingTypeName: string, employeeName: string /*,lessonPlanName: string*/) {
+  async confirmScheduleModal(choice: number, scheduleEvent: any, venueName: string, bookingTypeName: string, employeeName: string, lessonName: string) {
 
     console.log('ScheduleService: ConfirmScheduleModalCall');
     console.log(choice);
@@ -156,7 +142,7 @@ export class ScheduleService {
           venueName,
           bookingTypeName,
           employeeName,
-          //lessonPlanName
+          lessonName
         }
 
       });

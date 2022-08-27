@@ -4,9 +4,9 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { BookingType } from 'src/app/models/booking-type';
 import { Employee } from 'src/app/models/employee';
 import { Venue } from 'src/app/models/venue';
+import {Lesson} from 'src/app/models/lesson'
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
-import { DatePipe } from '@angular/common';
 import { Schedule } from 'src/app/models/schedule';
 import { format, parseISO } from 'date-fns';
 
@@ -23,36 +23,31 @@ export class AddScheduleComponent implements AfterViewInit {
     timeEndSelector: [,[Validators.required]],
     venueDrop : ['', [Validators.required]],
     bookingTypeDrop : ['', [Validators.required]],
-    employeeDrop : ['', [Validators.required]]
+    employeeDrop : ['', [Validators.required]],
+    lessonDrop: ['',[Validators.required]]
   });
 
+  //Dropdowns
   venueList!: Venue[];
   bookingTypeList!: BookingType[];
   employeeList!: Employee[];
-  lessonPlan!: any; // Update to lesson plan model
+  lessonList!: Lesson[];
 
-  //Date selection variables
-  datePipe: DatePipe;
   //Variable used to determine selection from user when adding a new event
   dateSelect: any;
   today: string = (new Date()).toISOString();
-  //today: Date = parseISO(this.tempToday);
   timeStart: Time;
   timeEnd: Time;
 
-  //minDate: string = Date.toString();
+  // calendar = {
+  //   mode: 'month',
+  //   currentDate: new Date()
+  // };
 
-  calendar = {
-    mode: 'month',
-    currentDate: new Date()
-  };
-
-  viewTitle: string;
-
-  event = {
-    startTime: null,
-    endTime: null
-  }
+  // event = {
+  //   startTime: null,
+  //   endTime: null
+  // }
 
   modalReady = false;
 
@@ -89,20 +84,13 @@ export class AddScheduleComponent implements AfterViewInit {
       }
     });
 
-
-
-    // //Disable weekends script
-    // const datetime = document.querySelector('ion-datetime');
-    // datetime.isDateEnabled = (dateString) => {
-    //   const date = new Date(dateString);
-    //   const utcDay = date.getUTCDay();
-
-    //   /**
-    //    * Date will be enabled if it is not
-    //    * Sunday or Saturday
-    //    */
-    //   return utcDay !== 0 && utcDay !== 6;
-    //}
+    this.scheduleService.lessonService.getAllLessons().subscribe({
+      next: (data) => {
+        console.log("Lessons: ")
+        console.log(data);
+        this.lessonList = data;
+      },
+    })
   }
 
   submitForm() {
@@ -127,18 +115,21 @@ export class AddScheduleComponent implements AfterViewInit {
       timeS.setFullYear(dateTemp.getFullYear());
       timeE.setFullYear(dateTemp.getFullYear());
       var temp: Schedule = {
-        dateSession :{
-          startDateTime:timeS,
-          endDateTime: timeE
-        },
+        startDateTime:timeS,
+        endDateTime: timeE,
         bookingAttendance: null,
         venueID:this.cCalendarForm.value['venueDrop'].split(',')[0],
         bookingTypeID:this.cCalendarForm.value['bookingTypeDrop'].split(',')[0],
-        employeeID:this.cCalendarForm.value['employeeDrop'].split(',')[0]
+        employeeID:this.cCalendarForm.value['employeeDrop'].split(',')[0],
+        lessonID: this.cCalendarForm.value['lessonDrop'].split(',')[0]
       };
       console.log(temp);
       this.global.dismissModal();
-      this.scheduleService.confirmScheduleModal(1,temp,this.cCalendarForm.value['venueDrop'].split(',')[1],this.cCalendarForm.value['bookingTypeDrop'].split(',')[1],this.cCalendarForm.value['employeeDrop'].split(',')[1]);
+      this.scheduleService.confirmScheduleModal(1,temp,
+      this.cCalendarForm.value['venueDrop'].split(',')[1],
+      this.cCalendarForm.value['bookingTypeDrop'].split(',')[1],
+      this.cCalendarForm.value['employeeDrop'].split(',')[1],
+      this.cCalendarForm.value['lessonDrop'].split(',')[1]);
     }
    }
 

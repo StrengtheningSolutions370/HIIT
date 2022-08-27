@@ -140,6 +140,7 @@ import { ConfirmLessonComponent } from './pages/lessons/confirm-lesson/confirm-l
 import { AssociativeLessonComponent } from './pages/lessons/associative-lesson/associative-lesson.component';
 //SCHEDULE IMPORTS:
 import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-schedule.component';
+import { DeleteScheduleComponent } from './pages/booking/schedule/delete-schedule/delete-schedule.component';
 import { DatePipe } from '@angular/common';
 import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedule/update-schedule.component';
 
@@ -152,6 +153,7 @@ import { ConfirmIndemnityComponent } from './pages/profile/profile/confirm-indem
 //Add Measurement
 import { AddComponent } from './pages/measurements/add/add.component';
 import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measurement/confirm-measurement.component';
+
 
 @NgModule({
   declarations: [AppComponent,
@@ -197,7 +199,7 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
   //Schedule
-  AddScheduleComponent, UpdateScheduleComponent,
+  AddScheduleComponent, UpdateScheduleComponent, DeleteScheduleComponent,
   //Exercise
 
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,

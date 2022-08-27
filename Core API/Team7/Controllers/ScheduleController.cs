@@ -54,21 +54,14 @@ namespace Team7.Controllers
             }
             try
             {
-                //toUpdate.Name = saleCategory.Name;
-                //toUpdate.Description = saleCategory.Description;
-                //toUpdate.CapacityBooked = schedule.CapacityBooked;
                 if (schedule.BookingAttendance != null)
                 {
                     toUpdate.BookingAttendance = schedule.BookingAttendance;
                 }
 
-                if (schedule.DateSession != null)
-                {
-                    //ensure new record is made, and not just deleting existing one
-                    toUpdate.DateSession = schedule.DateSession;
-                }
 
-                toUpdate.DateSession = schedule.DateSession;
+                toUpdate.StartDateTime = schedule.StartDateTime;
+                toUpdate.EndDateTime = schedule.EndDateTime;
                 toUpdate.VenueID = schedule.VenueID;
                 toUpdate.BookingTypeID = schedule.BookingTypeID;
                 toUpdate.LessonID = schedule.LessonID;
@@ -163,30 +156,6 @@ namespace Team7.Controllers
                 else
                 {
                     return Ok(schedule);
-                }
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
-            }
-
-        }
-
-        // GET: api/schedule/getDateSessions
-        [HttpGet]
-        [Route("getDateSessions")]
-        public async Task<IActionResult> GetScheduleDateSessions()
-        {
-            try
-            {
-                var dates = await ScheduleRepo.GetAllDateSessions();
-                if (dates == null)
-                {
-                    return Ok(0);
-                }
-                else
-                {
-                    return Ok(dates);
                 }
             }
             catch (Exception err)

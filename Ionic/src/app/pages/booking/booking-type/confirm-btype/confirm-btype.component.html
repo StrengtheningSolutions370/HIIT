@@ -29,14 +29,6 @@
     <ion-label class="ion-text-left">Capacity:</ion-label>
     <ion-label class="ion-text-right">{{bookingType.capacity}}</ion-label>
   </ion-item>
-  <ion-item *ngIf="bookingType.bookingPriceHistory==null">
-    <ion-label class="ion-text-left">Price:</ion-label>
-    <ion-label class="ion-text-right">No change</ion-label>
-  </ion-item>
-  <ion-item *ngIf="bookingType.bookingPriceHistory!=null">
-    <ion-label class="ion-text-left">Price:</ion-label>
-    <ion-label class="ion-text-right">{{bookingType.bookingPriceHistory[0].amount}}</ion-label>
-  </ion-item>
 
   <br/><br/>
 

@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-<form [formGroup]="cCalendarForm" (ngSubmit)="submitForm()" style="padding-left:10%; padding-right:10%">
+<form [formGroup]="uCalendarForm" (ngSubmit)="submitForm()" style="padding-left:10%; padding-right:10%">
   <br/>
   <div class="ion-text-center">
     <p style="font-size:large">Please update the schedule event information below</p>
@@ -105,18 +105,16 @@
     <br/>
 </ion-item>
 
-<!--
-  <br>
-   <ion-item>
-    <ion-label position="floating">Lesson Plan:</ion-label>
-     <ion-select formControlName="lessonPlanDrop" type="text" required="" id="lessonPlanDrop" >
-       <ng-container *ngFor="let lp of this.lessonPlan">
-        <ion-select-option value="{{lp.(id)}},{{lp.(id)}}">{{ e.Name }}</ion-select-option>
-      </ng-container>
-    </ion-select>
-    <br/>
-</ion-item> -->
-
+<br>
+<ion-item>
+ <ion-label position="floating">Lesson:</ion-label>
+  <ion-select formControlName="lessonDrop" type="text" required="" id="lessonDrop" >
+    <ng-container *ngFor="let lp of this.lessonList">
+     <ion-select-option value="{{lp.lessonID}},{{lp.name}}">{{ lp.name }}</ion-select-option>
+   </ng-container>
+ </ion-select>
+ <br/>
+</ion-item>
 <br/><br/>
 
 <ion-button type="submit" color="success" [disabled]="!uCalendarForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Event</ion-button>
