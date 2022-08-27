@@ -23,6 +23,7 @@ import { Exercise } from '../models/exercise';
 import { WriteOffReason } from '../models/write-off-reason';
 import { Lesson } from '../models/lesson';
 import { Schedule } from '../models/schedule';
+import { Supplier } from '../models/supplier';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,8 @@ export class RepoService {
   MeasurementController = 'Measurement/';
   ReportController = 'Report/';
   PaymentController= 'Payment/';
+  SupplierController= 'Supplier/';
+
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -569,4 +572,31 @@ getSaleCategoryReport(): Observable<any>{
   return this.http.get(`${this.base+this.ReportController}getBySaleCategory`, this.httpOptions)
 }
 
+// Supplier:
+  // ------
+  // Create
+  createSupplier(supplier: Supplier): Observable<any> {
+    console.log(supplier);
+    return this.http.post<any>(`${this.base + this.SupplierController}add`, supplier, this.httpOptions);
+  }
+  //Update
+  updateSupplier(supplierId: number, supplier: Supplier): Observable<any> {
+    return this.http.put(`${this.base + this.SupplierController}update?id=${supplierId}`, supplier, this.httpOptions);
+  }
+  //Delete
+  deleteSupplier(supplierId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.SupplierController}delete?id=${supplierId}`, this.httpOptions);
+  }
+  //GetAll
+  getSupplier(): Observable<any> {
+    return this.http.get(`${this.base + this.SupplierController}getAll`, this.httpOptions);
+  }
+  // //GetMatch
+  // getMatchExercise(name: string, description: string): Observable<any> {
+  //   return this.http.get(`${this.base + this.ExerciseController}getMatch?name=${name}&description=${description}`, this.httpOptions);
+  // }
+  // //Exists
+  // existsExercise(id: number): Observable<any> {
+  //   return this.http.get(`${this.base + this.ExerciseController}exists?id=${id}`, this.httpOptions);
+  // }
 }
