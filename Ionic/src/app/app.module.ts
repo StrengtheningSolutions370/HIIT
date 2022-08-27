@@ -154,6 +154,15 @@ import { ConfirmIndemnityComponent } from './pages/profile/profile/confirm-indem
 import { AddComponent } from './pages/measurements/add/add.component';
 import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measurement/confirm-measurement.component';
 
+//SUPPLIER IMPORTS:
+import { AddSupplierComponent } from './pages/suppliers/supplier-page/add-supplier/add-supplier.component';
+import { UpdateSupplierComponent } from './pages/suppliers/supplier-page/update-supplier/update-supplier.component';
+import { DeleteSupplierComponent } from './pages/suppliers/supplier-page/delete-supplier/delete-supplier.component';
+import { ViewSupplierComponent } from './pages/suppliers/supplier-page/view-supplier/view-supplier.component';
+import { ConfirmSupplierComponent } from './pages/suppliers/supplier-page/confirm-supplier/confirm-supplier.component';
+import { AssociativeSupplierComponent } from './pages/suppliers/supplier-page/associative-supplier/associative-supplier.component';
+
+
 @NgModule({
   declarations: [AppComponent,
   //Venue
@@ -207,7 +216,9 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   //Client
   DeleteClientComponent,
   //confirmindemnity
-  AddComponent, ConfirmMeasurementComponent
+  AddComponent, ConfirmMeasurementComponent,
+   //Supplier
+   AddSupplierComponent, UpdateSupplierComponent, DeleteSupplierComponent, ViewSupplierComponent, ConfirmSupplierComponent, AssociativeSupplierComponent,
 
 ],
   entryComponents: [],
