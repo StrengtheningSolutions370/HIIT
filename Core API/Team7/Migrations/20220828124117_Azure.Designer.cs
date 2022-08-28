@@ -12,8 +12,8 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220828092247_Deploy")]
-    partial class Deploy
+    [Migration("20220828124117_Azure")]
+    partial class Azure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

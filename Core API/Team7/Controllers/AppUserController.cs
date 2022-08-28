@@ -664,6 +664,7 @@ namespace Team7.Controllers
         //    return stringBuilder.ToString();
         //}
 
+        //Changing comments to test if the API calls this uodate when deployed
         [HttpGet]
         private async Task<object> GenerateJWTTokenAsync(AppUser appUser)
         {
