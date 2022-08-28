@@ -37,7 +37,8 @@ namespace Team7.Controllers
         {
             var writeOffVM = wlvm.WriteOff;
             var saleItemVM = wlvm.SaleItems;
-
+            var reasonVM = wlvm.WriteOffReasons;
+            
             WriteOff writeOff = new WriteOff();
             writeOff.Date = System.DateTime.Now;
             writeOff.EmployeeID = writeOffVM.EmployeeID;
@@ -49,6 +50,7 @@ namespace Team7.Controllers
                 wl.Quantity = wlvm.Quantity;
                 wl.WriteOff = writeOff;
                 wl.SaleItem = await _saleItemRepo._GetSaleItemIdAsync(saleItemVMID.SaleItemID);
+                wl.WriteOffReason = await _writeOffReasonRepo._GetWriteOffReasonIdAsync(reasonVM.WriteOffReasonID);
                 _writeOffLineRepo.Add(wl);
                 writeOff.WriteOffLine.Add(wl);
             }
