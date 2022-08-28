@@ -11,11 +11,30 @@
   display: table-cell;
 }
 
-
 :host ::ng-deep {
 
+  @media (prefers-color-scheme: dark) {
+    .monthview-container {
+      background-color:#DEE4E7 !important;
+      color: black !important;
+      //color: white !important;
+      height:auto;
+    }
+  }
+
+  @media (prefers-color-scheme: light) {
+    .monthview-container {
+      background-color:#DEE4E7 !important;
+      color: black !important;
+      //color: white !important;
+      height:auto;
+    }
+  }
+
+
+
   .monthview-container {
-    background-color: black !important;
+    background-color:#DEE4E7 !important;
     //color: white !important;
     height:auto;
   }

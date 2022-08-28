@@ -21,6 +21,7 @@ export class AddScheduleComponent implements AfterViewInit {
     dateSelector: [, [Validators.required]],
     timeStartSelector: [, [Validators.required]],
     timeEndSelector: [,[Validators.required]],
+    schedulePrice: ['', [Validators.required, Validators.min(1)]],
     venueDrop : ['', [Validators.required]],
     bookingTypeDrop : ['', [Validators.required]],
     employeeDrop : ['', [Validators.required]],
@@ -39,25 +40,20 @@ export class AddScheduleComponent implements AfterViewInit {
   timeStart: Time;
   timeEnd: Time;
 
-  // calendar = {
-  //   mode: 'month',
-  //   currentDate: new Date()
-  // };
-
-  // event = {
-  //   startTime: null,
-  //   endTime: null
-  // }
-
-  modalReady = false;
+  //Delay modal generation to ensure api call is completed
+  //modalReady = false;
 
   constructor(public global:GlobalService, public formBuilder: UntypedFormBuilder, public scheduleService: ScheduleService) { }
 
+  get errorControl() {
+    return this.cCalendarForm.controls;
+  }
+
   ngAfterViewInit(): void {
     console.log(this.today);
-    setTimeout(() => {
-      this.modalReady = true;
-    }, 0);
+    // setTimeout(() => {
+    //   this.modalReady = true;
+    // }, 0);
 
 
     this.scheduleService.venueService.getAllVenues().subscribe({
@@ -114,10 +110,15 @@ export class AddScheduleComponent implements AfterViewInit {
       timeE.setMonth(dateTemp.getMonth());
       timeS.setFullYear(dateTemp.getFullYear());
       timeE.setFullYear(dateTemp.getFullYear());
+      //var bphTemp = null;
+      var bphTemp: any = [{
+        amount: Number(this.cCalendarForm.controls['schedulePrice'].value)
+      }];
       var temp: Schedule = {
         startDateTime:timeS,
         endDateTime: timeE,
         bookingAttendance: null,
+        bookingPriceHistory: bphTemp,
         venueID:this.cCalendarForm.value['venueDrop'].split(',')[0],
         bookingTypeID:this.cCalendarForm.value['bookingTypeDrop'].split(',')[0],
         employeeID:this.cCalendarForm.value['employeeDrop'].split(',')[0],

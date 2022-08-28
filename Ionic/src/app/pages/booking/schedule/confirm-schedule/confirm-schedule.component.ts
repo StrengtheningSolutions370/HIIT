@@ -25,6 +25,7 @@ export class ConfirmScheduleComponent implements ViewWillEnter{
 
   finalStart: string;
   finalEnd: string;
+  finalPriceHistory: string;
 
   constructor(public global:GlobalService, public scheduleService: ScheduleService) { }
 
@@ -51,16 +52,26 @@ export class ConfirmScheduleComponent implements ViewWillEnter{
       this.scheduleEvent.endDateTime.getUTCHours()+4,
       this.scheduleEvent.endDateTime.getUTCMinutes(),
     )).toISOString();
+    this.finalPriceHistory = (new Date (
+      this.scheduleEvent.endDateTime.getUTCFullYear(),
+      this.scheduleEvent.endDateTime.getUTCMonth(),
+      this.scheduleEvent.endDateTime.getUTCDate(),
+      this.scheduleEvent.endDateTime.getUTCHours()+4,
+      this.scheduleEvent.endDateTime.getUTCMinutes(),
+    )).toISOString();
     console.log(this.finalStart);
     console.log(this.finalEnd);
   }
     //1 = confirm ADD
   //2 = confirm UPDATE
   async confirmChanges(){
+    var tempPrice: any = [{
+      amount: this.scheduleEvent.bookingPriceHistory[0].amount
+    }]
     console.log(this.choice);
-
-    var final = {
+    var final: Schedule = {
       bookingAttendance : null, //set to null at first and created on API side
+      bookingPriceHistory: tempPrice,
       venueID: this.scheduleEvent.venueID,
       bookingTypeID: this.scheduleEvent.bookingTypeID,
       lessonID: this.scheduleEvent.lessonID,
@@ -94,7 +105,7 @@ export class ConfirmScheduleComponent implements ViewWillEnter{
       this.scheduleService.addScheduleModal();
     } else if (this.choice === 2){
       this.global.dismissModal();
-      //this.scheduleService.updateScheduleModal();
+      this.scheduleService.updateScheduleModal(this.scheduleEvent);
     }
   }
 

@@ -10,6 +10,8 @@ import { AddScheduleComponent } from 'src/app/pages/booking/schedule/add-schedul
 import { ConfirmScheduleComponent } from 'src/app/pages/booking/schedule/confirm-schedule/confirm-schedule.component';
 import { DeleteScheduleComponent } from 'src/app/pages/booking/schedule/delete-schedule/delete-schedule.component';
 import { UpdateScheduleComponent } from 'src/app/pages/booking/schedule/update-schedule/update-schedule.component';
+import { AddBookingComponent } from 'src/app/pages/class-booking/add-booking/add-booking.component';
+import { CancelBookingComponent } from 'src/app/pages/class-booking/cancel-booking/cancel-booking.component';
 import { BookingService } from '../booking/booking.service';
 import { EmployeeService } from '../employee/employee.service';
 import { LessonService } from '../lesson/lesson.service';
@@ -135,7 +137,7 @@ export class ScheduleService {
     }
 
       const modal = await this.modalCtrl.create({
-        component: ConfirmScheduleComponent ,
+        component: ConfirmScheduleComponent,
         componentProps: {
           scheduleEvent,
           choice,
@@ -147,6 +149,30 @@ export class ScheduleService {
 
       });
       await modal.present();
+  }
+
+  async addBookingModal(scheduleEvent: any){
+    const modal = await this.modalCtrl.create({
+      component: AddBookingComponent,
+      componentProps: {
+        scheduleEvent
+      },
+      backdropDismiss: true
+    });
+
+    await modal.present();
+  }
+
+  async cancelBookingModal(scheduleEvent: any){
+    const modal = await this.modalCtrl.create({
+      component: CancelBookingComponent,
+      componentProps: {
+        scheduleEvent
+      },
+      backdropDismiss: true
+    });
+
+    await modal.present();
   }
 
 

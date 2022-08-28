@@ -25,29 +25,29 @@ namespace Team7.Controllers
         {
             try
             {
-                BookingType toAdd = new BookingType
-                {
-                    Name = bookingType.Name,
-                    Description = bookingType.Description,
-                    Capacity = bookingType.Capacity,
-                    Colour = bookingType.Colour
-                };
-
-                //if (bookingType.BookingPriceHistory != null)
+                //BookingType toAdd = new BookingType
                 //{
-                //    BookingPriceHistory btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
+                //    Name = bookingType.Name,
+                //    Description = bookingType.Description,
+                //    Capacity = bookingType.Capacity,
+                //    Colour = bookingType.Colour
+                //};
 
-                //    BookingPriceHistory bookingPrice = new BookingPriceHistory
-                //    {
-                //        Amount = btPriceHistory.Amount,
-                //        Date = System.DateTime.Now,
-                //        ScheduleID = bookingType.BookingTypeID,
-                //        BookingType = bookingType
-                //    };
-                //    toAdd.BookingPriceHistory.Add(bookingPrice);
-                //}
+                ////if (bookingType.BookingPriceHistory != null)
+                ////{
+                ////    BookingPriceHistory btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
 
-                BookingTypeRepo.Add(toAdd);
+                ////    BookingPriceHistory bookingPrice = new BookingPriceHistory
+                ////    {
+                ////        Amount = btPriceHistory.Amount,
+                ////        Date = System.DateTime.Now,
+                ////        ScheduleID = bookingType.BookingTypeID,
+                ////        BookingType = bookingType
+                ////    };
+                ////    toAdd.BookingPriceHistory.Add(bookingPrice);
+                ////}
+
+                BookingTypeRepo.Add(bookingType);
                 if (await BookingTypeRepo.SaveChangesAsync())
                 {
                     return Ok();

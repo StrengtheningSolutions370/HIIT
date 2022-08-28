@@ -86,6 +86,20 @@
   </ion-popover>
 
   <br>
+      <ion-item>
+      <ion-label position="floating">Price:</ion-label>
+      <br/>
+      <ion-input type="number" formControlName="schedulePrice" type="number" required="" id="schedulePrice" >R</ion-input>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.schedulePrice.errors?.required && cCalendarForm.get('schedulePrice').touched">
+     Price is required <br/>
+    </span>
+    <span class="error ion-padding" *ngIf="errorControl.schedulePrice.errors?.min">
+     Price must be greater than 0 <br/>
+    </span>
+
+  <br>
 <ion-item>
     <ion-label position="floating">Venue:</ion-label>
      <ion-select formControlName="venueDrop" type="text" required="" id="venueDrop" >
@@ -95,6 +109,9 @@
     </ion-select>
     <br/>
 </ion-item>
+<span class="error ion-padding" *ngIf="errorControl.venueDrop.errors?.required && cCalendarForm.get('venueDrop').touched">
+  Venue is required <br/>
+ </span>
 
 <br>
 <ion-item>
@@ -106,6 +123,9 @@
     </ion-select>
     <br/>
 </ion-item>
+<span class="error ion-padding" *ngIf="errorControl.bookingTypeDrop.errors?.required && cCalendarForm.get('bookingTypeDrop').touched">
+  Booking type is required <br/>
+ </span>
 
 <br>
 <ion-item>
@@ -117,6 +137,9 @@
     </ion-select>
     <br/>
 </ion-item>
+<span class="error ion-padding" *ngIf="errorControl.employeeDrop.errors?.required && cCalendarForm.get('employeeDrop').touched">
+  Employee is required <br/>
+ </span>
 
   <br>
    <ion-item>
@@ -128,6 +151,9 @@
     </ion-select>
     <br/>
 </ion-item>
+<span class="error ion-padding" *ngIf="errorControl.lessonDrop.errors?.required && cCalendarForm.get('lessonDrop').touched">
+  Lesson is required <br/>
+ </span>
 
 <br/><br/>
 

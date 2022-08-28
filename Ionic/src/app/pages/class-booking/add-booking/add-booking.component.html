@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Confirm Schedule Event Details</ion-title>
+    <ion-title>Schedule Event Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
@@ -10,7 +10,7 @@
 <ion-content>
   <br/>
   <div class="ion-text-center">
-    <p style="font-size:large">Please confirm the following schedule event information</p>
+    <p style="font-size:large">Would you like to add this booking to your cart?</p>
   </div>
 
   <ion-item >
@@ -47,7 +47,7 @@
     <ion-label class="ion-text-wrap ion-text-right">{{lessonName}}</ion-label>
   </ion-item>
 
-    <ion-button color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;" (click)="confirmChanges()">Confirm</ion-button>
+    <ion-button color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;" (click)="confirmChanges()">Add to Cart</ion-button>
     <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="returnFrom()">Return</ion-button>
 
 </ion-content>

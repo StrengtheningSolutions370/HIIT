@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, LOCALE_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component,ViewChild } from '@angular/core';
 import { CalendarComponent } from 'ionic2-calendar';
 import { Subscription } from 'rxjs';
 import { Schedule } from 'src/app/models/schedule';
@@ -6,8 +6,7 @@ import { ScheduleService } from 'src/app/services/schedule/schedule.service';
 import { AlertController, ModalController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
 import { GlobalService } from 'src/app/services/global/global.service';
-import { format, parseISO } from 'date-fns';
-import { IEvent, ITimeSelected } from 'ionic2-calendar/calendar';
+import { ITimeSelected } from 'ionic2-calendar/calendar';
 
 
 @Component({
@@ -19,38 +18,24 @@ export class SchedulePage implements AfterViewInit  {
     //Calendar related:
     eventSource:any[] = []; //events to display
     viewTitle: string; //Title(i.e Month, or day)
-    modalReady = false;
+    modalReady = false; //Delay calendar generation so API call finishes
 
     calendar = {
       mode: 'month',
       currentDate: new Date()
     }
 
-  //   markDisabled = (date: Date) => {
-  //     var current = new Date();
-  //     return date < current;
-  // };
-
-  selectDate: ITimeSelected;
-
     //Object to add to schedule on create + populate calendar (time realted information here but rest in schedule entity)
   event = {
     scheduleID: 0,
     venue:{},
     bookingType:{},
+    lesson:{},
+    employee:{},
+    bookingPriceHistory:null,
     startTime: null,
     endTime: null
   }
-
-    //Pulling in linked SQL table data
-    //Venue:
-    //venueDrop!: Venue [];
-
-    //Booking:
-    //bookingDrop!: any []; //Need to update this to type Booking (when made as a model)
-
-    //Employee:
-    //employee!: Employee [];
 
     //Create local schedule array to be populated onInit.
     scheduleList: Schedule[] = [];
@@ -68,9 +53,6 @@ export class SchedulePage implements AfterViewInit  {
    }
 
    ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.modalReady = true;
-    }, 0);
     this.scheduleService.fetchScheduleEvent.subscribe(
       {
         next: res => {
@@ -123,7 +105,8 @@ export class SchedulePage implements AfterViewInit  {
                   startTime: startTime,
                   endTime: endTime,
                   lesson: sItem.lesson,
-                  employee: sItem.employee
+                  employee: sItem.employee,
+                  bookingPriceHistory: sItem.bookingPriceHistory
                 });
               })
               this.eventSource = events;
@@ -143,9 +126,6 @@ export class SchedulePage implements AfterViewInit  {
       });
 
   }
-
-   ngOnInit() {
-   }
 
    next() {
     this.scheduleCalendar.slideNext();
@@ -174,12 +154,15 @@ export class SchedulePage implements AfterViewInit  {
     let start = formatDate(event.startTime, 'h:mm a', 'en-ZA');
     let end = formatDate(event.endTime, 'h:mm a', 'en-ZA');
     let date = formatDate(event.startTime,'EEEE, MMMM d','en-ZA');
-    let venueName =  event.venue.name;
-    let bookingType = event.bookingType.name;
     const alert = await this.alertCtrl.create({
       header: date,
-      message: 'From:'+ start +
-      '<br><br>To: ' + end + '<br><br>' +'Venue: ' + venueName + '<br><br>' +'Booking Type: ' + bookingType ,
+      message: start +'&nbsp; - &nbsp;' + end +
+      '<br><br>Venue:&emsp;' + event.venue.name +
+      '<br><br>Booking Type:&emsp;' + event.bookingType.name +
+      '<br><br>Lesson:&emsp;' + event.lesson.name +
+      '<br><br>Price:&emsp; R' + event.bookingPriceHistory[event.bookingPriceHistory.length-1].amount +
+      '<br><br>Employee:&emsp;' + event.employee.appUser.firstName + '&nbsp;' + event.employee.appUser.lastName
+      ,
       buttons: ['Ok',{
         text: 'Update',
         handler: () =>{this.updateEvent(event);}

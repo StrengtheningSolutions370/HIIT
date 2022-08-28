@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -138,11 +138,16 @@ import { DeleteLessonComponent } from './pages/lessons/delete-lesson/delete-less
 import { ViewLessonComponent } from './pages/lessons/view-lesson/view-lesson.component';
 import { ConfirmLessonComponent } from './pages/lessons/confirm-lesson/confirm-lesson.component';
 import { AssociativeLessonComponent } from './pages/lessons/associative-lesson/associative-lesson.component';
+
 //SCHEDULE IMPORTS:
 import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-schedule.component';
-import { DeleteScheduleComponent } from './pages/booking/schedule/delete-schedule/delete-schedule.component';
-import { DatePipe } from '@angular/common';
 import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedule/update-schedule.component';
+import { DeleteScheduleComponent } from './pages/booking/schedule/delete-schedule/delete-schedule.component';
+import { ConfirmScheduleComponent } from './pages/booking/schedule/confirm-schedule/confirm-schedule.component';
+
+//BOOKING IMPORTS:
+import { AddBookingComponent } from './pages/class-booking/add-booking/add-booking.component';
+import { CancelBookingComponent } from './pages/class-booking/cancel-booking/cancel-booking.component';
 
 //CLIENT IMPORTS:
 import { DeleteClientComponent } from './pages/user/clients/delete-client/delete-client.component';
@@ -188,8 +193,6 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
   //ExerciseCategory
   AddExerciseCategoryComponent, UpdateExerciseCategoryComponent, DeleteExerciseCategoryComponent, ViewExerciseCategoryComponent, ConfirmExerciseCategoryComponent, AssociativeExerciseCategoryComponent,
-  //Side Menu
-  SidemenuComponent,
   //RefundReason
   ConfirmRefundReasonComponent, AddRefundReasonComponent, UpdateRefundReasonComponent, ViewRefundReasonComponent, DeleteRefundReasonComponent, AssociativeRefundReasonComponent,
   //Employee
@@ -198,17 +201,20 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   AddWriteOffReasonComponent, AssociativeWriteOffReasonComponent, ConfirmWriteOffReasonComponent, DeleteWriteOffReasonComponent, UpdateWriteOffReasonComponent, ViewWriteOffReasonComponent,
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
+  //Booking
+  AddBookingComponent, CancelBookingComponent,
   //Schedule
-  AddScheduleComponent, UpdateScheduleComponent, DeleteScheduleComponent,
+  AddScheduleComponent, UpdateScheduleComponent, DeleteScheduleComponent, ConfirmScheduleComponent,
   //Exercise
-
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
   //Lesson
   AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
   //Client
   DeleteClientComponent,
   //confirmindemnity
-  AddComponent, ConfirmMeasurementComponent
+  AddComponent, ConfirmMeasurementComponent,
+  //Side Menu
+  SidemenuComponent
 
 ],
   entryComponents: [],
