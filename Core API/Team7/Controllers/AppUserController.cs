@@ -66,7 +66,7 @@ namespace Team7.Controllers
         {
             List<AppUser> users = _userManager.Users.ToList();
             Email e = new Email();
-            e.emailList(users, "subject here", "body here");
+            //e.emailList(users, "subject here", "body here");
             return Ok();
         }
 
@@ -677,7 +677,7 @@ namespace Team7.Controllers
                 new Claim(ClaimTypes.Role, roleArray[0])
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:key"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(

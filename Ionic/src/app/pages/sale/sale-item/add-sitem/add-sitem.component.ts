@@ -64,37 +64,7 @@ export class AddSitemComponent implements ViewWillEnter {
   console.log('image: ', image);
   console.log('inside get image base 64', this.itemImageBase64String)
   
-  //this.selectImage = image;
-  // if(this.checkPlatformForWeb()) this.selectImage.webPath = this.selectImage.dataUrl;
-
-  // Can be set to the src of an image now
-  // imageElement.src = imageUrl;
 }
-
-//  addImage(event: any) {
-//    this.itemImage = event.target.files[0];
-//   console.log(this.itemImage);
-//    const re = /^image*/;
-
-//    if (this.itemImage.type.match(re)) {
-//     this.itemImageBase64String;
-//    }
-//   }
-
-//   //   getBase64(file: File) {
-//   //     const reader = new FileReader();
-//   //     reader.readAsDataURL(file);
-//   //     reader.onload = () => {
-//   //       // console.log(reader.result);
-//   //       this.itemImageBase64String = reader.result;
-//   //     };
-//   //     reader.onerror = (error) => {
-//   //       console.log(error);
-//   //       this.itemImageBase64String = null;
-//   //     };
-//   //  }
-
-
 
 
 srcToFile(src, fileName, mimeType) {
@@ -103,7 +73,6 @@ srcToFile(src, fileName, mimeType) {
       .then((buf) => { return new File([buf], fileName, {type:mimeType}); })
   );
 }
-
 
 
  checkBoxToggle(check: any) {
@@ -166,14 +135,6 @@ srcToFile(src, fileName, mimeType) {
     }
 
      submitForm() {
-
-      //  if image was uploaded:
-       if (this.itemImageBase64String == null) {
-        let str = "Image failed to upload." + '\n'+ "please try again."
-        this.global.showAlert(str,"Image Error");
-          return;
-       }
-
 
        if (this.cSaleItemForm.controls['itemSCategory'].value[0] == null) {
         this.global.showAlert("No Sale Category provided","Error updating sale item");

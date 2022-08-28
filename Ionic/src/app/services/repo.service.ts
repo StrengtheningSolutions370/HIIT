@@ -29,8 +29,8 @@ import { Schedule } from '../models/schedule';
 })
 
 export class RepoService {
-  // base = 'https://bsctest.azurewebsites.net/api/';
-  base = 'http://localhost:5001/api/';
+  base = 'https://bsctest.azurewebsites.net/api/';
+  //base = 'http://localhost:5001/api/';
   AppUserController = 'AppUser/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';

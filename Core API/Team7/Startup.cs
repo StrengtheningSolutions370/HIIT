@@ -70,7 +70,7 @@ namespace Team7
                         {
                             ValidIssuer = Configuration["Tokens:Issuer"],
                             ValidAudience = Configuration["Tokens:Audience"],
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:key"]))
                         };
                     });
 
@@ -130,7 +130,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("Josh")));
+            options.UseSqlServer(Configuration.GetConnectionString("Azure")));
 
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
