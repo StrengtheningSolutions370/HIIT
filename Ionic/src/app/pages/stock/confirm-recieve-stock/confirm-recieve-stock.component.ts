@@ -26,6 +26,7 @@ export class ConfirmRecieveStockComponent implements OnInit {
       next: (data : any) => {
         this.modalCtrl.dismiss();
         this.stockService.fetchStockEvent.emit();
+        this.global.showToast("Stock received successfully!")
       }
     }).add(() => { this.global.endNativeLoad() });
   }

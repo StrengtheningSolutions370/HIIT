@@ -36,12 +36,15 @@ export class StockPage implements OnInit {
   }
 
   fetch() {
+    this.count = 1;
     this.noresults = false;
     this.global.nativeLoad("Loading...");
     this.repo.getSupplier().subscribe({
       next: (suppliers : any) => {
         this.repo.getAllStock().subscribe({
           next: (stock : any) => {
+            this.stock = [];
+            this.stockOriginal = [];
             console.log(stock, suppliers);
             this.isLoading = false;
 
@@ -53,12 +56,16 @@ export class StockPage implements OnInit {
               this.stock.push({
                 ...el,
                 ...suppliers.find((supplier : any) => supplier.supplierID == el.supplierID),
-                OrderNo: this.count++
+                OrderNo: 0
               });
               this.stock[i].date = this.unixToDate(this.stock[i].date);
             });
 
-            this.stockOriginal = stock;
+            this.stock.forEach((el : any, i: number) => {
+              this.stock[i].OrderNo = i + 1;
+            });
+
+            this.stockOriginal = this.stock;
             this.global.orderHash = this.count;
 
             console.log('final', this.stock);

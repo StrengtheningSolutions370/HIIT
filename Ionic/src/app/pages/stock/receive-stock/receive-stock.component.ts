@@ -3,8 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
+import { SalesService } from 'src/app/services/sales/sales.service';
 import { StockService } from 'src/app/services/stock/stock.service';
 import { SupplierService } from 'src/app/services/supplier/supplier.service';
+import { AddSitemComponent } from '../../sale/sale-item/add-sitem/add-sitem.component';
 import { ConfirmRecieveStockComponent } from '../confirm-recieve-stock/confirm-recieve-stock.component';
 
 @Component({
@@ -27,7 +29,7 @@ export class ReceiveStockComponent implements OnInit {
   stock : any[] = [];
   validSaleItems = false;
 
-  constructor(private supplierService : StockService, private modalCtrl : ModalController, private repo : RepoService, private global : GlobalService, private formBuilder : FormBuilder) { }
+  constructor(private saleItemService : SalesService, private supplierService : StockService, private modalCtrl : ModalController, private repo : RepoService, private global : GlobalService, private formBuilder : FormBuilder) { }
 
   ngOnInit() {
 
@@ -36,6 +38,25 @@ export class ReceiveStockComponent implements OnInit {
       stocks: ['']
     });
 
+    this.fetch();
+
+    this.cStockForm.valueChanges.subscribe(() => {
+      this.validateForm();
+    });
+
+  }
+
+  async createNewSaleItem(){
+    const modal = await this.modalCtrl.create({
+      component: AddSitemComponent
+    });
+    await modal.present();
+    this.saleItemService.fetchSaleItemsEvent.subscribe(() => {
+      this.fetch();
+    });
+  }
+
+  fetch() {
     this.global.nativeLoad("Loading...");
     this.repo.getSupplier().subscribe({
       next: (data : any) => {
@@ -51,11 +72,6 @@ export class ReceiveStockComponent implements OnInit {
         }).add(() => { this.global.endNativeLoad() });
       }
     });
-
-    this.cStockForm.valueChanges.subscribe(() => {
-      this.validateForm();
-    });
-
   }
 
   async submitForm() {
