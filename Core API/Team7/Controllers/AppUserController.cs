@@ -19,6 +19,7 @@ using Team7.ViewModels;
 using Newtonsoft.Json.Linq;
 using System.Web;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Team7.Controllers
 {
@@ -57,6 +58,16 @@ namespace Team7.Controllers
                 oneTimePin += random.Next(0, 10).ToString();
             }
             return oneTimePin;
+        }
+
+        [HttpGet]
+        [Route("emaillist")]
+        public async Task<IActionResult> list()
+        {
+            List<AppUser> users = _userManager.Users.ToList();
+            Email e = new Email();
+            e.emailList(users, "subject here", "body here");
+            return Ok();
         }
 
         static string timeStamp()
