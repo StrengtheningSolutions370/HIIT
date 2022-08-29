@@ -166,6 +166,7 @@ import { AssociativeSupplierComponent } from './pages/suppliers/supplier-page/as
 //STOCK
 import { ViewOrderComponent } from './pages/stock/view-order/view-order.component';
 import { ReceiveStockComponent } from './pages/stock/receive-stock/receive-stock.component';
+import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stock/confirm-recieve-stock.component';
 
 
 @NgModule({
@@ -225,7 +226,7 @@ import { ReceiveStockComponent } from './pages/stock/receive-stock/receive-stock
    //Supplier
    AddSupplierComponent, UpdateSupplierComponent, DeleteSupplierComponent, ViewSupplierComponent, ConfirmSupplierComponent, AssociativeSupplierComponent,
    //Stock
-    ViewOrderComponent, ReceiveStockComponent,
+    ViewOrderComponent, ReceiveStockComponent, ConfirmRecieveStockComponent
 
 ],
   entryComponents: [],

@@ -53,7 +53,7 @@
                 <!-- <ion-select placeholder="Exercise" (ionChange)="setExercisePostID(exercise, $event)" [disabled]="!exercise.categoryset" type="text" required="" id="lessonEmployee" >
                   <ion-select-option *ngFor="let exe of exercise.exercise" value="{{exe.exerciseID}},{{exe.name}}">{{exe.name}}</ion-select-option>
                 </ion-select> -->
-                <ion-input minvalue="1" type="number" placeholder="Quantity" (ionChange)="setQuantity(item, $event)"></ion-input>
+                <ion-input minvalue="1" type="number" placeholder="Quantity" (input)="setQuantity(item, $event)"></ion-input>
   
               </div>
   
@@ -81,7 +81,7 @@
           <ion-button color="light" (click)="dismissModal()">Cancel</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button (click)="submitForm()" color="success" [disabled]="cStockForm.invalid || !validSaleItems">Create Lesson</ion-button>
+          <ion-button (click)="submitForm()" color="success" [disabled]="cStockForm.invalid || !validSaleItems">Recieve</ion-button>
         </ion-col>
       </ion-row>
     </div>

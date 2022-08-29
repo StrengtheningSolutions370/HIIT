@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
+import { StockService } from 'src/app/services/stock/stock.service';
+import { SupplierService } from 'src/app/services/supplier/supplier.service';
+import { ConfirmRecieveStockComponent } from '../confirm-recieve-stock/confirm-recieve-stock.component';
 
 @Component({
   selector: 'app-receive-stock',
@@ -23,7 +27,7 @@ export class ReceiveStockComponent implements OnInit {
   stock : any[] = [];
   validSaleItems = false;
 
-  constructor(private repo : RepoService, private global : GlobalService, private formBuilder : FormBuilder) { }
+  constructor(private supplierService : StockService, private modalCtrl : ModalController, private repo : RepoService, private global : GlobalService, private formBuilder : FormBuilder) { }
 
   ngOnInit() {
 
@@ -47,9 +51,34 @@ export class ReceiveStockComponent implements OnInit {
         }).add(() => { this.global.endNativeLoad() });
       }
     });
+
+    this.cStockForm.valueChanges.subscribe(() => {
+      this.validateForm();
+    });
+
   }
 
-  submitForm() {
+  async submitForm() {
+
+    const payload = {
+      supplierID : this.cStockForm.value.supplier.split(',')[0],
+      supplierName : this.cStockForm.value.supplier.split(',')[1],
+      saleItems: [],
+    }
+
+    this.stock.forEach((el : any, i : number) => {
+      payload.saleItems[i] = {
+        saleItemId : el.saleItemId,
+        quantity : el.quantity,
+        name: el.name
+      }
+    });
+
+    console.log(payload);
+
+    this.supplierService.showConfirm(payload).then(() => {
+      this.modalCtrl.dismiss();
+    })
 
   }
 
@@ -57,6 +86,8 @@ export class ReceiveStockComponent implements OnInit {
     console.log(item, event);
     const index = this.stock.findIndex(e => e.id == item.id);
     this.stock[index].saleItemId = event.target.value.split(',')[0];
+    const si = this.saleitems.find(e => e.saleItemID == event.target.value.split(',')[0]);
+    this.stock[index].name = si.name;
     this.updateDisplayCount();
     this.validateForm();
   }
@@ -91,7 +122,7 @@ export class ReceiveStockComponent implements OnInit {
     if (test.length != 0)
       return;
 
-    const test2 = this.stock.filter(e => e.quanity == -1);
+    const test2 = this.stock.filter(e => e.quantity == -1);
     
     if (test2.length != 0)
       return;
@@ -111,8 +142,9 @@ export class stockItem {
   constructor(id : number) {
     this.id = id;
   }
+  name : string;
   id : number;
   saleItemId : number = -1;
-  quanity : number = -1;
+  quantity : number = -1;
   displaycount : number = 1;
 }

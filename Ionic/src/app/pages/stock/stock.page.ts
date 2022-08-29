@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import Fuse from 'fuse.js';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -21,11 +21,16 @@ export class StockPage implements OnInit {
   stockOriginal : any[] = [];
   suppliers : any[] = [];
 
+  count = 1;
+
   constructor(private stockService : StockService, private repo : RepoService, private global : GlobalService, private modalCtrl : ModalController) { }
 
   ngOnInit() {
     this.stockService.fetchStockEvent.subscribe(() => {
       this.fetch();
+      this.modalCtrl.dismiss();
+      this.stock = [];
+      this.stockOriginal = [];
     });
     this.stockService.fetchStockEvent.emit();
   }
@@ -47,12 +52,14 @@ export class StockPage implements OnInit {
             stock.forEach((el : any, i: number) => {
               this.stock.push({
                 ...el,
-                ...suppliers.find((supplier : any) => supplier.supplierID == el.supplierID)
+                ...suppliers.find((supplier : any) => supplier.supplierID == el.supplierID),
+                OrderNo: this.count++
               });
               this.stock[i].date = this.unixToDate(this.stock[i].date);
             });
 
             this.stockOriginal = stock;
+            this.global.orderHash = this.count;
 
             console.log('final', this.stock);
           }
