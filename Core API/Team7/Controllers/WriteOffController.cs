@@ -7,6 +7,7 @@ using Team7.Models.Repository;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Team7.Controllers
 {
@@ -38,26 +39,50 @@ namespace Team7.Controllers
             var writeOffVM = wlvm.WriteOff;
             var saleItemVM = wlvm.SaleItems;
             var reasonVM = wlvm.WriteOffReasons;
+            var quantityList = wlvm.Quantity;
 
             WriteOff writeOff = new WriteOff();
             writeOff.Date = System.DateTime.Now;
             writeOff.EmployeeID = writeOffVM.EmployeeID;
             _writeOffRepo.Add(writeOff);
             await _writeOffRepo.SaveChangesAsync();
-            foreach (SaleItem saleItemVMID in saleItemVM)
+            var counter = 0;
+            foreach (int item in saleItemVM)
             {
                 WriteOffLine wl = new WriteOffLine();
-                wl.Quantity = wlvm.Quantity;
+                wl.Quantity = quantityList[counter];
                 wl.WriteOff = writeOff;
-                wl.SaleItem = await _saleItemRepo._GetSaleItemIdAsync(saleItemVMID.SaleItemID);
-                wl.WriteOffReason = await _writeOffReasonRepo._GetWriteOffReasonIdAsync(reasonVM);
+                wl.SaleItem = await _saleItemRepo._GetSaleItemIdAsync(item);
+                wl.WriteOffReason = await _writeOffReasonRepo._GetWriteOffReasonIdAsync(reasonVM[counter]);
                 _writeOffLineRepo.Add(wl);
                 writeOff.WriteOffLine.Add(wl);
+                counter++;
             }
 
             await _writeOffRepo.SaveChangesAsync();
             await _writeOffLineRepo.SaveChangesAsync();
             return Ok();
         }
+
+        //GET ALL
+        [HttpGet]
+        [Route("getAll")]
+        public async Task<IActionResult> GetPayments()
+        {
+            try
+            {
+                var writeoffList = await _writeOffLineRepo.GetAllWriteOffLinesAsync();
+                if (writeoffList == null)
+                {
+                    return Ok(0);
+                }
+                return Ok(writeoffList);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+        }
+
     }
 }
