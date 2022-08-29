@@ -18,6 +18,7 @@ import { GlobalService } from '../global/global.service';
 export class SupplierService {
 
   @Output() fetchSuppliersEvent = new EventEmitter<Supplier>();
+  @Output() closeUpdate = new EventEmitter<any>();
 
 
   constructor(public toastCtrl: ToastController, public repo: RepoService, private modalCtrl: ModalController, public alertCtrl: AlertController, public global : GlobalService) { 
@@ -50,19 +51,19 @@ export class SupplierService {
     });
    }
 
-   async duplicateAlert() {
+    async duplicateAlert() {
     console.trace();
     const alert = await this.alertCtrl.create({
       header: 'Supplier Already Exists',
       message: 'The Supplier Information entered already exists on the system',
       buttons: ['OK']
     });
-   alert.present();
+    alert.present();
   }
 
   
    //Receives a supplier to update in the service supplier list.
-   updateSupplier(id: number,supplier: any) {
+   updateSupplier(id: number, supplier: any) {
    
     return new Promise<any>((resolve, _) => {
       this.repo.updateSupplier(id, supplier).subscribe({

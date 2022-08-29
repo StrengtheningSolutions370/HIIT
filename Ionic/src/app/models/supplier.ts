@@ -1,5 +1,5 @@
 export class Supplier {
-    supplierId: number;
+    supplierID: number;
     name: string;
     email: string;
     cell : string;

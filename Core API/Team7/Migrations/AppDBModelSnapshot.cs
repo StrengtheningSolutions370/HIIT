@@ -589,6 +589,27 @@ namespace Team7.Migrations
                     b.ToTable("Measurement");
                 });
 
+            modelBuilder.Entity("Team7.Models.OrderRecieved", b =>
+                {
+                    b.Property<int>("OrderRecievedID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderRecievedID"), 1L, 1);
+
+                    b.Property<int>("Date")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SupplierID")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderRecievedID");
+
+                    b.HasIndex("SupplierID");
+
+                    b.ToTable("OrderRecieved");
+                });
+
             modelBuilder.Entity("Team7.Models.OrderStatus", b =>
                 {
                     b.Property<int>("OrderStatusID")
@@ -874,16 +895,37 @@ namespace Team7.Migrations
                     b.Property<int?>("SaleCategoryID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SupplierOrderID")
-                        .HasColumnType("int");
-
                     b.HasKey("SaleItemID");
 
                     b.HasIndex("SaleCategoryID");
 
-                    b.HasIndex("SupplierOrderID");
-
                     b.ToTable("SaleItem");
+                });
+
+            modelBuilder.Entity("Team7.Models.SaleItemOrder", b =>
+                {
+                    b.Property<int>("SaleItemOrderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SaleItemOrderID"), 1L, 1);
+
+                    b.Property<int>("OrderRecievedID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantityReceived")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SaleItemID")
+                        .HasColumnType("int");
+
+                    b.HasKey("SaleItemOrderID");
+
+                    b.HasIndex("OrderRecievedID");
+
+                    b.HasIndex("SaleItemID");
+
+                    b.ToTable("SaleItemOrder");
                 });
 
             modelBuilder.Entity("Team7.Models.SaleLine", b =>
@@ -1026,62 +1068,6 @@ namespace Team7.Migrations
                     b.HasKey("SupplierID");
 
                     b.ToTable("Supplier");
-                });
-
-            modelBuilder.Entity("Team7.Models.SupplierOrder", b =>
-                {
-                    b.Property<int>("SupplierOrderID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SupplierOrderID"), 1L, 1);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("OrderStatusID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SupplierID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.HasKey("SupplierOrderID");
-
-                    b.HasIndex("OrderStatusID");
-
-                    b.HasIndex("SupplierID");
-
-                    b.ToTable("SupplierOrder");
-                });
-
-            modelBuilder.Entity("Team7.Models.SupplierOrderLine", b =>
-                {
-                    b.Property<int>("SupplierOrderLineID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SupplierOrderLineID"), 1L, 1);
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SaleItemID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SupplierOrderID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.HasKey("SupplierOrderLineID");
-
-                    b.HasIndex("SaleItemID");
-
-                    b.HasIndex("SupplierOrderID");
-
-                    b.ToTable("SupplierOrderLine");
                 });
 
             modelBuilder.Entity("Team7.Models.Title", b =>
@@ -1398,6 +1384,17 @@ namespace Team7.Migrations
                     b.Navigation("Client");
                 });
 
+            modelBuilder.Entity("Team7.Models.OrderRecieved", b =>
+                {
+                    b.HasOne("Team7.Models.Supplier", "Supplier")
+                        .WithMany("Orders")
+                        .HasForeignKey("SupplierID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Supplier");
+                });
+
             modelBuilder.Entity("Team7.Models.PasswordHistory", b =>
                 {
                     b.HasOne("Team7.Models.AppUser", null)
@@ -1484,11 +1481,26 @@ namespace Team7.Migrations
                         .WithMany("SaleItem")
                         .HasForeignKey("SaleCategoryID");
 
-                    b.HasOne("Team7.Models.SupplierOrder", null)
-                        .WithMany("SaleItems")
-                        .HasForeignKey("SupplierOrderID");
-
                     b.Navigation("SaleCategory");
+                });
+
+            modelBuilder.Entity("Team7.Models.SaleItemOrder", b =>
+                {
+                    b.HasOne("Team7.Models.OrderRecieved", "OrdersRecieved")
+                        .WithMany("SaleItemOrders")
+                        .HasForeignKey("OrderRecievedID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Team7.Models.SaleItem", "SaleItems")
+                        .WithMany("SaleItemOrders")
+                        .HasForeignKey("SaleItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrdersRecieved");
+
+                    b.Navigation("SaleItems");
                 });
 
             modelBuilder.Entity("Team7.Models.SaleLine", b =>
@@ -1558,44 +1570,6 @@ namespace Team7.Migrations
                     b.Navigation("SaleItem");
 
                     b.Navigation("StockTake");
-                });
-
-            modelBuilder.Entity("Team7.Models.SupplierOrder", b =>
-                {
-                    b.HasOne("Team7.Models.OrderStatus", "OrderStatus")
-                        .WithMany("SupplierOrder")
-                        .HasForeignKey("OrderStatusID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Team7.Models.Supplier", "Supplier")
-                        .WithMany("SupplierOrder")
-                        .HasForeignKey("SupplierID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OrderStatus");
-
-                    b.Navigation("Supplier");
-                });
-
-            modelBuilder.Entity("Team7.Models.SupplierOrderLine", b =>
-                {
-                    b.HasOne("Team7.Models.SaleItem", "SaleItem")
-                        .WithMany()
-                        .HasForeignKey("SaleItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Team7.Models.SupplierOrder", "SupplierOrder")
-                        .WithMany("SupplierOrderLine")
-                        .HasForeignKey("SupplierOrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SaleItem");
-
-                    b.Navigation("SupplierOrder");
                 });
 
             modelBuilder.Entity("Team7.Models.WriteOff", b =>
@@ -1698,9 +1672,9 @@ namespace Team7.Migrations
                     b.Navigation("exercises");
                 });
 
-            modelBuilder.Entity("Team7.Models.OrderStatus", b =>
+            modelBuilder.Entity("Team7.Models.OrderRecieved", b =>
                 {
-                    b.Navigation("SupplierOrder");
+                    b.Navigation("SaleItemOrders");
                 });
 
             modelBuilder.Entity("Team7.Models.Payment", b =>
@@ -1744,6 +1718,8 @@ namespace Team7.Migrations
                 {
                     b.Navigation("PriceHistory");
 
+                    b.Navigation("SaleItemOrders");
+
                     b.Navigation("SaleLine");
 
                     b.Navigation("StockTakeLine");
@@ -1763,14 +1739,7 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.Supplier", b =>
                 {
-                    b.Navigation("SupplierOrder");
-                });
-
-            modelBuilder.Entity("Team7.Models.SupplierOrder", b =>
-                {
-                    b.Navigation("SaleItems");
-
-                    b.Navigation("SupplierOrderLine");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Team7.Models.Title", b =>

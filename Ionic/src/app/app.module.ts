@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './authentication/auth.interceptor';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 // import { PayPal } from '@ionic-native/paypal/ngx';
 // import { Stripe } from '@ionic-native/stripe/ngx';
 
@@ -162,6 +163,10 @@ import { ViewSupplierComponent } from './pages/suppliers/supplier-page/view-supp
 import { ConfirmSupplierComponent } from './pages/suppliers/supplier-page/confirm-supplier/confirm-supplier.component';
 import { AssociativeSupplierComponent } from './pages/suppliers/supplier-page/associative-supplier/associative-supplier.component';
 
+//STOCK
+import { ViewOrderComponent } from './pages/stock/view-order/view-order.component';
+import { ReceiveStockComponent } from './pages/stock/receive-stock/receive-stock.component';
+
 
 @NgModule({
   declarations: [AppComponent,
@@ -219,11 +224,13 @@ import { AssociativeSupplierComponent } from './pages/suppliers/supplier-page/as
   AddComponent, ConfirmMeasurementComponent,
    //Supplier
    AddSupplierComponent, UpdateSupplierComponent, DeleteSupplierComponent, ViewSupplierComponent, ConfirmSupplierComponent, AssociativeSupplierComponent,
+   //Stock
+    ViewOrderComponent, ReceiveStockComponent,
 
 ],
   entryComponents: [],
   imports: [
-    BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
+    BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule, GooglePlaceModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 
   bootstrap: [AppComponent]

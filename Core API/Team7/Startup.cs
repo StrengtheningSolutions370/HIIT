@@ -165,8 +165,6 @@ namespace Team7
             services.AddScoped<IScheduleRepo, ScheduleRepo>();
             services.AddScoped<IStockTakeLineRepo, StockTakeLineRepo>();
             services.AddScoped<IStockTakeRepo, StockTakeRepo>();
-            services.AddScoped<ISupplierOrderLineRepo, SupplierOrderLineRepo>();
-            services.AddScoped<ISupplierOrderRepo, SupplierOrderRepo>();
             services.AddScoped<ISupplierRepo, SupplierRepo>();
             services.AddScoped<ITitleRepo, TitleRepo>();
             services.AddScoped<IVenueRepo, VenueRepo>();
@@ -175,7 +173,8 @@ namespace Team7
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();
             services.AddScoped<IVATRepo, VATRepo>();
-            services.AddScoped<IReportRepo, ReportRepo>();
+            services.AddScoped<ISaleItemOrderRepo, SaleItemOrderRepo>();
+            services.AddScoped<IOrderRecievedRepo, OrderRecievedRepo>();
             //services.AddSwaggerGen();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);

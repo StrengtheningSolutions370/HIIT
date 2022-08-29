@@ -28,7 +28,7 @@ namespace Team7.Controllers
         {
             var suppliers = await _supplierRepo.GetAllSuppliersAsync();
 
-            if (suppliers == null)
+            if (suppliers != null)
                 foreach (var s in suppliers)
                 {
 
@@ -60,15 +60,29 @@ namespace Team7.Controllers
         //UPDATE
         [HttpPut]
         [Route("update")]
-        public async Task<IActionResult> updateSupplier(int id, [FromBody] SupplierViewModel svm)
+        public async Task<IActionResult> updateSupplier(int id, [FromBody] SupplierViewModel lvm)
         {
+            var suppliers = await _supplierRepo.GetAllSuppliersAsync();
+
+            if (suppliers == null)
+                foreach (var s in suppliers)
+                {
+
+                    if (s.Cell == lvm.Cell)
+                        return StatusCode(StatusCodes.Status409Conflict, "Supplier with the same Name exisits.");
+
+                    if (s.Email == lvm.Email)
+                        return StatusCode(StatusCodes.Status409Conflict, "Supplier with the same Email exists.");
+
+                }
+
             var supplier = await _supplierRepo.GetSupplierIdAsync(id);
             if (supplier == null)
                 return StatusCode(StatusCodes.Status404NotFound, "Supplier not found.");
-            supplier.Name = svm.Name;
-            supplier.Email = svm.Email;
-            supplier.Cell = svm.Cell;
-            supplier.Address = svm.Address;
+            supplier.Name = lvm.Name;
+            supplier.Email = lvm.Email;
+            supplier.Cell = lvm.Cell;
+            supplier.Address = lvm.Address;
 
             _supplierRepo.Update(supplier);
             if (!await _supplierRepo.SaveChangesAsync())
@@ -83,13 +97,6 @@ namespace Team7.Controllers
         {
 
             Supplier supplier = await this._supplierRepo.GetSupplierIdAsync(id);
-
-            if (supplier.SupplierOrder.Count != 0)
-                return StatusCode(StatusCodes.Status409Conflict, new
-                {
-                    error = "Cannot delete Supplier.",
-                    SupplierOrder = supplier.SupplierOrder
-                });
 
             _saleItemRepo.Delete(supplier);
             await _supplierRepo.SaveChangesAsync();

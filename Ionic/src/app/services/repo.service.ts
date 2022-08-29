@@ -55,6 +55,7 @@ export class RepoService {
   ReportController = 'Report/';
   PaymentController= 'Payment/';
   SupplierController= 'Supplier/';
+  StockController= 'Stock/';
 
 
   httpOptions = {
@@ -599,4 +600,16 @@ getSaleCategoryReport(): Observable<any>{
   // existsExercise(id: number): Observable<any> {
   //   return this.http.get(`${this.base + this.ExerciseController}exists?id=${id}`, this.httpOptions);
   // }
+  
+  //Stock
+  createStock(supplier: any): Observable<any> {
+    console.log();
+    return this.http.post<any>(`${this.base + this.StockController}add`, supplier, this.httpOptions);
+  }
+
+  //GetAll
+  getAllStock(): Observable<any> {
+    return this.http.get(`${this.base + this.StockController}getAll`, this.httpOptions);
+  }
+
 }

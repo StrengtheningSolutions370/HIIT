@@ -295,26 +295,42 @@ namespace Team7.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SupplierOrder",
+                name: "SaleItem",
                 columns: table => new
                 {
-                    SupplierOrderID = table.Column<int>(type: "int", nullable: false)
+                    SaleItemID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderStatusID = table.Column<int>(type: "int", nullable: false),
-                    SupplierID = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Quotable = table.Column<bool>(type: "bit", nullable: false),
+                    QuantityOnHand = table.Column<int>(type: "int", nullable: false),
+                    SaleCategoryID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SupplierOrder", x => x.SupplierOrderID);
+                    table.PrimaryKey("PK_SaleItem", x => x.SaleItemID);
                     table.ForeignKey(
-                        name: "FK_SupplierOrder_OrderStatus_OrderStatusID",
-                        column: x => x.OrderStatusID,
-                        principalTable: "OrderStatus",
-                        principalColumn: "OrderStatusID",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_SaleItem_SaleCategory_SaleCategoryID",
+                        column: x => x.SaleCategoryID,
+                        principalTable: "SaleCategory",
+                        principalColumn: "SaleCategoryID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderRecieved",
+                columns: table => new
+                {
+                    OrderRecievedID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SupplierID = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderRecieved", x => x.OrderRecievedID);
                     table.ForeignKey(
-                        name: "FK_SupplierOrder_Supplier_SupplierID",
+                        name: "FK_OrderRecieved_Supplier_SupplierID",
                         column: x => x.SupplierID,
                         principalTable: "Supplier",
                         principalColumn: "SupplierID",
@@ -356,32 +372,78 @@ namespace Team7.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SaleItem",
+                name: "PriceHistory",
                 columns: table => new
                 {
-                    SaleItemID = table.Column<int>(type: "int", nullable: false)
+                    PriceHistoryID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Quotable = table.Column<bool>(type: "bit", nullable: false),
-                    QuantityOnHand = table.Column<int>(type: "int", nullable: false),
-                    SaleCategoryID = table.Column<int>(type: "int", nullable: true),
-                    SupplierOrderID = table.Column<int>(type: "int", nullable: true)
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CostAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SaleAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SaleItemID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SaleItem", x => x.SaleItemID);
+                    table.PrimaryKey("PK_PriceHistory", x => x.PriceHistoryID);
                     table.ForeignKey(
-                        name: "FK_SaleItem_SaleCategory_SaleCategoryID",
-                        column: x => x.SaleCategoryID,
-                        principalTable: "SaleCategory",
-                        principalColumn: "SaleCategoryID");
+                        name: "FK_PriceHistory_SaleItem_SaleItemID",
+                        column: x => x.SaleItemID,
+                        principalTable: "SaleItem",
+                        principalColumn: "SaleItemID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockTakeLine",
+                columns: table => new
+                {
+                    StockTakeLineID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Difference = table.Column<int>(type: "int", nullable: false),
+                    StockTakeID = table.Column<int>(type: "int", nullable: false),
+                    SaleItemID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockTakeLine", x => x.StockTakeLineID);
                     table.ForeignKey(
-                        name: "FK_SaleItem_SupplierOrder_SupplierOrderID",
-                        column: x => x.SupplierOrderID,
-                        principalTable: "SupplierOrder",
-                        principalColumn: "SupplierOrderID");
+                        name: "FK_StockTakeLine_SaleItem_SaleItemID",
+                        column: x => x.SaleItemID,
+                        principalTable: "SaleItem",
+                        principalColumn: "SaleItemID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StockTakeLine_StockTake_StockTakeID",
+                        column: x => x.StockTakeID,
+                        principalTable: "StockTake",
+                        principalColumn: "StockTakeID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SaleItemOrder",
+                columns: table => new
+                {
+                    SaleItemOrderID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SaleItemID = table.Column<int>(type: "int", nullable: false),
+                    OrderRecievedID = table.Column<int>(type: "int", nullable: false),
+                    QuantityReceived = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SaleItemOrder", x => x.SaleItemOrderID);
+                    table.ForeignKey(
+                        name: "FK_SaleItemOrder_OrderRecieved_OrderRecievedID",
+                        column: x => x.OrderRecievedID,
+                        principalTable: "OrderRecieved",
+                        principalColumn: "OrderRecievedID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SaleItemOrder_SaleItem_SaleItemID",
+                        column: x => x.SaleItemID,
+                        principalTable: "SaleItem",
+                        principalColumn: "SaleItemID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -565,81 +627,6 @@ namespace Team7.Migrations
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PriceHistory",
-                columns: table => new
-                {
-                    PriceHistoryID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CostAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SaleAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SaleItemID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PriceHistory", x => x.PriceHistoryID);
-                    table.ForeignKey(
-                        name: "FK_PriceHistory_SaleItem_SaleItemID",
-                        column: x => x.SaleItemID,
-                        principalTable: "SaleItem",
-                        principalColumn: "SaleItemID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StockTakeLine",
-                columns: table => new
-                {
-                    StockTakeLineID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Difference = table.Column<int>(type: "int", nullable: false),
-                    StockTakeID = table.Column<int>(type: "int", nullable: false),
-                    SaleItemID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StockTakeLine", x => x.StockTakeLineID);
-                    table.ForeignKey(
-                        name: "FK_StockTakeLine_SaleItem_SaleItemID",
-                        column: x => x.SaleItemID,
-                        principalTable: "SaleItem",
-                        principalColumn: "SaleItemID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StockTakeLine_StockTake_StockTakeID",
-                        column: x => x.StockTakeID,
-                        principalTable: "StockTake",
-                        principalColumn: "StockTakeID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SupplierOrderLine",
-                columns: table => new
-                {
-                    SupplierOrderLineID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SupplierOrderID = table.Column<int>(type: "int", nullable: false),
-                    SaleItemID = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SupplierOrderLine", x => x.SupplierOrderLineID);
-                    table.ForeignKey(
-                        name: "FK_SupplierOrderLine_SaleItem_SaleItemID",
-                        column: x => x.SaleItemID,
-                        principalTable: "SaleItem",
-                        principalColumn: "SaleItemID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_SupplierOrderLine_SupplierOrder_SupplierOrderID",
-                        column: x => x.SupplierOrderID,
-                        principalTable: "SupplierOrder",
-                        principalColumn: "SupplierOrderID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1081,6 +1068,11 @@ namespace Team7.Migrations
                 column: "ClientID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderRecieved_SupplierID",
+                table: "OrderRecieved",
+                column: "SupplierID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PasswordHistory_AppUserId",
                 table: "PasswordHistory",
                 column: "AppUserId");
@@ -1131,9 +1123,14 @@ namespace Team7.Migrations
                 column: "SaleCategoryID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SaleItem_SupplierOrderID",
-                table: "SaleItem",
-                column: "SupplierOrderID");
+                name: "IX_SaleItemOrder_OrderRecievedID",
+                table: "SaleItemOrder",
+                column: "OrderRecievedID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SaleItemOrder_SaleItemID",
+                table: "SaleItemOrder",
+                column: "SaleItemID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SaleLine_SaleID",
@@ -1179,26 +1176,6 @@ namespace Team7.Migrations
                 name: "IX_StockTakeLine_StockTakeID",
                 table: "StockTakeLine",
                 column: "StockTakeID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SupplierOrder_OrderStatusID",
-                table: "SupplierOrder",
-                column: "OrderStatusID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SupplierOrder_SupplierID",
-                table: "SupplierOrder",
-                column: "SupplierID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SupplierOrderLine_SaleItemID",
-                table: "SupplierOrderLine",
-                column: "SaleItemID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SupplierOrderLine_SupplierOrderID",
-                table: "SupplierOrderLine",
-                column: "SupplierOrderID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WriteOff_EmployeeID",
@@ -1251,6 +1228,9 @@ namespace Team7.Migrations
                 name: "Measurement");
 
             migrationBuilder.DropTable(
+                name: "OrderStatus");
+
+            migrationBuilder.DropTable(
                 name: "PasswordHistory");
 
             migrationBuilder.DropTable(
@@ -1260,13 +1240,13 @@ namespace Team7.Migrations
                 name: "Refund");
 
             migrationBuilder.DropTable(
+                name: "SaleItemOrder");
+
+            migrationBuilder.DropTable(
                 name: "SaleLine");
 
             migrationBuilder.DropTable(
                 name: "StockTakeLine");
-
-            migrationBuilder.DropTable(
-                name: "SupplierOrderLine");
 
             migrationBuilder.DropTable(
                 name: "VAT");
@@ -1288,6 +1268,9 @@ namespace Team7.Migrations
 
             migrationBuilder.DropTable(
                 name: "RefundReason");
+
+            migrationBuilder.DropTable(
+                name: "OrderRecieved");
 
             migrationBuilder.DropTable(
                 name: "StockTake");
@@ -1326,22 +1309,16 @@ namespace Team7.Migrations
                 name: "Sale");
 
             migrationBuilder.DropTable(
-                name: "SaleCategory");
+                name: "Supplier");
 
             migrationBuilder.DropTable(
-                name: "SupplierOrder");
+                name: "SaleCategory");
 
             migrationBuilder.DropTable(
                 name: "Employee");
 
             migrationBuilder.DropTable(
                 name: "Client");
-
-            migrationBuilder.DropTable(
-                name: "OrderStatus");
-
-            migrationBuilder.DropTable(
-                name: "Supplier");
 
             migrationBuilder.DropTable(
                 name: "EmployeeType");

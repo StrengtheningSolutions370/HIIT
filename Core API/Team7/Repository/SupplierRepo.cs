@@ -40,7 +40,6 @@ namespace Team7.Models.Repository
                 Email = s.Email,
                 Cell = s.Cell,
                 Address = s.Address,
-                SupplierOrder = s.SupplierOrder,
             });
 
             if (!query.Any())
@@ -62,7 +61,6 @@ namespace Team7.Models.Repository
         //        return await query.ToArrayAsync();
         //    }
         //    return null;
-
         //}
 
         public async Task<Supplier> GetSupplierIdAsync(int id)
@@ -74,7 +72,6 @@ namespace Team7.Models.Repository
                 Email = s.Email,
                 Cell = s.Cell,
                 Address = s.Address,
-                SupplierOrder = s.SupplierOrder,
             });
 
             if (!query.Any())
