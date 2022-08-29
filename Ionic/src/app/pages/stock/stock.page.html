@@ -12,6 +12,11 @@
 </ion-header>
 
 <ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="top" >
+      <ion-tab-button tab="write-off">
+        <ion-label>Write-Off</ion-label>
+      </ion-tab-button>
 
   <br/>
   <ion-searchbar #search (ionClear)="searchOrder(search.value)" (ionInput)="searchOrder(search.value)" expand="block" placeholder='Search Order...' [(ngModel)]="filter"
@@ -52,11 +57,11 @@
     </ion-row>
   </ion-grid>
 
-  <ion-text id="noRes" *ngIf="!loading && noresults">
+  <ion-text id="noRes" *ngIf="!isLoading && noresults">
     <h1>No Results</h1>
   </ion-text>
 
-</ion-content>
+
 
 
 
@@ -64,3 +69,9 @@
   Bester Strength and Conditioning | info@besterstrengthandconditioning.co.za
   <br>
 </ion-footer> -->
+      <ion-tab-button tab="write-off-reason">
+        <ion-label>Write-Off Reason</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>
