@@ -7,6 +7,7 @@ using Team7.Models.Repository;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace Team7.Controllers
 {
@@ -30,7 +31,7 @@ namespace Team7.Controllers
         }
 
         //CREATE
-        [HttpGet]
+        [HttpPost]
         [Route("add")]
 
         public async Task<IActionResult> PostWriteOff(WriteOffLineViewModel wlvm)
@@ -38,7 +39,7 @@ namespace Team7.Controllers
             var writeOffVM = wlvm.WriteOff;
             var saleItemVM = wlvm.SaleItems;
             var reasonVM = wlvm.WriteOffReasons;
-            
+
             WriteOff writeOff = new WriteOff();
             writeOff.Date = System.DateTime.Now;
             writeOff.EmployeeID = writeOffVM.EmployeeID;
