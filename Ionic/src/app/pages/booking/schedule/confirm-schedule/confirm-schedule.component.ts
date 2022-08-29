@@ -18,6 +18,7 @@ export class ConfirmScheduleComponent implements ViewWillEnter{
   @Input() bookingTypeName: string;
   @Input() employeeName: string;
   @Input() lessonName: string;
+
   dateString: string;
   timeStart: string;
   timeEnd: string;

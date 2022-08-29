@@ -25,6 +25,7 @@ export class UpdateScheduleComponent implements OnInit {
     dateSelector: [, [Validators.required]],
     timeStartSelector: [, [Validators.required]],
     timeEndSelector: [,[Validators.required]],
+    schedulePrice: ['', [Validators.required, Validators.min(1)]],
     venueDrop : ['', [Validators.required]],
     bookingTypeDrop : ['', [Validators.required]],
     employeeDrop : ['', [Validators.required]],
@@ -44,6 +45,10 @@ export class UpdateScheduleComponent implements OnInit {
   timeEnd: Time;
 
   constructor(public formBuilder: UntypedFormBuilder, public scheduleService: ScheduleService, public modalCtrl:ModalController, public global: GlobalService) { }
+
+  get errorControl() {
+    return this.uCalendarForm.controls;
+  }
 
   ngOnInit() {
     this.scheduleService.venueService.getAllVenues().subscribe({
@@ -100,6 +105,12 @@ export class UpdateScheduleComponent implements OnInit {
       timeE.setMonth(dateTemp.getMonth());
       timeS.setFullYear(dateTemp.getFullYear());
       timeE.setFullYear(dateTemp.getFullYear());
+      var bphTemp: any = [{
+        amount: Number(this.uCalendarForm.controls['schedulePrice'].value)
+      }];
+
+      if (bphTemp.amount == this.schedule.bookingPriceHistory[49])
+
       var temp: Schedule = {
         startDateTime:timeS,
         endDateTime: timeE,
