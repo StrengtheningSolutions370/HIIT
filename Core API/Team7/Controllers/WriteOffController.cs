@@ -7,7 +7,6 @@ using Team7.Models.Repository;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
-using static iTextSharp.text.pdf.AcroFields;
 
 namespace Team7.Controllers
 {
@@ -51,7 +50,7 @@ namespace Team7.Controllers
                 wl.Quantity = wlvm.Quantity;
                 wl.WriteOff = writeOff;
                 wl.SaleItem = await _saleItemRepo._GetSaleItemIdAsync(saleItemVMID.SaleItemID);
-                wl.WriteOffReason = await _writeOffReasonRepo._GetWriteOffReasonIdAsync(reasonVM.WriteOffReasonID);
+                wl.WriteOffReason = await _writeOffReasonRepo._GetWriteOffReasonIdAsync(reasonVM);
                 _writeOffLineRepo.Add(wl);
                 writeOff.WriteOffLine.Add(wl);
             }
