@@ -35,6 +35,8 @@ export class ScheduleService {
 
   //Create:
   createSchedule(schedule: any){
+    console.log("Creating schedule in Schedule Service:");
+    console.log(schedule);
     this.repo.createScheduleEvent(schedule).subscribe(
       {
         next: () => {
@@ -93,12 +95,13 @@ export class ScheduleService {
   }
 
     //UPDATE Schedule event
-    async updateScheduleModal(scheduleEvent: any) {
+    async updateScheduleModal(schedule: Schedule) {
+      console.log(schedule);
       const modal = await this.modalCtrl.create({
         component: UpdateScheduleComponent,
         cssClass: 'calendar-modal',
         componentProps: {
-          scheduleEvent
+          schedule
         },
         backdropDismiss: true
       });
@@ -107,12 +110,13 @@ export class ScheduleService {
     }
 
     //DELETE Schedule event
-    async deleteScheduleModal(scheduleEvent: any) {
+    async deleteScheduleModal(schedule: any) {
+      console.log(schedule);
       const modal = await this.modalCtrl.create({
         component: DeleteScheduleComponent,
         cssClass: 'calendar-modal',
         componentProps: {
-          scheduleEvent
+          schedule
         },
         backdropDismiss: true
       });

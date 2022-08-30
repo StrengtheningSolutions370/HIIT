@@ -25,7 +25,7 @@ namespace Team7.Models
 
 
 
-        [Required]
+        //[Required]
         public int? SaleID { get; set; }
 
 

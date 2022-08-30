@@ -632,7 +632,6 @@ namespace Team7.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("SaleID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("PaymentID");
@@ -1395,9 +1394,7 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.Sale", "Sale")
                         .WithMany("Payment")
-                        .HasForeignKey("SaleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleID");
 
                     b.Navigation("Booking");
 

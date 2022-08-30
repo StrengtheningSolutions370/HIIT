@@ -101,7 +101,15 @@ namespace Team7.Controllers
 
                 if (schedule.BookingPriceHistory != null)
                 {
-                    toUpdate.BookingPriceHistory.Add(schedule.BookingPriceHistory.FirstOrDefault());
+                    BookingPriceHistory bookingPrice = new BookingPriceHistory
+                    {
+                        Amount = schedule.BookingPriceHistory.FirstOrDefault().Amount,
+                        Date = System.DateTime.Now,
+                        ScheduleID = schedule.ScheduleID,
+                        Schedule = schedule
+                    };
+
+                    toUpdate.BookingPriceHistory.Add(bookingPrice);
                 }
 
 
@@ -112,7 +120,7 @@ namespace Team7.Controllers
                 toUpdate.LessonID = schedule.LessonID;
                 toUpdate.EmployeeID = schedule.EmployeeID;
 
-                //ScheduleRepo.Update<Schedule>(schedule);
+                //ScheduleRepo.Update<Schedule>(toUpdate);
                 //Testing if this way works.. doubt it when we update stuff like venue, booking attendance etc. 
 
                 if (await ScheduleRepo.SaveChangesAsync())

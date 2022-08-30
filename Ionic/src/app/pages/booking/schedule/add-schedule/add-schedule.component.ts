@@ -8,13 +8,13 @@ import {Lesson} from 'src/app/models/lesson'
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
 import { Schedule } from 'src/app/models/schedule';
-import { format, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-add-schedule',
   templateUrl: './add-schedule.component.html',
   styleUrls: ['./add-schedule.component.scss'],
 })
+
 export class AddScheduleComponent implements AfterViewInit {
 
   cCalendarForm: UntypedFormGroup = this.formBuilder.group({
@@ -117,7 +117,7 @@ export class AddScheduleComponent implements AfterViewInit {
       var temp: Schedule = {
         startDateTime:timeS,
         endDateTime: timeE,
-        bookingAttendance: null,
+        bookingAttendance: null, // Passed as null in add because it's created in construction on API side
         bookingPriceHistory: bphTemp,
         venueID:this.cCalendarForm.value['venueDrop'].split(',')[0],
         bookingTypeID:this.cCalendarForm.value['bookingTypeDrop'].split(',')[0],

@@ -33,8 +33,8 @@ export class CalendarPage implements AfterViewInit {
     lesson:{},
     employee:{},
     bookingPriceHistory:null,
-    startTime: null,
-    endTime: null
+    startDateTime: null,
+    endDateTime: null
   }
 
   //Create local schedule array to be populated onInit.

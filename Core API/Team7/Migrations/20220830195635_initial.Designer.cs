@@ -12,7 +12,7 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220827180111_initial")]
+    [Migration("20220830195635_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -634,7 +634,6 @@ namespace Team7.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("SaleID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("PaymentID");
@@ -1397,9 +1396,7 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.Sale", "Sale")
                         .WithMany("Payment")
-                        .HasForeignKey("SaleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleID");
 
                     b.Navigation("Booking");
 

@@ -718,7 +718,7 @@ namespace Team7.Migrations
                     PaymentID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PaymentTypeID = table.Column<int>(type: "int", nullable: false),
-                    SaleID = table.Column<int>(type: "int", nullable: false),
+                    SaleID = table.Column<int>(type: "int", nullable: true),
                     BookingID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -739,8 +739,7 @@ namespace Team7.Migrations
                         name: "FK_Payment_Sale_SaleID",
                         column: x => x.SaleID,
                         principalTable: "Sale",
-                        principalColumn: "SaleID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "SaleID");
                 });
 
             migrationBuilder.CreateTable(

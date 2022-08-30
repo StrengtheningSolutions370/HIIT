@@ -11,16 +11,16 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class DeleteScheduleComponent implements OnInit {
-  @Input() scheduleEvent: Schedule;
+  @Input() schedule: Schedule;
   constructor(public scheduleService: ScheduleService, public global: GlobalService) { }
 
   ngOnInit() {
     console.log("Delete schedule view:");
-    console.log(this.scheduleEvent);
+    console.log(this.schedule);
   }
 
   delete() {
-    this.scheduleService.deleteScheduleEvent(this.scheduleEvent.scheduleID);
+    this.scheduleService.deleteScheduleEvent(this.schedule.scheduleID);
     this.global.dismissModal();
     this.global.showToast("The Schedule Event has been successfully deleted");
   }

@@ -33,8 +33,8 @@ export class SchedulePage implements AfterViewInit  {
     lesson:{},
     employee:{},
     bookingPriceHistory:null,
-    startTime: null,
-    endTime: null
+    startDateTime: null,
+    endDateTime: null
   }
 
     //Create local schedule array to be populated onInit.
@@ -176,8 +176,8 @@ export class SchedulePage implements AfterViewInit  {
     alert.present();
   }
 
-  updateEvent(event: any){
-    console.log("Updating event: " + event);
+  updateEvent(event: Schedule){
+    console.log("Updating event: " + event.scheduleID);
     this.scheduleService.updateScheduleModal(event);
   }
 

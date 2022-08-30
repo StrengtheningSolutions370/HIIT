@@ -66,9 +66,15 @@ export class ConfirmScheduleComponent implements ViewWillEnter{
     //1 = confirm ADD
   //2 = confirm UPDATE
   async confirmChanges(){
-    var tempPrice: any = [{
-      amount: this.scheduleEvent.bookingPriceHistory[0].amount
-    }]
+    var tempPrice: any = null;
+    if (this.scheduleEvent.bookingPriceHistory != null){
+      tempPrice = [{
+        amount: this.scheduleEvent.bookingPriceHistory[0].amount
+      }]
+    }
+
+
+
     console.log(this.choice);
     var final: Schedule = {
       bookingAttendance : null, //set to null at first and created on API side
