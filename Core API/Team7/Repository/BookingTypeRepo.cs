@@ -46,10 +46,25 @@ namespace Team7.Models.Repository
                     bt.Description,
                     bt.Colour,
                     bt.Capacity,
-                    BookingPriceHistory =
-                        bt
-                        .BookingPriceHistory
-                        .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                    Schedule =
+                            bt
+                            .Schedule
+                            .Select(sch => new {
+                                sch.ScheduleID,
+                                sch.Venue,
+                                Lesson = new { sch.Lesson.LessonID, sch.Lesson.Name },
+                                sch.StartDateTime,
+                                sch.EndDateTime,
+                                sch.Employee,
+                                BookingAttendance =
+                            sch
+                            .BookingAttendance
+                            .Select(ba => new { ba.BookingAttendanceID, ba.Attended }),
+                                BookingPriceHistory =
+                            sch
+                            .BookingPriceHistory
+                            .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                            })
                 }).ToListAsync()
             };
         }
@@ -72,10 +87,25 @@ namespace Team7.Models.Repository
                         bt.Description,
                         bt.Colour,
                         bt.Capacity,
-                        BookingPriceHistory =
+                        Schedule =
                             bt
+                            .Schedule
+                            .Select(sch => new {
+                                sch.ScheduleID,
+                                sch.Venue,
+                                Lesson = new { sch.Lesson.LessonID, sch.Lesson.Name },
+                                sch.StartDateTime,
+                                sch.EndDateTime,
+                                sch.Employee,
+                                BookingAttendance =
+                            sch
+                            .BookingAttendance
+                            .Select(ba => new { ba.BookingAttendanceID, ba.Attended }),
+                                BookingPriceHistory =
+                            sch
                             .BookingPriceHistory
                             .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                            })
                     }).ToListAsync()
                 };
             }
@@ -103,15 +133,22 @@ namespace Team7.Models.Repository
                         Schedule =
                             bt
                             .Schedule
-                            .Select(sch => new { sch.ScheduleID, sch.BookingType, sch.DateSession, sch.Employee, BookingAttendance =
+                            .Select(sch => new {
+                                sch.ScheduleID,
+                                sch.Venue,
+                                Lesson = new { sch.Lesson.LessonID, sch.Lesson.Name },
+                                sch.StartDateTime,
+                                sch.EndDateTime,
+                                sch.Employee,
+                                BookingAttendance =
                             sch
                             .BookingAttendance
-                            .Select(ba => new { ba.BookingAttendanceID, ba.Attended}) }),
-
-                        BookingPriceHistory =
-                            bt
+                            .Select(ba => new { ba.BookingAttendanceID, ba.Attended }),
+                                BookingPriceHistory =
+                            sch
                             .BookingPriceHistory
                             .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                            })
                     }).ToListAsync()
                 };
             }

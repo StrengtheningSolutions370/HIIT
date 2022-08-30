@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -119,7 +119,6 @@ import { ViewWriteOffReasonComponent } from './pages/stock/write-off-reason/view
 
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
-import { TimeRangeComponent } from './pages/booking/time-range/time-range.component';
 
 //CART IMPORTS:
 import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
@@ -140,10 +139,16 @@ import { DeleteLessonComponent } from './pages/lessons/delete-lesson/delete-less
 import { ViewLessonComponent } from './pages/lessons/view-lesson/view-lesson.component';
 import { ConfirmLessonComponent } from './pages/lessons/confirm-lesson/confirm-lesson.component';
 import { AssociativeLessonComponent } from './pages/lessons/associative-lesson/associative-lesson.component';
+
 //SCHEDULE IMPORTS:
 import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-schedule.component';
-import { DatePipe } from '@angular/common';
 import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedule/update-schedule.component';
+import { DeleteScheduleComponent } from './pages/booking/schedule/delete-schedule/delete-schedule.component';
+import { ConfirmScheduleComponent } from './pages/booking/schedule/confirm-schedule/confirm-schedule.component';
+
+//BOOKING IMPORTS:
+import { AddBookingComponent } from './pages/class-booking/add-booking/add-booking.component';
+import { CancelBookingComponent } from './pages/class-booking/cancel-booking/cancel-booking.component';
 
 //CLIENT IMPORTS:
 import { DeleteClientComponent } from './pages/user/clients/delete-client/delete-client.component';
@@ -167,7 +172,6 @@ import { AssociativeSupplierComponent } from './pages/suppliers/supplier-page/as
 import { ViewOrderComponent } from './pages/stock/view-order/view-order.component';
 import { ReceiveStockComponent } from './pages/stock/receive-stock/receive-stock.component';
 import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stock/confirm-recieve-stock.component';
-
 
 @NgModule({
   declarations: [AppComponent,
@@ -202,8 +206,6 @@ import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stoc
   AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
   //ExerciseCategory
   AddExerciseCategoryComponent, UpdateExerciseCategoryComponent, DeleteExerciseCategoryComponent, ViewExerciseCategoryComponent, ConfirmExerciseCategoryComponent, AssociativeExerciseCategoryComponent,
-  //Side Menu
-  SidemenuComponent,
   //RefundReason
   ConfirmRefundReasonComponent, AddRefundReasonComponent, UpdateRefundReasonComponent, ViewRefundReasonComponent, DeleteRefundReasonComponent, AssociativeRefundReasonComponent,
   //Employee
@@ -212,10 +214,11 @@ import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stoc
   AddWriteOffReasonComponent, AssociativeWriteOffReasonComponent, ConfirmWriteOffReasonComponent, DeleteWriteOffReasonComponent, UpdateWriteOffReasonComponent, ViewWriteOffReasonComponent,
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
+  //Booking
+  AddBookingComponent, CancelBookingComponent,
   //Schedule
-  TimeRangeComponent, AddScheduleComponent, UpdateScheduleComponent,
+  AddScheduleComponent, UpdateScheduleComponent, DeleteScheduleComponent, ConfirmScheduleComponent,
   //Exercise
-
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
   //Lesson
   AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
@@ -226,7 +229,9 @@ import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stoc
    //Supplier
    AddSupplierComponent, UpdateSupplierComponent, DeleteSupplierComponent, ViewSupplierComponent, ConfirmSupplierComponent, AssociativeSupplierComponent,
    //Stock
-    ViewOrderComponent, ReceiveStockComponent, ConfirmRecieveStockComponent
+    ViewOrderComponent, ReceiveStockComponent, ConfirmRecieveStockComponent,
+  //Side Menu
+  SidemenuComponent
 
 ],
   entryComponents: [],

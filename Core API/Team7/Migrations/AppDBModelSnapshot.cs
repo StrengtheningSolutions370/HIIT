@@ -294,15 +294,15 @@ namespace Team7.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("BookingTypeID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ScheduleID")
+                        .HasColumnType("int");
+
                     b.HasKey("BookingPriceHistoryID");
 
-                    b.HasIndex("BookingTypeID");
+                    b.HasIndex("ScheduleID");
 
                     b.ToTable("BookingPriceHistory");
                 });
@@ -367,25 +367,6 @@ namespace Team7.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Client");
-                });
-
-            modelBuilder.Entity("Team7.Models.DateSession", b =>
-                {
-                    b.Property<int>("DateSessionID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DateSessionID"), 1L, 1);
-
-                    b.Property<DateTime>("EndDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("DateSessionID");
-
-                    b.ToTable("DateSession");
                 });
 
             modelBuilder.Entity("Team7.Models.Employee", b =>
@@ -672,7 +653,6 @@ namespace Team7.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("SaleID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("PaymentID");
@@ -965,24 +945,24 @@ namespace Team7.Migrations
                     b.Property<int?>("BookingTypeID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DateSessionID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("EmployeeID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("LessonID")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("VenueID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("ScheduleID");
 
                     b.HasIndex("BookingTypeID");
-
-                    b.HasIndex("DateSessionID");
 
                     b.HasIndex("EmployeeID");
 
@@ -1295,11 +1275,11 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.BookingPriceHistory", b =>
                 {
-                    b.HasOne("Team7.Models.BookingType", "BookingType")
+                    b.HasOne("Team7.Models.Schedule", "Schedule")
                         .WithMany("BookingPriceHistory")
-                        .HasForeignKey("BookingTypeID");
+                        .HasForeignKey("ScheduleID");
 
-                    b.Navigation("BookingType");
+                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("Team7.Models.Client", b =>
@@ -1416,9 +1396,7 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.Sale", "Sale")
                         .WithMany("Payment")
-                        .HasForeignKey("SaleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleID");
 
                     b.Navigation("Booking");
 
@@ -1524,10 +1502,6 @@ namespace Team7.Migrations
                         .WithMany("Schedule")
                         .HasForeignKey("BookingTypeID");
 
-                    b.HasOne("Team7.Models.DateSession", "DateSession")
-                        .WithMany("Schedule")
-                        .HasForeignKey("DateSessionID");
-
                     b.HasOne("Team7.Models.Employee", "Employee")
                         .WithMany("Schedule")
                         .HasForeignKey("EmployeeID");
@@ -1538,13 +1512,9 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.Venue", "Venue")
                         .WithMany("Schedules")
-                        .HasForeignKey("VenueID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VenueID");
 
                     b.Navigation("BookingType");
-
-                    b.Navigation("DateSession");
 
                     b.Navigation("Employee");
 
@@ -1622,8 +1592,6 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.BookingType", b =>
                 {
-                    b.Navigation("BookingPriceHistory");
-
                     b.Navigation("Schedule");
                 });
 
@@ -1632,11 +1600,6 @@ namespace Team7.Migrations
                     b.Navigation("Booking");
 
                     b.Navigation("Measurement");
-                });
-
-            modelBuilder.Entity("Team7.Models.DateSession", b =>
-                {
-                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("Team7.Models.Employee", b =>
@@ -1730,6 +1693,8 @@ namespace Team7.Migrations
             modelBuilder.Entity("Team7.Models.Schedule", b =>
                 {
                     b.Navigation("BookingAttendance");
+
+                    b.Navigation("BookingPriceHistory");
                 });
 
             modelBuilder.Entity("Team7.Models.StockTake", b =>

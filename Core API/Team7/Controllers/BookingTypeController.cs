@@ -25,29 +25,29 @@ namespace Team7.Controllers
         {
             try
             {
-                BookingType toAdd = new BookingType
-                {
-                    Name = bookingType.Name,
-                    Description = bookingType.Description,
-                    Capacity = bookingType.Capacity,
-                    Colour = bookingType.Colour
-                };
+                //BookingType toAdd = new BookingType
+                //{
+                //    Name = bookingType.Name,
+                //    Description = bookingType.Description,
+                //    Capacity = bookingType.Capacity,
+                //    Colour = bookingType.Colour
+                //};
 
-                if (bookingType.BookingPriceHistory != null)
-                {
-                    BookingPriceHistory btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
+                ////if (bookingType.BookingPriceHistory != null)
+                ////{
+                ////    BookingPriceHistory btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
 
-                    BookingPriceHistory bookingPrice = new BookingPriceHistory
-                    {
-                        Amount = btPriceHistory.Amount,
-                        Date = System.DateTime.Now,
-                        BookingTypeID = bookingType.BookingTypeID,
-                        BookingType = bookingType
-                    };
-                    toAdd.BookingPriceHistory.Add(bookingPrice);
-                }
+                ////    BookingPriceHistory bookingPrice = new BookingPriceHistory
+                ////    {
+                ////        Amount = btPriceHistory.Amount,
+                ////        Date = System.DateTime.Now,
+                ////        ScheduleID = bookingType.BookingTypeID,
+                ////        BookingType = bookingType
+                ////    };
+                ////    toAdd.BookingPriceHistory.Add(bookingPrice);
+                ////}
 
-                BookingTypeRepo.Add(toAdd);
+                BookingTypeRepo.Add(bookingType);
                 if (await BookingTypeRepo.SaveChangesAsync())
                 {
                     return Ok();
@@ -83,19 +83,19 @@ namespace Team7.Controllers
                 toUpdate.Colour = bookingType.Colour;
 
 
-                if (bookingType.BookingPriceHistory != null)
-                {
-                    var btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
+                //if (bookingType.BookingPriceHistory != null)
+                //{
+                //    var btPriceHistory = bookingType.BookingPriceHistory.FirstOrDefault();
 
-                    BookingPriceHistory bookingPrice = new BookingPriceHistory
-                    {
-                        Amount = btPriceHistory.Amount,
-                        Date = System.DateTime.Now,
-                        BookingTypeID = bookingType.BookingTypeID,
-                        BookingType = bookingType
-                    };
-                    toUpdate.BookingPriceHistory.Add(bookingPrice);
-                }
+                //    BookingPriceHistory bookingPrice = new BookingPriceHistory
+                //    {
+                //        Amount = btPriceHistory.Amount,
+                //        Date = System.DateTime.Now,
+                //        ScheduleID = bookingType.BookingTypeID,
+                //        BookingType = bookingType
+                //    };
+                //    toUpdate.BookingPriceHistory.Add(bookingPrice);
+                //}
 
                 if (await BookingTypeRepo.SaveChangesAsync())
                 {
