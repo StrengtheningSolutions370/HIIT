@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using static iTextSharp.text.pdf.AcroFields;
+using System.Diagnostics.Metrics;
 
 namespace Team7.Controllers
 {
@@ -46,7 +48,19 @@ namespace Team7.Controllers
             writeOff.EmployeeID = writeOffVM.EmployeeID;
             _writeOffRepo.Add(writeOff);
             await _writeOffRepo.SaveChangesAsync();
-            var counter = 0;
+
+            WriteOffLine wl = new WriteOffLine();
+            wl.Quantity = quantityList;
+            wl.WriteOff = writeOff;
+            wl.SaleItem = await _saleItemRepo._GetSaleItemIdAsync(saleItemVM);
+            wl.WriteOffReason = await _writeOffReasonRepo._GetWriteOffReasonIdAsync(reasonVM);
+            _writeOffLineRepo.Add(wl);
+            writeOff.WriteOffLine.Add(wl);
+
+            var toUpdate = wl.SaleItem;
+            toUpdate.QuantityOnHand = toUpdate.QuantityOnHand - wl.Quantity;
+            _saleItemRepo.Update<SaleItem>(toUpdate);
+            /*var counter = 0;
             foreach (int item in saleItemVM)
             {
                 WriteOffLine wl = new WriteOffLine();
@@ -57,7 +71,11 @@ namespace Team7.Controllers
                 _writeOffLineRepo.Add(wl);
                 writeOff.WriteOffLine.Add(wl);
                 counter++;
-            }
+
+                var toUpdate = wl.SaleItem;
+                toUpdate.QuantityOnHand = toUpdate.QuantityOnHand - wl.Quantity;
+                _saleItemRepo.Update<SaleItem>(toUpdate);
+            }*/
 
             await _writeOffRepo.SaveChangesAsync();
             await _writeOffLineRepo.SaveChangesAsync();

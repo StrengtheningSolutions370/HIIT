@@ -51,7 +51,7 @@ export class UpdateWriteOffReasonComponent implements ViewWillEnter {
       temp = {
         writeOffReasonID: this.writeOffReason.writeOffReasonID,
         description: this.uWriteOffReasonForm.value['writeOffReasonDescription'],
-        writeOffLines: []
+        writeOffs: []
       };
        console.log(temp);
        this.writeOffReasonService.confirmWriteOffReasonModal(choice,temp);

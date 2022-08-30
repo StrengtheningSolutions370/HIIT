@@ -45,6 +45,7 @@ import { UpdateSitemComponent } from './pages/sale/sale-item/update-sitem/update
 import { DeleteSitemComponent } from './pages/sale/sale-item/delete-sitem/delete-sitem.component';
 import { ViewSitemComponent } from './pages/sale/sale-item/view-sitem/view-sitem.component';
 import { ConfirmSitemComponent } from './pages/sale/sale-item/confirm-sitem/confirm-sitem.component';
+import { WriteOffSitemComponent } from './pages/sale/sale-item/write-off-sitem/write-off-sitem.component';
 
 //EMPLOYEE_QUALIFICATION_TYPE IMPORTS:
 import { AddQtypeComponent } from './pages/employee/qualification-type/add-qtype/add-qtype.component';
@@ -171,7 +172,7 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   //SalesCategory
   AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent, AssociativeCategoryComponent,
   //SalesItem
-  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent, WriteOffSitemComponent,
   //SideMenu
   SidemenuComponent,
   //Qualification

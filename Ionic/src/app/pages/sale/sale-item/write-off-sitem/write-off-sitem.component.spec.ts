@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { WriteOffReasonPage } from './write-off-reason.page';
+import { WriteOffSitemComponent } from './write-off-sitem.component';
 
-describe('WriteOffReasonPage', () => {
-  let component: WriteOffReasonPage;
-  let fixture: ComponentFixture<WriteOffReasonPage>;
+describe('WriteOffSitemComponent', () => {
+  let component: WriteOffSitemComponent;
+  let fixture: ComponentFixture<WriteOffSitemComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ WriteOffReasonPage ],
+      declarations: [ WriteOffSitemComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(WriteOffReasonPage);
+    fixture = TestBed.createComponent(WriteOffSitemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
