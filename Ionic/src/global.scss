@@ -78,3 +78,56 @@ ion-popover {
 .redDelete {
   color: red !important;
 }
+//CSS for all cards displaying in list///////
+// ion-card {
+//   display: inline-flex;
+//   flex-direction: column;
+//   width: 100% !important;
+//   height: 100% !important;
+//   margin: 0 !important;
+//   max-height: 400px;
+//   height: 300px;
+// }
+
+///////////////////////////////////////////////////////////////////////////
+//CSS for all forms
+.itemLabel{
+  font-size: large;
+  margin-left: 10%;
+  margin-top: 2%;
+}
+
+.input{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-right: 10%;
+  margin-left: 10%;
+  width: 80%;
+
+  border: 1.5px solid #ccc;
+
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.containerMargins{
+  margin-top: 2%;
+  margin-bottom: 2%;
+  height: 96%;
+}
+
+.img-wrapper {
+  min-height: 100px;
+  min-width: 120px;
+  width: 100%;
+  height:auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 1%;
+  // margin-left: 10%;
+  // margin-right: 10%
+}
+
+
+//////////////////////////////////////////////////////////////////////////

@@ -3,8 +3,9 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
-import { Cart } from '../models/cart';
 import { cartLine } from '../models/cart-line';
+import { Cart, saleLine } from '../models/cart';
+import { SaleItem } from '../models/sale-item';
 import { CartModalPage } from '../pages/shop/cart-modal/cart-modal.page';
 import { CheckoutComponent } from '../pages/shop/checkout/checkout.component';
 import { PaymentPage } from '../pages/shop/payment/payment.page';
@@ -55,22 +56,16 @@ export class CartService {
 
   }
 
-  alertClearCart(index, items, data) {
-    // this.global.showAlert(
-    //   'Your cart contain items from a different restaurant. Would you like to reset your cart before browsing the restaurant?',
-    //   'Items already in Cart');
-  }
 
-  async quantityPlus(index, items?) {
+  async quantityPlus(index, sales?) {
     console.log('Cart Service: quantityPlus()');
     try {
-      if(items) {this.model.items = [...items];}
-      console.log('Quantity plus: ', this.model.items[index]);
-      // this.model.items[index].quantity += 1;
-      if(!this.model.items[index].quantityChange || this.model.items[index].quantityChange === 0) {
-        this.model.items[index].quantityChange = 1;
+      if(sales) {this.model.sales = [...sales];}
+      console.log('Quantity plus: ', this.model.sales[index]);
+      if(!this.model.sales[index].quantityChange || this.model.sales[index].quantityChange === 0) {
+        this.model.sales[index].quantityChange = 1;
       } else {
-        this.model.items[index].quantityChange += 1; // this.model.items[index].quantity = this.model.items[index].quantity + 1
+        this.model.sales[index].quantityChange += 1; // this.model.sales[index].quantity = this.model.sales[index].quantity + 1
       }
       await this.calculate();
       this._cart.next(this.model);
@@ -80,17 +75,17 @@ export class CartService {
     }
   }
 
-  async quantityMinus(index, items?: cartLine[]) {
+  async quantityMinus(index, sales?: any[]) {
     try {
-      if(items) {
+      if(sales) {
         console.log('model: ', this.model);
-        this.model.items = [...items];
+        this.model.sales = [...sales];
       }
-      console.log('item: ', this.model.items[index]);
-      if(this.model.items[index].quantityChange && this.model.items[index].quantityChange !== 0) {
-        this.model.items[index].quantityChange -= 1; // this.model.items[index].quantity = this.model.items[index].quantity - 1
+      console.log('item: ', this.model.sales[index]);
+      if(this.model.sales[index].quantityChange && this.model.sales[index].quantityChange !== 0) {
+        this.model.sales[index].quantityChange -= 1;
       } else {
-        this.model.items[index].quantityChange = 0;
+        this.model.sales[index].quantityChange = 0;
       }
       await this.calculate();
       this._cart.next(this.model);
@@ -101,30 +96,29 @@ export class CartService {
   }
 
   async calculate() {
-    const item = this.model.items.filter(x => x.quantityChange > 0);
-    this.model.items = item;
-    this.model.totalPrice = 0;
-    this.model.totalItem = 0;
-    this.model.grandTotal = 0;
-    this.model.items.forEach(element => {
-      this.model.totalItem += element.quantityChange;
-      let subTotal = element.priceHistory[element.priceHistory.length-1].saleAmount;
-      element.subTotal = subTotal * element.quantityChange;
-      this.model.totalPrice += (subTotal * element.quantityChange);
-    });
-    // console.log("Final price: ");
-    // console.log(this.model.totalPrice);
-    // this.model.totalPrice = parseFloat(this.model.totalPrice).toFixed(2);
-    // this.model.grandTotal = (parseFloat(this.model.totalPrice) + parseFloat(this.model.deliveryCharge)).toFixed(2);
-    this.model.grandTotal = this.model.totalPrice;
-    if(this.model.totalItem === 0) {
-      this.model.totalItem = 0;
-      this.model.totalPrice = 0;
-      this.model.grandTotal = 0;
-      await this.clearCart();
-      this.model = {} as Cart;
-    }
-    console.log('cart: ', this.model);
+    // const item = this.model.sales.filter(x => x.quantityChange > 0);
+    // this.model.sales = item;
+
+    // this.model.grandTotal = 0;
+    // this.model.sales.forEach(element => {
+    //   this.model.sales.length += element.quantityChange;
+    //   let subTotal = element.priceHistory[element.priceHistory.length-1].saleAmount;
+    //   element.subTotal = subTotal * element.quantityChange;
+    //   this.model.totalPrice += (subTotal * element.quantityChange);
+    // });
+    // // console.log("Final price: ");
+    // // console.log(this.model.totalPrice);
+    // // this.model.totalPrice = parseFloat(this.model.totalPrice).toFixed(2);
+    // // this.model.grandTotal = (parseFloat(this.model.totalPrice) + parseFloat(this.model.deliveryCharge)).toFixed(2);
+    // this.model.grandTotal = this.model.totalPrice;
+    // if(this.model.totalItem === 0) {
+    //   this.model.totalItem = 0;
+    //   this.model.totalPrice = 0;
+    //   this.model.grandTotal = 0;
+    //   await this.clearCart();
+    //   this.model = {} as Cart;
+    // }
+    // console.log('cart: ', this.model);
   }
 
   async clearCart() {
@@ -137,13 +131,14 @@ export class CartService {
   saveCart(model?) {
     if(model) {this.model = model;}
     this.storage.setKey('cart', JSON.stringify(this.model));
-    // this._cart.next(this.model);
   }
 
   saveCartOrder(model) {
     this.storage.setKey('order', JSON.stringify(model));
   }
 
+
+  //Modal to open cart
   async openCart(cartData, saleItem){
     const modal = await this.modalCtrl.create({
       component: CartModalPage,
@@ -156,9 +151,11 @@ export class CartService {
     await modal.present();
   }
 
+  //Clear cart
   async clearCartOrder() {
     await this.storage.deleteKey('order');
   }
+
 
   async checkout(cartData:any){
     const modal = await this.modalCtrl.create({

@@ -70,7 +70,7 @@ namespace Team7
                         {
                             ValidIssuer = Configuration["Tokens:Issuer"],
                             ValidAudience = Configuration["Tokens:Audience"],
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:key"]))
                         };
                     });
 

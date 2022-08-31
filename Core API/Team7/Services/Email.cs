@@ -14,6 +14,10 @@ namespace Team7.Services
         public string subject;
         public string body;
 
+        public Email()
+        {
+        }
+
         public Email(string recpt, string subject, string body)
         {
             this.recpt = recpt;
