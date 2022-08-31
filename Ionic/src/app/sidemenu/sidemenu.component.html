@@ -111,6 +111,13 @@
           <ion-label>Stock</ion-label>
         </ion-item>
       </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="superuser || client || member">
+        <ion-item routerLink="/trainers">
+          <ion-icon name="walk-outline" slot="start"></ion-icon>
+          <ion-label>Trainers Information</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
       
       <ion-menu-toggle *ngIf="superuser || client || member">
         <ion-item routerLink="/trainers">
@@ -118,8 +125,6 @@
           <ion-label>Trainers Information</ion-label>
         </ion-item>
       </ion-menu-toggle>
-
-
 
       <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="user">
