@@ -79,10 +79,10 @@ export class CartModalPage implements ViewWillEnter {
   quantityMinus(index) {
     this.cartService.quantityMinus(index);
     this.cartService.calculate();
-    if(this.model?.totalItem === 0){
-      this.model.items = null;
+    if(this.model?.sales.length === 0){
+      this.model.sales = null;
     }
-    console.log('Quantiy Minus: Null:', this.model.items);
+    console.log('Quantiy Minus: Null:', this.model.sales);
 
   }
 
@@ -122,7 +122,7 @@ export class CartModalPage implements ViewWillEnter {
 
   ionViewWillLeave() {
     console.log('ionViewWillLeave CartPage');
-    if(this.model?.items && this.model?.items.length > 0) {
+    if(this.model?.sales && this.model?.sales.length > 0) {
       this.cartService.saveCart();
     }
     this.cartSub.unsubscribe();

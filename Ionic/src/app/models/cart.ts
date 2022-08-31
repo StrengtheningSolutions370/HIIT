@@ -18,8 +18,3 @@ export class Cart {
     public sales?: saleLine[];
     public bookings?: bookingLine[];
 }
-
-
-
-
-

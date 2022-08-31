@@ -3,10 +3,8 @@ import { Cart } from 'src/app/models/cart';
 import { Yoco } from 'src/app/models/yoco';
 import { CartService } from 'src/app/services/cart.service';
 import { GlobalService } from 'src/app/services/global/global.service';
-import { RepoService } from 'src/app/services/repo.service';
 import { StoreService } from 'src/app/services/storage/store.service';
 import { YocoService } from 'src/app/services/yoco/yoco.service';
-import { CartModalPageRoutingModule } from '../cart-modal/cart-modal-routing.module';
 
 @Component({
   selector: 'app-checkout',
@@ -31,7 +29,7 @@ export class CheckoutComponent implements OnInit {
 
   async returnFrom(){
       this.global.dismissModal();
-      this.cartService.openCart(this.cartData, this.cartData.items);
+      this.cartService.openCart(this.cartData, this.cartData.sales);
   }
 
   handleChange(e) {
@@ -43,14 +41,14 @@ export class CheckoutComponent implements OnInit {
     var saleItemArr = [];
     const u = JSON.parse(await this.storage.getKey("user"));
     console.log(u);
-    this.cartData.items.forEach(element => {
+    this.cartData.sales.forEach(element => {
       let quantityObj ={
         saleItemID: element.saleItemID,
         quantity: element.quantityChange
       }
       saleItemArr.push(quantityObj);
-      console.log(saleItemArr);
     });
+    console.log(saleItemArr);
     var payObj = {
       userID: u.id,
       paymentTypeID: 1,
@@ -67,7 +65,8 @@ export class CheckoutComponent implements OnInit {
     console.log(this.cartData);
 
     this.global.nativeLoad("Processing Payment...");
-    const pl = new Yoco(this.cartData.grandTotal*100, 'ZAR', '');
+
+    const pl = new Yoco(100, 'ZAR', '');
     this.yoco
       .pay(pl)
       .subscribe(res => {
