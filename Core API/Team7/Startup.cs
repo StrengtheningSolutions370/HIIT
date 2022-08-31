@@ -130,7 +130,6 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            //Change to AWS to connect to the hosted DB
             options.UseSqlServer(Configuration.GetConnectionString("AWS")));
 
             //Scoping all Interfaces to all Repos

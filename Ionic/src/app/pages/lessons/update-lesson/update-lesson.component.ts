@@ -12,7 +12,10 @@ import { RepoService } from 'src/app/services/repo.service';
 export class UpdateLessonComponent implements OnInit {
 
   @Input() lesson : any;
-  @ViewChild('emp') trainerSelect : any;
+
+  //make a ViewChild in the TS
+  //put the name of the # as the constructor for the ViewChild:
+  @ViewChild('emp') trainerSelect : any; //trainerSelect is the variable name to refernce the html element with.
 
   //form for creation
   cLessonForm! : FormGroup;
@@ -39,19 +42,19 @@ export class UpdateLessonComponent implements OnInit {
 
   constructor(private formBuilder : FormBuilder, private repo : RepoService, private modalCtrl : ModalController, private global : GlobalService, private lessonService : LessonService) { }
 
+  //Must be in the ngAfterViewInit()
   ngAfterViewInit() {
-    const ddName = `${this.lesson?.employee?.appUser.firstName} ${this.lesson?.employee?.appUser.lastName}`;
-    this.trainerSelect.selectedText = ddName;
-    this.populateSelects();
-    console.log(this.trainerSelect)
-    //merge the exercises into the this.exercise then populate the childen:
-    // const temp = this.exercises;
-    // //this.exercises = [];
 
-    // temp.forEach((el : any) => {
-    //   const category = this.categories.filter(e => e.exerciseCategoryID == el.category.exerciseCategoryID);
-    //   //console.log('getting the exercises = ', category);
-    // });
+    const ddName = `${this.lesson?.employee?.appUser.firstName} ${this.lesson?.employee?.appUser.lastName}`;
+    //set the .selectedText to the value the user should see
+    this.trainerSelect.selectedText = ddName;
+
+    //if you want to set the actual value do it liek this:
+    //you usually set the value in the form not with this method:
+    //this.trainerSelect.value = 'id,name';
+
+    //this is a different method using getElementById (not the easiest way);
+    this.populateSelects();
 
   }
 

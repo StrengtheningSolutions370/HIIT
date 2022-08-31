@@ -46,7 +46,6 @@
   <ItemGroup>
 	<Folder Include="Context\" />
 	  <Folder Include="Factory" />
-	  <Folder Include="Migrations\" />
 	  <Folder Include="Resources\Employees\Images\" />
 	  <Folder Include="Resources\Employees\Contracts\" />
 	  <Folder Include="Resources\Images\NewFolder\" />

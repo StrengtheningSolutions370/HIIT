@@ -30,6 +30,7 @@ namespace Team7.Controllers
         {
             var output = await _orderRecievedRepo.GetAllOrderRecievedAsync();
             var allSaleItems = await _saleItemRepo._GetAllSaleItemsArray();
+            if(output != null)
             foreach (var item in output)
             {
                 foreach (var i in item.SaleItemOrders)

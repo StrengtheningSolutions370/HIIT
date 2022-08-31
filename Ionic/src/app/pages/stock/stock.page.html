@@ -17,9 +17,16 @@
       <ion-tab-button tab="write-off">
         <ion-label>Write-Off</ion-label>
       </ion-tab-button>
-
+      <ion-tab-button tab="write-off-reason">
+        <ion-label>Write-Off Reason</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
   <br/>
-  <ion-searchbar #search (ionClear)="searchOrder(search.value)" (ionInput)="searchOrder(search.value)" expand="block" placeholder='Search Order...' [(ngModel)]="filter"
+  <br/>
+  <br/>
+  <br/>
+  <ion-searchbar #search (ionClear)="searchOrder(search.value)" (ionInput)="searchOrder(search.value)" expand="block" placeholder='Search Order...'
   animated="true" debounce="200"></ion-searchbar>
   <br/><br/>
 
@@ -69,9 +76,5 @@
   Bester Strength and Conditioning | info@besterstrengthandconditioning.co.za
   <br>
 </ion-footer> -->
-      <ion-tab-button tab="write-off-reason">
-        <ion-label>Write-Off Reason</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
+     
 </ion-content>

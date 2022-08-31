@@ -29,7 +29,7 @@ export class ReceiveStockComponent implements OnInit {
   stock : any[] = [];
   validSaleItems = false;
 
-  constructor(private saleItemService : SalesService, private supplierService : StockService, private modalCtrl : ModalController, private repo : RepoService, private global : GlobalService, private formBuilder : FormBuilder) { }
+  constructor(private saleItemService : SalesService, private supplierService : StockService, private modalCtrl : ModalController, private repo : RepoService, public global : GlobalService, private formBuilder : FormBuilder) { }
 
   ngOnInit() {
 
