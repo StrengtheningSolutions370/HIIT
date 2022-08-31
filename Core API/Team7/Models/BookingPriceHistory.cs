@@ -8,11 +8,11 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BookingPriceHistoryID { get; set; }
-        [Required]
+
         public System.DateTime Date { get; set; }
         [Required]
         public decimal Amount { get; set; }
-        public int? BookingTypeID { get; set; }
-        public virtual BookingType BookingType { get; set; }
+        public int? ScheduleID { get; set; }
+        public virtual Schedule Schedule { get; set; }
     }
 }

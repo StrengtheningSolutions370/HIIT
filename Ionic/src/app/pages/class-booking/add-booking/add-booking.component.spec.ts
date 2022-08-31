@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TimeRangeComponent } from './time-range.component';
+import { AddBookingComponent } from './add-booking.component';
 
-describe('TimeRangeComponent', () => {
-  let component: TimeRangeComponent;
-  let fixture: ComponentFixture<TimeRangeComponent>;
+describe('AddBookingComponent', () => {
+  let component: AddBookingComponent;
+  let fixture: ComponentFixture<AddBookingComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimeRangeComponent ],
+      declarations: [ AddBookingComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TimeRangeComponent);
+    fixture = TestBed.createComponent(AddBookingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

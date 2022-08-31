@@ -44,18 +44,18 @@ export class SidemenuComponent implements OnInit {
             this.repo.getUserRole(token).subscribe({
 
               next: (data : any) => { //token was valid
-                const r = data.role;
+                this.role = data.role;
                 //OVERRIDE TESTING:
                 //this.superuser = true;
-                if (r == 'client')
+                if (this.role == 'client')
                   this.client = true;
-                if (r == 'member')
+                if (this.role == 'member')
                   this.member = true;
-                if (r == 'admin')
+                if (this.role == 'admin')
                   this.admin = true;
-                if (r == 'superuser')
+                if (this.role == 'superuser')
                   this.superuser = true;
-                if (r == 'trainer')
+                if (this.role == 'trainer')
                   this.trainer = true;
 
                   //set name in side menu:

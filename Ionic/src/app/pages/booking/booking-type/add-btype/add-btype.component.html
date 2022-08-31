@@ -29,18 +29,7 @@
     <span class="error ion-padding" *ngIf="errorControl.bookingTypeDescription.errors?.required && cBookingTypeForm.get('bookingTypeDescription').touched">
       Description is required<br/>
     </span>
-    <ion-item>
-      <ion-label position="floating">Price:</ion-label>
-      <br/>
-      <ion-input type="number" formControlName="bookingTypePrice" type="number" required="" id="bookingTypePrice" >R</ion-input>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.bookingTypePrice.errors?.required && cBookingTypeForm.get('bookingTypePrice').touched">
-     Price is required <br/>
-    </span>
-    <span class="error ion-padding" *ngIf="errorControl.bookingTypePrice.errors?.min">
-     Price must be greater than 0 <br/>
-    </span>
+
     <ion-item>
       <ion-label slot="start" id="clrSelector">Colour: </ion-label>
       <input formControlName="bookingTypeColour" type="color" required="" id="bookingTypeColour" slot="end"/>

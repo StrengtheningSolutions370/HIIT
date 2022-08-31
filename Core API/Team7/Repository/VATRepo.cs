@@ -53,9 +53,9 @@ namespace Team7.Models.Repository
             }
         }
 
-        public async Task<object> GetVATsAsync(decimal? percentage, DateTime? date)
+        public async Task<object> GetVATsAsync(decimal percentage, DateTime date)
         {
-            IQueryable<VAT> query = DB.VAT.Where(v => v.Percentage == percentage || v.Date == date);
+            IQueryable<VAT> query = DB.VAT.Where(v => v.Percentage == percentage || v.Date.Date == date.Date);
             if (!query.Any())
             {
                 return null;

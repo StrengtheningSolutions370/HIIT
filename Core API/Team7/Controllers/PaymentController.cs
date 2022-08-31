@@ -60,7 +60,7 @@ namespace Team7.Controllers
                     
                     Sale saleTemp = new()
                     {
-                        Date = System.DateTime.Now,
+                        Date = DateTime.Now,
                         UserID = userTemp.Id,
                         AppUser = userTemp
                     };

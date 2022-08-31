@@ -1,12 +1,15 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:Azure"
+    "secrets1": {
+      "type": "secrets"
     },
     "identityapp1": {
       "type": "identityapp",
       "dynamicId": null
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:Azure"
     }
   }
 }
