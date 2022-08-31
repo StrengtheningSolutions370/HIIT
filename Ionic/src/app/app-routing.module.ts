@@ -60,14 +60,14 @@ export const routes: Routes = [
       roles: [Roles.SuperUser, Roles.Admin]
     }
   },
-  {
-    path: 'inventory',
-    loadChildren: () => import('./pages/inventory/inventory.module').then(m => m.InventoryPageModule),
-    canActivate: [AuthGaurdService],
-    data: {
-      roles: [Roles.SuperUser, Roles.Admin]
-    }
-  },
+  //{
+    //path: 'inventory',
+    //loadChildren: () => import('./pages/inventory/inventory.module').then(m => m.InventoryPageModule),
+    //canActivate: [AuthGaurdService],
+    //data: {
+      //roles: [Roles.SuperUser, Roles.Admin]
+    //}
+  //},
   {
     path: 'suppliers',
     loadChildren: () => import('./pages/suppliers/suppliers.module').then(m => m.SuppliersPageModule),

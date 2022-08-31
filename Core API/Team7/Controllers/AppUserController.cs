@@ -65,8 +65,8 @@ namespace Team7.Controllers
         public async Task<IActionResult> list()
         {
             List<AppUser> users = _userManager.Users.ToList();
-            Email e = new Email();
-            e.emailList(users, "subject here", "body here");
+            //Email e = new Email();
+            //e.emailList(users, "subject here", "body here");
             return Ok();
         }
 

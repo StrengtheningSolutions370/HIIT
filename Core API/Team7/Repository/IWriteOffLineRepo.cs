@@ -10,7 +10,7 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        //Task<WriteOffLine[]> GetAllWriteOffLinesAsync();
+        Task<WriteOffLine[]> GetAllWriteOffLinesAsync();
 
         //Task<WriteOffLine[]> GetWriteOffLinesAsync(string input);
 
