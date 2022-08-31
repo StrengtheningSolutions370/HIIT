@@ -60,6 +60,16 @@ namespace Team7.Controllers
             return oneTimePin;
         }
 
+        [HttpGet]
+        [Route("emaillist")]
+        public async Task<IActionResult> list()
+        {
+            List<AppUser> users = _userManager.Users.ToList();
+            //Email e = new Email();
+            //e.emailList(users, "subject here", "body here");
+            return Ok();
+        }
+
         static string timeStamp()
         {
             return DateTimeOffset.Now.ToUnixTimeSeconds().ToString();

@@ -92,6 +92,13 @@
       </ion-menu-toggle>
 
       <ion-menu-toggle *ngIf="superuser || admin">
+        <ion-item routerLink="stock">
+          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+          <ion-label>Stock</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="suppliers">
           <ion-icon name="clipboard-outline" slot="start"></ion-icon>
           <ion-label>Suppliers</ion-label>
@@ -104,6 +111,8 @@
           <ion-label>Trainers Information</ion-label>
         </ion-item>
       </ion-menu-toggle>
+
+
 
       <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="user">
