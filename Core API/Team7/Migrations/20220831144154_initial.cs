@@ -856,8 +856,8 @@ namespace Team7.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WriteOffID = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    WriteOffReasonID = table.Column<int>(type: "int", nullable: true),
-                    SaleItemID = table.Column<int>(type: "int", nullable: true)
+                    WriteOffReasonID = table.Column<int>(type: "int", nullable: false),
+                    SaleItemID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -866,7 +866,8 @@ namespace Team7.Migrations
                         name: "FK_WriteOffLine_SaleItem_SaleItemID",
                         column: x => x.SaleItemID,
                         principalTable: "SaleItem",
-                        principalColumn: "SaleItemID");
+                        principalColumn: "SaleItemID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_WriteOffLine_WriteOff_WriteOffID",
                         column: x => x.WriteOffID,
@@ -877,7 +878,8 @@ namespace Team7.Migrations
                         name: "FK_WriteOffLine_WriteOffReason_WriteOffReasonID",
                         column: x => x.WriteOffReasonID,
                         principalTable: "WriteOffReason",
-                        principalColumn: "WriteOffReasonID");
+                        principalColumn: "WriteOffReasonID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

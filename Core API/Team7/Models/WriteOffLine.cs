@@ -8,14 +8,13 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WriteOffLineID { get; set; }
-        [Required]
         //public int? InventoryItemID { get; set; }
         //[Required]
-        public int? WriteOffID { get; set; }
+        public int WriteOffID { get; set; }
         [Required]
         public int Quantity { get; set; }
-        public int? WriteOffReasonID { get; set; }
-        public int? SaleItemID { get; set; }
+        public int WriteOffReasonID { get; set; }
+        public int SaleItemID { get; set; }
 
         //public virtual InventoryItem InventoryItem { get; set; }
         public virtual SaleItem SaleItem { get; set; }

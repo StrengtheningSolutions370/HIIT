@@ -132,16 +132,17 @@ export class WriteOffSitemComponent implements ViewWillEnter {
     var quantitySelected: number = +this.cWriteOffForm.controls['itemQuantity'].value;
     var writeOffReasonSelected: number = +this.cWriteOffForm.controls['itemSReason'].value;
     var saleItemSelected: number = +this.saleItem.saleItemID;
-    var employeeSelected: number = +this.cWriteOffForm.controls['itemSEmployee'].value;
+    var employeeSelected: number = this.cWriteOffForm.controls['itemSEmployee'].value;
     console.log()
     
-    var obj: any = {
-      writeOff: [{
-        employeeID: employeeSelected,
-      }],
-      quantity: quantitySelected,
-      writeOffReasons: writeOffReasonSelected,
-      saleItems: saleItemSelected,
+    var obj: WriteOff = {
+      EmployeeID: employeeSelected,
+      WriteOffLine: [{
+        Quantity: quantitySelected,
+        WriteOffReasonID: writeOffReasonSelected,
+        SaleItemID: saleItemSelected
+      }]
+
     }
     console.log("Object", obj)
     this.writeOffService.createWriteOff(obj);
