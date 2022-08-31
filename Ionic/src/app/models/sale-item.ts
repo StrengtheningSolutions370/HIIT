@@ -1,13 +1,14 @@
+import { WriteOff } from "./write-off";
+
 /* eslint-disable @typescript-eslint/naming-convention */
 export class SaleItem {
     saleItemID?: number;
     name: string;
     photo?: string;
     description: string;
-    //costPrice?: number;
-    //price: number;
     quotable?: boolean;
     quantityOnHand: number;
+    writeOffs?: WriteOff[];
     saleCategoryID?: number;
     saleCategory?:{
       saleCategoryID?: number;

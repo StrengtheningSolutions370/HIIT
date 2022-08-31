@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 using Team7.Context;
 
 
@@ -28,13 +30,22 @@ namespace Team7.Models.Repository
         }
 
 
-        //public async Task<WriteOffLine[]> GetAllWriteOffLinesAsync()
-        //{
-        //    IQueryable<WriteOffLine> query = DB.WriteOffLine;
-        //    return await query.ToArrayAsync();
-        //    return null;
+        public async Task<WriteOffLine[]> GetAllWriteOffLinesAsync()
+        {
+            IQueryable<WriteOffLine> query = DB.WriteOffLine;
 
-        //}
+            if (!query.Any())
+                return null;
+
+            return await query.Select(wl =>
+                new WriteOffLine
+                {
+                    WriteOffLineID = wl.WriteOffLineID,
+                    Quantity = wl.Quantity,
+                    WriteOffReason = wl.WriteOffReason,
+                    SaleItem = wl.SaleItem,
+                }).ToArrayAsync();
+        }
 
         //public async Task<WriteOffLine[]> GetWriteOffLinesAsync(string input)
         //{

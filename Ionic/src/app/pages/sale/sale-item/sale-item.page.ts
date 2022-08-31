@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { SalesService } from 'src/app/services/sales/sales.service';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
 
 
 @Component({
@@ -24,7 +25,7 @@ saleItemSub: Subscription;
 
 isLoading = true;
 
-constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService) {
+constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService, public inventoryService: InventoryService) {
    this.fetchSaleItem();
    this.addMoreItems();
   }

@@ -6,14 +6,17 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { WriteOffReason } from 'src/app/models/write-off-reason'; 
-import { AddWriteOffReasonComponent } from 'src/app/pages/inventory/write-off-reason/add-write-off-reason/add-write-off-reason.component'; 
-import { DeleteWriteOffReasonComponent } from 'src/app/pages/inventory/write-off-reason/delete-write-off-reason/delete-write-off-reason.component'; 
-import { UpdateWriteOffReasonComponent } from 'src/app/pages/inventory/write-off-reason/update-write-off-reason/update-write-off-reason.component'; 
-import { ViewWriteOffReasonComponent } from 'src/app/pages/inventory/write-off-reason/view-write-off-reason/view-write-off-reason.component'; 
-import { ConfirmWriteOffReasonComponent } from 'src/app/pages/inventory/write-off-reason/confirm-write-off-reason/confirm-write-off-reason.component'; 
-import { AssociativeWriteOffReasonComponent } from 'src/app/pages/inventory/write-off-reason/associative-write-off-reason/associative-write-off-reason.component'; 
+import { AddWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/add-write-off-reason/add-write-off-reason.component'; 
+import { DeleteWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/delete-write-off-reason/delete-write-off-reason.component'; 
+import { UpdateWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/update-write-off-reason/update-write-off-reason.component'; 
+import { ViewWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/view-write-off-reason/view-write-off-reason.component'; 
+import { ConfirmWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/confirm-write-off-reason/confirm-write-off-reason.component'; 
+import { AssociativeWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/associative-write-off-reason/associative-write-off-reason.component'; 
 import { RepoService } from '../repo.service';
 import { Observable } from 'rxjs';
+import { WriteOffSitemComponent } from 'src/app/pages/sale/sale-item/write-off-sitem/write-off-sitem.component';
+import { WriteOff } from 'src/app/models/write-off';
+import { SaleItem } from 'src/app/models/sale-item';
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +24,22 @@ import { Observable } from 'rxjs';
 export class InventoryService {
 
   @Output() fetchWriteOffReasonsEvent = new EventEmitter<WriteOffReason>();
+  @Output() fetchWriteOffsEvent = new EventEmitter<WriteOff>();
 
   constructor(public repo: RepoService, private modalCtrl: ModalController ) { 
     //Receive the write-off reasons from the repo (API).
     this.getAllWriteOffReasons();
+    this.getAllWriteOffs();
   }
 
   //READS:
   getAllWriteOffReasons(): Observable<any> {
     return this.repo.getWriteOffReason();
+  }
+
+  //READS:
+  getAllWriteOffs(): Observable<any> {
+    return this.repo.getWriteOffs();
   }
 
   matchingWriteOffReason(input: string): Promise<any>{
@@ -49,6 +59,25 @@ export class InventoryService {
         }, 
         error: (err) => {
           console.log("ERROR - CREATE WRITE-OFF REASON DATA:");
+          console.log(err);
+          return err;
+        }
+      }
+    )
+  }
+
+  //CREATE:
+  createWriteOff(writeOff: any): any {
+    this.repo.createWriteOff(writeOff).subscribe(
+      {
+        next: (data) => {
+          console.log("CREATE WRITE-OFF DATA:");
+          console.log(data);
+          this.fetchWriteOffsEvent.emit(writeOff);
+          return data;
+        }, 
+        error: (err) => {
+          console.log("ERROR - CREATE WRITE-OFF DATA:");
           console.log(err);
           return err;
         }
@@ -83,12 +112,23 @@ export class InventoryService {
   }
 
   //MODALS:
-  //CREATE
+  //CREATE REASON
   async addWriteOffReasonInfoModal(writeOffReason?: WriteOffReason) {
     const modal = await this.modalCtrl.create({
       component: AddWriteOffReasonComponent,
       componentProps:{
         writeOffReason
+      }
+    });
+    await modal.present();
+  }
+
+  //CREATE 
+  async addWriteOffInfoModal(saleItem?: SaleItem) {
+    const modal = await this.modalCtrl.create({
+      component: WriteOffSitemComponent,
+      componentProps:{
+        saleItem
       }
     });
     await modal.present();
@@ -109,7 +149,7 @@ export class InventoryService {
   //DELETE
   async deleteWriteOffReasonInfoModal(writeOffReason: WriteOffReason) {
     console.log("WriteOffReasonService: DeleteWriteOffReasonModalCall");
-    if (writeOffReason.writeOffLines!= null && writeOffReason.writeOffLines.length > 0){
+    if (writeOffReason.writeOffs!= null && writeOffReason.writeOffs.length > 0){
       const modal = await this.modalCtrl.create({
         component: AssociativeWriteOffReasonComponent,
           componentProps: {
@@ -184,4 +224,6 @@ export class InventoryService {
       console.log("BadOption: " + choice)
     }
   }
+
+  
 }

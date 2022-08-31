@@ -18,6 +18,7 @@ namespace Team7.Models
         public System.DateTime Date { get; set; }
         [Required]
         public int? EmployeeID { get; set; }
+
         public virtual Employee Employee { get; set; }
         public virtual ICollection<WriteOffLine> WriteOffLine { get; set; }
     }

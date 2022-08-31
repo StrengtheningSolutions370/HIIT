@@ -1,151 +1,149 @@
 ion-fab-button {
-    height: 70px;
-    width: 70px;
+  height: 70px;
+  width: 70px;
 }
 
-.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-    
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
 
 .cart-icon {
-    font-size: 50px;
+  font-size: 50px;
 }
 
 .cart-length {
-    position: absolute;
+  position: absolute;
 }
 
 .card-body {
-    flex: 1 1 auto;
-    min-height: 1px;
-    padding: 1.25rem;
-  }
-  
-  
-//   .row {
-//     display: flex;
-//     flex-wrap: wrap;
-//     margin-right: -.75rem;
-//     margin-left: -.75rem;
-//   }
-
-  .text-xs {
-    font-size: .7rem;
-  }
-  
-  .font-weight-bold {
-    font-weight: 700!important;
-  }
-  
-  .dropdown .dropdown-menu .dropdown-header, .sidebar .sidebar-heading, .text-uppercase {
-    text-transform: uppercase!important;
-  }
-
-  .div-img {
-    height: 200px;
-    width: 100%;
-    background-color: powderblue;
-  }
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
 }
-    
-  .align-items-center {
-    align-items: center!important;
-  }
-  
-  .no-gutters {
-    margin-right: 0;
-    margin-left: 0;
-  }
-  
-  .div-buttons{
-    margin-left: 0.7%;
-  }
 
-  .ion-row-buttons{
-    display: inline-block;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-  
 ion-card {
-    display: inline-flex;
-    flex-direction: column;
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
-    max-height: 400px;
-    height: 300px;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  max-height: 400px;
+  height: 300px;
 }
 
-.img-wrapper {
-    min-height: 100px;
-    min-width: 120px;
-    width: 100%;
-    height:auto;
-    background-size: cover;
-    background-repeat: no-repeat;
+
+.text-xs {
+  font-size: .7rem;
 }
+
+.font-weight-bold {
+  font-weight: 700 !important;
+}
+
+.dropdown .dropdown-menu .dropdown-header,
+.sidebar .sidebar-heading,
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.div-buttons {
+  margin-left: 0.7%;
+}
+
+.ion-row-buttons {
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+// ion-card {
+//     display: inline-flex;
+//     flex-direction: column;
+//     width: 100% !important;
+//     height: 100% !important;
+//     margin: 0 !important;
+//     max-height: 400px;
+//     height: 300px;
+// }
+
 
 .card-body {
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    min-height: 1px;
-    padding: 1.25rem;
-  }
-  
-  @media (min-width:992px) {
-    .align-items-lg-center {
-      -ms-flex-align: center!important;
-      align-items: center!important;
-    }
-  }
-  
-  @media (min-width:992px) {
-    .justify-content-lg-center {
-      -ms-flex-pack: center!important;
-      justify-content: center!important;
-    }
-  }
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
 
-  .justify-content-start {
-    -ms-flex-pack: start!important;
-    justify-content: flex-start!important;
-  }
-  
-  .d-flex {
-    display: -ms-flexbox!important;
-    display: flex!important;
-  }
-  
 @media (min-width:992px) {
   .align-items-lg-center {
-    -ms-flex-align: center!important;
-    align-items: center!important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
   }
 }
 
 @media (min-width:992px) {
   .justify-content-lg-center {
-    -ms-flex-pack: center!important;
-    justify-content: center!important;
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
   }
 }
 
 .justify-content-start {
-  -ms-flex-pack: start!important;
-  justify-content: flex-start!important;
+  -ms-flex-pack: start !important;
+  justify-content: flex-start !important;
 }
 
 .d-flex {
-  display: -ms-flexbox!important;
-  display: flex!important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
+@media (min-width:992px) {
+  .align-items-lg-center {
+    -ms-flex-align: center !important;
+    align-items: center !important;
+  }
+}
+
+@media (min-width:992px) {
+  .justify-content-lg-center {
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+  }
+}
+
+.justify-content-start {
+  -ms-flex-pack: start !important;
+  justify-content: flex-start !important;
+}
+
+.d-flex {
+  display: -ms-flexbox !important;
+  display: flex !important;
 }
 
 .row {
@@ -157,56 +155,41 @@ ion-card {
   margin-left: -15px;
 }
 
-.pagination{
-    margin-left:15rem;
-    margin-right:15rem;
-}
-
-.xc {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.fullheight {
-    height: 100%;
-}
 
 ion-badge {
-    position: absolute; 
-    font-size: 8pt;
-    right: -16px;
-    top: -3px; 
+  position: absolute;
+  font-size: 8pt;
+  right: -16px;
+  top: -3px;
 }
 
-@media (min-width: 768px){
-    .sale-img{
-        height: 20rem;
-    }
+@media (min-width: 768px) {
+  .sale-img {
+    height: 20rem;
+  }
 }
 
 @media (min-width:768px) {
-    .sale-img {
-      height: 20rem;
-    }
+  .sale-img {
+    height: 20rem;
   }
+}
 
-  
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
 
-  .col-auto {
-    flex: 0 0 auto;
-    width: auto;
-    max-width: 100%;
-  }
 
-  .mr-2, .mx-2 {
-    margin-right: .5rem!important;
-  }
-  
-  .margin-bottom{
-    margin-bottom: 10%;
-  }
-  
 
-  
-  
+.mr-2,
+.mx-2 {
+  margin-right: .5rem !important;
+}
+
+.margin-bottom {
+  margin-bottom: 10%;
+}
