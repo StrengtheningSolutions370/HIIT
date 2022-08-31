@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ConfigToken } from '@ionic/angular/providers/config';
+import { Yoco } from 'src/app/models/yoco';
 import { CartService } from 'src/app/services/cart.service';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { StoreService } from 'src/app/services/storage/store.service';
 import { YocoService } from 'src/app/services/yoco/yoco.service';
@@ -26,7 +28,7 @@ export class HomePage implements OnInit {
 
   username! : string;
 
-  constructor(private storage : StoreService, public cartService: CartService, private http : HttpClient, private repo : RepoService, private y : YocoService) { }
+  constructor(private global: GlobalService, private storage : StoreService, public cartService: CartService, private http : HttpClient, private repo : RepoService, private yocoService : YocoService) { }
 
   ngOnInit() {
 
@@ -35,50 +37,25 @@ export class HomePage implements OnInit {
       this.username = `${obj.firstName} ${obj.lastName}`;
     })
 
-    window.charge = (token_card : any, payload) => {
-      this.repo.chargeYOCO(payload).subscribe(res => {
-        console.log(JSON.parse(res));
-        this.yoco.showPopup(JSON.parse(res));
-      });
-    }
-
   }
-
 
   pay() {
     
-    this.yoco.showPopup({
-      amountInCents: 1000,
-      currency: 'ZAR',
-      name: 'Bester Strength and Conditioning',
-      description: 'HIIT',
-      image: 'https://localhost:44383/Resources/Logo.jpg',
-      customer: {
-        name: 'Shannon'
-      },
-      callback: function (result) {
-        if (result.error) {
-          const errorMessage = result.error.message;
-          alert("error occured: " + errorMessage);
-        } else {
-          console.log('card token = ', result.id);
-          this.token = result.id;
-          const httpOptions = {
-            headers: new HttpHeaders({
-              Accept: 'application/json',
-              ContentType: 'application/json'
-            }),
-          };
-          const payload = { token: result.id, amount: 1000}
-          window.charge(this.token, payload);
-        }
-      }
-    });
-    
-  }
+    //using yocoService : YocoService
+    //making yoco object:
+    const pl = new Yoco(1000, 'ZAR', ''); //remove the token from the yoco object
 
-  captureCharge(token_card : any) {
-    
+    this.global.nativeLoad("Processing Payment...")
+    this.yocoService
+      .pay(pl)
+      .subscribe(res => {
+        if (res)
+          this.global.showToast('Payment Successful');
+        else
+          this.global.showAlert('Payment Failed, Please try again');
+        this.global.endNativeLoad();
+      });
+        
   }
 
 }
