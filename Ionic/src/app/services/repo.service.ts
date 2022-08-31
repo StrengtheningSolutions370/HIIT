@@ -23,6 +23,7 @@ import { Exercise } from '../models/exercise';
 import { WriteOffReason } from '../models/write-off-reason';
 import { Lesson } from '../models/lesson';
 import { Schedule } from '../models/schedule';
+import { WriteOff } from '../models/write-off';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,7 @@ export class RepoService {
   MeasurementController = 'Measurement/';
   ReportController = 'Report/';
   PaymentController= 'Payment/';
+  WriteOffController= 'WriteOff/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -340,6 +342,16 @@ uploadSaleItemImage(data: FormData): Observable<any> {
 deleteSaleItemImage(id : string) : Observable<any> {
   return this.http.delete(`http://localhost:5001/api/SaleItem/deletephoto?name=${id}`)
 
+}
+//add writeOff
+createWriteOff(writeOff: any): Observable<any> {
+  console.log(writeOff);
+  return this.http.post<any>(`${this.base + this.WriteOffController}add`, writeOff, this.httpOptions);
+}
+
+//GetAll writeOffs
+getWriteOffs(): Observable<any>{
+  return this.http.get(`${this.base+this.WriteOffController}getAll`, this.httpOptions);
 }
 
 // ExerciseCategory:

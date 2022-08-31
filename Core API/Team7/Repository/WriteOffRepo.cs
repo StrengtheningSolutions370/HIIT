@@ -1,5 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Team7.Context;
+
 
 
 namespace Team7.Models.Repository
@@ -27,14 +31,45 @@ namespace Team7.Models.Repository
             DB.Update(Entity);
         }
 
+        static Employee GetEmployee(List<Employee> emps, int id)
+        {
+            foreach (Employee emp in emps)
+            {
+                if (emp.EmployeeID == id)
+                    return emp;
+            }
+            return null;
+        }
 
-        //public async Task<WriteOff[]> GetAllWriteOffsAsync()
-        //{
-        //    IQueryable<WriteOff> query = DB.WriteOff;
-        //    return await query.ToArrayAsync();
-        //    return null;
+        public async Task<WriteOff[]> GetAllWriteOffsAsync()
+        {
+            var query = await DB.WriteOff.Select(w =>
+                new WriteOff
+                {
+                    WriteOffID = w.WriteOffID,
+                    Date = w.Date,
+                    EmployeeID = w.EmployeeID,
+                    WriteOffLine = w.WriteOffLine,
+                }).ToArrayAsync();
 
-        //}
+            if (!query.Any())
+                return null;
+
+            var emps = DB.Employee.Select(e => new Employee
+            {
+                EmployeeID = e.EmployeeID,
+                Photo = e.Photo,
+                Qualification = e.Qualification,
+                AppUser = e.AppUser,
+            }).ToList();
+
+            foreach (var item in query)
+            {
+                item.Employee = GetEmployee(emps, item.EmployeeID);
+            }
+
+            return query.ToArray();
+        }
 
         //public async Task<WriteOff[]> GetWriteOffsAsync(string input)
         //{

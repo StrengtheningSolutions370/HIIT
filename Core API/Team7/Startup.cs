@@ -131,7 +131,8 @@ namespace Team7
             //DB configuration
             services.AddDbContext<AppDB>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("Azure")));
-
+            
+            
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
             services.AddScoped<IBookingPriceHistoryRepo, BookingPriceHistoryRepo>();
