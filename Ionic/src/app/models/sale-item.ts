@@ -4,8 +4,6 @@ export class SaleItem {
     name: string;
     photo?: string;
     description: string;
-    //costPrice?: number;
-    //price: number;
     quotable?: boolean;
     quantityOnHand: number;
     saleCategoryID?: number;

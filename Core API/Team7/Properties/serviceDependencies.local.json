@@ -1,17 +1,14 @@
 {
   "dependencies": {
-    "secrets1": {
-      "type": "secrets.user"
-    },
-    "identityapp1": {
-      "type": "identityapp.default",
-      "dynamicId": null
-    },
     "mssql1": {
       "secretStore": "LocalSecretsFile",
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/team7dbserver/databases/Hiit_db",
       "type": "mssql.azure",
       "connectionId": "ConnectionStrings:Azure"
+    },
+    "identityapp1": {
+      "type": "identityapp.default",
+      "dynamicId": null
     }
   }
 }
