@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './authentication/auth.interceptor';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 // import { PayPal } from '@ionic-native/paypal/ngx';
 // import { Stripe } from '@ionic-native/stripe/ngx';
 
@@ -160,6 +161,18 @@ import { ConfirmIndemnityComponent } from './pages/profile/profile/confirm-indem
 import { AddComponent } from './pages/measurements/add/add.component';
 import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measurement/confirm-measurement.component';
 
+//SUPPLIER IMPORTS:
+import { AddSupplierComponent } from './pages/suppliers/supplier-page/add-supplier/add-supplier.component';
+import { UpdateSupplierComponent } from './pages/suppliers/supplier-page/update-supplier/update-supplier.component';
+import { DeleteSupplierComponent } from './pages/suppliers/supplier-page/delete-supplier/delete-supplier.component';
+import { ViewSupplierComponent } from './pages/suppliers/supplier-page/view-supplier/view-supplier.component';
+import { ConfirmSupplierComponent } from './pages/suppliers/supplier-page/confirm-supplier/confirm-supplier.component';
+import { AssociativeSupplierComponent } from './pages/suppliers/supplier-page/associative-supplier/associative-supplier.component';
+
+//STOCK
+import { ViewOrderComponent } from './pages/stock/view-order/view-order.component';
+import { ReceiveStockComponent } from './pages/stock/receive-stock/receive-stock.component';
+import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stock/confirm-recieve-stock.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -214,13 +227,17 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   DeleteClientComponent,
   //confirmindemnity
   AddComponent, ConfirmMeasurementComponent,
+   //Supplier
+   AddSupplierComponent, UpdateSupplierComponent, DeleteSupplierComponent, ViewSupplierComponent, ConfirmSupplierComponent, AssociativeSupplierComponent,
+   //Stock
+    ViewOrderComponent, ReceiveStockComponent, ConfirmRecieveStockComponent,
   //Side Menu
   SidemenuComponent
 
 ],
   entryComponents: [],
   imports: [
-    BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
+    BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule, GooglePlaceModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 
   bootstrap: [AppComponent]

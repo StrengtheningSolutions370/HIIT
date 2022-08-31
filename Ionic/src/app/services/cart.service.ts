@@ -3,7 +3,6 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
-import { cartLine } from '../models/cart-line';
 import { Cart, saleLine } from '../models/cart';
 import { SaleItem } from '../models/sale-item';
 import { CartModalPage } from '../pages/shop/cart-modal/cart-modal.page';

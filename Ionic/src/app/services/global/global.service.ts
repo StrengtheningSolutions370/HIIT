@@ -15,6 +15,7 @@ export class GlobalService {
   public fetchMeasurementFlag = false;
   public closeMeasurementAddModal = new EventEmitter<any>();
 
+  public orderHash  = 0;
 
   constructor(private alertCtrl: AlertController,
     private toastCtrl: ToastController,

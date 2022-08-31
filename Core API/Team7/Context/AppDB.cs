@@ -47,14 +47,14 @@ namespace Team7.Context
         public virtual DbSet<StockTake> StockTake { get; set; }
         public virtual DbSet<StockTakeLine> StockTakeLine { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
-        public virtual DbSet<SupplierOrder> SupplierOrder { get; set; }
-        public virtual DbSet<SupplierOrderLine> SupplierOrderLine { get; set; }
         public virtual DbSet<Title> Title { get; set; }
         public virtual DbSet<Venue> Venue { get; set; }
         public virtual DbSet<WriteOff> WriteOff { get; set; }
         public virtual DbSet<WriteOffLine> WriteOffLine { get; set; }
         public virtual DbSet<WriteOffReason> WriteOffReason { get; set; }
         public virtual DbSet<VAT> VAT { get; set; }
+        public virtual DbSet<SaleItemOrder> SaleItemOrder { get; set; }
+        public virtual DbSet<OrderRecieved> OrderRecieved { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

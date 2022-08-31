@@ -130,9 +130,7 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
-            //Change to AWS to connect to the hosted DB
-            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
-
+            options.UseSqlServer(Configuration.GetConnectionString("AWS")));
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
             services.AddScoped<IBookingPriceHistoryRepo, BookingPriceHistoryRepo>();
@@ -163,8 +161,6 @@ namespace Team7
             services.AddScoped<IScheduleRepo, ScheduleRepo>();
             services.AddScoped<IStockTakeLineRepo, StockTakeLineRepo>();
             services.AddScoped<IStockTakeRepo, StockTakeRepo>();
-            services.AddScoped<ISupplierOrderLineRepo, SupplierOrderLineRepo>();
-            services.AddScoped<ISupplierOrderRepo, SupplierOrderRepo>();
             services.AddScoped<ISupplierRepo, SupplierRepo>();
             services.AddScoped<ITitleRepo, TitleRepo>();
             services.AddScoped<IVenueRepo, VenueRepo>();
@@ -173,9 +169,10 @@ namespace Team7
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();
             services.AddScoped<IVATRepo, VATRepo>();
+            services.AddScoped<ISaleItemOrderRepo, SaleItemOrderRepo>();
+            services.AddScoped<IOrderRecievedRepo, OrderRecievedRepo>();
+            //services.AddSwaggerGen();
             services.AddScoped<IReportRepo, ReportRepo>();
-
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
         }
