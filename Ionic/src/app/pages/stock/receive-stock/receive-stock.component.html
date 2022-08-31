@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>New Stock Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -38,7 +38,7 @@
 
             <div class="w-100 evenrow"> <!-- for selects -->
 
-              {{stock.displaycount}}
+              <!-- {{stock.displaycount}} -->
   
               <div class="w-100"> <!-- select for category -->
                 <!-- this is rendered from the oroginal, and on change pass the id of the obj and the category to set it to -->
@@ -85,7 +85,7 @@
     <div class="center">
       <ion-row class="width-80">
         <ion-col>
-          <ion-button color="light" (click)="dismissModal()">Cancel</ion-button>
+          <ion-button color="light" (click)="this.global.dismissModal()">Cancel</ion-button>
         </ion-col>
         <ion-col>
           <ion-button (click)="submitForm()" color="success" [disabled]="cStockForm.invalid || !validSaleItems">Recieve</ion-button>
