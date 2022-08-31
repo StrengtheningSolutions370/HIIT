@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Cart } from 'src/app/models/cart';
+import { Yoco } from 'src/app/models/yoco';
 import { CartService } from 'src/app/services/cart.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { StoreService } from 'src/app/services/storage/store.service';
+import { YocoService } from 'src/app/services/yoco/yoco.service';
 import { CartModalPageRoutingModule } from '../cart-modal/cart-modal-routing.module';
 
 @Component({
@@ -17,7 +19,7 @@ export class CheckoutComponent implements OnInit {
   currentMethod = undefined;
 
 
-  constructor(public global: GlobalService, public cartService: CartService, public storage: StoreService ) { }
+  constructor(public global: GlobalService, public cartService: CartService, public storage: StoreService, private yoco : YocoService) { }
 
   ngOnInit() {
     console.log(this.cartData);
@@ -63,7 +65,20 @@ export class CheckoutComponent implements OnInit {
 
   proceedToPayment(){
     console.log(this.cartData);
-    this.global.showAlert("Please make a cash payment in store","Card payment unavailable");
+
+    this.global.nativeLoad("Processing Payment...");
+    const pl = new Yoco(this.cartData.grandTotal*100, 'ZAR', '');
+    this.yoco
+      .pay(pl)
+      .subscribe(res => {
+        if (res)
+          this.global.showToast('Payment Successful');
+          //do call to make payment endpoint here
+        else
+          this.global.showAlert('Payment Failed, Please try again');
+        this.global.endNativeLoad();
+      });
+
   }
 
 }
