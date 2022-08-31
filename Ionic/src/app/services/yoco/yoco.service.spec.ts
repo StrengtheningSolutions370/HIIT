@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RazorpayService } from './razorpay.service';
+import { YocoService } from './yoco.service';
 
-describe('RazorpayService', () => {
-  let service: RazorpayService;
+describe('YocoService', () => {
+  let service: YocoService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RazorpayService);
+    service = TestBed.inject(YocoService);
   });
 
   it('should be created', () => {

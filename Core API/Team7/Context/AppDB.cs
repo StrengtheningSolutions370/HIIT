@@ -20,7 +20,6 @@ namespace Team7.Context
         public virtual DbSet<BookingPriceHistory> BookingPriceHistory { get; set; }
         public virtual DbSet<BookingType> BookingType { get; set; }
         public virtual DbSet<Client> Client { get; set; }
-        public virtual DbSet<DateSession> DateSession { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<EmployeeType> EmployeeType { get; set; }
         public virtual DbSet<ExerciseCategory> ExerciseCategory { get; set; }

@@ -38,7 +38,26 @@ $colors: (
 
 ion-popover {
   --width: auto!important;
+
 }
+
+//Alert view schedule event CSS:
+
+.alert-button-group {
+  flex-direction: row !important;
+  $alert-button-group:vertical;
+  text-align: center;
+}
+
+.alert-head {
+  text-align: center !important;
+}
+
+.alert-wrapper {
+  min-width: 20% !important;
+  text-align: center;
+}
+
 
 .toastCenter {
   text-align: center;
@@ -54,4 +73,8 @@ ion-popover {
   --height: 50%;
   --border-radius: 5%;
   padding: 25px;
+}
+
+.redDelete {
+  color: red !important;
 }

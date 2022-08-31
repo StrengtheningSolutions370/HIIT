@@ -95,8 +95,6 @@ export class AddSitemComponent implements ViewWillEnter {
     );
   }
 
-
-
   //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
     return this.cSaleItemForm.controls;

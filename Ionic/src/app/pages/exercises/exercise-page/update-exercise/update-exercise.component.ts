@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormGroup, FormControl, Validators, UntypedFormBuilder } from '@angular/forms';
-import { ModalController, ViewWillEnter } from '@ionic/angular';
-import { ValueAccessor } from '@ionic/angular/directives/control-value-accessors/value-accessor';
+import { UntypedFormGroup, Validators, UntypedFormBuilder } from '@angular/forms';
+import { ModalController} from '@ionic/angular';
 import { Exercise } from 'src/app/models/exercise';
 import { ExerciseCategory } from 'src/app/models/exercise-category';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -104,6 +103,6 @@ export class UpdateExerciseComponent implements OnInit {
     dismissModal() {
       this.modalCtrl.dismiss();
     }
-  
+
 
 }

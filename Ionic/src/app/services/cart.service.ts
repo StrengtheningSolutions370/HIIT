@@ -5,7 +5,6 @@ import { ModalController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { Cart } from '../models/cart';
 import { cartLine } from '../models/cart-line';
-import { SaleItem } from '../models/sale-item';
 import { CartModalPage } from '../pages/shop/cart-modal/cart-modal.page';
 import { CheckoutComponent } from '../pages/shop/checkout/checkout.component';
 import { PaymentPage } from '../pages/shop/payment/payment.page';

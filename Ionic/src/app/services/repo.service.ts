@@ -72,7 +72,9 @@ export class RepoService {
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
 
-
+  chargeYOCO(data : any) : Observable<any> {
+    return this.http.post(`${this.base + this.PaymentController}charge`, data, this.httpOptions);
+  }
 
   getUserRole(token : string) : Observable<any>{
     // console.trace();
