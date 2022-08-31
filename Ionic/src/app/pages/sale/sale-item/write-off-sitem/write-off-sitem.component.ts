@@ -57,6 +57,7 @@ export class WriteOffSitemComponent implements ViewWillEnter {
     console.log("AddWriteOff-ViewWillEnter");
     console.log("Item:",this.saleItem);
 
+    this.errorControl.itemQuantity.addValidators(Validators.max(this.saleItem.quantityOnHand));
     //fetch employees for the dropdown:
     //this.repo.getEmployees().subscribe({
     //  next: (data : any) => {
@@ -111,6 +112,18 @@ export class WriteOffSitemComponent implements ViewWillEnter {
     return `${employee.data}`;
   }
 
+  //getEmpSelected(employeeID : number) {
+  //  console.log("EmpID", employeeID);
+  //  this.repo.getEmployees().subscribe({
+  //    next: (data : any) => {
+  //      console.log(data)
+  //      this.employees = data.filter(el => el.employeeID == employeeID);
+  //      console.log('employee selected',this.employees)
+  //      return this.employees;
+  //    }
+  //  });
+  //}
+
   submitForm() {
     if (this.cWriteOffForm.invalid)
     {
@@ -118,13 +131,13 @@ export class WriteOffSitemComponent implements ViewWillEnter {
     }  
     var quantitySelected: number = +this.cWriteOffForm.controls['itemQuantity'].value;
     var writeOffReasonSelected: number = +this.cWriteOffForm.controls['itemSReason'].value;
-    console.log("number", writeOffReasonSelected)
     var saleItemSelected: number = +this.saleItem.saleItemID;
-    var employeeSelected: string = this.cWriteOffForm.controls['itemSEmployee'].value;
+    var employeeSelected: number = +this.cWriteOffForm.controls['itemSEmployee'].value;
     console.log()
+    
     var obj: any = {
       writeOff: [{
-        employee: this.employeeService.matchingEmployee(employeeSelected),
+        employeeID: employeeSelected,
       }],
       quantity: quantitySelected,
       writeOffReasons: writeOffReasonSelected,
