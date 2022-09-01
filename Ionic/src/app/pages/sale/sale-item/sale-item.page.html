@@ -34,12 +34,14 @@ animated="true" debounce="200"></ion-searchbar>
                 </ion-button>
               </ion-col>
             </ion-row>
+            <div *ngIf="saleItem.quotable !== true" >
             <ion-row class="row align-items-center no-gutters">
               <ion-col class="column-buttons">
                 <ion-button (click)="inventoryService.addWriteOffInfoModal(saleItem)"  color="warning"  expand="block" >Write-Off
                 </ion-button>
               </ion-col>
             </ion-row>
+          </div>
           </ion-card-content>
         </ion-card>
       </ion-col>

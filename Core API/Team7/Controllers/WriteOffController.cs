@@ -85,7 +85,7 @@ namespace Team7.Controllers
         {
             try
             {
-                var writeoffList = await _writeOffRepo.GetAllWriteOffsAsync();
+                var writeoffList = await _writeOffLineRepo.GetAllWriteOffLinesAsync();
                 if (writeoffList == null)
                 {
                     return Ok(0);

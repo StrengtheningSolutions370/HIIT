@@ -146,6 +146,7 @@ export class WriteOffSitemComponent implements ViewWillEnter {
     }
     console.log("Object", obj)
     this.writeOffService.createWriteOff(obj);
+    this.global.dismissModal();
     return;
   }
 }

@@ -23,6 +23,10 @@ const routes: Routes = [
       {
         path: 'refund-reason',
         loadChildren: () => import('./refund-reason/refund-reason.module').then( m => m.RefundReasonPageModule)
+      },
+      {
+        path: 'write-off',
+        loadChildren: () => import('./write-off/write-off.module').then( m => m.WriteOffPageModule)
       }
     ]
   },
@@ -30,7 +34,12 @@ const routes: Routes = [
     path: '',
     redirectTo: 'tabs/sale-item',
     pathMatch: 'full'
+  },
+  {
+    path: 'write-off',
+    loadChildren: () => import('./write-off/write-off.module').then( m => m.WriteOffPageModule)
   }
+
 
 ];
 

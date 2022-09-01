@@ -30,21 +30,43 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<WriteOffLine[]> GetAllWriteOffLinesAsync()
+        public async Task<object> GetAllWriteOffLinesAsync()
         {
             IQueryable<WriteOffLine> query = DB.WriteOffLine;
 
             if (!query.Any())
+            {
                 return null;
-
-            return await query.Select(wl =>
-                new WriteOffLine
+            }
+            return new
+            {
+                result = await query.Select(wl =>
+                new
                 {
-                    WriteOffLineID = wl.WriteOffLineID,
-                    Quantity = wl.Quantity,
-                    WriteOffReason = wl.WriteOffReason,
-                    SaleItem = wl.SaleItem,
-                }).ToArrayAsync();
+                    wl.WriteOffLineID,
+                    wl.Quantity,
+                    WriteOff = new
+                    {
+                        wl.WriteOff.WriteOffID,
+                        wl.WriteOff.Date,
+                        wl.WriteOff.Employee
+                    },
+                    SaleItem = new
+                    {
+                        wl.SaleItem.SaleItemID,
+                        wl.SaleItem.Name,
+                        wl.SaleItem.Photo,
+                        wl.SaleItem.Quotable,
+                        wl.SaleItem.Description,
+                        wl.SaleItem.QuantityOnHand
+                    },
+                    WriteOffReason = new
+                    {
+                        wl.WriteOffReason.WriteOffReasonID,
+                        wl.WriteOffReason.Description
+                    }
+                }).ToListAsync()
+            };
         }
 
         //public async Task<WriteOffLine[]> GetWriteOffLinesAsync(string input)
