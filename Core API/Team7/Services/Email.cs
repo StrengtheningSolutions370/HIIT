@@ -28,10 +28,7 @@ namespace Team7.Services
             this.body = body;
         }
 
-        public Email()
-        {
 
-        }
 
         public void sendEmail()
         {

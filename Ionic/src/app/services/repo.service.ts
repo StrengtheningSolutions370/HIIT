@@ -31,8 +31,9 @@ import { WriteOff } from '../models/write-off';
 })
 
 export class RepoService {
-  base = 'https://bsctest.azurewebsites.net/api/';
-  //base = 'http://localhost:5001/api/';
+  // base = 'https://bsctest.azurewebsites.net/api/';
+  // base = 'http://localhost:5001/api/';
+  base = 'https://localhost:44383/api/';
   AppUserController = 'AppUser/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
