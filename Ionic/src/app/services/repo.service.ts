@@ -31,8 +31,8 @@ import { WriteOff } from '../models/write-off';
 })
 
 export class RepoService {
-  base = 'https://bsctest.azurewebsites.net/api/';
-  //base = 'http://localhost:5001/api/';
+  //base = 'https://bsctest.azurewebsites.net/api/';
+  base = 'http://localhost:44383/api/';
   AppUserController = 'AppUser/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
@@ -122,6 +122,7 @@ export class RepoService {
 
   //Login
   login(userDetails: appUser): Observable<any> {
+    //console.log(this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions));
     return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
   }
 
@@ -614,7 +615,7 @@ getSaleCategoryReport(): Observable<any>{
   // existsExercise(id: number): Observable<any> {
   //   return this.http.get(`${this.base + this.ExerciseController}exists?id=${id}`, this.httpOptions);
   // }
-  
+
   //Stock
   createStock(supplier: any): Observable<any> {
     console.log();

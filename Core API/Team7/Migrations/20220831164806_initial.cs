@@ -40,20 +40,6 @@ namespace Team7.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DateSession",
-                columns: table => new
-                {
-                    DateSessionID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DateSession", x => x.DateSessionID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EmployeeType",
                 columns: table => new
                 {
@@ -252,26 +238,6 @@ namespace Team7.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BookingPriceHistory",
-                columns: table => new
-                {
-                    BookingPriceHistoryID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    BookingTypeID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BookingPriceHistory", x => x.BookingPriceHistoryID);
-                    table.ForeignKey(
-                        name: "FK_BookingPriceHistory_BookingType_BookingTypeID",
-                        column: x => x.BookingTypeID,
-                        principalTable: "BookingType",
-                        principalColumn: "BookingTypeID");
                 });
 
             migrationBuilder.CreateTable(
@@ -745,7 +711,7 @@ namespace Team7.Migrations
                     PaymentID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PaymentTypeID = table.Column<int>(type: "int", nullable: false),
-                    SaleID = table.Column<int>(type: "int", nullable: false),
+                    SaleID = table.Column<int>(type: "int", nullable: true),
                     BookingID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -766,8 +732,7 @@ namespace Team7.Migrations
                         name: "FK_Payment_Sale_SaleID",
                         column: x => x.SaleID,
                         principalTable: "Sale",
-                        principalColumn: "SaleID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "SaleID");
                 });
 
             migrationBuilder.CreateTable(
@@ -804,11 +769,12 @@ namespace Team7.Migrations
                 {
                     ScheduleID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VenueID = table.Column<int>(type: "int", nullable: false),
+                    VenueID = table.Column<int>(type: "int", nullable: true),
                     BookingTypeID = table.Column<int>(type: "int", nullable: true),
                     LessonID = table.Column<int>(type: "int", nullable: true),
-                    DateSessionID = table.Column<int>(type: "int", nullable: true),
-                    EmployeeID = table.Column<int>(type: "int", nullable: true)
+                    EmployeeID = table.Column<int>(type: "int", nullable: true),
+                    StartDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -818,11 +784,6 @@ namespace Team7.Migrations
                         column: x => x.BookingTypeID,
                         principalTable: "BookingType",
                         principalColumn: "BookingTypeID");
-                    table.ForeignKey(
-                        name: "FK_Schedule_DateSession_DateSessionID",
-                        column: x => x.DateSessionID,
-                        principalTable: "DateSession",
-                        principalColumn: "DateSessionID");
                     table.ForeignKey(
                         name: "FK_Schedule_Employee_EmployeeID",
                         column: x => x.EmployeeID,
@@ -837,8 +798,7 @@ namespace Team7.Migrations
                         name: "FK_Schedule_Venue_VenueID",
                         column: x => x.VenueID,
                         principalTable: "Venue",
-                        principalColumn: "VenueID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "VenueID");
                 });
 
             migrationBuilder.CreateTable(
@@ -953,6 +913,26 @@ namespace Team7.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BookingPriceHistory",
+                columns: table => new
+                {
+                    BookingPriceHistoryID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ScheduleID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingPriceHistory", x => x.BookingPriceHistoryID);
+                    table.ForeignKey(
+                        name: "FK_BookingPriceHistory_Schedule_ScheduleID",
+                        column: x => x.ScheduleID,
+                        principalTable: "Schedule",
+                        principalColumn: "ScheduleID");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -1013,9 +993,9 @@ namespace Team7.Migrations
                 column: "ScheduleID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookingPriceHistory_BookingTypeID",
+                name: "IX_BookingPriceHistory_ScheduleID",
                 table: "BookingPriceHistory",
-                column: "BookingTypeID");
+                column: "ScheduleID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Client_AppUserId",
@@ -1146,11 +1126,6 @@ namespace Team7.Migrations
                 name: "IX_Schedule_BookingTypeID",
                 table: "Schedule",
                 column: "BookingTypeID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedule_DateSessionID",
-                table: "Schedule",
-                column: "DateSessionID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Schedule_EmployeeID",
@@ -1286,9 +1261,6 @@ namespace Team7.Migrations
 
             migrationBuilder.DropTable(
                 name: "BookingType");
-
-            migrationBuilder.DropTable(
-                name: "DateSession");
 
             migrationBuilder.DropTable(
                 name: "Venue");
