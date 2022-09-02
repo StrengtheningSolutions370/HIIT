@@ -1,28 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { SaleItem } from 'src/app/models/sale-item';
 import { WriteOff } from 'src/app/models/write-off';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { SalesService } from 'src/app/services/sales/sales.service';
+import { GlobalService } from 'src/app/services/global/global.service';
+import { ViewWillEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-write-off',
   templateUrl: './write-off.page.html',
   styleUrls: ['./write-off.page.scss'],
 })
-export class WriteOffPage implements OnInit {
+export class WriteOffPage implements ViewWillEnter {
 
   //String used from the searchbar, used in the filter pipe to search write-off.
   public filter: string;
 
   //Create local write-off array to be populated onInit.
-  writeOffList: any[] = [];
+  writeOffList: WriteOff [] = [];
+  tempList: WriteOff [] = []; //unfiltered
 
+  //Create local saleItem array.
+  saleItemList: SaleItem [] = [];
   //Subscription variable to track live updates.
   writeOff: Subscription;
 
   isLoading = true;
 
-  constructor(public writeOffService: InventoryService, public saleItemService: SalesService) {
+  constructor(public writeOffService: InventoryService, public global: GlobalService, public saleItemService: SalesService) {
     this.fetchWriteOff();
   }
 
@@ -34,14 +40,22 @@ export class WriteOffPage implements OnInit {
           console.log('Fetching write-off from DB');
           console.log(data);
           this.isLoading = false;
-          this.writeOffList = data;
+          this.tempList = data.result;
+          this.writeOffList = [];
+          //this.writeOffList = data.result;
           console.log(this.writeOffList);
+          this.tempList.forEach(writeOff => {
+            console.log(writeOff);
+            if (writeOff.writeOffLine.length > 0){
+              this.writeOffList.push(writeOff);
+            }
+          })
         }
       }
     );
   }
 
-  ngOnInit() {
+  ionViewWillEnter(): void {
     this.writeOffService.fetchWriteOffsEvent.subscribe({
       next: res => {
         console.log('Fetch write-off again');
@@ -49,21 +63,7 @@ export class WriteOffPage implements OnInit {
         this.fetchWriteOff();
       }
     })
+    this.writeOffService.fetchWriteOffsEvent.emit();
   }
-  
-  getSaleItem(writeOffLine : any) {
-    console.log(this.saleItemService.getAllSaleItems)
-    console.log("LINE",writeOffLine)
-    this.saleItemService.getAllSaleItems().subscribe({
-      next: (data : any) => {
-        console.log(data)
-        var items = data.filter(si => si.saleItemID[0] == writeOffLine.saleItemID);
-        console.log('items',items)
-      }
-    })
-    return;
-  }
-
-  
 
 }

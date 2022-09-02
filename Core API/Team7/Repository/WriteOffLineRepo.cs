@@ -69,6 +69,26 @@ namespace Team7.Models.Repository
             };
         }
 
+        public async Task<bool> RemoveRangeSaleItemIdAsync(int SaleItemId)
+        {
+            var range = DB.WriteOffLine.Where(wl => wl.SaleItemID == SaleItemId);
+            if (range.Any())
+            {
+                var count = range.ToArray();
+                //for(int i = 0; i <= count.Length; i++)
+                //{
+                 //   IQueryable<WriteOff> query = DB.WriteOff;
+                 //   var tempWriteOff = query.Where(w => w.WriteOffLine.FirstOrDefault().WriteOffLineID == count.FirstOrDefault().WriteOffLineID);
+                 //   DB.WriteOff.Remove(tempWriteOff);
+                //}
+                DB.WriteOffLine.RemoveRange(range);
+                if (await this.SaveChangesAsync())
+                    return true;
+                return false;
+            }
+            return true;
+        }
+
         //public async Task<WriteOffLine[]> GetWriteOffLinesAsync(string input)
         //{
         //    IQueryable<WriteOffLine> query = DB.WriteOffLine.Where(v => v.Name == input || v.Address == input);

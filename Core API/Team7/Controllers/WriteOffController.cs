@@ -85,7 +85,7 @@ namespace Team7.Controllers
         {
             try
             {
-                var writeoffList = await _writeOffLineRepo.GetAllWriteOffLinesAsync();
+                var writeoffList = await _writeOffRepo.GetAllWriteOffsAsync();
                 if (writeoffList == null)
                 {
                     return Ok(0);
@@ -98,5 +98,34 @@ namespace Team7.Controllers
             }
         }
 
-    }
+        //DELETE
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<IActionResult> DeleteWriteOff(int id)
+        {
+            var tempWriteOff = await _writeOffRepo._GetWriteOffIdAsync(id);
+            if (tempWriteOff == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _writeOffRepo.Delete(tempWriteOff);
+                if (await _writeOffRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
+                }
+
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+        }
+
+    }  
 }

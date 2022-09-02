@@ -12,6 +12,8 @@ namespace Team7.Models.Repository
 
         Task<object> GetAllWriteOffLinesAsync();
 
+        Task<bool> RemoveRangeSaleItemIdAsync(int SaleItemId);
+
         //Task<WriteOffLine[]> GetWriteOffLinesAsync(string input);
 
         //Task<WriteOffLine> GetWriteOffLineIdAsync(int id);

@@ -130,22 +130,26 @@ export class WriteOffSitemComponent implements ViewWillEnter {
       return;
     }  
     var quantitySelected: number = +this.cWriteOffForm.controls['itemQuantity'].value;
-    var writeOffReasonSelected: number = +this.cWriteOffForm.controls['itemSReason'].value;
+    var writeOffReasonSelected: number = +this.cWriteOffForm.value['itemSReason'].split(',')[0];
+    var reasonDescription: string = this.cWriteOffForm.value['itemSReason'].split(',')[1];
     var saleItemSelected: number = +this.saleItem.saleItemID;
-    var employeeSelected: number = this.cWriteOffForm.controls['itemSEmployee'].value;
+    var employeeSelected: number = +this.cWriteOffForm.value['itemSEmployee'].split(',')[0];
+    var employeeName: string = this.cWriteOffForm.value['itemSEmployee'].split(',')[1];
     console.log()
     
     var obj: WriteOff = {
-      EmployeeID: employeeSelected,
-      WriteOffLine: [{
-        Quantity: quantitySelected,
-        WriteOffReasonID: writeOffReasonSelected,
-        SaleItemID: saleItemSelected
+      employeeID: employeeSelected,
+      writeOffLine: [{
+        quantity: quantitySelected,
+        writeOffReasonID: writeOffReasonSelected,
+        saleItemID: saleItemSelected
       }]
 
     }
     console.log("Object", obj)
-    this.writeOffService.createWriteOff(obj);
+    console.log("EmployeeName", employeeName)
+    console.log("Reason", reasonDescription)
+    this.writeOffService.confirmWriteOffModal(obj, this.saleItem, employeeName, reasonDescription);
     this.global.dismissModal();
     return;
   }

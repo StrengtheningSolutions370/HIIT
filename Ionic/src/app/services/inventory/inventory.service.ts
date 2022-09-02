@@ -6,17 +6,19 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { WriteOffReason } from 'src/app/models/write-off-reason'; 
-import { AddWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/add-write-off-reason/add-write-off-reason.component'; 
-import { DeleteWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/delete-write-off-reason/delete-write-off-reason.component'; 
-import { UpdateWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/update-write-off-reason/update-write-off-reason.component'; 
-import { ViewWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/view-write-off-reason/view-write-off-reason.component'; 
-import { ConfirmWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/confirm-write-off-reason/confirm-write-off-reason.component'; 
-import { AssociativeWriteOffReasonComponent } from 'src/app/pages/stock/write-off-reason/associative-write-off-reason/associative-write-off-reason.component'; 
+import { AddWriteOffReasonComponent } from 'src/app/pages/sale/write-off-reason/add-write-off-reason/add-write-off-reason.component'; 
+import { DeleteWriteOffReasonComponent } from 'src/app/pages/sale/write-off-reason/delete-write-off-reason/delete-write-off-reason.component'; 
+import { UpdateWriteOffReasonComponent } from 'src/app/pages/sale/write-off-reason/update-write-off-reason/update-write-off-reason.component'; 
+import { ViewWriteOffReasonComponent } from 'src/app/pages/sale/write-off-reason/view-write-off-reason/view-write-off-reason.component'; 
+import { ConfirmWriteOffReasonComponent } from 'src/app/pages/sale/write-off-reason/confirm-write-off-reason/confirm-write-off-reason.component'; 
+import { AssociativeWriteOffReasonComponent } from 'src/app/pages/sale/write-off-reason/associative-write-off-reason/associative-write-off-reason.component'; 
 import { RepoService } from '../repo.service';
 import { Observable } from 'rxjs';
 import { WriteOffSitemComponent } from 'src/app/pages/sale/sale-item/write-off-sitem/write-off-sitem.component';
 import { WriteOff } from 'src/app/models/write-off';
 import { SaleItem } from 'src/app/models/sale-item';
+import { ViewWriteOffComponent } from 'src/app/pages/sale/write-off/view-write-off/view-write-off.component';
+import { ConfirmWriteOffComponent } from 'src/app/pages/sale/sale-item/confirm-write-off-sitem/confirm-write-off-sitem.component';
 
 @Injectable({
   providedIn: 'root'
@@ -181,12 +183,40 @@ export class InventoryService {
   }
 
   //VIEW
+  async viewWriteOffInfoModal(writeOff: WriteOff) {
+    console.log("WriteOffService: ViewWriteOffInfoModalCall");
+    const modal = await this.modalCtrl.create({
+      component: ViewWriteOffComponent,
+      componentProps: {
+        writeOff
+      }
+    });
+    await modal.present();
+  }
+
+  //VIEW REASON
   async viewWriteOffReasonInfoModal(writeOffReason: WriteOffReason) {
     console.log("WriteOffReasonService: ViewWriteOffReasonInfoModalCall");
     const modal = await this.modalCtrl.create({
       component: ViewWriteOffReasonComponent,
       componentProps: {
         writeOffReason
+      }
+    });
+    await modal.present();
+  }
+
+  //CONFIRM
+  async confirmWriteOffModal(writeOff: any, saleItem: any, empName: string, reason: string) {
+    console.log('WriteOffReasonService: ConfirmWriteOffReasonModalCall');
+    console.log("Performing ADD");
+    const modal = await this.modalCtrl.create({
+      component: ConfirmWriteOffComponent,
+      componentProps: {
+        writeOff,
+        saleItem,
+        empName,
+        reason
       }
     });
     await modal.present();
