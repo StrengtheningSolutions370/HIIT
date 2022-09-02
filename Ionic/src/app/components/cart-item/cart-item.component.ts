@@ -5,7 +5,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   templateUrl: './cart-item.component.html',
   styleUrls: ['./cart-item.component.scss'],
 })
-export class CartItemComponent implements OnInit {
+export class CartItemComponent {
+
+  //Each individual line for a sales item
 
   @Input() item: any;
   @Input() index: any;

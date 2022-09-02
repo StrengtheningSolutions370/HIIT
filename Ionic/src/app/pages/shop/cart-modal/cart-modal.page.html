@@ -10,13 +10,15 @@
 </ion-header>
 
 <ion-content>
-  <app-cart-item *ngFor="let item of model?.items; let i = index" [item]="item" [index]="i" (add)="quantityPlus($event)"
+  <app-cart-item *ngFor="let item of model?.sales; let i = index" [item]="item" [index]="i" (add)="quantityPlus($event)"
     (minus)="quantityMinus($event)">
   </app-cart-item>
+  <app-cart-booking-item *ngFor="let booking of model?.bookings" [booking]="booking">
+</app-cart-booking-item>
 
-  <ion-label *ngIf="this.model === null">Cart is empty.</ion-label>
+  <ion-label *ngIf="!this.model.sales && !this.model.bookings">Cart is empty.</ion-label>
 
-  <ion-list class="borderBottom" *ngIf="this.model !== null">
+  <ion-list class="borderBottom" *ngIf="!this.model.sales && !this.model.bookings">
     <ion-item lines="none">
       <ion-label color="dark">
         <h1>

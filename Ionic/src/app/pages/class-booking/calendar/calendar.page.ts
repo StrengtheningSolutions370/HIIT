@@ -107,7 +107,8 @@ export class CalendarPage implements AfterViewInit {
                   endTime: endTime,
                   lesson: sItem.lesson,
                   employee: sItem.employee,
-                  bookingPriceHistory: sItem.bookingPriceHistory
+                  bookingPriceHistory: sItem.bookingPriceHistory,
+                  //color:
                 });
               })
               this.eventSource = events;

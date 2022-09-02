@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
-import { Cart, saleLine } from '../models/cart';
+import { bookingLine, Cart, saleLine } from '../models/cart';
 import { SaleItem } from '../models/sale-item';
 import { CartModalPage } from '../pages/shop/cart-modal/cart-modal.page';
 import { CheckoutComponent } from '../pages/shop/checkout/checkout.component';
@@ -17,8 +17,8 @@ import { StoreService } from './storage/store.service';
 })
 export class CartService {
 
-  model = {} as Cart;
-  private _cart = new BehaviorSubject<Cart>(null);
+  model = {} as Cart; //Local cart page, used for translation
+  private _cart = new BehaviorSubject<Cart>(null);//Dynamic cart obj
 
   get cart() {
     return this._cart.asObservable();
@@ -57,7 +57,7 @@ export class CartService {
 
 
   async quantityPlus(index, sales?) {
-    console.log('Cart Service: quantityPlus()');
+    console.log('Cart Service: quantityPlus('+index+')');
     try {
       if(sales) {this.model.sales = [...sales];}
       console.log('Quantity plus: ', this.model.sales[index]);
@@ -66,8 +66,43 @@ export class CartService {
       } else {
         this.model.sales[index].quantityChange += 1; // this.model.sales[index].quantity = this.model.sales[index].quantity + 1
       }
-      await this.calculate();
+      //await this.calculate();
+      console.log(this.model);
       this._cart.next(this.model);
+    } catch(e) {
+      console.log(e);
+      throw(e);
+    }
+  }
+
+  async addBooking(booking: bookingLine) {
+    console.log('Cart Service: quantityPlus()');
+    try {
+      let duplicate = false;
+      if (!this.model.bookings){
+        this.model.bookings = []; //Have to instantiate it as an empty array to use the length property
+        console.log(this.model);
+      } else {
+
+        this.model.bookings.forEach(bookLine => {
+          if (bookLine.scheduleID == booking.scheduleID){
+            console.log("Duplicate adding booking to cart");
+            duplicate = true;
+            return;
+          }
+        });
+      }
+
+      if (!duplicate) {
+        this.model.bookings[this.model.bookings.length] = ({...booking});
+        console.log("booking added: ", this.model.bookings);
+        this._cart.next(this.model);
+        console.log(this._cart.getValue());
+      }
+
+
+
+
     } catch(e) {
       console.log(e);
       throw(e);
@@ -87,6 +122,23 @@ export class CartService {
         this.model.sales[index].quantityChange = 0;
       }
       await this.calculate();
+      this._cart.next(this.model);
+    } catch(e) {
+      console.log(e);
+      throw(e);
+    }
+  }
+
+
+  async removeBooking(index, bookings?) {
+    try {
+      if(bookings) {
+        console.log('model: ', this.model);
+        //this.model.bookings = [...bookings];
+        this.model.bookings[index] = null;
+        console.log('model: ', this.model);
+      }
+      console.log('item: ', this.model.bookings[index]);
       this._cart.next(this.model);
     } catch(e) {
       console.log(e);
@@ -132,6 +184,11 @@ export class CartService {
     this.storage.setKey('cart', JSON.stringify(this.model));
   }
 
+  //Clear cart
+  async clearCartOrder() {
+    await this.storage.deleteKey('order');
+  }
+
   saveCartOrder(model) {
     this.storage.setKey('order', JSON.stringify(model));
   }
@@ -142,18 +199,15 @@ export class CartService {
     const modal = await this.modalCtrl.create({
       component: CartModalPage,
       componentProps:{
-        cartData, saleItem,
-        rootPage: PaymentPage
+        cartData,
+        saleItem
       },
       cssClass: 'cart-modal'
     });
     await modal.present();
   }
 
-  //Clear cart
-  async clearCartOrder() {
-    await this.storage.deleteKey('order');
-  }
+
 
 
   async checkout(cartData:any){

@@ -186,12 +186,15 @@ export class ItemsPage implements OnInit {
       if (cart && cart?.sales.length > 0) {
         this.storedData = cart;
         // this.cartData.items = this.storedData.items;
-        this.cartData.totalItem = this.storedData.totalItem;
-        this.cartData.totalPrice = this.storedData.totalPrice;
-        this.saleItems.forEach(element => {
-          cart.sales.forEach(element2 => {
-            if (element.id !== element2.saleItemID) { return; }
-            element.quantity = element2.quantityChange;
+        //this.cartData.totalItem = this.storedData.totalItem;
+        //this.cartData.totalPrice = this.storedData.totalPrice;
+
+        this.saleItems.forEach(saleItem => {
+          console.log(saleItem);
+          cart.sales.forEach(cartElement => {
+            console.log(cartElement);
+            if (saleItem.id !== cartElement.saleItemID) { return; }
+            saleItem.quantity = cartElement.quantityChange;//unsure why this is set to equal
           });
         });
         this.cartData.items = this.saleItems.filter(x => x.quantity > 0);
