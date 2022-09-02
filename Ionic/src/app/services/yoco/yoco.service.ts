@@ -27,7 +27,6 @@ export class YocoService {
 
   constructor(private repo : RepoService) { 
 
-
     //create charge function to handle WebAPI charge and verification:
     window.charge = async (token_card : any, payload : any) => {
       this.repo.chargeYOCO(payload).subscribe(res => {
