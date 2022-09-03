@@ -13,6 +13,7 @@ namespace Team7.Models
             this.SaleLine = new HashSet<SaleLine>();
             this.StockTakeLine = new HashSet<StockTakeLine>();
             this.WriteOffLine = new HashSet<WriteOffLine>();
+            this.SaleItemOrders = new HashSet<SaleItemOrder>();
         }
 
         [Key]
@@ -44,5 +45,7 @@ namespace Team7.Models
         public virtual ICollection<SaleLine> SaleLine { get; set; }
         public virtual ICollection<StockTakeLine> StockTakeLine { get; set; }
         public virtual ICollection<WriteOffLine> WriteOffLine { get; set; }
+
+        public virtual ICollection<SaleItemOrder> SaleItemOrders { get; set; }
     }
 }

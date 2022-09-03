@@ -7,6 +7,14 @@ using Team7.Models.Repository;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using RestSharp;
+using System.Text;
+using System.Net;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
+using Newtonsoft.Json.Linq;
 
 namespace Team7.Controllers
 {
@@ -39,8 +47,33 @@ namespace Team7.Controllers
             _scheduleRepo = scheduleRepo;
         }
 
-        //CREATE
         [HttpPost]
+        [Route("charge")]
+        public async Task<IActionResult> yocoChargeAPI(yocoChargeViewModel yoco)
+        {
+
+            using(var httpClient = new HttpClient())
+{
+                using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://online.yoco.com/v1/charges/"))
+                {
+                    var base64authorization = Convert.ToBase64String(Encoding.ASCII.GetBytes("sk_test_cc0f5683xWpR8vQ65b14d8a99f19:"));
+                    request.Headers.TryAddWithoutValidation("Authorization", $"Basic {base64authorization}");
+                    var contentList = new List<string>();
+                    contentList.Add("token=" + yoco.token);
+                    contentList.Add("amountInCents=" + yoco.amount);
+                    contentList.Add("currency=ZAR");
+                    request.Content = new StringContent(string.Join("&", contentList));
+                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+                    var response = await httpClient.SendAsync(request);
+                    var content = await response.Content.ReadAsStringAsync();
+                    return Ok(content);
+                }
+            }
+
+        }
+
+            //CREATE
+            [HttpPost]
         [Route("add")]
 
         public async Task<IActionResult> PostPayment(PaymentViewModel pvm)
@@ -60,7 +93,7 @@ namespace Team7.Controllers
                     
                     Sale saleTemp = new()
                     {
-                        Date = System.DateTime.Now,
+                        Date = DateTime.Now,
                         UserID = userTemp.Id,
                         AppUser = userTemp
                     };

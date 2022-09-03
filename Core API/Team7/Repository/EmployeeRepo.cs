@@ -79,7 +79,11 @@ namespace Team7.Models.Repository
                 Qualification = e.Qualification,
                 EmployeeType = e.EmployeeType,
                 AppUser = e.AppUser,
-                Lesson = e.Lesson,
+                Lesson = e.Lesson.Select(l => new
+                {
+                    l.LessonID,
+                    l.Name
+                }),
                 Schedule = e.Schedule,
                 UserID = e.UserID,
             }).ToListAsync();

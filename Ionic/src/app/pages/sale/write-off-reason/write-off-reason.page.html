@@ -4,7 +4,7 @@
       <ion-buttons slot="start">
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
-      <ion-title slot="">Write-Off Reason</ion-title>
+      <ion-title slot="">Stock</ion-title>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
       <!--Can we change this dynamically when switching between tabs?-->
     <!-- </ion-item> -->
@@ -12,17 +12,19 @@
 </ion-header>
 
 <ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="top" >
+      <ion-tab-button tab="write-off">
+        <ion-label>Write-Off</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="write-off-reason">
+        <ion-label>Write-Off Reason</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
   <br/>
-  <!--Searchbar (must make function to search)-->
-  <ion-searchbar expand="block" placeholder='Search Write-Off Reason...' [(ngModel)]="filter"
-  animated="true" debounce="200"></ion-searchbar>
-  <br/><br/>
-
-  <div class="ion-text-center">
-    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="writeOffReasonService.addWriteOffReasonInfoModal()">
-      Add Write-Off Reason
-    </ion-button>
-  </div>
+  <br/>
+  <br/>
   <br/>
 
   <ion-grid *ngIf="!isLoading" >

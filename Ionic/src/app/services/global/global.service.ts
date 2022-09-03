@@ -15,6 +15,7 @@ export class GlobalService {
   public fetchMeasurementFlag = false;
   public closeMeasurementAddModal = new EventEmitter<any>();
 
+  public orderHash  = 0;
 
   constructor(private alertCtrl: AlertController,
     private toastCtrl: ToastController,
@@ -24,7 +25,7 @@ export class GlobalService {
     //IMAGE manipulation
     //--------
 
-    public createImg = (fileName: string) => `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
+    public createImg = (fileName: string) => `http://localhost:5001/Resources/Images/saleItemImages/${fileName}`;
 
     filterItems(searchTerm) {
       return this.items.filter(item => item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);

@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './authentication/auth.interceptor';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 // import { PayPal } from '@ionic-native/paypal/ngx';
 // import { Stripe } from '@ionic-native/stripe/ngx';
 
@@ -123,7 +124,6 @@ import { ViewWriteOffReasonComponent } from './pages/sale/write-off-reason/view-
 
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
-import { TimeRangeComponent } from './pages/booking/time-range/time-range.component';
 
 //CART IMPORTS:
 import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
@@ -144,10 +144,16 @@ import { DeleteLessonComponent } from './pages/lessons/delete-lesson/delete-less
 import { ViewLessonComponent } from './pages/lessons/view-lesson/view-lesson.component';
 import { ConfirmLessonComponent } from './pages/lessons/confirm-lesson/confirm-lesson.component';
 import { AssociativeLessonComponent } from './pages/lessons/associative-lesson/associative-lesson.component';
+
 //SCHEDULE IMPORTS:
 import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-schedule.component';
-import { DatePipe } from '@angular/common';
 import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedule/update-schedule.component';
+import { DeleteScheduleComponent } from './pages/booking/schedule/delete-schedule/delete-schedule.component';
+import { ConfirmScheduleComponent } from './pages/booking/schedule/confirm-schedule/confirm-schedule.component';
+
+//BOOKING IMPORTS:
+import { AddBookingComponent } from './pages/class-booking/add-booking/add-booking.component';
+import { CancelBookingComponent } from './pages/class-booking/cancel-booking/cancel-booking.component';
 
 //CLIENT IMPORTS:
 import { DeleteClientComponent } from './pages/user/clients/delete-client/delete-client.component';
@@ -158,6 +164,19 @@ import { ConfirmIndemnityComponent } from './pages/profile/profile/confirm-indem
 //Add Measurement
 import { AddComponent } from './pages/measurements/add/add.component';
 import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measurement/confirm-measurement.component';
+
+//SUPPLIER IMPORTS:
+import { AddSupplierComponent } from './pages/suppliers/supplier-page/add-supplier/add-supplier.component';
+import { UpdateSupplierComponent } from './pages/suppliers/supplier-page/update-supplier/update-supplier.component';
+import { DeleteSupplierComponent } from './pages/suppliers/supplier-page/delete-supplier/delete-supplier.component';
+import { ViewSupplierComponent } from './pages/suppliers/supplier-page/view-supplier/view-supplier.component';
+import { ConfirmSupplierComponent } from './pages/suppliers/supplier-page/confirm-supplier/confirm-supplier.component';
+import { AssociativeSupplierComponent } from './pages/suppliers/supplier-page/associative-supplier/associative-supplier.component';
+
+//STOCK
+import { ViewOrderComponent } from './pages/stock/view-order/view-order.component';
+import { ReceiveStockComponent } from './pages/stock/receive-stock/receive-stock.component';
+import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stock/confirm-recieve-stock.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -194,8 +213,6 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
   //ExerciseCategory
   AddExerciseCategoryComponent, UpdateExerciseCategoryComponent, DeleteExerciseCategoryComponent, ViewExerciseCategoryComponent, ConfirmExerciseCategoryComponent, AssociativeExerciseCategoryComponent,
-  //Side Menu
-  SidemenuComponent,
   //RefundReason
   ConfirmRefundReasonComponent, AddRefundReasonComponent, UpdateRefundReasonComponent, ViewRefundReasonComponent, DeleteRefundReasonComponent, AssociativeRefundReasonComponent,
   //Employee
@@ -204,22 +221,29 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   AddWriteOffReasonComponent, AssociativeWriteOffReasonComponent, ConfirmWriteOffReasonComponent, DeleteWriteOffReasonComponent, UpdateWriteOffReasonComponent, ViewWriteOffReasonComponent,
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
+  //Booking
+  AddBookingComponent, CancelBookingComponent,
   //Schedule
-  TimeRangeComponent, AddScheduleComponent, UpdateScheduleComponent,
+  AddScheduleComponent, UpdateScheduleComponent, DeleteScheduleComponent, ConfirmScheduleComponent,
   //Exercise
-
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
   //Lesson
   AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
   //Client
   DeleteClientComponent,
   //confirmindemnity
-  AddComponent, ConfirmMeasurementComponent
+  AddComponent, ConfirmMeasurementComponent,
+   //Supplier
+   AddSupplierComponent, UpdateSupplierComponent, DeleteSupplierComponent, ViewSupplierComponent, ConfirmSupplierComponent, AssociativeSupplierComponent,
+   //Stock
+    ViewOrderComponent, ReceiveStockComponent, ConfirmRecieveStockComponent,
+  //Side Menu
+  SidemenuComponent
 
 ],
   entryComponents: [],
   imports: [
-    BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
+    BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule, GooglePlaceModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 
   bootstrap: [AppComponent]

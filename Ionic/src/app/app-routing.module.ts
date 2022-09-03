@@ -188,6 +188,12 @@ export const routes: Routes = [
    {
     path: 'booking',
     loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule)
+    //This needs to be restricted to admin only (Booking - ADMIN, Class bookings - all)
+  },
+  {
+    path: 'class-booking',
+    loadChildren: () => import('./pages/class-booking/class-booking.module').then( m => m.ClassBookingPageModule)
+    //This needs to be restricted to admin only (Booking - ADMIN, Class bookings - all)
   },
   {
     path: 'password',
@@ -209,7 +215,12 @@ export const routes: Routes = [
   {
     path: '**',
     redirectTo: 'login',
+  },
+  {
+    path: 'class-booking',
+    loadChildren: () => import('./pages/class-booking/class-booking.module').then( m => m.ClassBookingPageModule)
   }
+
 
 
 ]

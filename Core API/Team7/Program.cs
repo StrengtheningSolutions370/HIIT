@@ -20,6 +20,8 @@ namespace Team7
             }
         }
 
+     
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>

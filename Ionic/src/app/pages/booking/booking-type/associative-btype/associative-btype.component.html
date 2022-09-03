@@ -17,8 +17,8 @@
 
   <ion-list>
     <ion-item *ngFor="let schedule of this.bookingType.schedule">
-      <ion-label class="ion-text-left">Schedule with ID: </ion-label>
-      <ion-label class="ion-text-right">{{schedule.scheduleID}}</ion-label>
+      <ion-label class="ion-text-left">Schedule with time slot: </ion-label>
+      <ion-label class="ion-text-right">{{schedule.startDateTime| date : 'medium'}} - {{schedule.endDateTime| date : 'medium'}}</ion-label>
     </ion-item>
   </ion-list>
   </div>

@@ -12,10 +12,6 @@ const routes: Routes = [
         path: 'supplier-page',
         loadChildren: () => import('./supplier-page/supplier-page.module').then( m => m.SupplierPagePageModule)
       },
-      {
-        path: 'supplier-order',
-        loadChildren: () => import('./supplier-order/supplier-order.module').then( m => m.SupplierOrderPageModule)
-      }
     ]
   },
   {

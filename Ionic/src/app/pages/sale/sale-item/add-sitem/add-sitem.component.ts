@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ViewWillEnter } from '@ionic/angular';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -14,8 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RepoService } from 'src/app/services/repo.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { PhotoService } from 'src/app/services/photo/photo.service';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { Capacitor } from '@capacitor/core';
+import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 
 @Component({
   selector: 'app-add-sitem',
@@ -44,28 +44,36 @@ export class AddSitemComponent implements ViewWillEnter {
    itemQuotable: []
  });
 
- addImage(event: any) {
-   this.itemImage = event.target.files[0];
-  console.log(this.itemImage);
-   const re = /^image*/;
+ async getPhoto() {
+  const image = await Camera.getPhoto({
+    quality: 90,
+    // allowEditing: true,
+    source: CameraSource.Prompt,
+    width: 600,
+    resultType:  CameraResultType.DataUrl 
+  });
 
-   if (this.itemImage.type.match(re)) {
-    this.getBase64(this.itemImage);
-   }
-  }
+  // image.webPath will contain a path that can be set as an image src.
+  // You can access the original file using image.path, which can be
+  // passed to the Filesystem API to read the raw data of the image,
+  // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
 
-    getBase64(file: File) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        // console.log(reader.result);
-        this.itemImageBase64String = reader.result;
-      };
-      reader.onerror = (error) => {
-        console.log(error);
-        this.itemImageBase64String = null;
-      };
-   }
+  this.selectImage = image;
+  this.itemImageBase64String = image.base64String;
+  this.itemImage = await this.srcToFile(image.dataUrl, 'saleImage.jpeg', 'image/jpeg');
+  console.log('image: ', image);
+  console.log('inside get image base 64', this.itemImageBase64String)
+  
+}
+
+
+srcToFile(src, fileName, mimeType) {
+  return (fetch(src)
+      .then((res) => { return res.arrayBuffer(); })
+      .then((buf) => { return new File([buf], fileName, {type:mimeType}); })
+  );
+}
+
 
  checkBoxToggle(check: any) {
    this.quotable = check.target.checked;
@@ -94,8 +102,6 @@ export class AddSitemComponent implements ViewWillEnter {
       }
     );
   }
-
-
 
   //Used for validation within the form, if there are errors in the control, this method will return the errors.
   get errorControl() {
@@ -129,14 +135,6 @@ export class AddSitemComponent implements ViewWillEnter {
     }
 
      submitForm() {
-
-       //if image was uploaded:
-      //  if (this.itemImageBase64String == null) {
-      //   let str = "Image failed to upload." + '\n'+ "please try again."
-      //   this.global.showAlert(str,"Image Error");
-      //     return;
-      //  }
-
 
        if (this.cSaleItemForm.controls['itemSCategory'].value[0] == null) {
         this.global.showAlert("No Sale Category provided","Error updating sale item");
@@ -180,6 +178,7 @@ export class AddSitemComponent implements ViewWillEnter {
 
     console.log('ob');
     console.log(obj);
+    console.log("Upload Image Base64", this.itemImageBase64String);
 
 
     //wait for image to upload:

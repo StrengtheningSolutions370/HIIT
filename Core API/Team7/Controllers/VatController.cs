@@ -95,7 +95,7 @@ namespace Team7.Controllers
         // GET: api/Vat/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingVATs(decimal? percentage, DateTime? date)
+        public async Task<IActionResult> GetMatchingVATs(decimal percentage, DateTime date)
         {
             try
             {

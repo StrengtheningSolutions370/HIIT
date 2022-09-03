@@ -23,6 +23,7 @@ import { Exercise } from '../models/exercise';
 import { WriteOffReason } from '../models/write-off-reason';
 import { Lesson } from '../models/lesson';
 import { Schedule } from '../models/schedule';
+import { Supplier } from '../models/supplier';
 import { WriteOff } from '../models/write-off';
 
 @Injectable({
@@ -31,6 +32,7 @@ import { WriteOff } from '../models/write-off';
 
 export class RepoService {
   // base = 'https://bsctest.azurewebsites.net/api/';
+  // base = 'http://localhost:5001/api/';
   base = 'https://localhost:44383/api/';
   AppUserController = 'AppUser/';
   VenueController = 'Venue/';
@@ -54,6 +56,9 @@ export class RepoService {
   MeasurementController = 'Measurement/';
   ReportController = 'Report/';
   PaymentController= 'Payment/';
+  SupplierController= 'Supplier/';
+  StockController= 'Stock/';
+
   WriteOffController= 'WriteOff/';
 
   httpOptions = {
@@ -70,7 +75,9 @@ export class RepoService {
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
 
-
+  chargeYOCO(data : any) : Observable<any> {
+    return this.http.post(`${this.base + this.PaymentController}charge`, data, this.httpOptions);
+  }
 
   getUserRole(token : string) : Observable<any>{
     // console.trace();
@@ -336,11 +343,11 @@ getMatchSaleItem(name: string, description: string): Observable<any>{
 }
 //Image Upload
 uploadSaleItemImage(data: FormData): Observable<any> {
-  return this.http.post('https://localhost:44383/api/SaleItem/upload', data);
+  return this.http.post('http://localhost:5001/api/SaleItem/upload', data);
 }
 //reImage Upload
 deleteSaleItemImage(id : string) : Observable<any> {
-  return this.http.delete(`https://localhost:44383/api/SaleItem/deletephoto?name=${id}`)
+  return this.http.delete(`http://localhost:5001/api/SaleItem/deletephoto?name=${id}`)
 
 }
 //add writeOff
@@ -580,5 +587,44 @@ getScheduleEvent(): Observable<any>{
 getSaleCategoryReport(): Observable<any>{
   return this.http.get(`${this.base+this.ReportController}getBySaleCategory`, this.httpOptions)
 }
+
+// Supplier:
+  // ------
+  // Create
+  createSupplier(supplier: Supplier): Observable<any> {
+    console.log(supplier);
+    return this.http.post<any>(`${this.base + this.SupplierController}add`, supplier, this.httpOptions);
+  }
+  //Update
+  updateSupplier(supplierId: number, supplier: Supplier): Observable<any> {
+    return this.http.put(`${this.base + this.SupplierController}update?id=${supplierId}`, supplier, this.httpOptions);
+  }
+  //Delete
+  deleteSupplier(supplierId: number): Observable<any> {
+    return this.http.delete(`${this.base + this.SupplierController}delete?id=${supplierId}`, this.httpOptions);
+  }
+  //GetAll
+  getSupplier(): Observable<any> {
+    return this.http.get(`${this.base + this.SupplierController}getAll`, this.httpOptions);
+  }
+  // //GetMatch
+  // getMatchExercise(name: string, description: string): Observable<any> {
+  //   return this.http.get(`${this.base + this.ExerciseController}getMatch?name=${name}&description=${description}`, this.httpOptions);
+  // }
+  // //Exists
+  // existsExercise(id: number): Observable<any> {
+  //   return this.http.get(`${this.base + this.ExerciseController}exists?id=${id}`, this.httpOptions);
+  // }
+  
+  //Stock
+  createStock(supplier: any): Observable<any> {
+    console.log();
+    return this.http.post<any>(`${this.base + this.StockController}add`, supplier, this.httpOptions);
+  }
+
+  //GetAll
+  getAllStock(): Observable<any> {
+    return this.http.get(`${this.base + this.StockController}getAll`, this.httpOptions);
+  }
 
 }

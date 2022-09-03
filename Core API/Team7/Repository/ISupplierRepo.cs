@@ -10,11 +10,11 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        //Task<Supplier[]> GetAllSuppliersAsync();
+        Task<Supplier[]> GetAllSuppliersAsync();
 
         //Task<Supplier[]> GetSuppliersAsync(string input);
 
-        //Task<Supplier> GetSupplierIdAsync(int id);
+        Task<Supplier> GetSupplierIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
     }
