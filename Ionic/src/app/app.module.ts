@@ -46,7 +46,11 @@ import { UpdateSitemComponent } from './pages/sale/sale-item/update-sitem/update
 import { DeleteSitemComponent } from './pages/sale/sale-item/delete-sitem/delete-sitem.component';
 import { ViewSitemComponent } from './pages/sale/sale-item/view-sitem/view-sitem.component';
 import { ConfirmSitemComponent } from './pages/sale/sale-item/confirm-sitem/confirm-sitem.component';
+
+//WRITE_OFF IMPORTS
 import { WriteOffSitemComponent } from './pages/sale/sale-item/write-off-sitem/write-off-sitem.component';
+import { ViewWriteOffComponent } from './pages/sale/write-off/view-write-off/view-write-off.component';
+import { ConfirmWriteOffComponent } from './pages/sale/sale-item/confirm-write-off-sitem/confirm-write-off-sitem.component';
 
 //EMPLOYEE_QUALIFICATION_TYPE IMPORTS:
 import { AddQtypeComponent } from './pages/employee/qualification-type/add-qtype/add-qtype.component';
@@ -111,12 +115,12 @@ import { UpdateBtypeComponent } from './pages/booking/booking-type/update-btype/
 import { ViewBtypeComponent } from './pages/booking/booking-type/view-btype/view-btype.component';
 
 //WRITE-OFF REASON IMPORTS:
-import { AddWriteOffReasonComponent } from './pages/stock/write-off-reason/add-write-off-reason/add-write-off-reason.component';
-import { AssociativeWriteOffReasonComponent } from './pages/stock/write-off-reason/associative-write-off-reason/associative-write-off-reason.component';
-import { ConfirmWriteOffReasonComponent } from './pages/stock/write-off-reason/confirm-write-off-reason/confirm-write-off-reason.component';
-import { DeleteWriteOffReasonComponent } from './pages/stock/write-off-reason/delete-write-off-reason/delete-write-off-reason.component';
-import { UpdateWriteOffReasonComponent } from './pages/stock/write-off-reason/update-write-off-reason/update-write-off-reason.component';
-import { ViewWriteOffReasonComponent } from './pages/stock/write-off-reason/view-write-off-reason/view-write-off-reason.component';
+import { AddWriteOffReasonComponent } from './pages/sale/write-off-reason/add-write-off-reason/add-write-off-reason.component';
+import { AssociativeWriteOffReasonComponent } from './pages/sale/write-off-reason/associative-write-off-reason/associative-write-off-reason.component';
+import { ConfirmWriteOffReasonComponent } from './pages/sale/write-off-reason/confirm-write-off-reason/confirm-write-off-reason.component';
+import { DeleteWriteOffReasonComponent } from './pages/sale/write-off-reason/delete-write-off-reason/delete-write-off-reason.component';
+import { UpdateWriteOffReasonComponent } from './pages/sale/write-off-reason/update-write-off-reason/update-write-off-reason.component';
+import { ViewWriteOffReasonComponent } from './pages/sale/write-off-reason/view-write-off-reason/view-write-off-reason.component';
 
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
@@ -191,7 +195,9 @@ import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stoc
   //SalesCategory
   AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent, AssociativeCategoryComponent,
   //SalesItem
-  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent, WriteOffSitemComponent,
+  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent, 
+  //WriteOff
+  WriteOffSitemComponent, ViewWriteOffComponent, ConfirmWriteOffComponent,
   //SideMenu
   SidemenuComponent,
   //Qualification
