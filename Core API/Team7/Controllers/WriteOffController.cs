@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
 using Team7.ViewModels;
 using Team7.Models;
 using Team7.Models.Repository;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
-using System.Collections.Generic;
-using static iTextSharp.text.pdf.AcroFields;
-using System.Diagnostics.Metrics;
 
 namespace Team7.Controllers
 {
@@ -36,24 +32,24 @@ namespace Team7.Controllers
         [HttpPost]
         [Route("add")]
 
-        public async Task<IActionResult> PostWriteOff(WriteOffLineViewModel wlvm)
+        public async Task<IActionResult> PostWriteOff(WriteOff wlvm)
         {
-            var writeOffVM = wlvm.WriteOff;
-            var saleItemVM = wlvm.SaleItems;
-            var reasonVM = wlvm.WriteOffReasons;
-            var quantityList = wlvm.Quantity;
+            //var writeOffVM = wlvm.WriteOff;
+            //var saleItemVM = wlvm.SaleItems;
+            //var reasonVM = wlvm.WriteOffReasons;
+            //var quantityList = wlvm.Quantity;
 
             WriteOff writeOff = new WriteOff();
             writeOff.Date = System.DateTime.Now;
-            writeOff.EmployeeID = writeOffVM.EmployeeID;
+            writeOff.EmployeeID = wlvm.EmployeeID;
             _writeOffRepo.Add(writeOff);
             await _writeOffRepo.SaveChangesAsync();
 
             WriteOffLine wl = new WriteOffLine();
-            wl.Quantity = quantityList;
+            wl.Quantity = wlvm.WriteOffLine.FirstOrDefault().Quantity;
             wl.WriteOff = writeOff;
-            wl.SaleItem = await _saleItemRepo._GetSaleItemIdAsync(saleItemVM);
-            wl.WriteOffReason = await _writeOffReasonRepo._GetWriteOffReasonIdAsync(reasonVM);
+            wl.SaleItem = await _saleItemRepo._GetSaleItemIdAsync(wlvm.WriteOffLine.FirstOrDefault().SaleItemID);
+            wl.WriteOffReason = await _writeOffReasonRepo._GetWriteOffReasonIdAsync(wlvm.WriteOffLine.FirstOrDefault().WriteOffReasonID);
             _writeOffLineRepo.Add(wl);
             writeOff.WriteOffLine.Add(wl);
 
@@ -85,11 +81,11 @@ namespace Team7.Controllers
         //GET ALL
         [HttpGet]
         [Route("getAll")]
-        public async Task<IActionResult> GetPayments()
+        public async Task<IActionResult> GetWriteOffs()
         {
             try
             {
-                var writeoffList = await _writeOffLineRepo.GetAllWriteOffLinesAsync();
+                var writeoffList = await _writeOffRepo.GetAllWriteOffsAsync();
                 if (writeoffList == null)
                 {
                     return Ok(0);
@@ -102,5 +98,34 @@ namespace Team7.Controllers
             }
         }
 
-    }
+        //DELETE
+        [HttpDelete]
+        [Route("delete")]
+        public async Task<IActionResult> DeleteWriteOff(int id)
+        {
+            var tempWriteOff = await _writeOffRepo._GetWriteOffIdAsync(id);
+            if (tempWriteOff == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _writeOffRepo.Delete(tempWriteOff);
+                if (await _writeOffRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
+                }
+
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+        }
+
+    }  
 }

@@ -41,34 +41,74 @@ namespace Team7.Models.Repository
             return null;
         }
 
-        public async Task<WriteOff[]> GetAllWriteOffsAsync()
+        public async Task<object> GetAllWriteOffsAsync()
         {
-            var query = await DB.WriteOff.Select(w =>
-                new WriteOff
-                {
-                    WriteOffID = w.WriteOffID,
-                    Date = w.Date,
-                    EmployeeID = w.EmployeeID,
-                    WriteOffLine = w.WriteOffLine,
-                }).ToArrayAsync();
-
+            IQueryable<WriteOff> query = DB.WriteOff;
             if (!query.Any())
+            {
                 return null;
-
-            var emps = DB.Employee.Select(e => new Employee
-            {
-                EmployeeID = e.EmployeeID,
-                Photo = e.Photo,
-                Qualification = e.Qualification,
-                AppUser = e.AppUser,
-            }).ToList();
-
-            foreach (var item in query)
-            {
-                item.Employee = GetEmployee(emps, item.EmployeeID);
             }
+            return new
+            {
+                result = await query.Select(w =>
+                new
+                {
+                    w.WriteOffID,
+                    w.Date,
+                    Employee = new
+                    {
+                        w.Employee.EmployeeID,
+                        w.Employee.Contract,
+                        w.Employee.IDNumber,
+                        w.Employee.Photo,
+                        w.Employee.AppUser
+                    },
+                    WriteOffLine = w.WriteOffLine.Select(wl => new { wl.WriteOffLineID, wl.Quantity, wl.SaleItem, wl.WriteOffReason})
+                }).ToListAsync()
+            };
+        }
 
-            return query.ToArray();
+        public async Task<object> GetWriteOffIdAsync(int id)
+        {
+            IQueryable<WriteOff> query = DB.WriteOff.Where(w => w.WriteOffID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return new
+                {
+                    result = await query.Select(w =>
+                    new
+                    {
+                        w.WriteOffID,
+                        w.Date,
+                        Employee = new
+                        {
+                            w.Employee.EmployeeID,
+                            w.Employee.Contract,
+                            w.Employee.IDNumber,
+                            w.Employee.Photo,
+                            w.Employee.AppUser
+                        },
+                        WriteOffLine = w.WriteOffLine.Select(wl => new { wl.WriteOffLineID, wl.Quantity, wl.SaleItem, wl.WriteOffReason })
+                    }).ToListAsync()
+                };
+            }
+        }
+
+        public async Task<WriteOff> _GetWriteOffIdAsync(int id)
+        {
+            IQueryable<WriteOff> query = DB.WriteOff.Where(w => w.WriteOffID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.SingleAsync();
+            }
         }
 
         //public async Task<WriteOff[]> GetWriteOffsAsync(string input)
@@ -99,6 +139,8 @@ namespace Team7.Models.Repository
         //    }
         //    return null;
         //}
+
+        
 
         public async Task<bool> SaveChangesAsync()
         {
