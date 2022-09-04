@@ -14,10 +14,10 @@ import jsPDF from 'jspdf';
 export class SaleReportPage implements ViewWillEnter {
 
   colors = ['red','chartreuse','mediumblue','orange','cyan', 'gold','fuchsia','coral', 'teal', 'darkviolet'];
+  rangeTitle: string = 'Month view';
 
   @ViewChild('barCanvas') private saleBarCanvas: ElementRef;
   saleBarChart: Chart;
-  rangeTitle: string = 'Month view';
   barLabels: any; // Labels below - this object is placed inside barData along with tempCategoryDataset on submit
   selected: number; // length of selected labels
   year: string[] = ["2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"];
@@ -131,9 +131,6 @@ export class SaleReportPage implements ViewWillEnter {
     this.global.endNativeLoad();
     console.log("Finishing update");
     });
-
-
-
   }
 
   // async fetchLineReport(): Promise<any>{
