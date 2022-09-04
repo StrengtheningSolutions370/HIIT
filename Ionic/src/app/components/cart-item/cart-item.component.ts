@@ -16,14 +16,12 @@ export class CartItemComponent {
 
   constructor() { }
 
-  ngOnInit() {}
-
   quantityPlus() {
-    this.add.emit(this.index);
+    this.add.emit();
   }
 
   quantityMinus() {
-    this.minus.emit(this.index);
+    this.minus.emit();
   }
 
 }

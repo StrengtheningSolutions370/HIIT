@@ -166,16 +166,9 @@ export class CalendarPage implements AfterViewInit {
       ,
       buttons: ['Cancel',{
         text: 'Add to Cart',
-        handler: () =>{this.makeBooking(event);}
+        handler: () =>{this.scheduleService.addBookingModal(event)}
       }]
     });
     alert.present();
   }
-
-  makeBooking(event){
-    console.log("Making booking");
-    console.log("add to cart here");
-    console.log(event);
-  }
-
 }

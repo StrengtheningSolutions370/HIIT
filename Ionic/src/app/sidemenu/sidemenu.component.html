@@ -28,7 +28,7 @@
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="superuser || admin || trainer || client || member">
+      <ion-menu-toggle *ngIf="client || member">
         <ion-item routerLink="/class-booking">
           <ion-icon name="calendar-number-outline" slot="start"></ion-icon>
           <ion-label>Class Bookings</ion-label>
@@ -63,12 +63,7 @@
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="superuser || admin || client || member">
-        <ion-item routerLink="payments">
-          <ion-icon name="cash-outline" slot="start"></ion-icon>
-          <ion-label>Payment</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
+
 
       <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="reports">
@@ -105,20 +100,6 @@
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="superuser || admin">
-        <ion-item routerLink="stock">
-          <ion-icon name="checkmark-outline" slot="start"></ion-icon>
-          <ion-label>Stock</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle *ngIf="superuser || client || member">
-        <ion-item routerLink="/trainers">
-          <ion-icon name="walk-outline" slot="start"></ion-icon>
-          <ion-label>Trainers Information</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      
       <ion-menu-toggle *ngIf="superuser || client || member">
         <ion-item routerLink="/trainers">
           <ion-icon name="walk-outline" slot="start"></ion-icon>
@@ -162,6 +143,13 @@
       <ion-label>Stock</ion-label>
     </ion-item>
   </ion-menu-toggle> -->
+
+        <!-- <ion-menu-toggle *ngIf="superuser || admin || client || member">
+        <ion-item routerLink="payments">
+          <ion-icon name="cash-outline" slot="start"></ion-icon>
+          <ion-label>Payment</ion-label>
+        </ion-item>
+      </ion-menu-toggle> -->
 
   <!-- <ion-menu-toggle *ngIf="superuser || admin">
     <ion-item routerLink="inventory">

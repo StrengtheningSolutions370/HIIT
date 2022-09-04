@@ -30,17 +30,17 @@ namespace Team7.Models.Repository
         }
 
 
-        public async Task<object> GetAllPaymentsAsync()
+        public async Task<object> GetAllSalePaymentsAsync()
         {
             IQueryable<Payment> query = DB.Payment;
-            if(!query.Any())
+            query = query.Where(x => x.SaleID != null);
+            if (!query.Any())
             {
                 return null;
             }
-            var tempBook = query.Select(p => p.Booking);
-            if (tempBook == null)
-            {
-                return new
+           
+            //var tempBook = query.Select(p => p.Booking.BookingID);
+            return new
                 {
 
                     result = await query.Select(p =>
@@ -51,41 +51,109 @@ namespace Team7.Models.Repository
                         {
                             p.PaymentType.PaymentTypeID,
                             p.PaymentType.Name
+                        },
+                        Sale = new
+                        {
+                            p.Sale.SaleID,
+                            p.Sale.Date,
+                            p.Sale.AppUser.FirstName,
+                            p.Sale.AppUser.LastName,    
+                            SaleLine = p.Sale.SaleLine.Select(sl => new { sl.SaleLineID, sl.Quantity, sl.SaleItem })
                         }
-                        //},
-                        //Sale = new
-                        //{
-                        //    p.Sale.SaleID,
-                        //    p.Sale.Date,
-                        //    p.Sale.AppUser,
-                        //    SaleLine = p.Sale.SaleLine.Select(sl => new { sl.SaleLineID, sl.Quantity, sl.SaleItem })
-                        //}
                     }).ToListAsync()
                 };
+
+        }
+
+        public async Task<object> GetAllBookingPaymentsAsync()
+        {
+            IQueryable<Payment> query = DB.Payment;
+            query = query.Where(x => x.BookingID != null);
+            if (!query.Any())
+            {
+                return null;
             }
+            //var tempBook = query.Select(p => p.Booking.BookingID);
+            
             return new
             {
                 
                 result = await query.Select(p =>
-                new 
+                new
                 {
                     p.PaymentID,
                     PaymentType = new
                     {
-                        p.PaymentType.PaymentTypeID, p.PaymentType.Name
-                    },
-                    Sale = new {
-                    p.Sale.SaleID, p.Sale.Date, p.Sale.AppUser,
-                        SaleLine = p.Sale.SaleLine.Select(sl => new { sl.SaleLineID, sl.Quantity, sl.SaleItem})
+                        p.PaymentType.PaymentTypeID,
+                        p.PaymentType.Name
                     },
                     Booking = new
                     {
-                        p.Booking.BookingID, p.Booking.Date, p.Booking.Client,
-                            BookingAttendance = p.Booking.BookingAttendance.Select(ba => new {ba.BookingAttendanceID, ba.Attended } )
+                        p.Booking.BookingID,
+                        p.Booking.Date,
+                        p.Booking.Client,
+                        BookingAttendance = p.Booking.BookingAttendance.Select(ba => new { ba.BookingAttendanceID, ba.Attended })
                     }
                 }).ToListAsync()
             };
+
         }
+
+        //    return new
+        //    {
+
+        //        result = await query.Select(p =>
+        //        new
+        //        {
+        //            p.PaymentID,
+        //            PaymentType = new
+        //            {
+        //                p.PaymentType.PaymentTypeID,
+        //                p.PaymentType.Name
+        //            },
+        //            Booking = new
+        //            {
+        //                p.Booking.BookingID,
+        //                p.Booking.Date,
+        //                p.Booking.Client,
+        //                BookingAttendance = p.Booking.BookingAttendance.Select(ba => new { ba.BookingAttendanceID, ba.Attended })
+        //            }
+        //        }).ToListAsync()
+        //    };
+        //} else
+        //{
+        //    return new
+        //    {
+
+        //        result = await query.Select(p =>
+        //        new
+        //        {
+        //            p.PaymentID,
+        //            PaymentType = new
+        //            {
+        //                p.PaymentType.PaymentTypeID,
+        //                p.PaymentType.Name
+        //            },
+        //            Sale = new
+        //            {
+        //                p.Sale.SaleID,
+        //                p.Sale.Date,
+        //                p.Sale.AppUser.FirstName,
+        //                p.Sale.AppUser.LastName,
+        //                SaleLine = p.Sale.SaleLine.Select(sl => new { sl.SaleLineID, sl.Quantity, sl.SaleItem })
+        //            },
+        //            Booking = new
+        //            {
+        //                p.Booking.BookingID,
+        //                p.Booking.Date,
+        //                p.Booking.Client,
+        //                BookingAttendance = p.Booking.BookingAttendance.Select(ba => new { ba.BookingAttendanceID, ba.Attended })
+        //            }
+        //        }).ToListAsync()
+        //    };
+        //}
+
+
 
         //public async Task<Receipt[]> GetReceiptsAsync(string input)
         //{

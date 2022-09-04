@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ViewWillEnter } from '@ionic/angular';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { Cart } from 'src/app/models/cart';
 import { SaleCategory } from 'src/app/models/sale-category';
+import { SaleItem } from 'src/app/models/sale-item';
 import { CartService } from 'src/app/services/cart.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
@@ -19,12 +21,34 @@ import { SearchPipe } from '../search.pipe';
   templateUrl: './items.page.html',
   styleUrls: ['./items.page.scss'],
 })
-export class ItemsPage implements OnInit {
-  descending: boolean = false;
-  order: number;
-  column: string = 'name';
-  customSearch: SearchPipe;
+export class ItemsPage implements ViewWillEnter {
 
+  // items: any[] = [];
+  saleItems: SaleItem[] = []; //Entire collection of sale items
+  items: SaleItem[] = []; //infinite scroll collection, add 12 each time up till numTimesLeft
+  numTimesLeft: number = 4;
+  cartData: Cart = null;//Local cart data - populated on viewWillEnter by the cartService
+
+  //Subscription variable to track live updates.
+  saleItemSub: Subscription;
+  cartSub: Subscription;
+  isLoading = true;
+
+
+  //Filtering and ordering stuff
+  // filterCategories: any[];
+  // filterData = [];
+  // filtering = false;
+  // filterTerm = '';
+  // orderedSaleItems;
+  // currentCategory: any;
+  // categoryArray!: SaleCategory[];
+  // numTimesLeft = 4
+  // descending: boolean = false;
+  // order: number;
+  // column: string = 'name';
+  // customSearch: SearchPipe;
+  // saleItemsOriginal: any[] = [];
   //String used from the searchbar, used in the filter pipe to search titles.
   // public filter: string;
 
@@ -32,123 +56,14 @@ export class ItemsPage implements OnInit {
   selectedCategories: any = [];
   filterItems: any = [];
 
-  //Create local title array to be populated onInit.
-  items: any[] = [];
-  saleItems: any[] = [];
-
-  saleItemsOriginal: any[] = [];
-  numTimesLeft = 4
-  cartData: any = {};
-  storedData: any = {};
-  cartSub: Subscription;
-
-  filterData = []
-
-  filtering = false;
-  filterTerm = '';
-  orderedSaleItems;
-
-  selectedCategory = document.getElementById("selectedCategory");
-  currentCategory: any;
-
-  categoryArray!: SaleCategory[];
-
-  //Subscription variable to track live updates.
-  saleItemSub: Subscription;
-
-  isLoading = true;
-  filterCategories: any[];
-
 
   constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService,
     private cartService: CartService, public modalCtrl: ModalController, public shopService: ShopService) {
-    this.getItems();
+    //this.getItems();
     this.fetchSaleItem();
     this.addMoreItems();
-
     this.searchControl = new UntypedFormControl();
-
-    this.filterData = this.saleItems;
-  }
-
-
-
-  handleChange(ev) {
-    this.currentCategory = ev.target.value;
-
-     this.filterCategories = this.currentCategory.map((category) => {
-      return category.name;
-    });
-
-    const output = this.filterCategory(this.saleItems, this.filterCategories)
-
-
-    console.log("Selected categories", this.currentCategory);
-    console.log("Filtered products", output);
-  }
-
-  filterCategory(input: any[], filterCategories: string[]){
-    return input.filter(item => {
-      return filterCategories?.includes(item.SaleCategory.name);
-    });
-  }
-
-
-
-
-
-  sortBy(field: string) {
-
-    this.saleItems.sort((a: any, b: any) => {
-      if (a[field] < b[field]) {
-        return -1;
-      } else if (a[field] > b[field]) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    this.orderedSaleItems = this.filterData;
-  }
-
-  sortByDescending(field: string) {
-    this.saleItems.sort((a: any, b: any) => {
-      if (a[field] > b[field]) {
-        return -1;
-      } else if (a[field] < b[field]) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    this.orderedSaleItems = this.filterData;
-  }
-
-  sort() {
-    this.descending = !this.descending;
-    this.order = this.descending ? 1 : -1;
-  }
-
-  priceLow() {
-    this.orderedSaleItems = this.sortBy('priceHistory.saleAmount');
-  }
-
-  priceHigh() {
-    this.orderedSaleItems = this.sortByDescending('priceHistory.saleAmount');
-  }
-
-  loadData(event) {
-    setTimeout(() => {
-      this.addMoreItems();
-      this.numTimesLeft -= 1;
-      event.target.complete();
-    }, 400);
-  }
-
-  addMoreItems() {
-    for (let i = 1; i < 12; i++) {
-      this.items.push(i);
-    }
+    //this.filterData = this.saleItems;
   }
 
   fetchSaleItem() {
@@ -158,108 +73,76 @@ export class ItemsPage implements OnInit {
         next: data => {
           this.isLoading = false;
           this.saleItems = data.result;
-          this.sortBy('name');
+          //console.log(this.saleItems); //Entire collection of sale items
+          //this.sortBy('name');
         }
       }
     );
   }
 
-  ngOnInit() {
+  loadData(event) { //Called on html when user scrolls more
+    setTimeout(() => {
+      this.addMoreItems();
+      this.numTimesLeft -= 1;
+      event.target.complete();
+    }, 400);
+  }
 
-    // this.setFilteredItems('');
-    this.searchControl.valueChanges
-      .subscribe(search => {
-        this.setFilteredItems(search);
-      });
+  addMoreItems() {
+    for (let i = 0; i < 12; i++) {
+      this.items.push(this.saleItems[i]);
+    }
+  }
+
+  async getData(): Promise<any> {
+    await this.cartService.getCartData().then((bool)=>{
+      console.log("Getting data from cartService into item page local cartData: ", bool);
+    });
+
+    this.cartSub = this.cartService.cart.subscribe({
+      next: (cartVal) => {
+        this.cartData = cartVal;
+        console.log("itemPageCartSub: updated localItemPageCartData to: ",this.cartData);
+      },
+      error: (err) => {
+        console.log("Error in getting cart for items page: ",err)
+      }
+    }
+
+      )
+  }
+
+
+
+  async ionViewWillEnter(){
+
+    await this.getData();
 
     this.saleService.fetchSaleItemsEvent.subscribe(
       {
-        next: res => {
+        next: (res) => {
+          //console.log(res);
           this.fetchSaleItem();
         }
       }
     );
-
-    this.cartSub = this.cartService.cart.subscribe(cart => {
-      this.cartData = {};
-      this.storedData = {};
-      if (cart && cart?.sales.length > 0) {
-        this.storedData = cart;
-        // this.cartData.items = this.storedData.items;
-        //this.cartData.totalItem = this.storedData.totalItem;
-        //this.cartData.totalPrice = this.storedData.totalPrice;
-
-        this.saleItems.forEach(saleItem => {
-          console.log(saleItem);
-          cart.sales.forEach(cartElement => {
-            console.log(cartElement);
-            if (saleItem.id !== cartElement.saleItemID) { return; }
-            saleItem.quantity = cartElement.quantityChange;//unsure why this is set to equal
-          });
-        });
-        this.cartData.items = this.saleItems.filter(x => x.quantity > 0);
-      }
-      else {
-        this.saleItems.forEach(element => {
-          element.quantity = 0;
-        });
-      }
-    });
-
-    this.saleService.getAllSaleCategories().subscribe(
-      {
-        next: data => {
-          this.categoryArray = data.result;
-          this.isLoading = false;
-        }
-      }
-    );
-
-    this.filterData = this.saleItems;
-    console.log(this.filterItems);
-
-    this.getItems();
   }
 
-  setFilteredItems(searchTerm) {
-    this.getItems();
-    this.items = this.global.filterItems(searchTerm);
+  async ionViewWillLeave() {
+    this.cartSub.unsubscribe();
+    //if (this.cartData?.sales && this.cartData?.sales.length > 0) { this.saveToCart(); }
   }
-
-  async getItems() {
-    try {
-      this.isLoading = true;
-      this.cartData = {};
-      this.storedData = {};
-      setTimeout(async () => {
-        this.saleItems.forEach((element, index) => {
-          this.saleItems[index].quantity = 0;
-        });
-        this.items = [...this.saleItems];
-        await this.cartService.getCartData();
-        this.isLoading = false;
-      }, 3000);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
 
   quantityPlus(item) {
-    const index = this.saleItems.findIndex(x => x.saleItemID === item.saleItemID);
-    if (!this.saleItems[index].quantity) {
-      console.log('index item: ', this.saleItems);
-      this.cartService.quantityPlus(index, this.saleItems);
-    } else {
-      // alert for clear cart
-      // this.cartService.alertClearCart(index, this.saleItems);
-    };
+    console.log("1. Adding from shop page: ",item);
+    this.cartService.quantityPlus(item);
     this.global.showToast('Item successfully added to cart');
   }
 
   quantityMinus(item) {
-    const index = this.saleItems.findIndex(x => x.id === item.id);
-    this.cartService.quantityMinus(index, this.saleItems);
+    console.log("1. Minus from shop page: ",item);
+    this.cartService.quantityMinus(item);
+    this.global.showToast('Item successfully reduced in cart');
   }
 
   saveToCart() {
@@ -270,9 +153,113 @@ export class ItemsPage implements OnInit {
     }
   }
 
-  async ionViewWillLeave() {
-    if (this.cartData?.items && this.cartData?.items.length > 0) { await this.saveToCart(); }
-  }
-
-
 }
+
+  // setFilteredItems(searchTerm) {
+  //   this.getItems();
+  //   this.items = this.global.filterItems(searchTerm);
+  // }
+
+  // async getItems() {
+  //   try {
+  //     this.isLoading = true;
+  //     this.cartData = {};
+  //     //this.storedData = {};
+  //     setTimeout(async () => {
+  //       this.saleItems.forEach((element, index) => {
+  //         this.saleItems[index].quantity = 0;
+  //       });
+  //       this.items = [...this.saleItems];
+  //       await this.cartService.getCartData();
+  //       this.isLoading = false;
+  //     }, 3000);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
+
+      // this.saleService.getAllSaleCategories().subscribe(
+    //   {
+    //     next: data => {
+    //       this.categoryArray = data.result;
+    //       this.isLoading = false;
+    //     }
+    //   }
+    // );
+
+    // this.filterData = this.saleItems;
+    // console.log(this.filterItems);
+
+    //this.getItems();
+
+
+
+
+
+
+  //ALL FILTERING CODE
+
+  // handleChange(ev) {
+  //   this.currentCategory = ev.target.value;
+
+  //    this.filterCategories = this.currentCategory.map((category) => {
+  //     return category.name;
+  //   });
+
+  //   const output = this.filterCategory(this.saleItems, this.filterCategories)
+
+
+  //   console.log("Selected categories", this.currentCategory);
+  //   console.log("Filtered products", output);
+  // }
+
+  // filterCategory(input: any[], filterCategories: string[]){
+  //   return input.filter(item => {
+  //     return filterCategories?.includes(item.SaleCategory.name);
+  //   });
+  // }
+
+
+  // sortBy(field: string) {
+
+  //   this.saleItems.sort((a: any, b: any) => {
+  //     if (a[field] < b[field]) {
+  //       return -1;
+  //     } else if (a[field] > b[field]) {
+  //       return 1;
+  //     } else {
+  //       return 0;
+  //     }
+  //   });
+  //   this.orderedSaleItems = this.filterData;
+  // }
+
+  // sortByDescending(field: string) {
+  //   this.saleItems.sort((a: any, b: any) => {
+  //     if (a[field] > b[field]) {
+  //       return -1;
+  //     } else if (a[field] < b[field]) {
+  //       return 1;
+  //     } else {
+  //       return 0;
+  //     }
+  //   });
+  //   this.orderedSaleItems = this.filterData;
+  // }
+
+  // sort() {
+  //   this.descending = !this.descending;
+  //   this.order = this.descending ? 1 : -1;
+  // }
+
+  // priceLow() {
+  //   this.orderedSaleItems = this.sortBy('priceHistory.saleAmount');
+  // }
+
+  // priceHigh() {
+  //   this.orderedSaleItems = this.sortByDescending('priceHistory.saleAmount');
+  // }
+
+
+
+
