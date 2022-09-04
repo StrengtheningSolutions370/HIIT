@@ -52,29 +52,31 @@ export class CheckoutComponent implements ViewWillEnter {
   async cashPay(){
     console.log(this.cartData);
     var saleItemArr: any[] = null;
-    if (this.cartData.sales.length>0){
-      saleItemArr = [];
-      this.cartData.sales.forEach(saleLine => {
-        let tempSale = {
-          saleItemID: saleLine.saleItemID,
-          quantity: saleLine.quantity
-        }
-        saleItemArr.push(tempSale);
-      })
-    }
+    if (this.cartData['sales'] != null)
+      if (this.cartData.sales.length>0){
+        saleItemArr = [];
+        this.cartData.sales.forEach(saleLine => {
+          let tempSale = {
+            saleItemID: saleLine.saleItemID,
+            quantity: saleLine.quantity
+          }
+          saleItemArr.push(tempSale);
+        })
+      }
     console.log("Cash pay, sale item arr: ");
     console.log(saleItemArr);
 
     var bookingItemArr: bookingLine[] = null;
-    if (this.cartData.bookings.length>0){
-      bookingItemArr = [];
-      this.cartData.bookings.forEach(bookingLine => {
-        let tempBook = {
-          scheduleID: bookingLine.scheduleID
-        }
-        bookingItemArr.push(tempBook);
-      });
-    }
+    if (this.cartData['bookings'] != null)
+      if (this.cartData.bookings.length>0){
+        bookingItemArr = [];
+        this.cartData.bookings.forEach(bookingLine => {
+          let tempBook = {
+            scheduleID: bookingLine.scheduleID
+          }
+          bookingItemArr.push(tempBook);
+        });
+      }
     console.log("Cash pay, booking item arr: ");
     console.log(bookingItemArr);
 
@@ -95,20 +97,63 @@ export class CheckoutComponent implements ViewWillEnter {
   proceedToPayment(){
     console.log(this.cartData);
     this.global.nativeLoad("Processing Payment...");
-    // const pl = new Yoco(100, 'ZAR', '');
-    // this.yoco
-    //   .pay(pl)
-    //   .subscribe(res => {
-    //     if (res)
-    //       this.global.showToast('Payment Successful');
-    //       //do call to make payment endpoint here
-    //     else
-    //       this.global.showAlert('Payment Failed, Please try again');
-    //     this.global.endNativeLoad();
-    //   });
     this.global.endNativeLoad();
     this.global.dismissModal();
     this.global.showToast(this.currentMethod + " sale successfully recorded");
+  }
+
+  cardPay() {
+    const pl = new Yoco(this.cartData.grandPriceTotal * 100, 'ZAR', '');
+    this.yoco
+      .pay(pl)
+      .subscribe(res => {
+        if (res) {
+          console.log(this.cartData);
+          var saleItemArr: any[] = null;
+          if (this.cartData['sales'] != null)
+            if (this.cartData.sales.length>0){
+              saleItemArr = [];
+              this.cartData.sales.forEach(saleLine => {
+                let tempSale = {
+                  saleItemID: saleLine.saleItemID,
+                  quantity: saleLine.quantity
+                }
+                saleItemArr.push(tempSale);
+              })
+            }
+          console.log("Cash pay, sale item arr: ");
+          console.log(saleItemArr);
+
+          var bookingItemArr: bookingLine[] = null;
+          if (this.cartData['bookings'] != null)
+            if (this.cartData.bookings.length>0){
+              bookingItemArr = [];
+              this.cartData.bookings.forEach(bookingLine => {
+                let tempBook = {
+                  scheduleID: bookingLine.scheduleID
+                }
+                bookingItemArr.push(tempBook);
+              });
+            }
+          console.log("Cash pay, booking item arr: ");
+          console.log(bookingItemArr);
+
+          var payObj = { // Object to record sale on API
+            userID: this.cartData.userId,
+            paymentTypeID: 1,
+            sales: saleItemArr,
+            bookings: bookingItemArr,
+            //clientID: this.cartData.userId
+          }
+
+          console.log(payObj);
+          this.cartService.makePayment(payObj);
+          this.global.dismissModal();
+          this.global.showToast(this.currentMethod + " sale successfully recorded");
+        }
+        else
+          this.global.showAlert('Payment Failed, Please try again');
+      });
   }
 
 }

@@ -783,7 +783,6 @@ namespace Team7.Controllers
         {
 
             var emps = await EmployeeRepo.GetAllEmployeesAsync();
-            //filter to trainers and load in lessons;
             return Ok(emps);
         }
 

@@ -1,5 +1,4 @@
 ion-button{
-    width: 120px !important
   }
   
   ion-searchbar{
@@ -11,23 +10,86 @@ ion-button{
     margin-right: 10%;
   
   }
+
+  #hide {
+    font-size: 80px;
+    color: black;
+    display: none;
+  }
+
+  #hide2 {
+    font-size: 80px;
+    color: black;
+    display: none;
+  }
+
+  #hide3 {
+    font-size: 80px;
+    color: black;
+    display: none;
+  }
+
+  .downloadbutton {
+    display: flex;
+    justify-content: end;
+    width: 85%;
+  }
   
   ion-button {
     border-radius : 10px;
     --background: #b8b5b5;
   }
+
+  .w-100 {
+    width: 100% !important;
+
+  }
+
+  .center {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 5px;
+  }
+
+  .head {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
   
   p {
     font-size: large;
+  }
+
+  ion-col {
+    justify-content: center; 
+  }
+
+  .outline {
+    border-color: lightgray; 
+    border-width: .01em; 
+    border-style:solid; 
+    margin-bottom : -1px;
+  }
+
+  .heading {
+    font-size: 20px;
+    font-weight: bold;
   }
   
   .nomargin {
     margin: 0px !important;
   }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+  }
   
   img {
     height: 100px !important;
-    border-radius: 50%;
+    // border-radius: 50%;
     padding-top: 4%;
     padding-bottom: 4%;
   }
@@ -76,7 +138,7 @@ ion-button{
   }
   
   ion-col, ion-card {
-    width: 385px !important;
+    width: 230px !important;
   }
   
   ion-row {
