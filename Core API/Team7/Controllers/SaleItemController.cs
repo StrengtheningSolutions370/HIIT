@@ -20,13 +20,15 @@ namespace Team7.Controllers
         private readonly ISaleCategoryRepo saleCategoryRepo;
         private readonly IPriceHistoryRepo priceHistoryRepo;
         private readonly ISaleLineRepo saleLineRepo;
+        private readonly IWriteOffLineRepo writeOffLineRepo;
 
-        public SaleItemController(ISaleItemRepo saleItemRepo, ISaleCategoryRepo saleCategoryRepo, IPriceHistoryRepo priceHistoryRepo, ISaleLineRepo saleLineRepo)
+        public SaleItemController(ISaleItemRepo saleItemRepo, ISaleCategoryRepo saleCategoryRepo, IPriceHistoryRepo priceHistoryRepo, ISaleLineRepo saleLineRepo, IWriteOffLineRepo writeOffLineRepo)
         {
             this.SaleItemRepo = saleItemRepo;
             this.saleCategoryRepo = saleCategoryRepo;
             this.priceHistoryRepo = priceHistoryRepo;
             this.saleLineRepo = saleLineRepo;
+            this.writeOffLineRepo = writeOffLineRepo;
         }
 
         // POST api/SaleItem/add
@@ -199,22 +201,30 @@ namespace Team7.Controllers
                     //delete from price history:
                     if (await priceHistoryRepo.RemoveRangeSaleItemIdAsync(id))
                     {
-                        //delete from sale item:
-                        SaleItemRepo.Delete(tempSaleItem);
-                        if (await SaleItemRepo.SaveChangesAsync())
+                        //delete write-off
+                        if (await writeOffLineRepo.RemoveRangeSaleItemIdAsync(id))
                         {
-                            //try delete file:
-                            var fileToDelete = tempSaleItem.Photo;
-                            try
+                            //delete from sale item:
+                            SaleItemRepo.Delete(tempSaleItem);
+                            if (await SaleItemRepo.SaveChangesAsync())
                             {
-                                System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", fileToDelete));
+                                //try delete file:
+                                var fileToDelete = tempSaleItem.Photo;
+                                try
+                                {
+                                    System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", fileToDelete));
+                                }
+                                catch { }
+                                return Ok();
                             }
-                            catch { }
-                            return Ok();
+                            else
+                            {
+                                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
+                            }
                         }
                         else
                         {
-                            return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
+                            throw new Exception();
                         }
                     }
                     else

@@ -34,7 +34,8 @@ export class SchedulePage implements AfterViewInit  {
     employee:{},
     bookingPriceHistory:null,
     startDateTime: null,
-    endDateTime: null
+    endDateTime: null,
+    colour: null
   }
 
     //Create local schedule array to be populated onInit.
@@ -50,6 +51,7 @@ export class SchedulePage implements AfterViewInit  {
   constructor(public scheduleService: ScheduleService, public alertCtrl: AlertController, public modalCtrl: ModalController, public global: GlobalService ) {
     this.fetchSchedule();
     console.log(this.scheduleList);
+
    }
 
    ngAfterViewInit(): void {
@@ -106,8 +108,10 @@ export class SchedulePage implements AfterViewInit  {
                   endTime: endTime,
                   lesson: sItem.lesson,
                   employee: sItem.employee,
-                  bookingPriceHistory: sItem.bookingPriceHistory
+                  bookingPriceHistory: sItem.bookingPriceHistory,
+                  colour: sItem.bookingType.colour
                 });
+                document.body.style.setProperty('--colour'[sItem.scheduleID],sItem.bookingType.colour);
               })
               this.eventSource = events;
               console.log(this.eventSource);

@@ -28,8 +28,6 @@ namespace Team7.Services
             this.body = body;
         }
 
-
-
         public void sendEmail()
         {
             MailMessage email = new MailMessage();

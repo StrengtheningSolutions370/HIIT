@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ViewWillEnter } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { SalesService } from 'src/app/services/sales/sales.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class DeleteSitemComponent implements ViewWillEnter {
   currentCategory! : string;
 
   constructor(private global: GlobalService, 
-    public saleService: SalesService) { }
+    public saleService: SalesService, public inventoryService: InventoryService) { }
   
     ionViewWillEnter() {
       console.log('DeleteSaleItem - ViewWillEnter');
@@ -30,6 +31,8 @@ export class DeleteSitemComponent implements ViewWillEnter {
       this.saleService.deleteSaleItem(id);
       this.global.dismissModal();
       this.global.showToast("The sale item has been successfully deleted!");
+      this.inventoryService.fetchWriteOffsEvent.emit();
+
     }
 
     public createImg = (fileName: string) => { 
