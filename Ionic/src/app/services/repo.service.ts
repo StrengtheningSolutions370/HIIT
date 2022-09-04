@@ -348,15 +348,24 @@ getSaleItems(): Observable<any>{
 getMatchSaleItem(name: string, description: string): Observable<any>{
   return this.http.get(`${this.base+this.SaleItemController}getMatch?name=${name}&description=${description}`, this.httpOptions);
 }
+// //Image Upload
+// uploadSaleItemImage(data: FormData): Observable<any> {
+//   return this.http.post('http://localhost:5001/api/SaleItem/upload', data);
+// }
+// //reImage Upload
+// deleteSaleItemImage(id : string) : Observable<any> {
+//   return this.http.delete(`http://localhost:5001/api/SaleItem/deletephoto?name=${id}`)
+// }
+
 //Image Upload
 uploadSaleItemImage(data: FormData): Observable<any> {
-  return this.http.post('http://localhost:5001/api/SaleItem/upload', data);
+  return this.http.post(`${this.base+this.SaleItemController}upload`, data);
 }
 //reImage Upload
 deleteSaleItemImage(id : string) : Observable<any> {
-  return this.http.delete(`http://localhost:5001/api/SaleItem/deletephoto?name=${id}`)
-
+  return this.http.delete(`${this.base+this.SaleItemController}deletephoto?name=${id}`)
 }
+
 //add writeOff
 createWriteOff(writeOff: any): Observable<any> {
   console.log(writeOff);

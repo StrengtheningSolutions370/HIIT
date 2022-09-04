@@ -140,7 +140,7 @@ export class CheckoutComponent implements ViewWillEnter {
 
           var payObj = { // Object to record sale on API
             userID: this.cartData.userId,
-            paymentTypeID: 1,
+            paymentTypeID: 2,
             sales: saleItemArr,
             bookings: bookingItemArr,
             //clientID: this.cartData.userId

@@ -19,30 +19,34 @@ animated="true" debounce="200"></ion-searchbar>
         <ion-card>
           <h5 class="ion-align-self-center">{{saleItem.name}}</h5>
 
-          <div class="img-wrapper">
-            <img class="img-wrapper" (click)="saleService.viewSaleItemInfoModal(saleItem)"
-              [src]="this.global.createImg(saleItem.photo)" alt="sale item image">
-          </div>
+          
           <ion-card-content class="card-body card-buttons">
+            <div class="img-wrapper">
+              <img class="img-wrapper" (click)="saleService.viewSaleItemInfoModal(saleItem)" [src]="this.global.createImg(saleItem.photo)" alt="sale item image">
+            </div>
+
             <ion-row class="row align-items-center no-gutters">
+
               <ion-col class="column-buttons">
-                <ion-button (click)="saleService.deleteSaleItemInfoModal(saleItem)"  color="danger"  expand="block" >Delete
-                </ion-button>
+                <ion-button (click)="saleService.deleteSaleItemInfoModal(saleItem)"  color="danger"  expand="block" >Delete</ion-button>
               </ion-col>
-              <ion-col >
-                <ion-button (click)="saleService.updateSaleItemInfoModal(saleItem)"  color="success"  expand="block">Update
-                </ion-button>
+
+              <ion-col>
+                <ion-button (click)="saleService.updateSaleItemInfoModal(saleItem)"  color="success"  expand="block">Update</ion-button>
               </ion-col>
+
             </ion-row>
-            <div *ngIf="saleItem.quotable !== true" >
-            <ion-row class="row align-items-center no-gutters">
-              <ion-col class="column-buttons">
-                <ion-button (click)="inventoryService.addWriteOffInfoModal(saleItem)"  color="warning"  expand="block" >Write-Off
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </div>
+
+            <div *ngIf="saleItem.quotable !== true">
+              <ion-row class="row align-items-center no-gutters">
+                <ion-col class="column-buttons">
+                  <ion-button (click)="inventoryService.addWriteOffInfoModal(saleItem)"  color="warning"  expand="block" >Write-Off</ion-button>
+                </ion-col>
+              </ion-row>
+            </div>
+
           </ion-card-content>
+
         </ion-card>
       </ion-col>
     </ion-row>

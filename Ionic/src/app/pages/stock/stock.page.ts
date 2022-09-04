@@ -28,7 +28,7 @@ export class StockPage implements OnInit {
   ngOnInit() {
     this.stockService.fetchStockEvent.subscribe(() => {
       this.fetch();
-      this.modalCtrl.dismiss();
+      //this.modalCtrl.dismiss();
       this.stock = [];
       this.stockOriginal = [];
     });
