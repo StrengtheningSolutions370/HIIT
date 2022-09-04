@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RepoService } from 'src/app/services/repo.service';
 
 @Component({
   selector: 'app-trainer-report',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TrainerReportPage implements OnInit {
 
-  constructor() { }
+  constructor(private repo : RepoService) { }
 
   ngOnInit() {
+    // this.repo.getA
+  }
+
+  searchTrainers(event : string) {
+    console.log(event);
   }
 
 }

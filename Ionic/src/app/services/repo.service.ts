@@ -75,6 +75,12 @@ export class RepoService {
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
 
+
+  //TRAINER REPORT:
+  getTrainers() {
+    return this.http.get(`${this.base + this.EmployeeController}getalltrainers`, this.httpOptions);
+  }
+
   chargeYOCO(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.PaymentController}charge`, data, this.httpOptions);
   }
