@@ -123,6 +123,7 @@ export class RepoService {
 
   //Login
   login(userDetails: appUser): Observable<any> {
+    //console.log(this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions));
     return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
   }
 
@@ -615,7 +616,7 @@ getSaleCategoryReport(): Observable<any>{
   // existsExercise(id: number): Observable<any> {
   //   return this.http.get(`${this.base + this.ExerciseController}exists?id=${id}`, this.httpOptions);
   // }
-  
+
   //Stock
   createStock(supplier: any): Observable<any> {
     console.log();

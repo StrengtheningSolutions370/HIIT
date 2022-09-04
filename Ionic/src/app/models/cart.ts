@@ -4,9 +4,10 @@ import { Schedule } from "./schedule";
 export class saleLine {
     saleItemID: number;
     saleItem?: SaleItem;
-    quantityChange?: number;
-
+    quantity: number;
+    subTotalPrice?: number;
 }
+
 export class bookingLine {
     scheduleID: number;
     schedule?: Schedule;
@@ -14,7 +15,9 @@ export class bookingLine {
 
 export class Cart {
     public userId: string;
-    public paymentTypeId: number;
-    public sales?: saleLine[];
-    public bookings?: bookingLine[];
+    public paymentTypeId?: number;
+    public sales?: saleLine[]=[];
+    public bookings?: bookingLine[]=[];
+    public grandPriceTotal: number;
+    public grandItemTotal: number;
 }

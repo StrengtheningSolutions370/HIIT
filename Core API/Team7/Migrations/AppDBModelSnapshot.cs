@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Team7.Context;
 
@@ -12,15 +11,9 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-<<<<<<<< HEAD:Core API/Team7/Migrations/20220831144154_initial.Designer.cs
-    [Migration("20220831144154_initial")]
-    partial class initial
-========
-    [Migration("20220828124117_Azure")]
-    partial class Azure
->>>>>>>> developer:Core API/Team7/Migrations/20220828124117_Azure.Designer.cs
+    partial class AppDBModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -301,15 +294,15 @@ namespace Team7.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("BookingTypeID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ScheduleID")
+                        .HasColumnType("int");
+
                     b.HasKey("BookingPriceHistoryID");
 
-                    b.HasIndex("BookingTypeID");
+                    b.HasIndex("ScheduleID");
 
                     b.ToTable("BookingPriceHistory");
                 });
@@ -374,25 +367,6 @@ namespace Team7.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Client");
-                });
-
-            modelBuilder.Entity("Team7.Models.DateSession", b =>
-                {
-                    b.Property<int>("DateSessionID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DateSessionID"), 1L, 1);
-
-                    b.Property<DateTime>("EndDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("DateSessionID");
-
-                    b.ToTable("DateSession");
                 });
 
             modelBuilder.Entity("Team7.Models.Employee", b =>
@@ -596,6 +570,27 @@ namespace Team7.Migrations
                     b.ToTable("Measurement");
                 });
 
+            modelBuilder.Entity("Team7.Models.OrderRecieved", b =>
+                {
+                    b.Property<int>("OrderRecievedID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderRecievedID"), 1L, 1);
+
+                    b.Property<int>("Date")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SupplierID")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderRecievedID");
+
+                    b.HasIndex("SupplierID");
+
+                    b.ToTable("OrderRecieved");
+                });
+
             modelBuilder.Entity("Team7.Models.OrderStatus", b =>
                 {
                     b.Property<int>("OrderStatusID")
@@ -658,7 +653,6 @@ namespace Team7.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("SaleID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("PaymentID");
@@ -888,6 +882,32 @@ namespace Team7.Migrations
                     b.ToTable("SaleItem");
                 });
 
+            modelBuilder.Entity("Team7.Models.SaleItemOrder", b =>
+                {
+                    b.Property<int>("SaleItemOrderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SaleItemOrderID"), 1L, 1);
+
+                    b.Property<int>("OrderRecievedID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuantityReceived")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SaleItemID")
+                        .HasColumnType("int");
+
+                    b.HasKey("SaleItemOrderID");
+
+                    b.HasIndex("OrderRecievedID");
+
+                    b.HasIndex("SaleItemID");
+
+                    b.ToTable("SaleItemOrder");
+                });
+
             modelBuilder.Entity("Team7.Models.SaleLine", b =>
                 {
                     b.Property<int>("SaleLineID")
@@ -925,24 +945,24 @@ namespace Team7.Migrations
                     b.Property<int?>("BookingTypeID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DateSessionID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("EmployeeID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("LessonID")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("VenueID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("ScheduleID");
 
                     b.HasIndex("BookingTypeID");
-
-                    b.HasIndex("DateSessionID");
 
                     b.HasIndex("EmployeeID");
 
@@ -1028,62 +1048,6 @@ namespace Team7.Migrations
                     b.HasKey("SupplierID");
 
                     b.ToTable("Supplier");
-                });
-
-            modelBuilder.Entity("Team7.Models.SupplierOrder", b =>
-                {
-                    b.Property<int>("SupplierOrderID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SupplierOrderID"), 1L, 1);
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("OrderStatusID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SupplierID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.HasKey("SupplierOrderID");
-
-                    b.HasIndex("OrderStatusID");
-
-                    b.HasIndex("SupplierID");
-
-                    b.ToTable("SupplierOrder");
-                });
-
-            modelBuilder.Entity("Team7.Models.SupplierOrderLine", b =>
-                {
-                    b.Property<int>("SupplierOrderLineID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SupplierOrderLineID"), 1L, 1);
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SaleItemID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SupplierOrderID")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.HasKey("SupplierOrderLineID");
-
-                    b.HasIndex("SaleItemID");
-
-                    b.HasIndex("SupplierOrderID");
-
-                    b.ToTable("SupplierOrderLine");
                 });
 
             modelBuilder.Entity("Team7.Models.Title", b =>
@@ -1182,13 +1146,14 @@ namespace Team7.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("SaleItemID")
+                    b.Property<int?>("SaleItemID")
                         .HasColumnType("int");
 
-                    b.Property<int>("WriteOffID")
+                    b.Property<int?>("WriteOffID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("WriteOffReasonID")
+                    b.Property<int?>("WriteOffReasonID")
                         .HasColumnType("int");
 
                     b.HasKey("WriteOffLineID");
@@ -1309,11 +1274,11 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.BookingPriceHistory", b =>
                 {
-                    b.HasOne("Team7.Models.BookingType", "BookingType")
+                    b.HasOne("Team7.Models.Schedule", "Schedule")
                         .WithMany("BookingPriceHistory")
-                        .HasForeignKey("BookingTypeID");
+                        .HasForeignKey("ScheduleID");
 
-                    b.Navigation("BookingType");
+                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("Team7.Models.Client", b =>
@@ -1398,6 +1363,17 @@ namespace Team7.Migrations
                     b.Navigation("Client");
                 });
 
+            modelBuilder.Entity("Team7.Models.OrderRecieved", b =>
+                {
+                    b.HasOne("Team7.Models.Supplier", "Supplier")
+                        .WithMany("Orders")
+                        .HasForeignKey("SupplierID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Supplier");
+                });
+
             modelBuilder.Entity("Team7.Models.PasswordHistory", b =>
                 {
                     b.HasOne("Team7.Models.AppUser", null)
@@ -1419,9 +1395,7 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.Sale", "Sale")
                         .WithMany("Payment")
-                        .HasForeignKey("SaleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleID");
 
                     b.Navigation("Booking");
 
@@ -1487,6 +1461,25 @@ namespace Team7.Migrations
                     b.Navigation("SaleCategory");
                 });
 
+            modelBuilder.Entity("Team7.Models.SaleItemOrder", b =>
+                {
+                    b.HasOne("Team7.Models.OrderRecieved", "OrdersRecieved")
+                        .WithMany("SaleItemOrders")
+                        .HasForeignKey("OrderRecievedID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Team7.Models.SaleItem", "SaleItems")
+                        .WithMany("SaleItemOrders")
+                        .HasForeignKey("SaleItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrdersRecieved");
+
+                    b.Navigation("SaleItems");
+                });
+
             modelBuilder.Entity("Team7.Models.SaleLine", b =>
                 {
                     b.HasOne("Team7.Models.Sale", "Sale")
@@ -1508,10 +1501,6 @@ namespace Team7.Migrations
                         .WithMany("Schedule")
                         .HasForeignKey("BookingTypeID");
 
-                    b.HasOne("Team7.Models.DateSession", "DateSession")
-                        .WithMany("Schedule")
-                        .HasForeignKey("DateSessionID");
-
                     b.HasOne("Team7.Models.Employee", "Employee")
                         .WithMany("Schedule")
                         .HasForeignKey("EmployeeID");
@@ -1522,13 +1511,9 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.Venue", "Venue")
                         .WithMany("Schedules")
-                        .HasForeignKey("VenueID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VenueID");
 
                     b.Navigation("BookingType");
-
-                    b.Navigation("DateSession");
 
                     b.Navigation("Employee");
 
@@ -1556,44 +1541,6 @@ namespace Team7.Migrations
                     b.Navigation("StockTake");
                 });
 
-            modelBuilder.Entity("Team7.Models.SupplierOrder", b =>
-                {
-                    b.HasOne("Team7.Models.OrderStatus", "OrderStatus")
-                        .WithMany("SupplierOrder")
-                        .HasForeignKey("OrderStatusID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Team7.Models.Supplier", "Supplier")
-                        .WithMany("SupplierOrder")
-                        .HasForeignKey("SupplierID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OrderStatus");
-
-                    b.Navigation("Supplier");
-                });
-
-            modelBuilder.Entity("Team7.Models.SupplierOrderLine", b =>
-                {
-                    b.HasOne("Team7.Models.SaleItem", "SaleItem")
-                        .WithMany()
-                        .HasForeignKey("SaleItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Team7.Models.SupplierOrder", "SupplierOrder")
-                        .WithMany("SupplierOrderLine")
-                        .HasForeignKey("SupplierOrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SaleItem");
-
-                    b.Navigation("SupplierOrder");
-                });
-
             modelBuilder.Entity("Team7.Models.WriteOff", b =>
                 {
                     b.HasOne("Team7.Models.Employee", "Employee")
@@ -1609,9 +1556,7 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.SaleItem", "SaleItem")
                         .WithMany("WriteOffLine")
-                        .HasForeignKey("SaleItemID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SaleItemID");
 
                     b.HasOne("Team7.Models.WriteOff", "WriteOff")
                         .WithMany("WriteOffLine")
@@ -1621,9 +1566,7 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.WriteOffReason", "WriteOffReason")
                         .WithMany("WriteOffLine")
-                        .HasForeignKey("WriteOffReasonID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WriteOffReasonID");
 
                     b.Navigation("SaleItem");
 
@@ -1648,8 +1591,6 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.BookingType", b =>
                 {
-                    b.Navigation("BookingPriceHistory");
-
                     b.Navigation("Schedule");
                 });
 
@@ -1658,11 +1599,6 @@ namespace Team7.Migrations
                     b.Navigation("Booking");
 
                     b.Navigation("Measurement");
-                });
-
-            modelBuilder.Entity("Team7.Models.DateSession", b =>
-                {
-                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("Team7.Models.Employee", b =>
@@ -1698,9 +1634,9 @@ namespace Team7.Migrations
                     b.Navigation("exercises");
                 });
 
-            modelBuilder.Entity("Team7.Models.OrderStatus", b =>
+            modelBuilder.Entity("Team7.Models.OrderRecieved", b =>
                 {
-                    b.Navigation("SupplierOrder");
+                    b.Navigation("SaleItemOrders");
                 });
 
             modelBuilder.Entity("Team7.Models.Payment", b =>
@@ -1744,6 +1680,8 @@ namespace Team7.Migrations
                 {
                     b.Navigation("PriceHistory");
 
+                    b.Navigation("SaleItemOrders");
+
                     b.Navigation("SaleLine");
 
                     b.Navigation("StockTakeLine");
@@ -1754,6 +1692,8 @@ namespace Team7.Migrations
             modelBuilder.Entity("Team7.Models.Schedule", b =>
                 {
                     b.Navigation("BookingAttendance");
+
+                    b.Navigation("BookingPriceHistory");
                 });
 
             modelBuilder.Entity("Team7.Models.StockTake", b =>
@@ -1763,12 +1703,7 @@ namespace Team7.Migrations
 
             modelBuilder.Entity("Team7.Models.Supplier", b =>
                 {
-                    b.Navigation("SupplierOrder");
-                });
-
-            modelBuilder.Entity("Team7.Models.SupplierOrder", b =>
-                {
-                    b.Navigation("SupplierOrderLine");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Team7.Models.Title", b =>

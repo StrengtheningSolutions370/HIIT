@@ -20,16 +20,17 @@ export class ViewShopItemComponent {
   isLoading = false;
 
 
-  constructor(public global: GlobalService, public cartService: CartService,public saleService: SalesService ) { 
+  constructor(public global: GlobalService, public cartService: CartService,public saleService: SalesService ) {
     this.fetchSaleItem();
   }
 
   quantityPlus(item) {
+    console.log("Performing view shop item operation: qtyPlus: ", item);
     const index = this.saleItems.findIndex(x => x.saleItemID === item.saleItemID);
     console.log(index);
     if (!this.saleItems[index].quantity) {
       console.log('index item: ', this.saleItems);
-      this.cartService.quantityPlus(index, this.saleItems);
+      this.cartService.quantityPlus(item);
     } else {
       // alert for clear cart
       // this.cartService.alertClearCart(index, this.saleItems);
@@ -47,7 +48,7 @@ export class ViewShopItemComponent {
           console.log(data);
           this.isLoading = false;
           this.saleItems = data.result;
-  
+
         }
       }
     );

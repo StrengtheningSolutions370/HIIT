@@ -10,6 +10,7 @@ import { CartModalPage } from './cart-modal.page';
 import { CartItemComponent } from 'src/app/components/cart-item/cart-item.component';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { PaymentPage } from '../payment/payment.page';
+import { CartBookingItemComponent } from 'src/app/components/cart-booking-item/cart-booking-item.component';
 
 
 
@@ -22,7 +23,7 @@ import { PaymentPage } from '../payment/payment.page';
     CartModalPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [CartModalPage, CartItemComponent],
+  declarations: [CartModalPage, CartItemComponent, CartBookingItemComponent],
   bootstrap: [CartModalPage],
 
 })

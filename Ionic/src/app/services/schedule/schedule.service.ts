@@ -156,6 +156,7 @@ export class ScheduleService {
   }
 
   async addBookingModal(scheduleEvent: any){
+    console.log("call modal addBooking", scheduleEvent);
     const modal = await this.modalCtrl.create({
       component: AddBookingComponent,
       componentProps: {
