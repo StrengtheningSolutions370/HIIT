@@ -76,5 +76,35 @@ namespace Team7.Repository
                 }).ToListAsync()
             };
         }
+
+        public async Task<object> getAllBookingReport()
+        {
+            IQueryable<Booking> query = DB.Booking;
+            if (!query.Any())
+            {
+                return null;
+            }
+            return new
+            {
+
+                result = await query.Select(b =>
+                new
+                {
+                    b.BookingID,
+                    b.Date,
+                    BookingAttendance = b
+                    .BookingAttendance
+                    .Select(ba => new
+                    {
+                        ba.BookingAttendanceID,
+                        ba.ScheduleID,
+                        ba.Attended,
+                        BookingPriceHistory = ba
+                        .Schedule.BookingPriceHistory.Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
+                    })
+
+                }).ToListAsync()
+            };
+        }
     }
 }

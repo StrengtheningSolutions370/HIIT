@@ -139,7 +139,9 @@ namespace Team7.Controllers
                         BookingAttendance ba = new()
                         {
                             Booking = bookTemp,
+                            BookingID = bookTemp.BookingID,
                             Schedule = scheduleTemp,
+                            ScheduleID = scheduleTemp.ScheduleID,
                             Attended = false
                         };
                         bookTemp.BookingAttendance.Add(ba);
@@ -147,9 +149,12 @@ namespace Team7.Controllers
 
                     _bookingRepo.Add(bookTemp);
                     await _bookingRepo.SaveChangesAsync();
+                    bookTemp.Payment.Add(toAdd);
                     toAdd.Booking = bookTemp;
+                    toAdd.BookingID = bookTemp.BookingID;
                 } else
                 {
+                    toAdd.BookingID = null;
                     toAdd.Booking = null;
                 }
 

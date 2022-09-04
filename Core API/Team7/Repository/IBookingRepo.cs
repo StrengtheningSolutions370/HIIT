@@ -6,16 +6,11 @@ namespace Team7.Models.Repository
     {
         void Add<T>(T Entity) where T : class;
 
-        void Delete<T>(T Entity) where T : class;
+        Task<object> GetMyBookingsAsync(string aspNetUserID);
 
-        void Update<T>(T Entity) where T : class;
-
-        Task<Booking[]> GetAllBookingsAsync();
-
-        Task<Booking[]> GetBookingsAsync(string input);
-
-        Task<Booking> GetBookingIdAsync(int id);
+        Task<bool> CancelMyBooking(string aspNetUserID, int bookingID, int scheduleID);
 
         Task<bool> SaveChangesAsync();
+
     }
 }
