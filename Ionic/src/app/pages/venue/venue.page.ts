@@ -35,6 +35,7 @@ export class VenuePage implements OnInit {
         }
       }
     );
+    this.venueService.fetchVenuesEvent.emit();
   }
 
   fetchVenues() {

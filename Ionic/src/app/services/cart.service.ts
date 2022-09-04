@@ -8,6 +8,7 @@ import { SaleItem } from '../models/sale-item';
 import { CartModalPage } from '../pages/shop/cart-modal/cart-modal.page';
 import { CheckoutComponent } from '../pages/shop/checkout/checkout.component';
 import { PaymentPage } from '../pages/shop/payment/payment.page';
+import { BookingService } from './booking/booking.service';
 import { GlobalService } from './global/global.service';
 import { RepoService } from './repo.service';
 import { StoreService } from './storage/store.service';
@@ -28,7 +29,8 @@ export class CartService {
     private storage: StoreService,
     public global: GlobalService,
     private modalCtrl: ModalController,
-    public repo: RepoService
+    public repo: RepoService,
+    public bookingService: BookingService
   ) { }
 
   async createCart(){
@@ -273,7 +275,7 @@ export class CartService {
       this.createCart();
     });
 
-
+    this.bookingService.fetchBookingEvent.emit();
    }
 
   //Modal to open cart
