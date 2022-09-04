@@ -42,7 +42,7 @@ namespace Team7.Models.Repository
             
             _bookingAttendanceRepo.Delete<BookingAttendance>(query.FirstOrDefault());
 
-            await this.SaveChangesAsync();
+            //await this.SaveChangesAsync();
 
             //Look into deleting Payment associated with Booking if the BookingAttendance is empty.
             //Below finds the right record but for some reason the Payment ICollection is Null. No time to go down that rabbit hole now (04/09)

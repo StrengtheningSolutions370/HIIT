@@ -92,12 +92,18 @@ namespace Team7.Repository
                 {
                     b.BookingID,
                     b.Date,
+                    b.Client.AppUser.FirstName,
+                    b.Client.AppUser.LastName,
+                    b.Client.AppUser.Email,
                     BookingAttendance = b
                     .BookingAttendance
                     .Select(ba => new
                     {
                         ba.BookingAttendanceID,
                         ba.ScheduleID,
+                        ba.Schedule.StartDateTime,
+                        ba.Schedule.EndDateTime,
+                        ba.Schedule.Venue,
                         ba.Attended,
                         BookingPriceHistory = ba
                         .Schedule.BookingPriceHistory.Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })

@@ -35,6 +35,8 @@ export class RepoService {
   // base = 'http://localhost:5001/api/';
   base = 'https://localhost:44383/api/';
   AppUserController = 'AppUser/';
+  BookingController = 'Booking/'
+  BookingTypeController = 'BookingType/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
   EmployeeTypeController = 'EmployeeType/';
@@ -48,8 +50,7 @@ export class RepoService {
   PermissionController = 'Permission/';
   EmployeeController = 'Employee/';
   ExerciseCategoryController = 'ExerciseCategory/';
-  BookingTypeController = 'BookingType/'
-  ExerciseController = 'Exercise/'
+  ExerciseController = 'Exercise/';
   WriteOffReasonController = 'WriteOffReason/'
   LessonController = 'Lesson/'
   ScheduleController = 'Schedule/';
@@ -58,7 +59,6 @@ export class RepoService {
   PaymentController= 'Payment/';
   SupplierController= 'Supplier/';
   StockController= 'Stock/';
-
   WriteOffController= 'WriteOff/';
 
   httpOptions = {
@@ -481,6 +481,16 @@ getMatchBookingType(name: string, description: string): Observable<any>{
   return this.http.get(`${this.base+this.BookingTypeController}getMatch?name=${name}&description=${description}`, this.httpOptions);
 }
 
+//BOOKING
+//GetAll
+getClientBookings(aspNetUserID: string): Observable<any>{
+  return this.http.get(`${this.base+this.BookingController}getMyBookings?aspNetUserID=${aspNetUserID}`, this.httpOptions)
+}
+
+cancelMyBooking(aspNetUserID: string, bookingID: number, scheduleID: number): Observable<any>{
+  return this.http.delete(`${this.base+this.BookingController}delete?aspNetUserID=${aspNetUserID}&bookingID=${bookingID}&scheduleID=${scheduleID}`, this.httpOptions)
+}
+
 // Exercise:
   // ------
   // Create
@@ -587,6 +597,10 @@ getScheduleEvent(): Observable<any>{
 //Get by sale category
 getSaleCategoryReport(): Observable<any>{
   return this.http.get(`${this.base+this.ReportController}getBySaleCategory`, this.httpOptions)
+}
+
+getBookingReport(): Observable<any>{
+  return this.http.get(`${this.base+this.ReportController}getByBooking`, this.httpOptions)
 }
 
 // Supplier:
