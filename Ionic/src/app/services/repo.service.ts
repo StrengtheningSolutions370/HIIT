@@ -81,8 +81,13 @@ export class RepoService {
     return this.http.get(`${this.base + this.EmployeeController}getalltrainers`, this.httpOptions);
   }
 
+  //Payments
   chargeYOCO(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.PaymentController}charge`, data, this.httpOptions);
+  }
+
+  getPayments() : Observable<any> {
+    return this.http.get(`${this.base + this.PaymentController}getall`, this.httpOptions);
   }
 
   getUserRole(token : string) : Observable<any>{

@@ -52,13 +52,36 @@ namespace Team7.Models.Repository
                             p.PaymentType.PaymentTypeID,
                             p.PaymentType.Name
                         },
+                        //Sale = new
+                        //{
+                        //    p.Sale.SaleID,
+                        //    p.Sale.Date,
+                        //    p.Sale.AppUser.FirstName,
+                        //    p.Sale.AppUser.LastName,    
+                        //    SaleLine = p.Sale.SaleLine.Select(sl => new { sl.SaleLineID, sl.Quantity, sl.SaleItem })
+                        //}
                         Sale = new
                         {
-                            p.Sale.SaleID,
-                            p.Sale.Date,
-                            p.Sale.AppUser.FirstName,
-                            p.Sale.AppUser.LastName,    
-                            SaleLine = p.Sale.SaleLine.Select(sl => new { sl.SaleLineID, sl.Quantity, sl.SaleItem })
+                            SaleID = p.Sale.SaleID,
+                            Date = p.Sale.Date,
+                            UserID = p.Sale.UserID,
+                            AppUser = p.Sale.AppUser,
+                            SaleLine = p.Sale.SaleLine.Select(sl => new SaleLine {
+                                SaleLineID = sl.SaleLineID,
+                                Quantity = sl.Quantity,
+                                SaleID = sl.SaleLineID,
+                                SaleItem = new SaleItem
+                                {
+                                    SaleItemID = sl.SaleItem.SaleItemID,
+                                    Name = sl.SaleItem.Name,
+                                    Photo = sl.SaleItem.Photo,
+                                    Description = sl.SaleItem.Description,
+                                    QuantityOnHand = sl.SaleItem.QuantityOnHand,
+                                    SaleCategoryID = sl.SaleItem.SaleCategoryID,
+                                    PriceHistory = sl.SaleItem.PriceHistory,
+                                }
+                            }),
+                            Payment = p.Sale.Payment
                         }
                     }).ToListAsync()
                 };

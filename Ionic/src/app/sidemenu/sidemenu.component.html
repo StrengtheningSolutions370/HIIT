@@ -121,6 +121,12 @@
         </ion-item>
       </ion-menu-toggle>
 
+      <ion-menu-toggle *ngIf="superuser || admin || client || member">
+        <ion-item routerLink="payments">
+          <ion-icon name="cash-outline" slot="start"></ion-icon>
+          <ion-label>Payment</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
     </ion-list>
   </ion-content>
   <ion-footer>
@@ -135,7 +141,6 @@
       </ion-item>
     </ion-menu-toggle>
   </ion-footer>
-</ion-menu>
 
   <!-- <ion-menu-toggle *ngIf="superuser || admin">
     <ion-item routerLink="stock">
@@ -144,12 +149,7 @@
     </ion-item>
   </ion-menu-toggle> -->
 
-        <!-- <ion-menu-toggle *ngIf="superuser || admin || client || member">
-        <ion-item routerLink="payments">
-          <ion-icon name="cash-outline" slot="start"></ion-icon>
-          <ion-label>Payment</ion-label>
-        </ion-item>
-      </ion-menu-toggle> -->
+    </ion-menu>
 
   <!-- <ion-menu-toggle *ngIf="superuser || admin">
     <ion-item routerLink="inventory">

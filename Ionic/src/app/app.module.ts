@@ -178,6 +178,7 @@ import { AssociativeSupplierComponent } from './pages/suppliers/supplier-page/as
 import { ViewOrderComponent } from './pages/stock/view-order/view-order.component';
 import { ReceiveStockComponent } from './pages/stock/receive-stock/receive-stock.component';
 import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stock/confirm-recieve-stock.component';
+import { ViewPaymentComponent } from './pages/payments/view-payment/view-payment.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -239,7 +240,9 @@ import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stoc
    //Stock
     ViewOrderComponent, ReceiveStockComponent, ConfirmRecieveStockComponent,
   //Side Menu
-  SidemenuComponent
+  SidemenuComponent,
+  //payments
+  ViewPaymentComponent
 
 ],
   entryComponents: [],
