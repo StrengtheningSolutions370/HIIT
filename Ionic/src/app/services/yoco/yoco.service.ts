@@ -53,7 +53,7 @@ export class YocoService {
       currency: data.currency,
       name: 'Bester Strength and Conditioning',
       description: 'HIIT',
-      image: 'https://localhost:44383/Resources/Logo.jpg',
+      image: 'https://testbsc.azurewebsites.net/Resources/Logo.jpg',
       callback: async function (result) {
         if (result.error) {
           const errorMessage = result.error.message;

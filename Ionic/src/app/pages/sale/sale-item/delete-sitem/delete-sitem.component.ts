@@ -36,7 +36,7 @@ export class DeleteSitemComponent implements ViewWillEnter {
     }
 
     public createImg = (fileName: string) => { 
-      return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`; 
+      return `https://testbsc.azurewebsites.net/Resources/Images/saleItemImages/${fileName}`; 
     }
 
     convertToName() {

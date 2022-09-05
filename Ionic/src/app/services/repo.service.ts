@@ -33,7 +33,7 @@ import { WriteOff } from '../models/write-off';
 export class RepoService {
   // base = 'https://bsctest.azurewebsites.net/api/';
   // base = 'http://localhost:5001/api/';
-  base = 'https://localhost:44383/api/';
+  base = 'https://testbsc.azurewebsites.net/api/';
   AppUserController = 'AppUser/';
   BookingController = 'Booking/'
   BookingTypeController = 'BookingType/';
@@ -446,11 +446,11 @@ existsEmployee(id: number): Observable<any>{
 }
 // //Image Upload
 // uploadEmployeeImage(data: FormData): Observable<any> {
-//   return this.http.post('https://localhost:44383/api/Employee/upload', data);
+//   return this.http.post('https://testbsc.azurewebsites.net/api/Employee/upload', data);
 // }
 // //reImage Upload
 // reuploadEmployeeImage(id: string): Observable<any> {
-//   return this.http.delete(`https://localhost:44383/api/Employee/deletephoto?name=${id}`);
+//   return this.http.delete(`https://testbsc.azurewebsites.net/api/Employee/deletephoto?name=${id}`);
 // }
 //Document Upload
 

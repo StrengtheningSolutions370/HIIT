@@ -316,11 +316,11 @@ export class UpdateEmployeeComponent implements OnInit {
 
   createImg () {
     if (this.employee.data.photo == null)
-      return `https://localhost:44383/Resources/Employees/Images/default.jpeg`;
-    return `https://localhost:44383/Resources/Employees/Images/${this.employee.data.photo}`;
+      return `https://testbsc.azurewebsites.net/Resources/Employees/Images/default.jpeg`;
+    return `https://testbsc.azurewebsites.net/Resources/Employees/Images/${this.employee.data.photo}`;
   }
 
-  public createContract = () => `https://localhost:44383/Resources/Employees/Contracts/${this.employee.data.contract}`;
+  public createContract = () => `https://testbsc.azurewebsites.net/Resources/Employees/Contracts/${this.employee.data.contract}`;
 
   
 

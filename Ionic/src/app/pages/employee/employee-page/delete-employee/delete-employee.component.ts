@@ -71,11 +71,11 @@ export class DeleteEmployeeComponent implements OnInit {
 
   createImg (fileName: string) {
     if (fileName == null)
-      return `https://localhost:44383/Resources/Employees/Images/default.jpeg`;
-    return `https://localhost:44383/Resources/Employees/Images/${fileName}`;
+      return `https://testbsc.azurewebsites.net/Resources/Employees/Images/default.jpeg`;
+    return `https://testbsc.azurewebsites.net/Resources/Employees/Images/${fileName}`;
   }
 
-  public createContract = (fileName: string) => `https://localhost:44383/Resources/Employees/Contracts/${fileName}`;
+  public createContract = (fileName: string) => `https://testbsc.azurewebsites.net/Resources/Employees/Contracts/${fileName}`;
 
 }
 
