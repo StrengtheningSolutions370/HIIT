@@ -100,7 +100,6 @@ export class ExerciseService {
    }
 
    async duplicateAlert() {
-    console.trace();
     const alert = await this.alertCtrl.create({
       header: 'EXercise Already Exists',
       message: 'The Exercise Information entered already exists on the system',

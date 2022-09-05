@@ -76,11 +76,19 @@ namespace Team7.Models.Repository
                 Photo = e.Photo,
                 Contract = e.Contract,
                 IDNumber = e.IDNumber,
-                Qualification = e.Qualification,
+                Qualification = new Qualification
+                {
+                    Description = e.Qualification.Description,
+                    QualificationType = e.Qualification.QualificationType,
+                },
                 EmployeeType = e.EmployeeType,
                 AppUser = e.AppUser,
-                Lesson = e.Lesson,
-                Schedule = e.Schedule,
+                Lesson = e.Lesson.Select(l => new
+                {
+                    l.LessonID,
+                    l.Name
+                }),
+                //Schedule = e.Schedule,
                 UserID = e.UserID,
             }).ToListAsync();
 
@@ -123,7 +131,7 @@ namespace Team7.Models.Repository
                 EmployeeType = e.EmployeeType,
                 AppUser = e.AppUser,
                 Lesson = e.Lesson,
-                Schedule = e.Schedule,
+                //Schedule = e.Schedule,
                 UserID = e.UserID,
             }).ToListAsync();
 
@@ -174,7 +182,20 @@ namespace Team7.Models.Repository
 
         public async Task<Employee[]> _GetAllEmployeesAsync()
         {
-            IQueryable<Employee> query = DB.Employee;
+            IQueryable<Employee> query = DB.Employee.Select(e => new Employee
+            {
+                EmployeeID = e.EmployeeID,
+                Photo = e.Photo,
+                Contract = e.Contract,
+                IDNumber = e.IDNumber,
+                UserID = e.UserID,
+                EmployeeType = e.EmployeeType,
+                Qualification = e.Qualification,
+                Lesson = e.Lesson,
+                //Schedule = e.Schedule,
+                WriteOff = e.WriteOff,
+                AppUser = e.AppUser
+            });
             if (!query.Any())
             {
                 return null;

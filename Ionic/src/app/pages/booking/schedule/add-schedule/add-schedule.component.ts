@@ -4,9 +4,9 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { BookingType } from 'src/app/models/booking-type';
 import { Employee } from 'src/app/models/employee';
 import { Venue } from 'src/app/models/venue';
+import {Lesson} from 'src/app/models/lesson'
 import { GlobalService } from 'src/app/services/global/global.service';
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
-import { DatePipe } from '@angular/common';
 import { Schedule } from 'src/app/models/schedule';
 
 @Component({
@@ -14,51 +14,47 @@ import { Schedule } from 'src/app/models/schedule';
   templateUrl: './add-schedule.component.html',
   styleUrls: ['./add-schedule.component.scss'],
 })
+
 export class AddScheduleComponent implements AfterViewInit {
-
-  venueList!: Venue[];
-  bookingTypeList!: BookingType[];
-  employeeList!: Employee[];
-  lessonPlan!: any; // Update to lesson plan model
-
-  defaultDate = Date.now();//Need to recieve this as input from schedule
 
   cCalendarForm: UntypedFormGroup = this.formBuilder.group({
     dateSelector: [, [Validators.required]],
     timeStartSelector: [, [Validators.required]],
     timeEndSelector: [,[Validators.required]],
+    schedulePrice: ['', [Validators.required, Validators.min(1)]],
     venueDrop : ['', [Validators.required]],
     bookingTypeDrop : ['', [Validators.required]],
-    employeeDrop : ['', [Validators.required]]
+    employeeDrop : ['', [Validators.required]],
+    lessonDrop: ['',[Validators.required]]
   });
 
-  datePipe: DatePipe;
+  //Dropdowns
+  venueList!: Venue[];
+  bookingTypeList!: BookingType[];
+  employeeList!: Employee[];
+  lessonList!: Lesson[];
+
+  //Variable used to determine selection from user when adding a new event
   dateSelect: any;
+  today: string = (new Date()).toISOString();
   timeStart: Time;
   timeEnd: Time;
 
-  //minDate: string = Date.toString();
-
-  calendar = {
-    mode: 'month',
-    currentDate: new Date()
-  };
-
-  viewTitle: string;
-
-  event = {
-    startTime: null,
-    endTime: null
-  }
-
-  modalReady = false;
+  //Delay modal generation to ensure api call is completed
+  //modalReady = false;
 
   constructor(public global:GlobalService, public formBuilder: UntypedFormBuilder, public scheduleService: ScheduleService) { }
 
+  get errorControl() {
+    return this.cCalendarForm.controls;
+  }
+
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.modalReady = true;
-    }, 0);
+    console.log(this.today);
+    // setTimeout(() => {
+    //   this.modalReady = true;
+    // }, 0);
+
 
     this.scheduleService.venueService.getAllVenues().subscribe({
       next: (data) => {
@@ -84,20 +80,13 @@ export class AddScheduleComponent implements AfterViewInit {
       }
     });
 
-
-
-    // //Disable weekends script
-    // const datetime = document.querySelector('ion-datetime');
-    // datetime.isDateEnabled = (dateString) => {
-    //   const date = new Date(dateString);
-    //   const utcDay = date.getUTCDay();
-
-    //   /**
-    //    * Date will be enabled if it is not
-    //    * Sunday or Saturday
-    //    */
-    //   return utcDay !== 0 && utcDay !== 6;
-    //}
+    this.scheduleService.lessonService.getAllLessons().subscribe({
+      next: (data) => {
+        console.log("Lessons: ")
+        console.log(data);
+        this.lessonList = data;
+      },
+    })
   }
 
   submitForm() {
@@ -121,25 +110,34 @@ export class AddScheduleComponent implements AfterViewInit {
       timeE.setMonth(dateTemp.getMonth());
       timeS.setFullYear(dateTemp.getFullYear());
       timeE.setFullYear(dateTemp.getFullYear());
+      //var bphTemp = null;
+      var bphTemp: any = [{
+        amount: Number(this.cCalendarForm.controls['schedulePrice'].value)
+      }];
       var temp: Schedule = {
-        dateSession :{
-          startDateTime:timeS,
-          endDateTime: timeE
-        },
-        bookingAttendance: null,
+        startDateTime:timeS,
+        endDateTime: timeE,
+        bookingAttendance: null, // Passed as null in add because it's created in construction on API side
+        bookingPriceHistory: bphTemp,
         venueID:this.cCalendarForm.value['venueDrop'].split(',')[0],
         bookingTypeID:this.cCalendarForm.value['bookingTypeDrop'].split(',')[0],
-        employeeID:this.cCalendarForm.value['employeeDrop'].split(',')[0]
+        employeeID:this.cCalendarForm.value['employeeDrop'].split(',')[0],
+        lessonID: this.cCalendarForm.value['lessonDrop'].split(',')[0]
       };
       console.log(temp);
       this.global.dismissModal();
-      this.scheduleService.confirmScheduleModal(1,temp,this.cCalendarForm.value['venueDrop'].split(',')[1],this.cCalendarForm.value['bookingTypeDrop'].split(',')[1],this.cCalendarForm.value['employeeDrop'].split(',')[1]);
+      this.scheduleService.confirmScheduleModal(1,temp,
+      this.cCalendarForm.value['venueDrop'].split(',')[1],
+      this.cCalendarForm.value['bookingTypeDrop'].split(',')[1],
+      this.cCalendarForm.value['employeeDrop'].split(',')[1],
+      this.cCalendarForm.value['lessonDrop'].split(',')[1]);
     }
    }
 
   dateSelected(){
     console.log(this.dateSelect);
     console.log(this.cCalendarForm.get('dateSelector'));
+    //this.cCalendarForm.get('dateSelector').confirm(true);
   }
 
   timeStartSelected(){

@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './authentication/auth.interceptor';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 // import { PayPal } from '@ionic-native/paypal/ngx';
 // import { Stripe } from '@ionic-native/stripe/ngx';
 
@@ -45,6 +46,11 @@ import { UpdateSitemComponent } from './pages/sale/sale-item/update-sitem/update
 import { DeleteSitemComponent } from './pages/sale/sale-item/delete-sitem/delete-sitem.component';
 import { ViewSitemComponent } from './pages/sale/sale-item/view-sitem/view-sitem.component';
 import { ConfirmSitemComponent } from './pages/sale/sale-item/confirm-sitem/confirm-sitem.component';
+
+//WRITE_OFF IMPORTS
+import { WriteOffSitemComponent } from './pages/sale/sale-item/write-off-sitem/write-off-sitem.component';
+import { ViewWriteOffComponent } from './pages/sale/write-off/view-write-off/view-write-off.component';
+import { ConfirmWriteOffComponent } from './pages/sale/sale-item/confirm-write-off-sitem/confirm-write-off-sitem.component';
 
 //EMPLOYEE_QUALIFICATION_TYPE IMPORTS:
 import { AddQtypeComponent } from './pages/employee/qualification-type/add-qtype/add-qtype.component';
@@ -109,16 +115,15 @@ import { UpdateBtypeComponent } from './pages/booking/booking-type/update-btype/
 import { ViewBtypeComponent } from './pages/booking/booking-type/view-btype/view-btype.component';
 
 //WRITE-OFF REASON IMPORTS:
-import { AddWriteOffReasonComponent } from './pages/inventory/write-off-reason/add-write-off-reason/add-write-off-reason.component';
-import { AssociativeWriteOffReasonComponent } from './pages/inventory/write-off-reason/associative-write-off-reason/associative-write-off-reason.component';
-import { ConfirmWriteOffReasonComponent } from './pages/inventory/write-off-reason/confirm-write-off-reason/confirm-write-off-reason.component';
-import { DeleteWriteOffReasonComponent } from './pages/inventory/write-off-reason/delete-write-off-reason/delete-write-off-reason.component';
-import { UpdateWriteOffReasonComponent } from './pages/inventory/write-off-reason/update-write-off-reason/update-write-off-reason.component';
-import { ViewWriteOffReasonComponent } from './pages/inventory/write-off-reason/view-write-off-reason/view-write-off-reason.component';
+import { AddWriteOffReasonComponent } from './pages/sale/write-off-reason/add-write-off-reason/add-write-off-reason.component';
+import { AssociativeWriteOffReasonComponent } from './pages/sale/write-off-reason/associative-write-off-reason/associative-write-off-reason.component';
+import { ConfirmWriteOffReasonComponent } from './pages/sale/write-off-reason/confirm-write-off-reason/confirm-write-off-reason.component';
+import { DeleteWriteOffReasonComponent } from './pages/sale/write-off-reason/delete-write-off-reason/delete-write-off-reason.component';
+import { UpdateWriteOffReasonComponent } from './pages/sale/write-off-reason/update-write-off-reason/update-write-off-reason.component';
+import { ViewWriteOffReasonComponent } from './pages/sale/write-off-reason/view-write-off-reason/view-write-off-reason.component';
 
 //SIDEMENU IMPORTS:
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
-import { TimeRangeComponent } from './pages/booking/time-range/time-range.component';
 
 //CART IMPORTS:
 import { CartModalPageModule } from './pages/shop/cart-modal/cart-modal.module';
@@ -139,10 +144,17 @@ import { DeleteLessonComponent } from './pages/lessons/delete-lesson/delete-less
 import { ViewLessonComponent } from './pages/lessons/view-lesson/view-lesson.component';
 import { ConfirmLessonComponent } from './pages/lessons/confirm-lesson/confirm-lesson.component';
 import { AssociativeLessonComponent } from './pages/lessons/associative-lesson/associative-lesson.component';
+
 //SCHEDULE IMPORTS:
 import { AddScheduleComponent } from './pages/booking/schedule/add-schedule/add-schedule.component';
-import { DatePipe } from '@angular/common';
 import { UpdateScheduleComponent } from './pages/booking/schedule/update-schedule/update-schedule.component';
+import { DeleteScheduleComponent } from './pages/booking/schedule/delete-schedule/delete-schedule.component';
+import { ConfirmScheduleComponent } from './pages/booking/schedule/confirm-schedule/confirm-schedule.component';
+
+//BOOKING IMPORTS:
+import { AddBookingComponent } from './pages/class-booking/add-booking/add-booking.component';
+import { CancelBookingComponent } from './pages/class-booking/event-bookings/cancel-booking/cancel-booking.component';
+import { ViewBookingInfoComponent } from './pages/class-booking/event-bookings/view-booking-info/view-booking-info.component';
 
 //CLIENT IMPORTS:
 import { DeleteClientComponent } from './pages/user/clients/delete-client/delete-client.component';
@@ -153,6 +165,20 @@ import { ConfirmIndemnityComponent } from './pages/profile/profile/confirm-indem
 //Add Measurement
 import { AddComponent } from './pages/measurements/add/add.component';
 import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measurement/confirm-measurement.component';
+
+//SUPPLIER IMPORTS:
+import { AddSupplierComponent } from './pages/suppliers/supplier-page/add-supplier/add-supplier.component';
+import { UpdateSupplierComponent } from './pages/suppliers/supplier-page/update-supplier/update-supplier.component';
+import { DeleteSupplierComponent } from './pages/suppliers/supplier-page/delete-supplier/delete-supplier.component';
+import { ViewSupplierComponent } from './pages/suppliers/supplier-page/view-supplier/view-supplier.component';
+import { ConfirmSupplierComponent } from './pages/suppliers/supplier-page/confirm-supplier/confirm-supplier.component';
+import { AssociativeSupplierComponent } from './pages/suppliers/supplier-page/associative-supplier/associative-supplier.component';
+
+//STOCK
+import { ViewOrderComponent } from './pages/stock/view-order/view-order.component';
+import { ReceiveStockComponent } from './pages/stock/receive-stock/receive-stock.component';
+import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stock/confirm-recieve-stock.component';
+import { ViewPaymentComponent } from './pages/payments/view-payment/view-payment.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -172,6 +198,8 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent, AssociativeCategoryComponent,
   //SalesItem
   AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
+  //WriteOff
+  WriteOffSitemComponent, ViewWriteOffComponent, ConfirmWriteOffComponent,
   //SideMenu
   SidemenuComponent,
   //Qualification
@@ -187,8 +215,6 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
   //ExerciseCategory
   AddExerciseCategoryComponent, UpdateExerciseCategoryComponent, DeleteExerciseCategoryComponent, ViewExerciseCategoryComponent, ConfirmExerciseCategoryComponent, AssociativeExerciseCategoryComponent,
-  //Side Menu
-  SidemenuComponent,
   //RefundReason
   ConfirmRefundReasonComponent, AddRefundReasonComponent, UpdateRefundReasonComponent, ViewRefundReasonComponent, DeleteRefundReasonComponent, AssociativeRefundReasonComponent,
   //Employee
@@ -197,22 +223,31 @@ import { ConfirmMeasurementComponent } from './pages/measurements/confirm-measur
   AddWriteOffReasonComponent, AssociativeWriteOffReasonComponent, ConfirmWriteOffReasonComponent, DeleteWriteOffReasonComponent, UpdateWriteOffReasonComponent, ViewWriteOffReasonComponent,
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
+  //Booking
+  AddBookingComponent, CancelBookingComponent, ViewBookingInfoComponent,
   //Schedule
-  TimeRangeComponent, AddScheduleComponent, UpdateScheduleComponent,
+  AddScheduleComponent, UpdateScheduleComponent, DeleteScheduleComponent, ConfirmScheduleComponent,
   //Exercise
-
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
   //Lesson
   AddLessonComponent, UpdateLessonComponent, DeleteLessonComponent, ViewLessonComponent, ConfirmLessonComponent, AssociativeLessonComponent,
   //Client
   DeleteClientComponent,
   //confirmindemnity
-  AddComponent, ConfirmMeasurementComponent
+  AddComponent, ConfirmMeasurementComponent,
+   //Supplier
+   AddSupplierComponent, UpdateSupplierComponent, DeleteSupplierComponent, ViewSupplierComponent, ConfirmSupplierComponent, AssociativeSupplierComponent,
+   //Stock
+    ViewOrderComponent, ReceiveStockComponent, ConfirmRecieveStockComponent,
+  //Side Menu
+  SidemenuComponent,
+  //payments
+  ViewPaymentComponent
 
 ],
   entryComponents: [],
   imports: [
-    BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule],
+    BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, PdfViewerModule, CartModalPageModule, GooglePlaceModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
 
   bootstrap: [AppComponent]

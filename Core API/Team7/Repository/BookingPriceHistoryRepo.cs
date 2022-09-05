@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Team7.Context;
 
 
@@ -26,6 +27,20 @@ namespace Team7.Models.Repository
         {
             DB.Update(Entity);
         }
+
+        public async Task<bool> RemoveRangeScheduleIdAsync(int scheduleID)
+        {
+            var range = DB.BookingPriceHistory.Where(ph => ph.ScheduleID == scheduleID);
+            if (range.Any())
+            {
+                DB.BookingPriceHistory.RemoveRange(range);
+                if (await this.SaveChangesAsync())
+                    return true;
+                return false;
+            }
+            return true;
+        }
+
 
 
         //public async Task<BookingPriceHistory[]> GetAllBookingPriceHistorysAsync()

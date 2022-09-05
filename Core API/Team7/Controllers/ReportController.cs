@@ -41,5 +41,26 @@ namespace Team7.Controllers
             }
        }
 
+        //GETALL
+        [HttpGet]
+        [Route("getByBooking")]
+
+        public async Task<IActionResult> GetAllBooking()
+        {
+            try
+            {
+                var saleCategoryList = await _reportRepo.getAllBookingReport();
+                if (saleCategoryList == null)
+                {
+                    return Ok(0);
+                }
+                return Ok(saleCategoryList);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+        }
+
     }
 }

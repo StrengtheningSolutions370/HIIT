@@ -8,7 +8,6 @@ namespace Team7.Models
     {
         public BookingType()
         {
-            this.BookingPriceHistory = new HashSet<BookingPriceHistory>();
             this.Schedule = new HashSet<Schedule>();
         }
 
@@ -23,8 +22,6 @@ namespace Team7.Models
         public int Capacity { get; set; }
         [Required]
         public string Colour { get; set; }
-
-        public virtual ICollection<BookingPriceHistory> BookingPriceHistory { get; set; }
         public virtual ICollection<Schedule> Schedule { get; set; }
     }
 }

@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { SalesService } from 'src/app/services/sales/sales.service';
+import { InventoryService } from 'src/app/services/inventory/inventory.service';
+import { ViewWillEnter } from '@ionic/angular';
 
 
 @Component({
@@ -10,7 +12,7 @@ import { SalesService } from 'src/app/services/sales/sales.service';
   templateUrl: './sale-item.page.html',
   styleUrls: ['./sale-item.page.scss'],
 })
-export class SaleItemPage implements OnInit {
+export class SaleItemPage implements ViewWillEnter {
 //String used from the searchbar, used in the filter pipe to search titles.
 public filter: string;
 
@@ -24,7 +26,7 @@ saleItemSub: Subscription;
 
 isLoading = true;
 
-constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService) {
+constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService, public inventoryService: InventoryService) {
    this.fetchSaleItem();
    this.addMoreItems();
   }
@@ -59,8 +61,7 @@ addMoreItems() {
   }
 } 
 
-ngOnInit() {
-
+ionViewWillEnter(): void {
   this.saleService.fetchSaleItemsEvent.subscribe(
     {
       next: res => {
@@ -69,7 +70,6 @@ ngOnInit() {
       }
     }
   );
-
 }
 
 }

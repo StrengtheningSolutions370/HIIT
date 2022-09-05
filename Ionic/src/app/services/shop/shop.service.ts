@@ -38,11 +38,11 @@ export class ShopService {
 
 
 
-  constructor(public saleService: SalesService) { 
+  constructor(public saleService: SalesService) {
     this.fetchSaleCategory();
     this.initProductList();
 
-  
+
   }
 
   fetchSaleItem() {
@@ -56,13 +56,12 @@ export class ShopService {
       }
     );
   }
-  
+
   fetchSaleCategory(){
     this.saleService.getAllSaleCategories().subscribe(
       {
         next: data => {
           this.categories = data.result;
-          console.log(data);
         }
       }
     );
@@ -90,23 +89,23 @@ export class ShopService {
         if ( this.selectedCategories.length > 0 ) {
           foundCategory = this.selectedCategories.some( val => val.saleCategory.name.toLocaleLowerCase() === this.filterItems[i]['category'].toLocaleLowerCase() && val.isChecked);
         }
-        
+
         if ( this.priceRange.applied ) {
           let price = this.filterItems[i]['price'];
           foundPrice = ( price >= this.priceRange.lower && price <= this.priceRange.upper );
         }
-        
+
         if(foundCategory && foundPrice) {
           this.saleItems.push(this.filterItems[i]);
         }
-        
+
       }
     } else {
       console.log('No Filter found:>> ');
       this.saleItems = this.filterItems;
     }
     console.log("Shop Service apply filter: filter items", this.filterItems)
-  } 
+  }
 
   showResultCount() {
     this.show_result_size = true;
@@ -120,7 +119,7 @@ export class ShopService {
     this.filterItems = [];
     this.uncheckFilters();
     this.defaultListBy();
-  } 
+  }
 
   uncheckFilters() {
     this.selectedCategories = []
@@ -136,7 +135,7 @@ export class ShopService {
       lower : 0,
       upper : 100
     }
-    
+
   }
   defaultListBy() {
     Object.keys(this.listBy).forEach(key => {

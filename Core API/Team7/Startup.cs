@@ -70,7 +70,7 @@ namespace Team7
                         {
                             ValidIssuer = Configuration["Tokens:Issuer"],
                             ValidAudience = Configuration["Tokens:Audience"],
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:key"]))
                         };
                     });
 
@@ -137,7 +137,6 @@ namespace Team7
             services.AddScoped<IBookingRepo, BookingRepo>();
             services.AddScoped<IBookingTypeRepo, BookingTypeRepo>();
             services.AddScoped<IClientRepo, ClientRepo>();
-            services.AddScoped<IDateSessionRepo, DateSessionRepo>();
             services.AddScoped<IEmployeeContractRepo, EmployeeContractRepo>();
             services.AddScoped<IEmployeeRepo, EmployeeRepo>();
             services.AddScoped<IEmployeeTypeRepo, EmployeeTypeRepo>();
@@ -146,8 +145,6 @@ namespace Team7
             services.AddScoped<ILessonPlanRepo, LessonPlanRepo>();
             services.AddScoped<ILessonRepo, LessonRepo>();
             services.AddScoped<IMeasurementRepo, MeasurementRepo>();
-            //services.AddScoped<IMemberRepo, MemberRepo>();
-            //services.AddScoped<IMemberStatusRepo, MemberStatusRepo>();
             services.AddScoped<IOrderStatusRepo, OrderStatusRepo>();
             services.AddScoped<IPasswordHistoryRepo, PasswordHistoryRepo>();
             services.AddScoped<IPaymentTypeRepo, PaymentTypeRepo>();
@@ -164,8 +161,6 @@ namespace Team7
             services.AddScoped<IScheduleRepo, ScheduleRepo>();
             services.AddScoped<IStockTakeLineRepo, StockTakeLineRepo>();
             services.AddScoped<IStockTakeRepo, StockTakeRepo>();
-            services.AddScoped<ISupplierOrderLineRepo, SupplierOrderLineRepo>();
-            services.AddScoped<ISupplierOrderRepo, SupplierOrderRepo>();
             services.AddScoped<ISupplierRepo, SupplierRepo>();
             services.AddScoped<ITitleRepo, TitleRepo>();
             services.AddScoped<IVenueRepo, VenueRepo>();
@@ -174,9 +169,10 @@ namespace Team7
             services.AddScoped<IWriteOffReasonRepo, WriteOffReasonRepo>();
             services.AddScoped<IWriteOffRepo, WriteOffRepo>();
             services.AddScoped<IVATRepo, VATRepo>();
-            services.AddScoped<IReportRepo, ReportRepo>();
+            services.AddScoped<ISaleItemOrderRepo, SaleItemOrderRepo>();
+            services.AddScoped<IOrderRecievedRepo, OrderRecievedRepo>();
             //services.AddSwaggerGen();
-
+            services.AddScoped<IReportRepo, ReportRepo>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 
         }
@@ -209,16 +205,6 @@ namespace Team7
                 });
 
             }
-
-            //app.UseHttpsRedirection();
-            //app.UseCors("CorsPolicy");
-
-            //app.UseStaticFiles();
-            //app.UseStaticFiles(new StaticFileOptions()
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-            //    RequestPath = new PathString("/Resources")
-            //});
 
             app.UseStaticFiles(new StaticFileOptions
             {

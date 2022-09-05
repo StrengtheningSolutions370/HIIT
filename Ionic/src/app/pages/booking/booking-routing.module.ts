@@ -26,12 +26,7 @@ const routes: Routes = [
     path: '',
     redirectTo:'tabs/schedule',
     pathMatch: 'full'
-  },
-  {
-    path: 'calendar-modal',
-    loadChildren: () => import('./calendar-modal/calendar-modal.module').then( m => m.CalendarModalPageModule)
   }
-
 ];
 
 @NgModule({

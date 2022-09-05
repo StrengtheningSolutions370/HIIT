@@ -7,6 +7,14 @@ using Team7.Models.Repository;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using RestSharp;
+using System.Text;
+using System.Net;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
+using Newtonsoft.Json.Linq;
 
 namespace Team7.Controllers
 {
@@ -39,8 +47,33 @@ namespace Team7.Controllers
             _scheduleRepo = scheduleRepo;
         }
 
-        //CREATE
         [HttpPost]
+        [Route("charge")]
+        public async Task<IActionResult> yocoChargeAPI(yocoChargeViewModel yoco)
+        {
+
+            using(var httpClient = new HttpClient())
+{
+                using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://online.yoco.com/v1/charges/"))
+                {
+                    var base64authorization = Convert.ToBase64String(Encoding.ASCII.GetBytes("sk_test_cc0f5683xWpR8vQ65b14d8a99f19:"));
+                    request.Headers.TryAddWithoutValidation("Authorization", $"Basic {base64authorization}");
+                    var contentList = new List<string>();
+                    contentList.Add("token=" + yoco.token);
+                    contentList.Add("amountInCents=" + yoco.amount);
+                    contentList.Add("currency=ZAR");
+                    request.Content = new StringContent(string.Join("&", contentList));
+                    request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+                    var response = await httpClient.SendAsync(request);
+                    var content = await response.Content.ReadAsStringAsync();
+                    return Ok(content);
+                }
+            }
+
+        }
+
+            //CREATE
+            [HttpPost]
         [Route("add")]
 
         public async Task<IActionResult> PostPayment(PaymentViewModel pvm)
@@ -49,6 +82,7 @@ namespace Team7.Controllers
             {
                 Payment toAdd = new Payment
                 {
+                    PaymentTypeID = pvm.paymentTypeID,
                     PaymentType = await _paymentTypeRepo._GetPaymentTypeIdAsync(pvm.paymentTypeID)
                 };
 
@@ -60,7 +94,7 @@ namespace Team7.Controllers
                     
                     Sale saleTemp = new()
                     {
-                        Date = System.DateTime.Now,
+                        Date = DateTime.Now,
                         UserID = userTemp.Id,
                         AppUser = userTemp
                     };
@@ -88,7 +122,7 @@ namespace Team7.Controllers
                 
                 if (pvm.Bookings != null)
                 {
-                    var clientIDTemp = await _clientRepo.GetClientIdAsync(pvm.userID);
+                    var clientIDTemp = await _clientRepo.GetClientIdAsync(pvm.userID); //Cannot be null otherwise breaks system
                     //var clientTemp 
 
                     Booking bookTemp = new()
@@ -105,7 +139,9 @@ namespace Team7.Controllers
                         BookingAttendance ba = new()
                         {
                             Booking = bookTemp,
+                            BookingID = bookTemp.BookingID,
                             Schedule = scheduleTemp,
+                            ScheduleID = scheduleTemp.ScheduleID,
                             Attended = false
                         };
                         bookTemp.BookingAttendance.Add(ba);
@@ -113,9 +149,12 @@ namespace Team7.Controllers
 
                     _bookingRepo.Add(bookTemp);
                     await _bookingRepo.SaveChangesAsync();
+                    bookTemp.Payment.Add(toAdd);
                     toAdd.Booking = bookTemp;
+                    toAdd.BookingID = bookTemp.BookingID;
                 } else
                 {
+                    toAdd.BookingID = null;
                     toAdd.Booking = null;
                 }
 
@@ -169,7 +208,28 @@ namespace Team7.Controllers
         {
             try
             {
-                var paymentList = await _paymentRepo.GetAllPaymentsAsync();
+                var paymentList = await _paymentRepo.GetAllSalePaymentsAsync();
+                if (paymentList == null)
+                {
+                    return Ok(0);
+                }
+                return Ok(paymentList);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+        }
+
+        //GETALL
+        [HttpGet]
+        [Route("getAllBooking")]
+
+        public async Task<IActionResult> GetBookingPayments()
+        {
+            try
+            {
+                var paymentList = await _paymentRepo.GetAllBookingPaymentsAsync();
                 if (paymentList == null)
                 {
                     return Ok(0);
