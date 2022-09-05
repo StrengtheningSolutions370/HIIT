@@ -54,6 +54,16 @@ namespace Team7.Controllers
             lesson.EmployeeID = lessonVM.EmployeeID;
             _lessonRepo.Add(lesson);
             await _lessonRepo.SaveChangesAsync();
+
+            //fetch employee:
+            var emp = await _employeeRepo._GetEmployeeIdAsync(lesson.EmployeeID);
+            if (emp != null)
+            {
+                emp.Lesson.Add(lesson);
+                _employeeRepo.Update(emp);
+                await _employeeRepo.SaveChangesAsync();
+            }
+
             var NewLessonID = lesson.LessonID; //this is for debug
             foreach (int exerciseVMID in exerciseVM)
             {

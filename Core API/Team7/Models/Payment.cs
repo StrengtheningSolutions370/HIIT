@@ -22,10 +22,7 @@ namespace Team7.Models
         public int? PaymentTypeID { get; set; }
 
 
-
-
-
-        [Required]
+        //[Required]
         public int? SaleID { get; set; }
 
 

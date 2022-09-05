@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { appUser } from 'src/app/models/appUser';
-import { Order } from 'src/app/models/order';
-import { CartService } from 'src/app/services/cart.service';
 import { GlobalService } from 'src/app/services/global/global.service';
-import { RazorpayService } from 'src/app/services/razorpay/razorpay.service';
+import { RepoService } from 'src/app/services/repo.service';
+import Fuse from 'fuse.js'
 import { StoreService } from 'src/app/services/storage/store.service';
+import { ModalController } from '@ionic/angular';
+import { ViewPaymentComponent } from './view-payment/view-payment.component';
 
 @Component({
   selector: 'app-payments',
@@ -14,46 +12,82 @@ import { StoreService } from 'src/app/services/storage/store.service';
   styleUrls: ['./payments.page.scss'],
 })
 export class PaymentsPage implements OnInit {
-  
-  chargeApi = 'https://online.yoco.com/v1/charges/';
-  refundApi = 'https://online.yoco.com/v1/refunds/';
 
-  userMail!: string;
-  userPhone!: string;
-  profile = {} as appUser;
-  order = {} as Order;
-  profileSub: Subscription;
+  payments : any[] = [];
+  paymentsOriginal : any[] = [];
 
-  constructor(public cartService: CartService,
-    public router: Router,
-    private global: GlobalService,
-    private razorpay: RazorpayService,
-    private storage: StoreService) { }
+  constructor(private repo : RepoService, private global : GlobalService, private storage : StoreService, private modalCtrl : ModalController) { }
 
-  ngOnInit(): void {
-    this.storage.getKey('user').then((usr : any) => {
-      const obj = JSON.parse(usr)
-      this.userMail = `${obj.email}`.toString();
-      this.userPhone = `${obj.phoneNumber}`.toString();
-      console.log(this.userMail, this.userPhone);
-    })
+  ngOnInit() {
+
+    this.global.nativeLoad("Loading...");
+    this.repo.getPayments().subscribe({
+      next: async (payments : any) => {
+        const user = JSON.parse(await this.storage.getKey('user'));
+        payments.result.filter((payment : any) => {
+          return payment.paymentType.name == 'card' && payment.sale.appUser.id == user.id;
+        }).forEach(element => {
+          this.payments.push({
+            ...element,
+            ...{
+              total: this.getTotal(element.sale.saleLine)
+            },
+            ...{
+              count: element.sale.saleLine.length
+            }
+          });
+        });;
+        this.paymentsOriginal = this.payments;
+      }
+    }).add(() => { 
+      this.global.endNativeLoad();
+    });
+
   }
 
-  async getData() {
-    try {
-      //await this.checkUrl();
-      const order = await this.cartService.getCartOrder();
-      console.log(order);
-      this.order = JSON.parse(order?.value);
-    } catch(e) {
-      console.log(e);
-      // this.global.errorToast();
+  async view(p : any) {
+    const modal = await this.modalCtrl.create({
+      component: ViewPaymentComponent,
+      componentProps: {
+        payment: p
+      }
+    });
+    await modal.present();
+  }
+
+  getTotal(line : any[]) {
+    console.log('line', line);
+    let total = 0;
+    line.forEach(element => {
+      total += Number(element.quantity * element.saleItem.priceHistory[0].saleAmount);
+    });
+    return total;
+  }
+
+  searchPayment(evt : string) {
+    if (evt.length == 0) {
+      this.payments = this.paymentsOriginal;
+      return;
     }
+
+    const fuse = new Fuse(this.paymentsOriginal, {
+      keys: [
+        'sale.date',
+      ]
+    }).search(evt);
+
+    if (fuse.length == 0) {
+      this.payments = [];
+      return;
+    }
+
+    this.payments = fuse.map((el : any) => {
+      return el.item;
+    });
   }
 
-
-  async ngOnDestroy() {
-    await this.cartService.clearCartOrder();
+  getDate(date : string) {
+    return new Date(date).toLocaleString();
   }
 
 }

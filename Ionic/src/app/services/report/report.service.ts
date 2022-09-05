@@ -11,9 +11,14 @@ export class ReportService {
 
   constructor(public repo: RepoService) {
     this.getAllSaleCategoryReport();
+    this.getAllBookingReport();
    }
 
   getAllSaleCategoryReport(): Observable<any>{
     return this.repo.getSaleCategoryReport();
+  }
+
+  getAllBookingReport(): Observable<any>{
+    return this.repo.getBookingReport();
   }
 }

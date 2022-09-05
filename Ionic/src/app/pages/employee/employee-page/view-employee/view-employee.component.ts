@@ -35,15 +35,15 @@ export class ViewEmployeeComponent implements OnInit {
   };
 
   downloadPdf() {
-    window.open('https://localhost:44383/Resources/Employees/Contracts/' + this.employee.data.contract);
+    window.open('https://testbsc.azurewebsites.net/Resources/Employees/Contracts/' + this.employee.data.contract);
   }
 
   createImg (fileName: string) {
     if (fileName == null)
-      return `https://localhost:44383/Resources/Employees/Images/default.jpeg`;
-    return `https://localhost:44383/Resources/Employees/Images/${fileName}`;
+      return `https://testbsc.azurewebsites.net/Resources/Employees/Images/default.jpeg`;
+    return `https://testbsc.azurewebsites.net/Resources/Employees/Images/${fileName}`;
   }
 
-  public createContract = (fileName: string) => `https://localhost:44383/Resources/Employees/Contracts/${fileName}`;
+  public createContract = (fileName: string) => `https://testbsc.azurewebsites.net/Resources/Employees/Contracts/${fileName}`;
 
 }

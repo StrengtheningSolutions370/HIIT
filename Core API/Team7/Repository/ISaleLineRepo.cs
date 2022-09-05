@@ -10,6 +10,8 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
+        Task<bool> RemoveRangeSaleItemIdAsync(int SaleItemId);
+
         //Task<SaleLine[]> GetAllSaleLinesAsync();
 
         //Task<SaleLine[]> GetSaleLinesAsync(string input);

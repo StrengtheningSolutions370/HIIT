@@ -1,13 +1,23 @@
+import { SaleItem } from "./sale-item";
+import { Schedule } from "./schedule";
 
-import { cartLine } from './cart-line';
+export class saleLine {
+    saleItemID: number;
+    saleItem?: SaleItem;
+    quantity: number;
+    subTotalPrice?: number;
+}
+
+export class bookingLine {
+    scheduleID: number;
+    schedule?: Schedule;
+}
 
 export class Cart {
-    constructor(
-        public items: cartLine[],
-        public name: string,
-        public quantityChange: number,
-        public totalItem: number,
-        public totalPrice: number,
-        public grandTotal: number
-    ) {}
+    public userId: string;
+    public paymentTypeId?: number;
+    public sales?: saleLine[]=[];
+    public bookings?: bookingLine[]=[];
+    public grandPriceTotal: number;
+    public grandItemTotal: number;
 }

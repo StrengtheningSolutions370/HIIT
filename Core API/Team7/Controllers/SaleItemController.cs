@@ -17,11 +17,18 @@ namespace Team7.Controllers
         const string PATH = "./Assets/";
 
         private readonly ISaleItemRepo SaleItemRepo;
-        private readonly ISaleCategoryRepo saleCategoryRepo;    
-        public SaleItemController(ISaleItemRepo saleItemRepo, ISaleCategoryRepo saleCategoryRepo)
+        private readonly ISaleCategoryRepo saleCategoryRepo;
+        private readonly IPriceHistoryRepo priceHistoryRepo;
+        private readonly ISaleLineRepo saleLineRepo;
+        private readonly IWriteOffLineRepo writeOffLineRepo;
+
+        public SaleItemController(ISaleItemRepo saleItemRepo, ISaleCategoryRepo saleCategoryRepo, IPriceHistoryRepo priceHistoryRepo, ISaleLineRepo saleLineRepo, IWriteOffLineRepo writeOffLineRepo)
         {
             this.SaleItemRepo = saleItemRepo;
             this.saleCategoryRepo = saleCategoryRepo;
+            this.priceHistoryRepo = priceHistoryRepo;
+            this.saleLineRepo = saleLineRepo;
+            this.writeOffLineRepo = writeOffLineRepo;
         }
 
         // POST api/SaleItem/add
@@ -31,9 +38,6 @@ namespace Team7.Controllers
         {
             try
             {
-
-
-
 
                 SaleItem toAdd = new SaleItem
                 {
@@ -191,16 +195,45 @@ namespace Team7.Controllers
             }
             try
             {
-                SaleItemRepo.Delete<SaleItem>(tempSaleItem);
-                if (await SaleItemRepo.SaveChangesAsync())
+                //delete from sale line:
+                if (await saleLineRepo.RemoveRangeSaleItemIdAsync(id))
                 {
-                    var fileToDelete = tempSaleItem.Photo;
-                    System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", fileToDelete));
-                    return Ok();
-                }
-                else
+                    //delete from price history:
+                    if (await priceHistoryRepo.RemoveRangeSaleItemIdAsync(id))
+                    {
+                        //delete write-off
+                        if (await writeOffLineRepo.RemoveRangeSaleItemIdAsync(id))
+                        {
+                            //delete from sale item:
+                            SaleItemRepo.Delete(tempSaleItem);
+                            if (await SaleItemRepo.SaveChangesAsync())
+                            {
+                                //try delete file:
+                                var fileToDelete = tempSaleItem.Photo;
+                                try
+                                {
+                                    System.IO.File.Delete(Path.Combine("Resources", "Images", "saleItemImages", fileToDelete));
+                                }
+                                catch { }
+                                return Ok();
+                            }
+                            else
+                            {
+                                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                } else
                 {
-                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to delete value in the database. Contact support.");
+                    throw new Exception();
                 }
             }
             catch (Exception err)

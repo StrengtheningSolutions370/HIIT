@@ -10,24 +10,46 @@
 </ion-header>
 
 <ion-content>
-  <app-cart-item *ngFor="let item of model?.items; let i = index" [item]="item" [index]="i" (add)="quantityPlus($event)"
-    (minus)="quantityMinus($event)">
-  </app-cart-item>
+  <ion-item *ngIf="(!this.model.grandItemTotal>0)">
+    <ion-label color="dark">Cart is empty.</ion-label>
+  </ion-item>
 
-  <ion-label *ngIf="this.model === null">Cart is empty.</ion-label>
-
-  <ion-list class="borderBottom" *ngIf="this.model !== null">
-    <ion-item lines="none">
-      <ion-label color="dark">
-        <h1>
-          Item Total
-        </h1>
-      </ion-label>
-      <ion-text slot="end" color="dark">{{model?.totalPrice | currency: 'ZAR'}}</ion-text>
+  <div *ngIf="model?.sales">
+    <ion-item *ngIf="model.sales?.length>0">
+      <ion-label><h2><u>Sales items:</u></h2></ion-label>
     </ion-item>
-  </ion-list>
 
-  <ion-button (click)="checkout()">Proceed to checkout</ion-button>
+    <app-cart-item *ngFor="let item of model?.sales; let i = index" [item]="item" [index]="i" (add)="quantityPlus(item)"
+      (minus)="quantityMinus(item)">
+    </app-cart-item>
+    <br/>
+  </div>
+
+  <div *ngIf="model?.bookings">
+    <ion-item *ngIf="model.bookings?.length>0">
+      <ion-label><h2><u>Booking events:</u></h2></ion-label>
+    </ion-item>
+    <app-cart-booking-item *ngFor="let booking of model?.bookings" [booking]="booking" (remove)="removeBooking(booking)">
+    </app-cart-booking-item>
+    <br/>
+  </div>
+
+  <div *ngIf="(this.model.grandItemTotal>0)">
+    <ion-footer class="borderBottom">
+        <ion-item lines="none" >
+          <ion-label>Item Total:  </ion-label>
+          <ion-label slot="end"> {{model?.grandItemTotal}} </ion-label>
+
+        </ion-item>
+        <ion-item>
+          <ion-button (click)="checkout()">Proceed to checkout</ion-button>
+          <ion-text slot="end">{{model?.grandPriceTotal | currency: 'ZAR'}}</ion-text>
+        </ion-item>
+    </ion-footer>
+  </div>
+
+</ion-content>
+
 
 
 

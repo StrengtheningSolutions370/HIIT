@@ -20,7 +20,8 @@ registerLocaleData(localeAf);
     FormsModule,
     IonicModule,
     SchedulePageRoutingModule,
-    NgCalendarModule
+    NgCalendarModule,
+    DatePipe
   ],
   declarations: [SchedulePage],
   providers: [{provide: LOCALE_ID, useValue: 'en'}, DatePipe]

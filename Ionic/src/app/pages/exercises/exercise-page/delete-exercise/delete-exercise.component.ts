@@ -52,7 +52,7 @@ export class DeleteExerciseComponent implements OnInit {
 
     async sucDelete() {
       const toast = await this.toastCtrl.create({
-        message: 'The Employee has been successfully deleted!',
+        message: 'The Exercise has been successfully deleted!',
         duration: 2000
       });
       toast.present();

@@ -21,8 +21,8 @@ export class AddBtypeComponent implements ViewWillEnter {
     bookingTypeName: ['', [Validators.required]],
     bookingTypeDescription: ['', [Validators.required]],
     bookingTypeCapacity: ['', [Validators.required, Validators.min(1)]],
-    bookingTypeColour:  ['', [Validators.required]],
-    bookingTypePrice: ['', [Validators.required, Validators.min(1)]]
+    bookingTypeColour:  ['', [Validators.required]]
+    // bookingTypePrice: ['', [Validators.required, Validators.min(1)]]
   });
 
   get errorControl() {
@@ -57,10 +57,7 @@ export class AddBtypeComponent implements ViewWillEnter {
         name: this.cBookingTypeForm.value['bookingTypeName'],
         description: this.cBookingTypeForm.value['bookingTypeDescription'],
         capacity: this.cBookingTypeForm.value['bookingTypeCapacity'],
-        colour: this.cBookingTypeForm.value['bookingTypeColour'],
-        bookingPriceHistory: [{
-          amount: this.cBookingTypeForm.value['bookingTypePrice']
-        }]
+        colour: this.cBookingTypeForm.value['bookingTypeColour']
       };
       this.global.dismissModal();
       this.bookingService.confirmBookingTypeModal(1,temp);

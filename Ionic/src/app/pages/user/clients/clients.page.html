@@ -1,6 +1,5 @@
 <ion-content *ngIf="!loading">
-  
-  <br/>
+    <br/>
 
   <ion-grid>
     <ion-row>
@@ -11,14 +10,14 @@
 
     </ion-row>
   </ion-grid>
-  
+
     <ion-grid *ngIf="!loading && !noresults">
 
       <ion-list class="cardFadeUp" *ngFor="let usr of users">
         <!-- <ion-item-sliding> -->
 
           <ion-item>
-                
+
             <ion-grid class="nomargin">
               <ion-row>
 
@@ -35,7 +34,7 @@
               <!-- <ion-col>
                 <ion-text><h6 class="lightone">put something here?</h6></ion-text>
               </ion-col> -->
-              
+
               <ion-col>
                 <ion-button color="danger" (click)="deleteClientInfoModal(usr)">Delete</ion-button>
               </ion-col>
@@ -58,5 +57,5 @@
     <ion-text id="noRes" *ngIf="!loading && noresults">
       <h1>No Results</h1>
     </ion-text>
-    
+
   </ion-content>
