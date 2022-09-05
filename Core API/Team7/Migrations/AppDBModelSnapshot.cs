@@ -1146,14 +1146,13 @@ namespace Team7.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SaleItemID")
+                    b.Property<int>("SaleItemID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WriteOffID")
-                        .IsRequired()
+                    b.Property<int>("WriteOffID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WriteOffReasonID")
+                    b.Property<int>("WriteOffReasonID")
                         .HasColumnType("int");
 
                     b.HasKey("WriteOffLineID");
@@ -1556,7 +1555,9 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.SaleItem", "SaleItem")
                         .WithMany("WriteOffLine")
-                        .HasForeignKey("SaleItemID");
+                        .HasForeignKey("SaleItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Team7.Models.WriteOff", "WriteOff")
                         .WithMany("WriteOffLine")
@@ -1566,7 +1567,9 @@ namespace Team7.Migrations
 
                     b.HasOne("Team7.Models.WriteOffReason", "WriteOffReason")
                         .WithMany("WriteOffLine")
-                        .HasForeignKey("WriteOffReasonID");
+                        .HasForeignKey("WriteOffReasonID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("SaleItem");
 

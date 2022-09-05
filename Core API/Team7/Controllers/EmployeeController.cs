@@ -329,7 +329,7 @@ namespace Team7.Controllers
 
             var userRole = await _userManager.GetRolesAsync(await _userManager.FindByNameAsync(sub));
 
-        return Ok(new
+            return Ok(new
             {
                 role = userRole[0]
             });
@@ -776,5 +776,15 @@ namespace Team7.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
         }
+
+        [HttpGet]
+        [Route("getAllTrainers")]
+        public async Task<IActionResult> GetAllTrainer()
+        {
+
+            var emps = await EmployeeRepo.GetAllEmployeesAsync();
+            return Ok(emps);
+        }
+
     }
 }
