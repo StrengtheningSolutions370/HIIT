@@ -6,7 +6,7 @@
       <ion-icon name="cart" class="cart-icon"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-select interface="popover"       
+  <ion-select interface="popover"
   placeholder="Select filters"
   (ionChange)="handleChange($event)"
   [multiple]="true">
@@ -41,7 +41,7 @@
           <ion-card-content class="card-body">
             <ion-row class="row align-items-center no-gutters">
               <ion-col *ngIf="saleItem.quotable !== true" >
-                <ion-label class="ion-text-center">{{saleItem.priceHistory[0].saleAmount | currency:'ZAR'}}</ion-label>
+                <ion-label class="ion-text-center">{{saleItem.priceHistory[saleItem.priceHistory.length-1].saleAmount | currency:'ZAR'}}</ion-label>
               </ion-col>
               <ion-col *ngIf="saleItem.quotable === false">
                 <ion-button (click)="quantityPlus(saleItem)"  color="success">ADD TO

@@ -35,6 +35,8 @@ export class RepoService {
   // base = 'http://localhost:5001/api/';
   base = 'https://localhost:44383/api/';
   AppUserController = 'AppUser/';
+  BookingController = 'Booking/'
+  BookingTypeController = 'BookingType/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
   EmployeeTypeController = 'EmployeeType/';
@@ -48,8 +50,7 @@ export class RepoService {
   PermissionController = 'Permission/';
   EmployeeController = 'Employee/';
   ExerciseCategoryController = 'ExerciseCategory/';
-  BookingTypeController = 'BookingType/'
-  ExerciseController = 'Exercise/'
+  ExerciseController = 'Exercise/';
   WriteOffReasonController = 'WriteOffReason/'
   LessonController = 'Lesson/'
   ScheduleController = 'Schedule/';
@@ -58,7 +59,6 @@ export class RepoService {
   PaymentController= 'Payment/';
   SupplierController= 'Supplier/';
   StockController= 'Stock/';
-
   WriteOffController= 'WriteOff/';
 
   httpOptions = {
@@ -75,8 +75,19 @@ export class RepoService {
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
 
+
+  //TRAINER REPORT:
+  getTrainers() {
+    return this.http.get(`${this.base + this.EmployeeController}getalltrainers`, this.httpOptions);
+  }
+
+  //Payments
   chargeYOCO(data : any) : Observable<any> {
     return this.http.post(`${this.base + this.PaymentController}charge`, data, this.httpOptions);
+  }
+
+  getPayments() : Observable<any> {
+    return this.http.get(`${this.base + this.PaymentController}getall`, this.httpOptions);
   }
 
   getUserRole(token : string) : Observable<any>{
@@ -123,6 +134,7 @@ export class RepoService {
 
   //Login
   login(userDetails: appUser): Observable<any> {
+    //console.log(this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions));
     return this.http.post(`${this.base + this.AppUserController}login`,userDetails,this.httpOptions);
   }
 
@@ -341,15 +353,24 @@ getSaleItems(): Observable<any>{
 getMatchSaleItem(name: string, description: string): Observable<any>{
   return this.http.get(`${this.base+this.SaleItemController}getMatch?name=${name}&description=${description}`, this.httpOptions);
 }
+// //Image Upload
+// uploadSaleItemImage(data: FormData): Observable<any> {
+//   return this.http.post('http://localhost:5001/api/SaleItem/upload', data);
+// }
+// //reImage Upload
+// deleteSaleItemImage(id : string) : Observable<any> {
+//   return this.http.delete(`http://localhost:5001/api/SaleItem/deletephoto?name=${id}`)
+// }
+
 //Image Upload
 uploadSaleItemImage(data: FormData): Observable<any> {
-  return this.http.post('http://localhost:5001/api/SaleItem/upload', data);
+  return this.http.post(`${this.base+this.SaleItemController}upload`, data);
 }
 //reImage Upload
 deleteSaleItemImage(id : string) : Observable<any> {
-  return this.http.delete(`http://localhost:5001/api/SaleItem/deletephoto?name=${id}`)
-
+  return this.http.delete(`${this.base+this.SaleItemController}deletephoto?name=${id}`)
 }
+
 //add writeOff
 createWriteOff(writeOff: any): Observable<any> {
   console.log(writeOff);
@@ -480,6 +501,16 @@ getMatchBookingType(name: string, description: string): Observable<any>{
   return this.http.get(`${this.base+this.BookingTypeController}getMatch?name=${name}&description=${description}`, this.httpOptions);
 }
 
+//BOOKING
+//GetAll
+getClientBookings(aspNetUserID: string): Observable<any>{
+  return this.http.get(`${this.base+this.BookingController}getMyBookings?aspNetUserID=${aspNetUserID}`, this.httpOptions)
+}
+
+cancelMyBooking(aspNetUserID: string, bookingID: number, scheduleID: number): Observable<any>{
+  return this.http.delete(`${this.base+this.BookingController}delete?aspNetUserID=${aspNetUserID}&bookingID=${bookingID}&scheduleID=${scheduleID}`, this.httpOptions)
+}
+
 // Exercise:
   // ------
   // Create
@@ -588,6 +619,10 @@ getSaleCategoryReport(): Observable<any>{
   return this.http.get(`${this.base+this.ReportController}getBySaleCategory`, this.httpOptions)
 }
 
+getBookingReport(): Observable<any>{
+  return this.http.get(`${this.base+this.ReportController}getByBooking`, this.httpOptions)
+}
+
 // Supplier:
   // ------
   // Create
@@ -615,7 +650,7 @@ getSaleCategoryReport(): Observable<any>{
   // existsExercise(id: number): Observable<any> {
   //   return this.http.get(`${this.base + this.ExerciseController}exists?id=${id}`, this.httpOptions);
   // }
-  
+
   //Stock
   createStock(supplier: any): Observable<any> {
     console.log();

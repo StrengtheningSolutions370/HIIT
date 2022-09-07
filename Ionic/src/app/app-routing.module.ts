@@ -211,18 +211,23 @@ export const routes: Routes = [
       roles: [Roles.Trainer, Roles.SuperUser]
     }
   },
+  {
+    path: 'class-booking',
+    loadChildren: () => import('./pages/class-booking/class-booking.module').then( m => m.ClassBookingPageModule)
+  },
+  {
+    path: 'payments',
+    loadChildren: () => import('./pages/payments/payments.module').then( m => m.PaymentsPageModule)
+  },
+
+
+
+  
   //this route object must be last
   {
     path: '**',
     redirectTo: 'login',
   },
-  {
-    path: 'class-booking',
-    loadChildren: () => import('./pages/class-booking/class-booking.module').then( m => m.ClassBookingPageModule)
-  }
-
-
-
 ]
 
 

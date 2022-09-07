@@ -153,7 +153,8 @@ import { ConfirmScheduleComponent } from './pages/booking/schedule/confirm-sched
 
 //BOOKING IMPORTS:
 import { AddBookingComponent } from './pages/class-booking/add-booking/add-booking.component';
-import { CancelBookingComponent } from './pages/class-booking/cancel-booking/cancel-booking.component';
+import { CancelBookingComponent } from './pages/class-booking/event-bookings/cancel-booking/cancel-booking.component';
+import { ViewBookingInfoComponent } from './pages/class-booking/event-bookings/view-booking-info/view-booking-info.component';
 
 //CLIENT IMPORTS:
 import { DeleteClientComponent } from './pages/user/clients/delete-client/delete-client.component';
@@ -177,6 +178,7 @@ import { AssociativeSupplierComponent } from './pages/suppliers/supplier-page/as
 import { ViewOrderComponent } from './pages/stock/view-order/view-order.component';
 import { ReceiveStockComponent } from './pages/stock/receive-stock/receive-stock.component';
 import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stock/confirm-recieve-stock.component';
+import { ViewPaymentComponent } from './pages/payments/view-payment/view-payment.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -195,7 +197,7 @@ import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stoc
   //SalesCategory
   AddCategoryComponent, UpdateCategoryComponent, ViewCategoryComponent, DeleteCategoryComponent, ConfirmCategoryComponent, AssociativeCategoryComponent,
   //SalesItem
-  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent, 
+  AddSitemComponent, ConfirmSitemComponent, UpdateSitemComponent, ViewSitemComponent, DeleteSitemComponent,
   //WriteOff
   WriteOffSitemComponent, ViewWriteOffComponent, ConfirmWriteOffComponent,
   //SideMenu
@@ -222,7 +224,7 @@ import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stoc
   //BookingType
   AddBtypeComponent, AssociativeBtypeComponent, ConfirmBtypeComponent, DeleteBtypeComponent, UpdateBtypeComponent, ViewBtypeComponent,
   //Booking
-  AddBookingComponent, CancelBookingComponent,
+  AddBookingComponent, CancelBookingComponent, ViewBookingInfoComponent,
   //Schedule
   AddScheduleComponent, UpdateScheduleComponent, DeleteScheduleComponent, ConfirmScheduleComponent,
   //Exercise
@@ -238,7 +240,9 @@ import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stoc
    //Stock
     ViewOrderComponent, ReceiveStockComponent, ConfirmRecieveStockComponent,
   //Side Menu
-  SidemenuComponent
+  SidemenuComponent,
+  //payments
+  ViewPaymentComponent
 
 ],
   entryComponents: [],

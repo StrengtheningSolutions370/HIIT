@@ -45,6 +45,7 @@ export class AddSitemComponent implements ViewWillEnter {
  });
 
  async getPhoto() {
+  
   const image = await Camera.getPhoto({
     quality: 90,
     // allowEditing: true,

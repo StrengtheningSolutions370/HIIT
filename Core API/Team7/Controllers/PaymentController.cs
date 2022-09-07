@@ -82,6 +82,7 @@ namespace Team7.Controllers
             {
                 Payment toAdd = new Payment
                 {
+                    PaymentTypeID = pvm.paymentTypeID,
                     PaymentType = await _paymentTypeRepo._GetPaymentTypeIdAsync(pvm.paymentTypeID)
                 };
 
@@ -121,7 +122,7 @@ namespace Team7.Controllers
                 
                 if (pvm.Bookings != null)
                 {
-                    var clientIDTemp = await _clientRepo.GetClientIdAsync(pvm.userID);
+                    var clientIDTemp = await _clientRepo.GetClientIdAsync(pvm.userID); //Cannot be null otherwise breaks system
                     //var clientTemp 
 
                     Booking bookTemp = new()
@@ -138,7 +139,9 @@ namespace Team7.Controllers
                         BookingAttendance ba = new()
                         {
                             Booking = bookTemp,
+                            BookingID = bookTemp.BookingID,
                             Schedule = scheduleTemp,
+                            ScheduleID = scheduleTemp.ScheduleID,
                             Attended = false
                         };
                         bookTemp.BookingAttendance.Add(ba);
@@ -146,9 +149,12 @@ namespace Team7.Controllers
 
                     _bookingRepo.Add(bookTemp);
                     await _bookingRepo.SaveChangesAsync();
+                    bookTemp.Payment.Add(toAdd);
                     toAdd.Booking = bookTemp;
+                    toAdd.BookingID = bookTemp.BookingID;
                 } else
                 {
+                    toAdd.BookingID = null;
                     toAdd.Booking = null;
                 }
 
@@ -202,7 +208,28 @@ namespace Team7.Controllers
         {
             try
             {
-                var paymentList = await _paymentRepo.GetAllPaymentsAsync();
+                var paymentList = await _paymentRepo.GetAllSalePaymentsAsync();
+                if (paymentList == null)
+                {
+                    return Ok(0);
+                }
+                return Ok(paymentList);
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
+        }
+
+        //GETALL
+        [HttpGet]
+        [Route("getAllBooking")]
+
+        public async Task<IActionResult> GetBookingPayments()
+        {
+            try
+            {
+                var paymentList = await _paymentRepo.GetAllBookingPaymentsAsync();
                 if (paymentList == null)
                 {
                     return Ok(0);
