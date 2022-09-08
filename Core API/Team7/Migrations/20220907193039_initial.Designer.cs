@@ -12,11 +12,7 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-<<<<<<<< HEAD:Core API/Team7/Migrations/20220903110558_initial.Designer.cs
-    [Migration("20220903110558_initial")]
-========
-    [Migration("20220904200805_initial")]
->>>>>>>> developer:Core API/Team7/Migrations/20220904200805_initial.Designer.cs
+    [Migration("20220907193039_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
