@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, LOCALE_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component,ViewChild } from '@angular/core';
 import { CalendarComponent } from 'ionic2-calendar';
 import { Subscription } from 'rxjs';
 import { Schedule } from 'src/app/models/schedule';
@@ -6,8 +6,7 @@ import { ScheduleService } from 'src/app/services/schedule/schedule.service';
 import { AlertController, ModalController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
 import { GlobalService } from 'src/app/services/global/global.service';
-import { format, parseISO } from 'date-fns';
-import { IEvent, ITimeSelected } from 'ionic2-calendar/calendar';
+import { ITimeSelected } from 'ionic2-calendar/calendar';
 
 
 @Component({
@@ -19,38 +18,25 @@ export class SchedulePage implements AfterViewInit  {
     //Calendar related:
     eventSource:any[] = []; //events to display
     viewTitle: string; //Title(i.e Month, or day)
-    modalReady = false;
+    modalReady = false; //Delay calendar generation so API call finishes
 
     calendar = {
       mode: 'month',
       currentDate: new Date()
     }
 
-    markDisabled = (date: Date) => {
-      var current = new Date();
-      return date < current;
-  };
-
-  selectDate: ITimeSelected;
-
     //Object to add to schedule on create + populate calendar (time realted information here but rest in schedule entity)
   event = {
     scheduleID: 0,
     venue:{},
     bookingType:{},
-    startTime: null,
-    endTime: null
+    lesson:{},
+    employee:{},
+    bookingPriceHistory:null,
+    startDateTime: null,
+    endDateTime: null,
+    colour: null
   }
-
-    //Pulling in linked SQL table data
-    //Venue:
-    //venueDrop!: Venue [];
-
-    //Booking:
-    //bookingDrop!: any []; //Need to update this to type Booking (when made as a model)
-
-    //Employee:
-    //employee!: Employee [];
 
     //Create local schedule array to be populated onInit.
     scheduleList: Schedule[] = [];
@@ -65,12 +51,10 @@ export class SchedulePage implements AfterViewInit  {
   constructor(public scheduleService: ScheduleService, public alertCtrl: AlertController, public modalCtrl: ModalController, public global: GlobalService ) {
     this.fetchSchedule();
     console.log(this.scheduleList);
+
    }
 
    ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.modalReady = true;
-    }, 0);
     this.scheduleService.fetchScheduleEvent.subscribe(
       {
         next: res => {
@@ -91,7 +75,8 @@ export class SchedulePage implements AfterViewInit  {
           var events = [];
           if (this.scheduleList!= undefined){
             this.scheduleList.forEach((sItem) => {
-              var date = new Date(sItem.dateSession.startDateTime);
+              console.log(sItem);
+              var date = new Date(sItem.startDateTime);
               var startTime: Date;
               startTime = new Date(
                 Date.UTC(
@@ -103,7 +88,7 @@ export class SchedulePage implements AfterViewInit  {
                 ));
                 console.log(startTime);
 
-                var date = new Date(sItem.dateSession.endDateTime);
+                var date = new Date(sItem.endDateTime);
                 var endTime: Date;
                 endTime = new Date(
                   Date.UTC(
@@ -121,7 +106,12 @@ export class SchedulePage implements AfterViewInit  {
                   bookingType: sItem.bookingType,
                   startTime: startTime,
                   endTime: endTime,
+                  lesson: sItem.lesson,
+                  employee: sItem.employee,
+                  bookingPriceHistory: sItem.bookingPriceHistory,
+                  colour: sItem.bookingType.colour
                 });
+                document.body.style.setProperty('--colour'[sItem.scheduleID],sItem.bookingType.colour);
               })
               this.eventSource = events;
               console.log(this.eventSource);
@@ -139,32 +129,7 @@ export class SchedulePage implements AfterViewInit  {
         }
       });
 
-
-
-
-   //this.scheduleService
-    // .getAllBookingTypes().subscribe(
-    //   {
-    //     next: data => {
-    //       console.log('Fetching booking types from DB');
-    //       console.log(data);
-    //       this.isLoading = false;
-    //       this.bookingTypeList = data.result;
-    //     }
-    //   }
-    // );
   }
-
-   ngOnInit() {
-
-  //   this.bookingService.fetchBookingTypeEvent.subscribe({
-  //     next: res => {
-  //       console.log('Fetch booking type again');
-  //       console.log(res);
-  //       this.fetchBookingType();
-  //     }
-  //   })
-   }
 
    next() {
     this.scheduleCalendar.slideNext();
@@ -193,94 +158,35 @@ export class SchedulePage implements AfterViewInit  {
     let start = formatDate(event.startTime, 'h:mm a', 'en-ZA');
     let end = formatDate(event.endTime, 'h:mm a', 'en-ZA');
     let date = formatDate(event.startTime,'EEEE, MMMM d','en-ZA');
-    let venueName =  event.venue.name;
-    let bookingType = event.bookingType.name;
     const alert = await this.alertCtrl.create({
       header: date,
-      message: 'From:'+ start +
-      '<br><br>To: ' + end + '<br><br>' +'Venue: ' + venueName + '<br><br>' +'Booking Type: ' + bookingType ,
+      message: start +'&nbsp; - &nbsp;' + end +
+      '<br><br>Venue:&emsp;' + event.venue.name +
+      '<br><br>Booking Type:&emsp;' + event.bookingType.name +
+      '<br><br>Lesson:&emsp;' + event.lesson.name +
+      '<br><br>Price:&emsp; R' + event.bookingPriceHistory[event.bookingPriceHistory.length-1].amount +
+      '<br><br>Employee:&emsp;' + event.employee.appUser.firstName + '&nbsp;' + event.employee.appUser.lastName
+      ,
       buttons: ['Ok',{
         text: 'Update',
-        handler: () => {
-          console.log("Updating event: " + event);
-          this.scheduleService.updateScheduleModal(event);
-        }
+        handler: () =>{this.updateEvent(event);}
       },
       {
         text: 'Delete',
-        cssClass: 'color:red;',
-        handler: () => {
-          this.scheduleService.deleteScheduleEvent(event.scheduleID)
-        }
+        cssClass: 'redDelete',
+        handler: () => {this.deleteEvent(event);}
       }],
     });
     alert.present();
   }
 
+  updateEvent(event: Schedule){
+    console.log("Updating event: " + event.scheduleID);
+    this.scheduleService.updateScheduleModal(event);
+  }
 
-
-    createRandomEvents() {
-      var events = [];
-      for (var i = 0; i < 50; i += 1) {
-        var date = new Date();
-        var eventType = Math.floor(Math.random() * 2);
-        var startDay = Math.floor(Math.random() * 90) - 45;
-        var endDay = Math.floor(Math.random() * 2) + startDay;
-        var startTime: Date;
-        var endTime: Date;
-        if (eventType === 0) {
-          startTime = new Date(
-            Date.UTC(
-              date.getUTCFullYear(),
-              date.getUTCMonth(),
-              date.getUTCDate() + startDay
-            )
-          );
-          if (endDay === startDay) {
-            endDay += 1;
-          }
-          endTime = new Date(
-            Date.UTC(
-              date.getUTCFullYear(),
-              date.getUTCMonth(),
-              date.getUTCDate() + endDay
-            )
-          );
-          events.push({
-            title: 'All Day - ' + i,
-            startTime: startTime,
-            endTime: endTime,
-            allDay: true,
-          });
-        } else {
-          var startMinute = Math.floor(Math.random() * 24 * 60);
-          var endMinute = Math.floor(Math.random() * 180) + startMinute;
-          startTime = new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate() + startDay,
-            0,
-            date.getMinutes() + startMinute
-          );
-          endTime = new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate() + endDay,
-            0,
-            date.getMinutes() + endMinute
-          );
-          events.push({
-            title: 'Event - ' + i,
-            startTime: startTime,
-            endTime: endTime,
-            allDay: false,
-          });
-        }
-      }
-      this.eventSource = events;
-    }
-
-    removeEvents() {
-      this.eventSource = [];
-    }
+  deleteEvent(event: any){
+    console.log("Deleting event: " + event);
+    this.scheduleService.deleteScheduleModal(event);
+  }
 }

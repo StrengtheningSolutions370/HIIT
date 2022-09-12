@@ -10,8 +10,6 @@ namespace Team7.Models
         {
             this.Booking = new HashSet<Booking>();
             this.Measurement = new HashSet<Measurement>();
-            //this.Sale = new HashSet<Sale>();
-            //this.SaleLine = new HashSet<SaleLine>();
         }
 
         [Key]
@@ -27,10 +25,5 @@ namespace Team7.Models
         public virtual AppUser AppUser { get; set; }
         public virtual ICollection<Booking> Booking { get; set; }
         public virtual ICollection<Measurement> Measurement { get; set; }
-
-
-        //public virtual ICollection<Sale> Sale { get; set; }
-
-        //public virtual ICollection<SaleLine> SaleLine { get; set; }
     }
 }

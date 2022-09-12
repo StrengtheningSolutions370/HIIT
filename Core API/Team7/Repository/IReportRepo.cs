@@ -8,5 +8,7 @@ namespace Team7.Repository
 
         Task<object> getAllSaleItemReport();
 
+        Task<object> getAllBookingReport();
+
     }
 }

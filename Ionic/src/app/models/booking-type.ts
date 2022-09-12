@@ -6,9 +6,4 @@ export class BookingType {
   capacity: number;
   colour: string;
   schedule?: Schedule[];
-  bookingPriceHistory?: [{
-    bookingPriceID?:number,
-    date?:Date,
-    amount:number;
-  }];
 }

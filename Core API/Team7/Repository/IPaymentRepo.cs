@@ -10,7 +10,9 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        Task<object> GetAllPaymentsAsync();
+        Task<object> GetAllSalePaymentsAsync();
+
+        Task<object> GetAllBookingPaymentsAsync();
 
         //Task<Receipt[]> GetReceiptsAsync(string input);
 

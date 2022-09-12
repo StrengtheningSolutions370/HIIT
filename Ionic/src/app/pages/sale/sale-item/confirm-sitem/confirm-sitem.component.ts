@@ -68,6 +68,7 @@ export class ConfirmSitemComponent {
         this.global.showToast('The sale item has been successfully updated!');
          }
        }
+       
 
     })
   }

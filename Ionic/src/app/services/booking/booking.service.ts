@@ -8,6 +8,8 @@ import { ConfirmBtypeComponent } from 'src/app/pages/booking/booking-type/confir
 import { DeleteBtypeComponent } from 'src/app/pages/booking/booking-type/delete-btype/delete-btype.component';
 import { UpdateBtypeComponent } from 'src/app/pages/booking/booking-type/update-btype/update-btype.component';
 import { ViewBtypeComponent } from 'src/app/pages/booking/booking-type/view-btype/view-btype.component';
+import { CancelBookingComponent } from 'src/app/pages/class-booking/event-bookings/cancel-booking/cancel-booking.component';
+import { ViewBookingInfoComponent } from 'src/app/pages/class-booking/event-bookings/view-booking-info/view-booking-info.component';
 import { RepoService } from '../repo.service';
 
 @Injectable({
@@ -26,10 +28,14 @@ getAllBookingTypes() : Observable<any> {
   return this.repo.getBookingType();
 }
 
-getAllBooking() : Observable<any> {
-  //need to implement when I do booking
-  return //this.repo.getSaleCategory();
+getBookingByID(aspNetUserID: string){
+  return this.repo.getClientBookings(aspNetUserID);
 }
+
+// getAllBooking() : Observable<any> {
+//   //need to implement when I do booking
+//   return //this.repo.getSaleCategory();
+// }
 
 matchingBookingType(name: string, description: string):Promise<any>{
   console.log('bookingService: Repo -> Matching bookingType');
@@ -40,6 +46,11 @@ matchingBookingType(name: string, description: string):Promise<any>{
 //   console.log('saleService: Repo -> Matching saleCategory');
 //   return this.repo.getMatchSaleCategory(name, description).toPromise();
 //  }
+
+cancelClientBooking(aspNetUserID: string, bookingID: number, scheduleID: number){
+  console.log("Booking Service: Cancel my booking");
+  return this.repo.cancelMyBooking(aspNetUserID,bookingID,scheduleID);
+}
 
 
 //Methods
@@ -229,6 +240,35 @@ async viewBookingTypeModal(bookingType: BookingType) {
     component: ViewBtypeComponent,
     componentProps: {
       bookingType
+    }
+  });
+  await modal.present();
+}
+
+async viewMyBookingInfoModal(booking: any, bookingAttendance: any){
+  console.log("Booking Service: ViewMyBooking modal for client");
+  console.log(booking);
+
+  const modal = await this.modalCtrl.create({
+    component: ViewBookingInfoComponent,
+    componentProps: {
+      booking,
+      bookingAttendance
+    }
+  });
+  await modal.present();
+}
+
+async cancelMyBookingModal(booking: any, bookingAttendance: any){
+  console.log("Booking Service: Cancel My Booking modal for client");
+  console.log(booking);
+  console.log(bookingAttendance);
+
+  const modal = await this.modalCtrl.create({
+    component: CancelBookingComponent,
+    componentProps: {
+      booking,
+      bookingAttendance
     }
   });
   await modal.present();

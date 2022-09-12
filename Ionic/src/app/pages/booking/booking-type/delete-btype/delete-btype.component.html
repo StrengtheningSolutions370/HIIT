@@ -30,7 +30,7 @@
       <ion-label class="ion-text-left">Capacity:</ion-label>
       <ion-label class="ion-text-right">{{bookingType.capacity}}</ion-label>
     </ion-item>
-    <p *ngIf="bookingType.bookingPriceHistory.length > 0" style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following prices have been recorded for the selected booking type</p>
+    <!-- <p *ngIf="bookingType.bookingPriceHistory.length > 0" style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following prices have been recorded for the selected booking type</p>
     <div *ngFor="let item of bookingType.bookingPriceHistory; let i=index">
       <ion-item >
         <ion-label class="ion-text-left">Price:</ion-label>
@@ -40,7 +40,7 @@
         <ion-label class="ion-text-left">Date:</ion-label>
         <ion-label class="ion-text-right">{{bookingType.bookingPriceHistory[i].date | date:"medium"}}</ion-label>
       </ion-item>
-    </div>
+    </div> -->
 
     <br>
     <ion-button expand="block" type="ion-button" (click)="delete()" color="danger" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Delete Booking Type</ion-button>

@@ -10,6 +10,8 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
+        Task<bool> RemoveRangeScheduleIdAsync(int scheduleID);
+
         //Task<BookingPriceHistory[]> GetAllBookingPriveHistorysAsync();
 
         //Task<BookingPriceHistory[]> GetBookingPriceHistorysAsync(string input);

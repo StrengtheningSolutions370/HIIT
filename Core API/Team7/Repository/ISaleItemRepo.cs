@@ -14,6 +14,8 @@ namespace Team7.Models.Repository
 
         Task<object> GetSaleItemsAsync(string name, string description);
 
+        Task<SaleItem[]> _GetAllSaleItemsArray();
+
         Task<object> GetSaleItemIdAsync(int id);
         Task<SaleItem> _GetSaleItemIdAsync(int id);
 

@@ -8,27 +8,26 @@ namespace Team7.Models
     {
         public Schedule()
         {
+            this.BookingPriceHistory = new HashSet<BookingPriceHistory>();
             this.BookingAttendance = new HashSet<BookingAttendance>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ScheduleID { get; set; }
-        [Required]
-        //public int CapacityBooked { get; set; }
-        //[Required]
         public int? VenueID { get; set; }
-        //[Required]
         public int? BookingTypeID { get; set; }
         public int? LessonID { get; set; }
-        //[Required]
-        public int? DateSessionID { get; set; }
-        //[Required]
         public int? EmployeeID { get; set; }
-        //[Required]
+
+        [Required]
+        public System.DateTime StartDateTime { get; set; }
+        
+        [Required]
+        public System.DateTime EndDateTime { get; set; }
         public virtual Venue Venue { get; set; }
         public virtual BookingType BookingType { get; set; }
         public virtual ICollection<BookingAttendance> BookingAttendance { get; set; }
-        public virtual DateSession DateSession { get; set; }
+        public virtual ICollection<BookingPriceHistory> BookingPriceHistory { get; set; }
         public virtual Lesson Lesson { get; set; }
         public virtual Employee Employee { get; set; }
 

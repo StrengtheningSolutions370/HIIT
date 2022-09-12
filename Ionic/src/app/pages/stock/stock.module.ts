@@ -7,13 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { StockPageRoutingModule } from './stock-routing.module';
 
 import { StockPage } from './stock.page';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    StockPageRoutingModule
+    StockPageRoutingModule,
   ],
   declarations: [StockPage]
 })

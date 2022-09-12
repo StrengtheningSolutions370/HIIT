@@ -1,6 +1,4 @@
 <ion-content>
-
-
   <ion-segment [(ngModel)]="calendar.mode">
     <ion-segment-button value="month">
       <ion-label>Month</ion-label>
@@ -40,7 +38,6 @@
   [monthviewDisplayEventTemplate]="monthviewCal"
   [monthviewEventDetailTemplate]="monthviewEventList"
   [monthviewInactiveDisplayEventTemplate]="monthviewCalOut"
-  [markDisabled]="markDisabled"
   >
 </calendar>
 
@@ -60,7 +57,7 @@
   <div [class.with-event]="view.dates[row*7+col].events.length">
     {{view.dates[row*7+col].label}}
     <div class="indicator-container">
-      <div class="event-indicator" *ngFor="let ev of view.dates[row*7+col].events">
+      <div class="event-indicator" style="background:var(--colour\['ev.scheduleID'\])" *ngFor="let ev of view.dates[row*7+col].events">
       </div>
     </div>
   </div>
@@ -68,22 +65,11 @@
 
 <ng-template #monthviewEventList let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel" >
       <ion-segment>
-        <h1> Date: {{selectDate}}</h1>
+        <h1> Date: {{selectedDate.date | date: 'mediumDate'}}</h1>
       </ion-segment>
       <ion-button (click)="this.scheduleService.addScheduleModal()" slot="end" expand="block" fill="outline">
         Add New Event
       </ion-button>
-
-    <!-- <ion-col size="4">
-      <ion-button (click)="createRandomEvents()" expand="block" fill="outline">
-        Create random [testing]
-      </ion-button>
-    </ion-col>
-    <ion-col size="4">
-      <ion-button (click)="removeEvents()" expand="block" fill="outline">
-        Remove all events
-      </ion-button>
-  </ion-row> -->
   <ion-grid *ngIf="!isLoading" >
     <ion-list *ngFor="let ev of selectedDate.events">
       <ion-item-sliding >
@@ -92,12 +78,14 @@
             <h1>{{ev.startTime | date : 'medium'}}</h1>
             <p style="font-size:large">Venue:  {{ev.venue.name}}</p>
             <p style="font-size:large">Booking type: {{ev.bookingType.name}}</p>
+            <p style="font-size:large">Lesson: {{ev.lesson.name}}</p>
           </ion-label >
+          <input disabled type="color" value="{{ev.colour}}" required="" id="bookingTypeColour" slot="start"/>
           <ion-icon name="chevron-back-outline" size="small"></ion-icon>
         </ion-item>
         <ion-item-options side="end" >
-          <ion-item-option color="secondary" (click)="bookingService.updateBookingTypeModal(bt)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
-          <ion-item-option color="danger" (click)="bookingService.deleteBookingTypeModal(bt)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
+          <ion-item-option color="secondary" (click)="scheduleService.updateScheduleModal(ev)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
+          <ion-item-option color="danger" (click)="scheduleService.deleteScheduleModal(ev)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
