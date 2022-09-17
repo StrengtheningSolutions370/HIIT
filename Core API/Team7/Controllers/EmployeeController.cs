@@ -684,11 +684,11 @@ namespace Team7.Controllers
 
             if (lessons.Count != 0 || schedule.Count != 0)
             {
-                StatusCode(StatusCodes.Status409Conflict, new
+                return StatusCode(StatusCodes.Status409Conflict, new
                 {
-                    error = "Employee cannot be deleted?", //CHECKHERE
+                    error = "Employee cannot be deleted",
                     employee = employeeRecord
-                }); //return employss with loaded for the Associative modal
+                });
             }
 
             //employee can be deleted as they have no links:
