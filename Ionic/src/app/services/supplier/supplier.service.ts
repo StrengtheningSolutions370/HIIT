@@ -54,8 +54,8 @@ export class SupplierService {
     async duplicateAlert() {
     console.trace();
     const alert = await this.alertCtrl.create({
-      header: 'Supplier Already Exists',
-      message: 'The Supplier Information entered already exists on the system',
+      header: 'Failed to add supplier.',
+      message: 'Please try again.',
       buttons: ['OK']
     });
     alert.present();

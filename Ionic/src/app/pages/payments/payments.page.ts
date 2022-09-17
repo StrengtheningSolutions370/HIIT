@@ -24,19 +24,21 @@ export class PaymentsPage implements OnInit {
     this.repo.getPayments().subscribe({
       next: async (payments : any) => {
         const user = JSON.parse(await this.storage.getKey('user'));
-        payments.result.filter((payment : any) => {
-          return payment.paymentType.name == 'card' && payment.sale.appUser.id == user.id;
-        }).forEach(element => {
-          this.payments.push({
-            ...element,
-            ...{
-              total: this.getTotal(element.sale.saleLine)
-            },
-            ...{
-              count: element.sale.saleLine.length
-            }
+        console.log(this.payments);
+        if (payments.result != null)
+          payments.result.filter((payment : any) => {
+            return payment.paymentType.name == 'card' && payment.sale.appUser.id == user.id;
+          }).forEach(element => {
+            this.payments.push({
+              ...element,
+              ...{
+                total: this.getTotal(element.sale.saleLine)
+              },
+              ...{
+                count: element.sale.saleLine.length
+              }
+            });
           });
-        });;
         this.paymentsOriginal = this.payments;
       }
     }).add(() => { 

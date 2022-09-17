@@ -16,8 +16,8 @@ export class bookingLine {
 export class Cart {
     public userId: string;
     public paymentTypeId?: number;
-    public sales?: saleLine[]=[];
-    public bookings?: bookingLine[]=[];
+    public sales: saleLine[]=[];
+    public bookings: bookingLine[]=[];
     public grandPriceTotal: number;
     public grandItemTotal: number;
 }

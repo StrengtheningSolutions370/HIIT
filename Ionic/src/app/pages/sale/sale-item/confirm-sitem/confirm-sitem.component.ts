@@ -49,10 +49,10 @@ export class ConfirmSitemComponent {
   //1 = confirm ADD
   //2 = confirm UPDATE
   async confirmChanges(saleItem: SaleItem){
-    await this.checkMatch(saleItem.name,saleItem.description).then(result =>{
-      if (result == true){
-        return;
-      } else {
+    //await this.checkMatch(saleItem.name,saleItem.description).then(result =>{
+      // if (result == true){
+      //   return;
+      // } else {
          if (this.choice === 1){
           console.log('Add Sale Item from confirm:');
           //CallRepoToCreate
@@ -67,10 +67,10 @@ export class ConfirmSitemComponent {
         this.global.dismissModal();
         this.global.showToast('The sale item has been successfully updated!');
          }
-       }
+      //  }
        
 
-    })
+    //})
   }
 
   async returnFrom(){

@@ -35,6 +35,7 @@ import { ViewRefundReasonComponent } from 'src/app/pages/sale/refund-reason/view
 import { ConfirmRefundReasonComponent } from 'src/app/pages/sale/refund-reason/confirm-refund-reason/confirm-refund-reason.component';
 import { AssociativeRefundReasonComponent } from 'src/app/pages/sale/refund-reason/associative-refund-reason/associative-refund-reason.component';
 import { QuoteRequestPage } from 'src/app/pages/shop/quote-request/quote-request.page';
+import { GlobalService } from '../global/global.service';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +47,7 @@ export class SalesService {
   @Output() fetchSaleCategoriesEvent = new EventEmitter<SaleCategory>();
   @Output() fetchRefundReasonsEvent = new EventEmitter<RefundReason>();
 
-constructor(public repo: RepoService, private modalCtrl: ModalController) {
+constructor(public repo: RepoService, private modalCtrl: ModalController, private global : GlobalService) {
   //this should improve request time by caching the request when first loaded
   this.getAllSaleCategories().subscribe();
   this.getAllSaleItems().subscribe();
@@ -92,6 +93,9 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
         next: () => {
           console.log('SALE ITEM CREATED');
           this.fetchSaleItemsEvent.emit(saleItem);
+        },
+        error: (error :  any) => {
+          this.global.showAlert(error);
         }
       }
     );

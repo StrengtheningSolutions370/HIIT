@@ -87,36 +87,41 @@ export class CartService {
 
   //Add a sales item
   async quantityPlus(sales:SaleItem) {
-     try {
-      //await this.createCart();
-      var indx = -1;
-      this.model.sales.forEach((saleLineItem, index) => {
-        if (saleLineItem.saleItemID == sales.saleItemID){
-          indx = index;
-        }
-       })
 
-       if (indx == -1){
-        let tempSaleAdd: saleLine = {
-          saleItemID: sales.saleItemID,
-          saleItem: sales,
-          quantity: 1,
-          subTotalPrice: 0
-        }
-        console.log("Indx in qty plus is -1, add entire saleLine obj to cart: ",tempSaleAdd);
+      if (!this.model['sales'])
+        this.model.sales = [];
+
+      //new object:
+      let tempSaleAdd: saleLine = {
+        saleItemID: sales.saleItemID,
+        saleItem: sales,
+        quantity: 1,
+        subTotalPrice: 0
+      }
+
+      //if cart is null:
+      if (this.model.sales.length == 0) {
         this.model.sales.push(tempSaleAdd);
-       } else {
-        ;
-        this.model.sales[indx].quantity += 1;
-        console.log("Indx in qty plus is "+indx+", only update quantity for it:"+this.model.sales[indx]);
-       }
-       await this.calculate();
-       this._cart.next(this.model);
-       await this.saveCart();
-    } catch(e) {
-      console.log(e);
-      throw(e);
-    }
+        await this.calculate();
+        this._cart.next(this.model);
+        await this.saveCart();
+        return;
+      }
+
+      const obj = this.model.sales.find(item => item.saleItemID == sales.saleItemID);
+      const index = this.model.sales.indexOf(obj);
+
+      if (index == -1) {
+        //item does not exist:
+        this.model.sales.push(tempSaleAdd);
+      } else {
+        this.model.sales[index].quantity++;
+      }
+
+      await this.calculate();
+      this._cart.next(this.model);
+      await this.saveCart();
+
   }
 
 
@@ -127,13 +132,14 @@ export class CartService {
     await this.createCart();
     try {
       let duplicate = false;
-      this.model.bookings.forEach(bookLine => {
-        if (bookLine.scheduleID == booking.scheduleID){
-          console.log("Duplicate adding booking to cart");
-          duplicate = true;
-          return;
-        }
-      });
+      if (this.model.bookings)
+        this.model.bookings.forEach(bookLine => {
+          if (bookLine.scheduleID == booking.scheduleID){
+            console.log("Duplicate adding booking to cart");
+            duplicate = true;
+            return;
+          }
+        });
 
       if (!duplicate) {
         this.model.bookings[this.model.bookings.length] = ({...booking});
@@ -263,6 +269,9 @@ export class CartService {
 
   //Will be called on Checkout.ts to process yoco payment
   async makePayment(payform: any){
+
+    console.log('PAYMENT INFORMATION', payform)
+
     this.repo.makePayment(payform).subscribe(
       {
         next: (data) => {
