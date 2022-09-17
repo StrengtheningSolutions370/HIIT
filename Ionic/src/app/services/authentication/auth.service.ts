@@ -49,6 +49,7 @@ export class AuthService {
     await this.checkToken();
     return this.loggedIn.value;
   }
+  
   //////////////
 
   constructor(
