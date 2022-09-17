@@ -12,18 +12,12 @@ import { VenueService } from './services/venue/venue.service';
 })
 export class AppComponent implements OnInit {
 
-  hide = false;
-
   constructor(private router : Router, venueService: VenueService, private auth : AuthService, private storage : StoreService, private global : GlobalService) {
     
   }
   
   
   ngOnInit() {
-
-    this.auth.isLoggedIn.subscribe(log => {
-      this.hide = log;
-    })
     
   }
 

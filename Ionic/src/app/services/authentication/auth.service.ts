@@ -39,7 +39,6 @@ export class AuthService {
 
   navLogin() {
     this.loggedIn.next(true);
-    console.log('navLogin called');
   }
 
   navLogout() {
@@ -84,7 +83,7 @@ export class AuthService {
   async logout() {
     this.storage.deleteKey('token').then(() => {
       this.navLogout();
-      this.router.navigate(['login']); //route user back to login
+      window.location.href = './login';
     })
    }
 
