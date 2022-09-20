@@ -17,5 +17,7 @@ namespace Team7.Models.Repository
         //Task<Refund> GetRefundIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
+
+        Task<Refund> GetRefundByIdAsync(int id);
     }
 }

@@ -776,6 +776,9 @@ namespace Team7.Migrations
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<bool?>("complete")
+                        .HasColumnType("bit");
+
                     b.HasKey("RefundID");
 
                     b.HasIndex("PaymentID");

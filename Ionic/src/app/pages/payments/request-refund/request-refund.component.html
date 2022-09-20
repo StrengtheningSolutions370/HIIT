@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Request refund for "Payment #{{ refund.paymentID }}"</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="refundForm" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label position="floating">Reason for refund:</ion-label>
+      <ion-select formControlName="reason" placeholder="Reason">
+        <ion-select-option *ngFor="let reason of reasons" value="{{reason.refundReasonID}},{{reason.description}}">{{ reason.description }}</ion-select-option>
+      </ion-select>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.items?.errors?.required && refundForm.get('items').touched">
+      Item(s) are required<br/>
+    </span>
+  
+    <ion-item>
+      <ion-label position="floating">Items for refund:</ion-label>
+      <ion-select formControlName="items" placeholder="Items" [multiple]="true">
+        <ion-select-option *ngFor="let item of refund.sale.saleLine" value="{{item.saleLineID}}">{{ item.saleItem.name }}</ion-select-option>
+      </ion-select>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.items?.errors?.required && refundForm.get('items').touched">
+      Item(s) are required<br/>
+    </span>
+  
+    <ion-item>
+      <ion-label position="floating">Additional information:</ion-label>
+      <ion-textarea formControlName="additional" type="text" id="additional" ></ion-textarea>
+      <br/>
+    </ion-item>
+    <br>
+    <ion-button type="submit" color="success" [disabled]="!refundForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Request Refund</ion-button>
+      <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Return</ion-button>
+  </form>
+
+</ion-content>

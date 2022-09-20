@@ -845,7 +845,8 @@ namespace Team7.Migrations
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PaymentID = table.Column<int>(type: "int", nullable: false),
-                    RefundReasonID = table.Column<int>(type: "int", nullable: false)
+                    RefundReasonID = table.Column<int>(type: "int", nullable: false),
+                    complete = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {

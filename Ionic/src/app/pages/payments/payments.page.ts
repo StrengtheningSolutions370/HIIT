@@ -5,6 +5,7 @@ import Fuse from 'fuse.js'
 import { StoreService } from 'src/app/services/storage/store.service';
 import { ModalController } from '@ionic/angular';
 import { ViewPaymentComponent } from './view-payment/view-payment.component';
+import { RequestRefundComponent } from './request-refund/request-refund.component';
 
 @Component({
   selector: 'app-payments',
@@ -38,6 +39,7 @@ export class PaymentsPage implements OnInit {
           });
         });;
         this.paymentsOriginal = this.payments;
+        console.log(this.payments);
       }
     }).add(() => { 
       this.global.endNativeLoad();
@@ -88,6 +90,16 @@ export class PaymentsPage implements OnInit {
 
   getDate(date : string) {
     return new Date(date).toLocaleString();
+  }
+
+  async requestReund(refund : any) {
+    const modal = await this.modalCtrl.create({
+      component: RequestRefundComponent,
+      componentProps: {
+        refund: refund 
+      }
+    });
+    await modal.present();
   }
 
 }

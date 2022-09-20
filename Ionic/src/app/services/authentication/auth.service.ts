@@ -71,13 +71,18 @@ export class AuthService {
   async login(appUser: appUser) {
     await this.storage.deleteKey('token');
     await this.global.nativeLoad('loading...');
-    return this.repo.login(appUser).subscribe(async (result : any) => {
-      var token = result.value.token;
-      await this.storage.setKey('user', JSON.stringify(result.value.user));
-      this.storage.setKey('token', token).then(() => {
-        this.navLogin(); //change observable to show navbar after set for token
-      });
-      this.router.navigate(['home']);
+    return this.repo.login(appUser).subscribe({
+      next : async (result : any) => {
+        var token = result.value.token;
+        await this.storage.setKey('user', JSON.stringify(result.value.user));
+        this.storage.setKey('token', token).then(() => {
+          this.navLogin();
+        });
+        this.router.navigate(['home']);
+      },
+      error : (err) => {
+        this.global.showAlert('Incorrect username or password', 'Login Failed...');
+      }
     }).add(() =>{this.global.endNativeLoad()});
   }
 

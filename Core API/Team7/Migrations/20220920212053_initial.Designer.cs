@@ -12,7 +12,7 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220904200805_initial")]
+    [Migration("20220920212053_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -777,6 +777,9 @@ namespace Team7.Migrations
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool?>("complete")
+                        .HasColumnType("bit");
 
                     b.HasKey("RefundID");
 

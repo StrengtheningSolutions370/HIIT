@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Team7.Context;
-
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Team7.Models.Repository
 {
@@ -69,6 +70,16 @@ namespace Team7.Models.Repository
         {
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
+        }
+
+        public async Task<Refund> GetRefundByIdAsync(int id)
+        {
+            var r = DB.Refund.Where(p => p.PaymentID == id);
+
+            if (r.Any())
+                return await r.SingleAsync();
+
+            return null;
         }
     }
 }
