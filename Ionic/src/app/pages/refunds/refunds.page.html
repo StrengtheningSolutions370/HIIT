@@ -16,7 +16,7 @@
   <br/>
   <br/>
   <br/>
-  <ion-searchbar #search (ionClear)="searchPayment(search.value)" (ionInput)="searchPayment(search.value)" expand="block" placeholder='Search Refund...'
+  <ion-searchbar #search (ionClear)="searchRefund(search.value)" (ionInput)="searchRefund(search.value)" expand="block" placeholder='Search Refund...'
   animated="true" debounce="200"></ion-searchbar>
   <br/><br/>
 
@@ -24,13 +24,13 @@
         class="listMargin">
         <ion-card>
 
-          <h5 class="ion-align-self-center">Refund #{{refund.refundID}}</h5>
+          <h5 class="ion-align-self-center">Refund #{{refund.count}}</h5>
           
           <ion-card-content class="card-body card-buttons">
             <div class="img-wrapper">
               {{ getDate(refund.date) }}
               <br>
-              Reason: {{ refund.refundReason.deascription }}
+              Reason: {{ refund.refundReason.description }}
               <br>
               R{{ refund.total }}.00
             </div>

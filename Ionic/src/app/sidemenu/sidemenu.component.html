@@ -73,6 +73,13 @@
       </ion-menu-toggle>
 
       <ion-menu-toggle *ngIf="superuser || admin">
+        <ion-item routerLink="/refunds">
+          <ion-icon name="card-outline" slot="start"></ion-icon>
+          <ion-label>Refund Requests</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="sales">
           <ion-icon name="cart-outline" slot="start"></ion-icon>
           <ion-label>Sales Management</ion-label>

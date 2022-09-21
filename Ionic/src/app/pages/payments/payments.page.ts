@@ -21,15 +21,15 @@ export class PaymentsPage implements OnInit {
 
   ngOnInit() {
     this.global.nativeLoad("Loading...");
-    this.payments = [];
     this.global.fetchRefunds.subscribe({
       next: (res : any) => {
+        this.payments = [];
         this.repo.getPayments().subscribe({
           next: async (payments : any) => {
             const user = JSON.parse(await this.storage.getKey('user'));
             payments.result.filter((payment : any) => {
               return payment.paymentType.name == 'card' && payment.sale.appUser.id == user.id;
-            }).forEach(element => {
+            }).forEach((element:any, i: number) => {
               this.payments.push({
                 ...element,
                 ...{
@@ -37,7 +37,8 @@ export class PaymentsPage implements OnInit {
                 },
                 ...{
                   count: element.sale.saleLine.length
-                }
+                },
+                q : i+1
               });
             });;
             this.paymentsOriginal = this.payments;

@@ -93,6 +93,14 @@ export const routes: Routes = [
     }
   },
   {
+    path: 'refunds',
+    loadChildren: () => import('./pages/refunds/refunds.module').then(m => m.RefundsPageModule),
+    canActivate: [AuthGaurdService],
+    data: {
+      roles: [Roles.SuperUser, Roles.Admin]
+    }
+  },
+  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
@@ -187,13 +195,21 @@ export const routes: Routes = [
   },
    {
     path: 'booking',
-    loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule)
+    loadChildren: () => import('./pages/booking/booking.module').then( m => m.BookingPageModule),
     //This needs to be restricted to admin only (Booking - ADMIN, Class bookings - all)
+    canActivate: [AuthGaurdService],
+    data: {
+      roles: [Roles.Trainer, Roles.SuperUser, Roles.Admin]
+    }
   },
   {
     path: 'class-booking',
-    loadChildren: () => import('./pages/class-booking/class-booking.module').then( m => m.ClassBookingPageModule)
+    loadChildren: () => import('./pages/class-booking/class-booking.module').then( m => m.ClassBookingPageModule),
     //This needs to be restricted to admin only (Booking - ADMIN, Class bookings - all)
+    canActivate: [AuthGaurdService],
+    data: {
+      roles: [Roles.Client]
+    }
   },
   {
     path: 'password',
@@ -212,30 +228,15 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'class-booking',
-    loadChildren: () => import('./pages/class-booking/class-booking.module').then( m => m.ClassBookingPageModule)
-  },
-  {
     path: 'payments',
     loadChildren: () => import('./pages/payments/payments.module').then( m => m.PaymentsPageModule)
   },
-  {
-    path: 'refunds',
-    loadChildren: () => import('./pages/refunds/refunds.module').then( m => m.RefundsPageModule)
-  },
-
-
-
-  
   //this route object must be last
   {
     path: '**',
     redirectTo: 'login',
   },
-  {
-    path: 'refunds',
-    loadChildren: () => import('./pages/refunds/refunds.module').then( m => m.RefundsPageModule)
-  },
+ 
 
 ]
 
