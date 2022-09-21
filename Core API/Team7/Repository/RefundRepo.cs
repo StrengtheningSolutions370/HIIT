@@ -29,42 +29,33 @@ namespace Team7.Models.Repository
         }
 
 
-        //public async Task<Refund[]> GetAllRefundsAsync()
-        //{
-        //    IQueryable<Refund> query = DB.Refund;
-        //    return await query.ToArrayAsync();
-        //    return null;
+        public async Task<Refund[]> GetAllRefundsAsync()
+        {
+            var query = DB.Refund.Select(r => new Refund
+            {
+                RefundID = r.RefundID,
+                Date = r.Date,
+                Notes = r.Notes,
+                Total = r.Total,
+                complete = r.complete,
+                Payment = new Payment
+                {
+                    PaymentID = r.Payment.PaymentID,
+                    PaymentTypeID = r.Payment.PaymentTypeID,
+                    SaleID = r.Payment.SaleID,
+                    Sale = new Sale
+                    {
+                        AppUser = r.Payment.Sale.AppUser
+                    }
+                },
+                RefundReason = r.RefundReason,
+            });
 
-        //}
+            if (query.Any())
+                return await query.ToArrayAsync();
 
-        //public async Task<Refund[]> GetRefundsAsync(string input)
-        //{
-        //    IQueryable<Refund> query = DB.Refund.Where(v => v.Name == input || v.Address == input);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.ToArrayAsync();
-        //    }
-        //    return null;
-
-        //}
-
-        //public async Task<Refund> GetRefundIdAsync(int id)
-        //{
-        //    IQueryable<Refund> query = DB.Refund.Where(v => v.VenueID == id);
-        //    if (!query.Any())
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        return await query.SingleAsync();
-        //    }
-        //    return null;
-        //}
+            return null;
+        }
 
         public async Task<bool> SaveChangesAsync()
         {
@@ -74,7 +65,7 @@ namespace Team7.Models.Repository
 
         public async Task<Refund> GetRefundByIdAsync(int id)
         {
-            var r = DB.Refund.Where(p => p.PaymentID == id);
+            var r = DB.Refund.Where(p => p.RefundID == id);
 
             if (r.Any())
                 return await r.SingleAsync();

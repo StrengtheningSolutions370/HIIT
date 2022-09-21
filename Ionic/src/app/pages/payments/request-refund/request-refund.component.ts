@@ -61,6 +61,7 @@ export class RequestRefundComponent implements OnInit {
       reason : reason,
       saleLine : saleitems,
       additional : additional,
+      paymentID : this.refund.paymentID
     };
 
     console.log(data);
@@ -72,6 +73,10 @@ export class RequestRefundComponent implements OnInit {
       }
     });
     await modal.present();
+    modal.onDidDismiss().then((res : any) => {
+      if (res.data.confirmed == true)
+        this.modalCtrl.dismiss();
+    });
 
   }
 

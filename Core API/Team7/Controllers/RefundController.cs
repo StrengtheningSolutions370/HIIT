@@ -40,14 +40,12 @@ namespace Team7.Controllers
             if (payment == null)
                 return NotFound("Payment does not exist.");
             r.Payment = payment;
-            r.PaymentID = rvm.PaymentID;
 
             //fetch reason:
             var reason = await _refundReasonRepo._GetRefundReasonIdAsync(rvm.RefundResonID);
-            if (payment == null)
+            if (reason == null)
                 return NotFound("Refund reason does not exist.");
             r.RefundReason = reason;
-            r.RefundReasonID = rvm.RefundResonID;
 
             //add to db:
             _refundRepo.Add(r);
@@ -73,6 +71,14 @@ namespace Team7.Controllers
             thr.Start();
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("getAll")]
+        public async Task<IActionResult> getAll()
+        {
+            var output = await _refundRepo.GetAllRefundsAsync();
+            return Ok(output);
         }
 
     }

@@ -74,7 +74,7 @@ namespace Team7.Models.Repository
                                 }
                             }),
                             Payment = p.Sale.Payment
-                        }
+                        },
                     }).ToListAsync()
                 };
 

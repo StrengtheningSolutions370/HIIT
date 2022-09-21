@@ -15,19 +15,11 @@ namespace Team7.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentID { get; set; }
 
-
-
-
         [Required]
         public int? PaymentTypeID { get; set; }
 
-
         //[Required]
         public int? SaleID { get; set; }
-
-
-
-
 
         //[Required]
         public int? BookingID { get; set; }

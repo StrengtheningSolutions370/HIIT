@@ -219,6 +219,10 @@ export const routes: Routes = [
     path: 'payments',
     loadChildren: () => import('./pages/payments/payments.module').then( m => m.PaymentsPageModule)
   },
+  {
+    path: 'refunds',
+    loadChildren: () => import('./pages/refunds/refunds.module').then( m => m.RefundsPageModule)
+  },
 
 
 
@@ -228,6 +232,11 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'login',
   },
+  {
+    path: 'refunds',
+    loadChildren: () => import('./pages/refunds/refunds.module').then( m => m.RefundsPageModule)
+  },
+
 ]
 
 

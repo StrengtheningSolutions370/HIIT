@@ -181,6 +181,8 @@ import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stoc
 import { ViewPaymentComponent } from './pages/payments/view-payment/view-payment.component';
 import { RequestRefundComponent } from './pages/payments/request-refund/request-refund.component';
 import { ConfirmReasonComponent } from './pages/payments/confirm-reason/confirm-reason.component';
+import { RefundResponseComponent } from './pages/refunds/refund-response/refund-response.component';
+import { ViewRefundComponent } from './pages/refunds/view-refund/view-refund.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -244,8 +246,9 @@ import { ConfirmReasonComponent } from './pages/payments/confirm-reason/confirm-
   //Side Menu
   SidemenuComponent,
   //payments
-  ViewPaymentComponent, RequestRefundComponent, ConfirmReasonComponent
-
+  ViewPaymentComponent, RequestRefundComponent, ConfirmReasonComponent,
+  //refund
+  RefundResponseComponent, ViewRefundComponent
 ],
   entryComponents: [],
   imports: [

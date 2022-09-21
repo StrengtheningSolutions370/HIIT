@@ -20,31 +20,35 @@ export class PaymentsPage implements OnInit {
   constructor(private repo : RepoService, private global : GlobalService, private storage : StoreService, private modalCtrl : ModalController) { }
 
   ngOnInit() {
-
     this.global.nativeLoad("Loading...");
-    this.repo.getPayments().subscribe({
-      next: async (payments : any) => {
-        const user = JSON.parse(await this.storage.getKey('user'));
-        payments.result.filter((payment : any) => {
-          return payment.paymentType.name == 'card' && payment.sale.appUser.id == user.id;
-        }).forEach(element => {
-          this.payments.push({
-            ...element,
-            ...{
-              total: this.getTotal(element.sale.saleLine)
-            },
-            ...{
-              count: element.sale.saleLine.length
-            }
-          });
-        });;
-        this.paymentsOriginal = this.payments;
-        console.log(this.payments);
+    this.payments = [];
+    this.global.fetchRefunds.subscribe({
+      next: (res : any) => {
+        this.repo.getPayments().subscribe({
+          next: async (payments : any) => {
+            const user = JSON.parse(await this.storage.getKey('user'));
+            payments.result.filter((payment : any) => {
+              return payment.paymentType.name == 'card' && payment.sale.appUser.id == user.id;
+            }).forEach(element => {
+              this.payments.push({
+                ...element,
+                ...{
+                  total: this.getTotal(element.sale.saleLine)
+                },
+                ...{
+                  count: element.sale.saleLine.length
+                }
+              });
+            });;
+            this.paymentsOriginal = this.payments;
+            console.log(this.payments);
+          }
+        }).add(() => { 
+          this.global.endNativeLoad();
+        });
       }
-    }).add(() => { 
-      this.global.endNativeLoad();
     });
-
+    this.global.fetchRefunds.emit();
   }
 
   async view(p : any) {

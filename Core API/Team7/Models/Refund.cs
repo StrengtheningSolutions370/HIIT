@@ -14,12 +14,8 @@ namespace Team7.Models
         public string Notes { get; set; }
         [Required]
         public decimal Total { get; set; }
-        [Required]
-        public int? PaymentID { get; set; }
-        [Required]
-        public int? RefundReasonID { get; set; }
 
-        public bool? complete { get; set; }
+        public bool complete { get; set; }
 
         public virtual Payment Payment { get; set; }
         public virtual RefundReason RefundReason { get; set; }
