@@ -81,7 +81,11 @@ export class AuthService {
         this.router.navigate(['home']);
       },
       error : (err) => {
-        this.global.showAlert('Incorrect username or password', 'Login Failed...');
+        console.log(err);
+        if (err.status == 0)
+          this.global.showAlert('Connection failed, please try again.', 'Login Failed...');
+        else 
+          this.global.showAlert(err.error, 'Login Failed...');
       }
     }).add(() =>{this.global.endNativeLoad()});
   }

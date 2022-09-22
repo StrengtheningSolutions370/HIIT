@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global/global.service';
-import { ConfirmReasonComponent } from '../../payments/confirm-reason/confirm-reason.component';
-import { ConfirmRefundReasonComponent } from '../../sale/refund-reason/confirm-refund-reason/confirm-refund-reason.component';
 import { ConfirmRefundResponseComponent } from '../confirm-refund-response/confirm-refund-response.component';
 
 @Component({
@@ -20,7 +18,7 @@ export class RefundResponseComponent implements OnInit {
   }
 
   refundForm: UntypedFormGroup = this.formBuilder.group({
-    subject : ['', [Validators.required]],
+    subject : ['BSC Refund Reponse', [Validators.required]],
     body : ['', [Validators.required]],
   });
 
@@ -30,16 +28,31 @@ export class RefundResponseComponent implements OnInit {
     console.log('refund', this.refund);
   }
 
+  ngAfterViewInit() {
+    this.refundForm.controls['body'].setValue(`Dear ${this.refund.payment.sale.appUser.firstName} ${this.refund.payment.sale.appUser.lastName},${String.fromCharCode(10) + String.fromCharCode(10) + String.fromCharCode(10) + String.fromCharCode(10)}Regards, ${String.fromCharCode(10)}BSC team`);
+  }
+
   async submit() {
     const subject = this.refundForm.controls['subject'].value;
     const body = this.refundForm.controls['body'].value;
     const email = this.refund.payment.sale.appUser.email;
     const id = this.refund.refundID;
 
+    const chars : string[] = body.split("");
+    let output : string = '';
+    chars.forEach((char, index) => {
+      if (char.charCodeAt(0) == 10) {
+        output += '<br/>';
+      } else {
+        output += char;
+      }
+    });
+
     const payload = {
       refundID: id,
       subject: subject,
-      body: body,
+      body: output,
+      text: body,
       recpt: 'shannonlnoel@icloud.com'
     }
 

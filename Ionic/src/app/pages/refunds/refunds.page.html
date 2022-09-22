@@ -30,6 +30,8 @@
             <div class="img-wrapper">
               {{ getDate(refund.date) }}
               <br>
+              {{ refund.payment.sale.appUser.email}}
+              <br>
               Reason: {{ refund.refundReason.description }}
               <br>
               R{{ refund.total }}.00
