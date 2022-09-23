@@ -21,3 +21,10 @@ ion-card {
 ion-button {
     border-radius : 10px;
 }
+
+#noRes {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

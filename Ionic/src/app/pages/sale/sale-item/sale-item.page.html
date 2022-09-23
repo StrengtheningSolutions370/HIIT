@@ -1,7 +1,11 @@
 <div>
-  <ion-searchbar class="ion-float-right" color="secondary" expand="block" placeholder='Search Sale Item...'
-    [(ngModel)]="filter" animated="true" debounce="200">
-  </ion-searchbar>
+<ion-searchbar  #search (ionClear)="searchItems(search.value)" (ionInput)="searchItems(search.value)" expand="block" placeholder='Search Sale Item...'
+animated="true" debounce="200"></ion-searchbar>
+
+<div class="ion-text-center">
+  <ion-button class="ion-text-center"color="success" (click)="saleService.addSaleItemInfoModal()">
+    Add Sale Item
+  </ion-button>
   <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
     <ion-fab-button color="success" (click)="saleService.addSaleItemInfoModal()" #addItem>
       <ion-icon name="add-outline"></ion-icon>
@@ -58,9 +62,9 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </div>
-  
-</ion-content>
 
-<ion-text id="noRes" *ngIf="!loading && !saleItemList">
-  <h1>No Results</h1>
-</ion-text>
+  <ion-text id="noRes" *ngIf="noresults">
+    <h1>No Results</h1>
+  </ion-text>
+
+</ion-content>

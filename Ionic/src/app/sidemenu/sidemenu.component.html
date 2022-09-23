@@ -1,4 +1,4 @@
-<ion-menu menuId="mainMenu" contentId="main">
+<ion-menu *ngIf="hide" menuId="mainMenu" contentId="main">
   <ion-header>
     <ion-toolbar>
       <ion-title>Menu</ion-title>
@@ -73,6 +73,13 @@
       </ion-menu-toggle>
 
       <ion-menu-toggle *ngIf="superuser || admin">
+        <ion-item routerLink="/refunds">
+          <ion-icon name="card-outline" slot="start"></ion-icon>
+          <ion-label>Refund Requests</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="sales">
           <ion-icon name="cart-outline" slot="start"></ion-icon>
           <ion-label>Sales Management</ion-label>
@@ -100,12 +107,12 @@
         </ion-item>
       </ion-menu-toggle>
 
-      <ion-menu-toggle *ngIf="superuser || client || member">
+      <!-- <ion-menu-toggle *ngIf="superuser || client || member">
         <ion-item routerLink="/trainers">
           <ion-icon name="walk-outline" slot="start"></ion-icon>
           <ion-label>Trainers Information</ion-label>
         </ion-item>
-      </ion-menu-toggle>
+      </ion-menu-toggle> -->
 
       <ion-menu-toggle *ngIf="superuser || admin">
         <ion-item routerLink="user">

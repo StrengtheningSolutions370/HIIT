@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Email Response for Refund Request #{{ refund.refundID }}"</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="refundForm" (ngSubmit)="submit()">
+
+
+
+    <ion-item> 
+      <ion-label>
+        <h2>To:</h2>
+        <p class="ion-text-start">{{ refund.payment.sale.appUser.email }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Subject:</ion-label>
+      <ion-input formControlName="subject" type="text" id="subject"></ion-input>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.subject?.errors?.required && refundForm.get('subject').touched">
+      Subject is required.<br/>
+    </span>
+
+    <ion-item>
+      <ion-label position="floating">Body:</ion-label>
+      <ion-textarea rows="15" formControlName="body" type="text" id="body" >
+        
+      </ion-textarea>
+      <br/>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="errorControl.body?.errors?.required && refundForm.get('body').touched">
+      Body is required.<br/>
+    </span>
+  
+    <br>
+
+    <ion-button type="submit" color="success" [disabled]="!refundForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Send Response</ion-button>
+    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Return</ion-button>
+ 
+  </form>
+
+</ion-content>

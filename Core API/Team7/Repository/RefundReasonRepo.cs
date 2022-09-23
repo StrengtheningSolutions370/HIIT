@@ -39,13 +39,11 @@ namespace Team7.Models.Repository
             }
             return new
             {
-                result = await DB.RefundReason.Select(rr => new
+                result = await DB.RefundReason.Select(rr => new RefundReason
                 {
-                    rr.RefundReasonID,
-                    rr.Description,
-                    Refund = rr
-                .Refund
-                .Select(r => new { r.RefundID, r.Notes, r.Date, r.Payment, r.Total, r.PaymentID })
+                    RefundReasonID = rr.RefundReasonID,
+                    Description = rr.Description,
+                    Refund = rr.Refund
                 }).ToListAsync()
             };
 
@@ -69,7 +67,7 @@ namespace Team7.Models.Repository
                         rr.Description,
                         Refund = rr
                             .Refund
-                            .Select(r => new { r.RefundID, r.Date, r.Notes, r.Payment, r.PaymentID })
+                            .Select(r => new { r.RefundID, r.Date, r.Notes, r.Payment })
                     }).ToListAsync()
                 };
             }
@@ -93,7 +91,7 @@ namespace Team7.Models.Repository
                         rr.Description,
                         Refund = rr
                             .Refund
-                            .Select(r => new { r.RefundID, r.Date, r.Notes, r.Payment, r.PaymentID })
+                            .Select(r => new { r.RefundID, r.Date, r.Notes, r.Payment })
                     }).ToListAsync()
                 };
             }

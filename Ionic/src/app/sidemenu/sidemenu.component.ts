@@ -21,10 +21,16 @@ export class SidemenuComponent implements OnInit {
   prefersDark : any;
   username! : string;
 
+  hide = false;
 
   constructor(private router : Router, private storage : StoreService, private auth: AuthService, private repo : RepoService, private global : GlobalService) { }
 
   ngOnInit() {
+
+    this.auth.isLoggedIn.subscribe(log => {
+      this.hide = log;
+    })
+
     this.prefersDark  = window.matchMedia('(prefers-color-scheme: dark)');
     this.toggleTheme(this.prefersDark.matches);
 

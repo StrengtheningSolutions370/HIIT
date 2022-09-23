@@ -60,6 +60,7 @@ export class RepoService {
   SupplierController= 'Supplier/';
   StockController= 'Stock/';
   WriteOffController= 'WriteOff/';
+  RefundController = 'Refund/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -75,6 +76,19 @@ export class RepoService {
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
 
+
+  //Refund:
+  getRefunds() {
+    return this.http.get(`${this.base + this.RefundController}getall`, this.httpOptions);
+  }
+
+  completeRefund(data : any) {
+    return this.http.post<any>(`${this.base+this.RefundController}complete`, data, this.httpOptions);
+  }
+
+  addrefund(data : any) {
+    return this.http.post<any>(`${this.base+this.RefundController}add`, data, this.httpOptions);
+  }
 
   //TRAINER REPORT:
   getTrainers() {

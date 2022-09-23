@@ -5,6 +5,7 @@ import Fuse from 'fuse.js'
 import { StoreService } from 'src/app/services/storage/store.service';
 import { ModalController } from '@ionic/angular';
 import { ViewPaymentComponent } from './view-payment/view-payment.component';
+import { RequestRefundComponent } from './request-refund/request-refund.component';
 
 @Component({
   selector: 'app-payments',
@@ -19,30 +20,36 @@ export class PaymentsPage implements OnInit {
   constructor(private repo : RepoService, private global : GlobalService, private storage : StoreService, private modalCtrl : ModalController) { }
 
   ngOnInit() {
-
     this.global.nativeLoad("Loading...");
-    this.repo.getPayments().subscribe({
-      next: async (payments : any) => {
-        const user = JSON.parse(await this.storage.getKey('user'));
-        payments.result.filter((payment : any) => {
-          return payment.paymentType.name == 'card' && payment.sale.appUser.id == user.id;
-        }).forEach(element => {
-          this.payments.push({
-            ...element,
-            ...{
-              total: this.getTotal(element.sale.saleLine)
-            },
-            ...{
-              count: element.sale.saleLine.length
-            }
-          });
-        });;
-        this.paymentsOriginal = this.payments;
+    this.global.fetchRefunds.subscribe({
+      next: (res : any) => {
+        this.payments = [];
+        this.repo.getPayments().subscribe({
+          next: async (payments : any) => {
+            const user = JSON.parse(await this.storage.getKey('user'));
+            payments.result.filter((payment : any) => {
+              return payment.paymentType.name == 'card' && payment.sale.appUser.id == user.id;
+            }).forEach((element:any, i: number) => {
+              this.payments.push({
+                ...element,
+                ...{
+                  total: this.getTotal(element.sale.saleLine)
+                },
+                ...{
+                  count: element.sale.saleLine.length
+                },
+                q : i+1
+              });
+            });;
+            this.paymentsOriginal = this.payments;
+            console.log(this.payments);
+          }
+        }).add(() => { 
+          this.global.endNativeLoad();
+        });
       }
-    }).add(() => { 
-      this.global.endNativeLoad();
     });
-
+    this.global.fetchRefunds.emit();
   }
 
   async view(p : any) {
@@ -88,6 +95,16 @@ export class PaymentsPage implements OnInit {
 
   getDate(date : string) {
     return new Date(date).toLocaleString();
+  }
+
+  async requestReund(refund : any) {
+    const modal = await this.modalCtrl.create({
+      component: RequestRefundComponent,
+      componentProps: {
+        refund: refund 
+      }
+    });
+    await modal.present();
   }
 
 }

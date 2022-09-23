@@ -9,7 +9,20 @@
 </div>
 
 <ion-content>
-  <br>
+
+    <br/>
+    <!--Searchbar (must make function to search)-->
+    <ion-searchbar #search (ionClear)="searchReason(search.value)" (ionInput)="searchReason(search.value)" expand="block" placeholder='Search Refund Reason...'
+    animated="true" debounce="200"></ion-searchbar>
+    <br/><br/>
+
+    <div class="ion-text-center">
+        <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="saleService.addRefundReasonInfoModal()"> 
+          Add Refund Reason
+        </ion-button>
+    </div>
+    <br/>
+
     <ion-grid *ngIf="!isLoading" >
         <ion-list *ngFor="let reason of refundReasonList | filter:filter, let i = index"> 
           <ion-item-sliding>
@@ -30,6 +43,11 @@
       <div class="ion-text-center " *ngIf="isLoading">
         <ion-spinner name="circles"></ion-spinner>
       </div>
+
+      
+    <ion-text id="noRes" *ngIf="noresults">
+      <h1>No Results</h1>
+    </ion-text>
 
 </ion-content>
 
