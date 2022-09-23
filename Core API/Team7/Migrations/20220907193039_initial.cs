@@ -844,8 +844,9 @@ namespace Team7.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PaymentID = table.Column<int>(type: "int", nullable: false),
-                    RefundReasonID = table.Column<int>(type: "int", nullable: false)
+                    complete = table.Column<bool>(type: "bit", nullable: false),
+                    PaymentID = table.Column<int>(type: "int", nullable: true),
+                    RefundReasonID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -854,14 +855,12 @@ namespace Team7.Migrations
                         name: "FK_Refund_Payment_PaymentID",
                         column: x => x.PaymentID,
                         principalTable: "Payment",
-                        principalColumn: "PaymentID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PaymentID");
                     table.ForeignKey(
                         name: "FK_Refund_RefundReason_RefundReasonID",
                         column: x => x.RefundReasonID,
                         principalTable: "RefundReason",
-                        principalColumn: "RefundReasonID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "RefundReasonID");
                 });
 
             migrationBuilder.CreateTable(

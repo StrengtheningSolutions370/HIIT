@@ -256,10 +256,21 @@ namespace Team7.Models.Repository
                 EmployeeType = e.EmployeeType,
                 AppUser = e.AppUser,
                 Lesson = e.Lesson,
-                Schedule = e.Schedule,
+                //Schedule = e.Schedule,
                 UserID = e.UserID,
             }).ToListAsync();
-            return all.FirstOrDefault();
+
+            var emp = all.FirstOrDefault();
+
+            var sch = await DB.Schedule.Where(s => s.EmployeeID == emp.EmployeeID).Select(s => new Schedule
+            {
+                Venue = s.Venue,
+                StartDateTime = s.StartDateTime
+            }).ToListAsync();
+
+            emp.Schedule = sch;
+
+            return emp;
         }
 
         public async Task<object> GetEmployeeIdAsync(int id)

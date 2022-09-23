@@ -108,7 +108,13 @@ namespace Team7.Models.Repository
 
         public async Task<ExerciseCategory> _GetExerciseCategoryIdAsync(int id)
         {
-            IQueryable<ExerciseCategory> query = DB.ExerciseCategory.Where(ec => ec.ExerciseCategoryID == id);
+            IQueryable<ExerciseCategory> query = DB.ExerciseCategory.Where(ec => ec.ExerciseCategoryID == id).Select(sc => new ExerciseCategory
+            {
+                ExerciseCategoryID = sc.ExerciseCategoryID,
+                Name = sc.Name,
+                Description = sc.Description,
+                Exercise = sc.Exercise
+            });
             if (!query.Any())
             {
                 return null;

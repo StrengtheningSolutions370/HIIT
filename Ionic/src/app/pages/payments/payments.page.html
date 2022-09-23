@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar mode="ios">
+  <ion-toolbar mode="ios" color="primary">
     <!--Menu toggle button that will display the menu-->
       <ion-buttons slot="start">
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
-      <ion-title slot="">Payments</ion-title>
+      <ion-title class="ion-text-uppercase">Payments</ion-title>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
       <!--Can we change this dynamically when switching between tabs?-->
     <!-- </ion-item> -->
@@ -12,10 +12,6 @@
 </ion-header>
 <ion-content>
 
-  <br/>
-  <br/>
-  <br/>
-  <br/>
   <ion-searchbar #search (ionClear)="searchPayment(search.value)" (ionInput)="searchPayment(search.value)" expand="block" placeholder='Search Receipt...'
   animated="true" debounce="200"></ion-searchbar>
   <br/><br/>
@@ -24,7 +20,7 @@
         class="listMargin">
         <ion-card>
 
-          <h5 class="ion-align-self-center">Receipt #{{payment.paymentID}}</h5>
+          <h5 class="ion-align-self-center">Receipt #{{payment.q}}</h5>
           
           <ion-card-content class="card-body card-buttons">
             <div class="img-wrapper">

@@ -1,22 +1,19 @@
-ion-title {
-    font-family: 'Montserrat', sans-serif;;
-    font-weight: 500;
-}
 
-ion-item {
-    font-size: large;
+.add-image {
+    min-height: 100px;
+    min-width: 120px;
+    width: 80%;
+    height:auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom: 1%;
     margin-left: 10%;
-    margin-right: 10%;
-}
-
-p {
-    font-size : 110%;
+    margin-right: 10%
 }
 
 span {
-    color : danger;
-    font-size: large;
+    color: rgb(240, 58, 58);
+    font-size: medium;
     padding-bottom: 20px;
-    margin-left: 12%; 
+    margin-left: 10%; 
 }
-

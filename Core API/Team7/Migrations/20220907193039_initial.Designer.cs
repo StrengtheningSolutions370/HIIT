@@ -12,7 +12,11 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
+<<<<<<<< HEAD:Core API/Team7/Migrations/20220907193039_initial.Designer.cs
     [Migration("20220907193039_initial")]
+========
+    [Migration("20220922104534_initial")]
+>>>>>>>> developer:Core API/Team7/Migrations/20220922104534_initial.Designer.cs
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -768,15 +772,16 @@ namespace Team7.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PaymentID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("RefundReasonID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("complete")
+                        .HasColumnType("bit");
 
                     b.HasKey("RefundID");
 
@@ -1429,15 +1434,11 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Payment", "Payment")
                         .WithMany("Refund")
-                        .HasForeignKey("PaymentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PaymentID");
 
                     b.HasOne("Team7.Models.RefundReason", "RefundReason")
                         .WithMany("Refund")
-                        .HasForeignKey("RefundReasonID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RefundReasonID");
 
                     b.Navigation("Payment");
 

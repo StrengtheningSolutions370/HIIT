@@ -278,10 +278,13 @@ private tempE: Employee[];
         {
           next: res => {
             this.fetchEmployeesEvent.emit();
-            resolve(true);
+            resolve({ status: true});
           },
           error: err => {
-            resolve(false);
+            resolve({
+              status : false,
+              data: err
+            });
           }
         }
       ).add(() => {

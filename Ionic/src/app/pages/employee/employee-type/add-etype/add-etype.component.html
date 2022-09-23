@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>New Employee Type Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -8,36 +8,32 @@
 </ion-header>
 
 
-<ion-content>
-  <!--<form #cVenueForm="ngForm" (ngSubmit)="onSubmit(cVenueForm)">-->
+<ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cEmployeeTypeForm" (ngSubmit)="submitForm()"> 
     <br/>
     <div class="ion-text-center">
       <p>Please fill in the employee type information below.</p>
     </div>
-    <ion-item>
-      <ion-label position="floating">Name:</ion-label>
-      <ion-input formControlName="name" type="text" required="" id="name" ></ion-input>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.name.errors?.required && cEmployeeTypeForm.get('name').touched">
-      Name is required<br/>
-    </span>
 
-    <ion-item>
-      <ion-label position="floating">Description:</ion-label>
-      <ion-textarea class="ion-text-wrap" formControlName="description" type="text" required="" id="description"></ion-textarea>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.description.errors?.required && cEmployeeTypeForm.get('description').touched">
-      Description is required
-      <br/>
-    </span>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Name:</ion-label>
+      <ion-input class="input ion-text-capitalize" formControlName="name" type="text" required="" id="name"></ion-input>
+      <span class="errorSpan" *ngIf="errorControl.name.errors?.required && cEmployeeTypeForm.get('name').touched">
+        Name is required<br/>
+      </span>
+    </div>
+    <br>
 
-    <br/><br/>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Description:</ion-label>
+      <ion-textarea class="input" formControlName="description" type="text" required="" id="description" ></ion-textarea>
+      <span class="errorSpan" *ngIf="errorControl.description.errors?.required && cEmployeeTypeForm.get('description').touched">
+        Description is required<br/>
+      </span>
+    </div>
+    <br>
 
-    <ion-button type="submit" color="success" [disabled]="!cEmployeeTypeForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Employee Type</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
-    
+    <ion-button type="submit" color="primary" [disabled]="!cEmployeeTypeForm.valid" class="addBtn ion-float-right">Create Employee Type</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
   </form>
 </ion-content>

@@ -18,6 +18,8 @@ namespace Team7.Models.Repository
 
         //Task<Receipt> GetReceiptIdAsync(int id);
 
+        Task<Payment> GetPaymentByIdAsync(int id);
+
         Task<bool> SaveChangesAsync();
     }
 }

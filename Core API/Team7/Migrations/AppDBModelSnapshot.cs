@@ -766,15 +766,16 @@ namespace Team7.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PaymentID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("RefundReasonID")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("complete")
+                        .HasColumnType("bit");
 
                     b.HasKey("RefundID");
 
@@ -1427,15 +1428,11 @@ namespace Team7.Migrations
                 {
                     b.HasOne("Team7.Models.Payment", "Payment")
                         .WithMany("Refund")
-                        .HasForeignKey("PaymentID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PaymentID");
 
                     b.HasOne("Team7.Models.RefundReason", "RefundReason")
                         .WithMany("Refund")
-                        .HasForeignKey("RefundReasonID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RefundReasonID");
 
                     b.Navigation("Payment");
 
