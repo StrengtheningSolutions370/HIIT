@@ -1,5 +1,5 @@
 <div>
-  <ion-searchbar class="ion-float-right" color="secondary" expand="block" placeholder='Search Qualification Type...'
+  <ion-searchbar #search (ionClear)="searchType(search.value)" (ionInput)="searchType(search.value)" class="ion-float-right" color="secondary" expand="block" placeholder='Search Qualification Type...'
     [(ngModel)]="filter" animated="true" debounce="200">
   </ion-searchbar>
   <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
@@ -11,17 +11,6 @@
 <br>
 
 <ion-content>
-  <br/>
-  <ion-searchbar #search (ionClear)="searchType(search.value)" (ionInput)="searchType(search.value)"  showCancelButton="focus" expand="block" placeholder='Search Qualification Type...'
-    animated="true" debounce="200"></ion-searchbar>
-
-    <br/>
-  <div class="ion-text-center">
-    <ion-button color="success" (click)="qualificationService.addQualificationTypeInfoModal()">
-      Add Qualification Type
-    </ion-button>
-  </div>
-  <br/>
   <ion-grid *ngIf="!isLoading">
     <ion-list *ngFor="let qualificationType of qualificationTypeList | filter:filter, let i = index"> 
       <ion-item-sliding>
@@ -49,8 +38,5 @@
 
 </ion-content>
 
-<ion-text id="noRes" *ngIf="!loading && !qualificationTypeList">
-  <h1>No Results</h1>
-</ion-text>
 
 

@@ -1,5 +1,5 @@
 <div>
-  <ion-searchbar class="ion-float-right" color="secondary" expand="block" placeholder='Search Refund Reason...' [(ngModel)]="filter" animated="true" debounce="200">
+  <ion-searchbar #search (ionClear)="searchReason(search.value)" (ionInput)="searchReason(search.value)"  class="ion-float-right" color="secondary" expand="block" placeholder='Search Refund Reason...' [(ngModel)]="filter" animated="true" debounce="200">
   </ion-searchbar>
   <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
     <ion-fab-button color="success" (click)="saleService.addRefundReasonInfoModal()" #addItem>
@@ -9,20 +9,6 @@
 </div>
 
 <ion-content>
-
-    <br/>
-    <!--Searchbar (must make function to search)-->
-    <ion-searchbar #search (ionClear)="searchReason(search.value)" (ionInput)="searchReason(search.value)" expand="block" placeholder='Search Refund Reason...'
-    animated="true" debounce="200"></ion-searchbar>
-    <br/><br/>
-
-    <div class="ion-text-center">
-        <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="saleService.addRefundReasonInfoModal()"> 
-          Add Refund Reason
-        </ion-button>
-    </div>
-    <br/>
-
     <ion-grid *ngIf="!isLoading" >
         <ion-list *ngFor="let reason of refundReasonList | filter:filter, let i = index"> 
           <ion-item-sliding>
