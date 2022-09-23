@@ -8,39 +8,37 @@
 </ion-header>
 
 
-<ion-content>
-  <!--<form #cQTypeForm="ngForm" (ngSubmit)="onSubmit(cQTypeForm)">-->
+<ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cQualificationForm" (ngSubmit)="submitForm()"> 
     <br/>
     <div class="ion-text-center">
       <p style="font-size:large">Please fill in the qualification information below</p>
     </div>
-    <ion-item>
-      <ion-label position="floating">Description:</ion-label>
-      <ion-input formControlName="description" type="text" required id="description" ></ion-input>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.description.errors?.required && cQualificationForm.get('description').touched">
-      Description is required<br/>
-    </span>
-    <ion-item>
-      <ion-label position="floating">Qualification Type:</ion-label>
-      <ion-select formControlName="qualificationType" type="text" required="" id="qualificationType" >
-        <ng-container *ngFor="let q of qualificationTypeDropDown">
-          <ion-select-option value="{{q.qualificationTypeID}},{{q.name}}">{{ q.name }}</ion-select-option>
+
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Description:</ion-label>
+      <ion-textarea class="input" formControlName="description" type="text" required="" id="description" ></ion-textarea>
+      <span class="errorSpan" *ngIf="errorControl.description.errors?.required && cQualificationForm.get('description').touched">
+        Description is required<br/>
+      </span>
+    </div>
+    <br>
+
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Qualification Type:</ion-label>
+      <ion-select class="input" formControlName="qualificationType" type="text" required="" id="qualificationType" placeholder="Select Qualification Type" >
+        <ng-container *ngFor="let q of this.qualificationTypeDropDown">
+          <ion-select-option class="ion-text-capitalize" value="{{q.qualificationTypeID}},{{q.name}}">{{ q.name }}</ion-select-option>
         </ng-container>
       </ion-select>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.qualificationType.errors?.required && cQualificationForm.get('qualificationType').touched">
-      Qualification Type is required<br/>
-    </span>
+      <span class="errorSpan" *ngIf="errorControl.qualificationType.errors?.required && cQualificationForm.get('qualificationType').touched">
+        Qualification type is required <br/>
+       </span>
+     </div>
+     <br>
 
-    <!-- <pre>{{ qualificationTypeDropDown | json }}</pre> -->
-
-    <br/><br/>
-
-    <ion-button type="submit" color="success" [disabled]="!cQualificationForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Qualification</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
+    <ion-button type="submit" color="primary" [disabled]="!cQualificationForm.valid" class="addBtn ion-float-right">Create Qualification</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
     
   </form>
 </ion-content>

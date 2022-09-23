@@ -1,3 +1,13 @@
+<div>
+  <ion-searchbar class="ion-float-right" color="secondary" expand="block" placeholder='Search Refund Reason...' [(ngModel)]="filter" animated="true" debounce="200">
+  </ion-searchbar>
+  <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
+    <ion-fab-button color="success" (click)="saleService.addRefundReasonInfoModal()" #addItem>
+      <ion-icon name="add-outline" ></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</div>
+
 <ion-content>
 
     <br/>
@@ -15,16 +25,16 @@
 
     <ion-grid *ngIf="!isLoading" >
         <ion-list *ngFor="let reason of refundReasonList | filter:filter, let i = index"> 
-          <ion-item-sliding >
+          <ion-item-sliding>
             <ion-item button (click)="saleService.viewRefundReasonInfoModal(reason)" >
-              <ion-label style="padding-left:2% ;">
-                <h1>{{reason.description}}</h1> <br/> 
+              <ion-label>
+                <h1>{{reason.description}}</h1> 
               </ion-label>
               <ion-icon name="chevron-back-outline" size="small"></ion-icon>
             </ion-item>
             <ion-item-options side="end" >
               <ion-item-option color="secondary" (click)="saleService.updateRefundReasonInfoModal(reason)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
-              <ion-item-option color="danger" (click)="saleService.deleteRefundReasonInfoModal(reason)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
+              <ion-item-option color="tertiary" (click)="saleService.deleteRefundReasonInfoModal(reason)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
         </ion-list>
@@ -40,3 +50,7 @@
     </ion-text>
 
 </ion-content>
+
+<ion-text id="noRes" *ngIf="!loading && !refundReasonList">
+  <h1>No Results</h1>
+</ion-text>

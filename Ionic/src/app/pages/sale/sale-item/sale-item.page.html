@@ -1,3 +1,4 @@
+<div>
 <ion-searchbar  #search (ionClear)="searchItems(search.value)" (ionInput)="searchItems(search.value)" expand="block" placeholder='Search Sale Item...'
 animated="true" debounce="200"></ion-searchbar>
 
@@ -5,6 +6,11 @@ animated="true" debounce="200"></ion-searchbar>
   <ion-button class="ion-text-center"color="success" (click)="saleService.addSaleItemInfoModal()">
     Add Sale Item
   </ion-button>
+  <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
+    <ion-fab-button color="success" (click)="saleService.addSaleItemInfoModal()" #addItem>
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </div>
 
 <div class="ion-text-center " *ngIf="isLoading">
@@ -14,25 +20,24 @@ animated="true" debounce="200"></ion-searchbar>
 <ion-content>
   <ion-grid>
     <ion-row class="flex-wrap">
-      <ion-col class='ion-align-self-start ' sizeLg="3" sizeMd="3" sizeXs="6" *ngFor="let saleItem of saleItemList"
-        class="listMargin">
-        <ion-card>
-          <h5 class="ion-align-self-center">{{saleItem.name}}</h5>
+      <ion-col class='ion-align-self-start ' sizeLg="3" sizeMd="3" sizeXs="6" *ngFor="let saleItem of saleItemList">
+        <ion-card color="secondary">
+          <h3 class="ion-align-self-center ion-text-capitalize">{{saleItem.name}}</h3>
 
-          
-          <ion-card-content class="card-body card-buttons">
-            <div class="img-wrapper">
-              <img class="img-wrapper" (click)="saleService.viewSaleItemInfoModal(saleItem)" [src]="this.global.createImg(saleItem.photo)" alt="sale item image">
+          <ion-card-content>
+            <div >
+              <img class="img-wrapper" (click)="saleService.viewSaleItemInfoModal(saleItem)" [src]="this.global.createImg(saleItem.photo)"
+                alt="sale item image">
             </div>
 
-            <ion-row class="row align-items-center no-gutters">
-
-              <ion-col class="column-buttons">
-                <ion-button (click)="saleService.deleteSaleItemInfoModal(saleItem)"  color="danger"  expand="block" >Delete</ion-button>
-              </ion-col>
-
+            <ion-row class="row">
               <ion-col>
-                <ion-button (click)="saleService.updateSaleItemInfoModal(saleItem)"  color="success"  expand="block">Update</ion-button>
+                <ion-button (click)="saleService.deleteSaleItemInfoModal(saleItem)" color="tertiary" expand="block">
+                  Delete</ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="saleService.updateSaleItemInfoModal(saleItem)" color="primary" expand="block">
+                  Update</ion-button>
               </ion-col>
 
             </ion-row>
@@ -40,17 +45,17 @@ animated="true" debounce="200"></ion-searchbar>
             <div *ngIf="saleItem.quotable !== true">
               <ion-row class="row align-items-center no-gutters">
                 <ion-col class="column-buttons">
-                  <ion-button (click)="inventoryService.addWriteOffInfoModal(saleItem)"  color="warning"  expand="block" >Write-Off</ion-button>
+                  <ion-button (click)="inventoryService.addWriteOffInfoModal(saleItem)" color="warning" expand="block">
+                    Write-Off</ion-button>
                 </ion-col>
               </ion-row>
             </div>
-
           </ion-card-content>
-
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
+  
   <div>
     <ion-infinite-scroll threshold="110px" (ionInfinite)="loadData($event)" [disabled]="numTimesLeft <= 0">
       <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading Sale Items...">
