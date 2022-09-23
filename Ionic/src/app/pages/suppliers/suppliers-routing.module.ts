@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'tabs',
+    redirectTo: 'tabs/supplier-page',
     pathMatch: 'full'
   }
 ];

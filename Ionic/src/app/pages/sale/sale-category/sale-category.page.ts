@@ -21,8 +21,10 @@ export class SaleCategoryPage implements OnInit {
   saleCategorySub: Subscription;
 
   isLoading = true;
+  noresults = false;
+  
   constructor(public saleService: SalesService, public repo: RepoService) {
-     this.fetchSaleCategory();
+    this.fetchSaleCategory();
   }
 
 

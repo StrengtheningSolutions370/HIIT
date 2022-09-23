@@ -7,6 +7,7 @@ import { RepoService } from 'src/app/services/repo.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { SaleItem } from 'src/app/models/sale-item';
+import { Camera, CameraSource, CameraResultType } from '@capacitor/camera';
 
 
 
@@ -33,6 +34,17 @@ uSaleItemForm: UntypedFormGroup = this.formBuilder.group({
   itemSCategory: ['',[Validators.required]],
   itemQuotable: ['']
 });
+
+async getPhoto() {
+  
+  const image = await Camera.getPhoto({
+    quality: 90,
+    // allowEditing: true,
+    source: CameraSource.Prompt,
+    width: 600,
+    resultType:  CameraResultType.DataUrl 
+  });
+}
 
 addImage(event : any) {
  this.itemImage = event.target.files[0];

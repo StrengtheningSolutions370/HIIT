@@ -1,7 +1,12 @@
+<div>
+  <ion-searchbar class="ion-float-right" color="secondary" #search (ionClear)="searchUser(search.value)" (ionInput)="searchUser(search.value)" expand="block" placeholder='Search User...' [(ngModel)]="filter" animated="true" debounce="200">
+  </ion-searchbar>
+</div>
+
 <ion-content *ngIf="!loading">
     <br/>
 
-  <ion-grid>
+  <!-- <ion-grid>
     <ion-row>
 
       <ion-col size="12">
@@ -9,7 +14,7 @@
       </ion-col>
 
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
     <ion-grid *ngIf="!loading && !noresults">
 
@@ -53,9 +58,8 @@
 
       </ion-list>
     </ion-grid>
-
-    <ion-text id="noRes" *ngIf="!loading && noresults">
-      <h1>No Results</h1>
-    </ion-text>
-
   </ion-content>
+
+  <ion-text id="noRes" *ngIf="!loading && noresults">
+    <h1>No Results</h1>
+  </ion-text>
