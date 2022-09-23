@@ -65,6 +65,12 @@ namespace Team7.Controllers
         public async Task<IActionResult> DeleteExerciseCategory(int id)
         {
             var tempExerciseCategory = await ExerciseCategoryRepo._GetExerciseCategoryIdAsync(id);
+
+            if (tempExerciseCategory.Exercise.Count != 0)
+            {
+                return Conflict(new { exercise = tempExerciseCategory });
+            }
+
             if (tempExerciseCategory == null)
             {
                 return NotFound("Could not find existing Exercise Category with id:" + id);
@@ -74,6 +80,7 @@ namespace Team7.Controllers
                 ExerciseCategoryRepo.Delete<ExerciseCategory>(tempExerciseCategory);
                 await ExerciseCategoryRepo.SaveChangesAsync();
                 return Ok();
+
             }
             catch (Exception err)
             {

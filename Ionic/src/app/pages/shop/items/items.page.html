@@ -6,20 +6,20 @@
       <ion-icon name="cart" class="cart-icon"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-select interface="popover"
+  
+  <!-- <ion-select interface="popover"
   placeholder="Select filters"
   (ionChange)="handleChange($event)"
   [multiple]="true">
   <ion-select-option *ngFor="let category of categoryArray" [value]="category">{{ category.name }}</ion-select-option>
 
-  </ion-select>
+  </ion-select> -->
 
 
-<div class="ion-text-start div-buttons">
+<!-- <div class="ion-text-start div-buttons">
   <ion-button (click)="priceLow()">Price Low to High</ion-button>
   <ion-button (click)="priceHigh()">Price High to Low</ion-button>
-</div>
-
+</div> -->
 
 
   <div class="ion-text-center " *ngIf="isLoading">

@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar mode="ios">
+  <ion-toolbar mode="ios" color="primary">
     <!--Menu toggle button that will display the menu-->
       <ion-buttons slot="start">
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
-      <ion-title slot="">Sales</ion-title>
+      <ion-title class="ion-text-uppercase">Sales Management</ion-title>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
       <!--Can we change this dynamically when switching between tabs?-->
     <!-- </ion-item> -->
@@ -14,7 +14,7 @@
 <ion-content>
 
   <ion-tabs>
-    <ion-tab-bar slot="top" style="color: #E0E0E0;">
+    <ion-tab-bar slot="top" color="secondary">
       <ion-tab-button tab="sale-item">
         <ion-label>Sale Item</ion-label>
       </ion-tab-button>
@@ -44,8 +44,3 @@
 
 </ion-content>
 
-
-<!-- <ion-footer style="margin-left:20px;margin-bottom: 10px;">
-  Bester Strength and Conditioning | info@besterstrengthandconditioning.co.za
-  <br>
-</ion-footer> -->

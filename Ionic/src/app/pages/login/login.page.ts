@@ -44,10 +44,6 @@ export class LoginPage implements OnInit {
 
 
   onSubmit(loginForm: NgForm){
-    if(!loginForm.valid){
-      console.log('Somehow invalid submission');
-      return;
-    }
     this.login(loginForm);
   }
 

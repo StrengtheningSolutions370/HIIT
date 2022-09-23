@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Employee associated with [data]</ion-title>
+    <ion-title>Employee associated with lessons/schedules</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
@@ -12,17 +12,23 @@
   <br/>
 
   <div class="ion-text-center">
-
-      <!-- <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">
-          The {{venue.name}} cannot be deleted because the following schedule/s are associated with it.
+      <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">
+        "{{employee.name}}" cannot be deleted because the following lessons/schedules are associated with him/her
       </p>
 
       <ion-list> 
-        <ion-item *ngFor="let schedule of venue.schedules">
-          <ion-label>Schedule with ID: </ion-label>
-          <ion-label>{{schedule.scheduleID}}</ion-label>
+        <ion-item *ngFor="let lesson of employee.lessons">
+          <ion-label>Lesson: </ion-label>
+          <ion-label class="ion-text-right">{{ lesson.name }}</ion-label>
         </ion-item>
-      </ion-list> -->
+      </ion-list>
+
+      <ion-list> 
+        <ion-item *ngFor="let schedule of employee.schedule">
+          <ion-label>Schedule: </ion-label>
+          <ion-label class="ion-text-right">{{ schedule.venue.name }} on {{ getTime(schedule) }}</ion-label>
+        </ion-item>
+      </ion-list>
 
   </div>
 

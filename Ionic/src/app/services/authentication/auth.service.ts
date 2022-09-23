@@ -39,7 +39,6 @@ export class AuthService {
 
   navLogin() {
     this.loggedIn.next(true);
-    console.log('navLogin called');
   }
 
   navLogout() {
@@ -50,6 +49,7 @@ export class AuthService {
     await this.checkToken();
     return this.loggedIn.value;
   }
+  
   //////////////
 
   constructor(
@@ -71,20 +71,29 @@ export class AuthService {
   async login(appUser: appUser) {
     await this.storage.deleteKey('token');
     await this.global.nativeLoad('loading...');
-    return this.repo.login(appUser).subscribe(async (result : any) => {
-      var token = result.value.token;
-      await this.storage.setKey('user', JSON.stringify(result.value.user));
-      this.storage.setKey('token', token).then(() => {
-        this.navLogin(); //change observable to show navbar after set for token
-      });
-      this.router.navigate(['home']);
+    return this.repo.login(appUser).subscribe({
+      next : async (result : any) => {
+        var token = result.value.token;
+        await this.storage.setKey('user', JSON.stringify(result.value.user));
+        this.storage.setKey('token', token).then(() => {
+          this.navLogin();
+        });
+        this.router.navigate(['home']);
+      },
+      error : (err) => {
+        console.log(err);
+        if (err.status == 0)
+          this.global.showAlert('Connection failed, please try again.', 'Login Failed...');
+        else 
+          this.global.showAlert(err.error, 'Login Failed...');
+      }
     }).add(() =>{this.global.endNativeLoad()});
   }
 
   async logout() {
     this.storage.deleteKey('token').then(() => {
       this.navLogout();
-      this.router.navigate(['login']); //route user back to login
+      window.location.href = './login';
     })
    }
 

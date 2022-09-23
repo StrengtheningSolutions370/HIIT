@@ -122,14 +122,11 @@ namespace Team7.Controllers
             if (lesson == null)
                 return NotFound("Lesson not found for deletion");
 
-            bool assFlag = false;
+            if (lesson.Schedule == null)
+                return StatusCode(StatusCodes.Status409Conflict, new { lesson = lesson });
 
-            //check if attatched to employee:
-            //if (lesson.Schedule.Count != 0)
-            //    assFlag = true;
-
-            //if (assFlag)
-            //    return StatusCode(StatusCodes.Status409Conflict, new { message = "Lesson has assosciations to another table.", lesson });
+            if (lesson.Schedule.Count != 0)
+                return StatusCode(StatusCodes.Status409Conflict, new { lesson = lesson });
 
             //perform delete:
             //await _lessonPlanRepo.RemoveRangeLessonIdAsync(id);

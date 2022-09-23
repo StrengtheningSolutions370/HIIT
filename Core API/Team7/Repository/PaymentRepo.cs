@@ -52,14 +52,6 @@ namespace Team7.Models.Repository
                             p.PaymentType.PaymentTypeID,
                             p.PaymentType.Name
                         },
-                        //Sale = new
-                        //{
-                        //    p.Sale.SaleID,
-                        //    p.Sale.Date,
-                        //    p.Sale.AppUser.FirstName,
-                        //    p.Sale.AppUser.LastName,    
-                        //    SaleLine = p.Sale.SaleLine.Select(sl => new { sl.SaleLineID, sl.Quantity, sl.SaleItem })
-                        //}
                         Sale = new
                         {
                             SaleID = p.Sale.SaleID,
@@ -82,7 +74,7 @@ namespace Team7.Models.Repository
                                 }
                             }),
                             Payment = p.Sale.Payment
-                        }
+                        },
                     }).ToListAsync()
                 };
 
@@ -211,6 +203,16 @@ namespace Team7.Models.Repository
         {
             //Returns true/false based on success/failure
             return await DB.SaveChangesAsync() > 0;
+        }
+
+        public async Task<Payment> GetPaymentByIdAsync(int id)
+        {
+            var res = DB.Payment.Where(el => el.PaymentID == id);
+
+            if (res.Any())
+                return await res.SingleAsync();
+
+            return null;
         }
     }
 }

@@ -91,6 +91,10 @@ namespace Team7.Controllers
             {
                 return NotFound();
             }
+
+            if (tempExercise.ExerciseCategory != null && tempExercise.LessonPlan.Count != 0)
+                return Conflict(new { exercise = tempExercise });
+
             try
             {
                 ExerciseRepo.Delete(tempExercise);

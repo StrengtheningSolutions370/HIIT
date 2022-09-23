@@ -1,17 +1,15 @@
+<div>
+  <ion-searchbar class="ion-float-right" color="secondary" expand="block" placeholder='Search Booking Type...'
+    [(ngModel)]="filter" animated="true" debounce="200">
+  </ion-searchbar>
+  <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
+    <ion-fab-button color="success" (click)="bookingService.addBookingTypeModal()" #addBooking>
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</div>
+
 <ion-content>
-  <br/>
-  <!--Searchbar (must make function to search)-->
-  <ion-searchbar expand="block" placeholder='Search Booking Type...' [(ngModel)]="filter"
-  animated="true" debounce="200"></ion-searchbar>
-  <br/><br/>
-
-  <div class="ion-text-center">
-    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="bookingService.addBookingTypeModal()">
-      Add Booking Type
-    </ion-button>
-  </div>
-  <br/>
-
   <ion-grid *ngIf="!isLoading" >
     <ion-list *ngFor="let bt of bookingTypeList | filter:filter, let i = index">
       <ion-item-sliding >

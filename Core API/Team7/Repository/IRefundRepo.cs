@@ -10,12 +10,14 @@ namespace Team7.Models.Repository
 
         void Update<T>(T Entity) where T : class;
 
-        //Task<Refund[]> GetAllRefundsAsync();
+        Task<Refund[]> GetAllRefundsAsync();
 
         //Task<Refund[]> GetRefundsAsync(string input);
 
         //Task<Refund> GetRefundIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
+
+        Task<Refund> GetRefundByIdAsync(int id);
     }
 }
