@@ -1,11 +1,8 @@
-<div>
+
 <ion-searchbar  #search (ionClear)="searchItems(search.value)" (ionInput)="searchItems(search.value)" expand="block" placeholder='Search Sale Item...'
 animated="true" debounce="200"></ion-searchbar>
 
 <div class="ion-text-center">
-  <ion-button class="ion-text-center"color="success" (click)="saleService.addSaleItemInfoModal()">
-    Add Sale Item
-  </ion-button>
   <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
     <ion-fab-button color="success" (click)="saleService.addSaleItemInfoModal()" #addItem>
       <ion-icon name="add-outline"></ion-icon>
