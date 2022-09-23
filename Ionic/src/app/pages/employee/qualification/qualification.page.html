@@ -1,23 +1,22 @@
+<div>
+  <ion-searchbar class="ion-float-right" color="secondary" expand="block" placeholder='Search Qualification...'
+    [(ngModel)]="filter" animated="true" debounce="200">
+  </ion-searchbar>
+  <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
+    <ion-fab-button color="success" (click)="qualificationService.addQualificationInfoModal()" #addItem>
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</div>
+<br>
+
 <ion-content>
-  <br/>
-  <ion-searchbar showCancelButton="focus" expand="block" placeholder='Search Qualification...' [(ngModel)]="filter" animated="true"
-    debounce="200"></ion-searchbar>
-
-  <br/>
-  <div class="ion-text-center">
-    <ion-button color="success" (click)="qualificationService.addQualificationInfoModal()">
-      Add Qualification
-    </ion-button>
-  </div>
-  <br/>
-
   <ion-grid *ngIf="!isLoading">
     <ion-list *ngFor="let qualification of qualificationList | filter:filter, let i = index">
       <ion-item-sliding>
-        <!-- Sending through the venue object to the venue service, to be viewed in the modal -->
         <ion-item button (click)="qualificationService.viewQualificationInfoModal(qualification)">
           <ion-label>
-            <h1>{{qualification.description}}</h1> <br />
+            <h1>{{qualification.description}}</h1>
           </ion-label>
           <ion-icon name="chevron-back-outline" size="small"></ion-icon>
         </ion-item>
@@ -25,7 +24,7 @@
           <ion-item-option color="secondary" (click)="qualificationService.updateQualificationInfoModal(qualification)">
             Update<ion-icon name="refresh" size="large"></ion-icon>
           </ion-item-option>
-          <ion-item-option color="danger" (click)="qualificationService.deleteQualificationInfoModal(qualification)">
+          <ion-item-option color="tertiary" (click)="qualificationService.deleteQualificationInfoModal(qualification)">
             Delete<ion-icon name="trash" size="large"></ion-icon>
           </ion-item-option>
         </ion-item-options>
@@ -37,3 +36,7 @@
     <ion-spinner name="circles"></ion-spinner>
   </div>
 </ion-content>
+
+<ion-text id="noRes" *ngIf="!loading && !qualificationList">
+  <h1>No Results</h1>
+</ion-text>
