@@ -32,8 +32,8 @@ import { WriteOff } from '../models/write-off';
 
 export class RepoService {
   // base = 'https://bsctest.azurewebsites.net/api/';
-  // base = 'http://localhost:5001/api/';
-  base = 'https://localhost:44383/api/';
+  base = 'http://localhost:5001/api/';
+  //base = 'https://localhost:44383/api/';
   AppUserController = 'AppUser/';
   BookingController = 'Booking/'
   BookingTypeController = 'BookingType/';
@@ -368,22 +368,22 @@ getMatchSaleItem(name: string, description: string): Observable<any>{
   return this.http.get(`${this.base+this.SaleItemController}getMatch?name=${name}&description=${description}`, this.httpOptions);
 }
 // //Image Upload
-// uploadSaleItemImage(data: FormData): Observable<any> {
-//   return this.http.post('http://localhost:5001/api/SaleItem/upload', data);
-// }
+uploadSaleItemImage(data: FormData): Observable<any> {
+  return this.http.post('http://localhost:5001/api/SaleItem/upload', data);
+}
 // //reImage Upload
-// deleteSaleItemImage(id : string) : Observable<any> {
-//   return this.http.delete(`http://localhost:5001/api/SaleItem/deletephoto?name=${id}`)
-// }
+deleteSaleItemImage(id : string) : Observable<any> {
+  return this.http.delete(`http://localhost:5001/api/SaleItem/deletephoto?name=${id}`)
+}
 
 //Image Upload
-uploadSaleItemImage(data: FormData): Observable<any> {
-  return this.http.post(`${this.base+this.SaleItemController}upload`, data);
-}
+// uploadSaleItemImage(data: FormData): Observable<any> {
+//   return this.http.post(`${this.base+this.SaleItemController}upload`, data);
+// }
 //reImage Upload
-deleteSaleItemImage(id : string) : Observable<any> {
-  return this.http.delete(`${this.base+this.SaleItemController}deletephoto?name=${id}`)
-}
+// deleteSaleItemImage(id : string) : Observable<any> {
+//   return this.http.delete(`${this.base+this.SaleItemController}deletephoto?name=${id}`)
+// }
 
 //add writeOff
 createWriteOff(writeOff: any): Observable<any> {

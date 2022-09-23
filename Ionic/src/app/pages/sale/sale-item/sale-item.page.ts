@@ -28,7 +28,6 @@ noresults = false;
 saleItemSub: Subscription;
 
 isLoading = true;
-noresults = false;
 
 
 constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService, public inventoryService: InventoryService) {
