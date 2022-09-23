@@ -12,6 +12,13 @@ ion-searchbar{
     margin-right: 10%;
 }
 
+#noRes {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
 ion-card {
     background-color: white;
     border-radius: 50px;

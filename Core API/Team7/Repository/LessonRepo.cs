@@ -91,17 +91,16 @@ namespace Team7.Models.Repository
                 return null;
 
 
-            return await query.Select(l =>
+            var temp = await query.Select(l =>
                 new Lesson
                 {
                     LessonID = l.LessonID,
                     Name = l.Name,
                     Employee = l.Employee,
                     LessonPlan = l.LessonPlan,
-                    Schedule = l.Schedule,
-
                 }).SingleAsync();
-
+            temp.Schedule = await DB.Schedule.Where(s => s.ScheduleID == temp.ScheduleID).ToListAsync();
+            return temp;
         }
 
         public async Task<bool> SaveChangesAsync()

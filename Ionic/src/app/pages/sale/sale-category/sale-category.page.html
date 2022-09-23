@@ -2,7 +2,7 @@
 
     <br/>
     <!--Searchbar (must make function to search)-->
-    <ion-searchbar expand="block" placeholder='Search Sale Category...' [(ngModel)]="filter"
+    <ion-searchbar expand="block" placeholder='Search Sale Category...'  #search (ionClear)="searchItems(search.value)" (ionInput)="searchItems(search.value)"
     animated="true" debounce="200"></ion-searchbar>
     <br/><br/>
   
@@ -14,7 +14,7 @@
     <br/>
   
     <ion-grid *ngIf="!isLoading" >
-      <ion-list *ngFor="let category of saleCategoryList | filter:filter, let i = index"> 
+      <ion-list *ngFor="let category of saleCategoryList"> 
         <ion-item-sliding >
           <ion-item button (click)="saleService.viewCategoryInfoModal(category)" >
             <ion-label style="padding-left:2% ;">
@@ -49,5 +49,7 @@
         </ion-card-content>
       </ion-card>
     </div> -->
-
+    <ion-text id="noRes" *ngIf="noresults">
+      <h1>No Results</h1>
+    </ion-text>
   </ion-content>

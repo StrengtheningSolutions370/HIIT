@@ -1,4 +1,4 @@
-<ion-searchbar expand="block" placeholder='Search Sale Item...' [(ngModel)]="filter"
+<ion-searchbar  #search (ionClear)="searchItems(search.value)" (ionInput)="searchItems(search.value)" expand="block" placeholder='Search Sale Item...'
 animated="true" debounce="200"></ion-searchbar>
 
 <div class="ion-text-center">
@@ -58,5 +58,8 @@ animated="true" debounce="200"></ion-searchbar>
     </ion-infinite-scroll>
   </div>
 
+  <ion-text id="noRes" *ngIf="noresults">
+    <h1>No Results</h1>
+  </ion-text>
 
 </ion-content>
