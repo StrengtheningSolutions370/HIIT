@@ -1,8 +1,7 @@
 <ion-content>
   <div>
-  <br/>
   <ion-searchbar  #search (ionClear)="searchType(search.value)" (ionInput)="searchType(search.value)"  expand="block" placeholder='Search Employee Type...'
-    animated="true" debounce="200"></ion-searchbar>
+    animated="true" debounce="200" color="secondary"></ion-searchbar>
   <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
     <ion-fab-button color="success" (click)="employeeService.addEmployeeTypeInfoModal()" #addItem>
       <ion-icon name="add-outline"></ion-icon>

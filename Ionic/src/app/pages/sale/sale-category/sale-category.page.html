@@ -1,6 +1,7 @@
-<ion-content>
 <div>
-  <ion-searchbar class="ion-float-right" color="secondary" expand="block" placeholder='Search Sale Category...' [(ngModel)]="filter" animated="true" debounce="200">
+  <ion-searchbar #search (ionClear)="searchItems(search.value)" (ionInput)="searchItems(search.value)"
+    class="ion-float-right" color="secondary" expand="block" placeholder='Search Sale Category...'
+    [(ngModel)]="filter" animated="true" debounce="200">
   </ion-searchbar>
   <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
     <ion-fab-button color="success" (click)="saleService.addCategoryInfoModal()" #addCategory>
@@ -8,43 +9,36 @@
     </ion-fab-button>
   </ion-fab>
 </div>
+<br>
 
-    <br/>
-    <!--Searchbar (must make function to search)-->
-    <ion-searchbar expand="block" placeholder='Search Sale Category...'  #search (ionClear)="searchItems(search.value)" (ionInput)="searchItems(search.value)"
-    animated="true" debounce="200"></ion-searchbar>
-    <br/><br/>
-  
-    <div class="ion-text-center">
-      <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="saleService.addCategoryInfoModal()"> 
-        Add Sale Category
-      </ion-button>
-    </div>
-    <br/>
-  
-    <ion-grid *ngIf="!isLoading" >
-      <ion-list *ngFor="let category of saleCategoryList"> 
-        <ion-item-sliding >
-          <ion-item button (click)="saleService.viewCategoryInfoModal(category)" >
-            <ion-label>
-              <h1 class="ion-text-capitalize">{{category.name}}</h1>
-              <!-- <p style="font-size:medium">{{category.description}}</p> -->
-            </ion-label >
-            <ion-icon name="chevron-back-outline" size="small"></ion-icon>
-          </ion-item>
-          <ion-item-options side="end" >
-            <ion-item-option color="secondary" (click)="saleService.updateCategoryInfoModal(category)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
-            <ion-item-option color="tertiary" (click)="saleService.deleteCategoryInfoModal(category)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
-          </ion-item-options>
-        </ion-item-sliding>
-      </ion-list>
-    </ion-grid>
+<ion-content>
+  <ion-grid *ngIf="!isLoading">
+    <ion-list *ngFor="let category of saleCategoryList">
+      <ion-item-sliding>
+        <ion-item button (click)="saleService.viewCategoryInfoModal(category)">
+          <ion-label>
+            <h1 class="ion-text-capitalize">{{category.name}}</h1>
+            <!-- <p style="font-size:medium">{{category.description}}</p> -->
+          </ion-label>
+          <ion-icon name="chevron-back-outline" size="small"></ion-icon>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="secondary" (click)="saleService.updateCategoryInfoModal(category)">Update<ion-icon
+              name="refresh" size="large"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="tertiary" (click)="saleService.deleteCategoryInfoModal(category)">Delete<ion-icon
+              name="trash" size="large"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ion-grid>
 
-    <div class="ion-text-center " *ngIf="isLoading">
-      <ion-spinner name="circles"></ion-spinner>
-    </div>
+  <div class="ion-text-center " *ngIf="isLoading">
+    <ion-spinner name="circles"></ion-spinner>
+  </div>
 
-    <!-- <div style="width:40%;margin-left:30%;margin-right: 30%;" class="ion-text-center">
+  <!-- <div style="width:40%;margin-left:30%;margin-right: 30%;" class="ion-text-center">
       <ion-card>
         <ion-card-header>
           <img src="../../assets/NoSearch.png" style="width: 40%;">
@@ -58,8 +52,8 @@
         </ion-card-content>
       </ion-card>
     </div> -->
-    <ion-text id="noRes" *ngIf="noresults">
-      <h1>No Results</h1>
-    </ion-text>
+  <ion-text id="noRes" *ngIf="noresults">
+    <h1>No Results</h1>
+  </ion-text>
 
-  </ion-content>
+</ion-content>

@@ -10,21 +10,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <br/>
-  <!--Searchbar [(ngModel)] is used to bind the searchTerm to the class, to be called when filtering.-->
-  <ion-searchbar expand="block" placeholder='Search Venue...' #search (ionClear)="searchVenue(search.value)" (ionInput)="searchVenue(search.value)"
-    animated="true" debounce="200"></ion-searchbar>
-
 <div>
-  <ion-fab horizontal="end"  slot="fixed" style="margin-right: 2%; margin-top: 1%">
-    <ion-fab-button color="success" (click)="venueService.addVenueInfoModal()" #addCategory>
+  <ion-searchbar #search (ionClear)="searchVenue(search.value)" (ionInput)="searchVenue(search.value)" class="ion-float-right" color="secondary" expand="block" placeholder='Search Venue...'
+    [(ngModel)]="filter" animated="true" debounce="200">
+  </ion-searchbar>
+  <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%; margin-top: 8%">
+    <ion-fab-button color="success" (click)="venueService.addVenueInfoModal()" #addItem>
       <ion-icon name="add-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </div>
-
-<br>
 
 <ion-content>
   <ion-grid *ngIf="!isLoading">
