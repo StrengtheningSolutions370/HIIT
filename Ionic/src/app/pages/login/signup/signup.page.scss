@@ -14,7 +14,7 @@ ion-item{
 }
 
 ion-button{
-    --background: #4570e9;
+    --background: black;
     --color: white;
 }
 
@@ -26,9 +26,44 @@ ion-card{
     // margin-left: 30%;
     // margin-right: 30%;
     margin : auto;
-    margin-top: 15vh !important;
+    margin-top: 4vh !important;
     max-width: 400px !important;
     width: 90vw;
+}
+
+
+.center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.hint > p {
+    margin-top: 14px;
+    margin-bottom: 26px;
+}
+
+#logo {
+    width: 60%;
+}
+
+.row > p {
+    margin-right: 5px;
+}
+
+#create {
+    margin-top: 8px;
+    width: 80%;
+    margin-left: 10%;
+    border-radius: 10px;
 }
 
 h1{
@@ -39,3 +74,11 @@ h1{
     text-transform: uppercase;
   }
   
+#background {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0,)), url(https://images.unsplash.com/photo-1614928228253-dc09cbc3b11c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    width: 100vw;
+    height: 100%;
+}

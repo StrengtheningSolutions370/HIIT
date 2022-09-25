@@ -1,5 +1,4 @@
-<ion-content>
-
+<div id="background">
   <ion-card>
     <ion-card-content>
       <div class="ion-text-center">
@@ -7,10 +6,10 @@
       </div>
       <form #logForm="ngForm" (ngSubmit)="onSubmit(logForm)">
         <div padding>
-          <ion-item>
-            <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
-            <ion-input type="email" name="email" ngModel email #emailCtrl="ngModel" placeholder="Email" required ></ion-input>
-          </ion-item>
+          <div class="inputDiv">
+            <ion-input class="input" type="email" name="email" ngModel email #emailCtrl="ngModel" placeholder="Email" required ></ion-input>
+
+          </div>
           <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
             <p>Please enter a valid email address</p>
           </ion-text>
@@ -31,5 +30,5 @@
       </div>
     </ion-card-content>
   </ion-card>
-</ion-content>
+</div>
 
