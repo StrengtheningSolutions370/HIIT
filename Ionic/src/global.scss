@@ -29,7 +29,7 @@
 
 $colors: (
   primary:    #404040,
-  secondary:  #7b91cb,
+  secondary:  rgb(49, 122, 190),
   tertiary:   #fb7070,
   danger:     #eb445a,
   light:      #5e5e5e,
@@ -124,6 +124,21 @@ ion-popover {
   border-radius: 10px;
 }
 
+.editInput{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-right: 10%;
+  margin-left: 10%;
+  width: 80%;
+
+  border: 2px solid rgb(49, 122, 190);
+  --padding-start: 2%;
+
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
 .confirmInput{
   --padding-start: 2%;
   margin-top: 1%;
@@ -131,8 +146,9 @@ ion-popover {
   margin-right: 10%;
   margin-left: 10%;
   width: 80%;
+  padding-left: 1%;
 
-  border: 2px solid yellowgreen;
+  border: 2px solid rgb(149, 206, 35);
   --padding-end: 2%;
 
   -moz-border-radius: 10px;
@@ -197,3 +213,18 @@ ion-popover {
   width:48%
 }
 
+.editBtn{
+  margin-left:2%;
+  margin-right:10%; 
+  width:48%;
+
+  button.alert-button{
+    color: rgb(49, 122, 190);
+  }
+}
+
+.alertCss{
+  button.alert-button{
+    color: white;
+  }
+ }
