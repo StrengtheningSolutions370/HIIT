@@ -23,7 +23,7 @@ export class ConfirmQualificationComponent{
     return this.qualificationService.matchingQualification(description).then(result => {
       console.log('matchresult', result);
        if (result){
-         this.global.showAlert('The qualification information entered already exists on the system','Qualification Already Exists');
+         this.global.showAlert('The entered information already exists on the system','Duplicate Error');
          return true;
        } else {
          return false;
