@@ -1,27 +1,30 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Delete Qualification Type Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()">
+        <ion-icon name="close-outline" size="large"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<br />
 
-<ion-content>
-    <br/><br/>
-    <ion-label class="ion-text-center">
-      <p style="font-size:large; color: white;">Are you sure you want to delete the following qualification type?</p>
-    </ion-label>
-    <br/>
+<ion-content class="containerMargins">
+  <ion-label class="ion-text-center">
+    <p style="font-size:large">Are you sure you want to delete the following qualification type?</p>
+  </ion-label>
+  <br>
 
-    <ion-item > 
-      <ion-label class="ion-text-left">Name: </ion-label>
-      <ion-label class="ion-text-right">{{qualificationType.name}}</ion-label>
-    </ion-item>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Name:</ion-label>
+    <ion-input class="deleteInput ion-text-capitalize" readonly>{{qualificationType.name}}</ion-input>
+  </div>
+  <br>
 
-    <br>
-    <ion-button expand="block" type="ion-button" (click)="delete(qualificationType.qualificationTypeID)" color="danger" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Delete Qualification Type</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
+
+  <ion-button expand="block" type="ion-button" (click)="delete(qualificationType.qualificationTypeID)" color="danger"
+    class="addBtn ion-float-right">Delete Qualification Type</ion-button>
+  <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
 
 </ion-content>
-
