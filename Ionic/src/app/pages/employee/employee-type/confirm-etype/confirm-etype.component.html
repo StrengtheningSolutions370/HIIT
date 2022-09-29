@@ -1,31 +1,33 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Confirm Employee Type Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()">
+        <ion-icon name="close-outline" size="large"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <br/>
+<ion-content class="containerMargins" color="secondary">
+  <br />
   <div class="ion-text-center">
     <p style="font-size:large">Please confirm the following employee type information</p>
   </div>
 
-  <ion-item > 
-    <ion-label class="ion-text-left">Name:</ion-label>
-    <ion-label class="ion-text-right">{{employeeType.name}}</ion-label>
-  </ion-item>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Name:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>{{employeeType.name}}</ion-input>
+  </div>
+  <br>
 
-  <ion-item > 
-    <ion-label class="ion-text-left">Description:</ion-label>
-    <ion-label class="ion-text-wrap ion-text-right">{{employeeType.description}}</ion-label>
-  </ion-item>
-    
-    <br/><BR/>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Description:</ion-label>
+    <ion-input class="confirmInput" readonly>{{employeeType.description}}</ion-input>
+  </div>
+  <br>
 
-    <ion-button color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;" (click)="confirmChanges(employeeType)">Confirm</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="returnFrom()">Return</ion-button>
+  <ion-button color="success" class="addBtn ion-float-right" (click)="confirmChanges(employeeType)">Confirm</ion-button>
+  <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="returnFrom()">Return</ion-button>
 
 </ion-content>
