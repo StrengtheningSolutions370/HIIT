@@ -41,6 +41,7 @@ export class AddEmployeeComponent implements OnInit{
   cEmployeeForm! : UntypedFormGroup;
 
   roles : any[] = [];
+  
 
   photo! : File;
   photoFlag = false;
