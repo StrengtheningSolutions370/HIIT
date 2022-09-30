@@ -14,18 +14,20 @@
     <br/>
 
     <ion-label class="ion-text-center">
-      <p style="font-size:large">Please update the qualification information below</p>
+      <p style="font-size:large">Please update the information below.</p>
     </ion-label>
 
     <br/>
 
     <div class="inputDiv">
-      <ion-label class="itemLabel">Qualification Type:</ion-label>
+      <ion-label class="itemLabel">Qualification:</ion-label>
       <ion-input class="input ion-text-capitalize" formControlName="description" type="text" required id="description" ></ion-input>
       <span class="errorSpan" *ngIf="errorControl.description.errors?.required && uQualificationForm.get('description').touched">
         Qualification is required.<br/>
       </span>
     </div>
+
+    <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Qualification Type:</ion-label>
@@ -34,14 +36,14 @@
           <ion-select-option class="ion-text-capitalize" value="{{q.qualificationTypeID}},{{q.name}}">{{ q.name }}</ion-select-option>
         </ng-container>
       </ion-select>
-    <span class="error ion-padding" *ngIf="errorControl.qualificationType.errors?.required && uQualificationForm.get('qualificationType').touched">
+    <span class="errorSpan" *ngIf="errorControl.qualificationType.errors?.required && uQualificationForm.get('qualificationType').touched">
       Qualification type is required<br/>
     </span>
     </div>
 
     <br/>
 
-    <ion-button type="submit" color="success" [disabled]="!uQualificationForm.valid" class="addBtn ion-float-right">Update Qualification</ion-button>
+    <ion-button type="submit" color="primary" [disabled]="!uQualificationForm.valid" class="addBtn ion-float-right">Update Qualification</ion-button>
     <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
     
   </form>

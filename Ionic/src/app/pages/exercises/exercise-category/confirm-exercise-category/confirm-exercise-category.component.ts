@@ -23,15 +23,14 @@ export class ConfirmExerciseCategoryComponent {
        if (data != 0){
         let match = data.result;
         if (match.length > 1){
-          this.global.showAlert("The exercise category information entered already exists on the system","Duplicate Entry");
+          this.global.showAlert("The entered information already exists on the system","Duplicate Error");
           return true;
         } else if (match.length == 1 && this.choice == 2 && match[0].exerciseCategoryID == this.exerciseCategory.exerciseCategoryID){
-          alert("Matching itself in update");
           return false;
         } else {
           console.log("Must be in ADD, with exactly 1 other match: ");
           console.log("Choice: " + this.choice);
-          this.global.showAlert("The exercise category information entered already exists on the system","Duplicate Entry");
+          this.global.showAlert("The entered information already exists on the system","Duplicate Error");
           return true;
         }
        } else {

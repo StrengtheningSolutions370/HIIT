@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Edit Title Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,26 +7,26 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <br/>
-  <div class="ion-text-center">
-    <p style="font-size:large">Please update the title information below</p>
-  </div>
-
+<ion-content class="containerMargins" color="secondary">
   <form [formGroup]="uTitleForm" (ngSubmit)="submitForm()"> 
-    <ion-item>
-      <ion-label position="stacked">Description:</ion-label>
-      <ion-input formControlName="titleDescription"  type="text" required=""></ion-input>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.titleDescription.errors?.required">
-     Description is required
-      <br/>
-    </span>
+    <br/>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please update the information below.</p>
+    </ion-label>
+
+    <br/>
+
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Description:</ion-label>
+      <ion-input class="input ion-text-capitalize" formControlName="titleDescription"  type="text" required=""></ion-input>
+      <span class="errorSpan" *ngIf="errorControl.titleDescription.errors?.required">
+        Description is required
+      </span>
+    </div>
 
    
-    <br><br/>
-    <ion-button type="submit" color="secondary" [disabled]="!uTitleForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Title</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
+    <br/>
+    <ion-button type="submit" color="primary" [disabled]="!uTitleForm.valid" class="addBtn ion-float-right">Update Title</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
   </form>
 </ion-content>

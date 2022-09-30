@@ -19,7 +19,7 @@
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Qualification:</ion-label>
-      <ion-textarea class="input ion-text-capitalize" formControlName="description" type="text" required="" id="description" ></ion-textarea>
+      <ion-input class="input ion-text-capitalize" formControlName="description" type="text" required="" id="description" ></ion-input>
       <span class="errorSpan" *ngIf="errorControl.description.errors?.required && cQualificationForm.get('description').touched">
         Qualification is required<br/>
       </span>
