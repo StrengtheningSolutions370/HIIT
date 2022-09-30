@@ -33,7 +33,6 @@ namespace Team7.Controllers
             r.Date = System.DateTime.Now;
             r.Notes = rvm.Notes;
             r.Total = rvm.RefundAmount;
-            r.complete = false;
 
             //fetch payment:
             var payment = await _paymentRepo.GetPaymentByIdAsync(rvm.PaymentID);

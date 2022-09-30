@@ -844,7 +844,7 @@ namespace Team7.Migrations
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    complete = table.Column<bool>(type: "bit", nullable: false),
+                    complete = table.Column<bool>(type: "bit", nullable: true),
                     PaymentID = table.Column<int>(type: "int", nullable: true),
                     RefundReasonID = table.Column<int>(type: "int", nullable: true)
                 },
