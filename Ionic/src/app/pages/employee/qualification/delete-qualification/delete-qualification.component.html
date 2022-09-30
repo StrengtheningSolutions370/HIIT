@@ -1,34 +1,30 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Delete Qualification Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="this.global.dismissModal()">
-        <ion-icon name="close-outline" size="large"></ion-icon>
-      </ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="containerMargins">
-  <br/>
-  <ion-label class="ion-text-center">
-    <p style="font-size:large">Are you sure you want to delete the following qualification?</p>
-  </ion-label>
-  <br/>
+<ion-content class="containerMargins" color="secondary">
+    <br/>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Are you sure you want to delete the following qualification?</p>
+    </ion-label>
+    <br/>
 
-  <div class="inputDiv">
-    <ion-label class="itemLabel">Description:</ion-label>
-    <ion-input class="deleteInput" readonly>{{qualification.description}}</ion-input>
-  </div>
-  <br>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Qualification: </ion-label>
+      <ion-input class="deleteInput ion-text-capitalize" readonly>{{qualification.description}}</ion-input>
+    </div>
 
-  <div class="inputDiv">
-    <ion-label class="itemLabel">Qualification Type:</ion-label>
-    <ion-input class="deleteInput ion-text-capitalize" readonly>{{qualification.qualificationType.name}}</ion-input>
-  </div>
-  <br>
-
-  <ion-button expand="block" type="ion-button" (click)="delete(qualification.qualificationID)" color="danger"
-    class="addBtn ion-float-right">Delete Qualification</ion-button>
-  <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
+    <div class="inputDiv"> 
+      <ion-label class="itemLabel">Qualification Type:</ion-label>
+      <ion-input class="deleteInput ion-text-capitalize" readonly>{{qualification.qualificationType.name}}</ion-input>
+    </div>
+    
+    <br>
+    <ion-button expand="block" type="ion-button" (click)="delete(qualification.qualificationID)" color="danger" class="addBtn ion-float-right">Delete Qualification</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
 </ion-content>

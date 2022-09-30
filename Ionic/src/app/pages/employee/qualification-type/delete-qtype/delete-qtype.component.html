@@ -2,29 +2,26 @@
   <ion-toolbar color="primary">
     <ion-title>Delete Qualification Type Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="this.global.dismissModal()">
-        <ion-icon name="close-outline" size="large"></ion-icon>
-      </ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<br />
 
-<ion-content class="containerMargins">
-  <ion-label class="ion-text-center">
-    <p style="font-size:large">Are you sure you want to delete the following qualification type?</p>
-  </ion-label>
-  <br>
+<ion-content class="containerMargins" color="secondary">
+    <br/>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Are you sure you want to delete the following information?</p>
+    </ion-label>
+    <br/>
 
-  <div class="inputDiv">
-    <ion-label class="itemLabel">Name:</ion-label>
-    <ion-input class="deleteInput ion-text-capitalize" readonly>{{qualificationType.name}}</ion-input>
-  </div>
-  <br>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Qualification Type: </ion-label>
+      <ion-input class="deleteInput ion-text-capitalize" readonly>{{qualificationType.name}}</ion-input>
+    </div>
 
-
-  <ion-button expand="block" type="ion-button" (click)="delete(qualificationType.qualificationTypeID)" color="danger"
-    class="addBtn ion-float-right">Delete Qualification Type</ion-button>
-  <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
+    <br>
+    <ion-button expand="block" type="ion-button" (click)="delete(qualificationType.qualificationTypeID)" color="danger" class="addBtn ion-float-right">Delete Qualification Type</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
 
 </ion-content>
+

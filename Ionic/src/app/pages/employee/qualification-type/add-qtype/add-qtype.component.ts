@@ -57,23 +57,6 @@ export class AddQtypeComponent implements ViewWillEnter {
     }
    }
 
-  async duplicateAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Qualification Type Already Exists',
-      message: 'The Qualification Type Information entered already exists on the system',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-
-  async failureAlert() {
-    const alert = await this.alertCtrl.create({
-      header: 'Could not create qualification type',
-      message: 'There was an error updating the qualification type. Please try again',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
 
 
 }
