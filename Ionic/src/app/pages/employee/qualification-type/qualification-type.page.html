@@ -14,17 +14,33 @@
   <ion-grid *ngIf="!isLoading">
     <ion-list *ngFor="let qualificationType of qualificationTypeList | filter:filter, let i = index"> 
       <ion-item-sliding>
-        <ion-item button (click)="qualificationService.viewQualificationTypeInfoModal(qualificationType)">
-          <ion-label>
-            <h1>{{qualificationType.name}}</h1>
-          </ion-label>
-          <ion-icon name="chevron-back-outline" size="small"></ion-icon>
+
+        
+        <ion-item>
+          <ion-grid class="nomargin">
+            <ion-row>
+            
+              <ion-col size="9" class="name">
+                <ion-text><h4>{{qualificationType.name}}</h4></ion-text>
+              </ion-col>
+
+              <ion-col >
+                <ion-button (click)="qualificationService.viewQualificationTypeInfoModal(qualificationType)">View</ion-button>
+              </ion-col>
+
+              <ion-icon name="chevron-back-outline" size="small"></ion-icon>
+            </ion-row>
+          </ion-grid>
+          
         </ion-item>
+
         <ion-item-options side="end" >
           <ion-item-option color="secondary" (click)="qualificationService.updateQualificationTypeInfoModal(qualificationType)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
           <ion-item-option color="tertiary" (click)="qualificationService.deleteQualificationTypeInfoModal(qualificationType)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
         </ion-item-options>
+
       </ion-item-sliding>
+
     </ion-list>
   </ion-grid>   
 
