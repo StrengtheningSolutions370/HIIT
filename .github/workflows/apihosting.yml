@@ -21,6 +21,7 @@ env:
   WORKING_DIRECTORY: .
 jobs:
   build:
+    run: cd ./"Core API"/Team7
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
