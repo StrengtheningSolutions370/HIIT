@@ -98,6 +98,8 @@ namespace Team7.Controllers
 
             Supplier supplier = await this._supplierRepo.GetSupplierIdAsync(id);
 
+            if(supplier.Orders != null)
+           
             if (supplier.Orders.Count != 0)
                 return Conflict(new { supplier = supplier });
 

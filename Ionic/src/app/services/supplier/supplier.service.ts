@@ -97,12 +97,12 @@ export class SupplierService {
     return new Promise<any>((resolve, _) => {
       this.global.nativeLoad("Deleting...");
       this.repo.deleteSupplier(id).subscribe({
-        next: () => {
+        next: (data : any) => {
           this.fetchSuppliersEvent.emit();
-          resolve(true);
+          resolve(data);
         },
-        error: () => {
-          resolve(false);
+        error: (data : any) => {
+          resolve(data);
         }
       }).add(() => {
         this.global.endNativeLoad();
@@ -224,7 +224,7 @@ export class SupplierService {
 
   }
 
-  async associativeSupplierModal(supplier: Supplier) {
+  async associativeSupplierModal(supplier: any) {
     console.log("SupplierService: AssociativeModalCall");
     const modal = await this.modalCtrl.create({
       component: AssociativeSupplierComponent,
