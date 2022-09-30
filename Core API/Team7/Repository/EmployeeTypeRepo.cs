@@ -133,7 +133,29 @@ namespace Team7.Models.Repository
 
         public async Task<EmployeeType> _GetEmployeeTypeIdAsync(int id)
         {
-            IQueryable<EmployeeType> query = DB.EmployeeType.Where(v => v.EmployeeTypeID == id);
+            var query = DB.EmployeeType.Where(v => v.EmployeeTypeID == id).Select(t => new EmployeeType
+            {
+                EmployeeTypeID = t.EmployeeTypeID,
+                Name = t.Name,
+                Description = t.Description,
+                Employee = t.Employee
+
+            });
+
+
+            var users = await DB.Users.ToArrayAsync();
+            var types = await query.ToArrayAsync();
+            //foreach (EmployeeType e in emps)
+            //{
+            for ( var i = 0; i < types.Length; i++)
+            {
+                for ( var j = 0; j < users.Length; j++)
+                {
+                    var user = users[i];
+                }
+            }
+            //}
+
             if (!query.Any())
             {
                 return null;
