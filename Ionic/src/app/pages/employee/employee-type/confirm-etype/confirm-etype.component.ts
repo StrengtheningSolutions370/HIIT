@@ -25,7 +25,7 @@ export class ConfirmEtypeComponent {
     return this.employeeService.matchingEmployeeType(name).then(result => {
       console.log(result);
       if (result !== 0) {
-        this.global.showAlert('The employee type information entered already exists on the system', 'Duplicate Entry');
+        this.global.showAlert('The entered information already exists on the system', 'Duplicate Error');
         return true;
       } else {
         return false;

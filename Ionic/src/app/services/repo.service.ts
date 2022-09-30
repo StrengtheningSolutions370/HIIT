@@ -36,6 +36,7 @@ export class RepoService {
   //Hosted base:
   //base = 'http://localhost:5001/api/';
   //Local base:
+
   base = 'https://localhost:44383/api/';
   AppUserController = 'AppUser/';
   BookingController = 'Booking/'

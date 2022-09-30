@@ -11,18 +11,20 @@
 <ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cQTypeForm" (ngSubmit)="submitForm()"> 
     <br/>
-    <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the qualification type information below.</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please fill in the information below.</p>
+    </ion-label>
 
+    <br/>
+    
     <div class="inputDiv">
-      <ion-label class="itemLabel">Name:</ion-label>
+      <ion-label class="itemLabel">Qualification Type:</ion-label>
       <ion-input class="input ion-text-capitalize" formControlName="qualificationTypeName" type="text" required="" id="qualificationTypeName"></ion-input>
       <span class="errorSpan" *ngIf="errorControl.qualificationTypeName.errors?.required && cQTypeForm.get('qualificationTypeName').touched">
-        Name is required<br/>
+        Qualification type is required<br/>
       </span>
     </div>
-    <br>
+    <br/>
 
     <ion-button type="submit" color="primary" [disabled]="!cQTypeForm.valid" class="addBtn ion-float-right">Create Qualification Type</ion-button>
     <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>

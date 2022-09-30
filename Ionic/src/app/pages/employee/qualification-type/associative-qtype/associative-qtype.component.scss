@@ -10,7 +10,12 @@ ion-item {
 }
 
 span {
-    color : tertiary;
+    color : danger;
     font-size: large;
-    margin-left: 12%;  
+    padding-bottom: 20px;
+    margin-left: 12%; 
+}
+
+p {
+    font-size : 110%;
 }

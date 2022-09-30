@@ -23,15 +23,14 @@ export class ConfirmQtypeComponent {
        if (data != 0){
         let match = data.result;
         if (match.length > 1){
-          this.global.showAlert("The qualification type information entered already exists on the system","Qualification Type Already Exists");
+          this.global.showAlert("The entered information already exists on the system","Duplicate Error");
           return true;
         } else if (match.length == 1 && this.choice == 2 && match[0].qualificationTypeID == this.qualificationType.qualificationTypeID){
-          alert("Matching itself in update");
           return false;
         } else {
           console.log("Must be in ADD, with exactly 1 other match: ");
           console.log("Choice: " + this.choice);
-          this.global.showAlert("The qualification type information entered already exists on the system","Qualification Type Already Exists");
+          this.global.showAlert("The entered information already exists on the system","Duplicate Error");
           return true;
         }
        } else {
@@ -48,17 +47,15 @@ export class ConfirmQtypeComponent {
          return;
        } else {
           if (this.choice === 1){
-            console.log('Add booking type from confirm:');
             //CallRepoToCreate
             this.qualificationService.createQualificationType(this.qualificationType);
             this.global.dismissModal();
-            this.global.showToast('The qualification type has been successfully added!');
+            this.global.showToast('The qualification type has been successfully created!');
         } else if (this.choice === 2){
-            console.log('Update booking type from confirm:');
             //CallRepoToUpdate
             this.qualificationService.updateQualificationTypes(this.qualificationType.qualificationTypeID,this.qualificationType);
             this.global.dismissModal();
-            this.global.showToast('The booking type has been successfully updated!');
+            this.global.showToast('The qualification type has been successfully updated!');
           }
         }
       }

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>New Qualification Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -11,22 +11,24 @@
 <ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cQualificationForm" (ngSubmit)="submitForm()"> 
     <br/>
-    <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the qualification information below</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please fill in the information below.</p>
+    </ion-label>
+
+    <br/>
 
     <div class="inputDiv">
-      <ion-label class="itemLabel">Description:</ion-label>
-      <ion-textarea class="input" formControlName="description" type="text" required="" id="description" ></ion-textarea>
+      <ion-label class="itemLabel">Qualification:</ion-label>
+      <ion-input class="input ion-text-capitalize" formControlName="description" type="text" required="" id="description" ></ion-input>
       <span class="errorSpan" *ngIf="errorControl.description.errors?.required && cQualificationForm.get('description').touched">
-        Description is required<br/>
+        Qualification is required<br/>
       </span>
     </div>
     <br>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Qualification Type:</ion-label>
-      <ion-select class="input" formControlName="qualificationType" type="text" required="" id="qualificationType" placeholder="Select Qualification Type" >
+      <ion-select interface="popover" class="input" formControlName="qualificationType" type="text" required="" id="qualificationType" placeholder="Select Qualification Type" >
         <ng-container *ngFor="let q of this.qualificationTypeDropDown">
           <ion-select-option class="ion-text-capitalize" value="{{q.qualificationTypeID}},{{q.name}}">{{ q.name }}</ion-select-option>
         </ng-container>
