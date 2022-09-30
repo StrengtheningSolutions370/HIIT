@@ -2,7 +2,7 @@ name: Build and deploy .NET Core application to Web App apihosting with API Mana
 on:
   push:
     branches:
-    - shannon
+    - deploy
 env:
   AZURE_WEBAPP_NAME: apihosting
   AZURE_WEBAPP_PACKAGE_PATH: ./publish
