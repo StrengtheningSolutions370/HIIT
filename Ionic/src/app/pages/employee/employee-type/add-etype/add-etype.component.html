@@ -11,15 +11,17 @@
 <ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cEmployeeTypeForm" (ngSubmit)="submitForm()"> 
     <br/>
-    <div class="ion-text-center">
-      <p>Please fill in the employee type information below.</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p>Please fill in the information below.</p>
+    </ion-label>
+
+    <br/>
 
     <div class="inputDiv">
-      <ion-label class="itemLabel">Name:</ion-label>
+      <ion-label class="itemLabel">Employee Type:</ion-label>
       <ion-input class="input ion-text-capitalize" formControlName="name" type="text" required="" id="name"></ion-input>
       <span class="errorSpan" *ngIf="errorControl.name.errors?.required && cEmployeeTypeForm.get('name').touched">
-        Name is required<br/>
+        Employee type is required<br/>
       </span>
     </div>
     <br>
