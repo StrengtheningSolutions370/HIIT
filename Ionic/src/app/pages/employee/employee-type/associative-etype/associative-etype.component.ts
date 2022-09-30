@@ -8,10 +8,12 @@ import { GlobalService } from 'src/app/services/global/global.service';
   styleUrls: ['./associative-etype.component.scss'],
 })
 export class AssociativeEtypeComponent implements OnInit {
-  @Input() employeeType: EmployeeType;
+  @Input() employeeType: any;
 
   constructor(public global: GlobalService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('TYPE', this.employeeType)
+  }
 
 }
