@@ -19,6 +19,6 @@ export class DeleteExerciseCategoryComponent {
   async delete(id: number){
     this.exerciseService.deleteExerciseCategory(id);
     this.global.dismissModal();
-    this.global.showToast("The Exercise Category has been successfully deleted")
+    this.global.showToast("The Exercise Category has been successfully deleted!")
   }
 }

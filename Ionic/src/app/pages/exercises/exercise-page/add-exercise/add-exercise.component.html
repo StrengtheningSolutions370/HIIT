@@ -10,9 +10,10 @@
 <ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cExerciseForm" (ngSubmit)="submitForm()"> 
     <br/>
-    <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the exercise information below</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please fill in the information below.</p>
+    </ion-label>
+    <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Name:</ion-label>
@@ -21,7 +22,7 @@
         Name is required<br/>
       </span>
     </div>
-    <br>
+    <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Muscle Focus:</ion-label>
@@ -30,7 +31,7 @@
         Focus is required<br/>
       </span>
     </div>
-    <br>
+    <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Youtube Url:</ion-label>
@@ -39,7 +40,7 @@
         Please submit a URL from Youtube<br/>
       </span>
     </div>
-    <br>
+    <br/>
 
     <ion-item *ngIf="showVideo"> 
       <!-- <ion-label class="ion-text-right">{{exercise.url}}</ion-label> -->
@@ -49,7 +50,7 @@
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Exercise Category:</ion-label>
-      <ion-select class="input" formControlName="exerciseCategory" type="text" required="" id="exerciseCategory" placeholder="Select Exercise Category" >
+      <ion-select interface="popover" class="input" formControlName="exerciseCategory" type="text" required="" id="exerciseCategory" placeholder="Select Exercise Category" >
         <ng-container *ngFor="let ec of exerciseCategoryDropDown">
           <ion-select-option class="ion-text-capitalize" value="{{ec.exerciseCategoryID}},{{ec.name}}">{{ ec.name }}</ion-select-option>
         </ng-container>
@@ -58,7 +59,7 @@
         Exercise category is required <br/>
        </span>
      </div>
-    <br>
+    <br/>
 
     <ion-button type="submit" color="primary" [disabled]="!cExerciseForm.valid"  class="addBtn ion-float-right">Create Exercise</ion-button>
     <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
