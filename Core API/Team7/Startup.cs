@@ -28,14 +28,14 @@ namespace Team7
     public class Startup
     {
         readonly string corsPolicy = "_myAllowSpecificOrigins";
-        TimedEventService time_pba = new TimedEventService();
+        //TimedEventService time_pba = new TimedEventService();
 
         public Startup(IConfiguration configuration)
         {
             try
             {
                 Configuration = configuration;
-                time_pba.start();
+                //time_pba.start();
             }
             catch (Exception ex)
             {
@@ -131,6 +131,7 @@ namespace Team7
             //DB configuration
             services.AddDbContext<AppDB>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("Azure")));
+            
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
             services.AddScoped<IBookingPriceHistoryRepo, BookingPriceHistoryRepo>();

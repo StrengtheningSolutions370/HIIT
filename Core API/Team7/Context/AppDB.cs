@@ -8,11 +8,12 @@ namespace Team7.Context
     {
         public AppDB()
         {
+           
         }
 
         public AppDB(DbContextOptions<AppDB> options) : base(options)
         {
-
+            
         }
 
         public virtual DbSet<Booking> Booking { get; set; }

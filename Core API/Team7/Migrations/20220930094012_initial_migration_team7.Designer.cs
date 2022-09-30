@@ -12,8 +12,8 @@ using Team7.Context;
 namespace Team7.Migrations
 {
     [DbContext(typeof(AppDB))]
-    [Migration("20220930084258_initial")]
-    partial class initial
+    [Migration("20220930094012_initial_migration_team7")]
+    partial class initial_migration_team7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
