@@ -18,10 +18,9 @@ env:
   API_IMPORT_VERSION: v1
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
-  WORKING_DIRECTORY: .
+  WORKING_DIRECTORY: ./"Core API"/"Team7"
 jobs:
   build:
-    run: cd ./"Core API"/Team7
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
