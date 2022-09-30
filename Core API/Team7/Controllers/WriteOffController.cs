@@ -72,7 +72,7 @@ namespace Team7.Controllers
                 toUpdate.QuantityOnHand = toUpdate.QuantityOnHand - wl.Quantity;
                 _saleItemRepo.Update<SaleItem>(toUpdate);
             }*/
-
+            await _saleItemRepo.SaveChangesAsync();
             await _writeOffRepo.SaveChangesAsync();
             await _writeOffLineRepo.SaveChangesAsync();
             return Ok();
