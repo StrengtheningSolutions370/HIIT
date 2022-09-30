@@ -16,6 +16,9 @@ namespace Team7.Models.Repository
 
         Task<object> GetWriteOffReasonIdAsync(int id);
 
+
+        Task<object> GetWriteOffs(WriteOffReason r);
+
         Task<WriteOffReason> _GetWriteOffReasonIdAsync(int id);
 
         Task<bool> SaveChangesAsync();
