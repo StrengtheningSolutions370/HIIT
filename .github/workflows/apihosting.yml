@@ -1,6 +1,6 @@
 name: Build and deploy .NET Core application to Web App apihosting with API Management Service Team7api-Team7apimanagement
 on:
-  pull_request:
+  push:
     branches:
     - deploy
 env:
