@@ -13,15 +13,27 @@
   <ion-grid *ngIf="!isLoading" >
     <ion-list *ngFor="let bt of bookingTypeList | filter:filter, let i = index">
       <ion-item-sliding >
-        <ion-item button (click)="bookingService.viewBookingTypeModal(bt)" >
-          <ion-label style="padding-left:2% ;">
-            <h1>{{bt.name}}</h1>
-          </ion-label >
+        <ion-item >
+          <ion-grid class="nomargin">
+            <ion-row>
+
+              <ion-col size="9" class="name">
+                <ion-text><h4>{{bt.name}}</h4></ion-text>
+              </ion-col>
+
+              <ion-col>
+                <ion-button (click)="bookingService.viewBookingTypeModal(bt)">View</ion-button>
+              </ion-col>
+          
           <ion-icon name="chevron-back-outline" size="small"></ion-icon>
+        </ion-row>
+        </ion-grid>
+        
         </ion-item>
+      
         <ion-item-options side="end" >
           <ion-item-option color="secondary" (click)="bookingService.updateBookingTypeModal(bt)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
-          <ion-item-option color="danger" (click)="bookingService.deleteBookingTypeModal(bt)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
+          <ion-item-option color="tertiary" (click)="bookingService.deleteBookingTypeModal(bt)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
@@ -30,4 +42,9 @@
   <div class="ion-text-center " *ngIf="isLoading">
     <ion-spinner name="circles"></ion-spinner>
   </div>
+
+  <ion-text id="noRes" *ngIf="noresults">
+    <h1>No Results</h1>
+  </ion-text>
+  
 </ion-content>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { WriteOffReason } from 'src/app/models/write-off-reason';
+import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
   selector: 'app-associative-write-off-reason',
@@ -6,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./associative-write-off-reason.component.scss'],
 })
 export class AssociativeWriteOffReasonComponent implements OnInit {
+  @Input() writeOffReason: WriteOffReason;
 
-  constructor() { }
+  constructor(public global: GlobalService) { }
 
   ngOnInit() {}
 

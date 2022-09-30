@@ -15,10 +15,10 @@
     </ion-label>
     <br/>
     <div class="inputDiv">
-      <ion-label class="itemLabel">Description:</ion-label>
+      <ion-label class="itemLabel">Reason:</ion-label>
       <ion-textarea class="input ion-text-capitalize" formControlName="writeOffReasonDescription" type="text" required="" id="writeOffReasonDescription" ></ion-textarea>
       <span class="errorSpan" *ngIf="errorControl.writeOffReasonDescription.errors?.required && cWriteOffReasonForm.get('writeOffReasonDescription').touched">
-        Description is required<br/>
+        Reason is required<br/>
       </span>
     </div>
     <br>

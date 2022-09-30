@@ -15,7 +15,7 @@ export class BookingTypePage implements OnInit {
 
     //Create local exercise category array to be populated onInit.
     bookingTypeList: BookingType[] = [];
-
+    noresults = false;
     //Subscription variable to track live updates.
     bookingType: Subscription;
 
@@ -34,6 +34,8 @@ export class BookingTypePage implements OnInit {
           console.log(data);
           this.isLoading = false;
           this.bookingTypeList = data.result;
+          if (this.bookingTypeList.length == 0)
+            this.noresults = true;
         }
       }
     );

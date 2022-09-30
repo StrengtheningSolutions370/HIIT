@@ -1,3 +1,24 @@
-<p>
-  associative-write-off-reason works!
-</p>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Associated Write-Off/s</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="containerMargins" color="secondary">
+  <br/>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large"> The write-off reason cannot be deleted because the following write-off/s are associated with it</p>
+  </ion-label>
+
+    <ion-list> 
+    <ion-item *ngFor="let writeOff of writeOffReason.writeOffs" > 
+      <ion-label class="input ion-text-capitalize ion-text-center">{{writeOff.writeOffLine[0].saleItem.name}} written off by {{writeOffReason.writeOffs[0].employee.appUser.firstName}} {{writeOffReason.writeOffs[0].employee.appUser.lastName}}</ion-label>
+    </ion-item>
+    </ion-list>
+
+  <br>
+  <ion-button color="tertiary" class="addBtn ion-float-right" (click)="this.global.dismissModal()">Return</ion-button>
+</ion-content>
