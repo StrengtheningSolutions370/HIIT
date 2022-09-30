@@ -10,13 +10,15 @@
 <ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cTitleForm" (ngSubmit)="submitForm()"> 
     <br/>
-    <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the title information below</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please fill in the information below.</p>
+    </ion-label>
+
+    <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Description:</ion-label>
-      <ion-textarea class="input" formControlName="titleDescription" type="text" required="" id="titleDescription" ></ion-textarea>
+      <ion-input class="input" formControlName="titleDescription" type="text" required="" id="titleDescription" ></ion-input>
       <span class="errorSpan" *ngIf="errorControl.titleDescription.errors?.required && cTitleForm.get('titleDescription').touched">
         Description is required<br/>
       </span>

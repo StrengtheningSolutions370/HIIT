@@ -19,10 +19,15 @@ ion-card {
 
 ion-button {
     border-radius : 10px;
-    width : 15%;
 }
 
-p {
-    font-size: large;
-
+.name{
+    padding-left: 5%;
 }
+
+#noRes {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

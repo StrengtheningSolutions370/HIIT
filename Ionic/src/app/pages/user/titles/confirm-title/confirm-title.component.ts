@@ -20,7 +20,7 @@ export class ConfirmTitleComponent{
     return this.titleService.matchingTitle(description).then(result => {
       console.log(result);
        if (result != false){
-         this.global.showAlert("The title information entered already exists on the system","Title Already Exists");
+         this.global.showAlert("The entered information already exists on the system","Duplicate Error");
          return true;
        } else {
          return false;
