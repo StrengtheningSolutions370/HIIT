@@ -31,9 +31,12 @@ import { WriteOff } from '../models/write-off';
 })
 
 export class RepoService {
-  // base = 'https://bsctest.azurewebsites.net/api/';
-  base = 'http://localhost:5001/api/';
-  //base = 'https://localhost:44383/api/';
+  //Azure hosted api base:
+  //base = 'https://bsctest.azurewebsites.net/api/';
+  //Hosted base:
+  //base = 'http://localhost:5001/api/';
+  //Local base:
+  base = 'https://localhost:44383/api/';
   AppUserController = 'AppUser/';
   BookingController = 'Booking/'
   BookingTypeController = 'BookingType/';
@@ -369,11 +372,11 @@ getMatchSaleItem(name: string, description: string): Observable<any>{
 }
 // //Image Upload
 uploadSaleItemImage(data: FormData): Observable<any> {
-  return this.http.post('http://localhost:5001/api/SaleItem/upload', data);
+  return this.http.post(`${this.base+this.SaleItemController}upload`, data);
 }
 // //reImage Upload
 deleteSaleItemImage(id : string) : Observable<any> {
-  return this.http.delete(`http://localhost:5001/api/SaleItem/deletephoto?name=${id}`)
+  return this.http.delete(`${this.base+this.SaleItemController}deletephoto?name=${id}`)
 }
 
 //Image Upload
