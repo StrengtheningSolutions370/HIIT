@@ -74,6 +74,7 @@ export class GlobalService {
       await this.alertCtrl.create({
         header: header ? header : 'Alert!',
         message: message,
+        cssClass: 'alertCss',
         buttons: buttonArray ? buttonArray : ['Ok']
       })
       .then(alertEl => alertEl.present());
