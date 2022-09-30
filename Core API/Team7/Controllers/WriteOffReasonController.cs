@@ -87,7 +87,7 @@ namespace Team7.Controllers
             if (tempWriteOffReason.WriteOffLine != null)
             {
                 var writeoffs = await WriteOffReasonRepo.GetWriteOffs(tempWriteOffReason);
-                return Conflict(new { reason = tempWriteOffReason, writeoffs = writeoffs });
+                return Conflict(new { reason = tempWriteOffReason, writeoffs = writeoffs})
             }
 
             try
