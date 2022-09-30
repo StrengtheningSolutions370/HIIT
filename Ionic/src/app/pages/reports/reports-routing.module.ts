@@ -5,7 +5,7 @@ import { ReportsPage } from './reports.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: 'reports',
     component: ReportsPage,
     children:[
       {
@@ -32,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'tabs/sale-report',
+    redirectTo: 'reports',
     pathMatch: 'full'
   }
 ];

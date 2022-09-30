@@ -2,35 +2,34 @@
   <ion-toolbar color="primary">
     <ion-title>Confirm Qualification Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="this.global.dismissModal()">
-        <ion-icon name="close-outline" size="large"></ion-icon>
-      </ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="containerMargins" color="secondary">
-  <br />
-  <div class="ion-text-center">
-    <p style="font-size:large">Please confirm the following qualification information</p>
-  </div>
+  <br/>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large">Please confirm the following information</p>
+  </ion-label>
+
+  <br/>
 
   <div class="inputDiv">
-    <ion-label class="itemLabel">Description:</ion-label>
-    <ion-input class="confirmInput" readonly>{{qualification.description}}</ion-input>
+    <ion-label class="itemLabel">Qualification:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>{{qualification.description}}</ion-input>
   </div>
-  <br>
 
+  <br/>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Qualification Type:</ion-label>
     <ion-input class="confirmInput ion-text-capitalize" readonly>{{qualificationType}}</ion-input>
   </div>
-  <br>
+   
+    <br/>
 
-
-  <ion-button color="success" class="addBtn ion-float-right" (click)="confirmChanges(qualification)">Confirm
-  </ion-button>
-  <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="returnFrom()">Return</ion-button>
+    <ion-button color="success" class="addBtn ion-float-right" (click)="confirmChanges(qualification)">Confirm</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="returnFrom()">Return</ion-button>
 
 </ion-content>
