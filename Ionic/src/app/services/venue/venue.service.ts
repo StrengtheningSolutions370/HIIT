@@ -14,6 +14,7 @@ import { ConfirmVenueComponent } from 'src/app/pages/venue/confirm-venue/confirm
 import { AssociativeVenueComponent } from 'src/app/pages/venue/associative-venue/associative-venue.component';
 import { RepoService } from '../repo.service';
 import { Observable } from 'rxjs';
+import { GlobalService } from '../global/global.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class VenueService {
 
   @Output() fetchVenuesEvent = new EventEmitter<Venue>();
 
-  constructor(public repo: RepoService, private modalCtrl: ModalController) {
+  constructor(public repo: RepoService, private modalCtrl: ModalController, public global: GlobalService) {
     this.getAllVenues();
   }
 
@@ -65,14 +66,35 @@ export class VenueService {
    }
 
   //DELETE:
-   deleteVenue(id: number){
-    this.repo.deleteVenue(id).subscribe(result => {
-      console.log('VENUE DELETED');
-      this.fetchVenuesEvent.emit();
+  //  deleteVenue(id: number){
+  //   this.repo.deleteVenue(id).subscribe(result => {
+  //     console.log('VENUE DELETED');
+  //     this.fetchVenuesEvent.emit();
+  //   });
+  //  }
+
+   deleteVenue(id: number) : Promise<any> {
+    // this.repo.deleteExercise(id).subscribe(result => {
+    //   console.log('EXERCISE DELETED');
+    //   this.fetchExercisesEvent.emit();
+    // });
+
+    return new Promise<any>((resolve, _) => {
+      this.global.nativeLoad("Deleting...");
+      this.repo.deleteVenue(id).subscribe({
+        next: (data : any) => {
+          this.fetchVenuesEvent.emit();
+          resolve(data);
+        },
+        error: (err : any) => {
+          resolve(err);
+        }
+      }).add(() => {
+        this.global.endNativeLoad();
+      })
     });
+
    }
-
-
 
 
   //MODALS:
@@ -121,7 +143,7 @@ export class VenueService {
     }
   }
   //ASSOCIATIVE
-  async associativeVenueModal(venue: Venue) {
+  async associativeVenueModal(venue: any) {
     console.log("VenueService: AssociativeModalCall");
     const modal = await this.modalCtrl.create({
       component: AssociativeVenueComponent,

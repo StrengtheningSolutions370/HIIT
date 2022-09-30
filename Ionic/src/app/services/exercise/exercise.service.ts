@@ -166,12 +166,12 @@ export class ExerciseService {
     return new Promise<any>((resolve, _) => {
       this.global.nativeLoad("Deleting...");
       this.repo.deleteExercise(id).subscribe({
-        next: () => {
+        next: (data : any) => {
           this.fetchExercisesEvent.emit();
-          resolve(true);
+          resolve(data);
         },
-        error: () => {
-          resolve(false);
+        error: (err : any) => {
+          resolve(err);
         }
       }).add(() => {
         this.global.endNativeLoad();
@@ -186,11 +186,18 @@ export class ExerciseService {
    }
 
    //Receives a exercise category to delete in the service exercise category list.
-   deleteExerciseCategory(id: number){
-    this.repo.deleteExerciseCategory(id).subscribe(result => {
-      console.log('EXERCISE CATEGORY DELETED');
-      this.fetchExerciseCategorysEvent.emit();
-    });
+   deleteExerciseCategory(id: number ) : Promise<any> {
+    return new Promise<any>((res, rej) => {
+      this.repo.deleteExerciseCategory(id).subscribe({
+        next: (res : any) => {
+          this.fetchExerciseCategorysEvent.emit();
+          res(res)
+        },
+        error: (err : any) => {
+          res(err);
+        }
+      });
+    })
    }
 
    matchingExerciseCategory(name: string, description: string):Promise<any>{
@@ -408,7 +415,7 @@ export class ExerciseService {
 
   }
 
-  async associativeExerciseCategoryModal(exerciseCategory: ExerciseCategory) {
+  async associativeExerciseCategoryModal(exerciseCategory: any) {
     console.log("ExerciseCategoryService: AssociativeModalCall");
     const modal = await this.modalCtrl.create({
       component: AssociativeExerciseCategoryComponent,
@@ -419,8 +426,8 @@ export class ExerciseService {
     await modal.present();
   }
 
-  async associativeExerciseModal(exercise: Exercise) {
-    console.log("ExerciseService: AssociativeModalCall");
+  async associativeExerciseModal(exercise: any) {
+    console.log("ExerciseService: AssociativeModalCall", exercise);
     const modal = await this.modalCtrl.create({
       component: AssociativeExerciseComponent,
       componentProps: {

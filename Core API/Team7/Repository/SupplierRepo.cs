@@ -72,6 +72,7 @@ namespace Team7.Models.Repository
                 Email = s.Email,
                 Cell = s.Cell,
                 Address = s.Address,
+                Orders = s.Orders
             });
 
             if (!query.Any())

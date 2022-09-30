@@ -12,6 +12,8 @@ namespace Team7.Models.Repository
 
         Task<object> GetAllExercisesAsync();
 
+        Task<object> GetAttatchedLessons(Exercise e);
+
         Task<Exercise[]> _GetAllExercisesAsync();
 
         Task<object> GetExercisesAsync(string name, string description);

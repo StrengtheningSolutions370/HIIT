@@ -82,6 +82,10 @@ namespace Team7.Controllers
             {
                 return NotFound();
             }
+
+            if (tempRefundReason.Refund != null)
+                return Conflict(new { refund = tempRefundReason });
+
             try
             {
                 RefundReasonRepo.Delete<RefundReason>(tempRefundReason);

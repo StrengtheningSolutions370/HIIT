@@ -43,7 +43,7 @@ namespace Team7.Models.Repository
                 {
                     RefundReasonID = rr.RefundReasonID,
                     Description = rr.Description,
-                    Refund = rr.Refund
+                    //Refund = rr.Refund
                 }).ToListAsync()
             };
 
