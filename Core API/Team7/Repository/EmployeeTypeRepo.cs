@@ -139,14 +139,11 @@ namespace Team7.Models.Repository
                 Name = t.Name,
                 Description = t.Description,
                 Employee = t.Employee
-
             });
 
 
             var users = await DB.Users.ToArrayAsync();
             var types = await query.ToArrayAsync();
-            //foreach (EmployeeType e in emps)
-            //{
             for ( var i = 0; i < types.Length; i++)
             {
                 for ( var j = 0; j < users.Length; j++)
@@ -154,7 +151,6 @@ namespace Team7.Models.Repository
                     var user = users[i];
                 }
             }
-            //}
 
             if (!query.Any())
             {

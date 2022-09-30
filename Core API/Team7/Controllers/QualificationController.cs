@@ -66,10 +66,17 @@ namespace Team7.Controllers
         public async Task<IActionResult> DeleteQualification(int id)
         {
             var tempQualification = await qualificationRepo._GetQualificationIdAsync(id);
+
+
+
             if (tempQualification == null)
             {
                 return NotFound("Could not find existing Qualification with id:" + id);
             }
+
+            if (tempQualification.Employee != null)
+                return Conflict(new { qualification = tempQualification });
+
             try
             {
                 qualificationRepo.Delete<Qualification>(tempQualification);
