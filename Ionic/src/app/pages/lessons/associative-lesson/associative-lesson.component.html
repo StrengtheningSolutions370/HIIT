@@ -1,3 +1,30 @@
-<p>
-  associative-lesson works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Lessons associated with Schedule/s</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <br/>
+
+  <div class="ion-text-center">
+      <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">
+        "{{lesson.name}}" cannot be deleted because the following schedules are associated with it
+      </p>
+
+      <ion-list> 
+        <ion-item *ngFor="let schedule of lesson.schedule">
+          <ion-label>Schedules: </ion-label>
+          <ion-label class="ion-text-right">{{ schedule.venue.name }}</ion-label>
+        </ion-item>
+      </ion-list>
+
+  </div>
+
+  <ion-button color="light" class="ion-float-right" style="margin-right:10%;width:30% " (click)="this.global.dismissModal()">Return</ion-button>
+
+</ion-content>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { GlobalService } from 'src/app/services/global/global.service';
+
 
 @Component({
   selector: 'app-associative-lesson',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AssociativeLessonComponent implements OnInit {
 
-  constructor() { }
+  @Input() lesson: any
+
+  constructor(public global : GlobalService) { }
 
   ngOnInit() {}
 

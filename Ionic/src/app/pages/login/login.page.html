@@ -34,8 +34,7 @@
 
           <div class="inputDiv">
               <!-- <ion-icon name="key" slot="start" color="#282828"></ion-icon> -->
-              <!-- <ion-icon [name]="passType ? 'eye-outline':'eye-off-outline'" slot="end" color="#282828" (click)="updateIcn()"></ion-icon> -->
-              <ion-input class="input" [type]="passType ? 'password' : 'text'" name="password" ngModel #passCtrl="ngModel" placeholder="Password" required minlength="8"></ion-input>
+              <ion-input class="input" [type]="passType ? 'password' : 'text'" name="password" ngModel #passCtrl="ngModel" placeholder="Password" required minlength="8">  <ion-icon [name]="passType ? 'eye-outline':'eye-off-outline'" slot="end" color="#282828" (click)="updateIcn()"></ion-icon></ion-input>
           </div>
           <ion-text color="danger" *ngIf="!passCtrl.valid && passCtrl.touched">
             <p>Password should be minimum of 8 characters</p>
@@ -60,7 +59,7 @@
 
       <div class="ion-text-end row">
 
-        <p>Dont have an account?</p>
+        <p>Don't have an account?</p>
 
         <b><a routerLink="/login/signup"><p style="color:#969696">Sign Up</p></a></b> 
 
