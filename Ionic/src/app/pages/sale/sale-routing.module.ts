@@ -31,26 +31,25 @@ const routes: Routes = [
       {
         path: 'write-off',
         loadChildren: () => import('./write-off/write-off.module').then( m => m.WriteOffPageModule)
-      }
+      },
+      
     ]
   },
   {
     path: '',
     redirectTo: 'tabs/sale-item',
     pathMatch: 'full'
-  },
-  {
-    path: 'write-off',
-    loadChildren: () => import('./write-off/write-off.module').then( m => m.WriteOffPageModule)
-  },
-  {
-    path: 'write-off-reason',
-    loadChildren: () => import('./write-off-reason/write-off-reason.module').then( m => m.WriteOffReasonPageModule)
   }
-
-
-
 ];
+
+// {
+//   path: 'write-off',
+//   loadChildren: () => import('./write-off/write-off.module').then( m => m.WriteOffPageModule)
+// },
+// {
+//   path: 'write-off-reason',
+//   loadChildren: () => import('./write-off-reason/write-off-reason.module').then( m => m.WriteOffReasonPageModule)
+// }
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
