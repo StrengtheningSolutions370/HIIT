@@ -11,8 +11,16 @@ export class AssociativeLessonComponent implements OnInit {
 
   @Input() lesson: any
 
-  constructor(public global : GlobalService) { }
+  constructor(public global : GlobalService) {
+  }
+  
+  ngOnInit() {
+    this.lesson = this.lesson.lesson;
+    console.log(this.lesson);
+  }
 
-  ngOnInit() {}
+  getTime(time : string) {
+    return time.split('T')[0];
+  }
 
 }

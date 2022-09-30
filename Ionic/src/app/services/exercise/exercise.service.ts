@@ -166,12 +166,12 @@ export class ExerciseService {
     return new Promise<any>((resolve, _) => {
       this.global.nativeLoad("Deleting...");
       this.repo.deleteExercise(id).subscribe({
-        next: () => {
+        next: (data : any) => {
           this.fetchExercisesEvent.emit();
-          resolve(true);
+          resolve(data);
         },
-        error: () => {
-          resolve(false);
+        error: (err : any) => {
+          resolve(err);
         }
       }).add(() => {
         this.global.endNativeLoad();
@@ -419,8 +419,8 @@ export class ExerciseService {
     await modal.present();
   }
 
-  async associativeExerciseModal(exercise: Exercise) {
-    console.log("ExerciseService: AssociativeModalCall");
+  async associativeExerciseModal(exercise: any) {
+    console.log("ExerciseService: AssociativeModalCall", exercise);
     const modal = await this.modalCtrl.create({
       component: AssociativeExerciseComponent,
       componentProps: {

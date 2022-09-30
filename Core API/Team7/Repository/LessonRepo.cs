@@ -103,7 +103,13 @@ namespace Team7.Models.Repository
                 }).SingleAsync();
 
             List<Schedule> o = new List<Schedule>();
-            var t = await DB.Schedule.Select(s => new Schedule { Lesson = new Lesson { LessonID = s.Lesson.LessonID }}).ToArrayAsync();
+            var t = await DB.Schedule.Select(s => new Schedule { Lesson = new Lesson { 
+                LessonID = s.Lesson.LessonID,
+                Name = s.Lesson.Name,
+            },
+                Venue = s.Venue,
+                StartDateTime = s.StartDateTime,
+            }).ToArrayAsync();
             foreach(Schedule s in t)
             {
                 if (s.Lesson.LessonID == temp.LessonID)

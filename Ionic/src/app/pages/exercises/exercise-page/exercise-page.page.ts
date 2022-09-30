@@ -43,6 +43,8 @@ constructor(private modalCtrl: ModalController, public global : GlobalService, p
           this.isLoading = false;
           this.exerciseList = data;
           this.exerciseListOriginal = data;
+          if (this.exerciseList.length == 0)
+            this.noresults = true;
         }
       }
     );
