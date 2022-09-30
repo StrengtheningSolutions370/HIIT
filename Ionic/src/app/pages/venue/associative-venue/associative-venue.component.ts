@@ -10,10 +10,15 @@ import { GlobalService } from 'src/app/services/global/global.service';
 
 
 export class AssociativeVenueComponent implements OnInit {
-  @Input() venue: Venue;
+  @Input() venue: any;
 
   constructor(public global: GlobalService) { }
 
-  ngOnInit() {}
+  ngOnInit() { 
+    console.log(this.venue)
+  }
 
+  getTime(time : string) {
+    return time.split('T')[0];
+  }
 }

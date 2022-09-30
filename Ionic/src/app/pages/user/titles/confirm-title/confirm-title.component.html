@@ -9,18 +9,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <br />
-  <div class="ion-text-center">
-    <p style="font-size:large">Please confirm the following title information</p>
-  </div>
-  <br>
+<ion-content class="containerMargins" color="secondary">
+  <br/>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large">Please confirm the following information.</p>
+  </ion-label>
+  <br/>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Description:</ion-label>
     <ion-input class="confirmInput" readonly>{{title.description}}</ion-input>
   </div>
-  <br>
+  
+  <br/>
 
   <ion-button color="success" class="addBtn ion-float-right" (click)="confirmChanges(title)">Confirm</ion-button>
   <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="returnFrom()">Return</ion-button>
