@@ -87,13 +87,16 @@ namespace Team7.Controllers
         public async Task<IActionResult> DeleteExercise(int id)
         {
             var tempExercise = await ExerciseRepo._GetExerciseIdAsync(id);
+
+            var lessons = await ExerciseRepo.GetAttatchedLessons(tempExercise);
+
             if (tempExercise == null)
             {
                 return NotFound();
             }
 
-            if (tempExercise.ExerciseCategory != null && tempExercise.LessonPlan.Count != 0)
-                return Conflict(new { exercise = tempExercise });
+            if (tempExercise.LessonPlan.Count != 0)
+                return Conflict(new { exercise = tempExercise, lessons = lessons });
 
             try
             {

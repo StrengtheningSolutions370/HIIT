@@ -14,10 +14,12 @@ namespace Team7.Controllers
     {
         private readonly IScheduleRepo ScheduleRepo;
         private readonly IBookingPriceHistoryRepo BookingPriceHistoryRepo;
-        public ScheduleController(IScheduleRepo scheduleRepo, IBookingPriceHistoryRepo bookingPriceHistoryRepo)
+        private readonly ILessonRepo _lessonRepo;
+        public ScheduleController(IScheduleRepo scheduleRepo, IBookingPriceHistoryRepo bookingPriceHistoryRepo, ILessonRepo lessonRepo)
         {
             this.ScheduleRepo = scheduleRepo;
             this.BookingPriceHistoryRepo = bookingPriceHistoryRepo;
+            this._lessonRepo = lessonRepo;
         }
 
         // POST api/schedule/add
@@ -36,6 +38,7 @@ namespace Team7.Controllers
                     StartDateTime = schedule.StartDateTime, 
                     EndDateTime = schedule.EndDateTime
                 };
+               
 
                 if (schedule.BookingPriceHistory != null)
                 {
@@ -65,8 +68,13 @@ namespace Team7.Controllers
                 //    toAdd.BookingPriceHistory.Add(bookingPrice);
                 //}
                 ScheduleRepo.Add(schedule);
+
                 if (await ScheduleRepo.SaveChangesAsync())
                 {
+                    //query for the lesson:
+                    var les = await _lessonRepo.GetLessonIdAsync((int)schedule.LessonID);
+                    les.Schedule.Add(toAdd);
+                    await _lessonRepo.SaveChangesAsync();
                     return Ok();
                 }
                 else

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Qualification Associated with Lesson Plan/s</ion-title>
+    <ion-title>Exercise Associated with Lesson Plan/s</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
@@ -15,7 +15,7 @@
     <ion-list> 
     <ion-item *ngFor="let lp of exercise.lessons" > 
       <!--Unsure about the line of code below-->
-      <ion-label class="ion-text-center">{{lp['name']}}</ion-label>
+      <ion-label class="ion-text-center">{{ lp.name }}</ion-label>
     
     </ion-item>
     </ion-list>

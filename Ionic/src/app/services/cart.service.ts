@@ -41,14 +41,14 @@ export class CartService {
       await this.storage.getKey('user').then((usr : any) => {
         const obj = JSON.parse(usr)
         userID = `${obj.id}`.toString();
-        })
-      this.model = {
-      userId: userID,
-      sales: [],
-      bookings: [],
-      grandPriceTotal: 0,
-      grandItemTotal: 0
-      }
+        this.model = {
+        userId: userID,
+        sales: [],
+        bookings: [],
+        grandPriceTotal: 0,
+        grandItemTotal: 0
+        }
+      })
 
     }
     if (wasNull){
@@ -87,16 +87,23 @@ export class CartService {
 
   //Add a sales item
   async quantityPlus(sales:SaleItem) {
+    console.log('quanitityPlu', sales)
      try {
       //await this.createCart();
-      var indx = -1;
-      this.model.sales.forEach((saleLineItem, index) => {
-        if (saleLineItem.saleItemID == sales.saleItemID){
-          indx = index;
-        }
-       })
 
-       if (indx == -1){
+      var indx = -1;
+
+      if (this.model['sales'] != null) {
+        this.model.sales.forEach((saleLineItem, index) => {
+          if (saleLineItem.saleItemID == sales.saleItemID){
+            indx = index;
+          }
+        })
+      } else {
+        this.model.sales = Array<saleLine>();
+      }
+
+       if (indx == -1) {
         let tempSaleAdd: saleLine = {
           saleItemID: sales.saleItemID,
           saleItem: sales,
@@ -127,13 +134,18 @@ export class CartService {
     await this.createCart();
     try {
       let duplicate = false;
-      this.model.bookings.forEach(bookLine => {
-        if (bookLine.scheduleID == booking.scheduleID){
-          console.log("Duplicate adding booking to cart");
-          duplicate = true;
-          return;
-        }
-      });
+      
+      if (this.model['bookings'] != null) {
+        this.model.bookings.forEach(bookLine => {
+          if (bookLine.scheduleID == booking.scheduleID){
+            console.log("Duplicate adding booking to cart");
+            duplicate = true;
+            return;
+          }
+        });
+      } else {
+        this.model.bookings = Array<bookingLine>();
+      }
 
       if (!duplicate) {
         this.model.bookings[this.model.bookings.length] = ({...booking});

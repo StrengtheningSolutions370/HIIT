@@ -8,10 +8,12 @@ import { GlobalService } from 'src/app/services/global/global.service';
   styleUrls: ['./associative-exercise.component.scss'],
 })
 export class AssociativeExerciseComponent implements OnInit {
-  @Input() exercise: Exercise;
+
+  @Input() exercise: any;
 
   constructor(public global: GlobalService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
 }

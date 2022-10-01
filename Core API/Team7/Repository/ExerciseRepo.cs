@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
@@ -121,13 +122,45 @@ namespace Team7.Models.Repository
                 Url = e.Url,
                 ExerciseCategoryID = e.ExerciseCategoryID,
                 ExerciseCategory = e.ExerciseCategory,
-                LessonPlan = e.LessonPlan
+                LessonPlan = e.LessonPlan,
             });
+
+            
 
             if (!query.Any())
                 return null;
 
             return await query.SingleAsync();
+
+        }
+
+        public async Task<object> GetAttatchedLessons(Exercise e)
+        {
+
+
+            var lessons = await DB.Lesson.Select(l => new Lesson
+            {
+                Name = l.Name,
+                LessonPlan = l.LessonPlan
+            }).ToArrayAsync();
+
+            List<object> output = new List<object>();
+
+            foreach (Lesson l in lessons) //each lesson in repo
+            {
+                foreach (LessonPlan lp in l.LessonPlan) //each lessonPlan in that lesson
+                {
+                    foreach (LessonPlan elp in e.LessonPlan)
+                    {
+                        if (lp.LessonPlanID == elp.LessonPlanID)
+                        {
+                            output.Add(l);
+                        }
+                    }
+                }
+            }
+
+            return output;
 
         }
 

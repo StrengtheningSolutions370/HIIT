@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WriteOffReason } from 'src/app/models/write-off-reason';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
+import Fuse from 'fuse.js';
+
 
 @Component({
   selector: 'app-write-off-reason',
@@ -15,10 +17,12 @@ export class WriteOffReasonPage implements OnInit {
 
   //Create local write-off reason array to be populated onInit.
   writeOffReasonList: WriteOffReason[] = [];
+  writeOffReasonListOriginal: WriteOffReason[] = [];
+
 
   //Subscription variable to track live updates.
   writeOffReason: Subscription;
-
+  noresults = false;
   isLoading = true;
 
   constructor(public writeOffReasonService: InventoryService) {
@@ -34,6 +38,7 @@ export class WriteOffReasonPage implements OnInit {
           console.log(data);
           this.isLoading = false;
           this.writeOffReasonList = data.result;
+          this.writeOffReasonListOriginal = this.writeOffReasonList
         }
       }
     );
@@ -47,6 +52,40 @@ export class WriteOffReasonPage implements OnInit {
         this.fetchWriteOffReason();
       }
     })
+  }
+
+  searchWOR(event : any) {
+    this.noresults = false;
+
+    if (event == '' || event == null) {
+      this.writeOffReasonList = this.writeOffReasonListOriginal;
+
+
+      if (this.writeOffReasonList.length == 0) {
+        this.noresults = true;
+      }
+
+      return;
+    }
+
+    const hits = new Fuse(this.writeOffReasonList, {
+      keys: [
+        'description'
+      ]
+    }).search(
+      event
+    );
+
+    this.writeOffReasonList = [];
+
+    if (hits.length == 0) {
+      this.noresults = true;
+      return;
+    }
+
+    hits.map((el : any) => {
+      this.writeOffReasonList.push(el.item);
+    });
   }
 
 }

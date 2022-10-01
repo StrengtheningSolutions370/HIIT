@@ -74,6 +74,11 @@ namespace Team7.Controllers
             }
             try
             {
+                if (tempEmployeeType.Employee != null)
+                {
+                    if (tempEmployeeType.Employee.Count != 0)
+                        return Conflict(tempEmployeeType);
+                }
                 EmployeeTypeRepo.Delete<EmployeeType>(tempEmployeeType);
                 await EmployeeTypeRepo.SaveChangesAsync();
                 return Ok();

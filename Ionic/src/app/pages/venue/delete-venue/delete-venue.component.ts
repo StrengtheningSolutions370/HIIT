@@ -18,8 +18,16 @@ export class DeleteVenueComponent {
 
   //Send through the id of the selected venue to be deleted in the venue service.
   delete(id: number){
-    this.venueService.deleteVenue(id);
-    this.global.dismissModal();
-    this.global.showToast("The venue has been successfully deleted!")
+    this.venueService.deleteVenue(id).then(async resp => {
+
+      console.log('resp', resp);
+
+      if (resp.status == 200) {
+        this.global.showToast("The venue has been successfully deleted!")
+        this.global.dismissModal();
+      } else {
+        await this.venueService.associativeVenueModal(resp.error.venue)
+      }
+    });
   }
 }
