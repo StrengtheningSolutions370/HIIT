@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="containerMargins">
+<ion-content class="containerMargins" color="secondary">
   <br /><br />
   <ion-label class="ion-text-center">
     <p style="font-size:large">Are you sure you want to delete the following VAT?</p>
@@ -18,13 +18,13 @@
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Date:</ion-label>
-    <ion-input class="deleteInput" readonly>{{dateFormatter(VAT.date)}}</ion-input>
+    <ion-input class="deleteInput ion-text-capitalize" readonly>{{dateFormatter(VAT.date)}}</ion-input>
   </div>
   <br>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Percentage:</ion-label>
-    <ion-input class="deleteInput" readonly>{{VAT.percentage}}%</ion-input>
+    <ion-input class="deleteInput ion-text-capitalize" readonly>{{VAT.percentage}}%</ion-input>
   </div>
   <br>
 
