@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Confirm Venue Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()">
@@ -10,34 +10,36 @@
 </ion-header>
 
 <ion-content class="containerMargins" color="secondary">
-  <br />
-  <div class="ion-text-center">
-    <p style="font-size:large">Please confirm the following venue information</p>
-  </div>
+  <br/>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large">Please confirm the following information.</p>
+  </ion-label>
+  <br/>
+
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Name:</ion-label>
     <ion-input class="confirmInput ion-text-capitalize" readonly>{{venue.name}}</ion-input>
   </div>
-  <br>
+  <br/>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Address:</ion-label>
     <ion-input class="confirmInput" readonly>{{venue.address}}</ion-input>
   </div>
-  <br>
+  <br/>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Postal Code:</ion-label>
     <ion-input class="confirmInput" readonly>{{venue.postalCode}}</ion-input>
   </div>
-  <br>
+  <br/>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Capacity:</ion-label>
     <ion-input class="confirmInput" readonly>{{venue.capacity}}</ion-input>
   </div>
-  <br>
+  <br/>
 
   <ion-button color="success" class="addBtn ion-float-right"
     (click)="confirmChanges(venue)">Confirm</ion-button>

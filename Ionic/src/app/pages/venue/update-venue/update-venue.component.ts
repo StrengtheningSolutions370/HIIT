@@ -20,7 +20,7 @@ export class UpdateVenueComponent implements ViewWillEnter {
     venueName: new UntypedFormControl('', [Validators.required]),
     location: new UntypedFormControl('', [Validators.required]),
     postalCode: new UntypedFormControl('', [Validators.required, Validators.pattern('[0-9]{4}')]),
-    capacity: new UntypedFormControl('', [Validators.required, Validators.min(1)])
+    capacity: new UntypedFormControl('', [Validators.required, Validators.min(1), Validators.max(200)])
   });
 
   constructor(public global: GlobalService, public fb: UntypedFormBuilder,

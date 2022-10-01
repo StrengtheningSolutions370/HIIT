@@ -1,34 +1,32 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Measurements/Bookings Associated with Client</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Associated Bookings/Measurements</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <br/>
-  <div class="ion-text-center">
-    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;"> {{client.client.firstName}} {{client.client.lastName}} cannot be deleted because the following Bookings/Measurements are associated with them</p>
-  
-    <ion-list> 
+  <ion-label class="ion-text-center">
+    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;"> {{client.client.firstName}} {{client.client.lastName}} cannot be deleted because the following Bookings/Measurements are associated with them.</p>
+  </ion-label>
+  <br/>
 
+  <ion-list> 
+
+    <ion-label >Measurements:</ion-label>
     <ion-item *ngFor="let m of client.data.measurement" > 
-      <!--Unsure about the line of code below-->
-      <ion-label class="ion-text-center">Measurement:</ion-label>
-      <ion-label class="ion-text-center">{{ getDate(m.date) }}</ion-label>
-    
+      <ion-label class="input ion-text-capitalize ion-text-center">{{ getDate(m.date) }}</ion-label>
     </ion-item>
 
+    <ion-label>Bookings:</ion-label>
     <ion-item *ngFor="let w of client.data.bookings" > 
-      <!--Unsure about the line of code below-->
-      <ion-label class="ion-text-center">Booking:</ion-label>
-      <ion-label class="ion-text-center">{{ getDate(w.startDate) }}</ion-label>
-    
+      <ion-label class="input ion-text-capitalize ion-text-center">{{ getDate(w.startDate) }}</ion-label>
     </ion-item>
-    </ion-list>
-  </div>
-  <br>
-  <ion-button color="light" class="ion-float-right" style="margin-right:10%;width:30% " (click)="this.global.dismissModal()">Return</ion-button>
+  </ion-list>
+
+  <br/>
+  <ion-button color="tertiary" class="addBtn ion-float-right" (click)="this.global.dismissModal()">Return</ion-button>
 </ion-content>
