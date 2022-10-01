@@ -131,6 +131,19 @@ namespace Team7.Models.Repository
             }
         }
 
+        public async Task<EmployeeType> _GetEmployeeTypeIdAsyncOriginal(int id)
+        {
+            IQueryable<EmployeeType> query = DB.EmployeeType.Where(v => v.EmployeeTypeID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.SingleAsync();
+            }
+        }
+
         public async Task<EmployeeType> _GetEmployeeTypeIdAsync(int id)
         {
             var query = DB.EmployeeType.Where(v => v.EmployeeTypeID == id).Select(t => new EmployeeType

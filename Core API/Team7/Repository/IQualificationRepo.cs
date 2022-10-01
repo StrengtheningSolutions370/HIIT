@@ -20,6 +20,8 @@ namespace Team7.Models.Repository
 
         Task<Qualification> _GetQualificationIdAsync(int id);
 
+        Task<Qualification> _GetQualificationIdAsyncOriginal(int id);
+
 
         Task<bool> SaveChangesAsync();
     }
