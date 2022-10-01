@@ -134,6 +134,19 @@ namespace Team7.Models.Repository
 
         }
 
+        public async Task<Exercise> _GetExerciseIdAsyncOriginal(int id)
+        {
+
+            IQueryable<Exercise> query = DB.Exercise.Where(e => e.ExerciseID == id);
+
+            if (!query.Any())
+                return null;
+
+            return await query.SingleAsync();
+
+        }
+        
+
         public async Task<object> GetAttatchedLessons(Exercise e)
         {
 
