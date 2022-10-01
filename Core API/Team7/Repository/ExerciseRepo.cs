@@ -16,7 +16,7 @@ namespace Team7.Models.Repository
             DB = appDatabaseContext;
         }
 
-        public async void Add<T>(T Entity) where T : class
+        public void Add<T>(T Entity) where T : class
         {
             DB.Add(Entity);
         }
@@ -70,7 +70,7 @@ namespace Team7.Models.Repository
                 }).ToArrayAsync();
         }
 
-        public async Task<object> GetExercisesAsync(string focus, string name)
+        public async Task<object> GetExercisesAsync(string name, string focus)
         {
             IQueryable<Exercise> query = DB.Exercise.Where(e => e.Name == name || e.Focus == focus);
 
