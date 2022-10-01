@@ -4,50 +4,68 @@
   <img width="200px" height="200px"src="../../assets/HIIT.jpeg"/>
 </div>   -->
 
-<ion-content>
+<!-- <ion-content> -->
+<div id="background">
 
-        <ion-card>
-          <ion-card-content>
-            <div class="ion-text-center">
-              <h1 style="font-family: inherit; border:1px">LOGIN</h1>
-            </div>
-            <BR/>
-            <form #logForm="ngForm" (ngSubmit)="onSubmit(logForm)">
-              <div padding>
-                <ion-item>
-                  <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
-                  <ion-input type="email" name="emailAddress" ngModel email #emailCtrl="ngModel" placeholder="Email" required ></ion-input>
-                </ion-item>
-                <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
-                  <p>Please enter a valid email address</p>
-                </ion-text>
-                <ion-item>
-                  <ion-icon name="key" slot="start" color="#282828"></ion-icon>
-                  <ion-icon [name]="passType ? 'eye-outline':'eye-off-outline'" slot="end" color="#282828" (click)="updateIcn()"></ion-icon>
-                  <ion-input [type]="passType ? 'password' : 'text'" name="password" ngModel #passCtrl="ngModel" placeholder="Password" required minlength="8"></ion-input>
-                </ion-item>
-                <ion-text color="danger" *ngIf="!passCtrl.valid && passCtrl.touched">
-                  <p>Password should be minimum of 8 characters</p>
-                </ion-text>
-                <br/>
-                <b><a routerLink="/password/forgot"><p style="color:#717274;text-align: right;">Forgot Password?</p></a></b>
-              </div>
-              <div>
-                <br/>
-                <ion-button [disabled]="!logForm.valid" *ngIf="!isLoggedin" expand="block" shape="round" type="submit">Login</ion-button>
-                <div class="ion-text-center" *ngIf="isLoggedin">
-                  <ion-button shape="round">
-                    <ion-spinner name="circles"></ion-spinner>
-                  </ion-button>   
-                </div> 
-              </div>  
-            </form>
-            <div class="ion-text-center">
-              <br/>
-              <p>Dont have an account?</p>
-              <b><a routerLink="/login/signup"><p style="color:#717274">Sign Up</p></a></b>    
-            </div>
-          </ion-card-content>
-        </ion-card>
-</ion-content>
+  <ion-card>
+    <ion-card-content>
+
+      <div class="ion-text-center">
+        <h1>LOGIN</h1>
+      </div>
+
+      <div class="center">
+        <ion-img id="logo" class="ion-text-center" src="./../../../assets/logo.svg"></ion-img>
+      </div>
+
+      <div class="ion-text-center hint">
+        <p>Please enter your details.</p>
+      </div>
+
+      <form #logForm="ngForm" (ngSubmit)="onSubmit(logForm)">
+        <div padding>
+
+          <div class="inputDiv">
+              <ion-input class="input" type="email" name="emailAddress" ngModel email #emailCtrl="ngModel" placeholder="Email Address" required ></ion-input>
+          </div>
+          <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
+            <p>Please enter a valid email address</p>
+          </ion-text>
+
+          <div class="inputDiv">
+              <!-- <ion-icon name="key" slot="start" color="#282828"></ion-icon> -->
+              <ion-input class="input" [type]="passType ? 'password' : 'text'" name="password" ngModel #passCtrl="ngModel" placeholder="Password" required minlength="8">  <ion-icon [name]="passType ? 'eye-outline':'eye-off-outline'" slot="end" color="#282828" (click)="updateIcn()"></ion-icon></ion-input>
+          </div>
+          <ion-text color="danger" *ngIf="!passCtrl.valid && passCtrl.touched">
+            <p>Password should be minimum of 8 characters</p>
+          </ion-text>
+
+          <b><a routerLink="/password/forgot"><p style="color:#969696; margin-right: 10%; margin-top: 15px; margin-bottom: 15px; text-align: right;">Forgot Password?</p></a></b>
+
+        </div>
+
+        <div id="loginbutparent">
+
+          <ion-button [disabled]="!logForm.valid" *ngIf="!isLoggedin" id="loginbut" type="submit">Login</ion-button>
+          <div class="ion-text-center" *ngIf="isLoggedin">
+            <ion-button shape="round">
+              <ion-spinner name="circles"></ion-spinner>
+            </ion-button>   
+          </div> 
+
+        </div>  
+
+      </form>
+
+      <div class="ion-text-end row">
+
+        <p>Don't have an account?</p>
+
+        <b><a routerLink="/login/signup"><p style="color:#969696">Sign Up</p></a></b> 
+
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>
+<!-- </ion-content> -->
 

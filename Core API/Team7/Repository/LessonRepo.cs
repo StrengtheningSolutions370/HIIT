@@ -94,12 +94,30 @@ namespace Team7.Models.Repository
             var temp = await query.Select(l =>
                 new Lesson
                 {
+                    ScheduleID = l.ScheduleID,
                     LessonID = l.LessonID,
                     Name = l.Name,
                     Employee = l.Employee,
                     LessonPlan = l.LessonPlan,
+                    //Schedule = l.Schedule,
                 }).SingleAsync();
-            temp.Schedule = await DB.Schedule.Where(s => s.ScheduleID == temp.ScheduleID).ToListAsync();
+
+            List<Schedule> o = new List<Schedule>();
+            var t = await DB.Schedule.Select(s => new Schedule { Lesson = new Lesson { 
+                LessonID = s.Lesson.LessonID,
+                Name = s.Lesson.Name,
+            },
+                Venue = s.Venue,
+                StartDateTime = s.StartDateTime,
+            }).ToArrayAsync();
+            foreach(Schedule s in t)
+            {
+                if (s.Lesson.LessonID == temp.LessonID)
+                {
+                    o.Add(s);
+                }
+            }
+            temp.Schedule = o;
             return temp;
         }
 

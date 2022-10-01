@@ -1,0 +1,97 @@
+<!-- navbar -->
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light pl-5 pr-5">
+  <!-- brand image -->
+  <a class="navbar-brand" href="#">
+    <img src="assets/Logo.png" alt="logo" id="logo">
+  </a>
+  <button class="navbar-toggler" type="button"
+          (click)="toggleNavbar()">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse space-around" [ngClass]="{ 'show': navbarOpen }">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">About Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Neil Bester</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contact Us</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link mobile-nav" href="#">Log In</a>
+      </li>
+      <span id="button-space"></span>
+      <li class="nav-item">
+        <a class="nav-link mobile-nav" href="#">Sign Up</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- image -->
+<div id="background-image">
+
+  <div class="parent">
+
+    <div class="hidemin w-50 center l">
+
+      <div id="main-logo"></div>
+      <br>
+      <br>
+      <button class="btn">Sign Up</button>
+
+    </div>
+
+    <div class="about-min about-max about">
+      <div>
+        <h1>About Us</h1>
+        <p class="text">Bester Strength and Conditioning (BSC) was established in 2020 by Neil Bester, who is a qualified sports scientist after completing his undergraduate studies at the University of Johannesburg, as well as his postgraduate studies at Wits University.</p>
+        <p class="text">Bester Strength and Conditioning opened with the intention of providing functional fitness classes to both ordinary people and professional athletes. The gym offers individual training sessions, as well as group classes. The individual training sessions are client specific and focus on enhancing certain aspects of an individuals' fitness, whilst group classes consist of multiple clients who complete a given set of exercises in order to achieve their fitness goals.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="w-100 neilbio">
+  
+  <div id="aboutneil">
+    <p class="darktextbold i">Neil Bester, Owner of BSC Gym</p>
+    <p class="darktext i">Bester Strength and Conditioning (BSC) was established in 2020 by Neil Bester, who is a qualified sports scientist after completing his undergraduate studies at the University of Johannesburg, as well as his postgraduate studies at Wits University.</p>
+    <p class="darktext i">Bester Strength and Conditioning opened with the intention of providing functional fitness classes to both ordinary people and professional athletes. The gym offers individual training sessions, as well as group classes. The individual training sessions are client specific and focus on enhancing certain aspects of an individuals' fitness, whilst group classes consist of multiple clients who complete a given set of exercises in order to achieve their fitness goals.</p>
+  </div>
+
+  <div>
+    <img src="assets/neil.png" alt="Neil Bester" id="neil">
+  </div>
+
+</div>
+
+<hr>
+
+
+
+<div class="w-100 neilbio reverse">
+
+  
+  
+  <div id="aboutneil mr">
+    <p class="darktextbold i">Contact Us</p>
+    <p class="darktext i">Address: Senderwood Center, Chaucher Ave, Jhb</p>
+    <p class="darktext i">Phone: 063 269 8205</p>
+    <p class="darktext i">Email: info@bestersc.co.za</p>
+  </div>
+  
+  <div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="450" id="gmap_canvas" src="https://maps.google.com/maps?q=15%20Chaucher%20rd,%20bedfordview&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://putlocker-is.org"></a><br><style>.mapouter{position:relative;text-align:right;height:365px;width:703px;}</style><style>.gmap_canvas {overflow:hidden;background:none!important;height:365px;width:703px;}</style></div></div>
+</div>
+
+<hr id="low">
+
+<p class="darktext rights">Bester Strength & Conditioning. © 2021. All Rights Reserved</p>
+<br>
+<span></span>

@@ -78,10 +78,18 @@ namespace Team7.Controllers
         public async Task<IActionResult> DeleteWriteOffReason(int id)
         {
             var tempWriteOffReason = await WriteOffReasonRepo._GetWriteOffReasonIdAsync(id);
+
             if (tempWriteOffReason == null)
             {
                 return NotFound();
             }
+
+            if (tempWriteOffReason.WriteOffLine != null)
+            {
+                var writeoffs = await WriteOffReasonRepo.GetWriteOffs(tempWriteOffReason);
+                return Conflict(new { reason = tempWriteOffReason, writeoffs = writeoffs})
+            }
+
             try
             {
                 WriteOffReasonRepo.Delete(tempWriteOffReason);

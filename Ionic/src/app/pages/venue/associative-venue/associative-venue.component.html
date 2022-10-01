@@ -17,8 +17,8 @@
 
         <ion-list>
           <ion-item *ngFor="let schedule of venue.schedules">
-            <ion-label class="ion-text-left">Schedule with ID: </ion-label>
-            <ion-label class="ion-text-right">{{schedule.scheduleID}}</ion-label>
+            <ion-label class="ion-text-left">Schedule:</ion-label>
+            <ion-label class="ion-text-right">{{ getTime(schedule.startDateTime) }}</ion-label>
           </ion-item>
         </ion-list>
     </div>

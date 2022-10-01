@@ -8,13 +8,33 @@ ion-avatar {
         }
 }
 
+#loginbut {
+    width: 80%;
+    border-radius: 10px;
+}
+
+#loginbutparent {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 ion-item {
     --background: white;
     --color: #363636;
 }
 
+#background {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8) 35%, rgba(0, 0, 0, 0,)), url(https://images.unsplash.com/photo-1614928228253-dc09cbc3b11c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80);
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    width: 100vw;
+    height: 100%;
+}
+
 ion-button {
-    --background: #4570e9;
+    --background: black;
     --color: white;
 }
 
@@ -29,6 +49,7 @@ ion-card {
     margin-top: 15vh !important;
     max-width: 400px !important;
     width: 90vw;
+    background-color: none;
 }
 
 h1 {
@@ -37,4 +58,37 @@ h1 {
     margin: 0 0 35px;
     letter-spacing: 1px;
     text-transform: uppercase;
+}
+
+#logo {
+    width: 60%;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.row > p {
+    margin-right: 5px;
+}
+
+.hint > p {
+    margin-top: 14px;
+    margin-bottom: 26px;
+}
+
+h1 {
+    margin-bottom : 16px !important;
+    margin-top: 12px;
+    font-size: 25px;
+}
+
+.center {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
