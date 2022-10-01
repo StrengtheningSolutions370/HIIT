@@ -20,12 +20,12 @@ animated="true" debounce="200"></ion-searchbar>
       <ion-col class='ion-align-self-start ' sizeLg="3" sizeMd="3" sizeXs="6" *ngFor="let saleItem of saleItemList">
         <ion-card color="secondary">
           <h3 class="ion-align-self-center ion-text-capitalize">{{saleItem.name}}</h3>
-
+          <div >
+            <img class="img-wrapper" (click)="saleService.viewSaleItemInfoModal(saleItem)" [src]="this.global.createImg(saleItem.photo)"
+              alt="sale item image">
+          </div>
           <ion-card-content>
-            <div >
-              <img class="img-wrapper" (click)="saleService.viewSaleItemInfoModal(saleItem)" [src]="this.global.createImg(saleItem.photo)"
-                alt="sale item image">
-            </div>
+
 
             <ion-row class="row">
               <ion-col>
