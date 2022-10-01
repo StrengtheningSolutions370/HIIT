@@ -156,7 +156,16 @@ namespace Team7.Models.Repository
 
         public async Task<BookingType> _GetBookingTypeIdAsync(int id)
         {
-            IQueryable<BookingType> query = DB.BookingType.Where(bt => bt.BookingTypeID == id);
+            IQueryable<BookingType> query = DB.BookingType.Where(bt => bt.BookingTypeID == id).Select(b => new BookingType
+            {
+                BookingTypeID = b.BookingTypeID,
+                Name = b.Name,
+                Description = b.Description,
+                Capacity = b.Capacity,
+                Colour = b.Colour,
+                Schedule = b.Schedule
+            });
+
             if (!query.Any())
             {
                 return null;
