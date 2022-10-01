@@ -88,10 +88,10 @@ namespace Team7.Controllers
                 return NotFound("Could not find existing Venue with ID - " + id);
             }
 
-            if (tempVenue.Schedules != null)
+            /*if (tempVenue.Schedules != null)
             {
                 return Conflict(new { venue = tempVenue });
-            }
+            }*/
 
             if (tempVenue.Schedules.Count != 0)
                 return Conflict(new { venue = tempVenue });
