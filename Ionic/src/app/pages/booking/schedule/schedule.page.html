@@ -28,7 +28,7 @@
       </ion-button>
     </ion-col>
   </ion-row>
-  <calendar
+  <calendar 
   *ngIf="!isLoading"
   [eventSource]="eventSource"
   [calendarMode]="calendar.mode"
@@ -44,7 +44,7 @@
 <!-- (onTimeSelected)="onTimeSelected($event)" -->
 
 <ng-template #monthviewCal let-view="view" let-row="row" let-col="col">
-  <div [class.with-event]="view.dates[row*7+col].events.length">
+  <div color="secondary" [class.with-event]="view.dates[row*7+col].events.length">
     {{view.dates[row*7+col].label}}
     <div class="indicator-container">
       <div class="event-indicator" *ngFor="let ev of view.dates[row*7+col].events">

@@ -1,51 +1,44 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>{{saleItem.name}}</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-capitalize">{{saleItem.name}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()">
+        <ion-icon name="close-outline" size="large"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-<div class="container div">
+<ion-content color="secondary" class="containerMargins">
+  <br>
   <form [formGroup]="quoteEmailForm" (ngSubmit)="submitForm()">
-    <h4>Email:</h4>
-    <ion-input formControlName="clientMail" type="email" id="clientMail"></ion-input>
-  <span class="error ion-padding"
-    *ngIf="errorControl.clientMail.errors?.email && quoteEmailForm.get('clientMail').touched">
-    Please enter a valid email address.
-    <br />
-  </span>
-  <span class="error ion-padding"
-    *ngIf="errorControl.clientMail.errors?.required && quoteEmailForm.get('clientMail').touched">
-    Please enter an email address.
-    <br />
-  </span>
 
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Email:</ion-label>
+      <ion-input class="input" formControlName="clientMail" type="email" type="text" required="" id="clientMail">
+      </ion-input>
+      <span class="errorSpan" *ngIf="errorControl.clientMail.errors?.email && quoteEmailForm.get('clientMail').touched">
+        Please enter a valid email address.<br />
+      </span>
+      <span class="errorSpan"
+        *ngIf="errorControl.clientMail.errors?.required && quoteEmailForm.get('clientMail').touched">
+        Please enter an email address.<br />
+      </span>
+    </div>
+    <br>
 
-  <h4>Optional Message:</h4>
-  <ion-textarea rows="6" cols="20" placeholder="Type optional message here..." formControlName="optDescription" type="text" id="optDescription">
-  </ion-textarea>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Optional Message:</ion-label>
+      <ion-textarea class="input" placeholder="Type optional message here..." formControlName="optDescription"
+        type="text" required="" id="optDescription"></ion-textarea>
+    </div>
+    <br>
 
+    <ion-button type="submit" color="primary" class="ion-float-right addBtn"
+      (click)="submitForm()">Request Quote</ion-button>
+    <ion-button class="cancelBtn ion-float-left" color="tertiary" (click)="this.global.dismissModal()">Cancel
+    </ion-button>
 
-
-      <!-- <ion-col>
-        <ion-button  class="ion-align-items-center" color="light" (click)="this.global.dismissModal()">
-          Cancel
-        </ion-button>
-      </ion-col> -->
- 
-          <ion-button  class="ion-float-right" color="secondary" (click)="submitForm()">
-            Send Request
-          </ion-button>
-
-
-
-</form>
-</div>
+  </form>
+  <br>
 </ion-content>
-
-
-
-<!-- [disabled]="quoteEmailForm.invalid" -->
