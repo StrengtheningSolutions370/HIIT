@@ -19,6 +19,7 @@ namespace Team7.Models.Repository
         Task<object> GetExercisesAsync(string name, string description);
         Task<object> GetExerciseIdAsync(int id);
         Task<Exercise> _GetExerciseIdAsync(int id);
+        Task<Exercise> _GetExerciseIdAsyncOriginal(int id);
 
         Task<bool> SaveChangesAsync();
     }

@@ -5,6 +5,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 import { ReportService } from 'src/app/services/report/report.service';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-income-report',
@@ -49,8 +50,11 @@ export class IncomeReportPage {
 
    download() {
     let Data = document.getElementById('htmlData')!;
+    var img = new Image();
+    img.src = 'assets/Logo.jpg';
+
     html2canvas(Data).then((canvas) => {
-      let fileWidth = 290;
+      let fileWidth = 400;
       let fileHeight = (canvas.height * fileWidth) / canvas.width;
 
       const contentDataURL = canvas.toDataURL('image/png');
@@ -61,16 +65,33 @@ export class IncomeReportPage {
         format: 'a4'
       });
 
-      // PDF.setFontSize(30)
-      // PDF.text('Client Progress Report', 10, 10);
+      PDF.setFontSize(30);
+      PDF.text('Income Report', 15, 15);
 
-      const topPosition = 20;
-      const leftPosition = 5;
+      const topPosition = 25;
+      const leftPosition = -50;
 
       PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, fileWidth, fileHeight);
+      PDF.addImage(img, 'PNG', 260, 1, 25, 20);
+      PDF.line(0,25,300,25);
+      const pageCount = PDF.internal.pages.length-1;
+      console.log(pageCount);
+      PDF.setFontSize(10);
+      for(var i = 1; i <= pageCount; i++) {
+        let str = 'Page: '+ String(i) + '/' + String(pageCount);
+
+          PDF.text(str, 260, 200);
+      }
+      var today = new Date();
+      var dateNow = "Date Printed: " + formatDate(today, 'yyyy-MM-dd', 'EN');
+      PDF.text(dateNow, 20,200);
       PDF.save('Income Report.pdf');
     });
   }
+
+  addFooters() {
+
+}
 
   updateView(ev: CustomEvent){
     this.global.nativeLoad();
@@ -111,8 +132,11 @@ export class IncomeReportPage {
       this.lineChartMethod();
       //this.saleBarChart.resize(this.saleBarChart.width,this.saleBarChart.height);
     this.global.endNativeLoad();
-    console.log("Finishing update");
+    console.log("Temp income dataset: ");
+    console.log(this.tempIncomeDataset);
+    console.log("SaleCategory report: ",this.saleCategoryReportData);
     });
+
   }
 
   async fetchCategoryReport(): Promise<any>{

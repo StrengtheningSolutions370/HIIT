@@ -29,7 +29,7 @@ namespace Team7.Controllers
             {
                 //var cat = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(exercise.ExerciseCategory.ExerciseCategoryID);
                 var catId = exercise.ExerciseCategoryID;
-                exercise.ExerciseCategory = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(catId);
+                //exercise.ExerciseCategory = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(catId);
 
                 ExerciseRepo.Add(exercise);
 
@@ -144,11 +144,11 @@ namespace Team7.Controllers
         // GET: api/exercise/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingExercises(string name, string description)
+        public async Task<IActionResult> GetMatchingExercises(string name, string focus)
         {
             try
             {
-                var exercise = await ExerciseRepo.GetExercisesAsync(name, description);
+                var exercise = await ExerciseRepo.GetExercisesAsync(name, focus);
                 if (exercise == null)
                 {
                     return Ok(0);
