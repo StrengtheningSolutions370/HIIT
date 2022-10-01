@@ -128,7 +128,7 @@ namespace Team7.Controllers
             var flag = await _userManager.FindByEmailAsync(Email);
             if (flag != null)
             {
-                StatusCode(StatusCodes.Status403Forbidden, "User already exisit?"); //CHECKHERE
+                return StatusCode(StatusCodes.Status403Forbidden, "User already exisit?"); //CHECKHERE
             }
 
             //check if role exisit
@@ -182,8 +182,8 @@ namespace Team7.Controllers
                         Contract = null,
                         IDNumber = IDNumber,
                         AppUser = await _userManager.FindByNameAsync(Email),
-                        EmployeeType = await this.EmployeeTypeRepo._GetEmployeeTypeIdAsync(Convert.ToInt32(EmployeeTypeId)),
-                        Qualification = await this.QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID)),
+                        EmployeeType = await this.EmployeeTypeRepo._GetEmployeeTypeIdAsyncOriginal(Convert.ToInt32(EmployeeTypeId)),
+                        Qualification = await this.QualificationRepo._GetQualificationIdAsyncOriginal(Convert.ToInt32(QualificationID)),
                         UserID = EmployeeID
                     };
                     ///////////////////////////////////
@@ -423,8 +423,8 @@ namespace Team7.Controllers
                         Contract = null,
                         IDNumber = IDNumber,
                         AppUser = await _userManager.FindByNameAsync(Email),
-                        EmployeeType = await this.EmployeeTypeRepo._GetEmployeeTypeIdAsync(Convert.ToInt32(EmployeeTypeId)),
-                        Qualification = await this.QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID)),
+                        EmployeeType = await this.EmployeeTypeRepo._GetEmployeeTypeIdAsyncOriginal(Convert.ToInt32(EmployeeTypeId)),
+                        Qualification = await this.QualificationRepo._GetQualificationIdAsyncOriginal(Convert.ToInt32(QualificationID)),
                         UserID = EmployeeID
                     };
                     ///////////////////////////////////

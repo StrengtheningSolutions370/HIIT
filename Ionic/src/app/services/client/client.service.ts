@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { DeleteClientComponent } from 'src/app/pages/user/clients/delete-client/delete-client.component';
 import { RepoService } from '../repo.service';
 import { GlobalService } from '../global/global.service';
+import { AssociativeClientComponent } from 'src/app/pages/user/clients/associative-client/associative-client.component';
 
 @Injectable({
   providedIn: 'root'
@@ -48,16 +49,27 @@ public get clientList(){
         {
           next: res => {
             this.fetchClientsEvent.emit();
-            resolve(true);
+            resolve(res);
           },
           error: err => {
-            resolve(false);
+            resolve(err);
           }
         }
       ).add(() => {
         this.global.endNativeLoad();
       });
     });
+  }
+
+  async associaticeClientModal(client : any, coriginal : any) {
+    const modal = await this.modalCtrl.create({
+      component: AssociativeClientComponent,
+        componentProps: {
+          client,
+          coriginal
+      }
+    });
+    await modal.present();
   }
 
    //Display the delete client modal.

@@ -183,6 +183,7 @@ import { RequestRefundComponent } from './pages/payments/request-refund/request-
 import { ConfirmReasonComponent } from './pages/payments/confirm-reason/confirm-reason.component';
 import { RefundResponseComponent } from './pages/refunds/refund-response/refund-response.component';
 import { ViewRefundComponent } from './pages/refunds/view-refund/view-refund.component';
+import { AssociativeClientComponent } from './pages/user/clients/associative-client/associative-client.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -248,7 +249,9 @@ import { ViewRefundComponent } from './pages/refunds/view-refund/view-refund.com
   //payments
   ViewPaymentComponent, RequestRefundComponent, ConfirmReasonComponent,
   //refund
-  RefundResponseComponent, ViewRefundComponent
+  RefundResponseComponent, ViewRefundComponent,
+
+  AssociativeClientComponent
 ],
   entryComponents: [],
   imports: [

@@ -292,6 +292,11 @@ namespace Team7.Controllers
             try
             {
                 var clientrepo = await _clientRepo.GetClientIdAsync(id);
+
+                if (clientrepo.Booking.Count() != 0 || clientrepo.Measurement.Count() != 0)
+                    return Conflict(new { client = client, data = clientrepo });
+
+
                 _clientRepo.Delete(clientrepo);
                 await _clientRepo.SaveChangesAsync();
             }

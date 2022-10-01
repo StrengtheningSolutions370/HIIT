@@ -13,31 +13,44 @@
 
 :host ::ng-deep {
 
+  .monthview-primary-with-event {
+    background-color: var(--ion-background-color) !important;
+    color: var(--ion-text-color) !important;
+  }
+
+  .monthview-eventdetail-timecolumn {
+    background-color: #7B7B7C!important;
+  }
+
+  .button-inner {
+    width: 80% !important;
+  }
+
   @media (prefers-color-scheme: dark) {
     .monthview-container {
       height:auto;
+    }
+
+    .monthview-current{
+      background-color: #2323ac;
+      color: white;
+    }
+
+    .button-outline {
+      color: white !important;
+      --border-color: white !important;
     }
   }
 
   @media (prefers-color-scheme: light) {
     .monthview-container {
       background-color:#DEE4E7 !important;
-      color: black !important;
+      //color: black !important;
       height:auto;
     }
   }
 
 
-
-
-  .monthview-primary-with-event {
-    background-color: var(--ion-background-color) !important;
-    color: var(--ion-text-color) !important;
-  }
-
-    .monthview-eventdetail-timecolumn {
-      background-color: #7B7B7C!important;
-    }
 
 }
 

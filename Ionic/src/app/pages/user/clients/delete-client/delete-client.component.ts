@@ -22,15 +22,15 @@ export class DeleteClientComponent implements OnInit {
     this.imgSrc = this.client.imgSrc;
   }
 
-  deleteClient() {
+  deleteClient(coriginal : any) {
     //#TODO delete the lesson here
     console.log(this.client.id);
     this.clientService.deleteClient(this.client.userID).then(resp => {
-      if (resp) {
+      if (resp.status == 200) {
         this.sucDelete();
         this.dismissModal();
       } else {
-        this.failureAlert();
+        this.clientService.associaticeClientModal(resp.error, coriginal)
       }
     });
 

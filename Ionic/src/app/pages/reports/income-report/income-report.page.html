@@ -27,6 +27,49 @@
       <canvas #lineCanvas ></canvas>
 
     </div>
+    <div class="w-100 center" >
+      <ion-grid class="center">
+
+        <ion-row>
+          <ion-col class="heading"><u>Sales</u></ion-col>
+          <!-- <ion-col class="heading" size="3">Total item sales:</ion-col>
+          <ion-col class="heading">Total profit generated: </ion-col>
+          <ion-col class="heading">Qualification Type</ion-col>
+          <ion-col class="heading" size="1.4">Lesson's Made</ion-col> -->
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="0.5">No.</ion-col>
+          <ion-col size="3.5">Sale category</ion-col>
+          <ion-col size="6">Time period</ion-col>
+          <ion-col size="2">Profit generated</ion-col>
+        </ion-row>
+
+        <ion-row *ngFor="let saleCat of this.tempIncomeDataset; let i=index;">
+          <!-- count -->
+          <ion-col class="outline" size="0.5">
+            <h5>{{i+1}}</h5>
+
+          </ion-col>
+          <!-- name -->
+          <ion-col class="outline" size="3.5">
+            <h5>{{ saleCat.label }}</h5>
+          </ion-col>
+          <!-- qualifications -->
+          <ion-col class="outline">
+            <ion-row *ngFor="let period of this.lineLabels; let i=index" class="outline">
+              <ion-col size="10">
+                {{period}}
+              </ion-col>
+              <ion-col size="2">
+                R {{saleCat.data[i]}}
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
 
   </div>
 

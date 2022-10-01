@@ -68,7 +68,7 @@ namespace Team7.Controllers
             foreach (int exerciseVMID in exerciseVM)
             {
                 LessonPlan lp = new LessonPlan();
-                lp.Exercise = await _exerciseRepo._GetExerciseIdAsync(exerciseVMID);
+                lp.Exercise = await _exerciseRepo._GetExerciseIdAsyncOriginal(exerciseVMID);
                 lp.Lesson = lesson;
                 lp.LessonID = lesson.LessonID;
                 _lessonPlanRepo.Add(lp);
