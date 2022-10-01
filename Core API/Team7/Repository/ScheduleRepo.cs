@@ -56,14 +56,14 @@ namespace Team7.Models.Repository
                         Lesson = new { sc.Lesson.LessonID, sc.Lesson.Name},
                         sc.StartDateTime,
                         sc.EndDateTime,
-                        Employee = new { sc.Employee.EmployeeID, sc.Employee.UserID, sc.Employee.AppUser },
+                        Employee = new { sc.Employee.UserID, sc.Employee.AppUser },
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
                         BookingPriceHistory = sc
                             .BookingPriceHistory
                             .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })
-                }).ToListAsync()
+                    }).ToListAsync()
                 };
             }
         }
