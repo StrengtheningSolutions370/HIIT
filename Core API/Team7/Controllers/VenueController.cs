@@ -135,11 +135,11 @@ namespace Team7.Controllers
         // GET: api/venues/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingVenues(string name, string address = null)
+        public async Task<IActionResult> GetMatchingVenues(string name)
         {
             try
             {
-                var venue = await VenueRepo.GetVenuesAsync(name, address);
+                var venue = await VenueRepo.GetVenuesAsync(name);
                 if (venue == null) return Ok(0);
                 return Ok(venue);
             }
