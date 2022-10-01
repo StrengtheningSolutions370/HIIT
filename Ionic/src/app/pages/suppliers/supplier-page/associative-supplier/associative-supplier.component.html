@@ -19,9 +19,7 @@
   <div>
       <ion-list> 
         <ion-item *ngFor="let orders of supplier.orders">
-          <ion-label>Orders: </ion-label>
-          <!-- This should be changed to display employee name, not the ID -->
-          <ion-label>{{getDate(orders.date)}}</ion-label>
+          <ion-label class="input ion-text-capitalize ion-text-center">{{getDate(orders.date)}}</ion-label>
         </ion-item>
       </ion-list>
   </div>

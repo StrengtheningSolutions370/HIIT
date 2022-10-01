@@ -11,7 +11,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class DeleteBtypeComponent  {
   @Input() bookingType: BookingType;
 
-  constructor(private global: GlobalService,
+  constructor(public global: GlobalService,
     public bookingService: BookingService) { }
 
 

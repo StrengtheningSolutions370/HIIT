@@ -22,7 +22,7 @@ export class ConfirmVatComponent {
          let match = data.result;
          if (match.length > 1){
           console.log("matching more than 1");
-          this.global.showAlert("The VAT information entered already exists on the system","Duplicate Entry");
+          this.global.showAlert("The entered information already exists on the system","Duplicate Error");
          return true;
         }
          

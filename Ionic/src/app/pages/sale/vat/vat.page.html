@@ -11,7 +11,7 @@
 <ion-content>
   <br>
     <ion-grid *ngIf="!isLoading">
-      <ion-list *ngFor="let vat of vatList | filter:filter, let i = index"> 
+      <ion-list class="cardFadeUp" *ngFor="let vat of vatList | filter:filter, let i = index"> 
         <ion-item-sliding>
           <!-- Sending through the vat object to the vat service, to be viewed in the modal -->
           <ion-item >

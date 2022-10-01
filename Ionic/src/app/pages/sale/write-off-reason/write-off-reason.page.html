@@ -13,14 +13,14 @@
 <ion-content>
   <br/>
   <ion-grid *ngIf="!isLoading" >
-    <ion-list *ngFor="let wr of writeOffReasonListOriginal | filter:filter, let i = index">
+    <ion-list class="cardFadeUp" *ngFor="let wr of writeOffReasonListOriginal | filter:filter, let i = index">
       <ion-item-sliding >
         <ion-item >
           <ion-grid class="nomargin">
             <ion-row>
 
               <ion-col size="9" class="name">
-                <ion-text><h4>{{wr.description}}</h4></ion-text>
+                <ion-text class="ion-text-capitalize"><h4>{{wr.description}}</h4></ion-text>
               </ion-col>
 
               <ion-col>

@@ -13,14 +13,14 @@ import { GlobalService } from 'src/app/services/global/global.service';
 export class AddBtypeComponent implements ViewWillEnter {
 
   @Input() bookingType: BookingType;
-  constructor(private global: GlobalService,  public formBuilder: UntypedFormBuilder,
+  constructor(public global: GlobalService,  public formBuilder: UntypedFormBuilder,
     public bookingService: BookingService) { }
 
   //Creating the form to add the new booking type details, that will be displayed in the HTML component
    cBookingTypeForm: UntypedFormGroup = this.formBuilder.group({
     bookingTypeName: ['', [Validators.required]],
     bookingTypeDescription: ['', [Validators.required]],
-    bookingTypeCapacity: ['', [Validators.required, Validators.min(1)]],
+    bookingTypeCapacity: ['', [Validators.required, Validators.min(1),Validators.max(200)]],
     bookingTypeColour:  ['', [Validators.required]]
     // bookingTypePrice: ['', [Validators.required, Validators.min(1)]]
   });
