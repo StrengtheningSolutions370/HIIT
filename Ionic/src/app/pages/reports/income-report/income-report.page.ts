@@ -132,7 +132,7 @@ export class IncomeReportPage {
       this.lineChartMethod();
       //this.saleBarChart.resize(this.saleBarChart.width,this.saleBarChart.height);
     this.global.endNativeLoad();
-    console.log("Finishing update");
+    console.log("Temp income dataset: ");
     console.log(this.tempIncomeDataset);
     console.log("SaleCategory report: ",this.saleCategoryReportData);
     });

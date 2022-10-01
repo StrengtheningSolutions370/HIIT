@@ -549,8 +549,8 @@ cancelMyBooking(aspNetUserID: string, bookingID: number, scheduleID: number): Ob
     return this.http.get(`${this.base + this.ExerciseController}getAll`, this.httpOptions);
   }
   //GetMatch
-  getMatchExercise(name: string, description: string): Observable<any> {
-    return this.http.get(`${this.base + this.ExerciseController}getMatch?name=${name}&description=${description}`, this.httpOptions);
+  getMatchExercise(name: string, focus: string): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseController}getMatch?name=${name}&focus=${focus}`, this.httpOptions);
   }
   //Exists
   existsExercise(id: number): Observable<any> {
