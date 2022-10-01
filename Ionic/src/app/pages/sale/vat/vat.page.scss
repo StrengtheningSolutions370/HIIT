@@ -3,6 +3,17 @@ ion-button{
     margin-right:30%
 }
 
+#noRes {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .name{
+    padding-left: 5%;
+}
+
 ion-searchbar{
     --background : white;
     --color: #221f1f;

@@ -13,7 +13,7 @@ namespace Team7.Models.Repository
 
         Task<object> GetAllVenuesAsync();
 
-        Task<object> GetVenuesAsync(string name, string address);
+        Task<object> GetVenuesAsync(string name);
 
         Task<object> GetVenueIdAsync(int id);
 
