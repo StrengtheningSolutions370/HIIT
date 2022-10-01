@@ -17,6 +17,7 @@ namespace Team7.Models.Repository
         Task<EmployeeType[]> _GetEmployeeTypesAsync(string input);
         Task<object> GetEmployeeTypeIdAsync(int id);
         Task<EmployeeType> _GetEmployeeTypeIdAsync(int id);
+        Task<EmployeeType> _GetEmployeeTypeIdAsyncOriginal(int id);
         Task<bool> SaveChangesAsync();
     }
 }
