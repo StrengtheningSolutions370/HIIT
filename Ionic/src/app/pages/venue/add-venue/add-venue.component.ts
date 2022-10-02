@@ -56,7 +56,7 @@ export class AddVenueComponent implements ViewWillEnter {
         address: this.cVenueForm.value['location'],
         postalCode: this.cVenueForm.value['postalCode'],
         capacity: this.cVenueForm.value['capacity'],
-        schedules: null  
+        schedules: null
       };
       this.venueService.confirmVenueModal(1,temp);
       this.global.dismissModal();

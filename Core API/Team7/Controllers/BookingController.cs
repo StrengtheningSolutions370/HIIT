@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Team7.Models.Repository;
 using Team7.Services;
+using Team7.ViewModels;
 
 namespace Team7.Controllers
 {
@@ -17,9 +18,34 @@ namespace Team7.Controllers
     public class BookingController : ControllerBase
     {
         private readonly IBookingRepo BookingRepo;
-        public BookingController(IBookingRepo bookingRepo)
+        private readonly IBookingAttendanceRepo BookingAttendanceRepo;
+        public BookingController(IBookingRepo bookingRepo, IBookingAttendanceRepo bookingAttendanceRepo)
         {
             this.BookingRepo = bookingRepo;
+            this.BookingAttendanceRepo = bookingAttendanceRepo;
+        }
+
+        [HttpPost]
+        [Route("TrackAttendance")]
+        public async Task<IActionResult> TrackAttendance(AttendanceViewModel[] attendance)
+        {
+            try
+            {
+                var success = await BookingAttendanceRepo.TrackAttendance(attendance);
+                if (success == false)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError,"Unable to track attendance in API");
+                }
+                else
+                {
+                    return Ok(true);
+                }
+
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
+            }
         }
 
         [HttpGet]

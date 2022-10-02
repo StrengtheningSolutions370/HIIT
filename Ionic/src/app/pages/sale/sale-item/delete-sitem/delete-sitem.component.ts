@@ -17,26 +17,29 @@ export class DeleteSitemComponent implements ViewWillEnter {
 
   currentCategory! : string;
 
-  constructor(private global: GlobalService, 
+  constructor(private global: GlobalService,
     public saleService: SalesService, public inventoryService: InventoryService) { }
-  
+
     ionViewWillEnter() {
       console.log('DeleteSaleItem - ViewWillEnter');
       console.log(this.saleItem);
       this.convertToName();
     }
-  
+
     //Send through the id of the selected sale item to be deleted in the sale item service.
     async delete(id: number){
-      this.saleService.deleteSaleItem(id);
-      this.global.dismissModal();
-      this.global.showToast("The sale item has been successfully deleted!");
-      this.inventoryService.fetchWriteOffsEvent.emit();
-
+      if (this.saleItem.saleLine.length != 0){
+        this.global.showAlert("The sale item is related to 1 or more sales","Unable to delete sale item");
+      } else {
+        this.saleService.deleteSaleItem(id);
+        this.global.dismissModal();
+        this.global.showToast("The sale item has been successfully deleted!");
+        this.inventoryService.fetchWriteOffsEvent.emit();
+      }
     }
 
-    public createImg = (fileName: string) => { 
-      return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`; 
+    public createImg = (fileName: string) => {
+      return `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
     }
 
     convertToName() {
@@ -54,6 +57,6 @@ export class DeleteSitemComponent implements ViewWillEnter {
         }
       )
     }
-  
+
 
 }

@@ -20,7 +20,7 @@ export class DeleteScheduleComponent implements OnInit {
   }
 
   delete() {
-    if (this.schedule.bookingAttendance.length != 0){
+    if (this.schedule.bookingAttendance.length > 0){
       this.global.showAlert("Clients have booked for this event","Unable to delete schedule event");
       this.global.dismissModal();
     } else {

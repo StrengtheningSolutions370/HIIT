@@ -100,7 +100,6 @@ export class SchedulePage implements AfterViewInit  {
                     date.getMinutes()
                   ));
                   console.log(endTime);
-
                 events.push({
                   scheduleID: sItem.scheduleID,
                   venue: sItem.venue,

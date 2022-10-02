@@ -45,10 +45,18 @@ export class AddVatComponent implements ViewWillEnter{
       }else{
         var temp = {
           percentage: this.cVATForm.value['percentage'],
-          date: new Date().toISOString()       
-        }; 
-        this.vatService.confirmVatModal(temp);
-        this.global.dismissModal();
+          date: new Date().toISOString()
+        };
+        this.vatService.matchingVat(temp.percentage, temp.date).then((val) => {
+          console.log(val);
+          if (val != 0){
+            this.global.showAlert("The VAT information entered already exists on the system","VAT Already Exists");
+          } else {
+            this.vatService.confirmVatModal(temp);
+            this.global.dismissModal();
+          }
+        });
+
       }
      }
 }

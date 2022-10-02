@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { EventEmitter, Injectable } from '@angular/core';
 import { AlertController,LoadingController,ModalController,ToastController } from '@ionic/angular';
+import { RepoService } from '../repo.service';
 
 declare const Buffer;
 
@@ -11,7 +12,8 @@ declare const Buffer;
 export class GlobalService {
   loading: Boolean = false;
   public items: any = [];
-  
+  basePassed: string = '';
+
   public fetchMeasurementFlag = false;
   public closeMeasurementAddModal = new EventEmitter<any>();
   public closeVenueDelete = new EventEmitter<any>();
@@ -21,12 +23,14 @@ export class GlobalService {
   constructor(private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private modalCtrl: ModalController) { }
+    private modalCtrl: ModalController, private repo: RepoService) {
+      this.basePassed = this.repo.baseImg;
+     }
 
     //IMAGE manipulation
     //--------
 
-    public createImg = (fileName: string) => `https://localhost:44383/Resources/Images/saleItemImages/${fileName}`;
+    public createImg = (fileName: string) => `${this.basePassed}Resources/Images/saleItemImages/${fileName}`;
 
     filterItems(searchTerm) {
       return this.items.filter(item => item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
@@ -127,6 +131,6 @@ export class GlobalService {
       return `${url.substring(0, 24)}embed/${url.substring(32, url.length)}`;
     }
 
-    
+
 
 }

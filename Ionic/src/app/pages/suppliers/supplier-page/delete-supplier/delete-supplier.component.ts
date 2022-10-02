@@ -66,7 +66,7 @@ export class DeleteSupplierComponent implements OnInit {
         this.sucDelete();
         this.dismissModal();
       } else {
-        this.supplierService.associativeSupplierModal(resp.error.supplier)
+        this.supplierService.associativeSupplierModal(this.supplier)
       }
     });
   }
