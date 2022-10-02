@@ -11,10 +11,10 @@ namespace Team7.Controllers
     [ApiController]
     public class QualificationController : ControllerBase
     {
-        private readonly IQualificationRepo qualificationRepo;
+        private readonly IQualificationRepo QualificationRepo;
         public QualificationController(IQualificationRepo qualificationRepo)
         {
-            this.qualificationRepo = qualificationRepo;
+            this.QualificationRepo = qualificationRepo;
         }
 
         // POST api/qualification/add
@@ -25,8 +25,8 @@ namespace Team7.Controllers
         {
             try
             {
-                qualificationRepo.Add(qualification);
-                await qualificationRepo.SaveChangesAsync();
+                QualificationRepo.Add(qualification);
+                await QualificationRepo.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception err)
@@ -41,7 +41,7 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutQualification(int id, [FromBody] Qualification qualification)
         {
-            var toUpdate = await qualificationRepo._GetQualificationIdAsync(id);
+            var toUpdate = await QualificationRepo._GetQualificationIdAsync(id);
             if (toUpdate == null)
             {
                 return NotFound("Could not find existing Qualification with id:" + id);
@@ -50,7 +50,7 @@ namespace Team7.Controllers
             {
                 toUpdate.Description = qualification.Description;
                 toUpdate.QualificationTypeID = qualification.QualificationTypeID;
-                await qualificationRepo.SaveChangesAsync();
+                await QualificationRepo.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception err)
@@ -65,7 +65,7 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteQualification(int id)
         {
-            var tempQualification = await qualificationRepo._GetQualificationIdAsync(id);
+            var tempQualification = await QualificationRepo._GetQualificationIdAsync(id);
 
 
 
@@ -74,13 +74,13 @@ namespace Team7.Controllers
                 return NotFound("Could not find existing Qualification with id:" + id);
             }
 
-            if (tempQualification.Employee != null)
+            if (tempQualification.Employee.Count != 0)
                 return Conflict(new { qualification = tempQualification });
 
             try
             {
-                qualificationRepo.Delete<Qualification>(tempQualification);
-                await qualificationRepo.SaveChangesAsync();
+                QualificationRepo.Delete<Qualification>(tempQualification);
+                await QualificationRepo.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception err)
@@ -97,7 +97,7 @@ namespace Team7.Controllers
         {
             try
             {
-                var qualificationList = await qualificationRepo.GetAllQualificationsAsync();
+                var qualificationList = await QualificationRepo.GetAllQualificationsAsync();
                 if (qualificationList == null) return Ok(0);
                 return Ok(qualificationList);
             }
@@ -110,11 +110,11 @@ namespace Team7.Controllers
         // GET: api/qualification/getMatch/{input}
         [HttpGet]
         [Route("getMatch")]
-        public async Task<IActionResult> GetMatchingQualifications(string description)
+        public async Task<IActionResult> GetMatchingQualifications(string input)
         {
             try
             {
-                var tempQualifications = await qualificationRepo.GetQualificationsAsync(description);
+                var tempQualifications = await QualificationRepo.GetQualificationsAsync(input);
                 if (tempQualifications == null) return Ok(0);
                 return Ok(tempQualifications);
             }
@@ -127,11 +127,11 @@ namespace Team7.Controllers
 
         [HttpGet]
         [Route("exists")]
-        public async Task<object> QualificationExists(int id)
+        public async Task<IActionResult> QualificationExists(int id)
         {
             try
             {
-                var qualification = await qualificationRepo.GetQualificationIdAsync(id);
+                var qualification = await QualificationRepo._GetQualificationIdAsync(id);
                 if (qualification == null) return Ok(0);
                 return Ok(qualification);
             }
@@ -139,7 +139,7 @@ namespace Team7.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, err.Message);
             }
-
         }
+
     }
 }

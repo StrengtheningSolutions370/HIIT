@@ -9,33 +9,45 @@
 </div>
 
 <ion-content>
-<br>
-  <ion-grid *ngIf="!isLoading">
-    <ion-list *ngFor="let vat of vatList | filter:filter, let i = index"> 
-      <ion-item-sliding>
-        <!-- Sending through the vat object to the vat service, to be viewed in the modal -->
-        <ion-item button (click)="vatService.viewVatInfoModal(vat)">
-          <ion-label>
-            <h1 slot="start">{{vat.percentage}}%</h1> 
-          </ion-label>
-          <ion-label>
-            <p>{{dateFormatter(vat.date)}}</p>
-          </ion-label>
-          <ion-icon name="chevron-back-outline" size="small"></ion-icon>
-        </ion-item>
-        <ion-item-options side="end" >
-          <ion-item-option color="tertiary" (click)="vatService.deleteVatInfoModal(vat)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-
-    </ion-list>
-  </ion-grid>   
-
-  <div class="ion-text-center " *ngIf="isLoading">
-    <ion-spinner name="circles"></ion-spinner>
-  </div>
-
-</ion-content>
-
+  <br>
+    <ion-grid *ngIf="!isLoading">
+      <ion-list *ngFor="let vat of vatList | filter:filter, let i = index"> 
+        <ion-item-sliding>
+          <!-- Sending through the vat object to the vat service, to be viewed in the modal -->
+          <ion-item >
+            <ion-grid class="nomargin">
+              <ion-row>
+                <ion-col size="5" class="name">
+                  <ion-text><h4>{{vat.percentage}}%</h4></ion-text>
+                </ion-col>
+                <ion-col>
+                  <ion-text><h4>
+                    {{dateFormatter(vat.date)}}
+                  </h4></ion-text>
+                </ion-col>
+                
+                <ion-col>
+                  <ion-button (click)="vatService.viewVatInfoModal(vat)">View</ion-button>
+                </ion-col>
+                <ion-icon name="chevron-back-outline" size="small"></ion-icon>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        
+          <ion-item-options side="end" >
+            <ion-item-option color="tertiary" (click)="vatService.deleteVatInfoModal(vat)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
   
+      </ion-list>
+    </ion-grid>   
+  
+    <div class="ion-text-center " *ngIf="isLoading">
+      <ion-spinner name="circles"></ion-spinner>
+    </div>
+  
+    <ion-text id="noRes" *ngIf="noresults">
+      <h1>No Results</h1>
+    </ion-text>
+  </ion-content>
   

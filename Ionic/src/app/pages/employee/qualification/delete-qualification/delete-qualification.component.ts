@@ -26,13 +26,13 @@ export class DeleteQualificationComponent implements ViewWillEnter {
 
       console.log('resp', resp);
 
-      if (resp.status == 200) {
+      if (!resp || resp['status'] == 200) {
         this.global.showToast('The qualification has been successfully deleted!');
         this.global.dismissModal();
       } else {
         await this.qualificationService.associativeQualificationModal(resp.error)
       }
-    });;
+    });
   }
 
 }

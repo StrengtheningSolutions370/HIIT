@@ -15,13 +15,24 @@
   <ion-grid *ngIf="!isLoading">
     <ion-list *ngFor="let category of saleCategoryList">
       <ion-item-sliding>
-        <ion-item button (click)="saleService.viewCategoryInfoModal(category)">
-          <ion-label>
-            <h1 class="ion-text-capitalize">{{category.name}}</h1>
-            <!-- <p style="font-size:medium">{{category.description}}</p> -->
-          </ion-label>
+        <ion-item >
+          <ion-grid class="nomargin">
+            <ion-row>
+
+              <ion-col size="9" class="name">
+                <ion-text><h4>{{category.name}}</h4></ion-text>
+              </ion-col>
+
+              <ion-col>
+                <ion-button (click)="saleService.viewCategoryInfoModal(category)">View</ion-button>
+              </ion-col>
+          
           <ion-icon name="chevron-back-outline" size="small"></ion-icon>
+        </ion-row>
+        </ion-grid>
+        
         </ion-item>
+
         <ion-item-options side="end">
           <ion-item-option color="secondary" (click)="saleService.updateCategoryInfoModal(category)">Update<ion-icon
               name="refresh" size="large"></ion-icon>

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { WriteOffReason } from 'src/app/models/write-off-reason';
 import { GlobalService } from 'src/app/services/global/global.service';
 
 @Component({
@@ -7,17 +8,10 @@ import { GlobalService } from 'src/app/services/global/global.service';
   styleUrls: ['./associative-write-off-reason.component.scss'],
 })
 export class AssociativeWriteOffReasonComponent implements OnInit {
+  @Input() writeOffReason: WriteOffReason;
 
-  @Input() writeOffReason : any;
+  constructor(public global: GlobalService) { }
 
-  constructor(public global : GlobalService) { }
-
-  ngOnInit() {
-    console.log(this.writeOffReason);
-  }
-
-  getDate(date : string) {
-    return date.split('T')[0];
-  }
+  ngOnInit() {}
 
 }

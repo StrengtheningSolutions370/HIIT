@@ -7,8 +7,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <br/><br/>
+<ion-content class="containerMargins" color="secondary">
+    <br/>
     <ion-label class="ion-text-center">
       <p style="font-size:large">Are you sure you want to delete the following sale category?</p>
     </ion-label>
@@ -18,13 +18,13 @@
       <ion-label class="itemLabel">Name:</ion-label>
       <ion-input class="deleteInput ion-text-capitalize" readonly>{{saleCategory.name}}</ion-input>
     </div>
-    <br>
+    <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Description:</ion-label>
       <ion-input class="deleteInput" readonly>{{saleCategory.description}}</ion-input>
     </div>
-    <br>
+    <br/>
 
     <ion-button expand="block" type="ion-button" (click)="delete(saleCategory.saleCategoryID)" color="danger" class="addBtn ion-float-right">Delete Sale Category</ion-button>
     <ion-button color="tertiary" class="cancelBtn ion-float-left"  (click)="this.global.dismissModal()">Cancel</ion-button>

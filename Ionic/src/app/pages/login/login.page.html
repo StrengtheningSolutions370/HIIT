@@ -27,21 +27,21 @@
 
           <div class="inputDiv">
               <ion-input class="input" type="email" name="emailAddress" ngModel email #emailCtrl="ngModel" placeholder="Email Address" required ></ion-input>
-          </div>
-          <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
-            <p>Please enter a valid email address</p>
-          </ion-text>
+              <span class="errorSpan" *ngIf="!emailCtrl.valid && emailCtrl.touched">
+                Please enter a valid email address<br/>
+              </span>
+            </div>
+          <br>
 
           <div class="inputDiv">
               <!-- <ion-icon name="key" slot="start" color="#282828"></ion-icon> -->
               <ion-input class="input" [type]="passType ? 'password' : 'text'" name="password" ngModel #passCtrl="ngModel" placeholder="Password" required minlength="8">  <ion-icon [name]="passType ? 'eye-outline':'eye-off-outline'" slot="end" color="#282828" (click)="updateIcn()"></ion-icon></ion-input>
-          </div>
-          <ion-text color="danger" *ngIf="!passCtrl.valid && passCtrl.touched">
-            <p>Password should be minimum of 8 characters</p>
-          </ion-text>
+              <span class="errorSpan" *ngIf="!passCtrl.valid && passCtrl.touched">
+                Password should be minimum of 8 characters<br/>
+              </span>
+            </div>
 
           <b><a routerLink="/password/forgot"><p style="color:#969696; margin-right: 10%; margin-top: 15px; margin-bottom: 15px; text-align: right;">Forgot Password?</p></a></b>
-
         </div>
 
         <div id="loginbutparent">

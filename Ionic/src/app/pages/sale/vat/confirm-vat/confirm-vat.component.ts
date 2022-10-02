@@ -14,14 +14,22 @@ export class ConfirmVatComponent {
   constructor(public global: GlobalService, public VatService: VatService) {}
 
    async checkMatch(percentage: number, date:any): Promise<boolean>{
-    return this.VatService.matchingVat(percentage,date).then(result => {
-      console.log(result);
-       if (result != false){
-         this.global.showAlert("The VAT information entered already exists on the system","Duplicate Entry");
+    return this.VatService.matchingVat(percentage,date).then(data => {
+      console.log(percentage);
+      console.log('Check match result:');
+      console.log(data);
+       if (data != 0){
+         let match = data.result;
+         if (match.length > 1){
+          console.log("matching more than 1");
+          this.global.showAlert("The VAT information entered already exists on the system","Duplicate Entry");
          return true;
-       } else {
-         return false;
-       }
+        }
+         
+        } else {
+          this.global.dismissModal();
+           return false;
+         }
      });
    }
 

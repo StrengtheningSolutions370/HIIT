@@ -33,11 +33,12 @@
                   #firstName="ngModel" 
                   placeholder="First Name" 
                   required ></ion-input>
+                  <span class="errorSpan" *ngIf="!lastName.valid && lastName.touched">
+                    Please enter your first name.<br/>
+                  </span>
                 </div>
                 <!-- </ion-item> -->
-                <ion-text color="danger" *ngIf="!lastName.valid && lastName.touched">
-                  <p>Please enter your first name.</p>
-                </ion-text>
+
 
                 <div class="inputDiv">
                     <ion-input 
@@ -48,10 +49,11 @@
                     #lastName="ngModel" 
                     placeholder="Last Name" 
                     required ></ion-input>
+                    <span class="errorSpan" *ngIf="!lastName.valid && lastName.touched">
+                      Please enter your last name.<br/>
+                    </span>
                 </div>
-                <ion-text color="danger" *ngIf="!lastName.valid && lastName.touched">
-                  <p>Please enter your last name.</p>
-                </ion-text>
+
 
                 <div class="inputDiv">
                     <ion-input 
@@ -64,10 +66,11 @@
                     required 
                     minlength="10"
                     maxlength="10"></ion-input>
+                    <span class="errorSpan" *ngIf="!phone.valid && phone.touched">
+                      Please enter a valid phone number.<br/>
+                    </span>
                 </div>
-                <ion-text color="danger" *ngIf="!phone.valid && phone.touched">
-                  <p>Please enter a valid phone number.</p>
-                </ion-text>
+
 
                 <div class="inputDiv">
                   <ion-input 
@@ -78,10 +81,11 @@
                   #emailCtrl="ngModel" 
                   placeholder="Email" 
                   required ></ion-input>
+                  <span class="errorSpan" *ngIf="!emailCtrl.valid && emailCtrl.touched">
+                    Please enter a valid email address.<br/>
+                  </span>
                 </div>
-                <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
-                  <p>Please enter a valid email address</p>
-                </ion-text>
+
 
                 <div class="inputDiv">
                   <ion-input 
@@ -91,10 +95,11 @@
                   ngModel dob 
                   #dob="ngModel" 
                   required ></ion-input>
+                  <span class="errorSpan" *ngIf="!dob.valid && dob.touched">
+                    Please enter a date of birth.<br/>
+                  </span>
                 </div>
-                <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
-                  <p>Please enter a date of birth</p>
-                </ion-text>
+ 
 
                 <div class="inputDiv">
                   <ion-input 
@@ -106,14 +111,12 @@
                   placeholder="Password" 
                   required 
                   minlength="8"></ion-input>
+                  <span class="errorSpan" *ngIf="!passCtrl.valid && passCtrl.touched">
+                    Password should be minimum of 8 characters<br/>
+                  </span>
                 </div>
-                <ion-text color="danger" *ngIf="!passCtrl.valid && passCtrl.touched">
-                  <p>Password should be minimum of 8 characters</p>
-                </ion-text>
 
                 <div>
-
-
                   <div class="inputDiv">
                     <ion-input 
                     class="input"
@@ -124,14 +127,13 @@
                     placeholder="Confirm Password" 
                     required 
                     minlength="8"></ion-input>
+                    <span class="errorSpan" *ngIf="!c_passCtrl.valid && c_passCtrl.touched">
+                      Confirm Password should be minimum of 8 characters<br/>
+                    </span>
+                    <span class="errorSpan" *ngIf="c_passCtrl.valid && c_passCtrl.value !== passCtrl.value">
+                      Password mismatch. You have entered passwords that do not match.<br/>
+                    </span>
                   </div>
-
-                  <ion-text color="danger" *ngIf="!c_passCtrl.valid && c_passCtrl.touched">
-                    <p>Confirm Password should be minimum of 8 characters</p>
-                  </ion-text>
-                  <ion-text color="danger" *ngIf="c_passCtrl.valid && c_passCtrl.value !== passCtrl.value">
-                    <p>Password mismatch. You have entered passwords that do not match.</p>
-                  </ion-text>
                 </div>
               </div>
               <div>

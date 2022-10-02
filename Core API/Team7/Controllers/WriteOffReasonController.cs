@@ -84,7 +84,7 @@ namespace Team7.Controllers
                 return NotFound();
             }
 
-            if (tempWriteOffReason.WriteOffLine != null)
+            if (tempWriteOffReason.WriteOffLine.Count != 0)
             {
                 var writeoffs = await WriteOffReasonRepo.GetWriteOffs(tempWriteOffReason);
                 return Conflict(new { reason = tempWriteOffReason, writeoffs = writeoffs });
