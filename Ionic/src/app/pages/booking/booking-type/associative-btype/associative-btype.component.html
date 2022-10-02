@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Booking Type Associated with Schedule/s</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -8,12 +8,13 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <br/>
-  <div class="ion-text-center">
-    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">
+  <ion-label class="ion-text-center">
+    <p style="font-size:large">
       The {{bookingType.name}} cannot be deleted because the following schedule/s are associated with it
   </p>
+</ion-label>
 
   <ng-container *ngFor="let schedule of this.bookingType.schedule; let i = index">
     <ion-list>
@@ -35,6 +36,7 @@
 
   </div>
 
-  <ion-button color="light" class="ion-float-right" style="margin-right:10%;width:30% " (click)="this.global.dismissModal()">Return</ion-button>
+  <br>
+  <ion-button color="tertiary" class="addBtn ion-float-right" (click)="this.global.dismissModal()">Return</ion-button>
 </ion-content>
 

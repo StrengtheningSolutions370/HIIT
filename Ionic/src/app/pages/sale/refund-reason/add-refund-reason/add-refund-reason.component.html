@@ -7,16 +7,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="containerMargins">
+<ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cRefundReasonForm" (ngSubmit)="submitForm()"> 
     <br/>
-    <div class="ion-text-center">
+    <ion-label class="ion-text-center">
       <p style="font-size:large">Please fill in the refund reason information below</p>
-    </div>
-
+    </ion-label>
+    <br/>
     <div class="inputDiv">
       <ion-label class="itemLabel">Reason:</ion-label>
-      <ion-input class="input" formControlName="refundReason" type="text" required="" id="refundReason"></ion-input>
+      <ion-input class="input ion-text-capitalize" formControlName="refundReason" type="text" required="" id="refundReason"></ion-input>
       <span class="errorSpan" *ngIf="errorControl.refundReason.errors?.required && cRefundReasonForm.get('refundReason').touched">
         Reason is required<br/>
       </span>

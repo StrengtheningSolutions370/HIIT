@@ -31,6 +31,7 @@ import { WriteOff } from '../models/write-off';
 })
 
 export class RepoService {
+
   //Azure hosted api base:
   //base = 'https://bsctest.azurewebsites.net/api/';
   //Hosted base:
@@ -38,6 +39,7 @@ export class RepoService {
   //Local base:
 
   base = 'https://localhost:44383/api/';
+
   AppUserController = 'AppUser/';
   BookingController = 'Booking/'
   BookingTypeController = 'BookingType/';

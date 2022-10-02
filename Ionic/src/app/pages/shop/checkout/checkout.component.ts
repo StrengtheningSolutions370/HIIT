@@ -34,7 +34,7 @@ export class CheckoutComponent implements ViewWillEnter {
         console.log(percentage);
         tempPrice = tempPrice * (percentage/100);
         console.log(tempPrice);
-        this.priceExcVat = tempPrice;
+        this.priceExcVat = this.cartData.grandPriceTotal - tempPrice;
       }
     })
   }
