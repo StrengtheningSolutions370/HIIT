@@ -11,10 +11,9 @@
     </ion-segment-button>
   </ion-segment>
   <ion-row>
-
     <!-- Slide back 1 screen-->
-    <ion-col size="2">
-      <ion-button fill="clear" (click)="back()">
+    <ion-col size="2" class="ion-text-end">
+      <ion-button fill="outline" (click)="back()" color="dark">
         <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-col>
@@ -23,8 +22,8 @@
     </ion-col>
     <!-- Slide forward 1 screen-->
     <ion-col size="2">
-      <ion-button fill="clear" (click)="next()">
-        <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
+      <ion-button fill="outline" (click)="next()" color="dark">
+        <ion-icon name="arrow-forward" slot="icon-only" ></ion-icon>
       </ion-button>
     </ion-col>
   </ion-row>

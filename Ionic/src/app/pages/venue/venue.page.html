@@ -12,7 +12,7 @@
   <ion-searchbar #search (ionClear)="searchVenue(search.value)" (ionInput)="searchVenue(search.value)" class="ion-float-right" color="secondary" expand="block" placeholder='Search Venue...'
     [(ngModel)]="filter" animated="true" debounce="200">
   </ion-searchbar>
-  <ion-fab horizontal="end" slot="fixed" style="margin-right: 2%; margin-top: 0.5%;">
+  <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%; margin-top: 4.5%">
     <ion-fab-button color="success" (click)="venueService.addVenueInfoModal()" #addItem>
       <ion-icon name="add-outline"></ion-icon>
     </ion-fab-button>
@@ -22,8 +22,10 @@
 
 <ion-content>
   <ion-grid *ngIf="!isLoading">
-    <ion-list class="cardFadeUp" *ngFor="let venue of this.venueList | filter:filter, let i = index"> 
+    <ion-list *ngFor="let venue of this.venueList | filter:filter, let i = index">
       <ion-item-sliding>
+
+    <ion-list class="cardFadeUp" *ngFor="let venue of this.venueList | filter:filter, let i = index">
 
         <ion-item>
           <ion-grid class="nomargin">
@@ -39,10 +41,10 @@
               </ion-col>
 
               <ion-icon name="chevron-back-outline" size="small"></ion-icon>
-            
+
             </ion-row>
           </ion-grid>
-        
+
         </ion-item>
 
         <ion-item-options side="end" >
@@ -51,12 +53,12 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-  </ion-grid>   
+  </ion-grid>
 
   <div class="ion-text-center " *ngIf="isLoading">
     <ion-spinner name="circles"></ion-spinner>
   </div>
-  
+
   <ion-text id="noRes" *ngIf="noresults">
     <h1>No Results</h1>
   </ion-text>

@@ -5,7 +5,10 @@ export class Schedule {
     scheduleID?: number;
     startDateTime: any;
     endDateTime: any;
-    bookingAttendance?: [];
+    bookingAttendance?: [{
+      attended?: boolean;
+      bookingAttendanceID?: number;
+    }];
     venueID?: number;
     venue?: Venue;
     bookingTypeID?: number;

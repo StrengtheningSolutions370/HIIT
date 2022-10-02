@@ -33,6 +33,15 @@
   <ion-label class="ion-text-left">Price:</ion-label>
   <ion-label class="ion-text-right">{{bookingAttendance.schedule.bookingPriceHistory[bookingAttendance.schedule.bookingPriceHistory.length-1].amount | currency:'ZAR' }} </ion-label>
 </ion-item>
+
+<ion-item>
+  <ion-label class="ion-text-left">Attended:</ion-label>
+  <ion-label class="ion-text-right">
+    <ion-icon name="thumbs-up-outline" *ngIf="bookingAttendance.attended == true"></ion-icon>
+    <ion-icon name="thumbs-up-outline" *ngIf="bookingAttendance.attended == false"></ion-icon>
+  </ion-label>
+
+</ion-item>
     <br>
     <ion-button color="light" class="ion-float-right" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Return</ion-button>
 </ion-content>

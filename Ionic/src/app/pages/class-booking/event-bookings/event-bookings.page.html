@@ -17,8 +17,12 @@
               <p>
                 Event Date:  {{ba.schedule.startDateTime | date:'y, MMM d, h:mm a' }} - {{ba.schedule.endDateTime | date:'h:mm a' }}<br/>
                 Price: {{ba.schedule.bookingPriceHistory[ba.schedule.bookingPriceHistory.length-1].amount | currency: 'ZAR'}} <br/>
-                Attended: {{ba.attended}}
               </p>
+            </ion-label>
+            <ion-label class="ion-text-left">
+              Attended:
+                  <ion-icon name="thumbs-up-outline" *ngIf="bookingAttendance.attended == true"></ion-icon>
+                  <ion-icon name="thumbs-up-outline" *ngIf="bookingAttendance.attended == false"></ion-icon>
             </ion-label>
             <ion-icon name="chevron-back-outline" size="small"></ion-icon>
           </ion-item>

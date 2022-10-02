@@ -207,6 +207,11 @@ export class UpdateScheduleComponent implements ViewWillEnter {
       }
     }
 
+    if (timeESend < timeSSend) {
+      this.global.showAlert("Please ensure the ending time is after the starting time","Time range error");
+      return false;
+    }
+
       var bphTemp: any = [{
         amount: Number(this.uCalendarForm.controls['schedulePrice'].value)
       }];
