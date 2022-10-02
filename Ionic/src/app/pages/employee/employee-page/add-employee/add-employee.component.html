@@ -21,7 +21,7 @@
     <ion-item>
       <ion-label position="stacked">Profile Photo:</ion-label>
       <!-- <app-file-upload formControlName="photo"></app-file-upload> -->
-      <input #photo (change)="addPhoto($event)" formControlName="photo" type="file" id="photo">
+      <input #photo (change)="addPhoto($event)" formControlName="photo" type="file" id="photo" required>
     </ion-item>
     <span class="error ion-padding"
       *ngIf="photoFlag && errorControl.photo.errors && cEmployeeForm.get('photo').touched">
@@ -56,12 +56,12 @@
 
     <ion-item>
       <ion-label position="floating">ID Number:</ion-label>
-      <ion-input formControlName="idNumber" type="text" id="idNumber"></ion-input>
+      <ion-input formControlName="idNumber" type="text" id="idNumber" required minlength="13" maxlength="13"></ion-input>
       <br />
     </ion-item>
     <span class="error ion-padding"
       *ngIf="errorControl.idNumber.errors && cEmployeeForm.get('idNumber').touched">
-      Please enter a valid ID Number (13 digits)
+      Please enter a valid ID Number of 13 digits.
       <br />
     </span>
 
@@ -72,20 +72,30 @@
     </ion-item>
     <span class="error ion-padding"
       *ngIf="errorControl.email.errors?.email && cEmployeeForm.get('email').touched">
-      Please enter a valid email address
+      Please enter a valid email address.
       <br />
     </span>
     <span class="error ion-padding"
       *ngIf="errorControl.email.errors?.required && cEmployeeForm.get('email').touched">
-      Please enter an email address
+      Please enter an email address.
       <br />
     </span>
 
     <ion-item>
       <ion-label position="floating">Phone Number:</ion-label>
-      <ion-input formControlName="phone" type="text" id="phone"></ion-input>
+      <ion-input formControlName="phone" type="tel" id="phone" required minlength="10" maxlength="10"></ion-input>
       <br />
     </ion-item>
+    <span class="error ion-padding"
+    *ngIf="errorControl.phone.errors?.pattern && cEmployeeForm.get('phone').touched">
+    Please enter a phone number starting with 0.
+    <br />
+  </span>
+  <span class="error ion-padding"
+    *ngIf="errorControl.phone.errors?.required && cEmployeeForm.get('phone').touched">
+    Please enter a phone number.
+    <br />
+  </span>
 
     <ion-item>
       <ion-label position="floating">Title:</ion-label>
@@ -97,6 +107,12 @@
       <br/>
     </ion-item>
 
+    <span class="error ion-padding"
+    *ngIf="errorControl.titleId.errors?.required && cEmployeeForm.get('titleId').touched">
+    Please select a title.
+    <br />
+  </span>
+
     <ion-item>
       <ion-label position="floating">Employee Type:</ion-label>
       <ion-select formControlName="employeeTypeId" type="text" required="" id="employeeTypeId" >
@@ -105,7 +121,13 @@
         </ng-container>
       </ion-select>
       <br/>
-    </ion-item> 
+    </ion-item>
+
+    <span class="error ion-padding"
+    *ngIf="errorControl.employeeTypeId.errors?.required && cEmployeeForm.get('employeeTypeId').touched">
+    Please select an employee type.
+    <br />
+  </span>
 
     <ion-item>
       <ion-label position="floating">Qualification:</ion-label>
@@ -117,6 +139,12 @@
       <br/>
     </ion-item>
 
+    <span class="error ion-padding"
+    *ngIf="errorControl.qualificationId.errors?.required && cEmployeeForm.get('qualificationId').touched">
+    Please select a qualification.
+    <br />
+  </span>
+
     <!-- <ion-item>
       <ion-label position="floating">Qualification Type:</ion-label>
       <ion-select formControlName="qualificationTypeId" type="text" required="" id="qualificationTypeId" >
@@ -126,7 +154,7 @@
       </ion-select>
       <br/>
     </ion-item> -->
-    
+
     <ion-item>
       <ion-label position="floating">Role:</ion-label>
       <ion-select formControlName="role" type="text" required="" id="role" >
@@ -136,13 +164,12 @@
       </ion-select>
       <br/>
     </ion-item>
-    
-    <!-- <ion-item>
-      <ion-label>Employee Type</ion-label>
-      <ion-select formArrayName="checkBoxEmployeeTypes" placeholder="Select Employee Type">
-        <ion-select-option *ngFor="let employeeType of employeeTypeList">{{employeeType.name}}</ion-select-option>
-      </ion-select>
-    </ion-item> -->
+
+    <span class="error ion-padding"
+    *ngIf="errorControl.role.errors?.required && cEmployeeForm.get('role').touched">
+    Please select a role.
+    <br />
+  </span>
 
     <!-- employee contract file input here: -->
     <ion-item>
@@ -151,8 +178,13 @@
       <ion-input (change)="addContract($event)" formControlName="contract" type="file" id="contract"></ion-input>
     </ion-item>
     <span class="error ion-padding"
+    *ngIf="contractFlag && errorControl.contract.errors?.required && cEmployeeForm.get('contract').touched">
+    Please upload a PDF employee contract.
+    <br />
+  </span>
+    <span class="error ion-padding"
       *ngIf="contractFlag && errorControl.contract.errors && cEmployeeForm.get('contract').touched">
-      Please submit a .pdf
+      Please upload a PDF.
       <br />
     </span>
 
@@ -163,7 +195,7 @@
                 ></pdf-viewer>
     </ion-item>
 
-    
+
     <div class="center">
       <ion-row class="width-80">
         <ion-col>

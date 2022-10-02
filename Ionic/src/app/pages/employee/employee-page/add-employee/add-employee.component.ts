@@ -7,12 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AllRoles } from 'src/app/app-routing.module';
-import { ComponentsModule } from 'src/app/components/components.module';
 import { Employee } from 'src/app/models/employee';
-import { EmployeeType } from 'src/app/models/employeeType';
-import { QualificationType } from 'src/app/models/qualification-type';
 import { Roles } from 'src/app/models/roles.enum';
-import { Venue } from 'src/app/models/venue';
 import { EmployeeService } from 'src/app/services/employee/employee.service';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
@@ -27,7 +23,7 @@ import { TitleService } from 'src/app/services/title/title.service';
 export class AddEmployeeComponent implements OnInit{
 
   @Input() employee: Employee;
-  
+
   titleList: any[] = [];
   employeeTypeList: any[] = [];
   qualificationList: any[] = [];
@@ -41,7 +37,7 @@ export class AddEmployeeComponent implements OnInit{
   cEmployeeForm! : UntypedFormGroup;
 
   roles : any[] = [];
-  
+
 
   photo! : File;
   photoFlag = false;
@@ -103,19 +99,18 @@ export class AddEmployeeComponent implements OnInit{
 
     this.cEmployeeForm = this.formBuilder.group({
       name: ['', [Validators.required]],
-      contract: ['', [this.validateContract]],
+      contract: ['', [Validators.required, this.validateContract]],
       email: ['', [Validators.required, Validators.email]],
       surname: ['', [Validators.required]],
-      photo: ['', this.validatePhoto],
+      photo: ['', Validators.required, this.validatePhoto],
       // photo: ['', [this.validatePhoto]],
-      idNumber: ['', [this.validateIDNumber]],
-      phone: ['', [Validators.pattern(/[0-9]{10}/)]],
+      idNumber: ['', [Validators.required,this.validateIDNumber]],
+      phone: ['', [Validators.required,Validators.pattern('^0[0-9]{9}')]],
       titleId: ['', [Validators.required]],
       qualificationId : ['', Validators.required],
       employeeTypeId: ['', Validators.required],
       role: ['', Validators.required]
     });
-
     //getting employee types for drop down
     this.repo.getEmployeeTypes().subscribe({
       next: (data : any) => {
@@ -180,7 +175,7 @@ export class AddEmployeeComponent implements OnInit{
   validateContract(contract : UntypedFormControl) : {[valtype : string] : string} | null {
     const pattern = /.((pdf))$/
     if (!pattern.test(contract.value)) {
-      return {'errormsg' : 'Please submit .png, .jpg or .jpeg'}
+      return {'errormsg' : 'Please submit .PDF'}
     }
     return null;
   }
