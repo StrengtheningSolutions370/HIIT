@@ -62,7 +62,7 @@ export class DeleteSupplierComponent implements OnInit {
   delete() {
     console.log(this.supplier)
     this.supplierService.deleteSupplier(this.supplier.supplierID).then((resp) => {
-      if (resp.status == 200) {
+      if (!resp || resp['status'] == 200) {
         this.sucDelete();
         this.dismissModal();
       } else {

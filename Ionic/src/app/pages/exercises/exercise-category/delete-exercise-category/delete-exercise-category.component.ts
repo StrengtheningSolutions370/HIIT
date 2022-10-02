@@ -19,7 +19,7 @@ export class DeleteExerciseCategoryComponent {
   async delete(id: number){
     this.exerciseService.deleteExerciseCategory(id).then((res : any) => {
       console.log(res);
-      if (res.status == 200) {
+      if (!res || res['status'] == 200) {
         this.global.dismissModal();
         this.global.showToast("The Exercise Category has been successfully deleted!")
       } else {

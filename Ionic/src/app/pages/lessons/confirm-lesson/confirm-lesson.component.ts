@@ -13,7 +13,7 @@ export class ConfirmLessonComponent implements OnInit {
   @Input() choice : any;
   @Input() lesson : any;
   i = 0;
-  
+
   showImage = false;
   imgSrc = '';
 
@@ -71,7 +71,7 @@ export class ConfirmLessonComponent implements OnInit {
       }
 
       this.global.nativeLoad("Creating...");
-      console.log('Add Employee from confirm:');
+      console.log('Add Lesson from confirm:');
       this.lessonService.createLesson(post).then((el : any) => {
         if (el) {
           this.dismissModal();
@@ -113,7 +113,7 @@ export class ConfirmLessonComponent implements OnInit {
     }
   }
 
-  
+
   async sucAdd() {
     const toast = await this.toastCtrl.create({
       message: 'The Lesson has been successfully added!',

@@ -74,7 +74,7 @@ namespace Team7.Controllers
                 return NotFound("Could not find existing Qualification with id:" + id);
             }
 
-            if (tempQualification.Employee != null)
+            if (tempQualification.Employee.Count != 0)
                 return Conflict(new { qualification = tempQualification });
 
             try
