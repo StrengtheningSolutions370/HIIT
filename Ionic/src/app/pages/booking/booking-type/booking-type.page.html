@@ -8,10 +8,11 @@
     </ion-fab-button>
   </ion-fab>
 </div>
+<br/>
 
 <ion-content>
   <ion-grid *ngIf="!isLoading" >
-    <ion-list *ngFor="let bt of bookingTypeList | filter:filter, let i = index">
+    <ion-list class="cardFadeUp" *ngFor="let bt of bookingTypeList | filter:filter, let i = index">
       <ion-item-sliding >
         <ion-item >
           <ion-grid class="nomargin">

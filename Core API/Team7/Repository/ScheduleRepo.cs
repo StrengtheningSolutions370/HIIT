@@ -59,7 +59,7 @@ namespace Team7.Models.Repository
                         Employee = new { sc.Employee.UserID, sc.Employee.AppUser },
                         BookingAttendance = sc
                         .BookingAttendance
-                        .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking }),
+                        .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking, ba.Booking.Client.AppUser.FirstName, ba.Booking.Client.AppUser.LastName }),
                         BookingPriceHistory = sc
                             .BookingPriceHistory
                             .Select(bph => new { bph.BookingPriceHistoryID, bph.Date, bph.Amount })

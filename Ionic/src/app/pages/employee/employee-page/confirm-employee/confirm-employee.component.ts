@@ -150,8 +150,8 @@ export class ConfirmEmployeeComponent implements OnInit {
   async duplicateAlert() {
     console.trace();
     const alert = await this.alertCtrl.create({
-      header: 'Employee Already Exists',
-      message: 'The Employee Information entered already exists on the system',
+      header: 'Duplicate Error',
+      message: 'The entered information already exists on the system',
       buttons: ['OK']
     });
    alert.present();

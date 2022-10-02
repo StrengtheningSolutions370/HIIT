@@ -18,7 +18,7 @@
               <div padding>
                 
                 <div class="inputDiv">
-                  <ion-select class="input" ngModel #TitleId="ngModel" placeholder="Title" name="TitleId" type="text" id="TitleId" required>
+                  <ion-select interface="popover" class="input" ngModel #TitleId="ngModel" placeholder="Title" name="TitleId" type="text" id="TitleId" required>
                     <ion-select-option *ngFor="let title of titleList" value="{{title.titleID}}">{{ title.description }}</ion-select-option>
                   </ion-select>
                 </div>

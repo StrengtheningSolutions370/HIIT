@@ -20,9 +20,15 @@ export class DeleteScheduleComponent implements OnInit {
   }
 
   delete() {
-    this.scheduleService.deleteScheduleEvent(this.schedule.scheduleID);
-    this.global.dismissModal();
-    this.global.showToast("The Schedule Event has been successfully deleted");
+    if (this.schedule.bookingAttendance.length != 0){
+      this.global.showAlert("Clients have booked for this event","Unable to delete schedule event");
+      this.global.dismissModal();
+    } else {
+      this.scheduleService.deleteScheduleEvent(this.schedule.scheduleID);
+      this.global.dismissModal();
+      this.global.showToast("The Schedule Event has been successfully deleted");
+    }
+
   }
 
 }

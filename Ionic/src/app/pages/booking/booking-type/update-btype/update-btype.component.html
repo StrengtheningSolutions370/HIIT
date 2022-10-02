@@ -10,9 +10,12 @@
 <ion-content class="containerMargins" color="secondary">
   <form [formGroup]="uBookingTypeForm" (ngSubmit)="submitForm()">
     <br/>
-    <div class="ion-text-center">
-      <p style="font-size:large">Please update the booking type information below</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please update the information below.</p>
+    </ion-label>
+
+    <br/>
+
     <div class="inputDiv">
       <ion-label class="itemLabel">Name:</ion-label>
       <ion-input class="input ion-text-capitalize" formControlName="bookingTypeName" type="text" required="" id="bookingTypeName" ></ion-input>
@@ -51,11 +54,12 @@
       <span class="errorSpan" *ngIf="errorControl.bookingTypeCapacity.errors?.min">
         Capacity must be greater than 0 <br/>
        </span>
+       <span class="errorSpan" *ngIf="errorControl.bookingTypeCapacity.errors?.max">
+        Capacity must be less than 200 <br/>
+       </span>
     </div>
     <br>
 
-
-    <br><br/>
     <ion-button type="submit" color="primary" [disabled]="!uBookingTypeForm.valid" class="addBtn ion-float-right">Update Booking Type</ion-button>
     <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
   </form>

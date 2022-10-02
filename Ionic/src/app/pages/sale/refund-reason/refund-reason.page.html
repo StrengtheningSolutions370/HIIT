@@ -7,10 +7,11 @@
     </ion-fab-button>
   </ion-fab>
 </div>
+<br/>
 
 <ion-content>
     <ion-grid *ngIf="!isLoading" >
-        <ion-list *ngFor="let reason of refundReasonList | filter:filter, let i = index"> 
+        <ion-list class="cardFadeUp" *ngFor="let reason of refundReasonList | filter:filter, let i = index"> 
           <ion-item-sliding>
 
             <ion-item >
@@ -18,7 +19,7 @@
                 <ion-row>
     
                   <ion-col size="9" class="name">
-                    <ion-text><h4>{{reason.description}}</h4></ion-text>
+                    <ion-text class="ion-text-capitalize"><h4>{{reason.description}}</h4></ion-text>
                   </ion-col>
     
                   <ion-col>
