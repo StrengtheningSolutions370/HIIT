@@ -10,8 +10,9 @@
 <ion-content class="containerMargins" color="secondary">
   <br/>
   <ion-label class="ion-text-center">
-    <p style="font-size:large">Please confirm the following booking type information</p>
+    <p style="font-size:large">Please confirm the following information.</p>
   </ion-label>
+  <br>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Name:</ion-label>
@@ -28,7 +29,7 @@
 
   <div class="inputDiv">
     <ion-label class="itemLabel" slot="start" id="clrSelector">Colour: </ion-label>
-    <input class="confirmInput ion-text-capitalize" disabled type="color" value="{{bookingType.colour}}" required="" id="bookingTypeColour" slot="end"/>
+    <input disabled type="color" value="{{bookingType.colour}}" required="" id="bookingTypeColour" slot="end"/>
   </div>
   
   <br/>

@@ -10,10 +10,11 @@
 </ion-header>
 
 <ion-content class="containerMargins">
-  <br />
-  <div class="ion-text-center">
+  <br/>
+  <ion-label class="ion-text-center">
     <p style="font-size:large">Are you sure you want to delete the following sale item?</p>
-  </div>
+  </ion-label>
+  <br>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Name:</ion-label>
@@ -31,6 +32,7 @@
   <div class="add-image">
     <img [src]="this.global.createImg(saleItem.photo)" alt="Sale Item Image" />
   </div>
+  <br>
 
 
   <div *ngIf="saleItem.quotable == true" class="inputDiv">
@@ -38,19 +40,20 @@
     <ion-input class="deleteInput ion-text-capitalize" readonly>{{saleItem.quotable}}</ion-input>
     <br>
   </div>
+  
  
 
   <div *ngIf="saleItem.quotable == false" class="inputDiv">
     <ion-label class="itemLabel">Quantity:</ion-label>
     <ion-input class="deleteInput" readonly>{{saleItem.quantityOnHand}}</ion-input>
-    <br>
   </div>
+  <br>
  
   <div *ngIf="saleItem.quotable == false" class="inputDiv">
     <ion-label class="itemLabel">Price:</ion-label>
     <ion-input class="deleteInput" readonly>R{{saleItem.priceHistory[0].saleAmount}}</ion-input>
-    <br>
   </div>
+  <br>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Sale Category:</ion-label>

@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>View Employee</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>View Employee Details</ion-title>
     <ion-buttons slot="end">
       <ion-button  (click)="dismissModal()" color="tertiary"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
@@ -10,94 +10,83 @@
 <!-- This modal is not complete, please compare with "Advenue" for the correct format -->
 <!-- Looks at the html, scss and typescript -->
 
-<ion-content>
-  <!-- <br/>
-  <ion-label class="ion-text-center">
-    <h3>View employee?</h3>
-  </ion-label> -->
+<ion-content class="containerMargins" color="secondary">
   <br/>
-      <ion-item> 
-        <ion-label>
-          <h2>Profile Photo:</h2>
-          <ion-img [src]="createImg(employee.data.photo)"></ion-img>
-          <!-- <p class="ion-text-start">No Profile image</p> -->
-        </ion-label>
-      </ion-item>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large;margin-left: 10%;margin-right: 10%;">The following information corresponds with the selected employee</p>
+  </ion-label>
+
+  <br/>
+
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Profile Photo:</ion-label>
+        <ion-img [src]="createImg(employee.data.photo)"></ion-img>
+      </div>  
+      <br>
   
-      <ion-item> 
-        <ion-label>
-          <h2>Name:</h2>
-          <p class="ion-text-start">{{employee.data.appUser.firstName}}</p>
-        </ion-label>
-      </ion-item>
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Title: </ion-label>
+        <ion-input class="input ion-text-capitalize" readonly>{{employee.data.appUser.title.description}}</ion-input>
+      </div>
+      <br/>
+
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Name: </ion-label>
+        <ion-input class="input ion-text-capitalize" readonly>{{employee.data.appUser.firstName}}</ion-input>
+      </div>
+      <br/>
   
-      <ion-item> 
-        <ion-label>
-          <h2>Surname:</h2>
-          <p class="ion-text-start">{{employee.data.appUser.lastName}}</p>
-        </ion-label>
-      </ion-item>
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Surname: </ion-label>
+        <ion-input class="input ion-text-capitalize" readonly>{{employee.data.appUser.lastName}}</ion-input>
+      </div>
+      <br/>
   
-      <ion-item > 
-        <ion-label>
-          <h2>ID Number:</h2>
-          <p class="ion-text-start">{{employee.data.idNumber}}</p>
-        </ion-label>
-      </ion-item>
+      <div class="inputDiv">
+        <ion-label class="itemLabel">ID Number: </ion-label>
+        <ion-input class="input ion-text-capitalize" readonly>{{employee.data.idNumber}}</ion-input>
+      </div>
+      <br/>
   
-      <ion-item > 
-        <ion-label>
-          <h2>Email:</h2>
-          <p class="ion-text-start">{{employee.data.appUser.email}}</p>
-        </ion-label>
-      </ion-item>
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Email: </ion-label>
+        <ion-input class="input" readonly>{{employee.data.appUser.email}}</ion-input>
+      </div>
+      <br/>
   
-      <ion-item > 
-        <ion-label>
-          <h2>Phone Number:</h2>
-          <p class="ion-text-start">{{employee.data.appUser.phoneNumber}}</p>
-        </ion-label>
-      </ion-item>
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Phone: </ion-label>
+        <ion-input class="input ion-text-capitalize" readonly>{{employee.data.appUser.phoneNumber}}</ion-input>
+      </div>
+      <br/>
   
-      <ion-item > 
-        <ion-label>
-          <h2>Title:</h2>
-          <p class="ion-text-start">{{employee.data.appUser.title.description}}</p>
-        </ion-label>
-      </ion-item>
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Qualification: </ion-label>
+        <ion-input class="input ion-text-capitalize" readonly>{{employee.data.qualification.description}}</ion-input>
+      </div>
+      <br/>
   
-      <ion-item > 
-        <ion-label>
-          <h2>Employee Type:</h2>
-          <p class="ion-text-start">{{employee.data.employeeType.name}}</p>
-        </ion-label>
-      </ion-item>
-  
-      <ion-item > 
-        <ion-label>
-          <h2>Qualification:</h2>
-          <p class="ion-text-start">{{employee.data.qualification.description}}</p>
-        </ion-label>
-      </ion-item>
-  
-      <ion-item class=""> 
-        <ion-label>
-          <h2>Contract:</h2>
-            <ion-row>
-              <pdf-viewer [src]="createContract(employee.data.contract)"
-                      [render-text]="true"
-                      [original-size]="false"
-                      ></pdf-viewer>
-              </ion-row>
-              <ion-row class="download">
-                <ion-button color="primary" class="ion-float-right" (click)="downloadPdf()">Open</ion-button>
-              </ion-row>
-        </ion-label>
-      </ion-item>
-  
-      <br />
-      <ion-toolbar>
-        <ion-button class="return" color="light" class="ion-float-right" (click)="dismissModal()">Return</ion-button>
-      </ion-toolbar>
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Employee Type: </ion-label>
+        <ion-input class="input ion-text-capitalize" readonly>{{employee.data.employeeType.name}}</ion-input>
+      </div>
+      <br/>
+
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Contract:</ion-label>
+        <ion-row class="download">
+          <ion-button color="primary" class="ion-float-right" (click)="downloadPdf()">Open</ion-button>
+        </ion-row>
+        <ion-row>
+          <pdf-viewer style="margin-top: 5px;" [src]="createContract(employee.data.contract)"
+            [render-text]="true"
+            [original-size]="false"
+            ></pdf-viewer>
+          </ion-row>  
+      </div>
+      <br>
+
+      <ion-button color="tertiary" class="addBtn ion-float-right" (click)="this.global.dismissModal()">Return</ion-button>
+      <br><br>
 
 </ion-content>

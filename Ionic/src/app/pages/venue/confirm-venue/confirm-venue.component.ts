@@ -33,16 +33,15 @@ export class ConfirmVenueComponent {
      if (data != 0){
       let match = data.result;
       if (match.length > 1){
-        this.global.showAlert("The venue information entered already exists on the system","Venue Already Exists");
+        this.global.showAlert("The entered information already exists on the system","Duplicate Error");
         return true;
       } else if (match.length == 1 && this.choice == 2 && match[0].venueID == this.venue.venueID){
         console.log(this.choice);
-        alert("Matching itself in update");
         return false;
       } else {
         console.log("Must be in ADD, with exactly 1 other match: ");
         console.log("Choice: " + this.choice);
-        this.global.showAlert("The venue information entered already exists on the system","Venue Already Exists");
+        this.global.showAlert("The entered information already exists on the system","Duplicate Error");
         return true;
       }
      } else {

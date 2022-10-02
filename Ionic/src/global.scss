@@ -84,6 +84,10 @@ ion-popover {
   color: red !important;
 }
 
+.blueOkUpdate {
+  color: var(--ion-text-color) !important;
+}
+
 //CSS for all cards displaying in list///////
 // ion-card {
 //   display: inline-flex;
@@ -181,7 +185,7 @@ ion-popover {
   color: rgb(240, 58, 58);
   font-size: small;
   padding-bottom: 20px;
-  margin-left: 10%; 
+  margin-left: 10%;
 }
 
 
@@ -215,13 +219,13 @@ ion-popover {
 
 .addBtn{
   margin-left:2%;
-  margin-right:10%; 
+  margin-right:10%;
   width:48%
 }
 
 .editBtn{
   margin-left:2%;
-  margin-right:10%; 
+  margin-right:10%;
   width:48%;
 
   button.alert-button{

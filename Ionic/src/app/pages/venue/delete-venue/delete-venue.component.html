@@ -9,36 +9,36 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="containerMargins">
-  <br /><br />
+<ion-content class="containerMargins" color="secondary">
+  <br/>
   <ion-label class="ion-text-center">
     <p style="font-size:large">Are you sure you want to delete the following venue?</p>
   </ion-label>
-  <br />
+  <br/>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Name:</ion-label>
     <ion-input class="deleteInput ion-text-capitalize" readonly>{{venue.name}}</ion-input>
   </div>
-  <br>
+  <br/>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Address:</ion-label>
     <ion-input class="deleteInput" readonly>{{venue.address}}</ion-input>
   </div>
-  <br>
+  <br/>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Postal Code:</ion-label>
     <ion-input class="deleteInput" readonly>{{venue.postalCode}}</ion-input>
   </div>
-  <br>
+  <br/>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Capacity:</ion-label>
     <ion-input class="deleteInput" readonly>{{venue.capacity}}</ion-input>
   </div>
-  <br>
+  <br/>
 
   <ion-button expand="block" type="ion-button" (click)="delete(venue.venueID)" color="danger"
     class="addBtn ion-float-right">Delete Venue</ion-button>
