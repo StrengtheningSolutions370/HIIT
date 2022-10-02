@@ -12,3 +12,27 @@
   min-width: 270px;
   height : auto;
 }
+
+.heading {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+tr, td {
+  text-align: center;
+  padding: 1% !important;
+}
+
+.outline {
+  border-color: lightgray;
+  border-width: .01em;
+  border-style:solid;
+  margin-bottom : -1px;
+}
+
+.outlineTotal {
+  border-color: lightgray;
+  border-width: .03em;
+  border-style:solid;
+  margin-bottom : -1px;
+}
