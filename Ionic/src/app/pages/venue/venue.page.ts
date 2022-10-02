@@ -40,6 +40,10 @@ export class VenuePage implements OnInit {
     this.venueService.fetchVenuesEvent.emit();
   }
 
+  deleteVenueInfoModal(venue : any) {
+    this.venueService.deleteVenueInfoModal(venue);
+  }
+
   fetchVenues() {
     this.isLoading = true;
     this.venueService.getAllVenues().subscribe(

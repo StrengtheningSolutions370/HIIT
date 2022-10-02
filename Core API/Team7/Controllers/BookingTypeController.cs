@@ -125,11 +125,8 @@ namespace Team7.Controllers
                 return NotFound();
             }
 
-            if (tempBookingType.Schedule != null)
-            {
                 if (tempBookingType.Schedule.Count() != 0)
                     return Conflict(new { booking = tempBookingType });
-            }
 
             try
             {
