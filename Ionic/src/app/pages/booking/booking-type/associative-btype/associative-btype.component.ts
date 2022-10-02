@@ -8,9 +8,9 @@ import { GlobalService } from 'src/app/services/global/global.service';
   styleUrls: ['./associative-btype.component.scss'],
 })
 export class AssociativeBtypeComponent implements OnInit {
-  @Input() bookingType: BookingType
+  @Input() bookingType: any;
   constructor(public global: GlobalService) { }
 
-  ngOnInit() {}
+  ngOnInit() {console.log(this.bookingType)}
 
 }

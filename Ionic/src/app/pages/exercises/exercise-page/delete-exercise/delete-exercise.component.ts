@@ -40,7 +40,7 @@ export class DeleteExerciseComponent implements OnInit {
 
         console.log('resp', resp);
 
-        if (resp.status == 200) {
+        if (!resp || resp['status'] == 200) {
           this.sucDelete();
           this.dismissModal();
         } else {

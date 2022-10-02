@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/quotes */
 import { Component, Input} from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Venue } from 'src/app/models/venue';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { VenueService } from 'src/app/services/venue/venue.service';
@@ -13,7 +14,7 @@ export class DeleteVenueComponent {
   @Input() venue: Venue;
 
   constructor(public global: GlobalService,
-    public venueService: VenueService) { }
+    public venueService: VenueService, private modalCtrl : ModalController) { }
 
 
   //Send through the id of the selected venue to be deleted in the venue service.
@@ -22,9 +23,9 @@ export class DeleteVenueComponent {
 
       console.log('resp', resp);
 
-      if (resp.status == 200) {
-        this.global.showToast("The venue has been successfully deleted!")
-        this.global.dismissModal();
+      if (!resp || resp['status'] == 200) {
+        this.global.showToast("The venue has been successfully deleted!");
+        this.global.closeVenueDelete.emit();
       } else {
         await this.venueService.associativeVenueModal(resp.error.venue)
       }

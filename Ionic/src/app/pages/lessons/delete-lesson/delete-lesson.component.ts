@@ -26,8 +26,8 @@ export class DeleteLessonComponent implements OnInit {
     console.log(this.lesson.lessonID);
     this.lessonService.deleteLesson(this.lesson.lessonID).then(resp => {
 
-
-      if (resp.status) {
+      console.log('resp', resp);
+      if (!resp || resp['status'] == true) {
 
         this.sucDelete();
         this.dismissModal();
@@ -35,7 +35,7 @@ export class DeleteLessonComponent implements OnInit {
       } else {
 
         this.lessonService.AssociativeLessonComponent({
-          lesson: resp.data.error.lesson,
+          lesson: resp.error.lesson,
         });
 
       }

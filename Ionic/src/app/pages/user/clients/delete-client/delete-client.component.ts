@@ -26,7 +26,7 @@ export class DeleteClientComponent implements OnInit {
     //#TODO delete the lesson here
     console.log(this.client.id);
     this.clientService.deleteClient(this.client.userID).then(resp => {
-      if (resp.status == 200) {
+      if (!resp || resp['status'] == 200) {
         this.sucDelete();
         this.dismissModal();
       } else {

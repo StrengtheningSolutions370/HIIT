@@ -130,7 +130,12 @@ namespace Team7
 
             //DB configuration
             services.AddDbContext<AppDB>(options =>
+<<<<<<< HEAD
             options.UseSqlServer(Configuration.GetConnectionString("Lyne")));
+=======
+
+            options.UseSqlServer(Configuration.GetConnectionString("Luke")));
+>>>>>>> developer
             //Scoping all Interfaces to all Repos
             services.AddScoped<IBookingAttendanceRepo, BookingAttendanceRepo>();
             services.AddScoped<IBookingPriceHistoryRepo, BookingPriceHistoryRepo>();
