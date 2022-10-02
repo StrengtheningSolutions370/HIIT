@@ -19,7 +19,7 @@ export class DeleteWriteOffReasonComponent {
   //Send through the id of the selected write-off reason to be deleted in the write-off reason service.
   async delete(id: number){
     this.writeOffReasonService.deleteWriteOffReason(id).then((res : any) => {
-      if (res.status == 200){
+      if (!res || res['status'] == 200){
         this.global.dismissModal();
         this.global.showToast("The Write-Off Reason has been successfully deleted");
       } else {

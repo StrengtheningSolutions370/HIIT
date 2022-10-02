@@ -190,9 +190,9 @@ export class ExerciseService {
    deleteExerciseCategory(id: number ) : Promise<any> {
     return new Promise<any>((res, rej) => {
       this.repo.deleteExerciseCategory(id).subscribe({
-        next: (res : any) => {
+        next: (resp : any) => {
           this.fetchExerciseCategorysEvent.emit();
-          res(res)
+          res(resp)
         },
         error: (err : any) => {
           res(err);

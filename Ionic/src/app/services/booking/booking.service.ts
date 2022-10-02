@@ -10,6 +10,7 @@ import { UpdateBtypeComponent } from 'src/app/pages/booking/booking-type/update-
 import { ViewBtypeComponent } from 'src/app/pages/booking/booking-type/view-btype/view-btype.component';
 import { CancelBookingComponent } from 'src/app/pages/class-booking/event-bookings/cancel-booking/cancel-booking.component';
 import { ViewBookingInfoComponent } from 'src/app/pages/class-booking/event-bookings/view-booking-info/view-booking-info.component';
+import { GlobalService } from '../global/global.service';
 import { RepoService } from '../repo.service';
 
 @Injectable({
@@ -20,7 +21,7 @@ export class BookingService {
   @Output() fetchBookingTypeEvent = new EventEmitter<BookingType>();
   @Output() fetchBookingEvent = new EventEmitter<any>();//update when booking model is made
 
-  constructor(public repo:RepoService, private modalCtrl: ModalController) { }
+  constructor(public repo:RepoService, private modalCtrl: ModalController, public global: GlobalService) { }
 
 
 //READS:
@@ -107,20 +108,43 @@ createBookingType(bookingType: BookingType){
 // }
 
 //Receives a sale item to delete in the service vat list.
- deleteBookingType(id: number){
-  this.repo.deleteBookingType(id).subscribe(
-    {
-      next: res => {
-        console.log(res);
-        console.log('BOOKING TYPE DELETED');
+//  deleteBookingType(id: number): Promise<any> {
+//   this.repo.deleteBookingType(id).subscribe(
+//     {
+//       next: res => {
+//         console.log(res);
+//         console.log('BOOKING TYPE DELETED');
+//         this.fetchBookingTypeEvent.emit();
+//       },
+//       error: err => {
+//         console.log('ÉRROR HERE');
+//         console.log(err);
+//       }
+//     }
+//   );
+//  }
+
+ deleteBookingType(id: number) : Promise<any> {
+  // this.repo.deleteExercise(id).subscribe(result => {
+  //   console.log('EXERCISE DELETED');
+  //   this.fetchExercisesEvent.emit();
+  // });
+
+  return new Promise<any>((resolve, _) => {
+    this.global.nativeLoad("Deleting...");
+    this.repo.deleteBookingType(id).subscribe({
+      next: (data : any) => {
         this.fetchBookingTypeEvent.emit();
+        resolve(data);
       },
-      error: err => {
-        console.log('ÉRROR HERE');
-        console.log(err);
+      error: (err : any) => {
+        resolve(err);
       }
-    }
-  );
+    }).add(() => {
+      this.global.endNativeLoad();
+    })
+  });
+
  }
 
   // //Receives a sale category to delete in the service vat list.
@@ -314,6 +338,17 @@ async confirmBookingTypeModal(choice: number, bookingType: BookingType) {
     });
 
     await modal.present();
+}
+
+async associativeBookingTypeModal(bookingType: any) {
+  console.log("VenueService: AssociativeModalCall");
+  const modal = await this.modalCtrl.create({
+    component: AssociativeBtypeComponent,
+    componentProps: {
+      bookingType
+    }
+  });
+  await modal.present();
 }
 
 
