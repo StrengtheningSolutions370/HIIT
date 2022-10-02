@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ViewWillEnter } from '@ionic/angular';
 import html2canvas from 'html2canvas';
@@ -40,26 +41,65 @@ export class GroupSessionReportPage implements ViewWillEnter {
 
   download() {
     let Data = document.getElementById('htmlData')!;
+    var img = new Image();
+    img.src = 'assets/Logo.jpg';
+
+    const PDF = new jsPDF({
+      orientation: 'l',
+      unit: 'mm',
+      format: 'a4'
+    });
     html2canvas(Data).then((canvas) => {
-      let fileWidth = 290;
-      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      let imgWidth = 290;
+      let imgHeight = (canvas.height * imgWidth) / canvas.width;
+      var heightLeft = imgHeight;
 
       const contentDataURL = canvas.toDataURL('image/png');
 
-      const PDF = new jsPDF({
-        orientation: 'l',
-        unit: 'mm',
-        format: 'a4'
-      });
+
+      PDF.setPage(1);
+
+      //Add heading
+      PDF.setFontSize(30);
+      PDF.text('Booking Report', 15, 15);
+      //Add Logo
+      PDF.addImage(img, 'PNG', 260, 1, 25, 20);
+      //Add Line
+      PDF.line(0,25,300,25);
+      //Add date
+      var today = new Date();
+      var dateNow = "Date Printed: " + formatDate(today, 'yyyy-MM-dd', 'EN');
+      PDF.setFontSize(10);
+      PDF.text(dateNow, 20,200);
 
       // PDF.setFontSize(30)
       // PDF.text('Client Progress Report', 10, 10);
 
-      const topPosition = 20;
+      var topPosition = 28;
       const leftPosition = 5;
+      var pageHeight = 290;
+      PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, imgWidth, pageHeight);
 
-      PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, fileWidth, fileHeight);
-      PDF.save('Income Report.pdf');
+      imgHeight = (canvas.height * imgWidth) / canvas.width;
+      //var pages = 1;
+
+      while (heightLeft >= 0) {
+        topPosition = heightLeft - imgHeight;
+        PDF.addPage();
+        PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, imgWidth, pageHeight);
+        heightLeft -= pageHeight;
+      }
+
+      const pageCount = PDF.internal.pages.length-1;
+      console.log(pageCount);
+
+      for(var i = 1; i <= pageCount; i++) {
+        let str = 'Page: '+ String(i) + '/' + String(pageCount);
+          PDF.setPage(i);
+          PDF.text(str, 260, 200);
+      }
+
+      PDF.save('Booking report.pdf');
     });
   }
 
