@@ -1,13 +1,9 @@
 <ion-content *ngIf="!loading">
-  
-  <br/>
 
   <ion-grid>
     <ion-row>
 
-      <ion-col size="12">
-        <ion-searchbar #search (ionClear)="searchEmployees(search.value)" (ionInput)="searchEmployees(search.value)" expand="block" placeholder='I am looking for...' cancelButtonText="Close"></ion-searchbar>
-      </ion-col>
+        <ion-searchbar #search (ionClear)="searchEmployees(search.value)" (ionInput)="searchEmployees(search.value)" class="ion-float-right" color="secondary" expand="block" placeholder='I am looking for...' cancelButtonText="Close" animated="true"></ion-searchbar>
 
       <ion-col size="4">
         <ion-list>
@@ -25,12 +21,11 @@
     </ion-row>
   </ion-grid>
 
-
-  <div class="ion-text-center">
-    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addEmployeeInfoModal()">
-      Add Employee 
-    </ion-button>
-  </div>
+  <ion-fab horizontal="end" slot="fixed" style="margin-right: 2%; margin-top: 0.5%;">
+    <ion-fab-button color="success" (click)="addEmployeeInfoModal()" #addItem>
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   
     <ion-grid *ngIf="!loading && !noresults">
 

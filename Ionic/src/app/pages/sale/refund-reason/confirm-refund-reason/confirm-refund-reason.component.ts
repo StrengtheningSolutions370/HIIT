@@ -25,7 +25,7 @@ export class ConfirmRefundReasonComponent{
         let match = data.result;
         console.log(match);
         if (match.length > 1){
-          this.global.showAlert("The refund reason information entered already exists on the system","Duplicate Entry");
+          this.global.showAlert("The entered information already exists on the system","Duplicate Error");
           console.log(match.length);
           return true;
         } else if (match.length == 1 && this.choice == 2 && match[0].refundReasonID == this.refundReason.refundReasonID){
@@ -34,7 +34,7 @@ export class ConfirmRefundReasonComponent{
         } else {
           console.log("Must be in ADD, with exactly 1 other match: ");
           console.log("Choice: " + this.choice);
-          this.global.showAlert("The refund reason information entered already exists on the system","Duplicate Entry");
+          this.global.showAlert("The entered information already exists on the system","Duplicate Error");
           return true;
         }
        } else {

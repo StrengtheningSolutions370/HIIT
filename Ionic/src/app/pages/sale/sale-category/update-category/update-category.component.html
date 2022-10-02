@@ -10,9 +10,9 @@
 <ion-content class="containerMargins" color="secondary">
   <form [formGroup]="uSaleCategoryForm" (ngSubmit)="submitForm()"> 
     <br/>
-    <div class="ion-text-center">
-      <p style="font-size:large">Please update the sale category information below</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please update the information below.</p>
+    </ion-label>
     <br/>
     <div class="inputDiv">
       <ion-label class="itemLabel">Name:</ion-label>
@@ -21,6 +21,7 @@
         Name is required
       </span>
     </div>
+    <br/>
     
 
     <div class="inputDiv">
@@ -32,7 +33,7 @@
     </div>
 
     <br><br/>
-    <ion-button type="submit" color="secondary" [disabled]="!uSaleCategoryForm.valid" class="addBtn ion-float-right">Update Sale Category</ion-button>
+    <ion-button type="submit" color="primary" [disabled]="!uSaleCategoryForm.valid" class="addBtn ion-float-right">Update Sale Category</ion-button>
     <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
   </form>
 </ion-content>

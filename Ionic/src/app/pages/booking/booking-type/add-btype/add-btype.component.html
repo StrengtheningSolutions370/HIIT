@@ -11,7 +11,7 @@
   <form [formGroup]="cBookingTypeForm" (ngSubmit)="submitForm()">
     <br/>
     <ion-label class="ion-text-center">
-      <p style="font-size:large">Please fill in the booking type information below</p>
+      <p style="font-size:large">Please fill in the information below.</p>
     </ion-label>
 
     <br/>
@@ -53,6 +53,9 @@
       </span>
       <span class="errorSpan" *ngIf="errorControl.bookingTypeCapacity.errors?.min">
         Capacity must be greater than 0 <br/>
+       </span>
+       <span class="errorSpan" *ngIf="errorControl.bookingTypeCapacity.errors?.max">
+        Capacity must be less than 200 <br/>
        </span>
     </div>
     <br>

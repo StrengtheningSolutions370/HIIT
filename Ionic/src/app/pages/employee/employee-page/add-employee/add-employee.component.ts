@@ -107,7 +107,6 @@ export class AddEmployeeComponent implements OnInit{
       email: ['', [Validators.required, Validators.email]],
       surname: ['', [Validators.required]],
       photo: ['', this.validatePhoto],
-      // photo: ['', [this.validatePhoto]],
       idNumber: ['', [this.validateIDNumber]],
       phone: ['', [Validators.pattern(/[0-9]{10}/)]],
       titleId: ['', [Validators.required]],

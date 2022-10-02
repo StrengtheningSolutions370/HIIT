@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Confirm Exercise Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,36 +7,42 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <br/>
-  <div class="ion-text-center">
-    <p style="font-size:large">Please confirm the following exercise information</p>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large">Please confirm the following information.</p>
+  </ion-label>
+
+  <br>
+
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Name:</ion-label>
+    <ion-input input class="confirmInput ion-text-capitalize" readonly>{{exercise.name}}</ion-input>
+  </div>
+  <br/>
+
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Focus:</ion-label>
+    <ion-input input class="confirmInput" readonly>{{exercise.focus}}</ion-input>
+  </div>
+  <br/>
+
+  <ion-item class="inputDiv">
+    <ion-label class="itemLabel">Video:</ion-label>
+    <iframe [src]="embed" frameborder="0" allowfullscreen></iframe>
+  </ion-item>
+  <br/>
+
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Exercise Category:</ion-label>
+    <ion-input input class="confirmInput" readonly>{{exName}}</ion-input>
   </div>
 
-    <ion-item >
-      <ion-label class="ion-text-left">Name:</ion-label>
-      <ion-label class="ion-text-right">{{exercise.name}}</ion-label>
-    </ion-item>
-    <ion-item >
-      <ion-label class="ion-text-left">Focus:</ion-label>
-      <ion-label class="ion-text-wrap ion-text-right">{{exercise.focus}}</ion-label>
-    </ion-item>
+    <br/>
 
-    <ion-item > 
-      <ion-label class="ion-text-left">Video:</ion-label>
-      <!-- <ion-label class="ion-text-right">{{exercise.url}}</ion-label> -->
-      <iframe [src]="embed" frameborder="0" allowfullscreen></iframe>
-    </ion-item>
-
-    <ion-item > 
-      <ion-label class="ion-text-left">Exercise Category:</ion-label>
-      <ion-label class="ion-text-right">{{exName}}</ion-label>
-    </ion-item>
-
+    <ion-button color="success" class="addBtn ion-float-right" (click)="confirmChanges(exercise)">Confirm</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="returnFrom()">Return</ion-button>
+    
     <br/><br/>
-
-    <ion-button color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;" (click)="confirmChanges(exercise)">Confirm</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="returnFrom()">Return</ion-button>
-
 </ion-content>
 
