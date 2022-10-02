@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>New Employee Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,16 +7,17 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- This modal is not complete, please compare with "Addvenue" for the correct format -->
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cEmployeeForm" (ngSubmit)="submitForm()">
 
     <br/>
-    <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the Employee information below.</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please fill in the information below.</p>
+    </ion-label>
+    <br>
 
     <ion-img *ngIf="showProfile" src="{{imgSrc}}" (click)="photo.click()"></ion-img>
+    <br>
 
     <ion-item>
       <ion-label position="stacked">Profile Photo:</ion-label>
@@ -104,8 +105,9 @@
           <ion-select-option value="{{title.titleID}},{{title.description}}">{{ title.description }}</ion-select-option>
         </ng-container>
       </ion-select>
-      <br/>
-    </ion-item>
+    </div>
+    <br>
+
 
     <span class="error ion-padding"
     *ngIf="errorControl.titleId.errors?.required && cEmployeeForm.get('titleId').touched">
@@ -129,16 +131,15 @@
     <br />
   </span>
 
-    <ion-item>
-      <ion-label position="floating">Qualification:</ion-label>
-      <ion-select formControlName="qualificationId" type="text" required="" id="qualificationId" >
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Qualification:</ion-label>
+      <ion-select interface="popover" class="input" formControlName="qualificationId" type="text" required="" id="qualificationId" >
         <ng-container *ngFor="let qua of qualificationList">
-          <ion-select-option value="{{qua.qualificationID}},{{qua.description}}">{{ qua.description }}</ion-select-option>
+          <ion-select-option class="ion-text-capitalize" value="{{qua.qualificationID}},{{qua.description}}">{{ qua.description }}</ion-select-option>
         </ng-container>
       </ion-select>
-      <br/>
-    </ion-item>
-
+    </div>
+    <br>
     <span class="error ion-padding"
     *ngIf="errorControl.qualificationId.errors?.required && cEmployeeForm.get('qualificationId').touched">
     Please select a qualification.
@@ -159,7 +160,7 @@
       <ion-label position="floating">Role:</ion-label>
       <ion-select formControlName="role" type="text" required="" id="role" >
         <ng-container *ngFor="let role of roles">
-          <ion-select-option value="{{role.value}}">{{ role.role }}</ion-select-option>
+          <ion-select-option class="ion-text-capitalize" value="{{role.value}}">{{ role.role }}</ion-select-option>
         </ng-container>
       </ion-select>
       <br/>
@@ -195,14 +196,14 @@
                 ></pdf-viewer>
     </ion-item>
 
-
+    <br>
     <div class="center">
       <ion-row class="width-80">
         <ion-col>
-          <ion-button color="light" (click)="this.global.dismissModal()">Cancel</ion-button>
+          <ion-button color="tertiary" (click)="this.global.dismissModal()">Cancel</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button (click)="submitForm()" color="success" [disabled]="cEmployeeForm.invalid">Create Employee</ion-button>
+          <ion-button (click)="submitForm()" color="primary" [disabled]="cEmployeeForm.invalid">Create Employee</ion-button>
         </ion-col>
       </ion-row>
     </div>

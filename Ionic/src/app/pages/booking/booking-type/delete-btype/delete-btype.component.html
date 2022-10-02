@@ -16,29 +16,28 @@
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Name:</ion-label>
-      <ion-input class="confirmInput ion-text-capitalize" readonly>{{bookingType.name}}</ion-input>
+      <ion-input class="deleteInput ion-text-capitalize" readonly>{{bookingType.name}}</ion-input>
     </div>
     <br>
   
     <div class="inputDiv">
       <ion-label class="itemLabel">Description:</ion-label>
-      <ion-input class="confirmInput ion-text-capitalize" readonly>{{bookingType.description}}</ion-input>
+      <ion-input class="deleteInput ion-text-capitalize" readonly>{{bookingType.description}}</ion-input>
     </div>
     <br>
   
   
     <div class="inputDiv">
       <ion-label class="itemLabel" slot="start" id="clrSelector">Colour: </ion-label>
-      <input class="confirmInput ion-text-capitalize" disabled type="color" value="{{bookingType.colour}}" required="" id="bookingTypeColour" slot="end"/>
+      <input disabled type="color" value="{{bookingType.colour}}" required="" id="bookingTypeColour" slot="end"/>
     </div>
     
     <br/>
   
     <div class="inputDiv">
       <ion-label class="itemLabel">Capacity:</ion-label>
-      <ion-input class="confirmInput ion-text-capitalize" readonly>{{bookingType.capacity}}</ion-input>
+      <ion-input class="deleteInput ion-text-capitalize" readonly>{{bookingType.capacity}}</ion-input>
     </div>
-    <br>
     <!-- <p *ngIf="bookingType.bookingPriceHistory.length > 0" style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following prices have been recorded for the selected booking type</p>
     <div *ngFor="let item of bookingType.bookingPriceHistory; let i=index">
       <ion-item >

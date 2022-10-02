@@ -10,9 +10,11 @@
 <ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cVenueForm" (ngSubmit)="submitForm()">
     <br/>
-    <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the venue information below</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please fill in the information below.</p>
+    </ion-label>
+
+    <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Name:</ion-label>
@@ -21,7 +23,7 @@
         Name is required.<br/>
       </span>
     </div>
-    <br>
+    <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Address:</ion-label>
@@ -30,7 +32,7 @@
         Address is required.<br/>
       </span>
     </div>
-    <br>
+    <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Postal Code:</ion-label>
@@ -42,7 +44,7 @@
         Postal code must consist of 4 digits.<br/>
       </span>
     </div>
-    <br>
+    <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Capacity:</ion-label>
@@ -52,6 +54,9 @@
       </span>
       <span class="errorSpan" *ngIf="errorControl.capacity.errors?.min">
         Capacity must be greater than 0.<br/>
+      </span>
+      <span class="errorSpan" *ngIf="errorControl.capacity.errors?.max">
+        Capacity must be less than 200<br/>
       </span>
     </div>
     <br/>

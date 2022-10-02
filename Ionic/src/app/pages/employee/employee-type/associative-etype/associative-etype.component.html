@@ -16,13 +16,14 @@
     </p>
   </ion-label>
   <br/>
-  <div>
-      <ion-list> 
-        <ion-item *ngFor="let employee of employeeType.employee">
-          <ion-label>Employee: </ion-label>
-          <!-- This should be changed to display employee name, not the ID -->
-          <ion-label>{{employee.appUser.firstName}} {{employee.appUser.lastName}}</ion-label>
-        </ion-item>
-      </ion-list>
-  </div>
+
+  <ion-list> 
+    <ion-item *ngFor="let employee of employeeType.employee">
+      <ion-label class="input ion-text-capitalize ion-text-center">{{employee.appUser.firstName}} {{employee.appUser.lastName}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <br>
+  <ion-button color="tertiary" class="addBtn ion-float-right" (click)="this.global.dismissModal()">Return</ion-button>
+
 </ion-content>

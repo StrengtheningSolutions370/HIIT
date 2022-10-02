@@ -11,9 +11,9 @@
 
 <ion-content class="containerMargins" color="secondary">
   <br/>
-  <div class="ion-text-center">
-    <p style="font-size:large">Please confirm the following sale item information.</p>
-  </div>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large">Please confirm the following information.</p>
+  </ion-label>
 
   <div class="inputDiv">
     <ion-label class="itemLabel">Name:</ion-label>
@@ -39,6 +39,7 @@
     </div>
   </div>
 
+  <br>
   <div class="inputDiv" *ngIf="saleItem.quotable == true">
     <ion-label class="itemLabel">Quotable:</ion-label>
     <ion-input class="confirmInput" readonly>{{saleItem.quotable}}</ion-input>

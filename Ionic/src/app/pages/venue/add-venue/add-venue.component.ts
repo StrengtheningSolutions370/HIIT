@@ -23,7 +23,7 @@ export class AddVenueComponent implements ViewWillEnter {
     venueName: ['', [Validators.required]],
     location: ['', [Validators.required]],
     postalCode: ['', [Validators.required,Validators.pattern('[0-9]{4}')]],
-    capacity: ['', [Validators.required, Validators.min(1)]]
+    capacity: ['', [Validators.required, Validators.min(1), Validators.max(200)]]
   });
 
   constructor(public global: GlobalService,public formBuilder: UntypedFormBuilder,

@@ -9,15 +9,13 @@
   </ion-toolbar>
 </ion-header>
 
-<!--This modal is not complete, please check if it displays like "AddVenue"-->
-<!--Check the SCSS, TS AND HTML-->
-
 <ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cVATForm" (ngSubmit)="submitForm()">
     <br />
-    <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the VAT information below</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please fill in the information below.</p>
+    </ion-label>
+    <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Percentage:</ion-label>

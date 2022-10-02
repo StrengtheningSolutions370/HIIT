@@ -17,7 +17,7 @@ export class UpdateBtypeComponent implements ViewWillEnter {
   uBookingTypeForm: FormGroup = this.formBuilder.group({
     bookingTypeName: ['', [Validators.required]],
     bookingTypeDescription: ['', [Validators.required]],
-    bookingTypeCapacity: ['', [Validators.required, Validators.min(1)]],
+    bookingTypeCapacity: ['', [Validators.required, Validators.min(1), Validators.max(200)]],
     bookingTypeColour:  ['', [Validators.required]]
   });
 

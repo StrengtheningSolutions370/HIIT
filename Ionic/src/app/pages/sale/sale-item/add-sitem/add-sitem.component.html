@@ -10,9 +10,10 @@
 <ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cSaleItemForm" (ngSubmit)="submitForm()">
     <br/>
-    <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the sale item information below.</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please fill in the information below.</p>
+    </ion-label>
+    <br>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Name:</ion-label>
@@ -21,6 +22,7 @@
         Name is required<br/>
       </span>
     </div>
+    <br>
 
 
     <div class="inputDiv">
@@ -30,6 +32,7 @@
         Description is required<br/>
       </span>
     </div>
+    <br>
 
     <div class="inputDiv">
           <ion-label class="ion-float-left itemLabel">Photo:</ion-label>
@@ -40,12 +43,13 @@
             <img *ngIf="selectImage" [src]="selectImage?.dataUrl" alt=""/>
            </div>
     </div>
+    <br>
 
 
 
    <div class="inputDiv">
     <ion-label class="itemLabel">Sale Category:</ion-label>
-    <ion-select class="input" formControlName="itemSCategory" type="text" required="" id="itemSCategory" placeholder="Select Sale Category" >
+    <ion-select interface="popover" class="input" formControlName="itemSCategory" type="text" required="" id="itemSCategory" placeholder="Select Sale Category" >
       <ng-container *ngFor="let c of this.categoryDropDown">
         <ion-select-option class="ion-text-capitalize" value="{{c.saleCategoryID}},{{c.name}}">{{ c.name }}</ion-select-option>
       </ng-container>
@@ -54,6 +58,7 @@
       Sale category is required <br/>
      </span>
    </div>
+   <br>
 
    <div class="inputDiv">
     <ion-label class="itemLabel">
@@ -61,6 +66,7 @@
     </ion-label>
     <ion-checkbox class="ion-float-right" style="margin-right:10%;" formControlName="itemQuotable" (ionChange)="checkBoxToggle($event)" color="secondary" ></ion-checkbox>
    </div>
+   <br>
 
 
     <div *ngIf="!this.quotable">
@@ -68,12 +74,13 @@
         <ion-label class="itemLabel">Cost Price (R):</ion-label>
         <ion-input class="input" type="number" formControlName="itemCost" type="number" required="" id="itemCost" ></ion-input>
         <span class="errorSpan" *ngIf="errorControl.itemCost.errors?.required && cSaleItemForm.get('itemCost').touched">
-          Cost is required <br/>
+          Price is required <br/>
         </span>
         <span class="errorSpan" *ngIf="errorControl.itemCost.errors?.min">
-          Cost must be greater than 0 <br/>
+          Price must be greater than 0 <br/>
         </span>
       </div>
+      <br>
 
       <div class="inputDiv">
         <ion-label class="itemLabel">Selling Price (R):</ion-label>
@@ -85,6 +92,7 @@
           Price must be greater than 0 <br/>
          </span>
       </div>
+      <br>
 
       <div class="inputDiv">
         <ion-label class="itemLabel">Quantity On Hand:</ion-label>
@@ -97,6 +105,7 @@
          </span>
       </div>
     </div>
+    <br>
 
     <ion-button type="submit" color="primary" [disabled]="!cSaleItemForm.valid" class="ion-float-right addBtn">Create Sale Item</ion-button>
     <ion-button class="cancelBtn ion-float-left" color="tertiary" (click)="this.global.dismissModal()">Cancel</ion-button>

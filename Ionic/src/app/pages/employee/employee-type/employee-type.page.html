@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-grid *ngIf="!isLoading">
-    <ion-list *ngFor="let employeeType of this.employeeTypeList | filter:filter, let i = index"> 
+    <ion-list class="cardFadeUp" *ngFor="let employeeType of this.employeeTypeList | filter:filter, let i = index"> 
       <ion-item-sliding>
         
         <ion-item >
@@ -19,7 +19,7 @@
             <ion-row>
 
               <ion-col size="9" class="name">
-                <ion-text><h4>{{employeeType.name}}</h4></ion-text>
+                <ion-text class="ion-text-capitalize"><h4>{{employeeType.name}}</h4></ion-text>
               </ion-col>
 
               <ion-col>
