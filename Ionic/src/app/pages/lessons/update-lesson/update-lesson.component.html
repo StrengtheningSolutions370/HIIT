@@ -20,7 +20,7 @@
     <div class="inputDiv">
       <ion-label class="itemLabel">Name:</ion-label>
       <ion-input class="input ion-text-capitalize" formControlName="lessonName" type="text" id="lessonName"></ion-input>
-      <span class="error ion-padding" *ngIf="errorControl.lessonName.errors?.required && cLessonForm.get('lessonName').touched">
+      <span class="errorSpan" *ngIf="errorControl.lessonName.errors?.required && cLessonForm.get('lessonName').touched">
         Lesson name is required.
       </span>
     </div>

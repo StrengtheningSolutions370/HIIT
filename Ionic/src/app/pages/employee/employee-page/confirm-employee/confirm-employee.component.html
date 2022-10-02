@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Confirm Employee Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,94 +7,84 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
 
   <br/>
 
-    <div class="ion-text-center">
-      <p style="font-size:large">Please confirm the following employee information?</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please confirm the following information</p>
+    </ion-label>
+    <br>
   
 
-    <ion-item> 
-      <ion-label>
-        <h2>Profile Photo:</h2>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Profile Photo:</ion-label>
         <ion-img *ngIf="showProfile" src="{{imgSrc}}"></ion-img>
         <p *ngIf="!showProfile" class="ion-text-start">No Profile image</p>
-      </ion-label>
-    </ion-item>
+    </div>  
+    <br>
 
-    <ion-item> 
-      <ion-label>
-        <h2>Name:</h2>
-        <p class="ion-text-start">{{employee.Name}}</p>
-      </ion-label>
-    </ion-item>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Title:</ion-label>
+      <ion-input class="confirmInput ion-text-capitalize" readonly>{{title}}</ion-input>
+    </div>
+    <br>
 
-    <ion-item> 
-      <ion-label>
-        <h2>Surname:</h2>
-        <p class="ion-text-start">{{employee.Surname}}</p>
-      </ion-label>
-    </ion-item>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Name:</ion-label>
+      <ion-input class="confirmInput ion-text-capitalize" readonly>{{employee.Name}}</ion-input>
+    </div>
+    <br>
 
-    <ion-item > 
-      <ion-label>
-        <h2>ID Number:</h2>
-        <p class="ion-text-start">{{employee.IDNumber}}</p>
-      </ion-label>
-    </ion-item>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Surname:</ion-label>
+      <ion-input class="confirmInput ion-text-capitalize" readonly>{{employee.Surname}}</ion-input>
+    </div>
+    <br>
 
-    <ion-item > 
-      <ion-label>
-        <h2>Email:</h2>
-        <p class="ion-text-start">{{employee.Email}}</p>
-      </ion-label>
-    </ion-item>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">ID Number:</ion-label>
+      <ion-input class="confirmInput ion-text-capitalize" readonly>{{employee.IDNumber}}</ion-input>
+    </div>
+    <br>
 
-    <ion-item > 
-      <ion-label>
-        <h2>Phone Number:</h2>
-        <p class="ion-text-start">{{employee.Phone}}</p>
-      </ion-label>
-    </ion-item>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Phone Number:</ion-label>
+      <ion-input class="confirmInput ion-text-capitalize" readonly>{{employee.Phone}}</ion-input>
+    </div>
+    <br>
 
-    <ion-item > 
-      <ion-label>
-        <h2>Title:</h2>
-        <p class="ion-text-start">{{title}}</p>
-      </ion-label>
-    </ion-item>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Email:</ion-label>
+      <ion-input class="confirmInput ion-text-capitalize" readonly>{{employee.Email}}</ion-input>
+    </div>
+    <br>
 
-    <ion-item > 
-      <ion-label>
-        <h2>Employee Type:</h2>
-        <p class="ion-text-start">{{employeeType}}</p>
-      </ion-label>
-    </ion-item>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Qualification:</ion-label>
+      <ion-input class="confirmInput ion-text-capitalize" readonly>{{qualification}}</ion-input>
+    </div>
+    <br>
 
-    <ion-item > 
-      <ion-label>
-        <h2>Qualification:</h2>
-        <p class="ion-text-start">{{qualification}}</p>
-      </ion-label>
-    </ion-item>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Employee Type:</ion-label>
+      <ion-input class="confirmInput ion-text-capitalize" readonly>{{employeeType}}</ion-input>
+    </div>
+    <br>
 
-    <ion-item > 
-      <ion-label>
-        <h2>Contract:</h2>
-          <pdf-viewer [src]="pdfSrc"
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Contract:</ion-label>
+          <pdf-viewer style="margin-top: 5px;" [src]="pdfSrc"
                     [render-text]="true"
                     [original-size]="false"
                     ></pdf-viewer>
-      </ion-label>
-    </ion-item>
+    </div>
     
 
     <br/>
    
-    <ion-button color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;" (click)="confirmChanges(employee)">Confirm</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="returnFrom()">Return</ion-button>
+    <ion-button color="success" class=" addBtn ion-float-right" (click)="confirmChanges(employee)">Confirm</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left"(click)="returnFrom()">Return</ion-button>
 
     <br />
 </ion-content>
