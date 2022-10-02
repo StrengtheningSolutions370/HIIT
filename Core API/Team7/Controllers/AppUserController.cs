@@ -293,7 +293,12 @@ namespace Team7.Controllers
             {
                 var clientrepo = await _clientRepo.GetClientIdAsync(id);
 
-                if (clientrepo.Booking.Count() != 0 || clientrepo.Measurement.Count() != 0)
+                if (clientrepo.Booking != null)
+                if (clientrepo.Booking.Count() != 0)
+                    return Conflict(new { client = client, data = clientrepo });
+
+                if (clientrepo.Measurement.Count() != null)
+                if (clientrepo.Measurement.Count() != 0)
                     return Conflict(new { client = client, data = clientrepo });
 
 

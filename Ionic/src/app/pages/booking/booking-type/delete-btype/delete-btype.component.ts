@@ -21,7 +21,7 @@ export class DeleteBtypeComponent  {
 
       console.log('resp', resp);
 
-      if (resp.status == 200) {
+      if (!resp || resp['status'] == 200) {
         this.global.showToast("The Booking Type has been successfully deleted");
         this.global.dismissModal();
       } else {

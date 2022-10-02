@@ -140,6 +140,10 @@ export class VenueService {
         }
       });
       await modal.present();
+      this.global.closeVenueDelete.subscribe(() => {
+        this.modalCtrl.dismiss();
+        console.log('modal delete sidmiss')
+      })
     }
   }
   //ASSOCIATIVE

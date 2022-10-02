@@ -14,6 +14,7 @@ export class GlobalService {
   
   public fetchMeasurementFlag = false;
   public closeMeasurementAddModal = new EventEmitter<any>();
+  public closeVenueDelete = new EventEmitter<any>();
   public fetchRefunds = new EventEmitter<any>();
   public orderHash = 0;
 
