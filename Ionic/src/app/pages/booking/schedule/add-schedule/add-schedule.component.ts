@@ -56,6 +56,8 @@ export class AddScheduleComponent implements AfterViewInit {
     // }, 0);
 
 
+
+
     this.scheduleService.venueService.getAllVenues().subscribe({
       next: (data) => {
         this.venueList = data.result;
@@ -94,6 +96,8 @@ export class AddScheduleComponent implements AfterViewInit {
       console.log(this.cCalendarForm.value);
       console.log('Please provide all required fields');
       return false;
+    } else if (this.timeEnd < this.timeStart) {
+      this.global.showAlert("Please ensure the ending time is after the starting time","Time range error");
     }
     else
     {
