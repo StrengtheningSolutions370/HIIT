@@ -128,7 +128,7 @@
     </ion-item> -->
     
     <div class="inputDiv">
-      <ion-label class="itemLabel">Employee Type:</ion-label>
+      <ion-label class="itemLabel">Role:</ion-label>
       <ion-select interface="popover" class="input" formControlName="role" type="text" required="" id="role" >
         <ng-container *ngFor="let role of roles">
           <ion-select-option class="ion-text-capitalize" value="{{role.value}}">{{ role.role }}</ion-select-option>
