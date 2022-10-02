@@ -1,3 +1,4 @@
+
 <ion-content>
   <ion-segment [(ngModel)]="calendar.mode">
     <ion-segment-button value="month" color="contrast">
@@ -9,8 +10,11 @@
     <ion-segment-button value="day" >
       <ion-label color="dark">Day</ion-label>
     </ion-segment-button>
+
+
   </ion-segment>
   <ion-row>
+
 
     <!-- Slide back 1 screen-->
     <ion-col size="2" class="ion-text-end">
@@ -96,7 +100,6 @@
   </div>
 
 </ng-template>
-
 
 
 <div class="ion-text-center " *ngIf="isLoading">

@@ -100,7 +100,7 @@
     <!-- /home -->
     <ion-accordion class="sub" value="home" *ngIf="client || trainer">
       <ion-item slot="header" color="light">
-        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Home</ion-label>
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Home</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
 
@@ -248,7 +248,7 @@
     <!-- /lessons -->
     <ion-accordion class="sub" value="lessons" *ngIf="admin || superuser || trainer">
       <ion-item slot="header" color="light">
-        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Lessons</ion-label>
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Lessons</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
 
@@ -326,7 +326,7 @@
     <!-- /refundrequests -->
     <ion-accordion class="sub" value="refundrequests" *ngIf="admin || superuser">
       <ion-item slot="header" color="light">
-        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Refund Requests</ion-label>
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Refund Requests</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <app-help-refundrequests></app-help-refundrequests>
@@ -412,7 +412,7 @@
     <!-- /shop -->
     <ion-accordion class="sub" value="shop" *ngIf="client">
       <ion-item slot="header" color="light">
-        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Shop</ion-label>
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Shop</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <app-help-shop></app-help-shop>
@@ -455,7 +455,7 @@
               <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Clients</ion-label>
             </ion-item>
             <div class="ion-padding" slot="content">
-              <app-help-saleitem></app-help-saleitem>
+              <app-help-clients></app-help-clients>
             </div>
           </ion-accordion>
 
@@ -478,7 +478,7 @@
     <!-- /venues -->
     <ion-accordion class="sub" value="venues" *ngIf="admin || superuser">
       <ion-item slot="header" color="light">
-        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Venues</ion-label>
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Venues</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <app-help-venues></app-help-venues>
@@ -489,14 +489,14 @@
     <!-- /clientbookings -->
     <ion-accordion class="sub" value="clientbookings" *ngIf="client">
       <ion-item slot="header" color="light">
-        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Client Bookings</ion-label>
+        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Class Bookings</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
 
         <ion-accordion-group id="clientbookings">
           
           <!-- /eventcalendar -->
-          <ion-accordion class="subChild" value="clients">
+          <ion-accordion class="subChild" value="eventcalendar">
             <ion-item slot="header" color="light">
               <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Event Calendar</ion-label>
             </ion-item>
@@ -506,7 +506,7 @@
           </ion-accordion>
 
           <!-- /mybookings -->
-          <ion-accordion class="subChild" value="title">
+          <ion-accordion class="subChild" value="mybookings">
             <ion-item slot="header" color="light">
               <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>My Bookings</ion-label>
             </ion-item>
@@ -523,7 +523,7 @@
     <!-- /measurements -->
     <ion-accordion class="sub" value="measurements" *ngIf="client">
       <ion-item slot="header" color="light">
-        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Measurements</ion-label>
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Measurements</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <app-help-measurements></app-help-measurements>
