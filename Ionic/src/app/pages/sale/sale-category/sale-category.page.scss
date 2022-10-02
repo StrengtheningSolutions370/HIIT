@@ -19,7 +19,6 @@ ion-card {
 
 ion-button {
     border-radius : 10px;
-    width : 15%;
 }
 
 p {
@@ -33,3 +32,7 @@ p {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .name{
+    padding-left: 5%;
+}

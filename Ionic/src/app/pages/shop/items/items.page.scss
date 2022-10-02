@@ -29,6 +29,7 @@ ion-fab-button {
   padding: 1.25rem;
 }
 
+
 ion-card {
   display: inline-flex;
   flex-direction: column;
@@ -36,9 +37,13 @@ ion-card {
   height: 100% !important;
   margin: 0 !important;
   max-height: 400px;
-  height: 300px;
 }
 
+.price{
+  width: 26%;
+  margin-left: 2%;
+  margin-right: 2%
+}
 
 .text-xs {
   font-size: .7rem;
@@ -62,6 +67,10 @@ ion-card {
 
 .align-items-center {
   align-items: center !important;
+}
+
+.addCartBtn{
+  width: 60%;
 }
 
 .no-gutters {
