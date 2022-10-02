@@ -98,7 +98,8 @@ export class HelppagePage implements OnInit {
 
         //toggle the first parent:
         if (!openedParent) {
-          this.toggleParentAccordian(sub.getAttribute('value'));
+          // this.toggleParentAccordian(sub.getAttribute('value'));
+          firstParent = sub;
           openedParent = true;
         }
 
@@ -117,7 +118,7 @@ export class HelppagePage implements OnInit {
           const subText = [{
             text: subChild.textContent
           }];
-          console.log(subText[0].text)
+          // console.log(subText[0].text)
 
           const hitChild = new Fuse(subText, {
             keys: [
@@ -132,7 +133,6 @@ export class HelppagePage implements OnInit {
             this.hide(subChild);
           } else {
             if (!openedChild) {
-              //this.toggleParentAccordian(id);
               firstChild = subChild;
               openedChild = true;
             }
@@ -141,12 +141,16 @@ export class HelppagePage implements OnInit {
         };
 
       }
-
-      //parent made a match:
-      console.log(firstChild)
-
-
+      
     }
+
+    //parent made a match:
+    if (!openedChild) {
+      this.toggleParentAccordian(firstParent.getAttribute('value'));
+    } else {
+      this.toggleChildAccordian(firstParent.getAttribute('value'), firstChild.getAttribute('value'));
+    }
+    console.log(firstChild)
 
   }
 

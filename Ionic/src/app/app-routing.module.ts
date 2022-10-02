@@ -244,10 +244,10 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/helppage/helppage.module').then( m => m.HelppagePageModule)
   },
   //this route object must be last
-  {
-    path: '**',
-    redirectTo: 'login',
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: 'login',
+  // },
 
 ]
 
