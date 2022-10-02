@@ -1,0 +1,82 @@
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item >
+      <ion-select placeholder="Select chart view" interface="popover" slot="start" (ionChange)="updateView($event)">
+        <ion-select-option value="yearly">Years</ion-select-option>
+        <ion-select-option value="monthly">Monthly</ion-select-option>
+        <ion-select-option value="bimonth">Bi-monthly</ion-select-option>
+        <ion-select-option value="quarterly">Quarterly</ion-select-option>
+        <ion-select-option value="halfyear">Half-year</ion-select-option>
+      </ion-select>
+      <ion-button slot="end" (click)="download()">
+        Download
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <div class="flex w-100 center" style="margin:auto" id="htmlData" justify-content-center>
+    <div class="ion-text-center" style="width: 70vw;max-width: 90vw;min-width: 270px;height : auto; margin: auto" justify-content-center >
+      <h1> {{this.rangeTitle}}</h1>
+      <canvas #lineCanvas ></canvas>
+
+    </div>
+  </div>
+  <div class="flex w-100 center" style="max-width:90%; margin:auto"  justify-content-center>
+
+      <table style="width:100%;" id="htmlData2">
+
+        <!-- <tr>
+          <td class="heading"><u>Sales</u></td>
+          <td class="heading" size="3">Total item sales:</td>
+          <td class="heading">Total profit generated: </td>
+          <td class="heading">Qualification Type</td>
+          <td class="heading" size="1.4">Lesson's Made</td>
+        </tr> -->
+
+        <tr>
+          <th>No.</th>
+          <th>Sale category</th>
+          <th>Time period</th>
+          <th>Profit generated</th>
+        </tr>
+
+        <tr *ngFor="let saleCat of this.tempIncomeDataset; let i=index;">
+          <!-- count -->
+          <td class="outline">
+            <h5>{{i+1}}</h5>
+          </td>
+          <!-- Name of sale Category -->
+          <td class="outline">
+            <h5>{{saleCat.label}}</h5>
+          </td>
+          <!-- Time Period -->
+          <td class="outline">
+              <ng-container *ngFor="let period of this.lineLabels; let i=index">
+                  {{period}} <br/>
+              </ng-container>
+              <br/>
+              <ng-container>
+                Subtotal: <br/>
+              </ng-container>
+          </td>
+          <td class="outline ion-text-end" >
+            <ng-container *ngFor="let period of this.lineLabels; let i=index" >
+                R {{saleCat.data[i]}} <br/>
+            </ng-container>
+            <br/>
+            <ng-container>
+              R {{sumTotal(saleCat.data)}} <br/>
+            </ng-container>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Grand total: </td>
+          <td class="ion-text-end">R {{this.grandTotal}}</td>
+        </tr>
+      </table>
+
+  </div>
+
+</ion-content>
+
