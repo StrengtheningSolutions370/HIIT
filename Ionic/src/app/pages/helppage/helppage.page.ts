@@ -31,34 +31,7 @@ export class HelppagePage implements OnInit {
 
   ionViewDidEnter() {
 
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.item = this.route.snapshot.paramMap.get('item');
-    console.log(this.id, '/', this.item);
-    this.storage.getKey('role').then(role => {
-      this.role = role;
-      console.log(this.role);
-      if (this.role == 'client')
-        this.client = true;
-      if (this.role == 'member')
-        this.member = true;
-      if (this.role == 'admin' || this.role == 'superuser') {
-        this.client = true;
-        this.member = true;
-        this.admin = true;
-        this.superuser = true;
-        this.trainer = true;
-      }
-      if (this.role == 'trainer')
-        this.trainer = true;
-      if (this.id == null) return;
-      if (this.item == null)
-        this.toggleParentAccordian(this.id);
-      else
-        this.toggleChildAccordian(this.id, this.item);
-    });
-
-    this.subs = document.getElementsByClassName('sub');
-    this.subsChildren = document.getElementsByClassName('subChild');
+    
 
   }
 
@@ -183,9 +156,45 @@ export class HelppagePage implements OnInit {
 
   toggleChildAccordian(id : any, item : any) {
     this.toggleParentAccordian(id);
-    //toggle child
     const child : any = document.getElementById(id);
+    console.log('child to toggle', child);
     child.value = item;
+  }
+
+  ngAfterViewInit() {
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.item = this.route.snapshot.paramMap.get('item');
+    console.log(this.id, '/', this.item);
+    this.storage.getKey('role').then(role => {
+
+      this.role = role;
+      console.log(this.role);
+      if (this.role == 'client')
+        this.client = true;
+      if (this.role == 'member')
+        this.member = true;
+      if (this.role == 'admin' || this.role == 'superuser') {
+        this.client = true;
+        this.member = true;
+        this.admin = true;
+        this.superuser = true;
+        this.trainer = true;
+      }
+      if (this.role == 'trainer')
+        this.trainer = true;
+      if (this.id == null) return;
+  
+      setTimeout(() => {
+        if (this.item == null)
+          this.toggleParentAccordian(this.id);
+        else
+          this.toggleChildAccordian(this.id, this.item);
+      }, 100);
+        
+    });
+  
+    this.subs = document.getElementsByClassName('sub');
+    this.subsChildren = document.getElementsByClassName('subChild');
   }
 
   ngOnInit() {
