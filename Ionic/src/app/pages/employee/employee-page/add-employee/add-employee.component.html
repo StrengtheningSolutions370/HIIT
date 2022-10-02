@@ -105,15 +105,15 @@
           <ion-select-option value="{{title.titleID}},{{title.description}}">{{ title.description }}</ion-select-option>
         </ng-container>
       </ion-select>
-    </div>
-    <br>
+      <br>
+    </ion-item>
 
 
     <span class="error ion-padding"
     *ngIf="errorControl.titleId.errors?.required && cEmployeeForm.get('titleId').touched">
     Please select a title.
     <br />
-  </span>
+    </span>
 
     <ion-item>
       <ion-label position="floating">Employee Type:</ion-label>
@@ -129,7 +129,7 @@
     *ngIf="errorControl.employeeTypeId.errors?.required && cEmployeeForm.get('employeeTypeId').touched">
     Please select an employee type.
     <br />
-  </span>
+    </span>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Qualification:</ion-label>
@@ -138,13 +138,14 @@
           <ion-select-option class="ion-text-capitalize" value="{{qua.qualificationID}},{{qua.description}}">{{ qua.description }}</ion-select-option>
         </ng-container>
       </ion-select>
+      <br>
+      <span class="error ion-padding"
+      *ngIf="errorControl.qualificationId.errors?.required && cEmployeeForm.get('qualificationId').touched">
+      Please select a qualification.
+      <br />
+    </span>
     </div>
-    <br>
-    <span class="error ion-padding"
-    *ngIf="errorControl.qualificationId.errors?.required && cEmployeeForm.get('qualificationId').touched">
-    Please select a qualification.
-    <br />
-  </span>
+
 
     <!-- <ion-item>
       <ion-label position="floating">Qualification Type:</ion-label>
@@ -170,7 +171,7 @@
     *ngIf="errorControl.role.errors?.required && cEmployeeForm.get('role').touched">
     Please select a role.
     <br />
-  </span>
+    </span>
 
     <!-- employee contract file input here: -->
     <ion-item>
@@ -182,7 +183,7 @@
     *ngIf="contractFlag && errorControl.contract.errors?.required && cEmployeeForm.get('contract').touched">
     Please upload a PDF employee contract.
     <br />
-  </span>
+    </span>
     <span class="error ion-padding"
       *ngIf="contractFlag && errorControl.contract.errors && cEmployeeForm.get('contract').touched">
       Please upload a PDF.
@@ -207,6 +208,5 @@
         </ion-col>
       </ion-row>
     </div>
-
   </form>
 </ion-content>
