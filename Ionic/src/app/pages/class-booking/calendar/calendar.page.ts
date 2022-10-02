@@ -164,8 +164,12 @@ export class CalendarPage implements AfterViewInit {
       '<br><br>Price:&emsp; R' + event.bookingPriceHistory[event.bookingPriceHistory.length-1].amount +
       '<br><br>Employee:&emsp;' + event.employee.appUser.firstName + '&nbsp;' + event.employee.appUser.lastName
       ,
-      buttons: ['Cancel',{
+      buttons: [  {
+        text:'Cancel',
+        cssClass: 'redDelete'
+      },{
         text: 'Add to Cart',
+        cssClass: 'blueOkUpdate',
         handler: () =>{this.scheduleService.addBookingModal(event)}
       }]
     });

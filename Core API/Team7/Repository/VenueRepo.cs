@@ -50,7 +50,7 @@ namespace Team7.Models.Repository
                         v.Capacity,
                         Schedules = v
                             .Schedules
-                            .Select(s => new { s.ScheduleID/*, s.CapacityBooked */})
+                            .Select(s => new { s.ScheduleID, s.BookingType, s.Lesson, s.StartDateTime, s.EndDateTime})
                     }).ToListAsync()
                 };
             }

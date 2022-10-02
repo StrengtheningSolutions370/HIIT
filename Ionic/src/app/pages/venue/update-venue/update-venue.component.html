@@ -13,7 +13,7 @@
     <p style="font-size:large">Please update the venue information below</p>
   </div>
 
-  <form [formGroup]="uVenueForm" (ngSubmit)="submitForm()"> 
+  <form [formGroup]="uVenueForm" (ngSubmit)="submitForm()">
     <ion-item>
       <ion-label position="floating">Name:</ion-label>
       <ion-input formControlName="venueName" type="text" required="" id="venueName" ></ion-input>
@@ -35,7 +35,7 @@
 
     <ion-item>
       <ion-label position="floating">Postal Code:</ion-label>
-      <ion-input formControlName="postalCode" type="numeric" required="" maxlength="4" id="postalCode"></ion-input>
+      <ion-input formControlName="postalCode" type="text" required="" maxlength="4" id="postalCode"></ion-input>
       <br/>
     </ion-item>
     <span class="error ion-padding" *ngIf="errorControl.postalCode.errors?.required && uVenueForm.get('postalCode').touched">
@@ -46,7 +46,7 @@
       Postal code must consist of 4 digits
       <br/>
     </span>
-    
+
     <ion-item>
       <ion-label position="floating">Capacity:</ion-label>
       <ion-input formControlName="capacity" type="number" required="" id="capacity"></ion-input>

@@ -25,7 +25,7 @@ export class DeleteBtypeComponent  {
         this.global.showToast("The Booking Type has been successfully deleted");
         this.global.dismissModal();
       } else {
-        await this.bookingService.associativeBookingTypeModal(resp.error.venue)
+        await this.bookingService.associativeBookingTypeModal(this.bookingType);
       }
     });;
   }

@@ -14,7 +14,7 @@
   <ion-searchbar #search (ionClear)="searchVenue(search.value)" (ionInput)="searchVenue(search.value)" class="ion-float-right" color="secondary" expand="block" placeholder='Search Venue...'
     [(ngModel)]="filter" animated="true" debounce="200">
   </ion-searchbar>
-  <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%; margin-top: 8%">
+  <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%; margin-top: 4.5%">
     <ion-fab-button color="success" (click)="venueService.addVenueInfoModal()" #addItem>
       <ion-icon name="add-outline"></ion-icon>
     </ion-fab-button>
@@ -23,14 +23,14 @@
 
 <ion-content>
   <ion-grid *ngIf="!isLoading">
-    <ion-list *ngFor="let venue of this.venueList | filter:filter, let i = index"> 
+    <ion-list *ngFor="let venue of this.venueList | filter:filter, let i = index">
       <ion-item-sliding>
         <!-- Sending through the venue object to the venue service, to be viewed in the modal -->
         <ion-item button (click)="venueService.viewVenueInfoModal(venue)">
           <ion-label>
             <h1 class="ion-text-capitalize">{{venue.name}}</h1>
             <p>
-              Capacity: {{venue.capacity}} 
+              Capacity: {{venue.capacity}}
             </p>
           </ion-label>
           <ion-icon name="chevron-back-outline" size="small"></ion-icon>
@@ -41,12 +41,12 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-  </ion-grid>   
+  </ion-grid>
 
   <div class="ion-text-center " *ngIf="isLoading">
     <ion-spinner name="circles"></ion-spinner>
   </div>
-  
+
   <ion-text id="noRes" *ngIf="noresults">
     <h1>No Results</h1>
   </ion-text>

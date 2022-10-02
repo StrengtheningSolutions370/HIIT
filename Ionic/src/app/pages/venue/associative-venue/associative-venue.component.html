@@ -15,12 +15,23 @@
             The {{venue.name}} cannot be deleted because the following schedule/s are associated with it
         </p>
 
-        <ion-list>
-          <ion-item *ngFor="let schedule of venue.schedules">
-            <ion-label class="ion-text-left">Schedule:</ion-label>
-            <ion-label class="ion-text-right">{{ getTime(schedule.startDateTime) }}</ion-label>
-          </ion-item>
+        <ng-container *ngFor="let schedule of this.venue.schedules; let i = index">
+          <ion-list>
+            <ion-item>
+              <ion-label class="ion-text-left">Booking type:</ion-label>
+              <ion-label class="ion-text-right"> {{schedule.bookingType.name}} </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label class="ion-text-left">Lesson:</ion-label>
+              <ion-label class="ion-text-right"> {{schedule.lesson.name}} </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label class="ion-text-left">Timeslot:</ion-label>
+              <ion-textarea class="ion-text-right">{{schedule.startDateTime| date : 'MMM d, y, h:mm a'}} - {{schedule.endDateTime| date : 'h:mm a'}}</ion-textarea>
+            </ion-item>
         </ion-list>
+        <br/>
+        </ng-container>
     </div>
 
     <ion-button color="light" class="ion-float-right" style="margin-right:10%;width:30% " (click)="this.global.dismissModal()">Return</ion-button>

@@ -14,7 +14,7 @@ export class DeleteVenueComponent {
   @Input() venue: Venue;
 
   constructor(public global: GlobalService,
-    public venueService: VenueService, private modalCtrl : ModalController) { }
+    public venueService: VenueService) { }
 
 
   //Send through the id of the selected venue to be deleted in the venue service.
@@ -27,7 +27,7 @@ export class DeleteVenueComponent {
         this.global.showToast("The venue has been successfully deleted!");
         this.global.closeVenueDelete.emit();
       } else {
-        await this.venueService.associativeVenueModal(resp.error.venue)
+        await this.venueService.associativeVenueModal(this.venue);
       }
     });
   }
