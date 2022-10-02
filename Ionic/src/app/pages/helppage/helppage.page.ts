@@ -25,6 +25,7 @@ export class HelppagePage implements OnInit {
   screenID = 0;
 
   subs : any;
+  subsChildren : any;
 
   constructor(private route : ActivatedRoute, private storage : StoreService) { }
 
@@ -57,6 +58,7 @@ export class HelppagePage implements OnInit {
     });
 
     this.subs = document.getElementsByClassName('sub');
+    this.subsChildren = document.getElementsByClassName('subChild');
 
   }
 
@@ -65,6 +67,12 @@ export class HelppagePage implements OnInit {
     this.showAll();
 
     if (term == '') return;
+
+    let firstParent : any;
+    let firstChild : any;
+
+    let openedParent = false;
+    let openedChild = false;
 
     for (let i = 0; i < this.subs.length; i++) {
       
@@ -80,19 +88,62 @@ export class HelppagePage implements OnInit {
         ],
         findAllMatches: true,
         threshold: 0.1,
-        ignoreLocation: true
+        ignoreLocation: true,
+        // minMatchCharLength: 5
       }).search(term);
 
-      console.log('hide', hit)
       if (hit.length == 0) {
         this.hide(sub);
       } else {
 
-        console.log(sub);
+        //toggle the first parent:
+        if (!openedParent) {
+          this.toggleParentAccordian(sub.getAttribute('value'));
+          openedParent = true;
+        }
+
+        //filter children:
+        let child = sub.querySelector('ion-accordion-group')
+        if (child == null) {
+          continue;
+        }
+
+        child = child.querySelectorAll('ion-accordion');
+
+        for (let j = 0; j < child.length; j++) {
+          //console.log(child[j].textContent);
+
+          const subChild = child[j];
+          const subText = [{
+            text: subChild.textContent
+          }];
+          console.log(subText[0].text)
+
+          const hitChild = new Fuse(subText, {
+            keys: [
+              'text'
+            ],
+            findAllMatches: true,
+            threshold: 0.1,
+            ignoreLocation: true,
+          }).search(term);
+
+          if (hitChild.length == 0) {
+            this.hide(subChild);
+          } else {
+            if (!openedChild) {
+              //this.toggleParentAccordian(id);
+              firstChild = subChild;
+              openedChild = true;
+            }
+          }
+
+        };
 
       }
 
       //parent made a match:
+      console.log(firstChild)
 
 
     }
@@ -102,6 +153,9 @@ export class HelppagePage implements OnInit {
   showAll() {
     for (let i = 0; i < this.subs.length; i++) {
       this.subs[i].style.display = 'block';
+    }
+    for (let i = 0; i < this.subsChildren.length; i++) {
+      this.subsChildren[i].style.display = 'block';
     }
   }
 
