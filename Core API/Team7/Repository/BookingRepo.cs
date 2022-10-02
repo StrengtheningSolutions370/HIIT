@@ -32,7 +32,31 @@ namespace Team7.Models.Repository
 
         public async Task<Booking[]> GetAllBookingsAsync()
         {
-            var table = DB.Booking.Select(b => new Booking
+
+            var tom = DateTime.Now.AddDays(1);
+
+            var toremind = new List<Schedule>();
+
+            var schedules = await DB.Schedule.Select(s => new Schedule
+            {
+                StartDateTime = s.StartDateTime,
+                ScheduleID = s.ScheduleID,
+                BookingAttendance = s.BookingAttendance
+            }).ToArrayAsync();
+
+            foreach (var schedule in schedules)
+            {
+                var slot = schedule.StartDateTime;
+                if (slot.Year == tom.Year && slot.Month == tom.Month && slot.Day == tom.Day)
+                {
+                    if (schedule.BookingAttendance.Count() != 0)
+                    {
+                        toremind.Add(schedule);
+                    }
+                }
+            }
+
+            var bookings = await DB.Booking.Select(b => new Booking
             {
                 Date = b.Date,
                 Client = new Client
@@ -40,26 +64,26 @@ namespace Team7.Models.Repository
                     UserID = b.Client.UserID,
                     AppUser = b.Client.AppUser
                 },
-            });
+                BookingID = b.BookingID
+            }).ToArrayAsync();
 
-            var yr = DateTime.Now.Year.ToString();
-            var mt = DateTime.Now.Month.ToString();
-            var d = (DateTime.Now.Day + 1).ToString();
-
-            List<Booking> output = new List<Booking>();
-            foreach (Booking booking in table)
+            var output = new List<Booking>();
+            foreach (var schedule in toremind)
             {
-                //check if in the next 24 hours:
-
-                var byr = booking.Date.Year.ToString();
-                var bmt = booking.Date.Month.ToString();
-                var bd = booking.Date.Day.ToString();
-
-                if (yr == byr && mt == bmt && d == bd)
-                    output.Add(booking);
+                foreach (var attend in schedule.BookingAttendance)
+                {
+                    foreach (var booking in bookings)
+                    {
+                        if (booking.BookingID == attend.BookingID)
+                        {
+                            output.Add(booking);
+                        }
+                    }
+                }
             }
 
-            if (output.Count > 0)
+
+                if (output.Count > 0)
                 return output.ToArray();
 
             return null;

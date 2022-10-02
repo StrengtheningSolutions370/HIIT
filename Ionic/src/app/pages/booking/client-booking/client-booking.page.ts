@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { timeStamp } from 'console';
 import { Subscription } from 'rxjs';
 import { Schedule } from 'src/app/models/schedule';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { RepoService } from 'src/app/services/repo.service';
 import { ScheduleService } from 'src/app/services/schedule/schedule.service';
 
 
@@ -19,7 +21,7 @@ export class ClientBookingPage implements AfterViewInit {
   scheduleSub: Subscription;
 
   isLoading = true;
-  constructor(public scheduleService: ScheduleService, public global: GlobalService) {
+  constructor(public scheduleService: ScheduleService, public global: GlobalService, private repo: RepoService) {
     this.fetchSchedule();
    }
 
@@ -34,6 +36,13 @@ export class ClientBookingPage implements AfterViewInit {
     );
    }
 
+   send() {
+    this.repo.sendReminder().subscribe({
+      next: () => {
+        this.global.showToast("Reminders have been smsed!")
+      }
+    })
+   }
   fetchSchedule() {
     this.isLoading = true;
     this.scheduleService.getAllScheduleEvents().subscribe(
