@@ -49,8 +49,16 @@ namespace Team7.Controllers
             {
                 toUpdate.Name = exerciseCategory.Name;
                 toUpdate.Description = exerciseCategory.Description;
-                await ExerciseCategoryRepo.SaveChangesAsync();
-                return Ok();
+                ExerciseCategoryRepo.Update<ExerciseCategory>(toUpdate);
+            
+                if (await ExerciseCategoryRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to update value in the database. Contact support.");
+                }
             }
             catch (Exception err)
             {

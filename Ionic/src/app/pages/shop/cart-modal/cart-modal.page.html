@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Cart</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()">
@@ -9,47 +9,52 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item *ngIf="(!this.model.grandItemTotal>0)">
-    <ion-label color="dark">Cart is empty.</ion-label>
-  </ion-item>
+<ion-content color="secondary">
+
+  <div *ngIf="(!this.model.grandItemTotal>0)">
+    <h1>Cart is empty.</h1>
+  </div>
+
 
   <div *ngIf="model?.sales">
-    <ion-item *ngIf="model.sales?.length>0">
-      <ion-label><h2><u>Sales items:</u></h2></ion-label>
-    </ion-item>
+    <div *ngIf="model.sales?.length>0">
+      <h2 class="cartHeading">Sale Items</h2>
+    </div>
 
     <app-cart-item *ngFor="let item of model?.sales; let i = index" [item]="item" [index]="i" (add)="quantityPlus(item)"
       (minus)="quantityMinus(item)">
     </app-cart-item>
-    <br/>
+    <br />
   </div>
 
   <div *ngIf="model?.bookings">
-    <ion-item *ngIf="model.bookings?.length>0">
-      <ion-label><h2><u>Booking events:</u></h2></ion-label>
-    </ion-item>
-    <app-cart-booking-item *ngFor="let booking of model?.bookings" [booking]="booking" (remove)="removeBooking(booking)">
+    <div *ngIf="model.bookings?.length>0">
+      <h2 class="cartHeading">Booking Events</h2>
+    </div>
+
+    <app-cart-booking-item *ngFor="let booking of model?.bookings" [booking]="booking"
+      (remove)="removeBooking(booking)">
     </app-cart-booking-item>
-    <br/>
+    <br />
   </div>
 
   <div *ngIf="(this.model.grandItemTotal>0)">
     <ion-footer class="borderBottom">
-        <ion-item lines="none" >
-          <ion-label>Item Total:  </ion-label>
-          <ion-label slot="end"> {{model?.grandItemTotal}} </ion-label>
+      <ion-item lines="none">
+        <ion-label>Total Items:</ion-label>
+        <ion-label slot="end"> {{model?.grandItemTotal}} </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Total Price:</ion-label>
+        <ion-text slot="end">{{model?.grandPriceTotal | currency: 'ZAR'}}</ion-text>
+      </ion-item>
+      <br>
 
-        </ion-item>
-        <ion-item>
-          <ion-button (click)="checkout()">Proceed to checkout</ion-button>
-          <ion-text slot="end">{{model?.grandPriceTotal | currency: 'ZAR'}}</ion-text>
-        </ion-item>
+      <ion-button type="submit" color="primary"class="ion-float-right addBtn" (click)="checkout()">Proceed to Checkout</ion-button>
+      <ion-button class="cancelBtn ion-float-left" color="tertiary" (click)="this.global.dismissModal()">Return to Shop
+      </ion-button>
+      <!-- <ion-button (click)="checkout()" class="ion-float-right">Checkout</ion-button> -->
     </ion-footer>
   </div>
 
 </ion-content>
-
-
-
-
