@@ -5,9 +5,7 @@
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
       <ion-title slot="">Class bookings</ion-title>
-      <ion-button slot="end" (click)="cartService.openCart()" fill="clear">
-        <ion-icon slot="end" name="cart"></ion-icon>
-      </ion-button>
+
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
       <!--Can we change this dynamically when switching between tabs?-->
     <!-- </ion-item> -->
@@ -15,7 +13,12 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-fab horizontal="end" vertical="top" slot="fixed">
+    <ion-fab-button color="warning" (click)="cartService.openCart()" #cart>
+      <ion-badge color="danger">{{cartData?.quantity}}</ion-badge>
+      <ion-icon name="cart" class="cart-icon"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <ion-tabs >
     <ion-tab-bar slot="top" color="secondary">
       <ion-tab-button tab="calendar">

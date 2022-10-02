@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Team7.Context;
-
+using Team7.ViewModels;
 
 namespace Team7.Models.Repository
 {
@@ -25,6 +26,32 @@ namespace Team7.Models.Repository
         public void Update<T>(T Entity) where T : class
         {
             DB.Update(Entity);
+        }
+
+        public async  Task<bool> TrackAttendance(AttendanceViewModel[] attendanceViewModel)
+        {
+            try
+            {
+                foreach (var attendance in attendanceViewModel)
+                {
+                    BookingAttendance bookingAttendance = DB.BookingAttendance.Where(x => x.BookingAttendanceID == attendance.BookingAttendanceID).FirstOrDefault();
+                    bookingAttendance.Attended = attendance.Attended;
+                }
+                if (await SaveChangesAsync())
+                {
+                    return true;
+                } else
+                {
+                    return false;
+                }
+            }
+            catch (System.Exception)
+            {
+                return false;
+                throw;                
+            }
+  
+            
         }
 
 

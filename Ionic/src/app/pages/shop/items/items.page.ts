@@ -71,8 +71,10 @@ export class ItemsPage implements ViewWillEnter {
     this.saleService.getAllSaleItems().subscribe(
       {
         next: data => {
+          console.log(data);
           this.isLoading = false;
           this.saleItems = data.result;
+          this.saleItems = this.saleItems.filter(si => si.quantityOnHand > 0);
           //console.log(this.saleItems); //Entire collection of sale items
           //this.sortBy('name');
         }
@@ -122,6 +124,7 @@ export class ItemsPage implements ViewWillEnter {
       {
         next: (res) => {
           //console.log(res);
+          console.log("Fetching sale item due to event emit");
           this.fetchSaleItem();
         }
       }
@@ -130,13 +133,14 @@ export class ItemsPage implements ViewWillEnter {
 
   async ionViewWillLeave() {
     this.cartSub.unsubscribe();
+    this.saleService.fetchSaleItemsEvent.unsubscribe();
     //if (this.cartData?.sales && this.cartData?.sales.length > 0) { this.saveToCart(); }
   }
 
   quantityPlus(item) {
     console.log("1. Adding from shop page: ",item);
     this.cartService.quantityPlus(item);
-    this.global.showToast('Item successfully added to cart');
+
   }
 
   quantityMinus(item) {
@@ -155,110 +159,6 @@ export class ItemsPage implements ViewWillEnter {
 
 }
 
-  // setFilteredItems(searchTerm) {
-  //   this.getItems();
-  //   this.items = this.global.filterItems(searchTerm);
-  // }
-
-  // async getItems() {
-  //   try {
-  //     this.isLoading = true;
-  //     this.cartData = {};
-  //     //this.storedData = {};
-  //     setTimeout(async () => {
-  //       this.saleItems.forEach((element, index) => {
-  //         this.saleItems[index].quantity = 0;
-  //       });
-  //       this.items = [...this.saleItems];
-  //       await this.cartService.getCartData();
-  //       this.isLoading = false;
-  //     }, 3000);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
-
-      // this.saleService.getAllSaleCategories().subscribe(
-    //   {
-    //     next: data => {
-    //       this.categoryArray = data.result;
-    //       this.isLoading = false;
-    //     }
-    //   }
-    // );
-
-    // this.filterData = this.saleItems;
-    // console.log(this.filterItems);
-
-    //this.getItems();
-
-
-
-
-
-
-  //ALL FILTERING CODE
-
-  // handleChange(ev) {
-  //   this.currentCategory = ev.target.value;
-
-  //    this.filterCategories = this.currentCategory.map((category) => {
-  //     return category.name;
-  //   });
-
-  //   const output = this.filterCategory(this.saleItems, this.filterCategories)
-
-
-  //   console.log("Selected categories", this.currentCategory);
-  //   console.log("Filtered products", output);
-  // }
-
-  // filterCategory(input: any[], filterCategories: string[]){
-  //   return input.filter(item => {
-  //     return filterCategories?.includes(item.SaleCategory.name);
-  //   });
-  // }
-
-
-  // sortBy(field: string) {
-
-  //   this.saleItems.sort((a: any, b: any) => {
-  //     if (a[field] < b[field]) {
-  //       return -1;
-  //     } else if (a[field] > b[field]) {
-  //       return 1;
-  //     } else {
-  //       return 0;
-  //     }
-  //   });
-  //   this.orderedSaleItems = this.filterData;
-  // }
-
-  // sortByDescending(field: string) {
-  //   this.saleItems.sort((a: any, b: any) => {
-  //     if (a[field] > b[field]) {
-  //       return -1;
-  //     } else if (a[field] < b[field]) {
-  //       return 1;
-  //     } else {
-  //       return 0;
-  //     }
-  //   });
-  //   this.orderedSaleItems = this.filterData;
-  // }
-
-  // sort() {
-  //   this.descending = !this.descending;
-  //   this.order = this.descending ? 1 : -1;
-  // }
-
-  // priceLow() {
-  //   this.orderedSaleItems = this.sortBy('priceHistory.saleAmount');
-  // }
-
-  // priceHigh() {
-  //   this.orderedSaleItems = this.sortByDescending('priceHistory.saleAmount');
-  // }
 
 
 
