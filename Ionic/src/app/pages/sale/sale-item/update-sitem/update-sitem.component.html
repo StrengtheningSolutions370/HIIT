@@ -12,9 +12,9 @@
 <ion-content class="containerMargins" color="secondary">
   <form [formGroup]="uSaleItemForm" (ngSubmit)="submitForm()">
     <br />
-    <div class="ion-text-center">
-      <p style="font-size:large">Please update the sale item information below</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please update the information below.</p>
+    </ion-label>
     <br>
 
     <div class="inputDiv">
@@ -38,13 +38,6 @@
     <br>
 
     <div class="inputDiv">
-      <div class="add-image">
-        <img [src]="this.global.createImg(saleItem.photo)" alt="sale item image" />
-      </div>
-    </div>
-    <br>
-
-    <div class="inputDiv">
       <ion-label class="ion-float-left itemLabel">Photo:</ion-label>
       <ion-button class="cameraBtn ion-float-right" expand="block" (click)="getPhoto()"
         color="warning">
@@ -57,9 +50,17 @@
     <br>
     <br>
     <br>
+
+    <div class="inputDiv">
+      <div class="add-image">
+        <img [src]="this.global.createImg(saleItem.photo)" alt="sale item image" />
+      </div>
+    </div>
+    <br>
+
     <div class="inputDiv">
       <ion-label class="itemLabel">Sale Category:</ion-label>
-      <ion-select class="input ion-text-capitalize" formControlName="itemSCategory" type="text" required="" id="itemSCategory"
+      <ion-select interface="popover" class="input ion-text-capitalize" formControlName="itemSCategory" type="text" required="" id="itemSCategory"
         placeholder="Select sale category">
         <ng-container *ngFor="let c of this.categoryDropDown">
           <ion-select-option class="ion-text-capitalize" value="{{c.saleCategoryID}},{{c.name}}">{{ c.name }}</ion-select-option>
@@ -78,8 +79,9 @@
       </ion-label>
       <ion-checkbox class="ion-float-right" style="margin-right:10%;" formControlName="itemQuotable"
         (ionChange)="checkBoxToggle($event)" color="secondary"></ion-checkbox>
-    </div>
-    <br>
+        <br>
+      </div>
+    
 
     <div *ngIf="saleItem.quotable == false">
       <div class="inputDiv">
@@ -87,10 +89,10 @@
         <ion-input class="input" type="number" formControlName="itemCost" type="number" required="" id="itemCost">
         </ion-input>
         <span class="errorSpan" *ngIf="errorControl.itemCost.errors?.required && uSaleItemForm.get('itemCost').touched">
-          Cost is required <br />
+          Price is required <br />
         </span>
         <span class="errorSpan" *ngIf="errorControl.itemCost.errors?.min">
-          Cost must be greater than 0 <br />
+          Price must be greater than 0 <br />
         </span>
       </div>
       <br>
@@ -116,6 +118,9 @@
         <span class="errorSpan"
           *ngIf="errorControl.itemQuantity.errors?.required && uSaleItemForm.get('itemQuantity').touched">
           Quantity on hand is required <br />
+        </span>
+        <span class="errorSpan" *ngIf="errorControl.itemQuantity.errors?.min">
+          Quantity must be greater than 0 <br />
         </span>
       </div>
     </div>
