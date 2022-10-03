@@ -24,7 +24,7 @@
   </div>
   <br/> 
 
-  <ion-grid id="cols">
+  <ion-grid id="cols"  *ngIf="!loading && !noresults">
     <ion-row>
 
         <ion-col class="cardFadeUp" *ngFor="let item of stock" id="cols">
@@ -51,9 +51,6 @@
     </ion-row>
   </ion-grid>
 
-  <ion-text id="noRes" *ngIf="!isLoading && noresults">
-    <h1>No Results</h1>
-  </ion-text>
 
 
 
@@ -65,3 +62,7 @@
 </ion-footer> -->
      
 </ion-content>
+
+<ion-text id="noRes" *ngIf="!loading && noresults">
+  <h1>No Results</h1>
+</ion-text>

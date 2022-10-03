@@ -85,11 +85,8 @@ namespace Team7.Controllers
                 {
                     return NotFound();
                 }
-                if (tempRefundReason.Refund != null)
-                {
                     if (tempRefundReason.Refund.Count != 0)
                         return Conflict(new { refund = tempRefundReason });
-                }
 
                 RefundReasonRepo.Delete<RefundReason>(tempRefundReason);
                 if (await RefundReasonRepo.SaveChangesAsync())

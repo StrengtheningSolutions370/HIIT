@@ -340,9 +340,12 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
       await modal.present();
     }
   //DELETE Refund Reason
-  async deleteRefundReasonInfoModal(refundReason: RefundReason) {
+  async deleteRefundReasonInfoModal(refundReason: any) {
+
     console.log("SalesService: DeleteRefundReasonModalCall");
-    if (refundReason.refunds!= null && refundReason.refunds.length > 0){
+
+    if (refundReason.refund!= null && refundReason.refund.length > 0){
+      
       console.log("SalesService: Found associative in delete");
       console.log(refundReason);
       const modal = await this.modalCtrl.create({
@@ -353,7 +356,9 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
       });
 
       await modal.present();
+
     } else {
+
       const modal = await this.modalCtrl.create({
         component: DeleteRefundReasonComponent,
           componentProps: {
@@ -361,6 +366,7 @@ constructor(public repo: RepoService, private modalCtrl: ModalController) {
         }
       });
       await modal.present();
+
     }
 
   }
