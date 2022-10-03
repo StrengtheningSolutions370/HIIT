@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Vat } from 'src/app/models/vat';
+import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { VatService } from 'src/app/services/vat/vat.service';
 
@@ -24,7 +25,7 @@ export class VATPage implements OnInit{
 
   isLoading = true;
 
-  constructor(public vatService: VatService, public repo: RepoService) { 
+  constructor(public vatService: VatService, public repo: RepoService, public global: GlobalService) {
     // this.populateTitles();
     this.fetchVATs();
   }
@@ -56,6 +57,15 @@ export class VATPage implements OnInit{
         }
       }
     )
+  }
+
+  deleteVat(VatToDelete){
+    if (this.vatList.length <= 1){
+      this.global.showAlert("Atleast 1 VAT record is required at all times","Unable to delete last VAT record")
+    } else {
+      this.vatService.deleteVatInfoModal(VatToDelete);
+    }
+
   }
 
 
