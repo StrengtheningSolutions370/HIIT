@@ -185,6 +185,7 @@ import { RefundResponseComponent } from './pages/refunds/refund-response/refund-
 import { ViewRefundComponent } from './pages/refunds/view-refund/view-refund.component';
 import { AssociativeClientComponent } from './pages/user/clients/associative-client/associative-client.component';
 import { TrackAttendanceComponent } from './pages/booking/client-booking/track-attendance/track-attendance.component';
+import { ViewShopItemComponent } from './pages/shop/view-shop-item/view-shop-item.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -251,6 +252,8 @@ import { TrackAttendanceComponent } from './pages/booking/client-booking/track-a
   ViewPaymentComponent, RequestRefundComponent, ConfirmReasonComponent,
   //refund
   RefundResponseComponent, ViewRefundComponent,
+  //Shop
+  ViewShopItemComponent,
 
   AssociativeClientComponent
 ],
