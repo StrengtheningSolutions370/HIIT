@@ -5,6 +5,8 @@
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
       <ion-title class="ion-text-uppercase">Employee Management</ion-title>
+    <ion-icon id="helppageicon" slot="end" routerLink="/help/employeemanagement" name="help-circle-outline"></ion-icon>
+
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
       <!--Can we change this dynamically when switching between tabs?-->
     <!-- </ion-item> -->
@@ -15,19 +17,19 @@
   <ion-tabs>
     <ion-tab-bar slot="top" color="secondary">
       <ion-tab-button tab="employee-page">
-        <ion-label>Employee</ion-label>
+        <ion-label>Employee <ion-icon id="helppageicon" slot="end" routerLink="/help/employeemanagement/employee" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
   
       <ion-tab-button tab="employee-type">
-        <ion-label>Employee Type</ion-label>
+        <ion-label>Employee Type <ion-icon id="helppageicon" slot="end" routerLink="/help/employeemanagement/employeetype" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="qualification">
-        <ion-label>Qualification</ion-label>
+        <ion-label>Qualification <ion-icon id="helppageicon" slot="end" routerLink="/help/employeemanagement/qualification" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
   
       <ion-tab-button tab="qualification-type">
-        <ion-label>Qualification Type</ion-label>
+        <ion-label>Qualification Type <ion-icon id="helppageicon" slot="end" routerLink="/help/employeemanagement/qualificationtype" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
 
     </ion-tab-bar>

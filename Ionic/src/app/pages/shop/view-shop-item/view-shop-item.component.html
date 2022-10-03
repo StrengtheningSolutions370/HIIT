@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>{{saleItem.name}}</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content container="flex-wrap">
+<ion-content container="flex-wrap" color="secondary">
   <div class="ion-text-center">      
         <img [src]="this.global.createImg(saleItem.photo)" alt="img">
   </div>

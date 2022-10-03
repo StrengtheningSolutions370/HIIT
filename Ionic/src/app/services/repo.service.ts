@@ -89,6 +89,11 @@ export class RepoService {
     return this.http.get(`${this.base + this.RefundController}getall`, this.httpOptions);
   }
 
+   //Booking reminder notification:
+   sendReminder() {
+    return this.http.get(`${this.base + this.BookingController}reminders`, this.httpOptions);
+  }
+
   completeRefund(data : any) {
     return this.http.post<any>(`${this.base+this.RefundController}complete`, data, this.httpOptions);
   }

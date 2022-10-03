@@ -1,0 +1,536 @@
+<ion-header>
+  <ion-toolbar mode="ios" color="primary">
+    <!--Menu toggle button that will display the menu-->
+      <ion-buttons slot="start">
+        <ion-menu-button menu="mainMenu"></ion-menu-button>
+      </ion-buttons>
+      <ion-title class="ion-text-uppercase">Help</ion-title>
+      <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
+      <!--Can we change this dynamically when switching between tabs?-->
+    <!-- </ion-item> -->
+  </ion-toolbar>
+</ion-header>
+
+<div>
+  <ion-searchbar #search (ionClear)="searchHelp(search.value)" (ionInput)="searchHelp(search.value)"  class="ion-float-right" color="secondary" expand="block" placeholder='Search Help...' animated="true" debounce="200">
+  </ion-searchbar>
+</div>
+
+<ion-content>
+
+  <!-- accordian -->
+  <ion-accordion-group id="parentAcc" #parentAccordian>
+
+    <!-- /account -->
+    <ion-accordion class="sub" value="account" *ngIf="client || trainer">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Manage My Account</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <ion-accordion-group id="account">
+          
+          <!-- /login -->
+          <ion-accordion class="subChild" value="login">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Login</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-login></app-help-login>
+            </div>
+          </ion-accordion>
+
+          <!-- /logout -->
+          <ion-accordion  class="subChild" value="logout">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Logout</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-logout></app-help-logout>
+            </div>
+          </ion-accordion>
+
+          <!-- /register -->
+          <ion-accordion  class="subChild" value="register">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Register</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-register></app-help-register>
+            </div>
+          </ion-accordion>
+
+          <!-- /forgotpassword -->
+          <ion-accordion class="subChild" value="forgotpassword">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Forgot Password</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-forgotpassword></app-help-forgotpassword>
+            </div>
+          </ion-accordion>
+
+          <!-- /changepassword -->
+          <ion-accordion class="subChild" value="changepassword">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Change Password</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-changepassword></app-help-changepassword>
+            </div>
+          </ion-accordion>
+
+          <!-- /resetpassword -->
+          <ion-accordion class="subChild" value="resetpassword">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Reset Password</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-resetpassword></app-help-resetpassword>
+              SHANNON
+            </div>
+          </ion-accordion>
+
+        </ion-accordion-group>
+
+      </div>
+    </ion-accordion>
+
+
+    <!-- /home -->
+    <ion-accordion class="sub" value="home" *ngIf="client || trainer">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Home</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <app-help-home></app-help-home>
+        IPAD
+      </div>
+    </ion-accordion>
+
+
+    <!-- /bookingmanagement -->
+    <ion-accordion class="sub" value="bookingmanagement" *ngIf="trainer">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Booking Management</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <ion-accordion-group id="bookingmanagement">
+          
+          <!-- /schedulecalendar -->
+          <ion-accordion class="subChild" value="schedulecalendar">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Schedule Calendar</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-schedulecalendar></app-help-schedulecalendar>
+            </div>
+          </ion-accordion>
+
+          <!-- /bookingtype -->
+          <ion-accordion class="subChild" value="bookingtype">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Booking Type</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-bookingtype></app-help-bookingtype>
+            </div>
+          </ion-accordion>
+
+          <!-- /clientbookings -->
+          <ion-accordion class="subChild" value="clientbookings">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Client Bookings</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-clientbookings></app-help-clientbookings>
+            </div>
+          </ion-accordion>
+
+        </ion-accordion-group>
+
+      </div>
+    </ion-accordion>
+
+
+    <!-- /employeemanagement -->
+    <ion-accordion class="sub" value="employeemanagement" *ngIf="admin || superuser">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Employee Management</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <ion-accordion-group id="employeemanagement">
+          
+          <!-- /employee -->
+          <ion-accordion class="subChild" value="employee">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Employee</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-employee></app-help-employee>
+            </div>
+          </ion-accordion>
+
+          <!-- /employeetype -->
+          <ion-accordion class="subChild" value="employeetype">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Employee Type</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-employeetype></app-help-employeetype>
+            </div>
+          </ion-accordion>
+
+          <!-- /qualification -->
+          <ion-accordion class="subChild" value="qualification">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Qualification</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-qualification></app-help-qualification>
+            </div>
+          </ion-accordion>
+
+          <!-- /qualificationtype -->
+          <ion-accordion class="subChild" value="qualificationtype">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Qualification Type</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-qualificationtype></app-help-qualificationtype>
+            </div>
+          </ion-accordion>
+
+        </ion-accordion-group>
+
+      </div>
+    </ion-accordion>
+
+
+     <!-- /exercise -->
+     <ion-accordion class="sub" value="exercise" *ngIf="admin || superuser || trainer">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Exercise</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <ion-accordion-group id="exercise">
+          
+          <!-- /exercise -->
+          <ion-accordion class="subChild" value="exercise">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Exercise</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-exercise></app-help-exercise>
+            </div>
+          </ion-accordion>
+
+          <!-- /exercisecategory -->
+          <ion-accordion class="subChild" value="exercisecategory">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Exercise Category</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-exercisecategory></app-help-exercisecategory>
+            </div>
+          </ion-accordion>
+
+        </ion-accordion-group>
+
+      </div>
+    </ion-accordion>
+
+
+    <!-- /lessons -->
+    <ion-accordion class="sub" value="lessons" *ngIf="admin || superuser || trainer">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Lessons</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <app-help-lessons></app-help-lessons>
+
+      </div>
+    </ion-accordion>
+
+    
+    <!-- /reports -->
+    <ion-accordion class="sub" value="reports" *ngIf="admin || superuser">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Reports</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <ion-accordion-group id="reports">
+          
+          <!-- /trainerreport -->
+          <ion-accordion class="subChild" value="trainerreport">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Trainer Report</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-trainerreport></app-help-trainerreport>
+            </div>
+          </ion-accordion>
+
+          <!-- /clientreport -->
+          <ion-accordion class="subChild" value="clientreport">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Client Report</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-clientreport></app-help-clientreport>
+            </div>
+          </ion-accordion>
+
+          <!-- /bookingreport -->
+          <ion-accordion class="subChild" value="bookingreport">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Booking Report</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-bookingreport></app-help-bookingreport>
+            </div>
+          </ion-accordion>
+
+          <!-- /salereport -->
+          <ion-accordion class="subChild" value="salereport">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Sale Report</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-salereport></app-help-salereport>
+            </div>
+          </ion-accordion>
+
+          <!-- /incomereport -->
+          <ion-accordion class="subChild" value="incomereport">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Income Report</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-incomereport></app-help-incomereport>
+            </div>
+          </ion-accordion>
+
+        </ion-accordion-group>
+
+      </div>
+    </ion-accordion>
+
+
+    <!-- /refundrequests -->
+    <ion-accordion class="sub" value="refundrequests" *ngIf="admin || superuser">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Refund Requests</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-help-refundrequests></app-help-refundrequests>
+      </div>
+    </ion-accordion>
+
+
+    <!-- /salesmanagement -->
+    <ion-accordion class="sub" value="salesmanagement" *ngIf="admin || superuser">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Sales Management</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <ion-accordion-group id="salesmanagement">
+          
+          <!-- /saleitem -->
+          <ion-accordion class="subChild" value="saleitem">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Sale Item</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-saleitem></app-help-saleitem>
+            </div>
+          </ion-accordion>
+
+          <!-- /salecategory -->
+          <ion-accordion class="subChild" value="salecategory">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Sale Category</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-salecategory></app-help-salecategory>
+            </div>
+          </ion-accordion>
+
+          <!-- /refundreason -->
+          <ion-accordion class="subChild" value="refundreason">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Refund Reason</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-refundreason></app-help-refundreason>
+            </div>
+          </ion-accordion>
+
+          <!-- /vat -->
+          <ion-accordion class="subChild" value="vat">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>VAT</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-vat></app-help-vat>
+            </div>
+          </ion-accordion>
+
+          <!-- /writeoff -->
+          <ion-accordion class="subChild" value="writeoff">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Writeoff</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-writeoff></app-help-writeoff>
+            </div>
+          </ion-accordion>
+
+          <!-- /writeoffreason -->
+          <ion-accordion class="subChild" value="writeoffreason">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Writeoff Reason</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-writeoffreason></app-help-writeoffreason>
+            </div>
+          </ion-accordion>
+
+        </ion-accordion-group>
+
+      </div>
+    </ion-accordion>
+
+
+    <!-- /shop -->
+    <ion-accordion class="sub" value="shop" *ngIf="client">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Shop</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-help-shop></app-help-shop>
+      </div>
+    </ion-accordion>
+
+    <!-- /stock -->
+    <ion-accordion class="sub" value="stock" *ngIf="admin || superuser">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Stock</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-help-stock></app-help-stock>
+      </div>
+    </ion-accordion>
+
+    <!-- /suppliers -->
+    <ion-accordion class="sub" value="suppliers" *ngIf="admin || superuser">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Suppliers</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-help-suppliers></app-help-suppliers>
+      </div>
+    </ion-accordion>
+
+
+    <!-- /usermanagement -->
+    <ion-accordion class="sub" value="usermanagement" *ngIf="admin || superuser">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>User Management</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <ion-accordion-group id="usermanagement">
+          
+          <!-- /clients -->
+          <ion-accordion class="subChild" value="clients">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Clients</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-clients></app-help-clients>
+            </div>
+          </ion-accordion>
+
+          <!-- /title -->
+          <ion-accordion class="subChild" value="title">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Titles</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-title></app-help-title>
+            </div>
+          </ion-accordion>
+
+        </ion-accordion-group>
+
+      </div>
+    </ion-accordion>
+
+
+    <!-- /venues -->
+    <ion-accordion class="sub" value="venues" *ngIf="admin || superuser">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Venues</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-help-venues></app-help-venues>
+      </div>
+    </ion-accordion>
+
+
+    <!-- /clientbookings -->
+    <ion-accordion class="sub" value="clientbookings" *ngIf="client">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="folder-outline"></ion-icon><span></span>Class Bookings</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+        <ion-accordion-group id="clientbookings">
+          
+          <!-- /eventcalendar -->
+          <ion-accordion class="subChild" value="eventcalendar">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Event Calendar</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-eventcalendar></app-help-eventcalendar>
+            </div>
+          </ion-accordion>
+
+          <!-- /mybookings -->
+          <ion-accordion class="subChild" value="mybookings">
+            <ion-item slot="header" color="light">
+              <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>My Bookings</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <app-help-mybookings></app-help-mybookings>
+            </div>
+          </ion-accordion>
+
+        </ion-accordion-group>
+
+      </div>
+    </ion-accordion>
+
+    <!-- /measurements -->
+    <ion-accordion class="sub" value="measurements" *ngIf="client">
+      <ion-item slot="header" color="light">
+        <ion-label><ion-icon name="document-text-outline"></ion-icon><span></span>Measurements</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <app-help-measurements></app-help-measurements>
+      </div>
+    </ion-accordion>
+
+  </ion-accordion-group>
+
+
+</ion-content>

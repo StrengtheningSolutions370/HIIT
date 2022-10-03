@@ -17,6 +17,7 @@ export class SidemenuComponent implements OnInit {
   admin = false;
   superuser = false;
   trainer = false;
+
   role! : string;
   prefersDark : any;
   username! : string;
@@ -52,6 +53,7 @@ export class SidemenuComponent implements OnInit {
 
               next: (data : any) => { //token was valid
                 this.role = data.role;
+                this.setRoleStorage();
                 //OVERRIDE TESTING:
                 //this.superuser = true;
                 if (this.role == 'client')
@@ -88,6 +90,10 @@ export class SidemenuComponent implements OnInit {
       }
 
     })
+  }
+
+  setRoleStorage() {
+    this.storage.setKey('role', this.role);
   }
 
   toggleTheme(event:any){
