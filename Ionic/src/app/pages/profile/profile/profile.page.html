@@ -30,7 +30,7 @@
 
         <form #personalForm="ngForm"  (ngSubmit)="onPersonalSubmit(personalForm)">
           <div padding>
-
+           
               <ion-label>
                 <h2>Profile Photo:</h2>
               </ion-label>
@@ -46,7 +46,14 @@
               
               <ion-button *ngIf="showImage && uploadPhoto" color="danger" (click)="removePhoto()">Use Original</ion-button>
 
-            <ion-item>
+              <ion-item>
+                <ion-icon name="apps-outline" slot="start" color="#282828"></ion-icon>
+                <ion-select interface="popover" ngModel #TitleId="ngModel" placeholder="Title" name="TitleId" type="text" id="TitleId" required>
+                    <ion-select-option *ngFor="let title of titleList" value="{{title.titleID}},{{title.description}}">{{ title.description }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            
+              <ion-item>
               <ion-icon name="person" slot="start" color="#282828"></ion-icon>
               <ion-input 
               type="text" 
@@ -66,13 +73,6 @@
               #lastName="ngModel" 
               placeholder="Last Name" 
               required></ion-input>
-            </ion-item>
-            
-            <ion-item>
-              <ion-icon name="apps-outline" slot="start" color="#282828"></ion-icon>
-              <ion-select ngModel #TitleId="ngModel" placeholder="Title" name="TitleId" type="text" id="TitleId" required>
-                  <ion-select-option *ngFor="let title of titleList" value="{{title.titleID}},{{title.description}}">{{ title.description }}</ion-select-option>
-              </ion-select>
             </ion-item>
 
             <ion-item>
