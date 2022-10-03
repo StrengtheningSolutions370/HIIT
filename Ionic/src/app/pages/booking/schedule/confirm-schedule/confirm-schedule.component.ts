@@ -107,12 +107,13 @@ export class ConfirmScheduleComponent implements ViewWillEnter{
   async returnFrom(){
     //1 = return to ADD
     //2 = return to UPDATE
+    //this.global.dismissModal();
     if (this.choice === 1){
       this.global.dismissModal();
-      this.scheduleService.addScheduleModal();
+      await this.scheduleService.addScheduleModal();
     } else if (this.choice === 2){
       this.global.dismissModal();
-      this.scheduleService.updateScheduleModal(this.scheduleEvent);
+      await this.scheduleService.updateScheduleModal(this.scheduleEvent);
     }
   }
 
