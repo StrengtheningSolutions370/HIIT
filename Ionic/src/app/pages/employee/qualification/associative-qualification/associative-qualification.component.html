@@ -15,8 +15,8 @@
   <br/>
 
     <ion-list> 
-    <ion-item *ngFor="let qualification of qualification.employees" > 
-      <ion-label class="input ion-text-capitalize ion-text-center">{{qualification.Employee.name}}</ion-label>
+    <ion-item *ngFor="let e of qualification.employee" > 
+      <ion-label class="input ion-text-capitalize ion-text-center">{{e.appUser.firstName}} {{e.appUser.lastName}}</ion-label>
     </ion-item>
     </ion-list>
 

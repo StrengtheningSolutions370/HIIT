@@ -5,6 +5,7 @@
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
       <ion-title slot="">Stock</ion-title>
+      <ion-icon id="helppageicon" slot="end" routerLink="/help/stock" name="help-circle-outline"></ion-icon>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
       <!--Can we change this dynamically when switching between tabs?-->
     <!-- </ion-item> -->
@@ -14,7 +15,7 @@
 <ion-content>
   <ion-searchbar #search (ionClear)="searchOrder(search.value)" (ionInput)="searchOrder(search.value)" class="ion-float-right" color="secondary" expand="block" placeholder='Search Order...'
   animated="true" debounce="200"></ion-searchbar>
-  <br/><br/>
+  <br/>
 
   <div class="ion-text-center">
     <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addOrder()"> 
@@ -41,7 +42,7 @@
               </ion-card-content>
             </div>
             <div class="colmaker">
-              <ion-button (click)="viewOrder(item)">View</ion-button>
+              <ion-button color="tertiary" (click)="viewOrder(item)">View</ion-button>
             </div>
           </ion-card>
 

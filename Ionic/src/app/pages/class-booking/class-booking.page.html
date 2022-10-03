@@ -5,6 +5,10 @@
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
       <ion-title slot="">Class bookings</ion-title>
+      <ion-button slot="end" (click)="cartService.openCart()" fill="clear">
+        <ion-icon slot="end" name="cart"></ion-icon>
+      </ion-button>
+      <ion-icon id="helppageicon" slot="end" routerLink="/help/clientbookings" name="help-circle-outline"></ion-icon>
 
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
       <!--Can we change this dynamically when switching between tabs?-->
@@ -22,11 +26,11 @@
   <ion-tabs >
     <ion-tab-bar slot="top" color="secondary">
       <ion-tab-button tab="calendar">
-        <ion-label>Event Calendar</ion-label>
+        <ion-label>Event Calendar<ion-icon id="helppageicon" slot="end" routerLink="/help/clientbookings/eventcalendar" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="event-bookings">
-        <ion-label>My bookings</ion-label>
+        <ion-label>My bookings<ion-icon id="helppageicon" slot="end" routerLink="/help/clientbookings/mybookings" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
 
     </ion-tab-bar>

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Confirm Order #{{count}} Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,28 +7,27 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <br/>
-  <div class="ion-text-center">
-    <p style="font-size:large">Please confirm the following stock information</p>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large">Please confirm the following information</p>
+  </ion-label>
+  <br>
+
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Supplier:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>{{stock.supplierName}}</ion-input>
   </div>
+  <br/>
 
-    <ion-item >
-      <ion-label class="ion-text-left">Supplier:</ion-label>
-      <ion-label class="ion-text-right">{{stock.supplierName}}</ion-label>
-    </ion-item>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Sale Items:</ion-label>
+    <ion-input class="confirmInput" *ngFor="let i of stock.saleItems" readonly>{{i.quantity}} x {{i.name}}</ion-input>
+  </div>
+  <br/>
 
-    <ion-item> 
-      <ion-label>
-        <h2>Sale Items:</h2>
-        <br />
-        <p class="ion-text-start" *ngFor="let i of stock.saleItems">{{i.quantity}} x {{i.name}}</p>
-      </ion-label>
-    </ion-item>
+  <ion-button color="success" class="addBtn ion-float-right" (click)="confirmChanges()">Confirm</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="returnFrom()">Return</ion-button>
 
-    <br/><br/>
-
-    <ion-button color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;" (click)="confirmChanges()">Confirm</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="returnFrom()">Return</ion-button>
-
+    <br/><br/><br/>
 </ion-content>

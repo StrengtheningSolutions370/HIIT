@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Write-Off Sale Item</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,63 +7,62 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <br />
   <form [formGroup]="cWriteOffForm" (ngSubmit)="submitForm()">
 
     <br/>
-    <div class="ion-text-center">
+    <ion-label class="ion-text-center">
       <p style="font-size:large">Please fill in the write-off information below.</p>
-    </div>
+    </ion-label>
+    <br>
 
     <!-- employee for the lesson -->
-    <ion-item>
-      <ion-label position="floating">Employee:</ion-label>
-      <ion-select formControlName="itemSEmployee" type="text" required="" id="itemSEmployee" >
+
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Employee:</ion-label>
+      <ion-select interface="popover" class="input" formControlName="itemSEmployee" type="text" required="" id="itemSEmployee" >
         <ng-container *ngFor="let e of this.employeeDropDown">
-          <ion-select-option value="{{getEmpValue(e)}},{{getEmpName(e)}}">{{ getEmpName(e) }}</ion-select-option>
+          <ion-select-option class="ion-text-capitalize" value="{{getEmpValue(e)}},{{getEmpName(e)}}">{{ getEmpName(e) }}</ion-select-option>
         </ng-container>
       </ion-select>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.itemSReason.errors?.required && cWriteOffForm.get('itemSEmployee').touched">
+    <span class="errorSpan" *ngIf="errorControl.itemSEmployee.errors?.required && cWriteOffForm.get('itemSEmployee').touched">
+    Employee name is required
     </span>
+  </div>
+  <br>
 
     <!-- exercise choosing system -->
     
-    <ion-item>
-      <ion-label position="floating">Reason:</ion-label>
-      <ion-select formControlName="itemSReason" type="text" required="" id="itemSReason" >
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Reason:</ion-label>
+      <ion-select interface="popover" class="input"  formControlName="itemSReason" type="text" required="" id="itemSReason" >
         <ng-container *ngFor="let r of this.reasonDropDown">
-          <ion-select-option value="{{r.writeOffReasonID}},{{ r.description }}">{{ r.description }}</ion-select-option>
+          <ion-select-option class="ion-text-capitalize" value="{{r.writeOffReasonID}},{{ r.description }}">{{ r.description }}</ion-select-option>
         </ng-container>
       </ion-select>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.itemSReason.errors?.required && cWriteOffForm.get('itemSReason').touched">
-    </span>
+    <span class="errorSpan" *ngIf="errorControl.itemSReason.errors?.required && cWriteOffForm.get('itemSReason').touched">
+      Write-off reason is required
+    </span> 
+    </div>
+    <br>
   <!-- TRY BIND TO MANY INPUTS WITH ONE CONTROL -->
 
-  <ion-item>
-    <ion-label position="floating">Quantity:</ion-label>
-    <ion-input formControlName="itemQuantity" type="number" required="" id="itemQuantity" max="{{saleItem.quantityOnHand}}"></ion-input>
-    <br/>
-  </ion-item>
-  <span class="error ion-padding" *ngIf="errorControl.itemQuantity.errors?.required && cWriteOffForm.get('itemQuantity').touched">
-   Quantity is required <br/>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Quantity:</ion-label>
+    <ion-input class="input" formControlName="itemQuantity" type="number" required="" id="itemQuantity" max="{{saleItem.quantityOnHand}}"></ion-input>
+  <span class="errorSpan" *ngIf="errorControl.itemQuantity.errors?.required && cWriteOffForm.get('itemQuantity').touched">
+   Quantity is required
   </span>
+  <span class="errorSpan" *ngIf="errorControl.itemQuantity.errors?.min && cWriteOffForm.get('itemQuantity').touched">
+    Quantity must be greater than 0 <br/>
+   </span>
+  </div>
+  <br>
 
-    <!-- buttons for form -->
-    <div class="center">
-      <ion-row class="width-80">
-        <ion-col>
-          <ion-button color="light" (click)="dismissModal()">Cancel</ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button (click)="submitForm()" color="success" [disabled]="cWriteOffForm.invalid">Create Write-Off</ion-button>
-        </ion-col>
-      </ion-row>
-    </div>
+  <ion-button (click)="submitForm()" type="submit" color="primary" [disabled]="cWriteOffForm.invalid" class="ion-float-right addBtn">Create Write-Off</ion-button>
+  <ion-button class="cancelBtn ion-float-left" color="tertiary" (click)="this.global.dismissModal()">Cancel</ion-button>
+
     
   </form>
 </ion-content>

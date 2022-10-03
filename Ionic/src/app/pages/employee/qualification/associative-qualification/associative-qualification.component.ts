@@ -14,6 +14,7 @@ export class AssociativeQualificationComponent implements OnInit {
 
   ngOnInit() {
     this.qualification = this.qualification.qualification
-    console.log(this.qualification)}
+    console.log('qualification', this.qualification)
+  }
 
 }
