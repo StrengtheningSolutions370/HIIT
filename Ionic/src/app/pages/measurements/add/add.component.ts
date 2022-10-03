@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Measurement } from 'src/app/models/measurement';
@@ -16,6 +16,8 @@ export class AddComponent implements OnInit {
 
   measurementForm! : FormGroup;
   email! : any;
+
+  @ViewChild('dateobj') d : any;
 
   myDate:any  = new Date().toISOString();
 
@@ -40,7 +42,12 @@ export class AddComponent implements OnInit {
 
   }
 
-  
+  ngAfterViewInit() {
+    //set d to current date as max:
+    this.d.el.max = new Date().toISOString().split("T")[0];
+    //set to todays date:
+    this.d.el.value = new Date().toISOString().split("T")[0];
+  }
 
   async onMeasurementSubmit() {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { appUserRegister } from 'src/app/models/appUser';
 import { AuthService } from 'src/app/services/authentication/auth.service';
@@ -15,6 +15,9 @@ export class SignupPage implements OnInit {
   titleList : any[] = [];
   isLoading = false;
   i = false;
+
+  @ViewChild('date') dbo : any;
+
   constructor(private authServ: AuthService, private repo : RepoService) { }
 
   ngOnInit() {
@@ -26,6 +29,13 @@ export class SignupPage implements OnInit {
       }
     });
 
+
+  }
+
+  ngAfterViewInit() {
+    console.log(this.dbo)
+    //set max to today
+    this.dbo.el.max = new Date().toISOString().split("T")[0];
   }
 
   onSubmit(registerForm: NgForm){

@@ -49,8 +49,8 @@ export class MeasurementsPage implements AfterViewInit {
 
   ngAfterViewInit(): void {
     Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
-    this.setHigh(new Date().getTime());
 
+    this.high.el.value = new Date().toJSON().slice(0,10).replace(/-/g,'-');
   }
 
   ngOnInit() {
@@ -60,12 +60,6 @@ export class MeasurementsPage implements AfterViewInit {
       this.email = decode.sub;
       this.fetchData(this.email).then(() => {});
       this.maxHigh = new Date().getTime();
-      
-      console.log(this.high);
-      this.high.value = new Date().toJSON().slice(0,10).replace(/-/g,'-');
-      this.high.max = new Date().toJSON().slice(0,10).replace(/-/g,'-');
-
-
     });
 
 
