@@ -122,8 +122,8 @@ export class TrainerReportPage implements OnInit {
 
   createImg (fileName: string) {
     if (fileName == null)
-      return `https://testbsc.azurewebsites.net/Resources/Employees/Images/default.jpeg`;
-    return `https://testbsc.azurewebsites.net/Resources/Employees/Images/${fileName}`;
+      return `https://strengtheningsolutions.azurewebsites.net/Resources/Employees/Images/default.jpeg`;
+    return `https://strengtheningsolutions.azurewebsites.net/Resources/Employees/Images/${fileName}`;
    };
   
 }

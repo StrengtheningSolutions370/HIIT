@@ -467,11 +467,11 @@ existsEmployee(id: number): Observable<any>{
 }
 // //Image Upload
 // uploadEmployeeImage(data: FormData): Observable<any> {
-//   return this.http.post('https://testbsc.azurewebsites.net/api/Employee/upload', data);
+//   return this.http.post('https://strengtheningsolutions.azurewebsites.net/api/Employee/upload', data);
 // }
 // //reImage Upload
 // reuploadEmployeeImage(id: string): Observable<any> {
-//   return this.http.delete(`https://testbsc.azurewebsites.net/api/Employee/deletephoto?name=${id}`);
+//   return this.http.delete(`https://strengtheningsolutions.azurewebsites.net/api/Employee/deletephoto?name=${id}`);
 // }
 //Document Upload
 

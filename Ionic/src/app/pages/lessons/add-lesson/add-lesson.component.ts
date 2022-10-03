@@ -149,7 +149,7 @@ export class AddLessonComponent implements OnInit {
   }
 
   createImg (src : string) {
-    return `https://testbsc.azurewebsites.net/Resources/Employees/Images/${src}`;
+    return `https://strengtheningsolutions.azurewebsites.net/Resources/Employees/Images/${src}`;
   }
 
   submitForm() {
