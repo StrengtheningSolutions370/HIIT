@@ -74,12 +74,20 @@ export class ItemsPage implements ViewWillEnter {
           console.log(data);
           this.isLoading = false;
           this.saleItems = data.result;
-          this.saleItems = this.saleItems.filter(si => si.quantityOnHand > 0);
+          this.saleItems = this.saleItems.filter(this.filterShopItem);
           //console.log(this.saleItems); //Entire collection of sale items
           //this.sortBy('name');
         }
       }
     );
+  }
+
+  filterShopItem(element, index, array){
+    if (element.quotable == true){
+      return element;
+    } else if (element.quotable == false && element.quantityOnHand > 0){
+      return element;
+    }
   }
 
   loadData(event) { //Called on html when user scrolls more

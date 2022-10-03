@@ -4,6 +4,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 import axios from 'axios';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-trainer-report',
@@ -15,7 +16,8 @@ export class TrainerReportPage implements OnInit {
   trainers : any[] = [];
   trainersOriginal : any[] = [];
   i = 1;
-  date = '';
+  date: Date = null;
+  dateStr = '';
   total = 0;
   noLessons = 0;
 
@@ -41,15 +43,22 @@ export class TrainerReportPage implements OnInit {
         this.total++;
       });
     });
-    this.date = new Date().toLocaleString(); 
+    this.date = new Date();
+    this.dateStr = "Date Printed: " + formatDate(this.date, 'yyyy-MM-dd', 'EN')
     console.log(this.date);
   }
 
   download() {
     var element = document.getElementsByTagName('ion-col');
+
+    var logo = new Image();
+    logo.src = 'assets/Logo.jpg';
+
     for (let i = 0; i < element.length; i++) {
       element[i].style.color = 'black';
     }
+
+
     var header = document.getElementById('header');
     header.style.color = 'black';
     var button = document.getElementById('downloadbutton');
@@ -58,11 +67,14 @@ export class TrainerReportPage implements OnInit {
     var h = document.getElementById('hide');
     h.style.display = 'block';
 
+
     var h2 = document.getElementById('hide2');
     h2.style.display = 'block';
+    h2.style.marginBottom = '20px';
 
     var h3 = document.getElementById('hide3');
     h3.style.display = 'block';
+    h3.style.marginBottom = '10px';
 
     var img = document.getElementById('hideimg');
     img.style.display = 'none';
@@ -74,23 +86,41 @@ export class TrainerReportPage implements OnInit {
     const o = Data.style.width;
     Data.style.width = '300mm';
 
-    html2canvas(Data).then(canvas => {  
-      // Few necessary setting options  
+    html2canvas(Data).then(canvas => {
+      // Few necessary setting options
       let imgWidth = 210;
       let pageHeight = 295;
-      let imgHeight = canvas.height * imgWidth / canvas.width;  
-      let heightLeft = imgHeight;  
+      let imgHeight = canvas.height * imgWidth / canvas.width;
+      let heightLeft = imgHeight;
 
-      const contentDataURL = canvas.toDataURL('image/png')  
-      let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF  
+      const contentDataURL = canvas.toDataURL('image/png',1.0);
+      var pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
 
-      pdf.setFontSize(30)
-      pdf.text('Trainer Report', 0, 0);
 
-      let position = 0;  
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)  
-      pdf.save('MYPdf.pdf'); // Generated PDF   
-    });  
+
+      // pdf.setFontSize(30)
+      // pdf.text('Trainer Report', 15, 15);
+
+      let position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      //Add Logo
+      pdf.addImage(logo, 'PNG', 180, 1, 25, 20);
+      //Add Line
+      pdf.line(0,22,300,22);
+
+      //Add page numbers
+      const pageCount = pdf.internal.pages.length-1;
+      console.log(pageCount);
+      pdf.setFontSize(10);
+
+      for(var i = 1; i <= pageCount; i++) {
+        let str = 'Page: '+ String(i) + '/' + String(pageCount);
+        pdf.setPage(i);
+        pdf.text(str, 180, 280);
+      }
+
+      pdf.save('Trainer report.pdf'); // Generated PDF
+    });
 
     var element = document.getElementsByTagName('ion-col');
     for (let i = 0; i < element.length; i++) {
@@ -110,7 +140,7 @@ export class TrainerReportPage implements OnInit {
   searchTrainers(event : string) {
     console.log(event);
   }
-  
+
   updateNumbering() {
     this.trainers.forEach((e, i) => {
       e.displayID = i + 1;
@@ -125,7 +155,7 @@ export class TrainerReportPage implements OnInit {
       return `https://localhost:44383/Resources/Employees/Images/default.jpeg`;
     return `https://localhost:44383/Resources/Employees/Images/${fileName}`;
    };
-  
+
 }
 export class trainer {
   //col1
@@ -142,7 +172,7 @@ export class trainer {
   qType : string;
   //col6
   noLessons : number;
-  
+
   constructor(displayID : number, photo : string, name : string, email : string, phone : string, qDescription : string, qType : string, noLessons : number) {
     this.displayID = displayID;
     this.photo = photo;
