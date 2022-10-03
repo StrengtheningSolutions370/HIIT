@@ -116,7 +116,7 @@ export class ConfirmLessonComponent implements OnInit {
 
   async sucAdd() {
     const toast = await this.toastCtrl.create({
-      message: 'The Lesson has been successfully added!',
+      message: 'The Lesson has been successfully updated!',
       duration: 2000
     });
     toast.present();

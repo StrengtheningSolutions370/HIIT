@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Confirm Schedule Event Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,51 +7,64 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <br/>
-  <div class="ion-text-center">
+  <ion-label class="ion-text-center">
     <p style="font-size:large">Please confirm the following schedule event information</p>
+  </ion-label>
+  <br>
+
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Date:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>{{dateString}}</ion-input>
   </div>
+  <br>
 
-  <ion-item >
-    <ion-label class="ion-text-left">Date:</ion-label>
-    <ion-label class="ion-text-wrap ion-text-right">{{dateString}}</ion-label>
-  </ion-item>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Time:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>{{timeStart}} - {{timeEnd}}</ion-input>
+  </div>
+  <br>
 
-  <ion-item >
-    <ion-label class="ion-text-left">Time:</ion-label>
-    <ion-label class="ion-text-right">{{timeStart}} - {{timeEnd}}</ion-label>
-  </ion-item>
+  <div class="inputDiv" *ngIf="this.scheduleEvent.bookingPriceHistory==null">
+    <ion-label class="itemLabel">Price:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>No Change</ion-input>
+    <br>
+  </div>
+  
 
-    <ion-item *ngIf="this.scheduleEvent.bookingPriceHistory==null">
-      <ion-label class="ion-text-left">Price:</ion-label>
-      <ion-label class="ion-text-right">No change</ion-label>
-    </ion-item>
-    <ion-item *ngIf="this.scheduleEvent.bookingPriceHistory!=null">
-      <ion-label class="ion-text-left">Price:</ion-label>
-      <ion-label class="ion-text-right">R{{this.scheduleEvent.bookingPriceHistory[0].amount}}</ion-label>
-    </ion-item>
+  <div class="inputDiv" *ngIf="this.scheduleEvent.bookingPriceHistory!=null">
+    <ion-label class="itemLabel">Price:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>R{{this.scheduleEvent.bookingPriceHistory[0].amount}}</ion-input>
+    <br>
+  </div>
+  
 
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Venue:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>{{venueName}}</ion-input>
+  </div>
+  <br>
 
-  <ion-item >
-    <ion-label class="ion-text-left">Venue name:</ion-label>
-    <ion-label class="ion-text-right">{{venueName}}</ion-label>
-  </ion-item>
-  <ion-item >
-    <ion-label class="ion-text-left">Booking type name:</ion-label>
-    <ion-label class="ion-text-wrap ion-text-right">{{bookingTypeName}}</ion-label>
-  </ion-item>
-  <ion-item >
-    <ion-label class="ion-text-left">Employee name:</ion-label>
-    <ion-label class="ion-text-wrap ion-text-right">{{employeeName}}</ion-label>
-  </ion-item>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Booking Type:</ion-label>
+      <ion-input class="confirmInput ion-text-capitalize" readonly>{{bookingTypeName}}</ion-input>
+    </div>
+    <br>
 
-  <ion-item >
-    <ion-label class="ion-text-left">Lesson name:</ion-label>
-    <ion-label class="ion-text-wrap ion-text-right">{{lessonName}}</ion-label>
-  </ion-item>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Employee:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>{{employeeName}}</ion-input>
+  </div>
+  <br>
+  
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Lesson:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>{{lessonName}}</ion-input>
+  </div>
+  <br>
 
-    <ion-button color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;" (click)="confirmChanges()">Confirm</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="returnFrom()">Return</ion-button>
+    <ion-button color="success" class="addBtn ion-float-right"(click)="confirmChanges()">Confirm</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="returnFrom()">Return</ion-button>
 
 </ion-content>
