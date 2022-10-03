@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Measurement } from 'src/app/models/measurement';
 import { GlobalService } from 'src/app/services/global/global.service';
@@ -14,10 +14,12 @@ import { MeasurementsPage } from '../measurements.page';
 })
 export class AddComponent implements OnInit {
 
-  measurementForm! : NgForm;
+  measurementForm! : FormGroup;
   email! : any;
 
-  constructor(private storage : StoreService, private global : GlobalService, private modalCtrl : ModalController) { }
+  myDate:any  = new Date().toISOString();
+
+  constructor(private formBuilder : FormBuilder, private storage : StoreService, private global : GlobalService, private modalCtrl : ModalController) { }
 
   ngOnInit() {
     this.storage.getKey('token').then((token) => {
@@ -25,19 +27,32 @@ export class AddComponent implements OnInit {
       console.log(decode);
       this.email = decode.sub;
     }); 
+
+    const t = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+
+    this.measurementForm = this.formBuilder.group({
+      weight : ['', [Validators.required, Validators.max(300), Validators.min(0)]],
+      fatPercentage : ['', [Validators.required, Validators.max(80), Validators.min(0)]],
+      waist : ['', [Validators.required, Validators.max(200), Validators.min(0)]],
+      date : [t, [Validators.required]],
+      height : ['', [Validators.required, Validators.max(300), Validators.min(0)]]
+    });
+
   }
 
-  async onMeasurementSubmit(form : NgForm) {
+  
 
-    console.log(form);
-    console.log(form.controls.weight.value);
+  async onMeasurementSubmit() {
+
     const measurement : Measurement = new Measurement();
+
     measurement.ClientID = 0;
-    measurement.BodyFate = form.controls.bodyFat.value;
-    measurement.Waist = form.controls.waist.value;
-    measurement.Height = form.controls.height.value;
-    measurement.Weight = form.controls.weight.value;
-    measurement.Date = form.controls.date.value;
+    
+    measurement.BodyFate = this.measurementForm.controls['fatPercentage'].value;
+    measurement.Waist = this.measurementForm.controls['waist'].value;
+    measurement.Height = this.measurementForm.controls['height'].value;
+    measurement.Weight = this.measurementForm.controls['weight'].value;
+    measurement.Date = this.measurementForm.controls['date'].value;
     // measurement.Date = Math.trunc(new Date(form.controls.date.value).getTime() / 1000);
 
     const mvm = {
