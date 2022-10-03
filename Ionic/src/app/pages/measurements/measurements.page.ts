@@ -62,8 +62,9 @@ export class MeasurementsPage implements AfterViewInit {
       this.maxHigh = new Date().getTime();
       
       console.log(this.high);
-      this.high.value = this.conv(new Date());
-      this.high.value = this.conv(new Date());
+      this.high.value = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+      this.high.max = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+
 
     });
 

@@ -140,7 +140,7 @@ export class HelppagePage implements OnInit {
     el.style.display = 'none';
   }
 
-  getId() {
+  getId() { 
     return ++this.screenID;
   }
 
