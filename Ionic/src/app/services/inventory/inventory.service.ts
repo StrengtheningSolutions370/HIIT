@@ -70,11 +70,12 @@ export class InventoryService {
 
   //CREATE:
   createWriteOff(writeOff: any): any {
+    console.log("CREATE WRITE-OFF DATA:");
+          console.log(writeOff);
     this.repo.createWriteOff(writeOff).subscribe(
       {
         next: (data) => {
-          console.log("CREATE WRITE-OFF DATA:");
-          console.log(data);
+          
           this.fetchWriteOffsEvent.emit(writeOff);
           return data;
         }, 

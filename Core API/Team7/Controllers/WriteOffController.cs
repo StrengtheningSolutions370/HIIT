@@ -6,6 +6,7 @@ using Team7.Models.Repository;
 using System.Threading.Tasks;
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Team7.Controllers
 {
@@ -41,9 +42,10 @@ namespace Team7.Controllers
 
             WriteOff writeOff = new WriteOff();
             writeOff.Date = System.DateTime.Now;
+            //var emp = await _employeeRepo._GetEmployeeIdAsync(wlvm.EmployeeID);
+            //writeOff.Employee = emp;
             writeOff.EmployeeID = wlvm.EmployeeID;
-            _writeOffRepo.Add(writeOff);
-            await _writeOffRepo.SaveChangesAsync();
+            //await _writeOffRepo.SaveChangesAsync();
 
             WriteOffLine wl = new WriteOffLine();
             wl.Quantity = wlvm.WriteOffLine.FirstOrDefault().Quantity;
@@ -52,6 +54,7 @@ namespace Team7.Controllers
             wl.WriteOffReason = await _writeOffReasonRepo._GetWriteOffReasonIdAsync(wlvm.WriteOffLine.FirstOrDefault().WriteOffReasonID);
             _writeOffLineRepo.Add(wl);
             writeOff.WriteOffLine.Add(wl);
+            _writeOffRepo.Add(writeOff);
 
             var toUpdate = wl.SaleItem;
             toUpdate.QuantityOnHand = toUpdate.QuantityOnHand - wl.Quantity;
@@ -72,10 +75,33 @@ namespace Team7.Controllers
                 toUpdate.QuantityOnHand = toUpdate.QuantityOnHand - wl.Quantity;
                 _saleItemRepo.Update<SaleItem>(toUpdate);
             }*/
-            await _writeOffRepo.SaveChangesAsync();
-            await _writeOffLineRepo.SaveChangesAsync();
-            await _saleItemRepo.SaveChangesAsync();
-            return Ok();
+
+            //_writeOffRepo.
+            //    entry(product).state = EntityState.Modified;
+
+            if (await _writeOffRepo.SaveChangesAsync())
+            {
+                if (await _writeOffLineRepo.SaveChangesAsync())
+                {
+                    if (await _saleItemRepo.SaveChangesAsync())
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the saleItem. Contact support.");
+                    }
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the WriteOffLine. Contact support.");
+                }
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to add value in the WriteOff. Contact support.");
+            }
+
         }
 
         //GET ALL
