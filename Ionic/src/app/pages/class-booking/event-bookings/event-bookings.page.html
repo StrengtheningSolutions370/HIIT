@@ -1,11 +1,9 @@
 <ion-content>
   <br/>
   <!--Searchbar [(ngModel)] is used to bind the searchTerm to the class, to be called when filtering.-->
-  <ion-searchbar expand="block" placeholder='Search Booking...' [(ngModel)]="filter"
+  <ion-searchbar color="secondary" expand="block" placeholder='Search Booking...' [(ngModel)]="filter"
     animated="true" debounce="200"></ion-searchbar>
-
-    <br/>
-  <br>
+    
   <ng-container *ngIf="!isLoading">
     <ion-grid *ngFor="let booking of this.myBookingList | filter:filter, let i = index">
       <ion-list>

@@ -61,7 +61,7 @@ export class ConfirmExerciseCategoryComponent {
             //CallRepoToUpdate
             this.exerciseService.updateExerciseCategory(exerciseCategory.exerciseCategoryID,exerciseCategory);
             this.global.dismissModal();
-            this.global.showToast('The exercise category has been successfully updated!');
+            this.global.showToast('The exercise has been successfully added!');
           }
         }
       }

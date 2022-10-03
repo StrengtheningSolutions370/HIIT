@@ -77,6 +77,7 @@ export class QuoteRequestPage implements OnInit {
       }
     })
     this.global.dismissModal();
+    this.global.showToast('Your request for quote has succesfully been sent');
    }
 
 
