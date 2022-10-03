@@ -32,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'reports',
+    redirectTo: 'reports/trainer-report',
     pathMatch: 'full'
   }
 ];
