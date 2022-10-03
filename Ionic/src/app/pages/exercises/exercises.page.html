@@ -5,6 +5,7 @@
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
       <ion-title slot="">Exercises</ion-title>
+      <ion-icon id="helppageicon" slot="end" routerLink="/help/exercise" name="help-circle-outline"></ion-icon>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
       <!--Can we change this dynamically when switching between tabs?-->
     <!-- </ion-item> -->
@@ -16,11 +17,11 @@
   <ion-tabs>
     <ion-tab-bar slot="top" color="secondary">
       <ion-tab-button tab="exercise-page">
-        <ion-label>Exercise</ion-label>
+        <ion-label>Exercise<ion-icon id="helppageicon" slot="end" routerLink="/help/exercise/exercise" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="exercise-category">
-        <ion-label>Exercise Category</ion-label>
+        <ion-label>Exercise Category <ion-icon id="helppageicon" slot="end" routerLink="/help/exercise/exercisecategory" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
 
     </ion-tab-bar>

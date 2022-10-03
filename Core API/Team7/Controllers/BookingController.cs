@@ -59,12 +59,12 @@ namespace Team7.Controllers
 
             foreach (var booking in list)
             {
-                var email = booking.Client.AppUser.Email;
+                var email = booking.Email;
                 var date = booking.Date;
-                var phone = booking.Client.AppUser.PhoneNumber;
-                var name = booking.Client.AppUser.FirstName + " " + booking.Client.AppUser.LastName;
-                var d = date.Year + "/" + date.Month + "/" + date.Day;
-                var t = date.TimeOfDay;
+                var phone = booking.PhoneNumber;
+                var name = booking.Name;
+                var d = booking.Date;
+                var t = booking.TimeOfDay;
 
                 Sms s = new Sms();
                 s.sendSMS("+27" + phone.Trim('0'), "Hi, " + name + ". Reminder for booking at BSC for: " + t.ToString().Substring(0, 5) + " on " + d +". Be sure to put your workout pants on! See you there! :)" );
