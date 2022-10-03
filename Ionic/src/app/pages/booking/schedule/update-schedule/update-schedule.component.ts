@@ -43,6 +43,7 @@ export class UpdateScheduleComponent implements ViewWillEnter {
   timeStart: Time;
   timeEnd: Time;
 
+  somethingChanged: Boolean = false;
   //Display old times before update
   sDate: Date = null;
   sTime: Time = null;
@@ -143,9 +144,11 @@ export class UpdateScheduleComponent implements ViewWillEnter {
         timeSSend.setDate(dateSend.getDate());
         timeSSend.setMonth(dateSend.getMonth());
         timeSSend.setFullYear(dateSend.getFullYear());
+        //this.somethingChanged = true;
       }
     } else {
       //New time start in update
+      //this.somethingChanged = true;
       console.log("new timeS, check if date changed");
       if (dateVal == undefined){
         //New time start but old date
@@ -183,9 +186,11 @@ export class UpdateScheduleComponent implements ViewWillEnter {
         timeESend.setDate(dateSend.getDate());
         timeESend.setMonth(dateSend.getMonth());
         timeESend.setFullYear(dateSend.getFullYear());
+        //this.somethingChanged = true;
       }
     } else {
       //New time end in update
+      //this.somethingChanged = true;
       console.log("new timeE, check if date changed");
       if (dateVal == undefined){
         //New time end but old date
@@ -215,6 +220,11 @@ export class UpdateScheduleComponent implements ViewWillEnter {
       var bphTemp: any = [{
         amount: Number(this.uCalendarForm.controls['schedulePrice'].value)
       }];
+
+      if (bphTemp[0].amount != this.schedule.bookingPriceHistory[this.schedule.bookingPriceHistory.length-1].amount){
+        console.log("Different price in duplicate");
+        //this.somethingChanged = true;//Unsure about this
+      }
       console.log(Number(this.uCalendarForm.controls['schedulePrice'].value));
       console.log("BookingPrice: ",bphTemp[0].amount);
       console.log(this.schedule.bookingPriceHistory[this.schedule.bookingPriceHistory.length-1].amount);
@@ -235,9 +245,43 @@ export class UpdateScheduleComponent implements ViewWillEnter {
         employeeID:this.uCalendarForm.value['employeeDrop'].split(',')[0],
         lessonID: this.uCalendarForm.value['lessonDrop'].split(',')[0]
       };
+      if (this.schedule.venue.venueID != temp.venueID){
+        this.somethingChanged = true;
+        console.log("VenueID changed");
+        console.log("Old venueID:",this.schedule.venue.venueID);
+        console.log("New venueID:",temp.venueID);
+      } else if (this.schedule.employee.employeeID != temp.employeeID){
+        this.somethingChanged = true;
+        console.log("EmployeeID changed");
+        console.log("Old employeeID:",this.schedule.employee.employeeID);
+        console.log("New venueID:",temp.employeeID);
+      } else {
+        var oldStartTime = new Date(this.schedule.startTime);
+        var oldEndTime = new Date(this.schedule.endTime);
+        console.log("oldStartTime:", oldStartTime);
+        console.log("newStartTime:", timeSSend);
+        console.log("oldEndTime:", oldEndTime);
+        console.log("newEndTime:", timeESend);
+
+        if (oldEndTime < timeSSend){
+          //Old ends before duplicate starts
+          console.log("Old end time is before new duplicated start time");
+          this.somethingChanged = true;
+        }
+        if (timeESend < oldStartTime){
+          //Old starts after duplicate ends
+          console.log("Old start time is after new duplicated end time");
+          this.somethingChanged = true;
+        }
+      }
+
+      if (this.somethingChanged == false){
+        this.global.showAlert("Please ensure the duplicated event is unique: <br> different venue, employee or time range","Unable to duplicate event");
+        return false;
+      }
       console.log(temp);
       this.global.dismissModal();
-      this.scheduleService.confirmScheduleModal(1,temp,
+      this.scheduleService.confirmScheduleModal(2,temp,
       this.uCalendarForm.value['venueDrop'].split(',')[1],
       this.uCalendarForm.value['bookingTypeDrop'].split(',')[1],
       this.uCalendarForm.value['employeeDrop'].split(',')[1],
