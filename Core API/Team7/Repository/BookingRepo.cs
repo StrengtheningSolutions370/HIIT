@@ -80,10 +80,10 @@ namespace Team7.Models.Repository
                             output.Add(new Reminder
                             {
                                 Email = booking.Client.AppUser.Email,
-                                Date = booking.Date.ToString(),
+                                Date = schedule.StartDateTime.ToShortDateString(),
                                 PhoneNumber = booking.Client.AppUser.PhoneNumber,
                                 Name = booking.Client.AppUser.FirstName + " " + booking.Client.AppUser.LastName,
-                                TimeOfDay = booking.Date.TimeOfDay.ToString()
+                                TimeOfDay = schedule.StartDateTime.TimeOfDay.ToString()
                             });
                         }
                     }
