@@ -41,7 +41,7 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutEmployeeType(int id, [FromBody] EmployeeType employeeType)
         {
-            var toUpdate = await EmployeeTypeRepo._GetEmployeeTypeIdAsync(id);
+            var toUpdate = await EmployeeTypeRepo._GetEmployeeTypeIdAsyncOriginal(id);
             if (toUpdate == null)
             {
                 return NotFound("Could not find existing employee type with id:" + id);

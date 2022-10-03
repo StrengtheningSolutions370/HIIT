@@ -1,5 +1,5 @@
 import { CartService } from 'src/app/services/cart.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { RepoService } from 'src/app/services/repo.service';
 import { TitleService } from 'src/app/services/title/title.service';
@@ -20,7 +20,7 @@ export class ProfilePage implements OnInit {
   contractFlag = false;
 
   titleList : any[] = [];
-  personalForm! : FormGroup;
+  @ViewChild('personalForm') personalForm!: NgForm;
   isLoading = false;
   i = false;
 
@@ -49,6 +49,9 @@ export class ProfilePage implements OnInit {
   msg = '';
   indemnitySrc = '';;
   indemnityFlag = false;
+  su = false;
+  role = '';
+  showIndemnity = false;
 
   constructor(private router : Router, private modalCtrl : ModalController, private repo : RepoService, public global: GlobalService, public titleService: TitleService, public cartService: CartService, private storage : StoreService) { }
 
@@ -81,6 +84,7 @@ export class ProfilePage implements OnInit {
           this.repo.getUserRole(token).subscribe({
             next: (data : any) => {
               //query for the user:
+              console.log('u', data);
               this.storage.getKey('user').then((usr : any) => {
                 const u = JSON.parse(usr);
                 this.repo.getUser(u.id).subscribe((usr : any) => {
@@ -89,21 +93,27 @@ export class ProfilePage implements OnInit {
                   this.loading = false;
 
                   if (data.role == 'client') {
+
+                    console.log('here')
                     this.AspId = usr.cli.userID;
                     this.firstName = usr.user[0].firstName;
                     this.lastName = usr.user[0].lastName;
                     this.email = usr.user[0].email;
                     this.phone = usr.user[0].phoneNumber;
                     this.title = usr.user[0].title;
+
                     if (usr.cli.photo != null || usr.cli.photo != undefined) {
                       this.imgSrc = this.createClientImg(usr.cli.photo);
                       this.originalImg = this.imgSrc;
                       this.showImage = true;
                     }
-                    if(usr.cli.idemnity != null || usr.cli.idemnity != undefined) {
+
+                    if(usr.cli.idemnity.length != 0) {
                       this.indemnitySrc = this.createIndemnity(usr.cli.idemnity);
                       this.indemnityFlag = true;
+                      console.log('set to true')
                     }
+
                     //populate the form:
                     this.personalForm.controls['firstName'].setValue(this.firstName);
                     this.personalForm.controls['lastName'].setValue(this.lastName);
@@ -115,7 +125,9 @@ export class ProfilePage implements OnInit {
                   } 
                   else if (data.role == 'superuser') {
                     //this should be the logic for a superuser #TODO  
-
+                    this.client = false;
+                    this.indemnityFlag = false;
+                    this.su = true;
                   }
                   else {
                     this.client = false;
@@ -141,7 +153,6 @@ export class ProfilePage implements OnInit {
                         }
                       }
                     })
-                    this.client = false;
                   }
                   
                 }).add(() => {

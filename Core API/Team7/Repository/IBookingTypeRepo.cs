@@ -17,6 +17,9 @@ namespace Team7.Models.Repository
         Task<object> GetBookingTypeIdAsync(int id);
 
         Task<BookingType> _GetBookingTypeIdAsync(int id);
+        Task<BookingType> _GetBookingTypeIdAsyncOriginal(int id);
+
+
 
         Task<bool> SaveChangesAsync();
     }

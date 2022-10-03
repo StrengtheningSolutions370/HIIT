@@ -118,6 +118,7 @@ export class QualificationService {
         next: () => {
           console.log('VENUE UPDATED');
           this.fetchQualificationEvent.emit(qualification);
+          this.global.showToast('The qualification has been successfully updated!');
         }
       }
     );

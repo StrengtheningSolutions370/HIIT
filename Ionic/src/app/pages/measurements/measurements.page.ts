@@ -20,6 +20,8 @@ export class MeasurementsPage implements AfterViewInit {
   lineChart: any;
   @ViewChild('lineCanvas') lineCanvas: any;
 
+  @ViewChild('high') high : any;
+
   measurementCount! : any;
 
   measurements : any[] = [];
@@ -42,10 +44,14 @@ export class MeasurementsPage implements AfterViewInit {
 
   results = false;
 
+  maxHigh! : any;
+
   constructor(private storage : StoreService, private modalCtrl : ModalController, private global : GlobalService, private repo : RepoService) { }
 
   ngAfterViewInit(): void {
     Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
+
+    this.high.el.value = new Date().toJSON().slice(0,10).replace(/-/g,'-');
   }
 
   ngOnInit() {
@@ -54,11 +60,22 @@ export class MeasurementsPage implements AfterViewInit {
       const decode = this.global.decodeToken(token);
       this.email = decode.sub;
       this.fetchData(this.email).then(() => {});
+      this.maxHigh = new Date().getTime();
     });
 
 
 
   }
+
+  conv(dt : any) {
+    var m = dt.getMonth() + 1; // getMonth() is zero-based
+    var d = dt.getDate();
+  
+    return [dt.getFullYear(), '/',
+            (m>9 ? '' : '0') + m, '/',
+            (d>9 ? '' : '0') + d
+           ].join('');
+  };
 
   fetchData(email : string) : Promise<any> {
     return new Promise<any>((resolve, reject) => {

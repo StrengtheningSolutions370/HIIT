@@ -177,6 +177,19 @@ namespace Team7.Models.Repository
 
         }
 
+        public async Task<bool> checkConflict(Exercise exercise)
+        {
+            var query = await DB.Exercise.Where(e => e.Name == exercise.Name).ToArrayAsync();
+            if (query.Length != 0)
+            {
+                if (query.Length > 1) return true;
+                var f = query.First();
+                if (f != null) return false;
+                if (f.Name == exercise.Name) return false;
+            }
+            return false;
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             return await DB.SaveChangesAsync() > 0;

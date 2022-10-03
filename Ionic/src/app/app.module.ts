@@ -255,7 +255,8 @@ import { ViewShopItemComponent } from './pages/shop/view-shop-item/view-shop-ite
   //Shop
   ViewShopItemComponent,
 
-  AssociativeClientComponent
+  AssociativeClientComponent,
+
 ],
   entryComponents: [],
   imports: [

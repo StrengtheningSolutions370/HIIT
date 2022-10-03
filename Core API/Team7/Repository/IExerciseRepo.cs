@@ -21,6 +21,8 @@ namespace Team7.Models.Repository
         Task<Exercise> _GetExerciseIdAsync(int id);
         Task<Exercise> _GetExerciseIdAsyncOriginal(int id);
 
+        Task<bool> checkConflict(Exercise exercise);
+
         Task<bool> SaveChangesAsync();
     }
 }

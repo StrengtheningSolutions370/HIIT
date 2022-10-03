@@ -539,8 +539,8 @@ namespace Team7.Controllers
 
             //update the employee table:
             editEmployee.IDNumber = IDNumber;
-            editEmployee.Qualification = await QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID));
-            editEmployee.EmployeeType = await EmployeeTypeRepo._GetEmployeeTypeIdAsync(Convert.ToInt32(EmployeeTypeId));
+            editEmployee.Qualification = await QualificationRepo._GetQualificationIdAsyncOriginal(Convert.ToInt32(QualificationID));
+            editEmployee.EmployeeType = await EmployeeTypeRepo._GetEmployeeTypeIdAsyncOriginal(Convert.ToInt32(EmployeeTypeId));
             editEmployee.UserID = editAspUser.Id;
 
             //update the AspUser table:
