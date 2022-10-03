@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Edit Venue Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,63 +7,63 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <br/>
-  <div class="ion-text-center">
-    <p style="font-size:large">Please update the venue information below</p>
-  </div>
+<ion-content class="containerMargins" color="secondary">
 
-  <form [formGroup]="uVenueForm" (ngSubmit)="submitForm()"> 
-    <ion-item>
-      <ion-label position="floating">Name:</ion-label>
-      <ion-input formControlName="venueName" type="text" required="" id="venueName" ></ion-input>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.venueName.errors?.required && uVenueForm.get('venueName').touched">
-      Name is required<br/>
-    </span>
+  <form [formGroup]="uVenueForm" (ngSubmit)="submitForm()">
+    <br/>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please update the information below.</p>
+    </ion-label>
+    <br/>
 
-    <ion-item>
-      <ion-label position="floating">Address:</ion-label>
-      <ion-textarea formControlName="location" type="text" required="" id="location"></ion-textarea>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.location.errors?.required && uVenueForm.get('location').touched">
-      Address is required
-      <br/>
-    </span>
 
-    <ion-item>
-      <ion-label position="floating">Postal Code:</ion-label>
-      <ion-input formControlName="postalCode" type="numeric" required="" maxlength="4" id="postalCode"></ion-input>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.postalCode.errors?.required && uVenueForm.get('postalCode').touched">
-      Postal code is required
-      <br/>
-    </span>
-    <span class="error ion-padding" *ngIf="uVenueForm.controls['postalCode'].hasError('pattern')">
-      Postal code must consist of 4 digits
-      <br/>
-    </span>
-    
-    <ion-item>
-      <ion-label position="floating">Capacity:</ion-label>
-      <ion-input formControlName="capacity" type="number" required="" id="capacity"></ion-input>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.capacity.errors?.required && uVenueForm.get('capacity').touched">
-      Capacity is required
-      <br/>
-    </span>
-    <span class="error ion-padding" *ngIf="errorControl.capacity.errors?.min">
-      Capacity must be greater than 0
-      <br/>
-    </span>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Name:</ion-label>
+      <ion-input class="input ion-text-capitalize" formControlName="venueName" type="text" required="" id="venueName" ></ion-input>
+      <span class="errorSpan" *ngIf="errorControl.venueName.errors?.required && uVenueForm.get('venueName').touched">
+        Name is required
+      </span>
+    </div>
+    <br/>
 
-    <br/><br/>
-    <ion-button type="submit" color="secondary" [disabled]="!uVenueForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;">Update Venue</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Address:</ion-label>
+      <ion-textarea class="input" formControlName="location" type="text" required="" id="location"></ion-textarea>
+      <span class="errorSpan" *ngIf="errorControl.location.errors?.required && uVenueForm.get('location').touched">
+        Address is required
+      </span>
+    </div>
+    <br/>
+
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Postal Code:</ion-label>
+        <ion-input class="input" formControlName="postalCode" type="numeric" required="" maxlength="4" id="postalCode"></ion-input>
+        <span class="errorSpan" *ngIf="errorControl.postalCode.errors?.required && uVenueForm.get('postalCode').touched">
+          Postal code is required
+        </span>
+        <span class="errorSpan" *ngIf="uVenueForm.controls['postalCode'].hasError('pattern')">
+          Postal code must consist of 4 digits
+        </span>
+      </div>
+      <br/>
+
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Capacity:</ion-label>
+      <ion-input class="input" formControlName="capacity" type="number" required="" id="capacity"></ion-input>
+      <span class="errorSpan" *ngIf="errorControl.capacity.errors?.required && uVenueForm.get('capacity').touched">
+        Capacity is required
+      </span>
+      <span class="errorSpan" *ngIf="errorControl.capacity.errors?.min">
+        Capacity must be greater than 0
+      </span>
+      <span class="errorSpan" *ngIf="errorControl.capacity.errors?.max">
+        Capacity must be less than 200
+      </span>
+    </div>
+
+    <br/>
+    <ion-button type="submit" color="primary" [disabled]="!uVenueForm.valid" class="addBtn ion-float-right">Update Venue</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
   </form>
 </ion-content>
 

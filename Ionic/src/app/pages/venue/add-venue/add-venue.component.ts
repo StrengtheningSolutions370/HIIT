@@ -23,7 +23,7 @@ export class AddVenueComponent implements ViewWillEnter {
     venueName: ['', [Validators.required]],
     location: ['', [Validators.required]],
     postalCode: ['', [Validators.required,Validators.pattern('[0-9]{4}')]],
-    capacity: ['', [Validators.required, Validators.min(1)]]
+    capacity: ['', [Validators.required, Validators.min(1), Validators.max(200)]]
   });
 
   constructor(public global: GlobalService,public formBuilder: UntypedFormBuilder,
@@ -56,7 +56,7 @@ export class AddVenueComponent implements ViewWillEnter {
         address: this.cVenueForm.value['location'],
         postalCode: this.cVenueForm.value['postalCode'],
         capacity: this.cVenueForm.value['capacity'],
-        schedules: null  
+        schedules: null
       };
       this.venueService.confirmVenueModal(1,temp);
       this.global.dismissModal();

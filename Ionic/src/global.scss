@@ -25,15 +25,15 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-// @import '~animate.css/animate.min.css';
+//@import '~animate.css/animate.min.css';
 
 $colors: (
   primary:    #404040,
-  secondary:  #7b91cb,
+  secondary:  rgb(49, 122, 190),
   tertiary:   #fb7070,
   danger:     #eb445a,
-  light:      #f4f5f8,
-  dark:       #222
+  light:      #5e5e5e,
+  dark:       rgb(53, 53, 53)
 );
 
 ion-popover {
@@ -42,7 +42,6 @@ ion-popover {
 }
 
 //Alert view schedule event CSS:
-
 .alert-button-group {
   flex-direction: row !important;
   $alert-button-group:vertical;
@@ -78,6 +77,11 @@ ion-popover {
 .redDelete {
   color: red !important;
 }
+
+.blueOkUpdate {
+  color: var(--ion-text-color) !important;
+}
+
 //CSS for all cards displaying in list///////
 // ion-card {
 //   display: inline-flex;
@@ -89,8 +93,20 @@ ion-popover {
 //   height: 300px;
 // }
 
+#noRes {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 ///////////////////////////////////////////////////////////////////////////
 //CSS for all forms
+.cameraBtn{
+  margin-right:10%;
+  width:15%;
+}
+
 .itemLabel{
   font-size: large;
   margin-left: 10%;
@@ -104,12 +120,68 @@ ion-popover {
   margin-left: 10%;
   width: 80%;
 
-  border: 1.5px solid #ccc;
+  border: 2px solid rgb(255, 255, 255);
+  --padding-start: 2%;
 
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
+
+.editInput{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-right: 10%;
+  margin-left: 10%;
+  width: 80%;
+
+  border: 2px solid rgb(49, 122, 190);
+  --padding-start: 2%;
+
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.confirmInput{
+  --padding-start: 2%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-right: 10%;
+  margin-left: 10%;
+  width: 80%;
+  padding-left: 1%;
+
+  border: 2px solid rgb(149, 206, 35);
+  --padding-end: 2%;
+
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.deleteInput{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-right: 10%;
+  margin-left: 10%;
+  width: 80%;
+
+  border: 2px solid crimson;
+  --padding-start: 2%;
+
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.errorSpan {
+  color: rgb(240, 58, 58);
+  font-size: small;
+  padding-bottom: 20px;
+  margin-left: 10%;
+}
+
 
 .containerMargins{
   margin-top: 2%;
@@ -117,17 +189,46 @@ ion-popover {
   height: 96%;
 }
 
-.img-wrapper {
-  min-height: 100px;
-  min-width: 120px;
-  width: 100%;
-  height:auto;
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-bottom: 1%;
-  // margin-left: 10%;
-  // margin-right: 10%
+// .img-wrapper {
+//   min-height: 100px;
+//   min-width: 120px;
+//   width: 100%;
+//   height:auto;
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   margin-bottom: 1%;
+//   // margin-left: 10%;
+//   // margin-right: 10%
+// }
+//////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////Add Info Modal///////////////////////////////////
+/// Buttons
+.cancelBtn{
+  margin-left:10%;
+  width: 28%;
+  margin-bottom: 3%;
 }
 
+.addBtn{
+  margin-left:2%;
+  margin-right:10%;
+  width:48%
+}
 
-//////////////////////////////////////////////////////////////////////////
+.editBtn{
+  margin-left:2%;
+  margin-right:10%;
+  width:48%;
+
+  button.alert-button{
+    color: rgb(49, 122, 190);
+  }
+}
+
+.alertCss{
+  button.alert-button{
+    color: white;
+  }
+ }

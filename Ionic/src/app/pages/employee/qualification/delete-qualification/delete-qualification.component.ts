@@ -22,9 +22,17 @@ export class DeleteQualificationComponent implements ViewWillEnter {
 
       //Send through the id of the selected title to be deleted in the title service.
   delete(id: number){
-    this.qualificationService.deleteQualification(id);
-    this.global.dismissModal();
-    this.global.showToast('The qualification has been successfully deleted!');
+    this.qualificationService.deleteQualification(id).then(async resp => {
+
+      console.log('resp', resp);
+
+      if (!resp || resp['status'] == 200) {
+        this.global.showToast('The qualification has been successfully deleted!');
+        this.global.dismissModal();
+      } else {
+        await this.qualificationService.associativeQualificationModal(resp.error)
+      }
+    });
   }
 
 }

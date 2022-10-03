@@ -6,16 +6,14 @@ ion-button{
 ion-searchbar{
     --background : white;
     --color: #221f1f;
-    --clear-button-color : #ff5b71;
+    --clear-button-color : #554f50;
     width: 80%;
     margin-left: 10%;
     margin-right: 10%;
-
 }
 
 ion-button {
     border-radius : 10px;
-    --background: #b8b5b5;
 }
 
 p {
@@ -49,10 +47,6 @@ h3, h6 {
     opacity: 0.6;
     font-size: 12px;
     letter-spacing: 1px;
-}
-
-#viewButton {
-    --background: var(pink);
 }
 
 ion-row {

@@ -21,6 +21,7 @@ import { AssociativeQualificationComponent } from 'src/app/pages/employee/qualif
 import { DeleteQualificationComponent } from 'src/app/pages/employee/qualification/delete-qualification/delete-qualification.component';
 import { ViewQualificationComponent } from 'src/app/pages/employee/qualification/view-qualification/view-qualification.component';
 import { ConfirmQualificationComponent } from 'src/app/pages/employee/qualification/confirm-qualification/confirm-qualification.component';
+import { GlobalService } from '../global/global.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class QualificationService {
   @Output() fetchQualificationEvent = new EventEmitter<Qualification>();
 
 
-  constructor(public repo: RepoService, private modalCtrl: ModalController) {
+  constructor(public repo: RepoService, private modalCtrl: ModalController, public global: GlobalService) {
     //Receive the qualifications and types from the repo (API).
     this.getAllQualification();
     this.getAllQualificationTypes();
@@ -123,13 +124,36 @@ export class QualificationService {
   }
 
   //Receives a qualification to delete in the service qualification list.
-  deleteQualification(id: number) {
-    this.repo.deleteQualification(id).subscribe(result => {
-      console.log('QUALIFICATION  DELETED');
-      this.fetchQualificationEvent.emit();
+  // deleteQualification(id: number) {
+  //   this.repo.deleteQualification(id).subscribe(result => {
+  //     console.log('QUALIFICATION  DELETED');
+  //     this.fetchQualificationEvent.emit();
+  //   });
+
+  // }
+
+  deleteQualification(id: number) : Promise<any> {
+    // this.repo.deleteExercise(id).subscribe(result => {
+    //   console.log('EXERCISE DELETED');
+    //   this.fetchExercisesEvent.emit();
+    // });
+
+    return new Promise<any>((resolve, _) => {
+      this.global.nativeLoad("Deleting...");
+      this.repo.deleteQualification(id).subscribe({
+        next: (data : any) => {
+          this.fetchQualificationEvent.emit();
+          resolve(data);
+        },
+        error: (err : any) => {
+          resolve(err);
+        }
+      }).add(() => {
+        this.global.endNativeLoad();
+      })
     });
 
-  }
+   }
 
   matchingQualification(input: string): Promise<any>{
     console.log('Qualification Service: Repo -> Matching Qualification');
@@ -335,7 +359,7 @@ export class QualificationService {
 
   }
 
-  async associativeVenueModal(qualification: Qualification) {
+  async associativeQualificationModal(qualification: any) {
     console.log('QualificationService: AssociativeModalCall');
     const modal = await this.modalCtrl.create({
       component: AssociativeQualificationComponent,

@@ -36,14 +36,18 @@ export class DeleteExerciseComponent implements OnInit {
       // this.exerciseService.deleteExercise(id);
       // this.global.dismissModal();
       // this.global.showToast('The exercise has been successfully deleted!');
-      this.exerciseService.deleteExercise(ex.exerciseID).then(resp => {
-        if (resp) {
+      this.exerciseService.deleteExercise(ex.exerciseID).then(async resp => {
+
+        console.log('resp', resp);
+
+        if (!resp || resp['status'] == 200) {
           this.sucDelete();
           this.dismissModal();
         } else {
-          this.exerciseService.associativeExerciseModal(ex)
+          await this.exerciseService.associativeExerciseModal(resp.error)
         }
-      })
+      });
+
     }
 
     dismissModal() {

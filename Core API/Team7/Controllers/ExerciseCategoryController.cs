@@ -49,8 +49,16 @@ namespace Team7.Controllers
             {
                 toUpdate.Name = exerciseCategory.Name;
                 toUpdate.Description = exerciseCategory.Description;
-                await ExerciseCategoryRepo.SaveChangesAsync();
-                return Ok();
+                ExerciseCategoryRepo.Update<ExerciseCategory>(toUpdate);
+            
+                if (await ExerciseCategoryRepo.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status503ServiceUnavailable, "Unable to update value in the database. Contact support.");
+                }
             }
             catch (Exception err)
             {
@@ -65,6 +73,12 @@ namespace Team7.Controllers
         public async Task<IActionResult> DeleteExerciseCategory(int id)
         {
             var tempExerciseCategory = await ExerciseCategoryRepo._GetExerciseCategoryIdAsync(id);
+
+            if (tempExerciseCategory.Exercise.Count != 0)
+            {
+                return Conflict(new { exercise = tempExerciseCategory });
+            }
+
             if (tempExerciseCategory == null)
             {
                 return NotFound("Could not find existing Exercise Category with id:" + id);
@@ -74,6 +88,7 @@ namespace Team7.Controllers
                 ExerciseCategoryRepo.Delete<ExerciseCategory>(tempExerciseCategory);
                 await ExerciseCategoryRepo.SaveChangesAsync();
                 return Ok();
+
             }
             catch (Exception err)
             {

@@ -127,9 +127,40 @@ namespace Team7.Models.Repository
             }
         }
 
-        public async Task<Qualification> _GetQualificationIdAsync(int id)
+        public async Task<Qualification> _GetQualificationIdAsyncOriginal(int id)
         {
             IQueryable<Qualification> query = DB.Qualification.Where(q => q.QualificationID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.SingleAsync();
+            }
+        }
+
+        public async Task<Qualification> _GetQualificationIdAsync(int id)
+        {
+            IQueryable<Qualification> query = DB.Qualification.Where(q => q.QualificationID == id).Select(q => new Qualification
+            {
+                QualificationID = q.QualificationID,
+                Description = q.Description,
+                QualificationTypeID = q.QualificationTypeID,
+                Employee = q.Employee,
+                QualificationType = q.QualificationType
+            });
+
+            var users = await DB.Users.ToArrayAsync();
+            var qual = await query.ToArrayAsync();
+            for (var i = 0; i < qual.Length; i++)
+            {
+                for (var j = 0; j < users.Length; j++)
+                {
+                    var user = users[i];
+                }
+            }
+
             if (!query.Any())
             {
                 return null;

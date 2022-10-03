@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Edit Schedule Event Details</ion-title>
+    <ion-title>Duplicate Schedule Event Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
@@ -11,7 +11,7 @@
 <form [formGroup]="uCalendarForm" (ngSubmit)="submitForm()" style="padding-left:10%; padding-right:10%">
   <br/>
   <div class="ion-text-center">
-    <p style="font-size:large">Please update the schedule event information below</p>
+    <p style="font-size:large">Please confirm the schedule event information below</p>
   </div>
 
   <br>
@@ -147,7 +147,7 @@
 
 <br/><br/>
 
-<ion-button type="submit" color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Event</ion-button>
+<ion-button type="submit" color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Duplicate Event</ion-button>
 <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
 
 </form>

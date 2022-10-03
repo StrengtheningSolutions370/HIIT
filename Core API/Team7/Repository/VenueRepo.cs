@@ -50,15 +50,15 @@ namespace Team7.Models.Repository
                         v.Capacity,
                         Schedules = v
                             .Schedules
-                            .Select(s => new { s.ScheduleID/*, s.CapacityBooked */})
+                            .Select(s => new { s.ScheduleID, s.BookingType, s.Lesson, s.StartDateTime, s.EndDateTime})
                     }).ToListAsync()
                 };
             }
         }
 
-        public async Task<object> GetVenuesAsync(string name, string address)
+        public async Task<object> GetVenuesAsync(string name)
         {
-            IQueryable<Venue> query = DB.Venue.Where(v => v.Name == name || v.Address == address);
+            IQueryable<Venue> query = DB.Venue.Where(v => v.Name == name);
 
             if (!query.Any())
             {
@@ -112,7 +112,15 @@ namespace Team7.Models.Repository
 
         public async Task<Venue> _GetVenueIdAsync(int id)
         {
-            IQueryable<Venue> query = DB.Venue.Where(v => v.VenueID == id);
+            IQueryable<Venue> query = DB.Venue.Where(v => v.VenueID == id).Select(v => new Venue
+            {
+                VenueID = v.VenueID,
+                Name = v.Name,
+                Address = v.Address,
+                PostalCode = v.PostalCode,
+                Capacity = v.Capacity,
+                Schedules = v.Schedules
+            });
             if (!query.Any())
             {
                 return null;

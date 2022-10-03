@@ -91,17 +91,34 @@ namespace Team7.Models.Repository
                 return null;
 
 
-            return await query.Select(l =>
+            var temp = await query.Select(l =>
                 new Lesson
                 {
+                    ScheduleID = l.ScheduleID,
                     LessonID = l.LessonID,
                     Name = l.Name,
                     Employee = l.Employee,
                     LessonPlan = l.LessonPlan,
-                    Schedule = l.Schedule,
-
+                    //Schedule = l.Schedule,
                 }).SingleAsync();
 
+            List<Schedule> o = new List<Schedule>();
+            var t = await DB.Schedule.Select(s => new Schedule { Lesson = new Lesson { 
+                LessonID = s.Lesson.LessonID,
+                Name = s.Lesson.Name,
+            },
+                Venue = s.Venue,
+                StartDateTime = s.StartDateTime,
+            }).ToArrayAsync();
+            foreach(Schedule s in t)
+            {
+                if (s.Lesson.LessonID == temp.LessonID)
+                {
+                    o.Add(s);
+                }
+            }
+            temp.Schedule = o;
+            return temp;
         }
 
         public async Task<bool> SaveChangesAsync()

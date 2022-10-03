@@ -33,14 +33,19 @@ export class DeleteEmployeeComponent implements OnInit {
   //Send through the id of the selected employee to be deleted in the employee service.
   async delete(employee : any) {
     this.employeeService.deleteEmployee(employee.data.appUser.id).then(resp => {
-      if (resp) {
+      if (resp.status) {
         //deleted
         this.sucDelete();
         this.dismissModal();
       } else {
         //failed to delete due to links
         //call associative component here:
-        this.employeeService.AssociativeEmployeeComponent(employee);
+        console.log(resp.data.error.employee)
+        this.employeeService.AssociativeEmployeeComponent({
+          lessons: resp.data.error.employee.lesson,
+          schedule : resp.data.error.employee.schedule,
+          name: resp.data.error.employee.appUser.firstName + " " + resp.data.error.employee.appUser.lastName
+        });
       }
     });
 

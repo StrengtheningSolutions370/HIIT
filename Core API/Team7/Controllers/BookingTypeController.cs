@@ -124,6 +124,10 @@ namespace Team7.Controllers
             {
                 return NotFound();
             }
+
+                if (tempBookingType.Schedule.Count() != 0)
+                    return Conflict(new { booking = tempBookingType });
+
             try
             {
                 BookingTypeRepo.Delete(tempBookingType);

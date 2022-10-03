@@ -88,12 +88,13 @@ export class ExerciseService {
           this.fetchExercisesEvent.emit();
           resolve(true);
         },
-        error: () => {
+        error: (err) => {
+          console.log(err);
           this.duplicateAlert();
           _(false);
         }
-      }).add(() => { 
-        this.global.endNativeLoad() 
+      }).add(() => {
+        this.global.endNativeLoad()
       });
     });
 
@@ -101,7 +102,7 @@ export class ExerciseService {
 
    async duplicateAlert() {
     const alert = await this.alertCtrl.create({
-      header: 'EXercise Already Exists',
+      header: 'Exercise Already Exists',
       message: 'The Exercise Information entered already exists on the system',
       buttons: ['OK']
     });
@@ -139,7 +140,7 @@ export class ExerciseService {
         },
         error: () => {
           _(false);
-        } 
+        }
       }).add(() => { this.global.endNativeLoad() });
     });
   }
@@ -166,12 +167,12 @@ export class ExerciseService {
     return new Promise<any>((resolve, _) => {
       this.global.nativeLoad("Deleting...");
       this.repo.deleteExercise(id).subscribe({
-        next: () => {
+        next: (data : any) => {
           this.fetchExercisesEvent.emit();
-          resolve(true);
+          resolve(data);
         },
-        error: () => {
-          resolve(false);
+        error: (err : any) => {
+          resolve(err);
         }
       }).add(() => {
         this.global.endNativeLoad();
@@ -180,17 +181,24 @@ export class ExerciseService {
 
    }
 
-   matchingExercise(name: string, description: string):Promise<any>{
+   matchingExercise(name: string, focus: string):Promise<any>{
     console.log('ExerciseService: Repo -> Matching Exercise');
-    return this.repo.getMatchExercise(name,description).toPromise();
+    return this.repo.getMatchExercise(name,focus).toPromise();
    }
 
    //Receives a exercise category to delete in the service exercise category list.
-   deleteExerciseCategory(id: number){
-    this.repo.deleteExerciseCategory(id).subscribe(result => {
-      console.log('EXERCISE CATEGORY DELETED');
-      this.fetchExerciseCategorysEvent.emit();
-    });
+   deleteExerciseCategory(id: number ) : Promise<any> {
+    return new Promise<any>((res, rej) => {
+      this.repo.deleteExerciseCategory(id).subscribe({
+        next: (resp : any) => {
+          this.fetchExerciseCategorysEvent.emit();
+          res(resp)
+        },
+        error: (err : any) => {
+          res(err);
+        }
+      });
+    })
    }
 
    matchingExerciseCategory(name: string, description: string):Promise<any>{
@@ -359,7 +367,7 @@ export class ExerciseService {
   //Display the confirm create/update modal
   //Receives the selected exercise from the exercise page
   confirmExerciseModal(choice: number, exercise: any) {
-    
+
     return new Promise<any>(async (resolve, _) => {
 
       console.log('ExerciseService: ConfirmExerciseModalCall');
@@ -408,7 +416,7 @@ export class ExerciseService {
 
   }
 
-  async associativeExerciseCategoryModal(exerciseCategory: ExerciseCategory) {
+  async associativeExerciseCategoryModal(exerciseCategory: any) {
     console.log("ExerciseCategoryService: AssociativeModalCall");
     const modal = await this.modalCtrl.create({
       component: AssociativeExerciseCategoryComponent,
@@ -419,8 +427,8 @@ export class ExerciseService {
     await modal.present();
   }
 
-  async associativeExerciseModal(exercise: Exercise) {
-    console.log("ExerciseService: AssociativeModalCall");
+  async associativeExerciseModal(exercise: any) {
+    console.log("ExerciseService: AssociativeModalCall", exercise);
     const modal = await this.modalCtrl.create({
       component: AssociativeExerciseComponent,
       componentProps: {

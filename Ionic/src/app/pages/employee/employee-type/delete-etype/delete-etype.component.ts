@@ -22,10 +22,19 @@ export class DeleteEtypeComponent implements ViewWillEnter {
     }
 
     //Send through the id of the selected venue to be deleted in the venue service.
-  async delete(id: number){
-    this.employeeService.deleteEmployeeType(id);
-    this.global.dismissModal();
-    this.global.showToast('The employee type has been successfully deleted!');
+  async delete(id: number) {
+    this.employeeService.deleteEmployeeType(id).then(async resp => {
+
+      console.log('resp', resp);
+
+      if (!resp || resp['status'] == 200) {
+        this.global.showToast('The employee type has been successfully deleted!');
+        this.global.dismissModal();
+      } else {
+        await this.employeeService.associativeEmployeeTypeModal(resp.error)
+      }
+
+    });
   }
 
 }

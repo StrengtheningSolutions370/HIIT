@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Edit Exercise Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,66 +7,65 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <form [formGroup]="uExerciseForm" (ngSubmit)="submitForm()"> 
     <br/>
 
-    <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the exercise information below</p>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please update the information below.</p>
+    </ion-label>
+    <br/>
+
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Name:</ion-label>
+      <ion-input class="input ion-text-capitalize" formControlName="exerciseName" type="text" required="" id="exerciseName" ></ion-input>
+
+      <span class="errorSpan" *ngIf="errorControl.exerciseName?.errors?.required && uExerciseForm.get('exerciseName').touched">
+        Name is required<br/>
+      </span>
     </div>
+    <br/>
 
-    <ion-item>
-      <ion-label position="floating">Name:</ion-label>
-      <ion-input formControlName="exerciseName" type="text" required="" id="exerciseName" ></ion-input>
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Focus:</ion-label>
+        <ion-input class="input" formControlName="exerciseFocus" type="text" required="" id="exerciseDescription" ></ion-input>
+
+        <span class="errorSpan" *ngIf="errorControl.exerciseFocus?.errors?.required && uExerciseForm.get('exerciseFocus').touched">
+          Focus is required<br/>
+        </span>
+      </div>
       <br/>
-    </ion-item>
 
-    <span class="error ion-padding" *ngIf="errorControl.exerciseName?.errors?.required && uExerciseForm.get('exerciseName').touched">
-      Name is required<br/>
-    </span>
-
-    <ion-item>
-      <ion-label position="floating">Focus:</ion-label>
-      <ion-input class="ion-text-wrap" formControlName="exerciseFocus" type="text" required="" id="exerciseDescription" ></ion-input>
+      <div class="inputDiv">
+        <ion-label class="itemLabel">Youtube Url:</ion-label>
+        <ion-input class="input" (ionChange)="embedImage()" (ionInput)="embedImage()" (ionBlur)="embedImage()" formControlName="exerciseUrl" type="text" required="" id="exerciseUrl" ></ion-input>
+        <span class="errorSpan" *ngIf="errorControl.exerciseUrl?.errors?.pattern && uExerciseForm.get('exerciseUrl').touched">
+          Please submit a URL from youtube<br/>
+        </span>
+      </div>
       <br/>
-    </ion-item>
-
-    <span class="error ion-padding" *ngIf="errorControl.exerciseFocus?.errors?.required && uExerciseForm.get('exerciseFocus').touched">
-      Focus is required<br/>
-    </span>
-
-    <ion-item>
-      <ion-label position="floating">Url:</ion-label>
-      <ion-input (ionChange)="embedImage()" (ionInput)="embedImage()" (ionBlur)="embedImage()" class="ion-text-wrap" formControlName="exerciseUrl" type="text" required="" id="exerciseUrl" ></ion-input>
-      <br/>
-    </ion-item>
-
-    <span class="error ion-padding" *ngIf="errorControl.exerciseUrl?.errors?.pattern && uExerciseForm.get('exerciseUrl').touched">
-      Please submit a URL from youtube<br/>
-    </span>
 
     <ion-item *ngIf="showVideo"> 
       <!-- <ion-label class="ion-text-right">{{exercise.url}}</ion-label> -->
       <iframe [src]="embed" frameborder="0" allowfullscreen></iframe>
     </ion-item>
+    <br/>
 
-    <ion-item>
-      <ion-label position="floating">Exercise Category:</ion-label>
-      <ion-select formControlName="exerciseCategory" type="text" required="" id="exerciseCategory" >
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Exercise Category:</ion-label>
+      <ion-select interface="popover" class="input" formControlName="exerciseCategory" type="text" required="" id="exerciseCategory" >
         <ng-container *ngFor="let ec of exerciseCategoryDropDown">
-          <ion-select-option value="{{ec.exerciseCategoryID}},{{ec.name}}">{{ ec.name }}</ion-select-option>
+          <ion-select-option class="ion-text-capitalize" value="{{ec.exerciseCategoryID}},{{ec.name}}">{{ ec.name }}</ion-select-option>
         </ng-container>
       </ion-select>
-    </ion-item>
-
-    <span class="error ion-padding" *ngIf="errorControl.exerciseCategory?.errors?.required && uExerciseForm.get('exerciseCategory').touched">
-      Exercise Category is required<br/>
-    </span>
+      <span class="errorSpan" *ngIf="errorControl.exerciseCategory?.errors?.required && uExerciseForm.get('exerciseCategory').touched">
+        Exercise Category is required<br/>
+      </span>
+    </div>
 
     <br>
-    <br>
-    <ion-button type="submit" color="secondary" [disabled]="!uExerciseForm.valid"  class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Update Exercise</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
-    
+    <ion-button type="submit" color="primary" [disabled]="!uExerciseForm.valid"  class="addBtn ion-float-right">Update Exercise</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left"  (click)="this.global.dismissModal()">Cancel</ion-button>
+   <br> 
   </form>
 </ion-content>

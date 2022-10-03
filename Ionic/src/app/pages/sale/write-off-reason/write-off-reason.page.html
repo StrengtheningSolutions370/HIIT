@@ -1,45 +1,48 @@
-<ion-header>
-  <ion-toolbar mode="ios">
-    <!--Menu toggle button that will display the menu-->
-      <ion-buttons slot="start">
-        <ion-menu-button menu="mainMenu"></ion-menu-button>
-      </ion-buttons>
-      <ion-title slot="">Stock</ion-title>
-      <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
-      <!--Can we change this dynamically when switching between tabs?-->
-    <!-- </ion-item> -->
-  </ion-toolbar>
-</ion-header>
+<div>
+  <ion-searchbar #search (ionClear)="searchWriteOffReason(search.value)" (ionInput)="searchWriteOffReason(search.value)" class="ion-float-right" color="secondary" expand="block" placeholder='Search Write-Off Reason...'
+    [(ngModel)]="filter" animated="true" debounce="200">
+  </ion-searchbar>
+  <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
+    <ion-fab-button color="success" (click)="writeOffReasonService.addWriteOffReasonInfoModal()" #addItem>
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</div>
+<br>
 
 <ion-content>
-  <ion-tabs>
-    <ion-tab-bar slot="top" >
-      <ion-tab-button tab="write-off">
-        <ion-label>Write-Off</ion-label>
-      </ion-tab-button>
-      <ion-tab-button tab="write-off-reason">
-        <ion-label>Write-Off Reason</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
   <br/>
-  <br/>
-  <br/>
-  <br/>
-
   <ion-grid *ngIf="!isLoading" >
-    <ion-list *ngFor="let wr of writeOffReasonList | filter:filter, let i = index">
+    <ion-list class="cardFadeUp" *ngFor="let wr of writeOffReasonListOriginal | filter:filter, let i = index">
       <ion-item-sliding >
-        <ion-item button (click)="writeOffReasonService.viewWriteOffReasonInfoModal(wr)" >
-          <ion-label style="padding-left:2% ;">
-            <h1>{{wr.description}}</h1>
-          </ion-label >
+        <ion-item >
+          <ion-grid class="nomargin">
+            <ion-row>
+
+              <ion-col size="9" class="name">
+                <ion-text class="ion-text-capitalize"><h4>{{wr.description}}</h4></ion-text>
+              </ion-col>
+
+              <ion-col>
+                <ion-button (click)="writeOffReasonService.viewWriteOffReasonInfoModal(wr)">View</ion-button>
+              </ion-col>
+          
           <ion-icon name="chevron-back-outline" size="small"></ion-icon>
+        </ion-row>
+        </ion-grid>
+        
         </ion-item>
-        <ion-item-options side="end" >
-          <ion-item-option color="secondary" (click)="writeOffReasonService.updateWriteOffReasonInfoModal(wr)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
-          <ion-item-option color="danger" (click)="writeOffReasonService.deleteWriteOffReasonInfoModal(wr)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
+
+        <ion-item-options side="end">
+          <ion-item-option color="secondary" (click)="writeOffReasonService.updateWriteOffReasonInfoModal(wr)">
+            Update<ion-icon name="refresh" size="large"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="tertiary" (click)="writeOffReasonService.deleteWriteOffReasonInfoModal(wr)">
+            Delete<ion-icon name="trash" size="large"></ion-icon>
+          </ion-item-option>
         </ion-item-options>
+
+  
       </ion-item-sliding>
     </ion-list>
   </ion-grid>
@@ -47,4 +50,9 @@
   <div class="ion-text-center " *ngIf="isLoading">
     <ion-spinner name="circles"></ion-spinner>
   </div>
+
+  <ion-text id="noRes" *ngIf="noresults">
+    <h1>No Results</h1>
+  </ion-text>
+  
 </ion-content>

@@ -20,10 +20,66 @@ ion-card {
 
 ion-button {
     border-radius : 10px;
-    width : 15%;
 }
 
 p {
     font-size: large;
 }
+
+.name{
+    padding-left: 5%;
+}
+
+#noRes {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+ion-item {
+  -webkit-animation: fadeIn 600ms;
+  animation: fadeIn 600ms;
+}
+
+.cardFadeUp {
+    -webkit-animation: fadeIn 600ms; 
+    animation: fadeIn 600ms;
+    -webkit-animation: fadeInUp 400ms ease; 
+    animation: fadeInUp 400ms ease;
+}
+
+@keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+}
+  
+  .fadeIn {
+    animation-name: fadeIn;
+  }
+
+  ion-row {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
 

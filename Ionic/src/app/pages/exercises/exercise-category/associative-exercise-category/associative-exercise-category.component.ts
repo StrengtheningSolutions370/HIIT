@@ -8,9 +8,11 @@ import { GlobalService } from 'src/app/services/global/global.service';
   styleUrls: ['./associative-exercise-category.component.scss'],
 })
 export class AssociativeExerciseCategoryComponent implements OnInit {
-  @Input() exerciseCategory: ExerciseCategory;
+  @Input() exerciseCategory: any;
   constructor(public global:GlobalService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('to del', this.exerciseCategory)
+  }
 
 }

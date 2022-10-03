@@ -1,47 +1,45 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Confirm Delete Details</ion-title> <!--@TODO: NAME FOR THIS CARD-->
+  <ion-toolbar color="primary">
+    <ion-title>Delete Lesson Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
 
   <br/>
 
-    <div class="ion-text-center">
+    <ion-label class="ion-text-center">
       <p style="font-size:large">Are you sure you want to delete the following lesson?</p> <!--#TODO this modal name-->
+    </ion-label>
+    <br>
+
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Name: </ion-label>
+      <ion-input class="deleteInput ion-text-capitalize" readonly>{{lesson.name}}</ion-input>
     </div>
 
-    <ion-item> 
-      <ion-label>
-        <h2>Name:</h2>
-        <p class="ion-text-start">{{lesson.name}}</p>
-      </ion-label>
-    </ion-item>
+    <br/>
 
-    <ion-item> 
-      <ion-label>
-        <h2>Trainer:</h2>
-        <p class="ion-text-start">{{lesson.employee}}</p>
-      </ion-label>
-    </ion-item>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Trainer: </ion-label>
+      <ion-input class="deleteInput ion-text-capitalize" readonly>{{lesson.employee}}</ion-input>
+    </div>
 
     <ion-img *ngIf="showImage" src="{{imgSrc}}"></ion-img>
 
-    <ion-item> 
-      <ion-label>
-        <h2>Exercises:</h2>
-        <br />
-        <p class="ion-text-start" *ngFor="let ex of lesson.exercises">{{ex.i}}. {{ex.ExerciseName}}</p>
-      </ion-label>
-    </ion-item>
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Exercises: </ion-label>
+      <ion-input class="deleteInput ion-text-capitalize" *ngFor="let ex of lesson.exercises">{{ex.i}}. {{ex.ExerciseName}}</ion-input>
+    </div>
 
     <br/>
-    <ion-button color="danger" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;" (click)="deleteLesson()">Delete</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="dismissModal()">Return</ion-button>
-    <br />
+
+      <ion-button expand="block" type="ion-button" (click)="deleteLesson()" color="danger" class="addBtn ion-float-right">Delete Lesson</ion-button>
+      <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="dismissModal()">Return</ion-button>
+    
+    <br><br>
 
 </ion-content>

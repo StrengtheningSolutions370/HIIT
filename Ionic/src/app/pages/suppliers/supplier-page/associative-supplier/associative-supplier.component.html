@@ -1,3 +1,31 @@
-<p>
-  associative-supplier works!
-</p>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Associated Order/s Received</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="containerMargins" color="secondary">
+  <br/>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large;;margin-left: 10%;margin-right: 10%;">
+      The {{supplier.name}} supplier cannot be deleted because the following order/s are associated with it.
+    </p>
+  </ion-label>
+  <br/>
+  <div>
+      <ion-list> 
+        <ion-item *ngFor="let orders of supplier.orders">
+          <ion-label class="input ion-text-capitalize ion-text-center">{{getDate(orders.date)}}</ion-label>
+        </ion-item>
+      </ion-list>
+  </div>
+
+  <br/>
+
+  <ion-button color="tertiary" class="addBtn ion-float-right" (click)="this.global.dismissModal()">Return</ion-button>
+
+</ion-content>

@@ -25,11 +25,19 @@ export class DeleteLessonComponent implements OnInit {
     //#TODO delete the lesson here
     console.log(this.lesson.lessonID);
     this.lessonService.deleteLesson(this.lesson.lessonID).then(resp => {
-      if (resp) {
+
+      console.log('resp', resp);
+      if (!resp || resp['status'] == true) {
+
         this.sucDelete();
         this.dismissModal();
+
       } else {
-        this.failureAlert();
+
+        this.lessonService.AssociativeLessonComponent({
+          lesson: resp.error.lesson,
+        });
+
       }
     });
 

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>New Qualification Type Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -8,26 +8,26 @@
 </ion-header>
 
 
-<ion-content>
-  <!--<form #cQTypeForm="ngForm" (ngSubmit)="onSubmit(cQTypeForm)">-->
+<ion-content class="containerMargins" color="secondary">
   <form [formGroup]="cQTypeForm" (ngSubmit)="submitForm()"> 
     <br/>
-    <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the qualification type information below.</p>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please fill in the information below.</p>
+    </ion-label>
+
+    <br/>
+    
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Qualification Type:</ion-label>
+      <ion-input class="input ion-text-capitalize" formControlName="qualificationTypeName" type="text" required="" id="qualificationTypeName"></ion-input>
+      <span class="errorSpan" *ngIf="errorControl.qualificationTypeName.errors?.required && cQTypeForm.get('qualificationTypeName').touched">
+        Qualification type is required<br/>
+      </span>
     </div>
-    <ion-item>
-      <ion-label position="floating">Name:</ion-label>
-      <ion-input formControlName="qualificationTypeName" type="text" required="" id="qualificationTypeName" ></ion-input>
-      <br/>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="errorControl.qualificationTypeName.errors?.required && cQTypeForm.get('qualificationTypeName').touched">
-      Name is required<br/>
-    </span>
+    <br/>
 
-    <br/><br/>
-
-    <ion-button type="submit" color="success" [disabled]="!cQTypeForm.valid" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55% ;">Create Qualification Type</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="this.global.dismissModal()">Cancel</ion-button>
+    <ion-button type="submit" color="primary" [disabled]="!cQTypeForm.valid" class="addBtn ion-float-right">Create Qualification Type</ion-button>
+    <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
     
   </form>
 </ion-content>

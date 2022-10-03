@@ -60,6 +60,16 @@ namespace Team7.Controllers
             return oneTimePin;
         }
 
+        [HttpPost]
+        [Route("testemail")]
+        public async Task<IActionResult> Email()
+        {
+            Email e = new Email("shannonlnoel@icloud.com", "Subject", "Body");
+            Thread thr = new Thread(new ThreadStart(e.sendEmail));
+            thr.Start();
+            return Ok();
+        }
+
         [HttpGet]
         [Route("emaillist")]
         public async Task<IActionResult> list()
@@ -282,6 +292,16 @@ namespace Team7.Controllers
             try
             {
                 var clientrepo = await _clientRepo.GetClientIdAsync(id);
+
+                if (clientrepo.Booking != null)
+                if (clientrepo.Booking.Count() != 0)
+                    return Conflict(new { client = client, data = clientrepo });
+
+                if (clientrepo.Measurement.Count() != null)
+                if (clientrepo.Measurement.Count() != 0)
+                    return Conflict(new { client = client, data = clientrepo });
+
+
                 _clientRepo.Delete(clientrepo);
                 await _clientRepo.SaveChangesAsync();
             }
@@ -619,6 +639,14 @@ namespace Team7.Controllers
                 _clientRepo.Add(clientRec);
                 await _clientRepo.SaveChangesAsync();
 
+                var subject = "Congratulations on becoming part of the BSC team!";
+
+                var body = "Dear Bester Strengthening Client,<br><br>You have successfully registered!<br><br>On behalf of the Bester Strength and Conditioning team, we would like to say welcome and thank you for joining us to become the strongest we can be.<br><br>Below are your user/login details.<br><br>Username: " + userViewModel.EmailAddress + "<br><br><br>Regards,<br>BSC team";
+
+                Email e = new Email(userViewModel.EmailAddress, subject, body);
+                Thread thr = new Thread(new ThreadStart(e.sendEmail));
+                thr.Start();
+
             }
             else
             {
@@ -643,12 +671,12 @@ namespace Team7.Controllers
                 }
                 catch (Exception err)
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, err + " Internal error. Please contact support");
+                    return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Internal error. Please contact support." });
                 }
             }
             else
             {
-                return NotFound("The provided email or password is incorrect. Please check your password or register an account.");
+                return NotFound("Incorrect username or password.");
             }
         }
 

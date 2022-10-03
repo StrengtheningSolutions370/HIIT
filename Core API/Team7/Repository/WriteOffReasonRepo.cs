@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
@@ -103,7 +104,13 @@ namespace Team7.Models.Repository
 
         public async Task<WriteOffReason> _GetWriteOffReasonIdAsync(int id)
         {
-            IQueryable<WriteOffReason> query = DB.WriteOffReason.Where(wr => wr.WriteOffReasonID == id);
+            IQueryable<WriteOffReason> query = DB.WriteOffReason.Where(wr => wr.WriteOffReasonID == id).Select(w => new WriteOffReason
+            {
+                Description = w.Description,
+                WriteOffReasonID = w.WriteOffReasonID,
+                WriteOffLine = w.WriteOffLine
+            });
+
             if (!query.Any())
             {
                 return null;
@@ -112,6 +119,35 @@ namespace Team7.Models.Repository
             {
                 return await query.SingleAsync();
             }
+        }
+
+        public async Task<object> GetWriteOffs(WriteOffReason r)
+        {
+
+            var writeoffs = await DB.WriteOff.Select(w => new WriteOff
+            {
+                WriteOffID = w.WriteOffID,
+                Date = w.Date,
+                EmployeeID = w.EmployeeID,
+                Employee = w.Employee,
+                WriteOffLine = w.WriteOffLine
+            }).ToArrayAsync();
+
+            var output = new List<WriteOff>();
+
+            foreach (var line in r.WriteOffLine)
+            {
+                foreach (var w in writeoffs)
+                {
+                    foreach (var t in w.WriteOffLine)
+                    {
+                        if (t.WriteOffReasonID == r.WriteOffReasonID)
+                            output.Add(w);
+                    }
+                }
+            }
+
+            return output;
         }
 
         public async Task<bool> SaveChangesAsync()

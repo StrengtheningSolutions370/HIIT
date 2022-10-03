@@ -17,8 +17,14 @@ export class DeleteExerciseCategoryComponent {
 
   //Send through the id of the selected exercise category to be deleted in the exercise category service.
   async delete(id: number){
-    this.exerciseService.deleteExerciseCategory(id);
-    this.global.dismissModal();
-    this.global.showToast("The Exercise Category has been successfully deleted")
+    this.exerciseService.deleteExerciseCategory(id).then((res : any) => {
+      console.log(res);
+      if (!res || res['status'] == 200) {
+        this.global.dismissModal();
+        this.global.showToast("The Exercise Category has been successfully deleted!")
+      } else {
+        this.exerciseService.associativeExerciseCategoryModal(res.error.exercise);
+      }
+    });
   }
 }

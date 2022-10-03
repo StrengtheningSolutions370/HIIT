@@ -68,7 +68,7 @@ namespace Team7.Controllers
             foreach (int exerciseVMID in exerciseVM)
             {
                 LessonPlan lp = new LessonPlan();
-                lp.Exercise = await _exerciseRepo._GetExerciseIdAsync(exerciseVMID);
+                lp.Exercise = await _exerciseRepo._GetExerciseIdAsyncOriginal(exerciseVMID);
                 lp.Lesson = lesson;
                 lp.LessonID = lesson.LessonID;
                 _lessonPlanRepo.Add(lp);
@@ -122,14 +122,11 @@ namespace Team7.Controllers
             if (lesson == null)
                 return NotFound("Lesson not found for deletion");
 
-            bool assFlag = false;
+            if (lesson.Schedule == null)
+                return StatusCode(StatusCodes.Status409Conflict, new { lesson = lesson });
 
-            //check if attatched to employee:
-            //if (lesson.Schedule.Count != 0)
-            //    assFlag = true;
-
-            //if (assFlag)
-            //    return StatusCode(StatusCodes.Status409Conflict, new { message = "Lesson has assosciations to another table.", lesson });
+            if (lesson.Schedule.Count != 0)
+                return StatusCode(StatusCodes.Status409Conflict, new { lesson = lesson });
 
             //perform delete:
             //await _lessonPlanRepo.RemoveRangeLessonIdAsync(id);

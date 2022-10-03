@@ -131,9 +131,40 @@ namespace Team7.Models.Repository
             }
         }
 
-        public async Task<EmployeeType> _GetEmployeeTypeIdAsync(int id)
+        public async Task<EmployeeType> _GetEmployeeTypeIdAsyncOriginal(int id)
         {
             IQueryable<EmployeeType> query = DB.EmployeeType.Where(v => v.EmployeeTypeID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.SingleAsync();
+            }
+        }
+
+        public async Task<EmployeeType> _GetEmployeeTypeIdAsync(int id)
+        {
+            var query = DB.EmployeeType.Where(v => v.EmployeeTypeID == id).Select(t => new EmployeeType
+            {
+                EmployeeTypeID = t.EmployeeTypeID,
+                Name = t.Name,
+                Description = t.Description,
+                Employee = t.Employee
+            });
+
+
+            var users = await DB.Users.ToArrayAsync();
+            var types = await query.ToArrayAsync();
+            for ( var i = 0; i < types.Length; i++)
+            {
+                for ( var j = 0; j < users.Length; j++)
+                {
+                    var user = users[i];
+                }
+            }
+
             if (!query.Any())
             {
                 return null;

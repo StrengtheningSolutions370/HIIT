@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Team7.Context;
-using static iTextSharp.text.pdf.AcroFields;
 
 
 namespace Team7.Models.Repository
@@ -28,6 +28,41 @@ namespace Team7.Models.Repository
         public void Delete<T>(T Entity) where T : class
         {
             DB.Remove(Entity);
+        }
+
+        public async Task<Booking[]> GetAllBookingsAsync()
+        {
+            var table = DB.Booking.Select(b => new Booking
+            {
+                Date = b.Date,
+                Client = new Client
+                {
+                    UserID = b.Client.UserID,
+                    AppUser = b.Client.AppUser
+                },
+            });
+
+            var yr = DateTime.Now.Year.ToString();
+            var mt = DateTime.Now.Month.ToString();
+            var d = (DateTime.Now.Day + 1).ToString();
+
+            List<Booking> output = new List<Booking>();
+            foreach (Booking booking in table)
+            {
+                //check if in the next 24 hours:
+
+                var byr = booking.Date.Year.ToString();
+                var bmt = booking.Date.Month.ToString();
+                var bd = booking.Date.Day.ToString();
+
+                if (yr == byr && mt == bmt && d == bd)
+                    output.Add(booking);
+            }
+
+            if (output.Count > 0)
+                return output.ToArray();
+
+            return null;
         }
 
         public async Task<bool> CancelMyBooking(string aspNetUserID, int bookingID, int scheduleID)

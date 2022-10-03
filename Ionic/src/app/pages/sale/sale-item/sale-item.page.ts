@@ -5,7 +5,7 @@ import { RepoService } from 'src/app/services/repo.service';
 import { SalesService } from 'src/app/services/sales/sales.service';
 import { InventoryService } from 'src/app/services/inventory/inventory.service';
 import { ViewWillEnter } from '@ionic/angular';
-
+import Fuse from 'fuse.js';
 
 @Component({
   selector: 'app-sale-item',
@@ -18,13 +18,17 @@ public filter: string;
 
 //Create local title array to be populated onInit.
 saleItemList: any[] = [];
+saleItemListOriginal : any[] = [];
 numTimesLeft = 4
 items: any[] = [];
+
+noresults = false;
 
 //Subscription variable to track live updates.
 saleItemSub: Subscription;
 
 isLoading = true;
+
 
 constructor(public saleService: SalesService, public repo: RepoService, public global: GlobalService, public inventoryService: InventoryService) {
    this.fetchSaleItem();
@@ -41,9 +45,51 @@ fetchSaleItem() {
         console.log(data);
         this.isLoading = false;
         this.saleItemList = data.result;
+        if (this.saleItemList.length == 0) {
+          this.noresults = true;
+        }
+        this.saleItemListOriginal = data.result;
       }
     }
   );
+}
+
+searchItems(event : string) {
+
+  this.noresults = false;
+
+  if (event == '' || event == null) {
+    this.saleItemList = this.saleItemListOriginal;
+
+    if (this.saleItemList.length == 0) {
+      this.noresults = true;
+    }
+
+    return;
+  }
+
+  const hits = new Fuse(this.saleItemList, {
+    keys: [
+      'name',
+      'description',
+      'quantityOnHand',
+      'saleCategory.name',
+    ]
+  }).search(
+  	event
+  );
+
+  this.saleItemList = [];
+
+  if (hits.length == 0) {
+    this.noresults = true;
+    return;
+  }
+
+  hits.map((el : any) => {
+    this.saleItemList.push(el.item);
+  });
+
 }
 
 loadData(event) {
@@ -70,6 +116,10 @@ ionViewWillEnter(): void {
       }
     }
   );
+}
+
+ngOnDestroy(){
+  this.saleService.fetchSaleItemsEvent.unsubscribe;
 }
 
 }

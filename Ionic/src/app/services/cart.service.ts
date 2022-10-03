@@ -11,6 +11,7 @@ import { PaymentPage } from '../pages/shop/payment/payment.page';
 import { BookingService } from './booking/booking.service';
 import { GlobalService } from './global/global.service';
 import { RepoService } from './repo.service';
+import { SalesService } from './sales/sales.service';
 import { StoreService } from './storage/store.service';
 
 @Injectable({
@@ -30,7 +31,8 @@ export class CartService {
     public global: GlobalService,
     private modalCtrl: ModalController,
     public repo: RepoService,
-    public bookingService: BookingService
+    public bookingService: BookingService,
+    public saleService: SalesService
   ) { }
 
   async createCart(){
@@ -41,14 +43,14 @@ export class CartService {
       await this.storage.getKey('user').then((usr : any) => {
         const obj = JSON.parse(usr)
         userID = `${obj.id}`.toString();
-        })
-      this.model = {
-      userId: userID,
-      sales: [],
-      bookings: [],
-      grandPriceTotal: 0,
-      grandItemTotal: 0
-      }
+        this.model = {
+        userId: userID,
+        sales: [],
+        bookings: [],
+        grandPriceTotal: 0,
+        grandItemTotal: 0
+        }
+      })
 
     }
     if (wasNull){
@@ -86,42 +88,53 @@ export class CartService {
 
 
   //Add a sales item
-  async quantityPlus(sales:SaleItem) {
+  async quantityPlus(sales:any) {
+    console.log('quanitityPlu', sales)
+     try {
+      //await this.createCart();
 
-      if (!this.model['sales'])
-        this.model.sales = [];
+      var indx = -1;
 
-      //new object:
-      let tempSaleAdd: saleLine = {
-        saleItemID: sales.saleItemID,
-        saleItem: sales,
-        quantity: 1,
-        subTotalPrice: 0
-      }
-
-      //if cart is null:
-      if (this.model.sales.length == 0) {
-        this.model.sales.push(tempSaleAdd);
-        await this.calculate();
-        this._cart.next(this.model);
-        await this.saveCart();
-        return;
-      }
-
-      const obj = this.model.sales.find(item => item.saleItemID == sales.saleItemID);
-      const index = this.model.sales.indexOf(obj);
-
-      if (index == -1) {
-        //item does not exist:
-        this.model.sales.push(tempSaleAdd);
+      if (this.model['sales'] != null) {
+        this.model.sales.forEach((saleLineItem, index) => {
+          if (saleLineItem.saleItemID == sales.saleItemID){
+            indx = index;
+          }
+        })
       } else {
-        this.model.sales[index].quantity++;
+        this.model.sales = Array<saleLine>();
       }
 
-      await this.calculate();
-      this._cart.next(this.model);
-      await this.saveCart();
-
+       if (indx == -1) {
+        let tempSaleAdd: saleLine = {
+          saleItemID: sales.saleItemID,
+          saleItem: sales,
+          quantity: 1,
+          subTotalPrice: 0
+        }
+        console.log("Indx in qty plus is -1, add entire saleLine obj to cart: ",tempSaleAdd);
+        this.model.sales.push(tempSaleAdd);
+        this.global.showToast('Item successfully added to cart');
+       } else {
+        console.log(sales);
+        if (this.model.sales[indx].quantity >= sales.saleItem?.quantityOnHand){
+          this.global.showAlert("There is not enough quantity at the shop to service your sale","Unable to increase quantity");
+        } else if (this.model.sales[indx].quantity >= sales?.quantityOnHand) {
+          this.global.showAlert("There is not enough quantity at the shop to service your sale","Unable to increase quantity");
+        } else {
+          this.model.sales[indx].quantity += 1;
+          console.log("Indx in qty plus is "+indx+", only update quantity for it:"+this.model.sales[indx].quantity);
+          this.global.showToast('Item quantity increased in cart');
+          //console.log(sales);
+        }
+       }
+       await this.calculate();
+       this._cart.next(this.model);
+       await this.saveCart();
+    } catch(e) {
+      console.log(e);
+      throw(e);
+    }
   }
 
 
@@ -132,7 +145,8 @@ export class CartService {
     await this.createCart();
     try {
       let duplicate = false;
-      if (this.model.bookings)
+
+      if (this.model['bookings'] != null) {
         this.model.bookings.forEach(bookLine => {
           if (bookLine.scheduleID == booking.scheduleID){
             console.log("Duplicate adding booking to cart");
@@ -140,12 +154,16 @@ export class CartService {
             return;
           }
         });
+      } else {
+        this.model.bookings = Array<bookingLine>();
+      }
 
       if (!duplicate) {
         this.model.bookings[this.model.bookings.length] = ({...booking});
         console.log("booking added: ", this.model.bookings);
         this._cart.next(this.model);
         this.calculate();
+        this.global.showToast('Booking added to cart');
         await this.saveCart();
         //console.log(this._cart.getValue());
       }
@@ -175,6 +193,7 @@ export class CartService {
         //this.model.sales.push(tempSaleAdd);
        } else {
         this.model.sales[indx].quantity -= 1;
+        this.global.showToast('Item quantity decreased in cart');
        }
        await this.calculate();
        this._cart.next(this.model);
@@ -202,10 +221,12 @@ export class CartService {
         //this.model.sales.push(tempSaleAdd);
        } else {
         this.model.bookings[indx] = null;
+        this.global.showToast('Booking removed from cart');
        }
 
       await this.calculate();
       this._cart.next(this.model);
+      await this.saveCart();
     } catch(e) {
       console.log(e);
       throw(e);
@@ -285,6 +306,7 @@ export class CartService {
     });
 
     this.bookingService.fetchBookingEvent.emit();
+    this.saleService.fetchSaleItemsEvent.emit();
    }
 
   //Modal to open cart

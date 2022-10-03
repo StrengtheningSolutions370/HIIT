@@ -1,72 +1,74 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Confirm Sale Item Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+      <ion-button color="tertiary" (click)="this.global.dismissModal()">
+        <ion-icon name="close-outline" size="large"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <br/>
-  <div class="ion-text-center">
-    <p style="font-size:large">Please confirm the following sale item information</p>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large">Please confirm the following information.</p>
+  </ion-label>
+
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Name:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>{{saleItem.name}}</ion-input>
+  </div>
+  <br>
+
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Description:</ion-label>
+    <ion-input class="confirmInput" readonly>{{saleItem.description}}</ion-input>
+  </div>
+  <br>
+
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Sale Category:</ion-label>
+    <ion-input class="confirmInput ion-text-capitalize" readonly>{{categoryName}}</ion-input>
+  </div>
+  <br>
+
+  <div class="inputDiv">
+    <div class="add-image">
+      <img [src]="this.global.createImg(saleItem.photo)" alt="sale item image" />
+    </div>
   </div>
 
-  <ion-item >
-    <ion-label class="ion-text-left">Name:</ion-label>
-    <ion-label class="ion-text-right">{{saleItem.name}}</ion-label>
-  </ion-item>
-  <ion-item >
-    <ion-label class="ion-text-left">Description:</ion-label>
-    <ion-label class="ion-text-wrap ion-text-right">{{saleItem.description}}</ion-label>
-  </ion-item>
+  <br>
+  <div class="inputDiv" *ngIf="saleItem.quotable == true">
+    <ion-label class="itemLabel">Quotable:</ion-label>
+    <ion-input class="confirmInput" readonly>{{saleItem.quotable}}</ion-input>
+  </div>
+  <br>
 
-    <div class=imagecenter>
-      <img src="{{saleItem.photo.dataUrl}}">
+  <div class="inputDiv" *ngIf="saleItem.quotable == false">
+    <ion-label class="itemLabel">Quantity:</ion-label>
+    <ion-input class="confirmInput" readonly>{{saleItem.quantityOnHand}}</ion-input>
+  </div>
+  <br>
+
+  <div *ngIf="saleItem.quotable == false">
+    <div class="inputDiv" *ngIf="saleItem.priceHistory!=null">
+      <ion-label class="itemLabel">Cost:</ion-label>
+      <ion-input class="confirmInput" readonly>R{{saleItem.priceHistory[0].costAmount}}</ion-input>
     </div>
+    <br>
 
-
-    <ion-item >
-      <ion-label class="ion-text-left">Quotable:</ion-label>
-      <ion-label class="ion-text-right">{{saleItem.quotable}}</ion-label>
-    </ion-item>
-
-    <ion-item *ngIf="saleItem.quotable == false">
-      <ion-label class="ion-text-left">Quantity:</ion-label>
-      <ion-label class="ion-text-right">{{saleItem.quantityOnHand}}</ion-label>
-    </ion-item>
-
-    <div *ngIf="saleItem.quotable == false">
-      <ion-item *ngIf="saleItem.priceHistory==null">
-        <ion-label class="ion-text-left">Cost:</ion-label>
-        <ion-label class="ion-text-right">No change</ion-label>
-      </ion-item>
-      <ion-item *ngIf="saleItem.priceHistory!=null">
-        <ion-label class="ion-text-left">Cost:</ion-label>
-        <ion-label class="ion-text-right">{{saleItem.priceHistory[0].costAmount}}</ion-label>
-      </ion-item>
+    <div class="inputDiv" *ngIf="saleItem.priceHistory!=null">
+      <ion-label class="itemLabel">Selling Price:</ion-label>
+      <ion-input class="confirmInput" readonly>R{{saleItem.priceHistory[0].saleAmount}}</ion-input>
     </div>
+  </div>
+  <br />
 
-    <div *ngIf="saleItem.quotable == false">
-      <ion-item *ngIf="saleItem.priceHistory==null">
-        <ion-label class="ion-text-left">Price:</ion-label>
-        <ion-label class="ion-text-right">No change</ion-label>
-      </ion-item>
-      <ion-item *ngIf="saleItem.priceHistory!=null">
-        <ion-label class="ion-text-left">Price:</ion-label>
-        <ion-label class="ion-text-right">{{saleItem.priceHistory[0].saleAmount}}</ion-label>
-      </ion-item>
-    </div>
-
-    <ion-item>
-      <ion-label class="ion-text-left">Sale Category:</ion-label>
-      <ion-label class="ion-text-right">{{categoryName}}</ion-label>
-    </ion-item>
-    <br/><br/>
-
-    <ion-button color="success" class="ion-float-right" style="margin-left:2%; margin-right:10%; width:55%;" (click)="confirmChanges(saleItem)">Confirm</ion-button>
-    <ion-button color="light" class="ion-float-left" style="margin-left:10%;width: 20%;" (click)="returnFrom()">Return</ion-button>
+  <ion-button color="success" class="ion-float-right addBtn" style="margin-left:2%; margin-right:10%; width:55%;"
+    (click)="confirmChanges(saleItem)">Confirm</ion-button>
+  <ion-button color="tertiary" class="cancelBtn ion-float-left" style="margin-left:10%;width: 20%;"
+    (click)="returnFrom()">Return</ion-button>
 
 </ion-content>
-

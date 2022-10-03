@@ -35,7 +35,8 @@ export class SchedulePage implements AfterViewInit  {
     bookingPriceHistory:null,
     startDateTime: null,
     endDateTime: null,
-    colour: null
+    colour: null,
+    bookingAttendance:[{}]
   }
 
     //Create local schedule array to be populated onInit.
@@ -99,7 +100,6 @@ export class SchedulePage implements AfterViewInit  {
                     date.getMinutes()
                   ));
                   console.log(endTime);
-
                 events.push({
                   scheduleID: sItem.scheduleID,
                   venue: sItem.venue,
@@ -109,7 +109,8 @@ export class SchedulePage implements AfterViewInit  {
                   lesson: sItem.lesson,
                   employee: sItem.employee,
                   bookingPriceHistory: sItem.bookingPriceHistory,
-                  colour: sItem.bookingType.colour
+                  colour: sItem.bookingType.colour,
+                  bookingAttendance: sItem.bookingAttendance
                 });
                 document.body.style.setProperty('--colour'[sItem.scheduleID],sItem.bookingType.colour);
               })
@@ -167,8 +168,14 @@ export class SchedulePage implements AfterViewInit  {
       '<br><br>Price:&emsp; R' + event.bookingPriceHistory[event.bookingPriceHistory.length-1].amount +
       '<br><br>Employee:&emsp;' + event.employee.appUser.firstName + '&nbsp;' + event.employee.appUser.lastName
       ,
-      buttons: ['Ok',{
-        text: 'Update',
+      buttons: [
+      {
+        text:'Ok',
+        cssClass: 'blueOkUpdate'
+      },
+      {
+        text: 'Duplicate',
+        cssClass: 'blueOkUpdate',
         handler: () =>{this.updateEvent(event);}
       },
       {

@@ -40,11 +40,14 @@ export class AddSupplierComponent implements OnInit {
   }
 
   handleAddressChange(event : any) {
+
     this.addresserror = false;
     this.resolved = true;
+
     console.log(event);
-    this.long = this.midpoint(event.geometry.viewport.yb.hi, event.geometry.viewport.yb.lo);
-    this.lat = this.midpoint(event.geometry.viewport.Qa.hi, event.geometry.viewport.Qa.lo);
+
+    this.long = this.midpoint(event.geometry.viewport.Ab.hi, event.geometry.viewport.Ab.lo);
+    this.lat = this.midpoint(event.geometry.viewport.Va.hi, event.geometry.viewport.Va.lo);
     this.address = '';
     event.address_components.forEach((component : any, i : number) => {
       this.address += component.long_name;

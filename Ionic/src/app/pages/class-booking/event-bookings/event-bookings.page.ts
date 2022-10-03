@@ -14,7 +14,7 @@ export class EventBookingsPage implements OnInit {
     public filter: string;
 
     //Create local venue array to be populated onInit.
-    myBookingList: any[] = [];
+    public myBookingList: any[] = [];
 
     //Subscription variable to track live updates.
     bookingSub: Subscription;
@@ -56,6 +56,9 @@ export class EventBookingsPage implements OnInit {
           this.myBookingList = this.myBookingList.filter(x => x.bookingAttendance.length > 0);
           if (this.myBookingList.length < 1){
             this.noresults = true;
+            this.isLoading = false;
+          } else {
+            this.myBookingList.reverse();
           }
           console.log(this.myBookingList);
           this.isLoading = false;

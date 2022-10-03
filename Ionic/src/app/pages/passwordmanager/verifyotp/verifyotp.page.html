@@ -1,4 +1,4 @@
-<ion-content>
+<div id="background">
 
   <ion-card>
     <ion-card-content>
@@ -8,11 +8,9 @@
       <form #logForm="ngForm" (ngSubmit)="onSubmit(logForm)">
         <div padding>
 
-          <ion-item>
-            <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
-            <ion-input minlength="6" maxlength="6" type="text" name="otp" ngModel #otp="ngModel" placeholder="OTP" required></ion-input>
-          </ion-item>
-
+          <div class="inputDiv">
+            <ion-input class="input" minlength="6" maxlength="6" type="text" name="otp" ngModel #otp="ngModel" placeholder="OTP" required></ion-input>
+          </div>
           <ion-text color="danger" *ngIf="!otp.valid && otp.touched">
             <p>OTP must be 6 digits long.</p>
           </ion-text>
@@ -34,5 +32,4 @@
       </div>
     </ion-card-content>
   </ion-card>
-</ion-content>
-
+</div>

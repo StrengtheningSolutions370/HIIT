@@ -127,50 +127,103 @@ export class UpdateScheduleComponent implements ViewWillEnter {
       var timeEVal = this.uCalendarForm.value['timeEndSelector'];
       var timeESend: Date = null;
 
-    if (dateVal == undefined){
-      console.log("no Date Defined, use old one");
-      dateSend =  new Date(this.schedule.startTime);
-    } else {
-      dateSend = new Date(dateVal);
-    }
 
     if (timeSVal == undefined){
+      //Old Time Start in update
       console.log("no timeS Defined, use old one");
-      timeSSend = new Date(this.schedule.startTime);
+      if (dateVal == undefined){
+        //Old time start and old date
+        console.log("no new Date Defined, use old timeS fully");
+        timeSSend = new Date(this.schedule.startTime);
+      } else {
+        //Old time start with new date
+        console.log("new date but no change in time, update timeS date");
+        timeSSend = new Date(this.schedule.startTime);
+        dateSend = new Date(dateVal);
+        timeSSend.setDate(dateSend.getDate());
+        timeSSend.setMonth(dateSend.getMonth());
+        timeSSend.setFullYear(dateSend.getFullYear());
+      }
     } else {
-      timeSSend = new Date(timeSVal);
+      //New time start in update
+      console.log("new timeS, check if date changed");
+      if (dateVal == undefined){
+        //New time start but old date
+        console.log("no new Date Defined, use old timeStart date");
+        dateSend = new Date(this.schedule.startTime);
+        timeSSend = new Date(timeSVal);
+        timeSSend.setDate(dateSend.getDate());
+        timeSSend.setMonth(dateSend.getMonth());
+        timeSSend.setFullYear(dateSend.getFullYear());
+
+      } else {
+        //New time start with new date
+        console.log("new date and new timeS, update timeS to match");
+        timeSSend = new Date(timeSVal);
+        dateSend = new Date(dateVal);
+        timeSSend.setDate(dateSend.getDate());
+        timeSSend.setMonth(dateSend.getMonth());
+        timeSSend.setFullYear(dateSend.getFullYear());
+      }
     }
 
+    //Updating timeEnd
     if (timeEVal == undefined){
+      //Old Time End in update
       console.log("no timeE Defined, use old one");
-      timeESend = new Date(this.schedule.endTime);
+      if (dateVal == undefined){
+        //Old time end and old date
+        console.log("no new Date Defined, use old timeE fully");
+        timeESend = new Date(this.schedule.endTime);
+      } else {
+        //Old time end with new date
+        console.log("new date but no change in timeE, update timeE date");
+        timeESend = new Date(this.schedule.endTime);
+        dateSend = new Date(dateVal);
+        timeESend.setDate(dateSend.getDate());
+        timeESend.setMonth(dateSend.getMonth());
+        timeESend.setFullYear(dateSend.getFullYear());
+      }
     } else {
-      timeESend = new Date(timeEVal);
+      //New time end in update
+      console.log("new timeE, check if date changed");
+      if (dateVal == undefined){
+        //New time end but old date
+        console.log("no new Date Defined, use old timeEnd date");
+        dateSend = new Date(this.schedule.endTime);
+        timeESend = new Date(timeEVal);
+        timeESend.setDate(dateSend.getDate());
+        timeESend.setMonth(dateSend.getMonth());
+        timeESend.setFullYear(dateSend.getFullYear());
+
+      } else {
+        //New time end with new date
+        console.log("new date and new timeE, update timeE to match");
+        timeESend = new Date(timeEVal);
+        timeESend = new Date(dateVal);
+        timeESend.setDate(dateSend.getDate());
+        timeESend.setMonth(dateSend.getMonth());
+        timeESend.setFullYear(dateSend.getFullYear());
+      }
     }
 
-      //var datePipe = new DatePipe('en');
+    if (timeESend < timeSSend) {
+      this.global.showAlert("Please ensure the ending time is after the starting time","Time range error");
+      return false;
+    }
 
-
-      //var date = datePipe.transform(dateTemp,'dd/MM/yyyy');//formatted for display
-
-      // timeSSend.setDate(dateTemp.getDate());
-      // timeE.setDate(dateTemp.getDate());
-      // timeS.setMonth(dateTemp.getMonth());
-      // timeE.setMonth(dateTemp.getMonth());
-      // timeS.setFullYear(dateTemp.getFullYear());
-      // timeE.setFullYear(dateTemp.getFullYear());
       var bphTemp: any = [{
         amount: Number(this.uCalendarForm.controls['schedulePrice'].value)
       }];
       console.log(Number(this.uCalendarForm.controls['schedulePrice'].value));
-      console.log(bphTemp[0].amount);
+      console.log("BookingPrice: ",bphTemp[0].amount);
       console.log(this.schedule.bookingPriceHistory[this.schedule.bookingPriceHistory.length-1].amount);
-      if (bphTemp[0].amount === this.schedule.bookingPriceHistory[this.schedule.bookingPriceHistory.length-1].amount){
-        console.log(this.schedule.bookingPriceHistory[this.schedule.bookingPriceHistory.length-1].amount);
-        this.global.showAlert("No price change on schedule update");
-        console.log("setting price to null so it doesn't make a new price history record");
-        bphTemp = null;
-      }
+      // if (bphTemp[0].amount === this.schedule.bookingPriceHistory[this.schedule.bookingPriceHistory.length-1].amount){
+      //   console.log(this.schedule.bookingPriceHistory[this.schedule.bookingPriceHistory.length-1].amount);
+      //   this.global.showAlert("No price change on schedule update");
+      //   console.log("setting price to null so it doesn't make a new price history record");
+      //   bphTemp = null;
+      // }
 
       var temp: Schedule = {
         startDateTime:timeSSend,

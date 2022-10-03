@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>View "{{saleCategory.name}}"</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,33 +7,42 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <br/>
-  <div class="ion-text-center">
-    <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following information corresponds with the selected sale category</p>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large;margin-left: 10%;margin-right: 10%;">The following information corresponds with the selected sale category</p>
+  </ion-label>
+    
+  <br/>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Name:</ion-label>
+    <ion-input class="input ion-text-capitalize" readonly>{{saleCategory.name}}</ion-input>
+  </div>
 
-    <ion-item >
-      <ion-label class="ion-text-left">Name:</ion-label>
-      <ion-label class="ion-text-right">{{saleCategory.name}}</ion-label>
-    </ion-item>
-    <ion-item >
-      <ion-label class="ion-text-left">Description:</ion-label>
-      <ion-label class="ion-text-wrap ion-text-right">{{saleCategory.description}}</ion-label>
-    </ion-item>
-    <p *ngIf="this.saleCategory.saleItem.length > 0" style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">The following sale item/s are associated with the selected sale category</p>
-    <div *ngFor="let item of saleCategory.saleItem">
-      <ion-item >
-        <ion-label class="ion-text-left">Name:</ion-label>
-        <ion-label class="ion-text-right">{{item.name}}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label class="ion-text-left">Price:</ion-label>
-        <ion-label class="ion-text-right">{{item.price}}</ion-label>
-      </ion-item>
-      <br/>
+  <br/>
+
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Description:</ion-label>
+    <ion-input class="input ion-text-capitalize" readonly>{{saleCategory.description}}</ion-input>
+  </div>
+    
+  <br/>
+
+  <p *ngIf="this.saleCategory.saleItem.length > 0" style="font-size:large;margin-left: 10%;margin-right: 10%;">The following sale item/s are associated with the selected sale category</p>
+  <div *ngFor="let item of saleCategory.saleItem">
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Name:</ion-label>
+      <ion-input class="input ion-text-capitalize" readonly>{{item.name}}</ion-input>
     </div>
+       
+    <br/>
 
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Price:</ion-label>
+      <ion-input class="input ion-text-capitalize" readonly>{{item.price}}</ion-input>
+    </div> 
+    <br/>
   </div>
   <br>
-  <ion-button color="light" class="ion-float-right" style="margin-right:10%;width:30% " (click)="this.global.dismissModal()">Return</ion-button>
+  <ion-button color="tertiary" class="addBtn ion-float-right" (click)="this.global.dismissModal()">Return</ion-button>
 </ion-content>

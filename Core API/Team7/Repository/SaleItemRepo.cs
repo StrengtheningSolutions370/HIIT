@@ -62,6 +62,7 @@ namespace Team7.Models.Repository
                         //InventoryItem = si
                         //.InventoryItem
                         //.Select(i => new { i.InventoryItemID, i.Quantity }),
+                        si.SaleLine,
                         PriceHistory = si
                         .PriceHistory
                         .Select(ph => new { ph.Date, ph.SaleAmount, ph.CostAmount }),

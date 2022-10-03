@@ -20,6 +20,8 @@ export class VATPage implements OnInit{
   //Subscription variable to track live updates.
   vatSub: Subscription;
 
+  noresults = false;
+
   isLoading = true;
 
   constructor(public vatService: VatService, public repo: RepoService) { 
@@ -49,6 +51,8 @@ export class VATPage implements OnInit{
           console.log(data.result);
           this.isLoading = false;
           this.vatList = data.result;
+          if (this.vatList.length == 0)
+            this.noresults = true;
         }
       }
     )

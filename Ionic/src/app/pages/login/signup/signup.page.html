@@ -1,100 +1,109 @@
-<ion-content>
+<div id="background">
+
         <ion-card class="centerLogin" >
           <ion-card-content>
             <div class="ion-text-center">
               <h1 style="font-family: inherit; border:1px">REGISTER</h1>
             </div>
-            <br/>
+            
+            <div class="center">
+              <ion-img id="logo" class="ion-text-center" src="./../../../assets/logo.svg"></ion-img>
+            </div>
+
+            <div class="ion-text-center hint">
+              <p>Create your account here.</p>
+            </div>
 
             <form #regForm="ngForm" (ngSubmit)="onSubmit(regForm)">
               <div padding>
-                <ion-item>
-                  <ion-icon name="person" slot="start" color="#282828"></ion-icon>
+                
+                <div class="inputDiv">
+                  <ion-select interface="popover" class="input" ngModel #TitleId="ngModel" placeholder="Title" name="TitleId" type="text" id="TitleId" required>
+                    <ion-select-option *ngFor="let title of titleList" value="{{title.titleID}}">{{ title.description }}</ion-select-option>
+                  </ion-select>
+                </div>
+                
+                <!-- <ion-item> -->
+                <div class="inputDiv">
                   <ion-input 
+                  class="input"
                   type="text" 
                   name="firstName" 
                   ngModel 
                   #firstName="ngModel" 
                   placeholder="First Name" 
                   required ></ion-input>
-                </ion-item>
-                <ion-text color="danger" *ngIf="!lastName.valid && lastName.touched">
-                  <p>Please enter your first name.</p>
-                </ion-text>
-                <ion-item>
-                  <ion-icon name="person" slot="start" color="#282828"></ion-icon>
-                  <ion-input 
-                  type="text" 
-                  name="lastName" 
-                  ngModel 
-                  #lastName="ngModel" 
-                  placeholder="Last Name" 
-                  required ></ion-input>
-                </ion-item>
-                <ion-text color="danger" *ngIf="!lastName.valid && lastName.touched">
-                  <p>Please enter your last name.</p>
-                </ion-text>
+                  <span class="errorSpan" *ngIf="!lastName.valid && lastName.touched">
+                    Please enter your first name.<br/>
+                  </span>
+                </div>
+                <!-- </ion-item> -->
 
-                <ion-item>
-                  <ion-icon name="call" slot="start" color="#282828"></ion-icon>
-                  <ion-input 
-                  type="tel" 
-                  name="phone" 
-                  ngModel 
-                  #phone="ngModel" 
-                  placeholder="Phone number" 
-                  required 
-                  minlength="10"
-                  maxlength="10"></ion-input>
-                </ion-item>
-                <ion-text color="danger" *ngIf="!phone.valid && phone.touched">
-                  <p>Please enter a valid phone number.</p>
-                </ion-text>
 
-                <ion-item>
-                  <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
+                <div class="inputDiv">
+                    <ion-input 
+                    class="input"
+                    type="text" 
+                    name="lastName" 
+                    ngModel 
+                    #lastName="ngModel" 
+                    placeholder="Last Name" 
+                    required ></ion-input>
+                    <span class="errorSpan" *ngIf="!lastName.valid && lastName.touched">
+                      Please enter your last name.<br/>
+                    </span>
+                </div>
+
+
+                <div class="inputDiv">
+                    <ion-input 
+                    class="input"
+                    type="tel" 
+                    name="phone" 
+                    ngModel 
+                    #phone="ngModel" 
+                    placeholder="Cellphone No." 
+                    required 
+                    minlength="10"
+                    maxlength="10"></ion-input>
+                    <span class="errorSpan" *ngIf="!phone.valid && phone.touched">
+                      Please enter a valid phone number.<br/>
+                    </span>
+                </div>
+
+
+                <div class="inputDiv">
                   <ion-input 
+                  class="input"
                   type="email" 
                   name="emailAddress" 
                   ngModel email 
                   #emailCtrl="ngModel" 
                   placeholder="Email" 
                   required ></ion-input>
-                </ion-item>
-                <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
-                  <p>Please enter a valid email address</p>
-                </ion-text>
+                  <span class="errorSpan" *ngIf="!emailCtrl.valid && emailCtrl.touched">
+                    Please enter a valid email address.<br/>
+                  </span>
+                </div>
 
-                <ion-item>
-                  <ion-icon name="mail" slot="start" color="#282828"></ion-icon>
+
+                <div class="inputDiv">
                   <ion-input 
+                  class="input"
                   type="date" 
                   name="dob" 
                   ngModel dob 
                   #dob="ngModel" 
                   required ></ion-input>
-                </ion-item>
-                <ion-text color="danger" *ngIf="!emailCtrl.valid && emailCtrl.touched">
-                  <p>Please enter a date of birth</p>
-                </ion-text>
+                  <span class="errorSpan" *ngIf="!dob.valid && dob.touched">
+                    Please enter a date of birth.<br/>
+                  </span>
+                </div>
+ 
 
-                <!-- <ion-item>
-                  <ion-icon name="apps-outline" color="#282828"></ion-icon>
-                  <ion-select name="titleId">
-                    <ion-select-option>Mr.</ion-select-option>
-                  </ion-select>
-                </ion-item> -->
-
-                <ion-item>
-                  <ion-icon name="apps-outline" slot="start" color="#282828"></ion-icon>
-                  <ion-select ngModel #TitleId="ngModel" placeholder="Title" name="TitleId" type="text" id="TitleId" required>
-                      <ion-select-option *ngFor="let title of titleList" value="{{title.titleID}}">{{ title.description }}</ion-select-option>
-                  </ion-select>
-                </ion-item>
-
-                <ion-item>
-                  <ion-icon name="key" slot="start" color="#282828"></ion-icon>
+                <div class="inputDiv">
                   <ion-input 
+                  class="input"
                   type="password" 
                   name="password" 
                   ngModel 
@@ -102,14 +111,15 @@
                   placeholder="Password" 
                   required 
                   minlength="8"></ion-input>
-                </ion-item>
-                <ion-text color="danger" *ngIf="!passCtrl.valid && passCtrl.touched">
-                  <p>Password should be minimum of 8 characters</p>
-                </ion-text>
+                  <span class="errorSpan" *ngIf="!passCtrl.valid && passCtrl.touched">
+                    Password should be minimum of 8 characters<br/>
+                  </span>
+                </div>
+
                 <div>
-                  <ion-item>
-                    <ion-icon name="key" slot="start" color="#282828"></ion-icon>
+                  <div class="inputDiv">
                     <ion-input 
+                    class="input"
                     type="password" 
                     name="c_pass" 
                     ngModel 
@@ -117,19 +127,17 @@
                     placeholder="Confirm Password" 
                     required 
                     minlength="8"></ion-input>
-                  </ion-item>
-                  <ion-text color="danger" *ngIf="!c_passCtrl.valid && c_passCtrl.touched">
-                    <p>Confirm Password should be minimum of 8 characters</p>
-                  </ion-text>
-                  <ion-text color="danger" *ngIf="c_passCtrl.valid && c_passCtrl.value !== passCtrl.value">
-                    <p>Password mismatch. You have entered passwords that do not match.</p>
-                  </ion-text>
-                <br/>
+                    <span class="errorSpan" *ngIf="!c_passCtrl.valid && c_passCtrl.touched">
+                      Confirm Password should be minimum of 8 characters<br/>
+                    </span>
+                    <span class="errorSpan" *ngIf="c_passCtrl.valid && c_passCtrl.value !== passCtrl.value">
+                      Password mismatch. You have entered passwords that do not match.<br/>
+                    </span>
+                  </div>
                 </div>
               </div>
               <div>
-                <br/>
-                <ion-button [disabled]="!regForm.valid || (c_passCtrl.value !== passCtrl.value)" *ngIf="!isLoading" expand="block" shape="round" type="submit">Create Account</ion-button>
+                <ion-button [disabled]="!regForm.valid || (c_passCtrl.value !== passCtrl.value)" id="create" *ngIf="!isLoading" type="submit">Create Account</ion-button>
                 <div class="ion-text-center" *ngIf="isLoading">
                   <ion-button shape="round">
                     <ion-spinner name="circles"></ion-spinner>
@@ -137,7 +145,15 @@
                 </div> 
               </div>  
             </form>
-            <b><a routerLink="/login"><p style="color:#717274">Cancel</p></a></b>
+
+            <div class="ion-text-end row">
+
+              <p>Have an account?</p>
+      
+              <b><a routerLink="/login"><p style="color:#969696">Log In</p></a></b> 
+      
+            </div>
+
           </ion-card-content>
         </ion-card>
-</ion-content>
+</div>

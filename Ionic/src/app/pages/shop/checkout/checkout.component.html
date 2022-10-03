@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Confirm Payment</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()">
@@ -9,8 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <br />
+<ion-content color="secondary">
   <div class="ion-text-center">
     <p style="font-size:large">Please confirm the following payment information</p>
   </div>
@@ -31,7 +30,7 @@
   </div>
   <br>
   <ion-item>
-    <ion-label class="ion-text-left">Total (Excl. Vat):</ion-label>
+    <ion-label class="ion-text-left">Total Vat:</ion-label>
     <ion-label class="ion-text-right">{{priceExcVat | currency: 'ZAR'}}</ion-label>
   </ion-item>
   <ion-item>
@@ -39,7 +38,7 @@
     <ion-label class="ion-text-right">{{cartData.grandPriceTotal | currency: 'ZAR'}}</ion-label>
   </ion-item>
 
-  <ion-item>
+  <ion-item *ngIf="superuser || admin || trainer">
     <ion-label>Payment Method: </ion-label>
     <ion-select
       placeholder="Select payment method"
@@ -50,20 +49,15 @@
     </ion-select>
   </ion-item>
 
-  <!-- <ion-item lines="none">
-    <ion-label>Current value: {{ currentMethod | json }}</ion-label>
-  </ion-item> -->
+  <ion-item *ngIf="client || member">
+    <ion-label>Payment Method: </ion-label>
+    <ion-label slot="end">Card</ion-label>
+  </ion-item>
 
-  <!-- <select ng-change="updateBtn()" name="paymentType">
-    <option value="cash" selected="selected">Cash</option>
-    <option value="card">Card</option>
-  </select>
-
-  <button *ngIf="cashPay"></button> -->
 
     <ion-col size="2">
       <ion-button *ngIf="currentMethod === 'cash'" color="success"  expand="block"
-      (click)="cashPay()">Confirm cash payment</ion-button>
+      (click)="cashPay()">Confirm Cash Payment</ion-button>
     </ion-col>
     <ion-col size="2">
       <ion-button *ngIf="currentMethod === 'card'" color="success"  expand="block"
@@ -72,6 +66,5 @@
     <ion-col >
       <ion-button color="light"  expand="block" (click)="returnFrom()" >Return</ion-button>
     </ion-col>
-
 
 </ion-content>

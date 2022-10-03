@@ -120,10 +120,10 @@ export class LessonService {
         {
           next: res => {
             this.fetchLessonsEvent.emit();
-            resolve(true);
+            resolve(res);
           },
           error: err => {
-            resolve(false);
+            resolve(err);
           }
         }
       ).add(() => {

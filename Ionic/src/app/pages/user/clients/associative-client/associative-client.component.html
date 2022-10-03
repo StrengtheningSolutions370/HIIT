@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Associated Bookings/Measurements</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="containerMargins" color="secondary">
+  <br/>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large;margin-left: 10%;margin-right: 10%;"> {{client.client.firstName}} {{client.client.lastName}} cannot be deleted because the following Bookings/Measurements are associated with them.</p>
+  </ion-label>
+  <br/>
+
+  <ion-list> 
+
+    <ion-label >Measurements:</ion-label>
+    <ion-item *ngFor="let m of client.data.measurement" > 
+      <ion-label class="input ion-text-capitalize ion-text-center">{{ getDate(m.date) }}</ion-label>
+    </ion-item>
+
+    <ion-label>Bookings:</ion-label>
+    <ion-item *ngFor="let w of client.data.bookings" > 
+      <ion-label class="input ion-text-capitalize ion-text-center">{{ getDate(w.startDate) }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <br/>
+  <ion-button color="tertiary" class="addBtn ion-float-right" (click)="this.global.dismissModal()">Return</ion-button>
+</ion-content>

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Team7.ViewModels;
 
 namespace Team7.Models.Repository
 {
@@ -15,6 +16,8 @@ namespace Team7.Models.Repository
         //Task<BookingAttendance[]> GetBookingAttendancesAsync(string input);
 
         //Task<BookingAttendance> GetBookingAttendanceIdAsync(int id);
+
+        Task<bool> TrackAttendance(AttendanceViewModel[] attendanceViewModel);
 
         Task<bool> SaveChangesAsync();
     }

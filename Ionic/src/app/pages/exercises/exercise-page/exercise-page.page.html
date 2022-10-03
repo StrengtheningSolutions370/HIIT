@@ -1,37 +1,18 @@
-<ion-content>
-
-  <br/>
-  <ion-searchbar #search (ionClear)="searchExercises(search.value)" (ionInput)="searchExercises(search.value)" expand="block" placeholder='Search Exercise...' [(ngModel)]="filter"
-  animated="true" debounce="200"></ion-searchbar>
-  <br/><br/>
-
-  <div class="ion-text-center">
-    <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="exerciseService.addExerciseInfoModal()"> 
-      Add Exercise
-    </ion-button>
+  <div>
+    <ion-searchbar  color="secondary" #search (ionClear)="searchExercises(search.value)" (ionInput)="searchExercises(search.value)" class="ion-float-right" color="secondary" expand="block" placeholder='Search Exercise...'
+      animated="true" debounce="200">
+    </ion-searchbar>
+    <ion-fab horizontal="end" vertical="top" slot="fixed" style="margin-right: 2%">
+      <ion-fab-button color="success" (click)="exerciseService.addExerciseInfoModal()" #addExercise>
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   </div>
-  <br/> 
+  <br/>
 
+<ion-content>  
   <ion-grid *ngIf="!isLoading">
-
-    <!-- <ion-list *ngFor="let exercise of exerciseList | filter:filter, let i = index">  -->
-
-      <!-- <ion-item-sliding >
-        <ion-item button (click)="view(exercise)" >
-          <ion-label style="padding-left:2% ;">
-            <h1>{{exercise.name}}</h1>
-            <p style="font-size:large"> {{exercise.description}}</p>
-          </ion-label >
-          <ion-icon name="chevron-back-outline" size="small"></ion-icon>
-        </ion-item>
-        <ion-item-options side="end" >
-          <ion-item-option color="secondary" (click)="exerciseService.updateExerciseInfoModal(exercise)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
-          <ion-item-option color="danger" (click)="exerciseService.deleteExerciseInfoModal(exercise)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list> -->
-
-    <ion-list class="cardFadeUp" *ngFor="let exe of exerciseList">
+    <ion-list class="cardFadeUp" id="nomargin" *ngFor="let exe of exerciseList">
       <ion-item-sliding>
 
         <ion-item>
@@ -71,7 +52,7 @@
 
         <ion-item-options side="end" >
           <ion-item-option color="secondary" (click)="updateExerciseInfoModal(exe)">Update<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
-          <ion-item-option color="danger" (click)="deleteExerciseInfoModal(exe)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
+          <ion-item-option color="tertiary" (click)="deleteExerciseInfoModal(exe)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
         </ion-item-options>
 
       </ion-item-sliding>
@@ -85,3 +66,8 @@
   </div>
 
 </ion-content>
+
+
+<ion-text id="noRes" *ngIf="!loading && noresults">
+  <h1>No Results</h1>
+</ion-text>

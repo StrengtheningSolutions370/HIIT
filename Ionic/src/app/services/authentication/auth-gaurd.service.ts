@@ -23,7 +23,8 @@ export class AuthGaurdService {
       this.storage.getKey('token').then(token => {
 
         if (token == null) {
-          res(false);
+          res(true);
+          window.location.href = './login';
           return;
         }
 
@@ -46,12 +47,10 @@ export class AuthGaurdService {
           }
           
           //if output == false -> redirect to login else continue
-          if (!flag) {
-            this.router.navigate(['login']);
-            res(false);
-          }
-          else
-            res(true);
+          if (!flag)
+            window.location.href = './login';
+          
+          res(true);
   
         })
       })

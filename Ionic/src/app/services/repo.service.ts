@@ -31,9 +31,16 @@ import { WriteOff } from '../models/write-off';
 })
 
 export class RepoService {
-  // base = 'https://bsctest.azurewebsites.net/api/';
-  // base = 'http://localhost:5001/api/';
-  base = 'https://testbsc.azurewebsites.net/api/';
+
+  //Azure hosted api base:
+  //base = 'https://bsctest.azurewebsites.net/api/';
+  //Hosted base:
+  //base = 'http://localhost:5001/api/';
+  //Local base:
+
+  base = 'https://localhost:44383/api/';
+  public baseImg = 'https://localhost:44383/' ; //Ensure it is the same as the base without the 'api/' part
+
   AppUserController = 'AppUser/';
   BookingController = 'Booking/'
   BookingTypeController = 'BookingType/';
@@ -60,6 +67,7 @@ export class RepoService {
   SupplierController= 'Supplier/';
   StockController= 'Stock/';
   WriteOffController= 'WriteOff/';
+  RefundController = 'Refund/';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -75,6 +83,19 @@ export class RepoService {
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
 
+
+  //Refund:
+  getRefunds() {
+    return this.http.get(`${this.base + this.RefundController}getall`, this.httpOptions);
+  }
+
+  completeRefund(data : any) {
+    return this.http.post<any>(`${this.base+this.RefundController}complete`, data, this.httpOptions);
+  }
+
+  addrefund(data : any) {
+    return this.http.post<any>(`${this.base+this.RefundController}add`, data, this.httpOptions);
+  }
 
   //TRAINER REPORT:
   getTrainers() {
@@ -354,22 +375,22 @@ getMatchSaleItem(name: string, description: string): Observable<any>{
   return this.http.get(`${this.base+this.SaleItemController}getMatch?name=${name}&description=${description}`, this.httpOptions);
 }
 // //Image Upload
-// uploadSaleItemImage(data: FormData): Observable<any> {
-//   return this.http.post('http://localhost:5001/api/SaleItem/upload', data);
-// }
-// //reImage Upload
-// deleteSaleItemImage(id : string) : Observable<any> {
-//   return this.http.delete(`http://localhost:5001/api/SaleItem/deletephoto?name=${id}`)
-// }
-
-//Image Upload
 uploadSaleItemImage(data: FormData): Observable<any> {
   return this.http.post(`${this.base+this.SaleItemController}upload`, data);
 }
-//reImage Upload
+// //reImage Upload
 deleteSaleItemImage(id : string) : Observable<any> {
   return this.http.delete(`${this.base+this.SaleItemController}deletephoto?name=${id}`)
 }
+
+//Image Upload
+// uploadSaleItemImage(data: FormData): Observable<any> {
+//   return this.http.post(`${this.base+this.SaleItemController}upload`, data);
+// }
+//reImage Upload
+// deleteSaleItemImage(id : string) : Observable<any> {
+//   return this.http.delete(`${this.base+this.SaleItemController}deletephoto?name=${id}`)
+// }
 
 //add writeOff
 createWriteOff(writeOff: any): Observable<any> {
@@ -511,6 +532,10 @@ cancelMyBooking(aspNetUserID: string, bookingID: number, scheduleID: number): Ob
   return this.http.delete(`${this.base+this.BookingController}delete?aspNetUserID=${aspNetUserID}&bookingID=${bookingID}&scheduleID=${scheduleID}`, this.httpOptions)
 }
 
+trackAttendance(attendedVM: any){
+  return this.http.post<any>(`${this.base + this.BookingController}TrackAttendance`, attendedVM, this.httpOptions);
+}
+
 // Exercise:
   // ------
   // Create
@@ -531,8 +556,8 @@ cancelMyBooking(aspNetUserID: string, bookingID: number, scheduleID: number): Ob
     return this.http.get(`${this.base + this.ExerciseController}getAll`, this.httpOptions);
   }
   //GetMatch
-  getMatchExercise(name: string, description: string): Observable<any> {
-    return this.http.get(`${this.base + this.ExerciseController}getMatch?name=${name}&description=${description}`, this.httpOptions);
+  getMatchExercise(name: string, focus: string): Observable<any> {
+    return this.http.get(`${this.base + this.ExerciseController}getMatch?name=${name}&focus=${focus}`, this.httpOptions);
   }
   //Exists
   existsExercise(id: number): Observable<any> {

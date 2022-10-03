@@ -128,7 +128,7 @@ namespace Team7.Controllers
             var flag = await _userManager.FindByEmailAsync(Email);
             if (flag != null)
             {
-                StatusCode(StatusCodes.Status403Forbidden, "User already exisit?"); //CHECKHERE
+                return StatusCode(StatusCodes.Status403Forbidden, "User already exisit?"); //CHECKHERE
             }
 
             //check if role exisit
@@ -182,18 +182,15 @@ namespace Team7.Controllers
                         Contract = null,
                         IDNumber = IDNumber,
                         AppUser = await _userManager.FindByNameAsync(Email),
-                        EmployeeType = await this.EmployeeTypeRepo._GetEmployeeTypeIdAsync(Convert.ToInt32(EmployeeTypeId)),
-                        Qualification = await this.QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID)),
+                        EmployeeType = await this.EmployeeTypeRepo._GetEmployeeTypeIdAsyncOriginal(Convert.ToInt32(EmployeeTypeId)),
+                        Qualification = await this.QualificationRepo._GetQualificationIdAsyncOriginal(Convert.ToInt32(QualificationID)),
                         UserID = EmployeeID
                     };
                     ///////////////////////////////////
 
                     await _userManager.AddToRoleAsync(user, role);
 
-                    string body = "<h1>Strengthening Solutions</h1> <br /> <hr>" +
-                        "<p><strong>Email:</strong> " + Email + "</p>" +
-                        "<p><strong>Password:</strong> " + randomPassword + "</p>" +
-                        "<br /> <hr>";
+                    string body = "Dear Bester Strengthening Employee,<br><br>You have been successfully registered onto the system!<br><br>On behalf of the Bester Strength and Conditioning team, we would like to say welcome and thank you for joining us to become the strongest we can be.<br><br>Below are your user/login details.<br><br>Username: " + Email + "<br>Password:" + randomPassword + "<br><br><br>Regards,<br>BSC team";
                     try
                     {
                         //email the password to the user:
@@ -201,7 +198,7 @@ namespace Team7.Controllers
 
                         //email threading service:
 
-                        Email email = new Email(Email, "Strengthening Solutions", body);
+                        Email email = new Email(Email, "Congratulations on becoming part of the BSC team!", body);
                         Thread thr = new Thread(new ThreadStart(email.sendEmail));
                         thr.Start();
 
@@ -426,8 +423,8 @@ namespace Team7.Controllers
                         Contract = null,
                         IDNumber = IDNumber,
                         AppUser = await _userManager.FindByNameAsync(Email),
-                        EmployeeType = await this.EmployeeTypeRepo._GetEmployeeTypeIdAsync(Convert.ToInt32(EmployeeTypeId)),
-                        Qualification = await this.QualificationRepo._GetQualificationIdAsync(Convert.ToInt32(QualificationID)),
+                        EmployeeType = await this.EmployeeTypeRepo._GetEmployeeTypeIdAsyncOriginal(Convert.ToInt32(EmployeeTypeId)),
+                        Qualification = await this.QualificationRepo._GetQualificationIdAsyncOriginal(Convert.ToInt32(QualificationID)),
                         UserID = EmployeeID
                     };
                     ///////////////////////////////////
@@ -435,15 +432,13 @@ namespace Team7.Controllers
                     await _userManager.AddToRoleAsync(user, uvmRole);
 
                     //Email email = new Email();
-                    var body = "<h1>Strengthening Solutions</h1> <br /> <hr>" +
-                        "<p><strong>Email:</strong> " + Email + "</p>" +
-                        "<p><strong>Password:</strong> " + randomPassword + "</p>" +
-                        "<br /> <hr>";
+                    string body = "Dear Bester Strengthening Employee,<br><br>You have been successfully registered onto the system!<br><br>On behalf of the Bester Strength and Conditioning team, we would like to say welcome and thank you for joining us to become the strongest we can be.<br><br>Below are your user/login details.<br><br>Username: " + Email + "<br>Password:" + randomPassword + "<br><br><br>Regards,<br>BSC team";
+
                     try
                     {
                         //email the password to the user:
                         //email.sendEmail(Email, "Strengthening Solutions", body);
-                        Email email = new Email(Email, "Strengthening Solutions", body);
+                        Email email = new Email(Email, "Congratulations on becoming part of the BSC team!", body);
                         Thread thr = new Thread(new ThreadStart(email.sendEmail));
                         thr.Start();
 
@@ -684,11 +679,11 @@ namespace Team7.Controllers
 
             if (lessons.Count != 0 || schedule.Count != 0)
             {
-                StatusCode(StatusCodes.Status409Conflict, new
+                return StatusCode(StatusCodes.Status409Conflict, new
                 {
-                    error = "Employee cannot be deleted?", //CHECKHERE
+                    error = "Employee cannot be deleted",
                     employee = employeeRecord
-                }); //return employss with loaded for the Associative modal
+                });
             }
 
             //employee can be deleted as they have no links:

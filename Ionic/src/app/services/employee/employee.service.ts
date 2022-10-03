@@ -264,12 +264,35 @@ private tempE: Employee[];
 
 
   //Receives a employee type to delete in the service employee list.
-  deleteEmployeeType(id: number) {
-    this.repo.deleteEmployeeType(id).subscribe(result => {
-      console.log('VENUE DELETED');
-      this.fetchEmployeeTypesEvent.emit();
+  // deleteEmployeeType(id: number) {
+  //   this.repo.deleteEmployeeType(id).subscribe(result => {
+  //     console.log('VENUE DELETED');
+  //     this.fetchEmployeeTypesEvent.emit();
+  //   });
+  // }
+
+  deleteEmployeeType(id: number) : Promise<any> {
+    // this.repo.deleteExercise(id).subscribe(result => {
+    //   console.log('EXERCISE DELETED');
+    //   this.fetchExercisesEvent.emit();
+    // });
+
+    return new Promise<any>((resolve, _) => {
+      this.global.nativeLoad("Deleting...");
+      this.repo.deleteEmployeeType(id).subscribe({
+        next: (data : any) => {
+          this.fetchEmployeeTypesEvent.emit();
+          resolve(data);
+        },
+        error: (err : any) => {
+          resolve(err);
+        }
+      }).add(() => {
+        this.global.endNativeLoad();
+      })
     });
-  }
+
+   }
 
   deleteEmployee(id: string) : Promise<any> {
     return new Promise<any>((resolve, reject) => {
@@ -278,10 +301,13 @@ private tempE: Employee[];
         {
           next: res => {
             this.fetchEmployeesEvent.emit();
-            resolve(true);
+            resolve({ status: true});
           },
           error: err => {
-            resolve(false);
+            resolve({
+              status : false,
+              data: err
+            });
           }
         }
       ).add(() => {

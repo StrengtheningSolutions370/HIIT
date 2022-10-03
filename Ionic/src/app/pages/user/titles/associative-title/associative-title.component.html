@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Title Associated with User/s</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Associated User/s</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
     </ion-buttons>
@@ -8,20 +8,23 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <br/>
-  <div class="ion-text-center">
-      <p style="font-size:large; color: white;margin-left: 10%;margin-right: 10%;">
+  <ion-label class="ion-text-center">
+      <p style="font-size:large;margin-left: 10%;margin-right: 10%;">
           The "{{title.description}}" title cannot be deleted because the following user/s are associated with it
       </p>
+  </ion-label>
+
+  <br/>
 
       <ion-list> 
         <ion-item *ngFor="let user of title.users">
-          <ion-label>User name: </ion-label>
-          <ion-label class="ion-text-right">{{user.firstName}} {{user.lastName}}</ion-label>
+          <ion-label class="input ion-text-capitalize ion-text-center">{{user.firstName}} {{user.lastName}}</ion-label>
         </ion-item>
       </ion-list>
-  </div>
 
-  <ion-button color="light" class="ion-float-right" style="margin-right:10%;width:30% " (click)="this.global.dismissModal()">Return</ion-button>
+  <br/>
+
+  <ion-button color="tertiary" class="addBtn ion-float-right" (click)="this.global.dismissModal()">Return</ion-button>
 </ion-content>

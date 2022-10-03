@@ -1,19 +1,20 @@
 <ion-header>
-  <ion-toolbar mode="ios">
+  <ion-toolbar mode="ios" color="primary">
     <!--Menu toggle button that will display the menu-->
       <ion-buttons slot="start">
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
       <ion-title slot="">My Profile</ion-title>
-      <ion-button slot="end" (click)="cartService.openCart()" fill="clear">
-        <ion-icon slot="end" name="cart"></ion-icon>
-      </ion-button>
+      <ion-buttons slot="end" (click)="cartService.openCart()" fill="clear">
+        <ion-icon slot="end" name="cart" color="warning"></ion-icon>
+      </ion-buttons>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 <br/>
+
 
 <!-- client -->
 <div *ngIf="client">

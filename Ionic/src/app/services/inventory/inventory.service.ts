@@ -106,11 +106,18 @@ export class InventoryService {
   }
 
   //DELETE:
-  deleteWriteOffReason(id: number){
-    this.repo.deleteWriteOffReason(id).subscribe(result => {
-      console.log('WRITE-OFF REASON DELETED');
-      this.fetchWriteOffReasonsEvent.emit();
-    });
+  deleteWriteOffReason(id: number) : Promise<any> {
+    return new Promise<any>((res, rej) => {
+      this.repo.deleteWriteOffReason(id).subscribe({
+        next: (data : any) => {
+          this.fetchWriteOffReasonsEvent.emit();
+          res(data);
+        },
+        error: (data : any) => {
+          res(data);
+        }
+      });
+    })
   }
 
   //MODALS:
@@ -171,7 +178,7 @@ export class InventoryService {
   }
 
   //ASSOCIATIVE
-  async associativeWriteOffReasonModal(writeOffReason: WriteOffReason) {
+  async associativeWriteOffReasonModal(writeOffReason: any) {
     console.log("WriteOffReasonService: AssociativeWriteOffReasonModalCall");
     const modal = await this.modalCtrl.create({
       component: AssociativeWriteOffReasonComponent,

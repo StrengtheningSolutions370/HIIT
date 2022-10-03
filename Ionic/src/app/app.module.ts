@@ -179,6 +179,12 @@ import { ViewOrderComponent } from './pages/stock/view-order/view-order.componen
 import { ReceiveStockComponent } from './pages/stock/receive-stock/receive-stock.component';
 import { ConfirmRecieveStockComponent } from './pages/stock/confirm-recieve-stock/confirm-recieve-stock.component';
 import { ViewPaymentComponent } from './pages/payments/view-payment/view-payment.component';
+import { RequestRefundComponent } from './pages/payments/request-refund/request-refund.component';
+import { ConfirmReasonComponent } from './pages/payments/confirm-reason/confirm-reason.component';
+import { RefundResponseComponent } from './pages/refunds/refund-response/refund-response.component';
+import { ViewRefundComponent } from './pages/refunds/view-refund/view-refund.component';
+import { AssociativeClientComponent } from './pages/user/clients/associative-client/associative-client.component';
+import { TrackAttendanceComponent } from './pages/booking/client-booking/track-attendance/track-attendance.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -218,7 +224,7 @@ import { ViewPaymentComponent } from './pages/payments/view-payment/view-payment
   //RefundReason
   ConfirmRefundReasonComponent, AddRefundReasonComponent, UpdateRefundReasonComponent, ViewRefundReasonComponent, DeleteRefundReasonComponent, AssociativeRefundReasonComponent,
   //Employee
-  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent, AssociativeEtypeComponent,
+  ConfirmEmployeeComponent, AddEmployeeComponent, ConfirmEmployeeComponent, UpdateEmployeeComponent, ViewEmployeeComponent, DeleteEmployeeComponent, AssociativeEtypeComponent, AssociativeEmployeeComponent,
   //WriteOffReason
   AddWriteOffReasonComponent, AssociativeWriteOffReasonComponent, ConfirmWriteOffReasonComponent, DeleteWriteOffReasonComponent, UpdateWriteOffReasonComponent, ViewWriteOffReasonComponent,
   //BookingType
@@ -226,7 +232,7 @@ import { ViewPaymentComponent } from './pages/payments/view-payment/view-payment
   //Booking
   AddBookingComponent, CancelBookingComponent, ViewBookingInfoComponent,
   //Schedule
-  AddScheduleComponent, UpdateScheduleComponent, DeleteScheduleComponent, ConfirmScheduleComponent,
+  AddScheduleComponent, UpdateScheduleComponent, DeleteScheduleComponent, ConfirmScheduleComponent, TrackAttendanceComponent,
   //Exercise
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
   //Lesson
@@ -242,8 +248,11 @@ import { ViewPaymentComponent } from './pages/payments/view-payment/view-payment
   //Side Menu
   SidemenuComponent,
   //payments
-  ViewPaymentComponent
+  ViewPaymentComponent, RequestRefundComponent, ConfirmReasonComponent,
+  //refund
+  RefundResponseComponent, ViewRefundComponent,
 
+  AssociativeClientComponent
 ],
   entryComponents: [],
   imports: [

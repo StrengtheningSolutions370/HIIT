@@ -5,6 +5,12 @@ namespace Team7.Models
 {
     public class Refund
     {
+
+        public Refund()
+        {
+            this.complete = false;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RefundID { get; set; }
@@ -14,12 +20,11 @@ namespace Team7.Models
         public string Notes { get; set; }
         [Required]
         public decimal Total { get; set; }
-        [Required]
-        public int? PaymentID { get; set; }
-        [Required]
-        public int? RefundReasonID { get; set; }
+
+        public bool? complete { get; set; }
 
         public virtual Payment Payment { get; set; }
         public virtual RefundReason RefundReason { get; set; }
+
     }
 }
