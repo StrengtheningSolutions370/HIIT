@@ -14,10 +14,12 @@ namespace Team7.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WriteOffID { get; set; }
-        [Required]
+        [Required]        
         public System.DateTime Date { get; set; }
-        public int EmployeeID { get; set; }
+
         public virtual Employee Employee { get; set; }
+        public int EmployeeID { get; set; }
+        
         public virtual ICollection<WriteOffLine> WriteOffLine { get; set; }
     }
 }

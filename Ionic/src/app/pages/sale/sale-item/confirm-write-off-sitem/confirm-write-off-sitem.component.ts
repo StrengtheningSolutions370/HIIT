@@ -31,8 +31,9 @@ export class ConfirmWriteOffComponent implements ViewWillEnter{
   //1 = confirm ADD
   async confirmChanges(writeOff: WriteOff){
     //search duplicates
-    console.log('Add Sale Category from confirm:');
+    console.log('Add Write offfrom confirm:');
     //CallRepoToCreate
+
     this.writeOffService.createWriteOff(writeOff);
     this.global.dismissModal();
     this.global.showToast('The write-off has been successfully added!');
