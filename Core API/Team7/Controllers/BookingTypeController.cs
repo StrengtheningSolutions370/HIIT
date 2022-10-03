@@ -70,7 +70,7 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutBookingType(int id, [FromBody] BookingType bookingType)
         {
-            var toUpdate = await BookingTypeRepo._GetBookingTypeIdAsync(id);
+            var toUpdate = await BookingTypeRepo._GetBookingTypeIdAsyncOriginal(id);
             if (toUpdate == null)
             {
                 return NotFound("Could not find existing Booking Type with ID - " + id);
@@ -119,7 +119,7 @@ namespace Team7.Controllers
         [Route("delete")]
         public async Task<IActionResult> DeleteBookingType(int id)
         {
-            var tempBookingType = await BookingTypeRepo._GetBookingTypeIdAsync(id);
+            var tempBookingType = await BookingTypeRepo._GetBookingTypeIdAsyncOriginal(id);
             if (tempBookingType == null)
             {
                 return NotFound();

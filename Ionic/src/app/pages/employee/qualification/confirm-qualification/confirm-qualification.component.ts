@@ -56,7 +56,6 @@ export class ConfirmQualificationComponent{
             console.log(temp);
             //CallRepoToUpdate
             this.qualificationService.updateQualification(qualification.qualificationID,temp);
-            this.global.showToast('The qualification has been successfully updated!');
         }
       }
           //dismiss modal
