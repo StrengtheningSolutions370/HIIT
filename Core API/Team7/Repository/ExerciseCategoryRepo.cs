@@ -125,6 +125,19 @@ namespace Team7.Models.Repository
             }
         }
 
+        public async Task<ExerciseCategory> _GetExerciseCategoryIdAsyncOriginal(int id)
+        {
+            IQueryable<ExerciseCategory> query = DB.ExerciseCategory.Where(ec => ec.ExerciseCategoryID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.SingleAsync();
+            }
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             //Returns true/false based on success/failure

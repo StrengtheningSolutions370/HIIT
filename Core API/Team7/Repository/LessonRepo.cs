@@ -121,6 +121,47 @@ namespace Team7.Models.Repository
             return temp;
         }
 
+        public async Task<Lesson> GetLessonIdAsyncOriginal(int id)
+        {
+
+            IQueryable<Lesson> query = DB.Lesson.Where(l => l.LessonID == id);
+
+            if (!query.Any())
+                return null;
+
+
+            var temp = await query.Select(l =>
+                new Lesson
+                {
+                    ScheduleID = l.ScheduleID,
+                    LessonID = l.LessonID,
+                    Name = l.Name,
+                    Employee = l.Employee,
+                    LessonPlan = l.LessonPlan,
+                    //Schedule = l.Schedule,
+                }).SingleAsync();
+
+            List<Schedule> o = new List<Schedule>();
+            var t = await DB.Schedule.Select(s => new Schedule { Lesson = new Lesson { LessonID = s.Lesson.LessonID } }).ToArrayAsync();
+            foreach (Schedule s in t)
+            {
+                if (s.Lesson.LessonID == temp.LessonID)
+                {
+                    o.Add(s);
+                }
+            }
+            temp.Schedule = o;
+            return temp;
+        }
+
+        public async Task<bool> checkName(Lesson l)
+        {
+            var query = await DB.Lesson.Where(ls => ls.Name == l.Name).ToArrayAsync();
+            if (query.Length != 0)
+                return true;
+            return false;
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             return await DB.SaveChangesAsync() > 0;

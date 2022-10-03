@@ -25,6 +25,14 @@ namespace Team7.Controllers
         [Route("add")]
         public async Task<IActionResult> PostExercise(Exercise exercise)
         {
+
+            var flag = await ExerciseRepo.checkConflict(exercise);
+
+            if (flag)
+            {
+                return Conflict(new { msg = "EXercise with this name already exists." });
+            }
+
             try
             {
                 //var cat = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(exercise.ExerciseCategory.ExerciseCategoryID);
@@ -51,7 +59,7 @@ namespace Team7.Controllers
         [Route("update")]
         public async Task<IActionResult> PutExercise(int id, [FromBody] Exercise exercise)
         {
-            var toUpdate = await ExerciseRepo._GetExerciseIdAsync(id);
+            var toUpdate = await ExerciseRepo._GetExerciseIdAsyncOriginal(id);
 
             if (toUpdate == null)
             {
@@ -63,7 +71,7 @@ namespace Team7.Controllers
                 toUpdate.Name = exercise.Name;
                 toUpdate.Focus = exercise.Focus;
                 toUpdate.Url = exercise.Url;
-                toUpdate.ExerciseCategory = await _exerciseCategoryRepo._GetExerciseCategoryIdAsync(exercise.ExerciseCategoryID);
+                toUpdate.ExerciseCategory = await _exerciseCategoryRepo._GetExerciseCategoryIdAsyncOriginal(exercise.ExerciseCategoryID);
 
                 if (await ExerciseRepo.SaveChangesAsync())
                 {

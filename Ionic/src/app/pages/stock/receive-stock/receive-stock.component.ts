@@ -109,6 +109,10 @@ export class ReceiveStockComponent implements OnInit {
   }
 
   setQuantity(item : any, event : any) {
+    if (event.target.value <= 0) {
+      this.validSaleItems = false;
+      return;
+    }
     const index = this.stock.findIndex(e => e.id == item.id);
     this.stock[index].quantity = event.target.value;
     this.updateDisplayCount();
