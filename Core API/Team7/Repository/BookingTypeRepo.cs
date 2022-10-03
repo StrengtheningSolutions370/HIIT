@@ -176,6 +176,19 @@ namespace Team7.Models.Repository
             }
         }
 
+        public async Task<BookingType> _GetBookingTypeIdAsyncOriginal(int id)
+        {
+            IQueryable<BookingType> query = DB.BookingType.Where(bt => bt.BookingTypeID == id);
+            if (!query.Any())
+            {
+                return null;
+            }
+            else
+            {
+                return await query.SingleAsync();
+            }
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             //Returns true/false based on success/failure

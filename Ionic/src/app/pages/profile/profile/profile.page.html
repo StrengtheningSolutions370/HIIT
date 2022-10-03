@@ -122,7 +122,7 @@
     </ion-card>
   </div>
 
-  <div class="ion-padding" slot="content">
+  <div class="ion-padding" slot="content" *ngIf="client">
     <ion-card>
       <ion-card-content>
         <div class="ion-text-center">
@@ -136,7 +136,7 @@
                         [original-size]="false"
                         ></pdf-viewer>
             </ion-item>
-            <div *ngIf="!indemnityFlag && client && !loading">
+            <div *ngIf="!indemnityFlag">
               <input id="ind" #ind type="file" (change)="uploadIndemnity($event)" accept="application/pdf" />
               <ion-button (click)="downloadPdf()">Download Indemnity Form</ion-button>
               <ion-button (click)="ind.click()">Upload Signed Indemnity Form</ion-button>
@@ -151,7 +151,7 @@
 
 
 <!-- employee -->
-<div *ngIf="!client && !loading" class="ion-padding">
+<div *ngIf="!client && !loading && !su" class="ion-padding">
   <ion-card>
     <ion-item> 
       <ion-label>
@@ -215,7 +215,7 @@
   </ion-card>
 </div>
 
-<div class="ion-padding" *ngIf="!loading">
+<div class="ion-padding" >
   <ion-card>
     <ion-card-content>
       <div class="ion-text-center">

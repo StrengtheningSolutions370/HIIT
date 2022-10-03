@@ -22,7 +22,7 @@
         </div>
         <br/>
 
-        <form #measurementForm="ngForm"  (ngSubmit)="onMeasurementSubmit(measurementForm)">
+        <form [formGroup]="measurementForm" (ngSubmit)="onMeasurementSubmit(measurementForm)">
           <div padding>
 
             <ion-item>
@@ -30,9 +30,8 @@
               <ion-input 
               type="number" 
               name="bodyFat" 
-              ngModel 
-              #bodyFat="ngModel" 
-              placeholder="Body Fat %" 
+              placeholder="Body Fat %"
+              formControlName="fatPercentage"
               required></ion-input>
             </ion-item>
 
@@ -41,9 +40,9 @@
               <ion-input 
               type="number" 
               name="waist" 
-              ngModel 
-              #waist="ngModel" 
               placeholder="Waist (cm)" 
+              max="200"
+              formControlName="waist"
               required></ion-input>
             </ion-item>
             
@@ -53,9 +52,9 @@
               <ion-input 
               type="number" 
               name="height" 
-              ngModel 
-              #height="ngModel" 
               placeholder="Height (cm)"
+              max="300"
+              formControlName="height"
               required></ion-input>
             </ion-item>
 
@@ -64,9 +63,9 @@
               <ion-input 
               type="number" 
               name="weight" 
-              ngModel 
-              #weight="ngModel" 
               placeholder="Weight (kg)" 
+              max="300"
+              formControlName="weight"
               required></ion-input>
             </ion-item>
 
@@ -75,9 +74,10 @@
               <ion-input 
               type="date" 
               name="date" 
-              ngModel 
-              #date="ngModel" 
               placeholder="Date" 
+              [(ngModel)]="myDate"
+              formControlName="date"
+              #dateobj
               required></ion-input>
             </ion-item>
           

@@ -252,7 +252,8 @@ import { TrackAttendanceComponent } from './pages/booking/client-booking/track-a
   //refund
   RefundResponseComponent, ViewRefundComponent,
 
-  AssociativeClientComponent
+  AssociativeClientComponent,
+
 ],
   entryComponents: [],
   imports: [

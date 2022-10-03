@@ -12,14 +12,14 @@
   <br/>
   <ion-label class="ion-text-center">
       <p style="font-size:large">
-          The refund reason cannot be deleted because the following sale item/s are associated with it
+          The refund reason cannot be deleted because the following refund/s are associated with it
       </p>
   </ion-label>
   <br/>
 
       <ion-list> 
-        <ion-item *ngFor="let r of refundReason.refunds">
-          <ion-label class="input ion-text-capitalize ion-text-center">{{r.name}}</ion-label>
+        <ion-item *ngFor="let r of refundReason.refund">
+          <ion-label class="input ion-text-capitalize ion-text-center">{{r.notes}}</ion-label>
         </ion-item>
       </ion-list>
 

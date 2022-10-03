@@ -36,7 +36,7 @@
     
             <div>
               To:
-              <ion-input #high (change)="setHigh(high)" type="date"></ion-input>
+              <ion-input id="high" #high (change)="setHigh(high)" type="date" [max]="maxHigh"></ion-input>
             </div>
     
           </div>
