@@ -15,7 +15,7 @@
 <ion-content>
   <ion-searchbar #search (ionClear)="searchOrder(search.value)" (ionInput)="searchOrder(search.value)" class="ion-float-right" color="secondary" expand="block" placeholder='Search Order...'
   animated="true" debounce="200"></ion-searchbar>
-  <br/><br/>
+  <br/>
 
   <div class="ion-text-center">
     <ion-button color="success" style="margin-left:30%;margin-right:30%" (click)="addOrder()"> 
@@ -42,7 +42,7 @@
               </ion-card-content>
             </div>
             <div class="colmaker">
-              <ion-button (click)="viewOrder(item)">View</ion-button>
+              <ion-button color="tertiary" (click)="viewOrder(item)">View</ion-button>
             </div>
           </ion-card>
 

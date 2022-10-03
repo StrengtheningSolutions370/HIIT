@@ -2,7 +2,7 @@
   <ion-toolbar mode="ios">
     <!--Menu toggle button that will display the menu-->
       <ion-buttons slot="start">
-        <ion-menu-button menu="mainMenu"></ion-menu-button>
+        <ion-menu-button menu="mainMenu" style="color:white"></ion-menu-button>
       </ion-buttons>
       <ion-title slot="">Requested Refunds</ion-title>
       <ion-icon id="helppageicon" slot="end" routerLink="/help/refundrequests" name="help-circle-outline"></ion-icon>
@@ -14,10 +14,7 @@
 <ion-content>
 
   <br/>
-  <br/>
-  <br/>
-  <br/>
-  <ion-searchbar #search (ionClear)="searchRefund(search.value)" (ionInput)="searchRefund(search.value)" expand="block" placeholder='Search Refund...'
+  <ion-searchbar #search (ionClear)="searchRefund(search.value)" (ionInput)="searchRefund(search.value)" class="ion-float-right" color="secondary" expand="block" placeholder='Search Refund...'
   animated="true" debounce="200"></ion-searchbar>
   <br/><br/>
 

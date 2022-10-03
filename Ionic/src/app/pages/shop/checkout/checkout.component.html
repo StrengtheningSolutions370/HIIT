@@ -10,9 +10,12 @@
 </ion-header>
 
 <ion-content color="secondary">
-  <div class="ion-text-center">
+  <ion-label class="ion-text-center">
+    <br>
     <p style="font-size:large">Please confirm the following payment information</p>
-  </div>
+  </ion-label>
+  <br>
+
   <div *ngFor="let item of cartData.items">
     <ion-item>
 
@@ -40,7 +43,7 @@
 
   <ion-item *ngIf="superuser || admin || trainer">
     <ion-label>Payment Method: </ion-label>
-    <ion-select
+    <ion-select interface="popover"
       placeholder="Select payment method"
       (ionChange)="handleChange($event)"
     >
