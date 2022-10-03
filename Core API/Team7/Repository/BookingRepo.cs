@@ -30,7 +30,7 @@ namespace Team7.Models.Repository
             DB.Remove(Entity);
         }
 
-        public async Task<Booking[]> GetAllBookingsAsync()
+        public async Task<Reminder[]> GetAllBookingsAsync()
         {
 
             var tom = DateTime.Now.AddDays(1);
@@ -67,7 +67,7 @@ namespace Team7.Models.Repository
                 BookingID = b.BookingID
             }).ToArrayAsync();
 
-            var output = new List<Booking>();
+            var output = new List<Reminder>();
             foreach (var schedule in toremind)
             {
                 foreach (var attend in schedule.BookingAttendance)
@@ -76,7 +76,15 @@ namespace Team7.Models.Repository
                     {
                         if (booking.BookingID == attend.BookingID)
                         {
-                            output.Add(booking);
+                            //output.Add(booking);
+                            output.Add(new Reminder
+                            {
+                                Email = booking.Client.AppUser.Email,
+                                Date = booking.Date.ToString(),
+                                PhoneNumber = booking.Client.AppUser.PhoneNumber,
+                                Name = booking.Client.AppUser.FirstName + " " + booking.Client.AppUser.LastName,
+                                TimeOfDay = booking.Date.TimeOfDay.ToString()
+                            });
                         }
                     }
                 }
