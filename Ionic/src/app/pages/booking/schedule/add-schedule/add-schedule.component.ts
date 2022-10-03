@@ -55,9 +55,6 @@ export class AddScheduleComponent implements AfterViewInit {
     //   this.modalReady = true;
     // }, 0);
 
-
-
-
     this.scheduleService.venueService.getAllVenues().subscribe({
       next: (data) => {
         this.venueList = data.result;
