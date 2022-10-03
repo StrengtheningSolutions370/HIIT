@@ -14,7 +14,7 @@
     <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
 
     <!--Can we change this dynamically when switching between tabs?-->
-    <!-- </ion-item> 
+    <!-- </ion-item>
       <ion-title slot="">Welcome, Stacey</ion-title>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">-->
   </ion-toolbar>
@@ -28,7 +28,7 @@
           <img src="../../assets/DarkGymHomePhoto.jpg" class=full-image alt="Image"/>
           <!-- <div class="card-title">São Paulo</div> -->
           <div class="card-subtitle">
-            <ion-button color="light" size="medium" [routerLink]="['/detail']">View Shop</ion-button>
+            <ion-button color="light" size="medium" [routerLink]="['/shop']">View Shop</ion-button>
           </div>
         </ion-card>
       </ion-col>
@@ -36,7 +36,7 @@
         <ion-card>
           <img src="../../assets/Treadmill.jpg" class="full-image" alt="Image"/>
           <div class="card-subtitle">
-            <ion-button color="light" size="medium">View Exercise</ion-button>
+            <ion-button color="light" size="medium"  [routerLink]="['/exercises']">View Exercise</ion-button>
           </div>
         </ion-card>
       </ion-col>
@@ -44,20 +44,21 @@
         <ion-card>
           <img src="../../assets/EmployeeHomePage.jpg" class="full-image" alt="Image"/>
           <div class="card-subtitle">
-            <ion-button color="light" size="medium">View Employees</ion-button>
+            <ion-button color="light" size="medium" [routerLink]="['/employees']">View Employees</ion-button>
           </div>
       </ion-card>
       </ion-col>
       <ion-col class="ion-align-self-start no-padding" sizeLg="3" sizeMd="3" sizeXs="6" class="listMargin">
         <ion-card>
           <img src="../../assets/BSC.png" alt="Image"/>
-          <div class="card-title">São Paulo</div>
-          <div class="card-subtitle">41 Listings</div>
+          <div class="card-subtitle">
+            <ion-button color="light" size="medium" [routerLink]="['/employees']">About us</ion-button>
+          </div>
         </ion-card>
       </ion-col>
     </ion-row>
     <ion-row>
-      
+
     </ion-row>
   </ion-grid>
 </ion-content>
@@ -79,7 +80,7 @@
 
     <br/>
     <h2>Hey {{username}}, What would you like to do : </h2>
-    
+
     <ion-chip>
       <ion-icon name="folder-open"></ion-icon>
       <ion-label>View Member Requests</ion-label>
@@ -89,7 +90,7 @@
       <ion-icon name="document"></ion-icon>
       <ion-label>View Refund Requests</ion-label>
     </ion-chip>
-  
+
 
     <br/>
     <h2>Training Sessions for today : </h2>
@@ -132,10 +133,10 @@
             Complete checkout(s)
           </ion-card-subtitle>
       </ion-col>
-      
+
       </ion-card> -->
 
-<!--   
+<!--
 </ion-grid> -->
 
 <!-- </ion-content>

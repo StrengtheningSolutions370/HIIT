@@ -17,7 +17,12 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-fab horizontal="end" vertical="top" slot="fixed">
+    <ion-fab-button color="warning" (click)="cartService.openCart()" #cart>
+      <ion-badge color="danger">{{cartData?.quantity}}</ion-badge>
+      <ion-icon name="cart" class="cart-icon"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <ion-tabs >
     <ion-tab-bar slot="top" color="secondary">
       <ion-tab-button tab="calendar">

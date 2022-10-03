@@ -184,6 +184,7 @@ import { ConfirmReasonComponent } from './pages/payments/confirm-reason/confirm-
 import { RefundResponseComponent } from './pages/refunds/refund-response/refund-response.component';
 import { ViewRefundComponent } from './pages/refunds/view-refund/view-refund.component';
 import { AssociativeClientComponent } from './pages/user/clients/associative-client/associative-client.component';
+import { TrackAttendanceComponent } from './pages/booking/client-booking/track-attendance/track-attendance.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -231,7 +232,7 @@ import { AssociativeClientComponent } from './pages/user/clients/associative-cli
   //Booking
   AddBookingComponent, CancelBookingComponent, ViewBookingInfoComponent,
   //Schedule
-  AddScheduleComponent, UpdateScheduleComponent, DeleteScheduleComponent, ConfirmScheduleComponent,
+  AddScheduleComponent, UpdateScheduleComponent, DeleteScheduleComponent, ConfirmScheduleComponent, TrackAttendanceComponent,
   //Exercise
   AddExerciseComponent, UpdateExerciseComponent, DeleteExerciseComponent, ViewExerciseComponent, ConfirmExerciseComponent, AssociativeExerciseComponent,
   //Lesson

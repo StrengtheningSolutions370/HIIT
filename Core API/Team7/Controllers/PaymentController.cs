@@ -102,6 +102,7 @@ namespace Team7.Controllers
                     foreach (SaleLine item in pvm.Sales)
                     {
                         SaleItem saleItemTemp = await _saleItemRepo._GetSaleItemIdAsync((int)item.SaleItemID);
+                        saleItemTemp.QuantityOnHand -= item.Quantity;
                         SaleLine sl = new()
                         {
                             Sale = saleTemp,

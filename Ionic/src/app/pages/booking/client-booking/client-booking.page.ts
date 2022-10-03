@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { timeStamp } from 'console';
 import { Subscription } from 'rxjs';
@@ -44,6 +45,7 @@ export class ClientBookingPage implements AfterViewInit {
     })
    }
   fetchSchedule() {
+
     this.isLoading = true;
     this.scheduleService.getAllScheduleEvents().subscribe(
       {
@@ -74,7 +76,7 @@ export class ClientBookingPage implements AfterViewInit {
                     date.getHours()-2,
                     date.getMinutes()
                   ));
-                  if (sItem.bookingAttendance.length != 0){
+                  if (sItem.bookingAttendance.length > 0){
                     this.scheduleList.push(sItem);
                   }
               })

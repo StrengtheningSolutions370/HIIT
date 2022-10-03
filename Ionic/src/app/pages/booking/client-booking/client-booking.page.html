@@ -10,7 +10,7 @@
     <ion-grid *ngFor="let schedule of this.scheduleList | filter:filter, let i = index">
       <ion-list>
         <ion-item-sliding >
-          <ion-item button (click)="onEventSelected(schedule)" tappable>
+          <ion-item button (click)="scheduleService.trackAttendanceModal(schedule)" tappable>
             <ion-label style="padding-left:2% ;">
               <h1>{{schedule.startDateTime | date : 'medium'}}</h1>
               <p style="font-size:large">Venue:  {{schedule.venue.name}}</p>
@@ -21,7 +21,7 @@
 
           </ion-item>
           <ion-item-options side="end" >
-            <ion-item-option color="secondary" (click)="scheduleService.updateScheduleModal(schedule)">Track Attendance <ion-icon name="analytics-outline" size="large"></ion-icon></ion-item-option>
+            <ion-item-option color="secondary" (click)="scheduleService.trackAttendanceModal(schedule)">Track Attendance <ion-icon name="analytics-outline" size="large"></ion-icon></ion-item-option>
           </ion-item-options>
         </ion-item-sliding>
 

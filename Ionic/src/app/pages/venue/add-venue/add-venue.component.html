@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content class="containerMargins" color="secondary">
-  <form [formGroup]="cVenueForm" (ngSubmit)="submitForm()"> 
+  <form [formGroup]="cVenueForm" (ngSubmit)="submitForm()">
     <br/>
     <ion-label class="ion-text-center">
       <p style="font-size:large">Please fill in the information below.</p>
@@ -20,7 +20,7 @@
       <ion-label class="itemLabel">Name:</ion-label>
       <ion-input class="input ion-text-capitalize" formControlName="venueName" type="text" required="" id="venueName"></ion-input>
       <span class="errorSpan" *ngIf="errorControl.venueName.errors?.required && cVenueForm.get('venueName').touched">
-        Name is required<br/>
+        Name is required.<br/>
       </span>
     </div>
     <br/>
@@ -29,19 +29,19 @@
       <ion-label class="itemLabel">Address:</ion-label>
       <ion-input class="input ion-text-capitalize" formControlName="location" type="text" required="" id="location"></ion-input>
       <span class="errorSpan" *ngIf="errorControl.location.errors?.required && cVenueForm.get('location').touched">
-        Address is required<br/>
+        Address is required.<br/>
       </span>
     </div>
     <br/>
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Postal Code:</ion-label>
-      <ion-input class="input ion-text-capitalize" formControlName="postalCode" type="numeric" required maxlength="4" id="postalCode"></ion-input>
+      <ion-input class="input ion-text-capitalize" formControlName="postalCode" type="text" required maxlength="4" id="postalCode"></ion-input>
       <span class="errorSpan" *ngIf="errorControl.postalCode.errors?.required && cVenueForm.get('postalCode').touched">
-        Postal code is required<br/>
+        Postal code is required.<br/>
       </span>
       <span class="errorSpan" *ngIf="cVenueForm.controls['postalCode'].hasError('pattern')">
-        Postal code must consist of 4 digits<br/>
+        Postal code must consist of 4 digits.<br/>
       </span>
     </div>
     <br/>
@@ -50,10 +50,10 @@
       <ion-label class="itemLabel">Capacity:</ion-label>
       <ion-input class="input ion-text-capitalize" formControlName="capacity" type="number" required id="postalCode"></ion-input>
       <span class="errorSpan" *ngIf="errorControl.capacity.errors?.required && cVenueForm.get('capacity').touched">
-        Capacity is required<br/>
+        Capacity is required.<br/>
       </span>
       <span class="errorSpan" *ngIf="errorControl.capacity.errors?.min">
-        Capacity must be greater than 0<br/>
+        Capacity must be greater than 0.<br/>
       </span>
       <span class="errorSpan" *ngIf="errorControl.capacity.errors?.max">
         Capacity must be less than 200<br/>
@@ -63,6 +63,6 @@
 
     <ion-button type="submit" color="primary" [disabled]="!cVenueForm.valid" class="addBtn ion-float-right">Create Venue</ion-button>
     <ion-button color="tertiary" class="cancelBtn ion-float-left" (click)="this.global.dismissModal()">Cancel</ion-button>
-    
+
   </form>
 </ion-content>

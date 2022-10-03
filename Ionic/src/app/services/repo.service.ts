@@ -39,6 +39,7 @@ export class RepoService {
   //Local base:
 
   base = 'https://localhost:44383/api/';
+  public baseImg = 'https://localhost:44383/' ; //Ensure it is the same as the base without the 'api/' part
 
   AppUserController = 'AppUser/';
   BookingController = 'Booking/'
@@ -534,6 +535,10 @@ getClientBookings(aspNetUserID: string): Observable<any>{
 
 cancelMyBooking(aspNetUserID: string, bookingID: number, scheduleID: number): Observable<any>{
   return this.http.delete(`${this.base+this.BookingController}delete?aspNetUserID=${aspNetUserID}&bookingID=${bookingID}&scheduleID=${scheduleID}`, this.httpOptions)
+}
+
+trackAttendance(attendedVM: any){
+  return this.http.post<any>(`${this.base + this.BookingController}TrackAttendance`, attendedVM, this.httpOptions);
 }
 
 // Exercise:

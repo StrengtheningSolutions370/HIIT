@@ -16,12 +16,23 @@
         </p>
     </ion-label>
     <br/>
-
-    <ion-list>
-      <ion-item *ngFor="let schedule of venue.schedules">
-        <ion-label class="input ion-text-capitalize ion-text-center">{{ getTime(schedule.startDateTime) }}</ion-label>
-      </ion-item>
-    </ion-list>
+        <ng-container *ngFor="let schedule of this.venue.schedules; let i = index">
+          <ion-list>
+            <ion-item>
+              <ion-label class="ion-text-left">Booking type:</ion-label>
+              <ion-label class="ion-text-right"> {{schedule.bookingType.name}} </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label class="ion-text-left">Lesson:</ion-label>
+              <ion-label class="ion-text-right"> {{schedule.lesson.name}} </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label class="ion-text-left">Timeslot:</ion-label>
+              <ion-textarea class="ion-text-right">{{schedule.startDateTime| date : 'MMM d, y, h:mm a'}} - {{schedule.endDateTime| date : 'h:mm a'}}</ion-textarea>
+            </ion-item>
+        </ion-list>
+        <br/>
+        </ng-container>
 
     <br/>
 

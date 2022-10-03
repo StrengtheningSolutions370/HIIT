@@ -215,87 +215,90 @@ export class IncomeReportPage {
           element.saleItem.forEach(saleItem => {
             console.log("Entering Sale Item: ");
             console.log(saleItem);
-            var saleItemCost = saleItem.priceHistory[saleItem.priceHistory.length-1].costAmount;
-            var saleItemSell = saleItem.priceHistory[saleItem.priceHistory.length-1].saleAmount;
-            var profit = saleItemSell - saleItemCost;
+            if (saleItem.priceHistory.length < 1){
+              console.log("Skipping quotable item");
+            } else {
+              var saleItemCost = saleItem.priceHistory[saleItem.priceHistory.length-1].costAmount;
+              var saleItemSell = saleItem.priceHistory[saleItem.priceHistory.length-1].saleAmount;
+              var profit = saleItemSell - saleItemCost;
 
 
 
-            console.log(saleItem.name);
-            console.log("Cost Price: ", saleItemCost);
-            console.log("Sale Price: ", saleItemSell);
-            var subQuantity = 0;
-            saleItem.saleLine.forEach(saleLine => {
-              console.log("Entering Sale Line: ");
-              console.log(saleLine);
-              let date = new Date(saleLine.date);
-              if (this.selected == this.yearMonth.length){
-                // console.log("TempData: ");
-                // console.log(tempData);
-                //Year month calculation
-                for (let index = 0; index < this.selected; index++) {
-                  if (index == date.getMonth()){
-                    subQuantity += (saleLine.quantity*profit);
-                  } else {
-                    subQuantity = 0;
-                  }
-                  // console.log(tempData[index]);
-                  // console.log(subQuantity);
-                  tempData[index] += subQuantity;
-                  this.grandTotal += subQuantity;
+              console.log(saleItem.name);
+              console.log("Cost Price: ", saleItemCost);
+              console.log("Sale Price: ", saleItemSell);
+              var subQuantity = 0;
+              saleItem.saleLine.forEach(saleLine => {
+                console.log("Entering Sale Line: ");
+                console.log(saleLine);
+                let date = new Date(saleLine.date);
+                if (this.selected == this.yearMonth.length){
                   // console.log("TempData: ");
                   // console.log(tempData);
-                }
-              } else if (this.selected == this.biMonth.length){
-
-                for (let index = 0; index < this.selected; index++) {
-                  if (index == Math.floor(date.getMonth()/2)){
-                    subQuantity += (saleLine.quantity*profit);
-                  } else {
-                    subQuantity = 0;
+                  //Year month calculation
+                  for (let index = 0; index < this.selected; index++) {
+                    if (index == date.getMonth()){
+                      subQuantity += (saleLine.quantity*profit);
+                    } else {
+                      subQuantity = 0;
+                    }
+                    // console.log(tempData[index]);
+                    // console.log(subQuantity);
+                    tempData[index] += subQuantity;
+                    this.grandTotal += subQuantity;
+                    // console.log("TempData: ");
+                    // console.log(tempData);
                   }
-                  tempData[index] += subQuantity;
-                  this.grandTotal += subQuantity;
-                }
-              } else if (this.selected == this.triMonth.length){
+                } else if (this.selected == this.biMonth.length){
 
-                for (let index = 0; index < this.selected; index++) {
-                  if (index == Math.floor(date.getMonth()/3)){
-                    subQuantity += (saleLine.quantity*profit);
-                  } else {
-                    subQuantity = 0;
+                  for (let index = 0; index < this.selected; index++) {
+                    if (index == Math.floor(date.getMonth()/2)){
+                      subQuantity += (saleLine.quantity*profit);
+                    } else {
+                      subQuantity = 0;
+                    }
+                    tempData[index] += subQuantity;
+                    this.grandTotal += subQuantity;
                   }
-                  tempData[index] += subQuantity;
-                  this.grandTotal += subQuantity;
-                }
-              } else if (this.selected == this.halfyear.length){
+                } else if (this.selected == this.triMonth.length){
 
-                for (let index = 0; index < this.selected; index++) {
-                  console.log(Math.floor(date.getMonth()/6));
-                  if (index == Math.floor(date.getMonth()/6)){
-                    subQuantity += (saleLine.quantity*profit);
-                  } else {
-                    subQuantity = 0;
+                  for (let index = 0; index < this.selected; index++) {
+                    if (index == Math.floor(date.getMonth()/3)){
+                      subQuantity += (saleLine.quantity*profit);
+                    } else {
+                      subQuantity = 0;
+                    }
+                    tempData[index] += subQuantity;
+                    this.grandTotal += subQuantity;
                   }
-                  tempData[index] += subQuantity;
-                  this.grandTotal += subQuantity;
-                }
-              } else if (this.selected == this.year.length){
+                } else if (this.selected == this.halfyear.length){
 
-                for (let index = 0; index < this.selected; index++) {
-                  if (2020+index == date.getFullYear()){
-                    subQuantity += (saleLine.quantity*profit);
-                  } else {
-                    subQuantity = 0;
+                  for (let index = 0; index < this.selected; index++) {
+                    console.log(Math.floor(date.getMonth()/6));
+                    if (index == Math.floor(date.getMonth()/6)){
+                      subQuantity += (saleLine.quantity*profit);
+                    } else {
+                      subQuantity = 0;
+                    }
+                    tempData[index] += subQuantity;
+                    this.grandTotal += subQuantity;
                   }
-                  tempData[index] += subQuantity;
-                  this.grandTotal += subQuantity;
+                } else if (this.selected == this.year.length){
+
+                  for (let index = 0; index < this.selected; index++) {
+                    if (2020+index == date.getFullYear()){
+                      subQuantity += (saleLine.quantity*profit);
+                    } else {
+                      subQuantity = 0;
+                    }
+                    tempData[index] += subQuantity;
+                    this.grandTotal += subQuantity;
+                  }
                 }
-              }
 
 
-            })
-
+              })
+            }
           });
           let color = this.colors[index];
           var dataset = {

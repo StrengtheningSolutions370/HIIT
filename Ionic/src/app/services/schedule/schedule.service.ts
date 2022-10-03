@@ -6,6 +6,7 @@ import { BookingType } from 'src/app/models/booking-type';
 import { Employee } from 'src/app/models/employee';
 import { Schedule } from 'src/app/models/schedule';
 import { Venue } from 'src/app/models/venue';
+import { TrackAttendanceComponent } from 'src/app/pages/booking/client-booking/track-attendance/track-attendance.component';
 import { AddScheduleComponent } from 'src/app/pages/booking/schedule/add-schedule/add-schedule.component';
 import { ConfirmScheduleComponent } from 'src/app/pages/booking/schedule/confirm-schedule/confirm-schedule.component';
 import { DeleteScheduleComponent } from 'src/app/pages/booking/schedule/delete-schedule/delete-schedule.component';
@@ -31,6 +32,7 @@ export class ScheduleService {
   getAllScheduleEvents() : Observable<any> {
     return this.repo.getScheduleEvent();
   }
+
 
   //Create:
   createSchedule(schedule: any){
@@ -152,6 +154,40 @@ export class ScheduleService {
 
       });
       await modal.present();
+  }
+
+  //Track Attendance Repo call
+  trackAttendance(attendedVM: any){
+    console.log('HERE = ' + attendedVM);
+   this.repo.trackAttendance(attendedVM).subscribe(
+     {
+       next: res => {
+         console.log('ATTENDANCE TRACKED');
+         console.log(res);
+         this.fetchScheduleEvent.emit();
+       },
+       error: err => {
+         console.log('ÉRROR HERE');
+         console.log(err);
+       }
+     }
+   );
+  }
+
+
+  //Track Attendance Modal
+
+  async trackAttendanceModal(schedule: Schedule){
+    console.log("call modal trackAttendance", schedule);
+    const modal = await this.modalCtrl.create({
+      component: TrackAttendanceComponent,
+      componentProps: {
+        schedule
+      },
+      backdropDismiss: true
+    });
+
+    await modal.present();
   }
 
   async addBookingModal(scheduleEvent: any){
