@@ -5,6 +5,7 @@ import { Chart, ChartConfiguration, BarController, BarElement, PointElement, Lin
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { GlobalService } from 'src/app/services/global/global.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-member-report',
@@ -24,7 +25,7 @@ export class MemberReportPage implements AfterViewInit {
   ngAfterViewInit(): void {
     Chart.register(BarController, BarElement, PointElement, LinearScale, Title, CategoryScale);
   }
-  
+
   ngOnInit() {
     this.global.nativeLoad("Loading...");
     this.repo.getAllClients().subscribe({
@@ -64,7 +65,7 @@ export class MemberReportPage implements AfterViewInit {
     //take last age:
     const lastAge = this.clients[this.clients.length - 1].age;
     const range = Math.trunc(lastAge / 10)+1;
-    
+
     //array of ages size range:
     const bars = new Array(range);
 
@@ -176,28 +177,52 @@ export class MemberReportPage implements AfterViewInit {
       }
     });
   }
-  
+
   download() {
     let Data = document.getElementById('htmlData');
+    var img = new Image();
+    img.src = 'assets/Logo.jpg';
     console.log(Data);
+    const PDF = new jsPDF({
+      orientation: 'l',
+      unit: 'mm',
+      format: 'a4'
+    });
+
     html2canvas(Data).then((canvas) => {
       let fileWidth = 290;
       let fileHeight = (canvas.height * fileWidth) / canvas.width;
       const contentDataURL = canvas.toDataURL('image/png');
-      
-      const PDF = new jsPDF({
-        orientation: 'l',
-        unit: 'mm',
-        format: 'a4'
-      });
 
-      PDF.setFontSize(30)
-      PDF.text('Age Distribution of Clients', 10, 10);
-      
-      const topPosition = 25;
+      PDF.setPage(1);
+
+      //Add heading
+      PDF.setFontSize(30);
+      PDF.text('Age Distribution of Clients', 15, 15);
+      //Add Logo
+      PDF.addImage(img, 'PNG', 260, 1, 25, 20);
+      //Add Line
+      PDF.line(0,25,300,25);
+      //Add date
+      var today = new Date();
+      var dateNow = "Date Printed: " + formatDate(today, 'yyyy-MM-dd', 'EN');
+      PDF.setFontSize(10);
+      PDF.text(dateNow, 20,200);
+
+      const topPosition = 30;
       const leftPosition = 5;
       console.log(contentDataURL);
       PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, fileWidth, fileHeight);
+
+      const pageCount = PDF.internal.pages.length-1;
+      console.log(pageCount);
+
+      for(var i = 1; i <= pageCount; i++) {
+        let str = 'Page: '+ String(i) + '/' + String(pageCount);
+          PDF.setPage(i);
+          PDF.text(str, 260, 200);
+      }
+
       PDF.save('Client Report.pdf');
     });
   }
