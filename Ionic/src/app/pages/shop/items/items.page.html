@@ -1,5 +1,5 @@
-<ion-searchbar [(ngModel)]="terms"></ion-searchbar>
-<ion-content class="container">
+<ion-searchbar [(ngModel)]="terms" class="ion-float-right" color="secondary" expand="block" placeholder='Search Items...'></ion-searchbar>
+<ion-content class="container" >
   <ion-fab horizontal="end" vertical="top" slot="fixed">
     <ion-fab-button color="warning" (click)="cartService.openCart()" #cart>
       <ion-badge color="danger">{{cartData?.quantity}}</ion-badge>

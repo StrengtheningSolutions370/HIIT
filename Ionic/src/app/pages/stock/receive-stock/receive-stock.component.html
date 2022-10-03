@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>New Stock Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="this.global.dismissModal()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,32 +7,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <br />
   <form [formGroup]="cStockForm" (ngSubmit)="submitForm()">
 
     <br/>
-    <div class="ion-text-center">
-      <p style="font-size:large">Please fill in the stock information below.</p>
-    </div>
+    <ion-label class="ion-text-center">
+      <p style="font-size:large">Please fill in the information below.</p>
+    </ion-label>
+    <br/>
 
     <!-- supplier for the stock -->
-    <ion-item>
-      <ion-label position="floating">Supplier:</ion-label>
-      <ion-select formControlName="supplier" type="text" required="" id="supplier" >
-          <ion-select-option *ngFor="let supplier of suppliers" value="{{supplier.supplierID}},{{supplier.name}}">{{ supplier.name }}</ion-select-option>
-      </ion-select>
-      <br/>
-    </ion-item> 
 
-    <!-- Sale Item choosing system -->
-    <!-- <ion-item> -->
+    <div class="inputDiv">
+      <ion-label class="itemLabel">Supplier:</ion-label>
+      <ion-select interface="popover" class="input" formControlName="supplier" type="text" required="" id="supplier" >
+        <ion-select-option *ngFor="let supplier of suppliers" value="{{supplier.supplierID}},{{supplier.name}}">{{ supplier.name }}</ion-select-option>
+    </ion-select>
+    </div>
+
       <br />
-      <ion-label id="exe" position="floating">Add Sale Items:</ion-label>
-    <!-- </ion-item> -->
+      <ion-label id="exe" class="itemLabel" >Add Sale Items:</ion-label>
+
     
     <div *ngFor="let item of stock">
-      <br />
+      <br/>
         <div class="center">
           <div class="row width-80">
 
@@ -42,7 +41,7 @@
   
               <div class="w-100"> <!-- select for category -->
                 <!-- this is rendered from the oroginal, and on change pass the id of the obj and the category to set it to -->
-                <ion-select (ionChange)="setSaleItem(item, $event)" placeholder="SaleItem" type="text">
+                <ion-select interface="popover" class="input" (ionChange)="setSaleItem(item, $event)" placeholder="SaleItem" type="text">
                   <ion-select-option *ngFor="let si of saleitems" value="{{si.saleItemID}},{{si.name}}">{{ si.name }}</ion-select-option>
                 </ion-select>
   
@@ -53,7 +52,7 @@
                 <!-- <ion-select placeholder="Exercise" (ionChange)="setExercisePostID(exercise, $event)" [disabled]="!exercise.categoryset" type="text" required="" id="lessonEmployee" >
                   <ion-select-option *ngFor="let exe of exercise.exercise" value="{{exe.exerciseID}},{{exe.name}}">{{exe.name}}</ion-select-option>
                 </ion-select> -->
-                <ion-input minvalue="1" type="number" placeholder="Quantity" (input)="setQuantity(item, $event)"></ion-input>
+                <ion-input class="input" min="1" type="number" placeholder="Quantity" (input)="setQuantity(item, $event)" required=""></ion-input>
   
               </div>
   
@@ -85,10 +84,10 @@
     <div class="center">
       <ion-row class="width-80">
         <ion-col>
-          <ion-button color="light" (click)="this.global.dismissModal()">Cancel</ion-button>
+          <ion-button color="tertiary" (click)="this.global.dismissModal()">Cancel</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button (click)="submitForm()" color="success" [disabled]="cStockForm.invalid || !validSaleItems">Recieve</ion-button>
+          <ion-button (click)="submitForm()" color="primary" [disabled]="cStockForm.invalid || !validSaleItems">Recieve</ion-button>
         </ion-col>
       </ion-row>
     </div>
