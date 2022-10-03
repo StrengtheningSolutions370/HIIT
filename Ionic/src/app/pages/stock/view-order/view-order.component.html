@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Order #{{order.OrderNo}} Details</ion-title>
     <ion-buttons slot="end">
       <ion-button color="tertiary" (click)="returnFrom()"><ion-icon name="close-outline" size="large"></ion-icon></ion-button>
@@ -7,41 +7,44 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="containerMargins" color="secondary">
   <br/>
-  <div class="ion-text-center">
-    <p style="font-size:large">The following information corresponds with #{{order.OrderNo}}</p>
+  <ion-label class="ion-text-center">
+    <p style="font-size:large">The following information corresponds with Order #{{order.OrderNo}}</p>
+  </ion-label>
+  <br>
+
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Name:</ion-label>
+    <ion-input class="input ion-text-capitalize" readonly>{{order.name}}</ion-input>
   </div>
+  <br/>
 
-    <ion-item >
-      <ion-label class="ion-text-left">Name:</ion-label>
-      <ion-label class="ion-text-right">{{order.name}}</ion-label>
-    </ion-item>
-    <ion-item >
-      <ion-label class="ion-text-left">Email:</ion-label>
-      <ion-label class="ion-text-wrap ion-text-right">{{order.email}}</ion-label>
-    </ion-item>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Email:</ion-label>
+    <ion-input class="input" readonly>{{order.email}}</ion-input>
+  </div>
+  <br/>
 
-    <ion-item > 
-      <ion-label class="ion-text-left">Cell:</ion-label>
-      <ion-label class="ion-text-wrap ion-text-right">{{order.cell}}</ion-label>
-    </ion-item>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Cell:</ion-label>
+    <ion-input class="input" readonly>{{order.cell}}</ion-input>
+  </div>
+  <br/>
 
-    <ion-item > 
-      <ion-label class="ion-text-left">Date:</ion-label>
-      <ion-label class="ion-text-wrap ion-text-right">{{order.cell}}</ion-label>
-    </ion-item>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Date:</ion-label>
+    <ion-input class="input ion-text-capitalize" readonly>{{order.date}}</ion-input>
+  </div>
+  <br/>
 
-    <ion-item> 
-      <ion-label>
-        <h2>Sale Items:</h2>
-        <br />
-        <p class="ion-text-start" *ngFor="let i of order.saleItemOrders">{{i.quantityReceived}} x {{i.saleItems.name}}</p>
-      </ion-label>
-    </ion-item>
+  <div class="inputDiv">
+    <ion-label class="itemLabel">Sale Items:</ion-label>
+    <ion-input class="input" *ngFor="let i of order.saleItemOrders" readonly>{{i.quantityReceived}} x {{i.saleItems.name}}</ion-input>
+  </div>
+  <br/>
 
-    <br/><br/>
-
-    <ion-button color="light" id="returnfrom" class="ion-float-left" style="margin-left:10%;width: 80%;" (click)="returnFrom()">Return</ion-button>
-
+  <ion-button color="tertiary" id="returnfrom" class="addBtn ion-float-right" (click)="returnFrom()">Return</ion-button>
+    
+  <br/><br/>
 </ion-content>

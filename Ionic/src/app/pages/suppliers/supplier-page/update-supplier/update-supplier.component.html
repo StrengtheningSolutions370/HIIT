@@ -27,7 +27,7 @@
 
     <div class="inputDiv">
       <ion-label class="itemLabel">Email:</ion-label>
-      <ion-input class="input ion-text-capitalize" formControlName="supplierEmail" type="email" required="" id="supplierEmail" ></ion-input>
+      <ion-input class="input" formControlName="supplierEmail" type="email" required="" id="supplierEmail" ></ion-input>
       <span class="errorSpan" *ngIf="errorControl.supplierEmail?.errors?.required && cSupplierForm.get('supplierEmail').touched">
         Please enter a valid email address.<br/>
       </span>
