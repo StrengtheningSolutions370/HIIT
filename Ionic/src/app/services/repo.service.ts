@@ -33,16 +33,17 @@ import { WriteOff } from '../models/write-off';
 export class RepoService {
 
   //Azure hosted api base:
-  //base = 'https://bsctest.azurewebsites.net/api/';
+  base = 'https://strengtheningsolutions.azurewebsites.net/api/';
   //Hosted base:
   //base = 'http://localhost:5001/api/';
   //Local base:
 
-  base = 'https://localhost:44383/api/';
-  public baseImg = 'https://localhost:44383/' ; //Ensure it is the same as the base without the 'api/' part
+  // base = 'https://localhost:440383/api/';
+  // public baseImg = 'https://localhost:44383/' ; //Ensure it is the same as the base without the 'api/' part
+  public baseImg = 'https://strengtheningsolutions.azurewebsites.net/' ; //Ensure it is the same as the base without the 'api/' part
 
   AppUserController = 'AppUser/';
-  BookingController = 'Booking/'
+  BookingController = 'Booking/';
   BookingTypeController = 'BookingType/';
   VenueController = 'Venue/';
   UserRoleController = 'UserRole/';
@@ -82,7 +83,6 @@ export class RepoService {
     //CRUDS in this repo file need to be used by subscribing to them in the relevant service.
     //E.g to use getVenues(); it must be subscribed to in the venue service
   }
-
 
   //Refund:
   getRefunds() {

@@ -7,12 +7,12 @@
       "type": "identityapp",
       "dynamicId": null
     },
+    "apis1": {
+      "type": "apis"
+    },
     "mssql1": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:Azure"
-    },
-    "apis1": {
-      "type": "apis"
     }
   }
 }
