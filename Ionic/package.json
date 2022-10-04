@@ -46,6 +46,7 @@
     "fuse.js": "^6.6.2",
     "ion2-calendar": "3.5.0",
     "ionic2-calendar": "^0.6.9",
+    "ios": "^0.0.1",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",
     "md5": "^2.3.0",
