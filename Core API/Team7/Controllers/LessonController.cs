@@ -83,9 +83,11 @@ namespace Team7.Controllers
         [HttpPut]
         [Route("update")]
         public async Task<IActionResult> PutLesson(int id, [FromBody] LessonViewModel lvm)
-        {
+            {
 
             var update = await _lessonRepo.GetLessonIdAsync(id);
+
+            var flag = await _lessonRepo.checkName(lvm.Lesson);
 
             var lesson = lvm.Lesson;
             var exercises = lvm.Exercises;
@@ -94,12 +96,18 @@ namespace Team7.Controllers
             update.Name = lesson.Name;
             update.EmployeeID = lesson.EmployeeID;
 
-            await _lessonPlanRepo.RemoveRangeLessonIdAsync(id);
+            if (exercises.Length != lvm.Exercises.Length)
+                await _lessonPlanRepo.RemoveRangeLessonIdAsync(id);
+            else
+            {
+                _lessonRepo.Update(update);
+                await _lessonRepo.SaveChangesAsync();
+            }
 
             foreach (int exercise in exercises)
             {
                 LessonPlan lp = new LessonPlan();
-                lp.Exercise = await _exerciseRepo._GetExerciseIdAsync(exercise);
+                lp.Exercise = await _exerciseRepo._GetExerciseIdAsyncOriginal(exercise);
                 lp.Lesson = update;
                 lp.LessonID = update.LessonID;
                 _lessonPlanRepo.Add(lp);

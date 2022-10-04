@@ -5,6 +5,7 @@
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
       <ion-title class="ion-text-uppercase">Sales Management</ion-title>
+      <ion-icon id="helppageicon" slot="end" routerLink="/help/salesmanagement" name="help-circle-outline"></ion-icon>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
       <!--Can we change this dynamically when switching between tabs?-->
     <!-- </ion-item> -->
@@ -16,27 +17,26 @@
   <ion-tabs>
     <ion-tab-bar slot="top" color="secondary">
       <ion-tab-button tab="sale-item">
-        <ion-label>Sale Item</ion-label>
+        <ion-label>Sale Item<ion-icon id="helppageicon" slot="end" routerLink="/help/salesmanagement/saleitem" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="sale-category">
-        <ion-label>Sale Category</ion-label>
+        <ion-label>Sale Category <ion-icon id="helppageicon" slot="end" routerLink="/help/salesmanagement/salecategory" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="refund-reason">
-        <ion-label>Refund Reason</ion-label>
+        <ion-label>Refund Reason<ion-icon id="helppageicon" slot="end" routerLink="/help/salesmanagement/refundreason" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="vat">
-        <ion-label>VAT</ion-label>
+        <ion-label>VAT<ion-icon id="helppageicon" slot="end" routerLink="/help/salesmanagement/vat" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
 
-      <!-- <ion-tab-button tab="write-off">
+      <ion-tab-button tab="write-off">
         <ion-label>Write-Off</ion-label>
-      </ion-tab-button> -->
-      
+      </ion-tab-button>      
       <ion-tab-button tab="write-off-reason">
-        <ion-label>Write-Off Reason</ion-label>
+        <ion-label>Write-Off Reason<ion-icon id="helppageicon" slot="end" routerLink="/help/salesmanagement/writeoffreason" name="help-circle-outline"></ion-icon></ion-label>
       </ion-tab-button>
 
     </ion-tab-bar>

@@ -30,11 +30,11 @@
     <div class="inputDiv">
       <ion-label class="itemLabel">Optional Message:</ion-label>
       <ion-textarea class="input" placeholder="Type optional message here..." formControlName="optDescription"
-        type="text" required="" id="optDescription"></ion-textarea>
+        type="text" id="optDescription"></ion-textarea>
     </div>
     <br>
 
-    <ion-button type="submit" color="primary" class="ion-float-right addBtn"
+    <ion-button type="submit" color="primary" class="ion-float-right addBtn" [disabled]="!quoteEmailForm.valid"
       (click)="submitForm()">Request Quote</ion-button>
     <ion-button class="cancelBtn ion-float-left" color="tertiary" (click)="this.global.dismissModal()">Cancel
     </ion-button>

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Team7.Models;
 
 namespace Team7.Models.Repository
 {
@@ -13,8 +14,11 @@ namespace Team7.Models.Repository
         Task<Lesson[]> GetAllLessonsAsync();
 
         Task<Lesson> GetLessonIdAsync(int id);
+        Task<Lesson> GetLessonIdAsyncOriginal(int id);
 
         Task<bool> SaveChangesAsync();
+
+        Task<bool> checkName(Lesson l);
 
         Task<Lesson> GetLessonByNameAsync(string name);
 

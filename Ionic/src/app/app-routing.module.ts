@@ -126,7 +126,7 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/booking/booking.module').then(m => m.BookingPageModule),
     canActivate: [AuthGaurdService],
     data: {
-      roles: [Roles.Member, Roles.Client, Roles.SuperUser]
+      roles: [Roles.SuperUser, Roles.Trainer]
     }
     //loadChildren component here for bookings once generated
   },
@@ -231,12 +231,23 @@ export const routes: Routes = [
     path: 'payments',
     loadChildren: () => import('./pages/payments/payments.module').then( m => m.PaymentsPageModule)
   },
+  {
+    path: 'help/:id',
+    loadChildren: () => import('./pages/helppage/helppage.module').then( m => m.HelppagePageModule)
+  },
+  {
+    path: 'help/:id/:item',
+    loadChildren: () => import('./pages/helppage/helppage.module').then( m => m.HelppagePageModule)
+  },
+  {
+    path: 'help',
+    loadChildren: () => import('./pages/helppage/helppage.module').then( m => m.HelppagePageModule)
+  },
   //this route object must be last
   {
     path: '**',
     redirectTo: 'login',
-  },
- 
+  }
 
 ]
 

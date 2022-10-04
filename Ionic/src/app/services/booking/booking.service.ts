@@ -271,7 +271,8 @@ async viewBookingTypeModal(bookingType: BookingType) {
 
 async viewMyBookingInfoModal(booking: any, bookingAttendance: any){
   console.log("Booking Service: ViewMyBooking modal for client");
-  console.log(booking);
+  console.log("booking: ",booking);
+  console.log("bookingAttendance: ",bookingAttendance);
 
   const modal = await this.modalCtrl.create({
     component: ViewBookingInfoComponent,

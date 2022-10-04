@@ -10,7 +10,7 @@ namespace Team7.Models.Repository
 
         Task<bool> CancelMyBooking(string aspNetUserID, int bookingID, int scheduleID);
 
-        Task<Booking[]> GetAllBookingsAsync();
+        Task<Reminder[]> GetAllBookingsAsync();
 
         Task<bool> SaveChangesAsync();
 

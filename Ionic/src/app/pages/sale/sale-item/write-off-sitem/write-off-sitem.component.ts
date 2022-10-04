@@ -40,7 +40,7 @@ export class WriteOffSitemComponent implements ViewWillEnter {
 
   //Creating the form to add the new write-off details, that will be displayed in the HTML component
   cWriteOffForm: UntypedFormGroup = this.formBuilder.group({
-    itemQuantity: ['', [Validators.required]],
+    itemQuantity: ['', [Validators.required, Validators.min(1)]],
     itemSReason: ['', [Validators.required]],
     itemSEmployee: ['', [Validators.required]]
   });

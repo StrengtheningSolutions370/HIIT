@@ -78,16 +78,16 @@ namespace Team7.Controllers
         public async Task<IActionResult> DeleteRefundReason(int id)
         {
             var tempRefundReason = await RefundReasonRepo._GetRefundReasonIdAsync(id);
-            if (tempRefundReason == null)
-            {
-                return NotFound();
-            }
-
-            if (tempRefundReason.Refund != null)
-                return Conflict(new { refund = tempRefundReason });
 
             try
             {
+                if (tempRefundReason == null)
+                {
+                    return NotFound();
+                }
+                    if (tempRefundReason.Refund.Count != 0)
+                        return Conflict(new { refund = tempRefundReason });
+
                 RefundReasonRepo.Delete<RefundReason>(tempRefundReason);
                 if (await RefundReasonRepo.SaveChangesAsync())
                 {

@@ -9,7 +9,7 @@ import { GlobalService } from 'src/app/services/global/global.service';
 })
 export class AssociativeRefundReasonComponent implements OnInit {
 
-  @Input() refundReason: RefundReason;
+  @Input() refundReason: any;
   constructor(public global: GlobalService) { }
 
   ngOnInit() {}

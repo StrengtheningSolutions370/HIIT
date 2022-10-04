@@ -96,7 +96,7 @@ export class ScheduleService {
   }
 
     //UPDATE Schedule event
-    async updateScheduleModal(schedule: Schedule) {
+    async updateScheduleModal(schedule: any) {
       console.log(schedule);
       const modal = await this.modalCtrl.create({
         component: UpdateScheduleComponent,

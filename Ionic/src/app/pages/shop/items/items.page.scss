@@ -13,6 +13,15 @@ ion-fab-button {
   padding-right: 1.5rem;
 }
 
+ion-searchbar{
+  --background : white;
+  --color: #221f1f;
+  --clear-button-color : #554f50;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
 
 .cart-icon {
   font-size: 50px;

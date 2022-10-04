@@ -1,16 +1,20 @@
+
 <ion-content>
   <ion-segment [(ngModel)]="calendar.mode">
     <ion-segment-button value="month" color="contrast">
-      <ion-label color="dark">Month</ion-label>
+      <ion-label style="color:white">Month</ion-label>
     </ion-segment-button>
     <ion-segment-button value="week" >
-      <ion-label color="dark">Week</ion-label>
+      <ion-label style="color:white">Week</ion-label>
     </ion-segment-button>
     <ion-segment-button value="day" >
-      <ion-label color="dark">Day</ion-label>
+      <ion-label style="color:white">Day</ion-label>
     </ion-segment-button>
+
+
   </ion-segment>
   <ion-row>
+
 
     <!-- Slide back 1 screen-->
     <ion-col size="2" class="ion-text-end">
@@ -70,6 +74,7 @@
       <ion-button (click)="this.scheduleService.addScheduleModal()" slot="end" expand="block" fill="outline" color="dark" style="width:80%;margin:auto">
         Add New Event
       </ion-button>
+      <br>
   <ion-grid *ngIf="!isLoading" >
     <ion-list *ngFor="let ev of selectedDate.events">
       <ion-item-sliding >
@@ -85,7 +90,7 @@
         </ion-item>
         <ion-item-options side="end" >
           <ion-item-option color="secondary" (click)="scheduleService.updateScheduleModal(ev)">Duplicate<ion-icon name="refresh" size="large"></ion-icon></ion-item-option>
-          <ion-item-option color="danger" (click)="scheduleService.deleteScheduleModal(ev)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
+          <ion-item-option color="tertiary" (click)="scheduleService.deleteScheduleModal(ev)">Delete<ion-icon name="trash" size="large"></ion-icon></ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
@@ -96,7 +101,6 @@
   </div>
 
 </ng-template>
-
 
 
 <div class="ion-text-center " *ngIf="isLoading">

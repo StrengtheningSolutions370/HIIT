@@ -250,12 +250,12 @@ namespace Team7.Controllers
                     FirstName = usr.FirstName,
                     LastName = usr.LastName,
                     Email = usr.Email,
-                    PhoneNumber = usr.PhoneNumber,
-                    Title = new Title
-                    {
-                        TitleID = usr.Title.TitleID,
-                        Description = usr.Title.Description
-                    }
+                    //PhoneNumber = usr.PhoneNumber,
+                    //Title = new Title
+                    //{
+                    //    TitleID = usr.Title.TitleID,
+                    //    Description = usr.Title.Description
+                    //}
                 });
                 return Ok(user);
             } catch (Exception ex)
@@ -768,15 +768,15 @@ namespace Team7.Controllers
             //var s = formCollection.Keys.();
             //string decode = HttpUtility.UrlDecode(formCollection);
             //var quoteObj = JObject.Parse(decode);
-            string? optDescription = null;
+            //string? optDescription = null;
 
             string clientAddress = quoteObj.clientMail.ToString();
             //Look at replacing with a dedicated BSC quotations email
             string employeeAddress = quoteObj.employeeMail.ToString();
             string saleQuoteName = quoteObj.saleQuoteName.ToString();
             int saleQuoteID = ((int)quoteObj.saleQuoteID);
-            DateTime currentTime = new();
-            optDescription = quoteObj.optDescription.ToString();
+            var currentTime = new DateTime().ToShortDateString();
+            var optDescription = quoteObj.optDescription; ;
 
 
 
@@ -788,8 +788,8 @@ namespace Team7.Controllers
 
             var bodyEmployee = "<h1>BSC product quotation: " + saleQuoteName + " </h1> <br /> <hr>" +
                 "<p><strong>New client product request, respond to:</strong>" + clientAddress + "</strong></p>" +
-                "<p>Date of email creation from API: " + currentTime.ToString() + "</p>" +
-                "<p>Product ID: " + saleQuoteID + "</p>" +
+                "<p>Date of request: " + currentTime + "</p>" +
+                
                 "<p><strong> Client message: " + optDescription
                 + "<br /> <hr>";
             Email emailEmployee = new Email(employeeAddress, saleQuoteName + " quotation request", bodyEmployee);

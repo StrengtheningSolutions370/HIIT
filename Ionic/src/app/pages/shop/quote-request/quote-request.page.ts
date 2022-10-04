@@ -36,8 +36,8 @@ export class QuoteRequestPage implements OnInit {
     this.quoteEmailForm = this.formBuilder.group({
       clientMail: ['', [Validators.required, Validators.email]],
       employeeMail: [''],
-      saleQuoteName: ['', [Validators.required]],
-      saleQuoteID: ['', Validators.required],
+      saleQuoteName: [''],
+      saleQuoteID: [''],
       optDescription: ['']
     });
   }
@@ -53,7 +53,7 @@ export class QuoteRequestPage implements OnInit {
   submitForm() {
     const quote = new Quote();
     quote.clientMail = this.quoteEmailForm.value['clientMail'];
-    quote.employeeMail = 'u20625741@tuks.co.za';
+    quote.employeeMail = 'besterstrengthconditioning@gmail.com';
     quote.saleQuoteName = this.saleItem.name;
     quote.saleQuoteID = this.saleItem.saleItemID;
     quote.optDescription = this.quoteEmailForm.value['optDescription'];
@@ -75,8 +75,9 @@ export class QuoteRequestPage implements OnInit {
       next: (data : any) => {
         console.log(data);
       }
-    }) 
+    })
     this.global.dismissModal();
+    this.global.showToast('Your request for quote has succesfully been sent');
    }
 
 

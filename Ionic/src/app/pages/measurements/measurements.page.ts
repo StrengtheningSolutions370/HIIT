@@ -9,6 +9,7 @@ import { Chart, ChartConfiguration, LineController, LineElement, PointElement, L
 import { isThisHour } from 'date-fns';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-measurements',
   templateUrl: './measurements.page.html',
@@ -18,6 +19,8 @@ export class MeasurementsPage implements AfterViewInit {
 
   lineChart: any;
   @ViewChild('lineCanvas') lineCanvas: any;
+
+  @ViewChild('high') high : any;
 
   measurementCount! : any;
 
@@ -41,10 +44,14 @@ export class MeasurementsPage implements AfterViewInit {
 
   results = false;
 
+  maxHigh! : any;
+
   constructor(private storage : StoreService, private modalCtrl : ModalController, private global : GlobalService, private repo : RepoService) { }
 
   ngAfterViewInit(): void {
     Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
+
+    this.high.el.value = new Date().toJSON().slice(0,10).replace(/-/g,'-');
   }
 
   ngOnInit() {
@@ -53,11 +60,22 @@ export class MeasurementsPage implements AfterViewInit {
       const decode = this.global.decodeToken(token);
       this.email = decode.sub;
       this.fetchData(this.email).then(() => {});
+      this.maxHigh = new Date().getTime();
     });
 
 
 
   }
+
+  conv(dt : any) {
+    var m = dt.getMonth() + 1; // getMonth() is zero-based
+    var d = dt.getDate();
+  
+    return [dt.getFullYear(), '/',
+            (m>9 ? '' : '0') + m, '/',
+            (d>9 ? '' : '0') + d
+           ].join('');
+  };
 
   fetchData(email : string) : Promise<any> {
     return new Promise<any>((resolve, reject) => {
@@ -133,8 +151,11 @@ export class MeasurementsPage implements AfterViewInit {
 
   download() {
     let Data = document.getElementById('htmlData')!;
+    var logo = new Image();
+    logo.src = 'assets/Logo.jpg';
+
     html2canvas(Data).then((canvas) => {
-      let fileWidth = 210;
+      let fileWidth = 400;
       let fileHeight = (canvas.height * fileWidth) / canvas.width;
 
       const contentDataURL = canvas.toDataURL('image/png');
@@ -148,11 +169,34 @@ export class MeasurementsPage implements AfterViewInit {
       PDF.setFontSize(30)
       PDF.text('Client Progress Report', 10, 10);
 
-      const topPosition = 25;
-      const leftPosition = 5;
+      //Add date
+      var today = new Date();
+      var dateNow = "Date Printed: " + formatDate(today, 'yyyy-MM-dd', 'EN');
+      PDF.setFontSize(10);
+      PDF.text(dateNow, 20,280);
+
+      const topPosition = 35;
+      const leftPosition = -95;
 
       PDF.addImage(contentDataURL, 'PNG', leftPosition, topPosition, fileWidth, fileHeight);
-      PDF.save('Client Report.pdf');
+
+      //Add Logo
+      PDF.addImage(logo, 'PNG', 180, 1, 25, 20);
+      //Add Line
+      PDF.line(0,22,300,22);
+
+      //Add page numbers
+      const pageCount = PDF.internal.pages.length-1;
+      console.log(pageCount);
+      PDF.setFontSize(10);
+
+      for(var i = 1; i <= pageCount; i++) {
+        let str = 'Page: '+ String(i) + '/' + String(pageCount);
+        PDF.setPage(i);
+        PDF.text(str, 180, 280);
+      }
+
+      PDF.save('Measurement Report.pdf');
     });
   }
 

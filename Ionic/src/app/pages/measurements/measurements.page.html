@@ -5,6 +5,7 @@
         <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
       <ion-title slot="">Measurements</ion-title>
+      <ion-icon id="helppageicon" slot="end" routerLink="/help/measurements" name="help-circle-outline"></ion-icon>
       <img src="../../assets/BSC.png" width="80px" height="80px" alt="logo" slot="end">
       <!--Can we change this dynamically when switching between tabs?-->
     <!-- </ion-item> -->
@@ -35,7 +36,7 @@
     
             <div>
               To:
-              <ion-input #high (change)="setHigh(high)" type="date"></ion-input>
+              <ion-input id="high" #high (change)="setHigh(high)" type="date" [max]="maxHigh"></ion-input>
             </div>
     
           </div>
