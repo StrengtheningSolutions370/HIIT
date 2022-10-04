@@ -109,7 +109,7 @@ export class SchedulePage implements AfterViewInit  {
                   lesson: sItem.lesson,
                   employee: sItem.employee,
                   bookingPriceHistory: sItem.bookingPriceHistory,
-                  colour: sItem.bookingType.colour,
+                 // colour: sItem.bookingType.colour,
                   bookingAttendance: sItem.bookingAttendance
                 });
                 document.body.style.setProperty('--colour'[sItem.scheduleID],sItem.bookingType.colour);

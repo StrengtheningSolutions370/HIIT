@@ -56,7 +56,7 @@ namespace Team7.Models.Repository
                         Lesson = new { sc.Lesson.LessonID, sc.Lesson.Name},
                         sc.StartDateTime,
                         sc.EndDateTime,
-                        //Employee = new { sc.Employee.EmployeeID, sc.Employee.AppUser },
+                        Employee = new { sc.Employee.EmployeeID, sc.Employee.AppUser },
                         BookingAttendance = sc
                         .BookingAttendance
                         .Select(ba => new { ba.BookingAttendanceID, ba.Attended, ba.Booking, ba.Booking.Client.AppUser.FirstName, ba.Booking.Client.AppUser.LastName }),
