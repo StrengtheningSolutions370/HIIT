@@ -60,7 +60,7 @@ export class LessonsPage implements OnInit {
     if (src == null) {
       return null;
     }
-    return `https://strengtheningsolutions.azurewebsites.net/Resources/Employees/Images/${src}`;
+    return `https://team720221016154649.azurewebsites.net/Resources/Employees/Images/${src}`;
   }
 
   fetchLessons() : Promise<any> {

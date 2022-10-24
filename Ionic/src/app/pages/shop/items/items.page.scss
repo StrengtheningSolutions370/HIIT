@@ -45,7 +45,14 @@ ion-card {
   width: 100% !important;
   height: 100% !important;
   margin: 0 !important;
-  max-height: 400px;
+  // max-height: 400px;
+  max-width: 400px;
+}
+
+img {
+  width: 100% !important;
+  max-height: 207px !important;
+  object-fit: contain
 }
 
 .price{

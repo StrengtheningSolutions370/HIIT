@@ -33,25 +33,31 @@
         class="listMargin">
 
         <ion-card color="secondary">
+
           <h5 class="ion-align-self-center ion-text-capitalize">{{saleItem.name}}</h5>
+
           <div>
+
             <img (click)="saleService.viewShopItemInfoModal(saleItem)"
               [src]="this.global.createImg(saleItem.photo)" alt="sale item image">
 
-              <div *ngIf="saleItem.quotable !== true" >
-                <ion-label class="price ion-float-left ion-text-center">{{saleItem.priceHistory[saleItem.priceHistory.length-1].saleAmount | currency:'ZAR'}}</ion-label>
-              </div>
-              <div *ngIf="saleItem.quotable === false">
-                <ion-button class="addCartBtn ion-float-right" (click)="quantityPlus(saleItem)"  color="success">Add To
-                  Cart
-                </ion-button>
-              </div>
+            <div *ngIf="saleItem.quotable !== true" >
+              <ion-label class="price ion-float-left ion-text-center">{{saleItem.priceHistory[saleItem.priceHistory.length-1].saleAmount | currency:'ZAR'}}</ion-label>
+            </div>
+
+            
+            <div *ngIf="saleItem.quotable === false">
+              <ion-button class="addCartBtn ion-float-right" (click)="quantityPlus(saleItem)"  color="success">Add To
+                Cart
+              </ion-button>
+            </div>
+
             <div *ngIf="saleItem.quotable===true">
               <ion-button (click)="saleService.openQuote(saleItem)" color="warning" class="ion-float-right">
                 Request Quote
               </ion-button>
             </div>
-
+            
           </div>
 
 

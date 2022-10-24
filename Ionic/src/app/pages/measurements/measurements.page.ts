@@ -52,6 +52,9 @@ export class MeasurementsPage implements AfterViewInit {
     Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
 
     this.high.el.value = new Date().toJSON().slice(0,10).replace(/-/g,'-');
+    //set high:
+    const a = new Date();
+    this.upper = Math.trunc(a.getTime() / 1000);
   }
 
   ngOnInit() {
@@ -201,6 +204,9 @@ export class MeasurementsPage implements AfterViewInit {
   }
 
   generate() {
+
+    console.log(this.lower, this.upper);
+
     if (this.lower == null || this.upper == null) {
       this.global.showAlert("Date range is required.");
       return;

@@ -298,6 +298,11 @@ export class CartService {
         next: (data) => {
           console.log(payform);
           //console.log(data);
+          this.global.dismissModal();
+          this.global.showToast("card sale successfully recorded");
+        },
+        error: () => {
+          this.global.showToast("card sale failed, please try again");
         }
       }
     )

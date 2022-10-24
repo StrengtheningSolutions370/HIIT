@@ -236,9 +236,9 @@ export class UpdateLessonComponent implements OnInit {
 
   createImg (src : string) {
     if (src == null || src == undefined || src == '') {
-      return `https://strengtheningsolutions.azurewebsites.net/Resources/Employees/Images/default.jpeg`;
+      return `https://team720221016154649.azurewebsites.net/Resources/Employees/Images/default.jpeg`;
     }
-    return `https://strengtheningsolutions.azurewebsites.net/Resources/Employees/Images/${src}`;
+    return `https://team720221016154649.azurewebsites.net/Resources/Employees/Images/${src}`;
   }
 
   dismissModal() {

@@ -223,9 +223,9 @@ export class CheckoutComponent implements ViewWillEnter {
 
           console.log(payObj);
           this.cartService.makePayment(payObj);
-          this.global.dismissModal();
-          this.global.showToast(this.currentMethod + " sale successfully recorded");
-          location.reload();
+          // this.global.dismissModal();
+          // this.global.showToast(this.currentMethod + " sale successfully recorded");
+          //location.reload();
         }
         else
           this.global.showAlert('Payment Failed, Please try again');

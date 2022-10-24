@@ -26,7 +26,9 @@ export class PaymentsPage implements OnInit {
         this.payments = [];
         this.repo.getPayments().subscribe({
           next: async (payments : any) => {
+            console.log('payments', payments);
             const user = JSON.parse(await this.storage.getKey('user'));
+            console.log(user);
             payments.result.filter((payment : any) => {
               return payment.paymentType.name == 'card' && payment.sale.appUser.id == user.id;
             }).forEach((element:any, i: number) => {

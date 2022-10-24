@@ -33,14 +33,14 @@ import { WriteOff } from '../models/write-off';
 export class RepoService {
 
   //Azure hosted api base:
-  base = 'https://strengtheningsolutions.azurewebsites.net/api/';
+  base = 'https://team720221016154649.azurewebsites.net/api/';
   //Hosted base:
   //base = 'http://localhost:5001/api/';
   //Local base:
 
-  // base = 'https://localhost:440383/api/';
-  // public baseImg = 'https://localhost:44383/' ; //Ensure it is the same as the base without the 'api/' part
-  public baseImg = 'https://strengtheningsolutions.azurewebsites.net/' ; //Ensure it is the same as the base without the 'api/' part
+  //base = 'https://localhost:44383/api/';
+  //public baseImg = 'https://localhost:44383/' ; //Ensure it is the same as the base without the 'api/' part
+  public baseImg = 'https://team720221016154649.azurewebsites.net/' ; //Ensure it is the same as the base without the 'api/' part
 
   AppUserController = 'AppUser/';
   BookingController = 'Booking/';
@@ -190,6 +190,7 @@ export class RepoService {
   }
 
   makePayment(payment): Observable<any>{
+    console.log('payment repo post:', payment);
     return this.http.post<any>(`${this.base + this.PaymentController}add`,payment);
   }
 
@@ -472,11 +473,11 @@ existsEmployee(id: number): Observable<any>{
 }
 // //Image Upload
 // uploadEmployeeImage(data: FormData): Observable<any> {
-//   return this.http.post('https://strengtheningsolutions.azurewebsites.net/api/Employee/upload', data);
+//   return this.http.post('https://team720221016154649.azurewebsites.net/api/Employee/upload', data);
 // }
 // //reImage Upload
 // reuploadEmployeeImage(id: string): Observable<any> {
-//   return this.http.delete(`https://strengtheningsolutions.azurewebsites.net/api/Employee/deletephoto?name=${id}`);
+//   return this.http.delete(`https://team720221016154649.azurewebsites.net/api/Employee/deletephoto?name=${id}`);
 // }
 //Document Upload
 

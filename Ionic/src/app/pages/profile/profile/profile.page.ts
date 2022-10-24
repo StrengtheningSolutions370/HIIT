@@ -60,7 +60,7 @@ export class ProfilePage implements OnInit {
   }
 
   downloadPdf() {
-    window.open('https://strengtheningsolutions.azurewebsites.net/Resources/Clients/Indemnity/Indemnity.pdf');
+    window.open('https://team720221016154649.azurewebsites.net/Resources/Clients/Indemnity/Indemnity.pdf');
   }
 
   setup() {
@@ -289,13 +289,13 @@ export class ProfilePage implements OnInit {
   }
 
   public createContract = (fileName: string) => {
-    console.log(`https://strengtheningsolutions.azurewebsites.net/Resources/Employees/Contracts/${fileName}`)
-    return `https://strengtheningsolutions.azurewebsites.net/Resources/Employees/Contracts/${fileName}`
+    console.log(`https://team720221016154649.azurewebsites.net/Resources/Employees/Contracts/${fileName}`)
+    return `https://team720221016154649.azurewebsites.net/Resources/Employees/Contracts/${fileName}`
   };
 
   public createIndemnity = (fileName: string) => {
-    console.log(`https://strengtheningsolutions.azurewebsites.net/Resources/Clients/Indemnity/${fileName}`)
-    return `https://strengtheningsolutions.azurewebsites.net/Resources/Clients/Indemnity/${fileName}`
+    console.log(`https://team720221016154649.azurewebsites.net/Resources/Clients/Indemnity/${fileName}`)
+    return `https://team720221016154649.azurewebsites.net/Resources/Clients/Indemnity/${fileName}`
   };
 
   onPersonalSubmit(personalForm: NgForm){
@@ -364,14 +364,14 @@ export class ProfilePage implements OnInit {
   
   createEmpImg (fileName: string) {
     if (fileName == null)
-      return `https://strengtheningsolutions.azurewebsites.net/Resources/Employees/Images/default.jpeg`;
-    return `https://strengtheningsolutions.azurewebsites.net/Resources/Employees/Images/${fileName}`;
+      return `https://team720221016154649.azurewebsites.net/Resources/Employees/Images/default.jpeg`;
+    return `https://team720221016154649.azurewebsites.net/Resources/Employees/Images/${fileName}`;
   }
 
   createClientImg (fileName: string) {
     if (fileName == null)
-      return `https://strengtheningsolutions.azurewebsites.net/Resources/Clients/Images/default.jpeg`;
-    return `https://strengtheningsolutions.azurewebsites.net/Resources/Clients/Images/${fileName}`;
+      return `https://team720221016154649.azurewebsites.net/Resources/Clients/Images/default.jpeg`;
+    return `https://team720221016154649.azurewebsites.net/Resources/Clients/Images/${fileName}`;
   }
 
 }

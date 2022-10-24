@@ -21,9 +21,9 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-hiitclient-ionic-223922-deployment/amplify-cfn-templates/hosting/amplifyhosting-template.json",
         "logicalId": "hostingamplifyhosting"
       },
-      "lastPushTimeStamp": "2022-10-03T20:52:12.681Z",
+      "lastPushTimeStamp": "2022-10-17T07:37:14.096Z",
       "output": {},
-      "lastPushDirHash": "3XySHON8JjyDA0YdBT+iCdySPFQ="
+      "lastPushDirHash": "E+1WWlF6KAAVOK0175hIyFGiu14="
     }
   }
 }
