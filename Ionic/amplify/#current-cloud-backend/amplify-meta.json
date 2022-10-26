@@ -1,15 +1,15 @@
 {
   "providers": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-hiitclient-ionic-223922-authRole",
-      "UnauthRoleArn": "arn:aws:iam::403668517797:role/amplify-hiitclient-ionic-223922-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::403668517797:role/amplify-hiitclient-ionic-223922-authRole",
+      "AuthRoleName": "amplify-ionic-dev-211226-authRole",
+      "UnauthRoleArn": "arn:aws:iam::768119052996:role/amplify-ionic-dev-211226-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::768119052996:role/amplify-ionic-dev-211226-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-hiitclient-ionic-223922-deployment",
-      "UnauthRoleName": "amplify-hiitclient-ionic-223922-unauthRole",
-      "StackName": "amplify-hiitclient-ionic-223922",
-      "StackId": "arn:aws:cloudformation:us-east-1:403668517797:stack/amplify-hiitclient-ionic-223922/79598bf0-435b-11ed-b3af-0a9997afb0d5",
-      "AmplifyAppId": "d3u8esycr52y6q"
+      "DeploymentBucketName": "amplify-ionic-dev-211226-deployment",
+      "UnauthRoleName": "amplify-ionic-dev-211226-unauthRole",
+      "StackName": "amplify-ionic-dev-211226",
+      "StackId": "arn:aws:cloudformation:us-east-1:768119052996:stack/amplify-ionic-dev-211226/cd5c7e40-53cf-11ed-b07a-12f294eabff5",
+      "AmplifyAppId": "d1t7r3g66fqonb"
     }
   },
   "hosting": {
@@ -18,12 +18,12 @@
       "providerPlugin": "awscloudformation",
       "type": "manual",
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-hiitclient-ionic-223922-deployment/amplify-cfn-templates/hosting/amplifyhosting-template.json",
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-ionic-dev-211226-deployment/amplify-cfn-templates/hosting/amplifyhosting-template.json",
         "logicalId": "hostingamplifyhosting"
       },
-      "lastPushTimeStamp": "2022-10-04T08:55:41.508Z",
+      "lastPushTimeStamp": "2022-10-24T19:15:12.853Z",
       "output": {},
-      "lastPushDirHash": "E+1WWlF6KAAVOK0175hIyFGiu14="
+      "lastPushDirHash": "3XySHON8JjyDA0YdBT+iCdySPFQ="
     }
   }
 }

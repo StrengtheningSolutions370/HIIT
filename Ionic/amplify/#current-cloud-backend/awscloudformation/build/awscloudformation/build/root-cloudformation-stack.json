@@ -1,5 +1,5 @@
 {
-  "Description": "Root Stack for AWS Amplify Console",
+  "Description": "Root Stack for AWS Amplify CLI",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "DeploymentBucketName": {
@@ -155,11 +155,11 @@
     "hostingamplifyhosting": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-hiitclient-ionic-223922-deployment/amplify-cfn-templates/hosting/amplifyhosting-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-ionic-dev-211226-deployment/amplify-cfn-templates/hosting/amplifyhosting-template.json",
         "Parameters": {
-          "appId": "d3u8esycr52y6q",
+          "appId": "d1t7r3g66fqonb",
           "type": "manual",
-          "env": "ionic"
+          "env": "dev"
         }
       }
     }
