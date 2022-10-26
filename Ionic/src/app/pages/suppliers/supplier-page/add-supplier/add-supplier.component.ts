@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { ComponentsModule } from 'src/app/components/components.module';
 import { Supplier } from 'src/app/models/supplier';
 import { GlobalService } from 'src/app/services/global/global.service';
 import { SupplierService } from 'src/app/services/supplier/supplier.service';
@@ -41,14 +42,28 @@ export class AddSupplierComponent implements OnInit {
 
   handleAddressChange(event : any) {
 
+    console.log(event);
+
+    const viewpoint = event.geometry.viewport;
+
+    const longs : any = Object.values(viewpoint)[0];
+    const lats : any = Object.values(viewpoint)[1];
+
+    // console.log('longs', longs);
+    // console.log('lats', lats);
+
     this.addresserror = false;
     this.resolved = true;
 
-    console.log(event);
 
-    this.long = this.midpoint(event.geometry.viewport.Ab.hi, event.geometry.viewport.Ab.lo);
-    this.lat = this.midpoint(event.geometry.viewport.Va.hi, event.geometry.viewport.Va.lo);
+    this.long = this.midpoint(longs.hi, longs.lo);
+    this.lat = this.midpoint(lats.hi, lats.lo);
+
+    console.log('long', this.long);
+    console.log('lat', this.lat);
+    
     this.address = '';
+
     event.address_components.forEach((component : any, i : number) => {
       this.address += component.long_name;
       if (i < event.address_components.length - 1) {
@@ -57,7 +72,9 @@ export class AddSupplierComponent implements OnInit {
         this.address += '.';
       }
     });
-    console.log(this.address)
+
+    console.log(this.address);
+
   }
 
   submitForm() {
